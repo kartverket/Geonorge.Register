@@ -2612,12 +2612,12 @@
         </member>
         <member name="P:Resources.DataSet.DOK_Delivery_Wfs">
             <summary>
-              Looks up a localized string similar to Wfs status.
+              Looks up a localized string similar to WFS status.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DOK_Delivery_Wms">
             <summary>
-              Looks up a localized string similar to Wms status.
+              Looks up a localized string similar to WMS status.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DOK_DeliveryStatusHeading">
@@ -4039,6 +4039,11 @@
         <member name="P:Resources.Shared.Select">
             <summary>
               Looks up a localized string similar to Velg.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.ShowAll">
+            <summary>
+              Looks up a localized string similar to Vis alle.
             </summary>
         </member>
         <member name="P:Resources.Shared.Status">

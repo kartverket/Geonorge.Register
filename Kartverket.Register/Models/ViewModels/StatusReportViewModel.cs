@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Services;
 using Resources;
+using SolrNet.Mapping.Validation.Rules;
 
 namespace Kartverket.Register.Models.ViewModels
 {
@@ -125,7 +126,6 @@ namespace Kartverket.Register.Models.ViewModels
 
             if (statusReport != null)
             {
-
                 Date = statusReport.Date;
                 NumberOfItems = statusReport.NumberOfIems();
 
@@ -233,16 +233,17 @@ namespace Kartverket.Register.Models.ViewModels
         {
             List<SelectListItem> items = new List<SelectListItem>();
 
-            items.Add(new SelectListItem() { Text = "Metadata", Value = "Metadata" });
-            items.Add(new SelectListItem() { Text = "Produktark", Value = "ProductSheet" });
-            items.Add(new SelectListItem() { Text = "Tegneregler", Value = "PresentationRules" });
-            items.Add(new SelectListItem() { Text = "Produktspesifikasjoner", Value = "ProductSpecification" });
-            items.Add(new SelectListItem() { Text = "Wms", Value = "Wms" });
-            items.Add(new SelectListItem() { Text = "Wfs", Value = "Wfs" });
-            items.Add(new SelectListItem() { Text = "Sosi-krav", Value = "SosiRequirements" });
-            items.Add(new SelectListItem() { Text = "Gml-krav", Value = "GmlRequirements" });
-            items.Add(new SelectListItem() { Text = "Atom-feed", Value = "AtomFeed" });
-            items.Add(new SelectListItem() { Text = "Nedlasting", Value = "Distribution" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Metadata, Value = "Metadata" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_ProductSheet, Value = "ProductSheet" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_PresentationRules, Value = "PresentationRules" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_ProductSpesification, Value = "ProductSpecification" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Wms, Value = "Wms" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Wfs, Value = "Wfs" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_SosiRequirements, Value = "SosiRequirements" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_GmlRequirements, Value = "GmlRequirements" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_AtomFeed, Value = "AtomFeed" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Distribution, Value = "Distribution" });
+            items.Add(new SelectListItem() { Text = Shared.ShowAll, Value = "all" });
 
             var selectList = new SelectList(items, "Value", "Text");
 

@@ -2,11 +2,13 @@
 
 <script>
 
-    $(document).ready(function() {
-        var selectedView = localStorage.getItem("SelectedViewButtons");
-        var showAllLineChart = localStorage.getItem("ShowAllLineCart");
+    $(document).ready(function () {
+        var statusTypeAll = getParameterByName("statustype") == "all";
 
-        if (showAllLineChart === true) {
+        var selectedView = localStorage.getItem("SelectedViewButtons");
+        //var showAllLineChart = localStorage.getItem("ShowAllLineCart");
+
+        if (statusTypeAll) {
             ShowAllChart();
         } else {
             ShowStatusChart();
@@ -54,26 +56,17 @@
     function ShowAllChart() {
         var chartAll = document.getElementById("lineChartAll");
         var chartStatus = document.getElementById("lineChartStatus");
-        var ddList = document.getElementById("ddStatusType");
-        var button = document.getElementById("lineChartStatusbutton");
 
         chartAll.style.display = "block";
         chartStatus.style.display = "none";
-        ddList.disabled = true;
-        button.classList.add("button-selected");
     }
 
     function ShowStatusChart() {
         var chartAll = document.getElementById("lineChartAll");
         var chartStatus = document.getElementById("lineChartStatus");
-        var ddList = document.getElementById("ddStatusType");
-        var button = document.getElementById("lineChartStatusbutton");
 
         chartAll.style.display = "none";
         chartStatus.style.display = "block";
-        ddList.disabled = false;
-        $(button).removeClass("button-selected");
-
     }
 
 

@@ -259,4 +259,7 @@
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>Show all</value>
+  </data>
 </root>

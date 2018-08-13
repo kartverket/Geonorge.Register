@@ -3,8 +3,10 @@
 <script>
 
     $(document).ready(function () {
-        var statusTypeAll = getParameterByName("statustype") == "all";
-
+        var parameterStatusType = getParameterByName("statustype");
+        var statusTypeAll = parameterStatusType == "all" || parameterStatusType == "";
+        console.log(parameterStatusType);
+        console.log(statusTypeAll);
         var selectedView = localStorage.getItem("SelectedViewButtons");
         //var showAllLineChart = localStorage.getItem("ShowAllLineCart");
 

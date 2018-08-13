@@ -233,6 +233,7 @@ namespace Kartverket.Register.Models.ViewModels
         {
             List<SelectListItem> items = new List<SelectListItem>();
 
+            items.Add(new SelectListItem() { Text = Shared.ShowAll, Value = "all" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Metadata, Value = "Metadata" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_ProductSheet, Value = "ProductSheet" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_PresentationRules, Value = "PresentationRules" });
@@ -243,7 +244,6 @@ namespace Kartverket.Register.Models.ViewModels
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_GmlRequirements, Value = "GmlRequirements" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_AtomFeed, Value = "AtomFeed" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Distribution, Value = "Distribution" });
-            items.Add(new SelectListItem() { Text = Shared.ShowAll, Value = "all" });
 
             var selectList = new SelectList(items, "Value", "Text");
 

@@ -10,7 +10,7 @@ namespace Kartverket.Register.Models
         public FilterParameters()
         {
             InspireRegisteryType = "dataset";
-            StatusType = "Metadata";
+            StatusType = "all";
         }
         public string text { get; set; }
         public bool filterVertikalt { get; set; }

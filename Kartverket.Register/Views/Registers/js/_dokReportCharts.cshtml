@@ -92,7 +92,7 @@
             labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Labels))),
             datasets: [
                 {
-                    label: "Metadata",
+                    label: "@DataSet.DOK_Delivery_Metadata",
                     borderColor: 'rgb(255, 0, 0)',
                     data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Metadata))),
                     backgroundColor: "rgb(255, 0, 0)",
@@ -101,7 +101,7 @@
                     fill: false
                 },
                 {
-                    label: "Produktark",
+                    label: "@DataSet.DOK_Delivery_ProductSheet",
                     fill: false,
                     backgroundColor: 'rgb(240, 179, 35)',
                     borderColor: 'rgb(240, 179, 35)',
@@ -110,7 +110,7 @@
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                 },
                 {
-                    label: "Tegneregler",
+                    label: "@DataSet.DOK_Delivery_PresentationRules",
                     backgroundColor: "rgb(169, 196, 127)",
                     fill: false,
                     borderColor: 'rgb(169, 196, 127)',
@@ -119,7 +119,7 @@
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                 },
                 {
-                    label: "Produktspesifikasjoner",
+                    label: "@DataSet.DOK_Delivery_ProductSpesification",
                     backgroundColor: "rgb(93, 71, 119)",
                     fill: false,
                     borderColor: 'rgb(93, 71, 119)',
@@ -128,7 +128,7 @@
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                 },
                 {
-                    label: "WMS",
+                    label: "@DataSet.DOK_Delivery_Wms",
                     backgroundColor: "rgb(254, 80, 0)",
                     fill: false,
                     borderColor: 'rgb(254, 80, 0)',
@@ -137,7 +137,7 @@
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                 },
                 {
-                    label: "WFS",
+                    label: "@DataSet.DOK_Delivery_Wfs",
                     backgroundColor: "rgb(125, 161, 196)",
                     fill: false,
                     borderColor: 'rgb(125, 161, 196)',
@@ -146,7 +146,7 @@
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                 },
                 {
-                    label: "Sosi-krav",
+                    label: "@DataSet.DOK_Delivery_SosiRequirements",
                     backgroundColor: "rgb(54, 197, 69)",
                     fill: false,
                     borderColor: 'rgb(54, 197, 69)',
@@ -155,7 +155,7 @@
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                 },
                 {
-                    label: "Gml-krav",
+                    label: "@DataSet.DOK_Delivery_GmlRequirements",
                     backgroundColor: "rgb(101, 126, 224)",
                     fill: false,
                     borderColor: 'rgb(101, 126, 224)',
@@ -164,7 +164,7 @@
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                 },
                 {
-                    label: "Atom-feed",
+                    label: "@DataSet.DOK_Delivery_AtomFeed",
                     backgroundColor: 'rgb(102, 153, 102)',
                     fill: false,
                     borderColor: 'rgb(102, 153, 102)',
@@ -173,7 +173,7 @@
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                 },
                 {
-                    label: "Nedlasting",
+                    label: "@DataSet.DOK_Delivery_Distribution",
                     backgroundColor: "rgb(0, 26, 0)",
                     fill: false,
                     borderColor: 'rgb(0, 26, 0)',

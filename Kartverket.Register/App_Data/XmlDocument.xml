@@ -2522,7 +2522,7 @@
         </member>
         <member name="P:Resources.DataSet.DOK_Delivery_AtomFeed">
             <summary>
-              Looks up a localized string similar to Atom-feed status.
+              Looks up a localized string similar to ATOM-feed status.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DOK_Delivery_Distribution">

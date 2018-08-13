@@ -205,7 +205,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Atom-feed status.
+        ///   Looks up a localized string similar to ATOM-feed status.
         /// </summary>
         public static string DOK_Delivery_AtomFeed {
             get {

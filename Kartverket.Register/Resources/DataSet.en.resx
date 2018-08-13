@@ -124,7 +124,7 @@
     <value>Coverage shows whether the data set actually exists in the municipality</value>
   </data>
   <data name="DOK_Delivery_AtomFeed" xml:space="preserve">
-    <value>Atom feed status</value>
+    <value>ATOM feed status</value>
   </data>
   <data name="DOK_Delivery_Distribution" xml:space="preserve">
     <value>Download status</value>

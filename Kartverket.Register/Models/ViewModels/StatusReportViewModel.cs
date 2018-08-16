@@ -17,6 +17,7 @@ namespace Kartverket.Register.Models.ViewModels
         private const string Notset = "notset";
         private const string Useable = "useable";
 
+        public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public int NumberOfItems { get; set; }
         public SelectList DokReportsSelectList { get; set; }
@@ -126,6 +127,7 @@ namespace Kartverket.Register.Models.ViewModels
 
             if (statusReport != null)
             {
+                Id = statusReport.Id;
                 Date = statusReport.Date;
                 NumberOfItems = statusReport.NumberOfIems();
 

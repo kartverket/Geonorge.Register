@@ -74,5 +74,6 @@ namespace Kartverket.Register.Services
 
             return queryResults.FirstOrDefault();
         }
+
     }
 }

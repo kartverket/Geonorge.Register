@@ -21,6 +21,7 @@ using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Formatter;
 using System.Web;
 using Kartverket.Register.App_Start;
+using StatusReport = Kartverket.Register.Models.StatusReport;
 
 namespace Kartverket.Register.Controllers
 {
@@ -69,6 +70,9 @@ namespace Kartverket.Register.Controllers
         }
 
 
+
+
+
         /// <summary>
         /// Gets register by name
         /// </summary>
@@ -102,11 +106,45 @@ namespace Kartverket.Register.Controllers
             return Content(System.Net.HttpStatusCode.OK, inspireMonitoring, new XMLFormatter(), new MediaTypeHeaderValue("application/xml"));
         }
 
+
+        /// <summary>
+        /// Gets selected status report
+        /// </summary>
+        [Route("api/register/det-offentlige-kartgrunnlaget/report/{id}.{ext}")]
+        [Route("api/register/det-offentlige-kartgrunnlaget/report/{id}")]
+        [HttpGet]
+        public IHttpActionResult DokStatusReport(string id)
+        {
+            SetLanguage(Request);
+            var statusReport = _statusReportService.GetStatusReportById(id);
+            return Ok(new Models.Api.StatusReport(statusReport));
+        }
+
+        /// <summary>
+        /// Gets selected status report
+        /// </summary>
+        [Route("api/register/det-offentlige-kartgrunnlaget/report.{ext}")]
+        [Route("api/register/det-offentlige-kartgrunnlaget/report")]
+        [HttpGet]
+        public IHttpActionResult DokStatusReports()
+        {
+            SetLanguage(Request);
+            List<Models.Api.StatusReport> statusReportsApi = new List<Models.Api.StatusReport>();
+            List<StatusReport> statusReports = _statusReportService.GetStatusReports();
+
+            foreach (var report in statusReports)
+            {
+                statusReportsApi.Add(new Models.Api.StatusReport(report));
+            }
+            return Ok(statusReportsApi);
+        }
+
+
         /// <summary>
         /// Save dok status report to db
         /// </summary>
         [Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        [Route("api/register/{registerName}/report")]
+        [Route("api/register/{registerName}/report/save")]
         [HttpGet]
         public IHttpActionResult DokReport(string registerName)
         {

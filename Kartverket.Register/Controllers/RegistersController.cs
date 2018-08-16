@@ -186,6 +186,15 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
+
+        //[Route("api/register/det-offentlige-kartgrunnlaget/report.{ext}")]
+        //[Route("api/register/det-offentlige-kartgrunnlaget/report")]
+        //[HttpGet]
+        //public void GetDokStatusReport(Guid id, bool selectAll)
+        //{
+            
+        //}
+
         private void StartSynchronizationDataset()
         {
             HttpClient hc = new HttpClient();

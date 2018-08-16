@@ -497,6 +497,16 @@
             Gets inspiremonitoring xml
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.DokStatusReport(System.String)">
+            <summary>
+            Gets selected status report
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.DokStatusReports">
+            <summary>
+            Gets selected status report
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.DokReport(System.String)">
             <summary>
             Save dok status report to db
@@ -3542,6 +3552,11 @@
         <member name="P:Resources.Registers.Current">
             <summary>
               Looks up a localized string similar to Gjeldende.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Date">
+            <summary>
+              Looks up a localized string similar to Dato.
             </summary>
         </member>
         <member name="P:Resources.Registers.DateAccepted">

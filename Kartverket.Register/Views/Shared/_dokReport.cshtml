@@ -1,4 +1,5 @@
-﻿@model Kartverket.Register.Models.ViewModels.StatusReportViewModel
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.ViewModels.StatusReportViewModel
 
 @if (Model.ReportNotExists)
 {
@@ -18,11 +19,15 @@ else
                 @Html.DropDownList("SelectedDokReport", Model.DokReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
             }
         </div>
-        <div id="reportViewButtons">
+        <div id="reportViewButtons" class="col-md-4 col-sm-12">
             <button class="btn" id="tabelButton" onclick="reportView('tabel', event)"><i class="fa fa-table"></i></button>
             <button class="btn" id="pieChartButton" onclick="reportView('pieChart', event)"><i class="fa fa-pie-chart"></i></button>
             <button class="btn" id="barChartButton" onclick="reportView('barChart', event)"><i class="fa fa-bar-chart"></i></button>
             <button class="btn" id="lineChartButton" onclick="reportView('lineChart', event)"><i class="fa fa-line-chart"></i></button>
+        </div>
+        <div class="pull-right col-md-4">
+            <a href="@RegisterUrls.ApiReportUrlFormat(Request, "json", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="JSON">JSON</a>
+            <a href="@RegisterUrls.ApiReportUrlFormat(Request, "csv", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="JSON">CSV</a>
         </div>
     </div>
 
@@ -183,25 +188,16 @@ else
 
             <div id="lineChartStatus">
                 <div class="col-md-12">
-                <canvas id="LineChart" height="200" chart-colors="colors"></canvas>
-            </div>
+                    <canvas id="LineChart" height="200" chart-colors="colors"></canvas>
+                </div>
             </div>
 
-                <div id="lineChartAll">
-                    <div class="pull-right col-md-4">
-                        <a  class="pull-right btn btn-default" id="exportMyChart" download="LineChart-All.jpg"> <span class="fa fa-image"></span> @Shared.Download</a>
-                        @*<input type="button" name="exportChartData" value="CSV" onclick="exportCSV();" />*@
-                    </div>
-                    <div class="col-md-12">
-
+            <div id="lineChartAll">
+                <div class="col-md-12">
                     <canvas id="myChart" height="200" style="background-color: #ffffff"></canvas>
                 </div>
-                </div>
-        
-
-
+            </div>
         </div>
-
     </div>
 
 

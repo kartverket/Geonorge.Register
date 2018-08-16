@@ -207,8 +207,8 @@ else
                 }
             </div>
             <div class="pull-right col-md-4">
-                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "json") title="Eksporer alle rapporter som json" class="btn btn-default btn-space pull-right" title="JSON">JSON</a>
-                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "csv")" title="Eksporer alle rapporter som csv" class="btn btn-default btn-space pull-right" title="JSON">CSV</a>
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "json", Model.Id.ToString())" title="Eksporer alle rapporter som json" class="btn btn-default btn-space pull-right" title="JSON">JSON</a>
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "csv", Model.Id.ToString())" title="Eksporer alle rapporter som csv" class="btn btn-default btn-space pull-right" title="JSON">CSV</a>
             </div>
 
             <div id="lineChartStatus">

@@ -108,6 +108,26 @@ namespace Kartverket.Register.Controllers
 
 
         /// <summary>
+        /// Save dok status report to db
+        /// </summary>
+        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [Route("api/register/det-offentlige-kartgrunnlaget/report/save")]
+        [HttpGet]
+        public IHttpActionResult DokReport()
+        {
+            try
+            {
+                var register = _registerService.GetDokStatusRegister();
+                _statusReportService.CreateStatusReport(register);
+                return Ok("Saved");
+            }
+            catch
+            {
+                return Ok("Error");
+            }
+        }
+
+        /// <summary>
         /// Gets selected status report
         /// </summary>
         [Route("api/register/det-offentlige-kartgrunnlaget/report/{id}.{ext}")]
@@ -140,25 +160,6 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        /// <summary>
-        /// Save dok status report to db
-        /// </summary>
-        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        [Route("api/register/{registerName}/report/save")]
-        [HttpGet]
-        public IHttpActionResult DokReport(string registerName)
-        {
-            try
-            {
-                var register = _registerService.GetRegister(null, registerName);
-                _statusReportService.CreateStatusReport(register);
-                return Ok("Saved");
-            }
-            catch
-            {
-                return Ok("Error");
-            }
-        }
 
         /// <summary>
         /// Save inspire monitoring report data to database.

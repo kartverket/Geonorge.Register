@@ -16,8 +16,22 @@
             ShowStatusChart();
         }
         reportView(selectedView, null);
+        var cb = document.getElementById("cbExportReport");
+        ToggleExportReport(cb);
     });
 
+    function ToggleExportReport(cb) {
+
+        if (cb.checked) {
+            document.getElementById("ExportAll").style.display = "inline-block";
+            document.getElementById("ExportSelected").style.display = "none";
+        } else {
+            document.getElementById("ExportAll").style.display = "none";
+            document.getElementById("ExportSelected").style.display = "inline-block";
+        }
+    }
+
+    
     function reportView(view, event) {
         var buttons = $("#reportViewButtons button");
         $.each(buttons,

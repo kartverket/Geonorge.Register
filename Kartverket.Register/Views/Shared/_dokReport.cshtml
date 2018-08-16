@@ -7,7 +7,9 @@
 }
 else
 {
-    <h2> Rapport </h2>
+    <div class="row">
+        <h2 class="col-md-6"> Rapport </h2>
+    </div>
     <p>Antall datasett: @Model.NumberOfItems</p>
 
     <div class="row">
@@ -26,8 +28,20 @@ else
             <button class="btn" id="lineChartButton" onclick="reportView('lineChart', event)"><i class="fa fa-line-chart"></i></button>
         </div>
         <div class="pull-right col-md-4">
-            <a href="@RegisterUrls.ApiReportUrlFormat(Request, "json", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="JSON">JSON</a>
-            <a href="@RegisterUrls.ApiReportUrlFormat(Request, "csv", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="JSON">CSV</a>
+            <div id="ExportAll" style="display:none;" class="pull-right">
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "json")" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "csv")" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
+            </div>
+
+            <div id="ExportSelected" style="display:inline-block" class="pull-right">
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "json", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "csv", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
+            </div>
+
+            <div class="text-center pull-right btn-space" style="display: inline-block; vertical-align: top">
+                <label>Alle rapporter</label>
+                <input type="checkbox" id="cbExportReport" onclick="ToggleExportReport(this)">
+            </div>
         </div>
     </div>
 

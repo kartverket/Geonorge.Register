@@ -59,7 +59,6 @@ else
             </thead>
 
             <tbody>
-
                 <tr>
                     <td>@Html.LabelFor(model => model.NumberOfItemsWithMetadataGood)</td>
                     <td>@Model.NumberOfItemsWithMetadataGood</td>
@@ -125,14 +124,20 @@ else
                 </tr>
 
                 <tr>
+                    <td>@Html.LabelFor(model => model.NumberOfItemsWithAtomFeedGood)</td>
+                    <td>@Model.NumberOfItemsWithAtomFeedGood</td>
+                    <td>@Model.NumberOfItemsWithAtomFeedUseable</td>
+                    <td>@Model.NumberOfItemsWithAtomFeedDeficient</td>
+                    <td>@Model.NumberOfItemsWithAtomFeedNotSet</td>
+                </tr>
+
+                <tr>
                     <td>@Html.LabelFor(model => model.NumberOfItemsWithDistributionGood)</td>
                     <td>@Model.NumberOfItemsWithDistributionGood</td>
                     <td>@Model.NumberOfItemsWithDistributionUseable</td>
                     <td>@Model.NumberOfItemsWithDistributionDeficient</td>
                     <td>@Model.NumberOfItemsWithDistributionNotSet</td>
                 </tr>
-
-
             </tbody>
         </table>
     </div>

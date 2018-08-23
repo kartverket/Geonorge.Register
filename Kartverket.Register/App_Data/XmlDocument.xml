@@ -497,14 +497,9 @@
             Gets inspiremonitoring xml
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.DokReport">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.NewStatusReport(System.String)">
             <summary>
             Save dok status report to db
-            </summary>
-        </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.DokStatusReport(System.String)">
-            <summary>
-            Gets selected status report
             </summary>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.DokStatusReports">

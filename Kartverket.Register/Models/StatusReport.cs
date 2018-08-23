@@ -12,25 +12,25 @@ namespace Kartverket.Register.Models
         {
             Id = Guid.NewGuid();
             Date = DateTime.Now;
-            StatusHistories = new List<StatusHistory>();
+            StatusRegisterItems = new List<RegisterItemStatusReport>();
         }
 
 
         [Key]
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
-        public virtual ICollection<StatusHistory> StatusHistories { get; set; }
+        public virtual ICollection<RegisterItemStatusReport> StatusRegisterItems { get; set; }
 
 
         public int NumberOfIems()
         {
-            return StatusHistories.Count;
+            return StatusRegisterItems.Count;
         }
 
         public int NumberOfItemsWithMetadata(string status)
         {
             int number = 0;
-            foreach (StatusHistory item in StatusHistories)
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
@@ -46,7 +46,7 @@ namespace Kartverket.Register.Models
         public int NumberOfItemsWithProductsheet(string status)
         {
             int number = 0;
-            foreach (StatusHistory item in StatusHistories)
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
@@ -62,7 +62,7 @@ namespace Kartverket.Register.Models
         public int NumberOfItemsWithPresentationRules(string status)
         {
             int number = 0;
-            foreach (StatusHistory item in StatusHistories)
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
@@ -78,7 +78,7 @@ namespace Kartverket.Register.Models
         public int NumberOfItemsWithProductSpecification(string status)
         {
             int number = 0;
-            foreach (StatusHistory item in StatusHistories)
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
@@ -94,7 +94,7 @@ namespace Kartverket.Register.Models
         public int NumberOfItemsWithWms(string status)
         {
             int number = 0;
-            foreach (StatusHistory item in StatusHistories)
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
@@ -110,7 +110,7 @@ namespace Kartverket.Register.Models
         public int NumberOfItemsWithWfs(string status)
         {
             int number = 0;
-            foreach (StatusHistory item in StatusHistories)
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
@@ -126,7 +126,7 @@ namespace Kartverket.Register.Models
         public int NumberOfItemsWithSosiRequirements(string status)
         {
             int number = 0;
-            foreach (StatusHistory item in StatusHistories)
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
@@ -142,7 +142,7 @@ namespace Kartverket.Register.Models
         public int NumberOfItemsWithGmlRequirements(string status)
         {
             int number = 0;
-            foreach (StatusHistory item in StatusHistories)
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
@@ -158,7 +158,7 @@ namespace Kartverket.Register.Models
         public int NumberOfItemsWithAtomFeed(string status)
         {
             int number = 0;
-            foreach (StatusHistory item in StatusHistories)
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
@@ -174,7 +174,7 @@ namespace Kartverket.Register.Models
         public int NumberOfItemsWithDistribution(string status)
         {
             int number = 0;
-            foreach (StatusHistory item in StatusHistories)
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {

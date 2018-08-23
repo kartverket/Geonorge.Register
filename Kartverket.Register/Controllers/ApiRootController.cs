@@ -111,34 +111,35 @@ namespace Kartverket.Register.Controllers
         /// Save dok status report to db
         /// </summary>
         [Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        [Route("api/register/det-offentlige-kartgrunnlaget/report/save")]
+        [Route("api/register/{registerName}/report/save")]
         [HttpGet]
-        public IHttpActionResult DokReport()
+        public IHttpActionResult NewStatusReport(string registerName)
         {
             try
             {
-                var register = _registerService.GetDokStatusRegister();
+                //var register = _registerService.GetDokStatusRegister();
+                var register = _registerService.GetRegisterByName(registerName);
                 _statusReportService.CreateStatusReport(register);
                 return Ok("Saved");
             }
-            catch
+            catch(Exception e)
             {
-                return Ok("Error");
+                return Ok(e);
             }
         }
 
-        /// <summary>
-        /// Gets selected status report
-        /// </summary>
-        [Route("api/register/det-offentlige-kartgrunnlaget/report/{id}.{ext}")]
-        [Route("api/register/det-offentlige-kartgrunnlaget/report/{id}")]
-        [HttpGet]
-        public IHttpActionResult DokStatusReport(string id)
-        {
-            SetLanguage(Request);
-            var statusReport = _statusReportService.GetStatusReportById(id);
-            return Ok(new Models.Api.StatusReport(statusReport));
-        }
+        ///// <summary>
+        ///// Gets selected status report
+        ///// </summary>
+        //[Route("api/register/det-offentlige-kartgrunnlaget/report/{id}.{ext}")]
+        //[Route("api/register/det-offentlige-kartgrunnlaget/report/{id}")]
+        //[HttpGet]
+        //public IHttpActionResult DokStatusReport(string id)
+        //{
+        //    SetLanguage(Request);
+        //    var statusReport = _statusReportService.GetStatusReportById(id);
+        //    return Ok(new Models.Api.StatusReport(statusReport));
+        //}
 
         /// <summary>
         /// Gets selected status report

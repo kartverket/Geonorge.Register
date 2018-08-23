@@ -23,8 +23,21 @@ namespace Kartverket.Register.Services
                 if (item is Dataset dataset)
                 {
                     var datasetStatuses = new DatasetStatusHistory(dataset);
-                    statusReport.StatusHistories.Add(datasetStatuses);
-                    //dataset.StatusHistories.Add(datasetStatuses);
+                    statusReport.StatusRegisterItems.Add(datasetStatuses);
+                }
+            }
+
+            foreach (var item in register.RegisterItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    var inspireDatasetStatuses = new InspireDatasetStatusReport(inspireDataset);
+                    statusReport.StatusRegisterItems.Add(inspireDatasetStatuses);
+                }
+                if (item is InspireDataService inspireDataService)
+                {
+                    var inspireDataserviceStatuses = new InspireDataserviceStatusReport(inspireDataService);
+                    statusReport.StatusRegisterItems.Add(inspireDataserviceStatuses);
                 }
             }
 

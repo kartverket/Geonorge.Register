@@ -56,6 +56,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<StatusReport> StatusReports { get; set; }
         public virtual DbSet<DatasetStatusHistory> DatasetStatusHistories  { get; set; }
         public virtual DbSet<InspireDatasetStatusReport> StatusInspireDatasets { get; set; }
+        public virtual DbSet<InspireDataserviceStatusReport> StatusInspireDataservices { get; set; }
 
 
         public ILogEntryService LogEntryService

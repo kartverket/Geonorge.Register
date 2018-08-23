@@ -18,7 +18,7 @@
 @section Scripts {
     @if (!Model.StatusReport.ReportNotExists)
     {
-        @Html.Partial("js/_dokReportCharts", Model.StatusReport)
+        @Html.Partial("js/_dokReportCharts", (DokStatusReportViewModel)Model.StatusReport)
     }
 
 
@@ -124,7 +124,10 @@
 
 @if (Model.SelectedDokTabIsReport())
 {
-    @Html.Partial("_dokReport", Model.StatusReport)
+    if (Model.StatusReport is DokStatusReportViewModel)
+    {
+        @Html.Partial("_dokReport", (DokStatusReportViewModel)Model.StatusReport)
+    }
 }
 else
 {

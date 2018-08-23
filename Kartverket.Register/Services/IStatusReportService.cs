@@ -12,5 +12,6 @@ namespace Kartverket.Register.Services
         StatusReport GetLatestReport();
         List<StatusReport> GetStatusReports(int numberOfReports = 0);
         StatusReport GetStatusReportById(string statusReportId);
+        List<StatusReport> GetDokStatusReports(int i);
     }
 }

@@ -173,10 +173,11 @@ namespace Kartverket.Register.Controllers
 
             register = FilterRegisterItems(register, filter);
 
-            StatusReport statusReport = filter.SelectedDokReport != null ? _statusReportService.GetStatusReportById(filter.SelectedDokReport) : _statusReportService.GetLatestReport();
+            List<StatusReport> dokStatusReports = _statusReportService.GetDokStatusReports(12);
+            StatusReport statusReport = filter.SelectedDokReport != null ? _statusReportService.GetStatusReportById(filter.SelectedDokReport) : dokStatusReports.FirstOrDefault();
             
 
-            var viewModel = new RegisterV2ViewModel(register, null, statusReport, _statusReportService.GetStatusReports(12), filter.StatusType);
+            var viewModel = new RegisterV2ViewModel(register, null, statusReport, dokStatusReports, filter.StatusType);
             viewModel.SelectedDokTab = filter.DokSelectedTab;
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
 

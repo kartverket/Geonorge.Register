@@ -876,6 +876,10 @@
     <Compile Include="Migrations\201808230924313_AddInspireDataServiceStatusReport.Designer.cs">
       <DependentUpon>201808230924313_AddInspireDataServiceStatusReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808231320160_AddReferenceToRegisterInStatusReport.cs" />
+    <Compile Include="Migrations\201808231320160_AddReferenceToRegisterInStatusReport.Designer.cs">
+      <DependentUpon>201808231320160_AddReferenceToRegisterInStatusReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -950,6 +954,7 @@
     <Compile Include="Models\ViewModels\InspireMonitoringViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireReportViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
+    <Compile Include="Models\ViewModels\DokStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\SynchronizationViewModel.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
@@ -2403,6 +2408,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808230924313_AddInspireDataServiceStatusReport.resx">
       <DependentUpon>201808230924313_AddInspireDataServiceStatusReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808231320160_AddReferenceToRegisterInStatusReport.resx">
+      <DependentUpon>201808231320160_AddReferenceToRegisterInStatusReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

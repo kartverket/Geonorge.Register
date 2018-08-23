@@ -19,12 +19,24 @@ namespace Kartverket.Register.Models
         [Key]
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
+        public virtual Register Register { get; set; }
         public virtual ICollection<RegisterItemStatusReport> StatusRegisterItems { get; set; }
 
 
         public int NumberOfIems()
         {
             return StatusRegisterItems.Count;
+        }
+
+        public bool IsDokReport()
+        {
+            return StatusRegisterItems.FirstOrDefault() is DatasetStatusHistory;
+        }
+
+        public bool IsInspireRegistryReport()
+        {
+            return StatusRegisterItems.FirstOrDefault() is InspireDataserviceStatusReport || 
+                   StatusRegisterItems.FirstOrDefault() is InspireDatasetStatusReport;
         }
 
         public int NumberOfItemsWithMetadata(string status)

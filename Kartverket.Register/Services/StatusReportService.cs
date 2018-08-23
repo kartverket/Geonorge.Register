@@ -18,6 +18,7 @@ namespace Kartverket.Register.Services
         public void CreateStatusReport(Models.Register register)
         {
             var statusReport = new StatusReport();
+            statusReport.Register = register;
             foreach (var item in register.items)
             {
                 if (item is Dataset dataset)
@@ -88,5 +89,24 @@ namespace Kartverket.Register.Services
             return queryResults.FirstOrDefault();
         }
 
+        public List<StatusReport> GetDokStatusReports(int i)
+        {
+            List<StatusReport> statusReports = GetStatusReports();
+            List<StatusReport> dokStatusReports = new List<StatusReport>();
+            
+                foreach (var report in statusReports)
+                {
+                    if (report.IsDokReport())
+                    {
+                        dokStatusReports.Add(report);
+                        if (dokStatusReports.Count > i)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+            return dokStatusReports;
+        }
     }
 }

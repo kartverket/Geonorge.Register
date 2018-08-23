@@ -1,12 +1,16 @@
 ﻿@using Kartverket.Register.Helpers
-@model Kartverket.Register.Models.ViewModels.StatusReportViewModel
+@using Kartverket.Register.Models.ViewModels
+@model DokStatusReportViewModel
+
+@{
+
+}
 
 @if (Model.ReportNotExists)
 {
     <p>Ingen rapporter enda...</p>
 }
-else
-{
+else{
     <div class="row">
         <h2 class="col-md-6"> Rapport </h2>
     </div>

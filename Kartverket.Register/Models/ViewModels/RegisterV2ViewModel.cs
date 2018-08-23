@@ -95,7 +95,7 @@ namespace Kartverket.Register.Models.ViewModels
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
                 SynchronizationJobs = new SynchronizationViewModel(register.Synchronizes, page);
-                StatusReport = new StatusReportViewModel(statusReport, statusReports, statusType);
+                StatusReport = GetStatsReport(statusReport, statusReports, statusType);
 
 
                 if (register.accessId != null) AccessId = register.accessId.Value;
@@ -108,6 +108,18 @@ namespace Kartverket.Register.Models.ViewModels
                     }
                 }
             }
+        }
+
+        private StatusReportViewModel GetStatsReport(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
+        {
+            if (statusReport != null)
+            {
+                if (statusReport.IsDokReport())
+                {
+                    return new DokStatusReportViewModel(statusReport, statusReports, statusType);
+                }
+            }
+            return null;
         }
 
 

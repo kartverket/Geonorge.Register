@@ -70,7 +70,7 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "ServiceUuid", ResourceType = typeof(DataSet))]
         public string UuidService { get; set; }
 
-        public DokHistoricalChart DokHistoricalChart { get; set; }
+        public DokLineChart DokHistoricalChart { get; set; }
 
 
         public DokDatasetViewModel()

@@ -20,6 +20,8 @@ namespace Kartverket.Register.Models.ViewModels
         public DateTime Date { get; set; }
         public int NumberOfItems { get; set; }
         public SelectList StatusTypeSelectList { get; set; }
+        public SelectList ReportsSelectList { get; set; }
+
         public bool ReportNotExists { get; set; }
 
 
@@ -34,7 +36,7 @@ namespace Kartverket.Register.Models.ViewModels
             return Math.Round(x * 100, 2);
         }
 
-        private double Divide(int x, int y)
+        public double Divide(int x, int y)
         {
             try
             {
@@ -52,6 +54,29 @@ namespace Kartverket.Register.Models.ViewModels
 
                 return 0;
             }
+        }
+
+        public SelectList CreateSelectList(List<StatusReport> statusReports)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            if (statusReports == null)
+            {
+                items.Add(new SelectListItem() { Text = "Ingen rapporter", Value = null });
+            }
+            else if (statusReports.Any())
+            {
+                foreach (var report in statusReports.OrderByDescending(i => i.Date))
+                {
+                    if (report.IsDokReport())
+                    {
+                        items.Add(new SelectListItem() { Text = report.Date.ToString(), Value = report.Id.ToString() });
+                    }
+                }
+            }
+            var selectList = new SelectList(items, "Value", "Text");
+
+            return selectList;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Kartverket.Register.Models
 {
-    public class DokHistoricalChart
+    public class DokLineChart
     {
         public List<string> Labels { get; set; }
 
@@ -21,7 +21,7 @@ namespace Kartverket.Register.Models
 
         public List<int> PointSize { get; set; }
 
-        public DokHistoricalChart(List<StatusReport> statusReports, StatusReport selectedStatusReport, string statusType = "Metadata")
+        public DokLineChart(List<StatusReport> statusReports, StatusReport selectedStatusReport, string statusType = "Metadata")
         {
             Metadata = new List<int>();
             Productsheet = new List<int>();
@@ -56,7 +56,6 @@ namespace Kartverket.Register.Models
                         GmlRequirements.Add(statusReport.NumberOfItemsWithGmlRequirements("good"));
                         AtomFeed.Add(statusReport.NumberOfItemsWithAtomFeed("good"));
                         Distribution.Add(statusReport.NumberOfItemsWithDistribution("good"));
-                    
                 }
             }
         }

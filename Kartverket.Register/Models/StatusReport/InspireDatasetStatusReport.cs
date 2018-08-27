@@ -37,5 +37,8 @@ namespace Kartverket.Register.Models
         public string AtomFeedInspireDataset { get; set; }
         public string HarmonizedDataInspireDataset { get; set; }
         public string SpatialDataServiceInspireDataset { get; set; }
+
     }
+
+
 }

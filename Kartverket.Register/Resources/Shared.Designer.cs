@@ -124,6 +124,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ikke levert.
+        /// </summary>
+        public static string Deficient {
+            get {
+                return ResourceManager.GetString("Deficient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slett.
         /// </summary>
         public static string Delete {
@@ -220,6 +229,15 @@ namespace Resources {
         public static string GeneralInformation {
             get {
                 return ResourceManager.GetString("GeneralInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to God.
+        /// </summary>
+        public static string Good {
+            get {
+                return ResourceManager.GetString("Good", resourceCulture);
             }
         }
         
@@ -346,6 +364,15 @@ namespace Resources {
         public static string NotFoundText {
             get {
                 return ResourceManager.GetString("NotFoundText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leveransestatus er ikke satt.
+        /// </summary>
+        public static string NotSet {
+            get {
+                return ResourceManager.GetString("NotSet", resourceCulture);
             }
         }
         
@@ -481,6 +508,15 @@ namespace Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brukbar.
+        /// </summary>
+        public static string Useable {
+            get {
+                return ResourceManager.GetString("Useable", resourceCulture);
             }
         }
         

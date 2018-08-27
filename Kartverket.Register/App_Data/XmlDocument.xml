@@ -2470,6 +2470,11 @@
               Looks up a localized string similar to Datasett.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.Deficient">
+            <summary>
+              Looks up a localized string similar to Ikke satt.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DeleteDataset">
             <summary>
               Looks up a localized string similar to Slett datasett.
@@ -2881,11 +2886,6 @@
         <member name="P:Resources.DataSet.SuggestNewDatasetMunicipality">
             <summary>
               Looks up a localized string similar to Legg til ekstra DOK-datasett for din kommune.
-            </summary>
-        </member>
-        <member name="P:Resources.DataSet.Suitability">
-            <summary>
-              Looks up a localized string similar to Egnethet.
             </summary>
         </member>
         <member name="P:Resources.DataSet.SuitabilityArealText">
@@ -3870,6 +3870,11 @@
               Looks up a localized string similar to Kontakt oss.
             </summary>
         </member>
+        <member name="P:Resources.Shared.Deficient">
+            <summary>
+              Looks up a localized string similar to Ikke levert.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Delete">
             <summary>
               Looks up a localized string similar to Slett.
@@ -3924,6 +3929,11 @@
         <member name="P:Resources.Shared.GeneralInformation">
             <summary>
               Looks up a localized string similar to Generell informasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Good">
+            <summary>
+              Looks up a localized string similar to God.
             </summary>
         </member>
         <member name="P:Resources.Shared.Heading">
@@ -3994,6 +4004,11 @@
         <member name="P:Resources.Shared.NotFoundText">
             <summary>
               Looks up a localized string similar to Vi finner ikke siden du leter etter, men Geonorge skal hjelpe deg videre..
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.NotSet">
+            <summary>
+              Looks up a localized string similar to Leveransestatus er ikke satt.
             </summary>
         </member>
         <member name="P:Resources.Shared.Previous">
@@ -4069,6 +4084,11 @@
         <member name="P:Resources.Shared.Title">
             <summary>
               Looks up a localized string similar to Tittel.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Useable">
+            <summary>
+              Looks up a localized string similar to Brukbar.
             </summary>
         </member>
         <member name="P:Resources.Shared.ValidationSummary">

@@ -121,7 +121,11 @@ namespace Kartverket.Register.Controllers
             filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
 
-            var viewModel = new RegisterV2ViewModel(register, page);
+            List<StatusReport> inspireStatusReports = _statusReportService.GetInspireStatusReports(12, filter.InspireRegisteryType);
+            StatusReport statusReport = filter.SelectedDokReport != null ? _statusReportService.GetStatusReportById(filter.SelectedDokReport) : inspireStatusReports.FirstOrDefault();
+
+
+            var viewModel = new RegisterV2ViewModel(register, page, statusReport, inspireStatusReports, filter.InspireRegisteryType);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
 
@@ -187,14 +191,6 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
-
-        //[Route("api/register/det-offentlige-kartgrunnlaget/report.{ext}")]
-        //[Route("api/register/det-offentlige-kartgrunnlaget/report")]
-        //[HttpGet]
-        //public void GetDokStatusReport(Guid id, bool selectAll)
-        //{
-            
-        //}
 
         private void StartSynchronizationDataset()
         {

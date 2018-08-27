@@ -13,5 +13,6 @@ namespace Kartverket.Register.Services
         List<StatusReport> GetStatusReports(int numberOfReports = 0);
         StatusReport GetStatusReportById(string statusReportId);
         List<StatusReport> GetDokStatusReports(int i);
+        List<StatusReport> GetInspireStatusReports(int i, string filterInspireRegisteryType);
     }
 }

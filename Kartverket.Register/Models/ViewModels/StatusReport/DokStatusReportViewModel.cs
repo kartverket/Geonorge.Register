@@ -17,9 +17,8 @@ namespace Kartverket.Register.Models.ViewModels
         private const string Notset = "notset";
         private const string Useable = "useable";
 
-        public SelectList DokReportsSelectList { get; set; }
-        public DokHistoricalChart DokHistoricalChart { get; set; }
-        public StatusChart StatusChart { get; set; }
+        public DokLineChart DokHistoricalChart { get; set; }
+        public StatusLineChart StatusChart { get; set; }
 
         // Metadata
         [Display(Name = "DOK_Delivery_Metadata", ResourceType = typeof(DataSet))]
@@ -28,7 +27,6 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithMetadataDeficient { get; set; }
         public int NumberOfItemsWithMetadataUseable { get; set; }
 
-        public DokPieChart DokMetadataPieChart { get; set; }
 
         // ProductSheet
         [Display(Name = "DOK_ProductSheetStatus", ResourceType = typeof(DataSet))]
@@ -37,7 +35,6 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithProductsheetDeficient { get; set; }
         public int NumberOfItemsWithProductsheetUseable { get; set; }
 
-        public DokPieChart DokProductSheetPieChart { get; set; }
 
 
         // PresentationRules
@@ -47,7 +44,6 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithPresentationRulesDeficient { get; set; }
         public int NumberOfItemsWithPresentationRulesUseable { get; set; }
 
-        public DokPieChart DokPresentationRulesPieChart { get; set; }
 
         // ProductSpecification
         [Display(Name = "DOK_ProductSpecificationStatus", ResourceType = typeof(DataSet))]
@@ -56,7 +52,6 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithProductSpecificationDeficient { get; set; }
         public int NumberOfItemsWithProductSpecificationUseable { get; set; }
 
-        public DokPieChart DokProductSpecificationPieChart { get; set; }
 
         // Wms
         [Display(Name = "DOK_Delivery_Wms", ResourceType = typeof(DataSet))]
@@ -65,7 +60,6 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithWmsDeficient { get; set; }
         public int NumberOfItemsWithWmsUseable { get; set; }
 
-        public DokPieChart DokWmsPieChart { get; set; }
 
         // Wfs
         [Display(Name = "DOK_Delivery_Wfs", ResourceType = typeof(DataSet))]
@@ -74,7 +68,6 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithWfsDeficient { get; set; }
         public int NumberOfItemsWithWfsUseable { get; set; }
 
-        public DokPieChart DokWfsPieChart { get; set; }
 
         // SosiRequirements
         [Display(Name = "DOK_Delivery_SosiRequirements", ResourceType = typeof(DataSet))]
@@ -83,7 +76,6 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithSosiRequirementsDeficient { get; set; }
         public int NumberOfItemsWithSosiRequirementsUseable { get; set; }
 
-        public DokPieChart DokSosiRequirementsPieChart { get; set; }
 
         // GmlRequirements
         [Display(Name = "DOK_Delivery_GmlRequirements", ResourceType = typeof(DataSet))]
@@ -92,7 +84,6 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithGmlRequirementsDeficient { get; set; }
         public int NumberOfItemsWithGmlRequirementsUseable { get; set; }
 
-        public DokPieChart DokGmlRequirementsPieChart { get; set; }
 
         // AtomFeed
         [Display(Name = "DOK_Delivery_AtomFeed", ResourceType = typeof(DataSet))]
@@ -101,7 +92,6 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithAtomFeedDeficient { get; set; }
         public int NumberOfItemsWithAtomFeedUseable { get; set; }
 
-        public DokPieChart DokAtomFeedPieChart { get; set; }
 
         // Distribution
         [Display(Name = "DOK_Delivery_Distribution", ResourceType = typeof(DataSet))]
@@ -110,14 +100,13 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithDistributionDeficient { get; set; }
         public int NumberOfItemsWithDistributionUseable { get; set; }
 
-        public DokPieChart DokDistributionPieChart { get; set; }
 
         public DokStatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
         {
-            DokReportsSelectList = CreateSelectList(statusReports);
+            ReportsSelectList = CreateSelectList(statusReports);
             StatusTypeSelectList = CreateStatusTypeSelectList();
-            DokHistoricalChart = new DokHistoricalChart(statusReports, statusReport, statusType);
-            StatusChart = new StatusChart(statusReports, statusReport, statusType);
+            DokHistoricalChart = new DokLineChart(statusReports, statusReport, statusType);
+            StatusChart = new StatusLineChart(statusReports, statusReport, statusType);
 
             if (statusReport != null)
             {
@@ -184,29 +173,6 @@ namespace Kartverket.Register.Models.ViewModels
         }
 
 
-        private SelectList CreateSelectList(List<StatusReport> statusReports)
-        {
-            List<SelectListItem> items = new List<SelectListItem>();
-
-            if (statusReports == null)
-            {
-                items.Add(new SelectListItem() { Text = "Ingen rapporter", Value = null });
-            }
-            else if (statusReports.Any())
-            {
-                foreach (var report in statusReports.OrderByDescending(i => i.Date))
-                {
-                    if (report.IsDokReport())
-                    {
-                        items.Add(new SelectListItem() { Text = report.Date.ToString(), Value = report.Id.ToString() });
-                    }
-                }
-            }
-            var selectList = new SelectList(items, "Value", "Text");
-
-            return selectList;
-        }
-
         private SelectList CreateStatusTypeSelectList()
         {
             List<SelectListItem> items = new List<SelectListItem>();
@@ -228,30 +194,6 @@ namespace Kartverket.Register.Models.ViewModels
             return selectList;
         }
 
-        public double Percent(int numberOf)
-        {
-            var x = Divide(numberOf, NumberOfItems);
-            return Math.Round(x * 100, 2);
-        }
 
-        private double Divide(int x, int y)
-        {
-            try
-            {
-                if (y == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return (double)x / y;
-                }
-            }
-            catch (Exception e)
-            {
-
-                return 0;
-            }
-        }
     }
 }

@@ -13,6 +13,7 @@ namespace Kartverket.Register.Models.ViewModels
     public class RegisterV2ViewModel
     {
         private int? page;
+        private Register _register;
 
         public Guid SystemId { get; set; }
 
@@ -77,6 +78,7 @@ namespace Kartverket.Register.Models.ViewModels
         {
             if (register != null)
             {
+                _register = register;
                 SystemId = register.systemId;
                 Owner = register.owner;
                 Name = register.NameTranslated();
@@ -110,6 +112,7 @@ namespace Kartverket.Register.Models.ViewModels
             }
         }
 
+        
         private StatusReportViewModel GetStatsReport(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
         {
             if (statusReport != null)
@@ -117,6 +120,11 @@ namespace Kartverket.Register.Models.ViewModels
                 if (statusReport.IsDokReport())
                 {
                     return new DokStatusReportViewModel(statusReport, statusReports, statusType);
+                }
+
+                if (statusReport.IsInspireRegistryReport())
+                {
+                    return new InspireRegistryStatusReportViewModel(statusReport, statusReports, statusType);
                 }
             }
             return null;

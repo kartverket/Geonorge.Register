@@ -96,7 +96,7 @@ namespace Kartverket.Register.Services
             
                 foreach (var report in statusReports)
                 {
-                    if (report.IsDokReport())
+                if (report.IsDokReport())
                     {
                         dokStatusReports.Add(report);
                         if (dokStatusReports.Count > i)
@@ -107,6 +107,26 @@ namespace Kartverket.Register.Services
                 }
 
             return dokStatusReports;
+        }
+
+        public List<StatusReport> GetInspireStatusReports(int i, string type)
+        {
+            List<StatusReport> statusReports = GetStatusReports();
+            List<StatusReport> inpsireStatusReports = new List<StatusReport>();
+
+            foreach (var report in statusReports)
+            {
+                if (type == "dataset" && report.IsInspireDatasetReport())
+                {
+                    inpsireStatusReports.Add(report);
+                    if (inpsireStatusReports.Count > i)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return inpsireStatusReports;
         }
     }
 }

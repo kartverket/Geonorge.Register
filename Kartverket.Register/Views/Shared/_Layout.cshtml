@@ -1,4 +1,4 @@
-@using Kartverket.Register.Helpers
+﻿@using Kartverket.Register.Helpers
 <!DOCTYPE html>
 <html class=" js flexbox no-flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg no-smil svgclippaths">
 <head>
@@ -26,6 +26,17 @@
 
     @Html.Partial("_Resources")
 
+    <script>
+        var applicationVersionNumber = '@Html.ApplicationVersionNumber()';
+        var applicationEnvironment = '@Html.EnvironmentName()';
+
+        var cultureData = {
+            friendlyUrlEN: '@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url }))',
+            friendlyUrlNO: '@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))',
+            currentCulture: '@CultureHelper.GetCurrentCulture()'
+            };
+    </script>
+
 </head>
 
 <body class="geonorge-container prototype  geonorge">
@@ -33,6 +44,7 @@
     <div id="loading-animation" class="loading-animation" style="display: none;"></div>
 
     @Html.Raw(File.ReadAllText(Server.MapPath("~/dist/partials/Header.html")))
+    @Styles.Render("~/shared-partials-styles")
     @Styles.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles")
     @Styles.Render("~/Content/local-styles")
 
@@ -82,18 +94,7 @@
     {
         @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer_eng.min.cshtml");
     }
-    @Scripts.Render("~/shared-partials")
-
-    <script>
-        var applicationVersionNumber = '@Html.ApplicationVersionNumber()';
-        var applicationEnvironment = '@Html.EnvironmentName()';
-
-        var cultureData = {
-            friendlyUrlEN: '@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url }))',
-            friendlyUrlNO: '@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))',
-            currentCulture: '@CultureHelper.GetCurrentCulture()'
-            };
-    </script>
+    @Scripts.Render("~/shared-partials-scripts")
 
     <script>
         searchOption.loginUrl = '@Html.Raw(Url.Action("SignIn", "AuthServices", new { ReturnUrl = Request.Url }))';

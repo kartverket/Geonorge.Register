@@ -124,7 +124,7 @@
     <value>Coverage shows whether the data set actually exists in the municipality</value>
   </data>
   <data name="DOK_Delivery_AtomFeed" xml:space="preserve">
-    <value>Atom feed status</value>
+    <value>ATOM feed status</value>
   </data>
   <data name="DOK_Delivery_Distribution" xml:space="preserve">
     <value>Download status</value>
@@ -175,10 +175,10 @@
     <value>Title</value>
   </data>
   <data name="DOK_Delivery_Wfs" xml:space="preserve">
-    <value>Wfs status</value>
+    <value>WFS status</value>
   </data>
   <data name="DOK_Delivery_Wms" xml:space="preserve">
-    <value>Wms status</value>
+    <value>WMS status</value>
   </data>
   <data name="DOK_Eier" xml:space="preserve">
     <value>The organization that has an ownership of the dates and can answer in depth about the academic issues surrounding the structure and content of the dataset</value>

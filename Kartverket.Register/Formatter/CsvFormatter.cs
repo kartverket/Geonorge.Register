@@ -31,6 +31,8 @@ namespace Kartverket.Register.Formatter
                 type == typeof(IEnumerable<Models.Api.Register>) ||
                 type == typeof(List<Models.Api.Register>) ||
                 type == typeof(IEnumerable<Registeritem>) ||
+                type == typeof(StatusReport) ||
+                type == typeof(List<StatusReport>) ||
                 type == typeof(List<Registeritem>))
 
                 return true;
@@ -54,6 +56,8 @@ namespace Kartverket.Register.Formatter
                 type == typeof(IEnumerable<Models.Api.Register>) ||
                 type == typeof(List<Models.Api.Register>) ||
                 type == typeof(IEnumerable<Registeritem>) ||
+                type == typeof(StatusReport) ||
+                type == typeof(List<StatusReport>) ||
                 type == typeof(List<Registeritem>))
                 BuildCSV(value, writeStream, content.Headers.ContentType.MediaType);
         }
@@ -97,8 +101,157 @@ namespace Kartverket.Register.Formatter
                     }
                 }
             }
+
+            if (models is StatusReport statusReport)
+            {
+                streamWriter.WriteLine(SingelStatusReportHeading());
+                WriteStatusesInTable(streamWriter, statusReport);
+            }
+
+            if (models is List<StatusReport> statusReports)
+            {
+                streamWriter.WriteLine(StatusReportHeading());
+                streamWriter.WriteLine(StatusReportHeadingStatusValues());
+
+                foreach (var report in statusReports)
+                {
+                    streamWriter.WriteLine(WriteStatusReport(report));
+                }
+            }
             streamWriter.Close();
         }
+
+        private void WriteStatusesInTable(StreamWriter streamWriter, StatusReport statusReport)
+        {
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Metadata,
+                                                    statusReport.NumberOfItemsWithMetadataGood,
+                                                    statusReport.NumberOfItemsWithMetadataUseable,
+                                                    statusReport.NumberOfItemsWithMetadataDeficient,
+                                                    statusReport.NumberOfItemsWithMetadataNotSet));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_ProductSheet,
+                                    statusReport.NumberOfItemsWithProductsheetGood,
+                                    statusReport.NumberOfItemsWithProductsheetUseable,
+                                    statusReport.NumberOfItemsWithProductsheetDeficient,
+                                    statusReport.NumberOfItemsWithProductsheetNotSet));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_PresentationRules,
+                                    statusReport.NumberOfItemsWithPresentationRulesGood,
+                                    statusReport.NumberOfItemsWithPresentationRulesUseable,
+                                    statusReport.NumberOfItemsWithPresentationRulesDeficient,
+                                    statusReport.NumberOfItemsWithPresentationRulesNotSet));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_ProductSpesification,
+                statusReport.NumberOfItemsWithProductSpecificationGood,
+                statusReport.NumberOfItemsWithProductSpecificationUseable,
+                statusReport.NumberOfItemsWithProductSpecificationDeficient,
+                statusReport.NumberOfItemsWithProductSpecificationNotSet));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Wms,
+                statusReport.NumberOfItemsWithWmsGood,
+                statusReport.NumberOfItemsWithWmsUseable,
+                statusReport.NumberOfItemsWithWmsDeficient,
+                statusReport.NumberOfItemsWithWmsNotSet));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Wfs,
+                statusReport.NumberOfItemsWithWfsGood,
+                statusReport.NumberOfItemsWithWfsUseable,
+                statusReport.NumberOfItemsWithWfsDeficient,
+                statusReport.NumberOfItemsWithWfsNotSet));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_GmlRequirements,
+                statusReport.NumberOfItemsWithGmlRequirementsGood,
+                statusReport.NumberOfItemsWithGmlRequirementsUseable,
+                statusReport.NumberOfItemsWithGmlRequirementsDeficient,
+                statusReport.NumberOfItemsWithGmlRequirementsNotSet));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_SosiRequirements,
+                statusReport.NumberOfItemsWithSosiRequirementsGood,
+                statusReport.NumberOfItemsWithSosiRequirementsUseable,
+                statusReport.NumberOfItemsWithSosiRequirementsDeficient,
+                statusReport.NumberOfItemsWithSosiRequirementsNotSet));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_AtomFeed,
+                statusReport.NumberOfItemsWithAtomFeedGood,
+                statusReport.NumberOfItemsWithAtomFeedUseable,
+                statusReport.NumberOfItemsWithAtomFeedDeficient,
+                statusReport.NumberOfItemsWithAtomFeedNotSet));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Distribution,
+                statusReport.NumberOfItemsWithDistributionGood,
+                statusReport.NumberOfItemsWithDistributionUseable,
+                statusReport.NumberOfItemsWithDistributionDeficient,
+                statusReport.NumberOfItemsWithDistributionNotSet));
+        }
+
+        private string StatusByType(string statusType, int good, int useable, int deficient, int notSet)
+        {
+            return statusType + ";" + good + ";" + useable + ";" + deficient + ";" + notSet;
+        }
+
+        private string SingelStatusReportHeading()
+        {
+            return ";" + DataSet.DOK_Delivery_Status_Good + ";" +
+                   DataSet.DOK_Delivery_Status_Useable + ";" +
+                   DataSet.DOK_Delivery_Status_Deficient + ";" +
+                   DataSet.DOK_Delivery_Status_NotSet;
+        }
+
+        private string WriteStatusReport(StatusReport statusReport)
+        {
+            return statusReport.Date + ";" +
+                   statusReport.NumberOfItemsWithMetadataGood + ";" +
+                   statusReport.NumberOfItemsWithMetadataUseable + ";" +
+                   statusReport.NumberOfItemsWithMetadataDeficient + ";" +
+                   statusReport.NumberOfItemsWithMetadataNotSet + ";" +
+
+                   statusReport.NumberOfItemsWithProductsheetGood + ";" +
+                   statusReport.NumberOfItemsWithProductsheetUseable + ";" +
+                   statusReport.NumberOfItemsWithProductsheetDeficient + ";" +
+                   statusReport.NumberOfItemsWithProductsheetNotSet + ";" +
+
+                   statusReport.NumberOfItemsWithPresentationRulesGood + ";" +
+                   statusReport.NumberOfItemsWithPresentationRulesUseable + ";" +
+                   statusReport.NumberOfItemsWithPresentationRulesDeficient + ";" +
+                   statusReport.NumberOfItemsWithPresentationRulesNotSet + ";" +
+
+                   statusReport.NumberOfItemsWithProductSpecificationGood + ";" +
+                   statusReport.NumberOfItemsWithProductSpecificationUseable + ";" +
+                   statusReport.NumberOfItemsWithProductSpecificationDeficient + ";" +
+                   statusReport.NumberOfItemsWithProductSpecificationNotSet + ";" +
+
+                   statusReport.NumberOfItemsWithWmsGood + ";" +
+                   statusReport.NumberOfItemsWithWmsUseable + ";" +
+                   statusReport.NumberOfItemsWithWmsDeficient + ";" +
+                   statusReport.NumberOfItemsWithWmsNotSet + ";" +
+
+                   statusReport.NumberOfItemsWithWfsGood + ";" +
+                   statusReport.NumberOfItemsWithWfsUseable + ";" +
+                   statusReport.NumberOfItemsWithWfsDeficient + ";" +
+                   statusReport.NumberOfItemsWithWfsNotSet + ";" +
+
+                   statusReport.NumberOfItemsWithSosiRequirementsGood + ";" +
+                   statusReport.NumberOfItemsWithSosiRequirementsUseable + ";" +
+                   statusReport.NumberOfItemsWithSosiRequirementsDeficient + ";" +
+                   statusReport.NumberOfItemsWithSosiRequirementsNotSet + ";" +
+
+                   statusReport.NumberOfItemsWithGmlRequirementsGood + ";" +
+                   statusReport.NumberOfItemsWithGmlRequirementsUseable + ";" +
+                   statusReport.NumberOfItemsWithGmlRequirementsDeficient + ";" +
+                   statusReport.NumberOfItemsWithGmlRequirementsNotSet + ";" +
+
+                   statusReport.NumberOfItemsWithAtomFeedGood + ";" +
+                   statusReport.NumberOfItemsWithAtomFeedUseable + ";" +
+                   statusReport.NumberOfItemsWithAtomFeedDeficient + ";" +
+                   statusReport.NumberOfItemsWithAtomFeedNotSet + ";" +
+
+                   statusReport.NumberOfItemsWithDistributionGood + ";" +
+                   statusReport.NumberOfItemsWithDistributionUseable + ";" +
+                   statusReport.NumberOfItemsWithDistributionDeficient + ";" +
+                   statusReport.NumberOfItemsWithDistributionNotSet;
+
+        }
+
 
         private void ConvertRegisters(StreamWriter streamWriter, Models.Api.Register register)
         {
@@ -156,18 +309,18 @@ namespace Kartverket.Register.Formatter
             else if (item.itemclass == "InspireDataset" || item.itemclass == "InspireDataService")
             {
                 text = item.InspireTheme + ";" +
-                        item.label + ";" + 
-                        item.owner + ";" + 
-                        item.dokStatus + ";" + 
-                        (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") : "") + ";" + 
-                        (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + 
-                        (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") : "") + ";" + 
-                        item.versionNumber + ";" + 
-                        item.description + ";" + 
-                        item.id + ";" + 
+                        item.label + ";" +
+                        item.owner + ";" +
+                        item.dokStatus + ";" +
+                        (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") : "") + ";" +
+                        (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") +
+                        (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") : "") + ";" +
+                        item.versionNumber + ";" +
+                        item.description + ";" +
+                        item.id + ";" +
                         GetInspireDeliveryStatus(item) + ";" +
                         item.InspireDataType + ";" +
-                        (isAdmin ? item.uuid.ToString() : "") + ";" + 
+                        (isAdmin ? item.uuid.ToString() : "") + ";" +
                         item.MetadataUrl;
             }
             else if (item.itemclass == "GeodatalovDataset")
@@ -213,7 +366,8 @@ namespace Kartverket.Register.Formatter
 
         private static string GetInspireDeliveryStatus(Registeritem item)
         {
-            if (item.itemclass == "InspireDataset") {
+            if (item.itemclass == "InspireDataset")
+            {
                 return item.MetadataStatus + ";" +
                    item.MetadataServiceStatus + ";" +
                    item.DistributionStatus + ";" +
@@ -325,7 +479,7 @@ namespace Kartverket.Register.Formatter
                         "Tjenestestatus;" +
                         "Requests;" +
                         "Nettverkstjeneste;" +
-                        "Sds;" + 
+                        "Sds;" +
                         "Datatype;" +
                         (isAdmin ? "Uuid" : "") + ";" +
                         DataSet.DisplayKartkatalogen;
@@ -368,6 +522,41 @@ namespace Kartverket.Register.Formatter
         private string RegisterHeading()
         {
             return "Id ;" + Registers.Name + ";" + Registers.Description + ";" + Registers.Owner + ";" + Registers.Updated;
+        }
+
+        private string StatusReportHeading()
+        {
+            return Registers.Date + ";" +
+                   DataSet.DOK_Delivery_Metadata + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_ProductSheet + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_PresentationRules + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_ProductSpesification + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_Wms + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_Wfs + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_SosiRequirements + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_GmlRequirements + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_AtomFeed + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_Distribution;
+        }
+
+        private string StatusReportHeadingStatusValues()
+        {
+            return ";" +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses();
+        }
+
+        private static string HeadingStatuses()
+        {
+            return DataSet.DOK_Delivery_Status_Good + ";" + DataSet.DOK_Delivery_Status_Useable + ";" + DataSet.DOK_Delivery_Status_Deficient + ";" + DataSet.DOK_Delivery_Status_NotSet + ";";
         }
 
         private string RegisterItemDokMunicipalHeading(Models.Api.Register register)

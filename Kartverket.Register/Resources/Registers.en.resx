@@ -309,4 +309,7 @@
   <data name="GroupSymbolAndCartography" xml:space="preserve">
     <value>Symbols and cartography</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
 </root>

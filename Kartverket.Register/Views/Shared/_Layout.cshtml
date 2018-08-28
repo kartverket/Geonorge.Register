@@ -19,13 +19,12 @@
         }
         @Resources.Shared.AppPageTitle
     </title>
-   
+
 
 
     @RenderSection("head", false)
 
     @Html.Partial("_Resources")
-
 
     <script>
         var applicationVersionNumber = '@Html.ApplicationVersionNumber()';
@@ -45,6 +44,7 @@
     <div id="loading-animation" class="loading-animation" style="display: none;"></div>
 
     @Html.Raw(File.ReadAllText(Server.MapPath("~/dist/partials/Header.html")))
+    @Styles.Render("~/shared-partials-styles")
     @Styles.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles")
     @Styles.Render("~/Content/local-styles")
 
@@ -94,6 +94,7 @@
     {
         @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer_eng.min.cshtml");
     }
+    @Scripts.Render("~/shared-partials-scripts")
 
     <script>
         searchOption.loginUrl = '@Html.Raw(Url.Action("SignIn", "AuthServices", new { ReturnUrl = Request.Url }))';

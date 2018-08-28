@@ -176,7 +176,7 @@ namespace Kartverket.Register.Controllers
             StatusReport statusReport = filter.SelectedDokReport != null ? _statusReportService.GetStatusReportById(filter.SelectedDokReport) : _statusReportService.GetLatestReport();
             
 
-            var viewModel = new RegisterV2ViewModel(register, null, statusReport, _statusReportService.GetStatusReports(12));
+            var viewModel = new RegisterV2ViewModel(register, null, statusReport, _statusReportService.GetStatusReports(12), filter.StatusType);
             viewModel.SelectedDokTab = filter.DokSelectedTab;
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
 
@@ -185,6 +185,15 @@ namespace Kartverket.Register.Controllers
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
             return View(viewModel);
         }
+
+
+        //[Route("api/register/det-offentlige-kartgrunnlaget/report.{ext}")]
+        //[Route("api/register/det-offentlige-kartgrunnlaget/report")]
+        //[HttpGet]
+        //public void GetDokStatusReport(Guid id, bool selectAll)
+        //{
+            
+        //}
 
         private void StartSynchronizationDataset()
         {

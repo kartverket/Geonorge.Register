@@ -1,4 +1,5 @@
-﻿@model Kartverket.Register.Models.ViewModels.StatusReportViewModel
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.ViewModels.StatusReportViewModel
 
 @if (Model.ReportNotExists)
 {
@@ -6,8 +7,9 @@
 }
 else
 {
-    <h2> Rapport </h2>
-    <p>@Model.Date</p>
+    <div class="row">
+        <h2 class="col-md-6"> Rapport </h2>
+    </div>
     <p>Antall datasett: @Model.NumberOfItems</p>
 
     <div class="row">
@@ -19,10 +21,27 @@ else
                 @Html.DropDownList("SelectedDokReport", Model.DokReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
             }
         </div>
-        <div id="reportViewButtons">
+        <div id="reportViewButtons" class="col-md-4 col-sm-12">
             <button class="btn" id="tabelButton" onclick="reportView('tabel', event)"><i class="fa fa-table"></i></button>
             <button class="btn" id="pieChartButton" onclick="reportView('pieChart', event)"><i class="fa fa-pie-chart"></i></button>
+            <button class="btn" id="barChartButton" onclick="reportView('barChart', event)"><i class="fa fa-bar-chart"></i></button>
             <button class="btn" id="lineChartButton" onclick="reportView('lineChart', event)"><i class="fa fa-line-chart"></i></button>
+        </div>
+        <div class="pull-right col-md-4">
+            <div id="ExportAll" style="display:none;" class="pull-right">
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "json")" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "csv")" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
+            </div>
+
+            <div id="ExportSelected" style="display:inline-block" class="pull-right">
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "json", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "csv", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
+            </div>
+
+            <div class="text-center pull-right btn-space" style="display: inline-block; vertical-align: top">
+                <label>Alle rapporter</label>
+                <input type="checkbox" id="cbExportReport" onclick="ToggleExportReport(this)">
+            </div>
         </div>
     </div>
 
@@ -40,7 +59,6 @@ else
             </thead>
 
             <tbody>
-
                 <tr>
                     <td>@Html.LabelFor(model => model.NumberOfItemsWithMetadataGood)</td>
                     <td>@Model.NumberOfItemsWithMetadataGood</td>
@@ -106,76 +124,98 @@ else
                 </tr>
 
                 <tr>
+                    <td>@Html.LabelFor(model => model.NumberOfItemsWithAtomFeedGood)</td>
+                    <td>@Model.NumberOfItemsWithAtomFeedGood</td>
+                    <td>@Model.NumberOfItemsWithAtomFeedUseable</td>
+                    <td>@Model.NumberOfItemsWithAtomFeedDeficient</td>
+                    <td>@Model.NumberOfItemsWithAtomFeedNotSet</td>
+                </tr>
+
+                <tr>
                     <td>@Html.LabelFor(model => model.NumberOfItemsWithDistributionGood)</td>
                     <td>@Model.NumberOfItemsWithDistributionGood</td>
                     <td>@Model.NumberOfItemsWithDistributionUseable</td>
                     <td>@Model.NumberOfItemsWithDistributionDeficient</td>
                     <td>@Model.NumberOfItemsWithDistributionNotSet</td>
                 </tr>
-
-
             </tbody>
         </table>
     </div>
 
     <div id="pieChart" style="display:none" class="reportViewContent">
-        <div class="col-md-12 row text-center">
+        <div class="col-md-12 row text-center grid">
 
-            <div class="col-md-12 margin-bottom-10">
-                <div class="label good">@DataSet.DOK_Delivery_Status_Good</div>
-                <div class="label useable">@DataSet.DOK_Delivery_Status_Useable</div>
-                <div class="label deficient">@DataSet.DOK_Delivery_Status_Deficient</div>
-                <div class="label notset">@DataSet.DOK_Delivery_Status_NotSetShort</div>
-            </div>
-
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-1">
                 <canvas id="metadataChart"></canvas>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-1">
                 <canvas id="productsheetChart"></canvas>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-1">
                 <canvas id="presentationRulesChart"></canvas>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-1">
                 <canvas id="productSpecificationChart"></canvas>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-1">
                 <canvas id="wmsChart"></canvas>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-1">
                 <canvas id="wfsChart"></canvas>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-1">
                 <canvas id="sosiRequirementsChart"></canvas>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-1">
                 <canvas id="gmlRequirementsChart"></canvas>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-1">
                 <canvas id="atomFeedChart"></canvas>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-1">
                 <canvas id="distributionChart"></canvas>
             </div>
 
         </div>
     </div>
 
-    <div id="lineChart" style="display:none" class="reportViewContent">
-        <p>Endringer antall med status "God"</p>
+    <div id="barChart" style="display: none" class="reportViewContent">
+        <div class="row col-md-12">
+            <canvas id="statusBarChart"></canvas>
+        </div>
+    </div>
 
-        <div class="col-md-12">
-            <canvas id="myChart" height="200" chart-colors="colors"></canvas>
+    <div id="lineChart" style="display: none" class="reportViewContent">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 form-group">
+                @using (Html.BeginForm("DetailsDokStatusRegistry", "Registers", FormMethod.Get))
+                {
+
+                    @Html.Hidden("DokSelectedTab", "report")
+                    @Html.DropDownList("StatusType", Model.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
+                }
+            </div>
+
+            <div id="lineChartStatus">
+                <div class="col-md-12">
+                    <canvas id="LineChart" height="200" chart-colors="colors"></canvas>
+                </div>
+            </div>
+
+            <div id="lineChartAll">
+                <div class="col-md-12">
+                    <canvas id="myChart" height="200" style="background-color: #ffffff"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -184,4 +224,4 @@ else
 
 
 
-        }
+}

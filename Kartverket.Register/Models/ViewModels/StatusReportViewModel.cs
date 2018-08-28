@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Services;
 using Resources;
+using SolrNet.Mapping.Validation.Rules;
 
 namespace Kartverket.Register.Models.ViewModels
 {
@@ -16,11 +17,14 @@ namespace Kartverket.Register.Models.ViewModels
         private const string Notset = "notset";
         private const string Useable = "useable";
 
+        public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public int NumberOfItems { get; set; }
         public SelectList DokReportsSelectList { get; set; }
+        public SelectList StatusTypeSelectList { get; set; }
         public bool ReportNotExists { get; set; }
         public DokHistoricalChart DokHistoricalChart { get; set; }
+        public StatusChart StatusChart { get; set; }
 
         // Metadata
         [Display(Name = "DOK_Delivery_Metadata", ResourceType = typeof(DataSet))]
@@ -114,15 +118,16 @@ namespace Kartverket.Register.Models.ViewModels
         public DokPieChart DokDistributionPieChart { get; set; }
 
 
-        public StatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports)
+        public StatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
         {
             DokReportsSelectList = CreateSelectList(statusReports);
-            DokHistoricalChart = new DokHistoricalChart(statusReports, statusReport);
-
+            StatusTypeSelectList = CreateStatusTypeSelectList();
+            DokHistoricalChart = new DokHistoricalChart(statusReports, statusReport, statusType);
+            StatusChart = new StatusChart(statusReports, statusReport, statusType);
 
             if (statusReport != null)
             {
-
+                Id = statusReport.Id;
                 Date = statusReport.Date;
                 NumberOfItems = statusReport.NumberOfIems();
 
@@ -224,6 +229,53 @@ namespace Kartverket.Register.Models.ViewModels
             var selectList = new SelectList(items, "Value", "Text");
 
             return selectList;
+        }
+
+        private SelectList CreateStatusTypeSelectList()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            items.Add(new SelectListItem() { Text = Shared.ShowAll, Value = "all" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Metadata, Value = "Metadata" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_ProductSheet, Value = "ProductSheet" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_PresentationRules, Value = "PresentationRules" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_ProductSpesification, Value = "ProductSpecification" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Wms, Value = "Wms" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Wfs, Value = "Wfs" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_SosiRequirements, Value = "SosiRequirements" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_GmlRequirements, Value = "GmlRequirements" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_AtomFeed, Value = "AtomFeed" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Distribution, Value = "Distribution" });
+
+            var selectList = new SelectList(items, "Value", "Text");
+
+            return selectList;
+        }
+
+        public double Percent(int numberOf)
+        {
+            var x = Divide(numberOf, NumberOfItems);
+            return Math.Round(x * 100, 2);
+        }
+
+        private double Divide(int x, int y)
+        {
+            try
+            {
+                if (y == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return (double)x / y;
+                }
+            }
+            catch (Exception e)
+            {
+
+                return 0;
+            }
         }
     }
 }

@@ -187,6 +187,52 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfItemsByType(string statusType, string status)
+        {
+            if (statusType == "Metadata")
+            {
+                return NumberOfItemsWithMetadata(status);
+            }
+            else if (statusType == "ProductSheet")
+            {
+                return NumberOfItemsWithProductsheet(status);
+            }
+            else if (statusType == "PresentationRules")
+            {
+                return NumberOfItemsWithPresentationRules(status);
+            }
+            else if (statusType == "ProductSpecification")
+            {
+                return NumberOfItemsWithProductSpecification(status);
+            }
+            else if (statusType == "Wms")
+            {
+                return NumberOfItemsWithWms(status);
+            }
+            else if (statusType == "Wfs")
+            {
+                return NumberOfItemsWithWfs(status);
+            }
+            else if (statusType == "SosiRequirements")
+            {
+                return NumberOfItemsWithSosiRequirements(status);
+            }
+            else if (statusType == "GmlRequirements")
+            {
+                return NumberOfItemsWithGmlRequirements(status);
+            }
+            else if (statusType == "AtomFeed")
+            {
+                return NumberOfItemsWithAtomFeed(status);
+            }
+            else if (statusType == "Distribution")
+            {
+                return NumberOfItemsWithDistribution(status);
+            }
+
+
+            return 0;
+        }
     }
 
 

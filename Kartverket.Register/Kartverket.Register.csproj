@@ -886,11 +886,13 @@
     <Compile Include="Models\Api\SearchParameters.cs" />
     <Compile Include="Models\Api\SearchResult.cs" />
     <Compile Include="Models\Api\AlertService.cs" />
+    <Compile Include="Models\Api\StatusReport.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
     <Compile Include="Models\DatasetStatusHistory.cs" />
+    <Compile Include="Models\StatusChart.cs" />
     <Compile Include="Models\DokHistoricalChrart.cs" />
     <Compile Include="Models\DokPieChart.cs" />
     <Compile Include="Models\GeodatalovDataset.cs" />
@@ -1946,6 +1948,7 @@
     <Content Include="Views\Registers\DetailsDokStatusRegistry.cshtml" />
     <Content Include="Views\Shared\_dokReport.cshtml" />
     <Content Include="Views\Registers\js\_dokReportCharts.cshtml" />
+    <Content Include="Views\Shared\Js\_datasetCharts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -2538,6 +2541,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Datasets\js\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

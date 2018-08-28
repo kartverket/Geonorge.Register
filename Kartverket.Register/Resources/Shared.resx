@@ -259,4 +259,10 @@
   <data name="LogIn" xml:space="preserve">
     <value>Logg inn</value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>Vis alle</value>
+  </data>
 </root>

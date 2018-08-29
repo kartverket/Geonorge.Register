@@ -129,7 +129,7 @@ namespace Kartverket.Register.Controllers
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
 
-            if (viewModel.SelectedInspireRegisteryTypeIsReport())
+            if (viewModel.SelectedInspireRegisteryTypeIsInspireReport())
             {
                 viewModel.InspireReport = _inspireMonitoringService.GetInspireReportViewModel(register, filter);
             }
@@ -235,7 +235,7 @@ namespace Kartverket.Register.Controllers
 
         private string GetInspireRegistryType(string filter)
         {
-            if (filter == "report")
+            if (filter == "inspirereport")
             {
                 if (!IsAdmin())
                 {

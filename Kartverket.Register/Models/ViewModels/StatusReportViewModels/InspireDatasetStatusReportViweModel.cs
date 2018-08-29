@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using Kartverket.Register.Models.ViewModels.StatusReportViewModels;
 using Resources;
 
 namespace Kartverket.Register.Models.ViewModels
@@ -15,6 +17,9 @@ namespace Kartverket.Register.Models.ViewModels
         private const string Useable = "useable";
 
         public int NumberOfInspireDatasets { get; set; }
+        public SelectList StatusTypeSelectList { get; set; }
+
+        public InspireDatasetLineChart LineChart { get; set; }
 
         // Metadata
         [Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
@@ -53,11 +58,13 @@ namespace Kartverket.Register.Models.ViewModels
         public NumberOfStatuses NumberOfItemsWithSpatialDataService { get; set; }
 
 
-        public InspireDatasetStatusReportViweModel(StatusReport statusReport)
+        public InspireDatasetStatusReportViweModel(StatusReport statusReport, List<StatusReport> statusReports)
         {
+            StatusTypeSelectList = CreateStatusTypeSelectList();
+            LineChart = new InspireDatasetLineChart(statusReports, statusReport);
             if (statusReport != null)
             {
-                NumberOfItemsWithMetadata = new NumberOfStatuses(statusReport.NumberOfInspireDatasetsItemsWithMetadata(Good), statusReport.NumberOfInspireDatasetsItemsWithMetadata(Useable), statusReport.NumberOfInspireDatasetsItemsWithMetadata(Deficient), statusReport.NumberOfInspireDatasetsItemsWithMetadata(Notset));
+                NumberOfItemsWithMetadata = new NumberOfStatuses(statusReport.NumberOfInspireDatasetsWithMetadata(Good), statusReport.NumberOfInspireDatasetsWithMetadata(Useable), statusReport.NumberOfInspireDatasetsWithMetadata(Deficient), statusReport.NumberOfInspireDatasetsWithMetadata(Notset));
                 NumberOfItemsWithMetadataService = new NumberOfStatuses(statusReport.NumberOfItemsWithMetadataService(Good), statusReport.NumberOfItemsWithMetadataService(Useable), statusReport.NumberOfItemsWithMetadataService(Deficient), statusReport.NumberOfItemsWithMetadataService(Notset));
                 NumberOfItemsWithDistribution = new NumberOfStatuses(statusReport.NumberOfInspireDatasetsWithDistribution(Good), statusReport.NumberOfInspireDatasetsWithDistribution(Useable), statusReport.NumberOfInspireDatasetsWithDistribution(Deficient), statusReport.NumberOfInspireDatasetsWithDistribution(Notset));
                 NumberOfItemsWithWms = new NumberOfStatuses(statusReport.NumberOfInspireDatasetsWithWms(Good), statusReport.NumberOfInspireDatasetsWithWms(Useable), statusReport.NumberOfInspireDatasetsWithWms(Deficient), statusReport.NumberOfInspireDatasetsWithWms(Notset));
@@ -68,6 +75,26 @@ namespace Kartverket.Register.Models.ViewModels
                 NumberOfItemsWithSpatialDataService = new NumberOfStatuses(statusReport.NumberOfItemsWithSpatialDataService(Good), statusReport.NumberOfItemsWithSpatialDataService(Useable), statusReport.NumberOfItemsWithSpatialDataService(Deficient), statusReport.NumberOfItemsWithSpatialDataService(Notset));
                 NumberOfInspireDatasets = statusReport.NumberOfInspireDatasets();
             }
+        }
+
+        private SelectList CreateStatusTypeSelectList()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            items.Add(new SelectListItem() { Text = Shared.ShowAll, Value = "all" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.Metadata, Value = "Metadata" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.MetadataServiceStatus, Value = "MetadataServiceStatus" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.Distribution, Value = "Distribution" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.WmsStatus, Value = "Wms" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.WfsStatus, Value = "Wfs" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.WfsOrAtomStatus, Value = "WfsOrAtom" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.AtomFeedStatus, Value = "Atom" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.HarmonizedDataStatus, Value = "HarmonizedData" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.SpatialDataServiceStatus, Value = "SpatialDataService" });
+
+            var selectList = new SelectList(items, "Value", "Text");
+
+            return selectList;
         }
     }
 }

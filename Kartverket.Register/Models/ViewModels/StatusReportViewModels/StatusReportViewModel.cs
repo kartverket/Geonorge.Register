@@ -68,10 +68,10 @@ namespace Kartverket.Register.Models.ViewModels
             {
                 foreach (var report in statusReports.OrderByDescending(i => i.Date))
                 {
-                    if (report.IsDokReport())
-                    {
+                    //if (report.IsDokReport())
+                    //{
                         items.Add(new SelectListItem() { Text = report.Date.ToString(), Value = report.Id.ToString() });
-                    }
+                    //}
                 }
             }
             var selectList = new SelectList(items, "Value", "Text");

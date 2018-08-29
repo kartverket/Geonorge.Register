@@ -295,9 +295,9 @@ namespace Kartverket.Register.Models.ViewModels
             return ParentRegister == null ? "/" : ParentRegister.GetObjectUrl();
         }
 
-        public bool SelectedInspireRegisteryTypeIsReport()
+        public bool SelectedInspireRegisteryTypeIsInspireReport()
         {
-            return SelectedInspireRegisteryType == "report";
+            return SelectedInspireRegisteryType == "inspirereport";
         }
 
         public bool SelectedInspireRegisteryTypeIsSynchronizations()
@@ -308,6 +308,11 @@ namespace Kartverket.Register.Models.ViewModels
         public bool SelectedDokTabIsReport()
         {
             return SelectedDokTab == "report";
+        }
+
+        public bool SelectedInspireRegisteryTypeIsService()
+        {
+            return SelectedInspireRegisteryType == "service";
         }
     }
 }

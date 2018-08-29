@@ -116,7 +116,7 @@ namespace Kartverket.Register.Services
 
             foreach (var report in statusReports)
             {
-                if (type == "dataset" && report.IsInspireDatasetReport())
+                if (report.IsInspireDatasetReport())
                 {
                     inpsireStatusReports.Add(report);
                     if (inpsireStatusReports.Count > i)

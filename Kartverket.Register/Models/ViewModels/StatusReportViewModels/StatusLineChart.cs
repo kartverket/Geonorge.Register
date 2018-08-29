@@ -25,7 +25,6 @@ namespace Kartverket.Register.Models
 
             if (statusReports != null)
             {
-
                 foreach (var statusReport in statusReports)
                 {
                     PointSize.Add(selectedStatusReport != null && statusReport.Id == selectedStatusReport.Id ? 7 : 3);

@@ -188,7 +188,7 @@
         {
             @Html.Partial("_inspireDataService", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         }
-        else if (Model.SelectedInspireRegisteryType == "report")
+        else if (Model.SelectedInspireRegisteryTypeIsInspireReport())
         {
             @Html.Partial("_inspireMonitoring", Model.InspireReport)
         }

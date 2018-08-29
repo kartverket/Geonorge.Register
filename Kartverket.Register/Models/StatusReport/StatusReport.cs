@@ -74,7 +74,7 @@ namespace Kartverket.Register.Models
             return number;
         }
 
-        public int NumberOfInspireDatasetsItemsWithMetadata(string status)
+        public int NumberOfInspireDatasetsWithMetadata(string status)
         {
             int number = 0;
             foreach (RegisterItemStatusReport item in StatusRegisterItems)

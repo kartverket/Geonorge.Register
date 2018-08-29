@@ -903,11 +903,18 @@
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
-    <Compile Include="Models\ViewModels\StatusReport\DokLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\DokStatusReportViewModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDataserviceStatusReportViweModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDatasetLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDatasetStatusReportViweModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\InspireRegistryStatusReportViewModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\NumberOfStatuses.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\StatusLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\StatusReportViewModel.cs" />
     <Compile Include="Models\StatusReport\InspireDataserviceStatusReport.cs" />
     <Compile Include="Models\StatusReport\InspireDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReport\DatasetStatusHistory.cs" />
-    <Compile Include="Models\ViewModels\StatusReport\StatusLineChart.cs" />
     <Compile Include="Models\GeodatalovDataset.cs" />
     <Compile Include="Models\IInspireMonitoring.cs" />
     <Compile Include="Models\InspireDataService.cs" />
@@ -949,16 +956,10 @@
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\DokDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
-    <Compile Include="Models\ViewModels\StatusReport\InspireDataserviceStatusReportViweModel.cs" />
     <Compile Include="Models\ViewModels\InspireDataServiceViewModel.cs" />
-    <Compile Include="Models\ViewModels\StatusReport\InspireDatasetStatusReportViweModel.cs" />
     <Compile Include="Models\ViewModels\InspireMonitoringViewModel.cs" />
-    <Compile Include="Models\ViewModels\StatusReport\InspireRegistryStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireReportViewModel.cs" />
-    <Compile Include="Models\ViewModels\StatusReport\NumberOfStatuses.cs" />
     <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
-    <Compile Include="Models\ViewModels\StatusReport\DokStatusReportViewModel.cs" />
-    <Compile Include="Models\ViewModels\StatusReport\StatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\SynchronizationViewModel.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
     <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
@@ -1967,6 +1968,8 @@
     <Content Include="Views\Shared\_dokReport.cshtml" />
     <Content Include="Views\Registers\js\_dokReportCharts.cshtml" />
     <Content Include="Views\Shared\Js\_datasetCharts.cshtml" />
+    <Content Include="Views\Shared\_inspireReport.cshtml" />
+    <Content Include="Views\Registers\js\_inspireReportCharts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

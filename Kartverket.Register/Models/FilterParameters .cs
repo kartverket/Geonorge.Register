@@ -7,9 +7,13 @@ namespace Kartverket.Register.Models
 {
     public class FilterParameters
     {
+        private string Dataset = "dataset";
+        private string Service = "service";
+        private string InspireReport = "inspirereport";
+
         public FilterParameters()
         {
-            InspireRegisteryType = "dataset";
+            InspireRegisteryType = Dataset;
             StatusType = "all";
         }
         public string text { get; set; }
@@ -29,5 +33,19 @@ namespace Kartverket.Register.Models
         public string SelectedDokReport { get; set; }
         public string StatusType { get; set; }
 
+        public bool InspireRegistertTypeIsDataset()
+        {
+            return InspireRegisteryType == Dataset;
+        }
+
+        public bool InspireRegistertTypeIsService()
+        {
+            return InspireRegisteryType == Service;
+        }
+
+        public bool InspireRegisteryTypeIsisInspireReport()
+        {
+            return InspireRegisteryType == InspireReport;
+        }
     }
 }

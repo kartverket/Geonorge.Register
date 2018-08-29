@@ -15,12 +15,12 @@
     int pageSize = 50;
     int pageNumber = (page ?? 1);
 }
+
 @section Scripts {
-    @if (!Model.StatusReport.ReportNotExists)
+    @if (Model.StatusReport != null && !Model.StatusReport.ReportNotExists)
     {
         @Html.Partial("js/_dokReportCharts", (DokStatusReportViewModel)Model.StatusReport)
     }
-
 
     <script>
 
@@ -52,8 +52,6 @@
 
 }
 
-
-
 @Html.Partial("_SearchBarPartial")
 
 <section>
@@ -70,7 +68,6 @@
             <p>
                 @Model.Description
             </p>
-
         </div>
 
         <div class="col-sm-12 col-md-2 text-right">
@@ -135,7 +132,7 @@ else
 }
 
 
-@if (!Model.SelectedInspireRegisteryTypeIsReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations())
+@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport())
 {<div class="clearfix"></div>
     <div class="col-sm-12 row">
         @if (Model.ContainedItemClassIsRegister())
@@ -155,7 +152,7 @@ else
 
 <div class="clearfix"></div>
 <div class="hidden-print">
-    @if (!Model.SelectedInspireRegisteryTypeIsReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations())
+    @if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport())
     {
         if (Model.AccessRegister.EditListOfRegisterItems)
         {

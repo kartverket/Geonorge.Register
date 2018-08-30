@@ -90,6 +90,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfInspireDataServiceWithMetadata(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is InspireDataserviceStatusReport inspireDataServiceStatusReport)
+                {
+                    if (inspireDataServiceStatusReport.MetadataInspireDataService == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithProductsheet(string status)
         {
             int number = 0;
@@ -330,6 +346,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfInspireDataServicesWithMetadataService(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is InspireDataserviceStatusReport inspireDataServiceStatusReport)
+                {
+                    if (inspireDataServiceStatusReport.MetadataInSearchServiceInspireDataService == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithHarmonizedData(string status)
         {
             int number = 0;
@@ -354,6 +386,22 @@ namespace Kartverket.Register.Models
                 if (item is InspireDatasetStatusReport inspireDatasetStatusReport)
                 {
                     if (inspireDatasetStatusReport.SpatialDataServiceInspireDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfItemsWithServiceStatus(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is InspireDataserviceStatusReport inspireDataServiceStatusReport)
+                {
+                    if (inspireDataServiceStatusReport.ServiceStatusInspireDataService == status)
                     {
                         number++;
                     }
@@ -418,6 +466,38 @@ namespace Kartverket.Register.Models
                 if (item is InspireDatasetStatusReport inspireDatasetStatusReport)
                 {
                     number++;
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfInspireDataServiceWithSds()
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is InspireDataserviceStatusReport InspireDataServiceStatusReport)
+                {
+                    if (InspireDataServiceStatusReport.Sds)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfInspireDataServiceWithNetworkService()
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is InspireDataserviceStatusReport InspireDataServiceStatusReport)
+                {
+                    if (InspireDataServiceStatusReport.NetworkService)
+                    {
+                        number++;
+                    }
                 }
             }
             return number;

@@ -133,11 +133,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network service.
+        /// </summary>
+        public static string NetworkService {
+            get {
+                return ResourceManager.GetString("NetworkService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Legg til nytt inspire datasett.
         /// </summary>
         public static string NewDataset {
             get {
                 return ResourceManager.GetString("NewDataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjenestestatus.
+        /// </summary>
+        public static string ServiceStatus {
+            get {
+                return ResourceManager.GetString("ServiceStatus", resourceCulture);
             }
         }
         

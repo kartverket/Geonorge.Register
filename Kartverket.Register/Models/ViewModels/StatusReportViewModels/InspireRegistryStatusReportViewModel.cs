@@ -30,7 +30,8 @@ namespace Kartverket.Register.Models.ViewModels
                 Date = statusReport.Date;
                 NumberOfItems = statusReport.NumberOfIems();
 
-                InspireDatasetStatusReport = new InspireDatasetStatusReportViweModel(statusReport, statusReports);                
+                InspireDatasetStatusReport = new InspireDatasetStatusReportViweModel(statusReport, statusReports);
+                InspireDataserviceStatusReport = new InspireDataserviceStatusReportViweModel(statusReport, statusReports);                
             }
             else
             {

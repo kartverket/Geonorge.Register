@@ -141,8 +141,14 @@
   <data name="MetadataServiceStatus" xml:space="preserve">
     <value>Metadatatjeneste</value>
   </data>
+  <data name="NetworkService" xml:space="preserve">
+    <value>Network service</value>
+  </data>
   <data name="NewDataset" xml:space="preserve">
     <value>Legg til nytt inspire datasett</value>
+  </data>
+  <data name="ServiceStatus" xml:space="preserve">
+    <value>Tjenestestatus</value>
   </data>
   <data name="SpatialDataServiceStatus" xml:space="preserve">
     <value>Spatial data service</value>

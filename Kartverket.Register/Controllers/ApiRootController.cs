@@ -128,24 +128,24 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        ///// <summary>
-        ///// Gets selected status report
-        ///// </summary>
-        //[Route("api/register/det-offentlige-kartgrunnlaget/report/{id}.{ext}")]
-        //[Route("api/register/det-offentlige-kartgrunnlaget/report/{id}")]
-        //[HttpGet]
-        //public IHttpActionResult DokStatusReport(string id)
-        //{
-        //    SetLanguage(Request);
-        //    var statusReport = _statusReportService.GetStatusReportById(id);
-        //    return Ok(new Models.Api.StatusReport(statusReport));
-        //}
+        /// <summary>
+        /// Gets selected status report
+        /// </summary>
+        [Route("api/register/{registerName}/report/{id}.{ext}")]
+        [Route("api/register/{registerName}/report/{id}")]
+        [HttpGet]
+        public IHttpActionResult DokStatusReport(string id)
+        {
+            SetLanguage(Request);
+            var statusReport = _statusReportService.GetStatusReportById(id);
+            return Ok(new Models.Api.StatusReport(statusReport));
+        }
 
         /// <summary>
         /// Gets selected status report
         /// </summary>
-        [Route("api/register/det-offentlige-kartgrunnlaget/report.{ext}")]
-        [Route("api/register/det-offentlige-kartgrunnlaget/report")]
+        [Route("api/register/{registerName}/report.{ext}")]
+        [Route("api/register/{registerName}/report")]
         [HttpGet]
         public IHttpActionResult DokStatusReports()
         {

@@ -126,11 +126,20 @@
   <data name="HarmonizedDataStatus" xml:space="preserve">
     <value>Harmoniserte data</value>
   </data>
+  <data name="Metadata" xml:space="preserve">
+    <value>Metadata</value>
+  </data>
   <data name="MetadataServiceStatus" xml:space="preserve">
     <value>Metadata service status</value>
   </data>
+  <data name="NetworkService" xml:space="preserve">
+    <value>Nettverkstjeneste</value>
+  </data>
   <data name="NewDataset" xml:space="preserve">
     <value>Add a new inspire data set</value>
+  </data>
+  <data name="ServiceStatus" xml:space="preserve">
+    <value>Service status</value>
   </data>
   <data name="SpatialDataServiceStatus" xml:space="preserve">
     <value>Spatial data service</value>

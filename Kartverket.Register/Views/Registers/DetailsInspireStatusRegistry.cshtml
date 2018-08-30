@@ -102,7 +102,7 @@
     </div>
 </section>
 
-@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations())
+@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedInspireRegisteryTypeIsReport())
 {
     <div class="row search-result-navigation">
         <div class="col-md-4">
@@ -160,7 +160,7 @@ else
 }
 
 
-@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations())
+@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedInspireRegisteryTypeIsReport())
 {<div class="clearfix"></div>
     <div class="col-sm-12 row">
         @if (Model.ContainedItemClassIsRegister())

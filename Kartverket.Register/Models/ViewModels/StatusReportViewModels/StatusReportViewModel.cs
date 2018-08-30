@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
 using Resources;
 using SolrNet.Mapping.Validation.Rules;
@@ -32,29 +33,9 @@ namespace Kartverket.Register.Models.ViewModels
 
         public double Percent(int numberOf)
         {
-            var x = Divide(numberOf, NumberOfItems);
-            return Math.Round(x * 100, 2);
+            return HtmlHelperExtensions.Percent(numberOf, NumberOfItems);
         }
 
-        public double Divide(int x, int y)
-        {
-            try
-            {
-                if (y == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return (double)x / y;
-                }
-            }
-            catch (Exception e)
-            {
-
-                return 0;
-            }
-        }
 
         public SelectList CreateSelectList(List<StatusReport> statusReports)
         {
@@ -68,10 +49,7 @@ namespace Kartverket.Register.Models.ViewModels
             {
                 foreach (var report in statusReports.OrderByDescending(i => i.Date))
                 {
-                    //if (report.IsDokReport())
-                    //{
                         items.Add(new SelectListItem() { Text = report.Date.ToString(), Value = report.Id.ToString() });
-                    //}
                 }
             }
             var selectList = new SelectList(items, "Value", "Text");

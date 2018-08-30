@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels.StatusReportViewModels;
 using Resources;
 
@@ -95,6 +96,17 @@ namespace Kartverket.Register.Models.ViewModels
             var selectList = new SelectList(items, "Value", "Text");
 
             return selectList;
+        }
+
+
+        /// <summary>
+        /// Percent of inspire datasets
+        /// </summary>
+        /// <param name="numberOf"></param>
+        /// <returns></returns>
+        public double Percent(int numberOf)
+        {
+            return HtmlHelperExtensions.Percent(numberOf, NumberOfInspireDatasets);
         }
     }
 }

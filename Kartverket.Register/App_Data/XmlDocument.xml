@@ -981,6 +981,13 @@
             Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Models.ViewModels.InspireDatasetStatusReportViweModel.Percent(System.Int32)">
+            <summary>
+            Percent of inspire datasets
+            </summary>
+            <param name="numberOf"></param>
+            <returns></returns>
+        </member>
         <member name="P:Kartverket.Register.Models.InspireDataService.ServiceType">
             Liste opp alle Annex tjenestene h�rer til..
         </member>

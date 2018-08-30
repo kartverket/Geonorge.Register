@@ -122,7 +122,7 @@ namespace Kartverket.Register.Controllers
             register = FilterRegisterItems(register, filter);
 
             List<StatusReport> inspireStatusReports = _statusReportService.GetInspireStatusReports(12, filter.InspireRegisteryType);
-            StatusReport statusReport = filter.SelectedDokReport != null ? _statusReportService.GetStatusReportById(filter.SelectedDokReport) : inspireStatusReports.FirstOrDefault();
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : inspireStatusReports.FirstOrDefault();
 
 
             var viewModel = new RegisterV2ViewModel(register, page, statusReport, inspireStatusReports, filter.InspireRegisteryType);
@@ -178,7 +178,7 @@ namespace Kartverket.Register.Controllers
             register = FilterRegisterItems(register, filter);
 
             List<StatusReport> dokStatusReports = _statusReportService.GetDokStatusReports(12);
-            StatusReport statusReport = filter.SelectedDokReport != null ? _statusReportService.GetStatusReportById(filter.SelectedDokReport) : dokStatusReports.FirstOrDefault();
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : dokStatusReports.FirstOrDefault();
             
 
             var viewModel = new RegisterV2ViewModel(register, null, statusReport, dokStatusReports, filter.StatusType);

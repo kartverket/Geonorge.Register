@@ -305,6 +305,11 @@ namespace Kartverket.Register.Models.ViewModels
             return SelectedInspireRegisteryType == "synchronizations";
         }
 
+        public bool SelectedInspireRegisteryTypeIsReport()
+        {
+            return SelectedInspireRegisteryType == "report";
+        }
+
         public bool SelectedDokTabIsReport()
         {
             return SelectedDokTab == "report";

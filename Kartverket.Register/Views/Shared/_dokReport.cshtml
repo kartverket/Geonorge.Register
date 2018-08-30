@@ -22,7 +22,7 @@ else{
             {
 
                 @Html.Hidden("DokSelectedTab", "report")
-                @Html.DropDownList("SelectedDokReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
+                @Html.DropDownList("SelectedReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
             }
         </div>
         <div id="reportViewButtons" class="col-md-4 col-sm-12">

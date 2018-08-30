@@ -8,18 +8,14 @@
 <p>Ingen rapporter enda...</p>
 }
 else{
-<div class="row">
-    <h2 class="col-md-6"> Rapport </h2>
-</div>
-<p>Antall datasett: @Model.NumberOfItems</p>
 
-<div class="row">
+<div class="row margin-top-10">
     <div class="col-md-4 col-sm-12">
-        @using (Html.BeginForm("DetailsDokStatusRegistry", "Registers", FormMethod.Get))
+        @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
         {
 
-        @Html.Hidden("DokSelectedTab", "report")
-        @Html.DropDownList("SelectedDokReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
+        @Html.Hidden("InspireRegisteryType", "inspirereport")
+        @Html.DropDownList("SelectedReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
         }
     </div>
     <div id="reportViewButtons" class="col-md-4 col-sm-12">
@@ -42,6 +38,14 @@ else{
         <div class="text-center pull-right btn-space" style="display: inline-block; vertical-align: top">
             <label>Alle rapporter</label>
             <input type="checkbox" id="cbExportReport" onclick="ToggleExportReport(this)">
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <div class="text-center btn-space" style="display: inline-block; vertical-align: top">
+            <label>Datasett (@Model.InspireDatasetStatusReport.NumberOfInspireDatasets)</label>
+            <input type="checkbox" id="cbToggleDataset" onclick="ToggleDatasetReport(this)">
+            <label>Tjenester</label>
+            <input type="checkbox" id="cbToggleDataService" onclick="ToggleDataServiceReport(this)">
         </div>
     </div>
 </div>
@@ -131,6 +135,7 @@ else{
                 <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Deficient</td>
                 <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Notset</td>
             </tr>
+
         </tbody>
     </table>
 </div>

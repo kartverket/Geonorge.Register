@@ -30,7 +30,7 @@ namespace Kartverket.Register.Models
         public string SelectedComparableCandidate { get; set; }
         public bool Compare { get; set; }
         public string DokSelectedTab { get; set; }
-        public string SelectedDokReport { get; set; }
+        public string SelectedReport { get; set; }
         public string StatusType { get; set; }
 
         public bool InspireRegistertTypeIsDataset()

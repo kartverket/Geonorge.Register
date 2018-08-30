@@ -25,6 +25,7 @@ namespace Kartverket.Register.Models
         public string MetadataInspireDataService { get; set; }
         public string MetadataInSearchServiceInspireDataService { get; set; }
         public string ServiceStatusInspireDataService { get; set; }
-
+        public bool Sds { get; set; }   
+        public bool NetworkService { get; set; }   
     }
 }

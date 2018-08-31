@@ -54,6 +54,7 @@ namespace Kartverket.Register.Models.ViewModels
                 NumberOfItemsWithServiceStatus = new NumberOfStatuses(statusReport.NumberOfItemsWithServiceStatus(Good), statusReport.NumberOfItemsWithServiceStatus(Useable), statusReport.NumberOfItemsWithServiceStatus(Deficient), statusReport.NumberOfItemsWithServiceStatus(Notset));
                 NumberOfItemsWithSds = statusReport.NumberOfInspireDataServiceWithSds() ;
                 NumberOfItemsWithNetworkService = statusReport.NumberOfInspireDataServiceWithNetworkService();
+                NumberOfInspireDataservices = statusReport.NumberOfInspireDataServices();
             }
         }
 
@@ -62,9 +63,9 @@ namespace Kartverket.Register.Models.ViewModels
             List<SelectListItem> items = new List<SelectListItem>();
 
             items.Add(new SelectListItem() { Text = Shared.ShowAll, Value = "all" });
-            items.Add(new SelectListItem() { Text = InspireDataSet.Metadata, Value = "Metadata" });
-            items.Add(new SelectListItem() { Text = InspireDataSet.MetadataServiceStatus, Value = "MetadataServiceStatus" });
-            items.Add(new SelectListItem() { Text = InspireDataSet.ServiceStatus, Value = "Distribution" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.Metadata, Value = "MetadataInspireDataService" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.MetadataServiceStatus, Value = "MetadataSearchServiceStatus" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.ServiceStatus, Value = "DistributionInspireDataService" });
             items.Add(new SelectListItem() { Text = InspireDataSet.SpatialDataServiceStatus, Value = "Sds" });
             items.Add(new SelectListItem() { Text = InspireDataSet.NetworkService, Value = "NetworkService" });
 
@@ -82,6 +83,16 @@ namespace Kartverket.Register.Models.ViewModels
         public double Percent(int numberOf)
         {
             return HtmlHelperExtensions.Percent(numberOf, NumberOfInspireDataservices);
+        }
+
+        public int NumberOfItemsWithoutSds()
+        {
+            return NumberOfInspireDataservices - NumberOfItemsWithSds;
+        }
+
+        public object NumberOfItemsWithoutNetworkService()
+        {
+            return NumberOfInspireDataservices - NumberOfItemsWithNetworkService;
         }
     }
 }

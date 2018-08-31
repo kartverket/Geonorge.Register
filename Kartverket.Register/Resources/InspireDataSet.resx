@@ -147,6 +147,9 @@
   <data name="NewDataset" xml:space="preserve">
     <value>Legg til nytt inspire datasett</value>
   </data>
+  <data name="Service" xml:space="preserve">
+    <value>Tjeneste</value>
+  </data>
   <data name="ServiceStatus" xml:space="preserve">
     <value>Tjenestestatus</value>
   </data>

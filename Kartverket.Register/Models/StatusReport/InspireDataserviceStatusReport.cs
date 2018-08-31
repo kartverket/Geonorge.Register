@@ -17,7 +17,7 @@ namespace Kartverket.Register.Models
             UuidInspireDataService = inspireDataservice.Uuid;
             MetadataInspireDataService = inspireDataservice.InspireDeliveryMetadata.StatusId;
             MetadataInSearchServiceInspireDataService = inspireDataservice.InspireDeliveryMetadataInSearchService.StatusId;
-            ServiceStatusInspireDataService = inspireDataservice.InspireDeliveryMetadataInSearchService.StatusId;
+            ServiceStatusInspireDataService = inspireDataservice.InspireDeliveryServiceStatus.StatusId;
             Sds = inspireDataservice.IsSds();
             NetworkService = inspireDataservice.IsNetworkService();
         }

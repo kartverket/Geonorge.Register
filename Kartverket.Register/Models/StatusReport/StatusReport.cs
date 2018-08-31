@@ -74,6 +74,7 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+
         public int NumberOfInspireDatasetsWithMetadata(string status)
         {
             int number = 0;
@@ -413,47 +414,57 @@ namespace Kartverket.Register.Models
 
         public int NumberOfItemsByType(string statusType, string status)
         {
-            if (statusType == "Metadata")
+            switch (statusType)
             {
-                return NumberOfItemsWithMetadata(status);
+                case "Metadata":
+                    return NumberOfItemsWithMetadata(status);
+                case "ProductSheet":
+                    return NumberOfItemsWithProductsheet(status);
+                case "PresentationRules":
+                    return NumberOfItemsWithPresentationRules(status);
+                case "ProductSpecification":
+                    return NumberOfItemsWithProductSpecification(status);
+                case "Wms":
+                    return NumberOfItemsWithWms(status);
+                case "Wfs":
+                    return NumberOfItemsWithWfs(status);
+                case "SosiRequirements":
+                    return NumberOfItemsWithSosiRequirements(status);
+                case "GmlRequirements":
+                    return NumberOfItemsWithGmlRequirements(status);
+                case "AtomFeed":
+                    return NumberOfItemsWithAtomFeed(status);
+                case "Distribution":
+                    return NumberOfItemsWithDistribution(status);
+                case "MetadataInspireDataService":
+                    return NumberOfInspireDataServiceWithMetadata(status);
+                case "MetadataSearchServiceStatus":
+                    return NumberOfInspireDataServicesWithMetadataService(status);
+                case "DistributionInspireDataService":
+                    return NumberOfItemsWithServiceStatus(status);
+                case "Sds":
+                    return NumberOfInspireDataServiceWithSds();
+                case "NetworkService":
+                    return NumberOfInspireDataServiceWithNetworkService();
+                case "MetadataInspireDataset":
+                    return NumberOfInspireDatasetsWithMetadata(status);
+                case "MetadataServiceStatus":
+                    return NumberOfItemsWithMetadataService(status);
+                case "DistributionInspireDataset":
+                    return NumberOfInspireDatasetsWithDistribution(status);
+                case "WmsInspireDataset":
+                    return NumberOfInspireDatasetsWithWms(status);
+                case "WfsInspireDataset":
+                    return NumberOfInspireDatasetsWithWfs(status);
+                case "WfsOrAtom":
+                    return NumberOfItemsWithWfsOrAtom(status);
+                case "AtomInspireDataset":
+                    return NumberOfInspireDatasetsWithAtomFeed(status);
+                case "HarmonizedData":
+                    return NumberOfItemsWithHarmonizedData(status);
+                case "SpatialDataService":
+                    return NumberOfItemsWithSpatialDataService(status);
             }
-            else if (statusType == "ProductSheet")
-            {
-                return NumberOfItemsWithProductsheet(status);
-            }
-            else if (statusType == "PresentationRules")
-            {
-                return NumberOfItemsWithPresentationRules(status);
-            }
-            else if (statusType == "ProductSpecification")
-            {
-                return NumberOfItemsWithProductSpecification(status);
-            }
-            else if (statusType == "Wms")
-            {
-                return NumberOfItemsWithWms(status);
-            }
-            else if (statusType == "Wfs")
-            {
-                return NumberOfItemsWithWfs(status);
-            }
-            else if (statusType == "SosiRequirements")
-            {
-                return NumberOfItemsWithSosiRequirements(status);
-            }
-            else if (statusType == "GmlRequirements")
-            {
-                return NumberOfItemsWithGmlRequirements(status);
-            }
-            else if (statusType == "AtomFeed")
-            {
-                return NumberOfItemsWithAtomFeed(status);
-            }
-            else if (statusType == "Distribution")
-            {
-                return NumberOfItemsWithDistribution(status);
-            }
-
 
             return 0;
         }
@@ -498,6 +509,19 @@ namespace Kartverket.Register.Models
                     {
                         number++;
                     }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfInspireDataServices()
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is InspireDataserviceStatusReport)
+                {
+                    number++;
                 }
             }
             return number;

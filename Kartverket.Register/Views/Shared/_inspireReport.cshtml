@@ -42,9 +42,9 @@ else{
     </div>
     <div class="col-md-12 col-sm-12">
         <div class="text-center btn-space" style="display: inline-block; vertical-align: top">
-            <label>Datasett (@Model.InspireDatasetStatusReport.NumberOfInspireDatasets)</label>
+            <label>@DataSet.Dataset (@Model.InspireDatasetStatusReport.NumberOfInspireDatasets)</label>
             <input type="checkbox" id="cbToggleDataset" onclick="ToggleDatasetReport(this)">
-            <label>Tjenester</label>
+            <label>@InspireDataSet.Service (@Model.InspireDataserviceStatusReport.NumberOfInspireDataservices)</label>
             <input type="checkbox" id="cbToggleDataService" onclick="ToggleDataServiceReport(this)">
         </div>
     </div>
@@ -142,41 +142,69 @@ else{
 
 <div id="pieChart" style="display:none" class="reportViewContent">
     <div class="col-md-12 row text-center grid">
+        
+        <div class="col-md-12 col-sm-12">
+            <h3>@DataSet.Dataset</h3>
+        </div>
 
-        <div class="col-md-6 col-sm-1">
+        <div class="col-md-6 col-sm-12">
             <canvas id="metadataPieChart"></canvas>
         </div>
 
-        <div class="col-md-6 col-sm-1">
+        <div class="col-md-6 col-sm-12">
             <canvas id="metadataServicePieChart"></canvas>
         </div>
 
-        <div class="col-md-6 col-sm-1">
+        <div class="col-md-6 col-sm-12">
             <canvas id="distributionPieChart"></canvas>
         </div>
 
-        <div class="col-md-6 col-sm-1">
+        <div class="col-md-6 col-sm-12">
             <canvas id="WmsPieChart"></canvas>
         </div>
 
-        <div class="col-md-6 col-sm-1">
+        <div class="col-md-6 col-sm-12">
             <canvas id="WfsPieChart"></canvas>
         </div>
 
-        <div class="col-md-6 col-sm-1">
+        <div class="col-md-6 col-sm-12">
             <canvas id="wfsOrAtomPieChart"></canvas>
         </div>
 
-        <div class="col-md-6 col-sm-1">
+        <div class="col-md-6 col-sm-12">
             <canvas id="atomFeedPieChart"></canvas>
         </div>
 
-        <div class="col-md-6 col-sm-1">
+        <div class="col-md-6 col-sm-12">
             <canvas id="harmonizedDataPieChart"></canvas>
         </div>
 
-        <div class="col-md-6 col-sm-1">
+        <div class="col-md-6 col-sm-12">
             <canvas id="spatialDataPieChart"></canvas>
+        </div>
+        
+        <div class="col-md-12 col-sm-12">
+            <h3>@InspireDataSet.Service</h3>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <canvas id="InspireDatasServiceMetadataPieChart"></canvas>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <canvas id="InspireDatasServiceMetadatasearchServicePieChart"></canvas>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <canvas id="InspireDatasServiceSearchServicePieChart"></canvas>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <canvas id="InspireDatasSdsPieChart"></canvas>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <canvas id="InspireDatasNetworkServicePieChart"></canvas>
         </div>
 
     </div>
@@ -191,10 +219,10 @@ else{
 <div id="lineChart" style="display: none" class="reportViewContent">
     <div class="row">
         <div class="col-md-4 col-sm-12 form-group">
-            @using (Html.BeginForm("DetailsDokStatusRegistry", "Registers", FormMethod.Get))
+            @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
             {
 
-            @Html.Hidden("DokSelectedTab", "report")
+            @Html.Hidden("InspireRegisteryType", "report")
             @Html.DropDownList("StatusType", Model.InspireDatasetStatusReport.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
             }
         </div>
@@ -203,12 +231,24 @@ else{
             <div class="col-md-12">
                 <canvas id="LineChartStatus" height="200" chart-colors="colors"></canvas>
             </div>
+
+            <div class="col-md-12">
+                <canvas id="LineChartStatusInspireDataService" height="200" chart-colors="colors"></canvas>
+            </div>
+        
         </div>
 
         <div id="lineChartAll">
             <div class="col-md-12">
+                <h3>@DataSet.Dataset</h3>
                 <canvas id="InspireDatasetLineChart" height="200" style="background-color: #ffffff"></canvas>
             </div>
+            
+            <div class="col-md-12">
+                <h3>@InspireDataSet.Service</h3>
+                <canvas id="InspireDataServiceLineChart" height="200" style="background-color: #ffffff"></canvas>
+            </div>
+
         </div>
     </div>
 </div>

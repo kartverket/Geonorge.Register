@@ -2057,6 +2057,11 @@
               Looks up a localized string similar to Legg til nytt inspire datasett.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.Service">
+            <summary>
+              Looks up a localized string similar to Tjeneste.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.ServiceStatus">
             <summary>
               Looks up a localized string similar to Tjenestestatus.

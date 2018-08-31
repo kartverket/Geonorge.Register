@@ -83,13 +83,13 @@ namespace Kartverket.Register.Models.ViewModels
             List<SelectListItem> items = new List<SelectListItem>();
 
             items.Add(new SelectListItem() { Text = Shared.ShowAll, Value = "all" });
-            items.Add(new SelectListItem() { Text = InspireDataSet.Metadata, Value = "Metadata" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.Metadata, Value = "MetadataInspireDataset" });
             items.Add(new SelectListItem() { Text = InspireDataSet.MetadataServiceStatus, Value = "MetadataServiceStatus" });
-            items.Add(new SelectListItem() { Text = InspireDataSet.Distribution, Value = "Distribution" });
-            items.Add(new SelectListItem() { Text = InspireDataSet.WmsStatus, Value = "Wms" });
-            items.Add(new SelectListItem() { Text = InspireDataSet.WfsStatus, Value = "Wfs" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.Distribution, Value = "DistributionInspireDataset" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.WmsStatus, Value = "WmsInspireDataset" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.WfsStatus, Value = "WfsInspireDataset" });
             items.Add(new SelectListItem() { Text = InspireDataSet.WfsOrAtomStatus, Value = "WfsOrAtom" });
-            items.Add(new SelectListItem() { Text = InspireDataSet.AtomFeedStatus, Value = "Atom" });
+            items.Add(new SelectListItem() { Text = InspireDataSet.AtomFeedStatus, Value = "AtomInspireDataset" });
             items.Add(new SelectListItem() { Text = InspireDataSet.HarmonizedDataStatus, Value = "HarmonizedData" });
             items.Add(new SelectListItem() { Text = InspireDataSet.SpatialDataServiceStatus, Value = "SpatialDataService" });
 

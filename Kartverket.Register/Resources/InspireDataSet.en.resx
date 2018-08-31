@@ -138,6 +138,9 @@
   <data name="NewDataset" xml:space="preserve">
     <value>Add a new inspire data set</value>
   </data>
+  <data name="Service" xml:space="preserve">
+    <value>Service</value>
+  </data>
   <data name="ServiceStatus" xml:space="preserve">
     <value>Service status</value>
   </data>

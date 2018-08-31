@@ -2047,9 +2047,19 @@
               Looks up a localized string similar to Metadatatjeneste.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.NetworkService">
+            <summary>
+              Looks up a localized string similar to Network service.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.NewDataset">
             <summary>
               Looks up a localized string similar to Legg til nytt inspire datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.ServiceStatus">
+            <summary>
+              Looks up a localized string similar to Tjenestestatus.
             </summary>
         </member>
         <member name="P:Resources.InspireDataSet.SpatialDataServiceStatus">

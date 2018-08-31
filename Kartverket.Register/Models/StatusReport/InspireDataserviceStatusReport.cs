@@ -18,6 +18,8 @@ namespace Kartverket.Register.Models
             MetadataInspireDataService = inspireDataservice.InspireDeliveryMetadata.StatusId;
             MetadataInSearchServiceInspireDataService = inspireDataservice.InspireDeliveryMetadataInSearchService.StatusId;
             ServiceStatusInspireDataService = inspireDataservice.InspireDeliveryMetadataInSearchService.StatusId;
+            Sds = inspireDataservice.IsSds();
+            NetworkService = inspireDataservice.IsNetworkService();
         }
 
         public virtual InspireDataService InspireDataservice { get; set; }
@@ -25,7 +27,7 @@ namespace Kartverket.Register.Models
         public string MetadataInspireDataService { get; set; }
         public string MetadataInSearchServiceInspireDataService { get; set; }
         public string ServiceStatusInspireDataService { get; set; }
-        public bool Sds { get; set; }   
-        public bool NetworkService { get; set; }   
+        public Boolean Sds { get; set; }   
+        public Boolean NetworkService { get; set; }   
     }
 }

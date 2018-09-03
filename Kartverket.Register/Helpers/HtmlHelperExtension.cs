@@ -431,8 +431,12 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingParam == "dokstatus" || sortingParam == "dokstatus_desc")
             {
-                sortTitle = "DOK-Status";
-                ; statusIcon = "statusIcon-Accepted";
+                if(inspireRegisteryType == "dataset")
+                    sortTitle = "Inspire-status";
+                else
+                    sortTitle = "DOK-status";
+
+                statusIcon = "statusIcon-Accepted";
             }
 
             // *** DOK STATUS SORTERING

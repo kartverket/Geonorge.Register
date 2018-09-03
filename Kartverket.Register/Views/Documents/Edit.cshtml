@@ -361,7 +361,7 @@
         });
     }
 
-    var selectedCartograhyUrl = '@Model.CartographyFile';
+    var selectedCartograhyUrl = '@Model.CartographyDetailsUrl';
 
     var cartographyFiles;
 
@@ -373,18 +373,21 @@
 
             $('#CartographyFile').append(new Option("Vennligst velg", "" ));
 
-            $.each(cartographyFiles, function(i, obj) {
-                var dataText = obj.DatasetName + ': ' + obj.Name;
-                var dataValue = obj.FileUrl;
-                var uuid = obj.Uuid;
+            $.each(cartographyFiles, function (i, obj) {
+                var uuid = obj.DatasetUuid;
+                var dataText = obj.DatasetName;
+                var url = '@WebConfigurationManager.AppSettings["RegistryCartographyUrl"]files/files?uuid=' + uuid;
+                var dataValue = url;
 
                 var selected = false;
+
                 if (dataValue == selectedCartograhyUrl)
                 {
                     selected = true;
-                    $('#CartographyDetailsUrl').val('@WebConfigurationManager.AppSettings["RegistryCartographyUrl"]files/Details?SystemId=' + uuid);
+                    $('#CartographyDetailsUrl').val(url);
                 }
-                $('#CartographyFile').append(new Option(dataText, dataValue, false, selected ));
+                if ($("#CartographyFile option[value='" + url + "']").length == 0)
+                    $('#CartographyFile').append(new Option(dataText, dataValue, false, selected ));
             });
 
         });
@@ -399,9 +402,12 @@
 
         $.each(cartographyFiles, function(i, obj) {
 
-            if(obj.FileUrl == selectedCartograhyUrl)
+           var uuid = obj.DatasetUuid;
+           var url = '@WebConfigurationManager.AppSettings["RegistryCartographyUrl"]files/files?uuid=' + uuid;
+
+            if (url == selectedCartograhyUrl)
             {
-                $('#CartographyDetailsUrl').val('@WebConfigurationManager.AppSettings["RegistryCartographyUrl"]files/Details?SystemId=' + obj.Uuid);
+                $('#CartographyDetailsUrl').val('@WebConfigurationManager.AppSettings["RegistryCartographyUrl"]files/files?uuid=' + obj.DatasetUuid);
 
                 if(obj.OfficialStatus){  
                     console.log("Official")

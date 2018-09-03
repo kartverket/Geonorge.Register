@@ -5,251 +5,337 @@
 
 @if (Model.ReportNotExists)
 {
-<p>Ingen rapporter enda...</p>
+    <p>Ingen rapporter enda...</p>
 }
-else{
+else
+{
 
-<div class="row margin-top-10">
-    <div class="col-md-4 col-sm-12">
-        @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
-        {
-
-        @Html.Hidden("InspireRegisteryType", "inspirereport")
-        @Html.DropDownList("SelectedReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
-        }
-    </div>
-    <div id="reportViewButtons" class="col-md-4 col-sm-12">
-        <button class="btn" id="tabelButton" onclick="reportView('tabel', event)"><i class="fa fa-table"></i></button>
-        <button class="btn" id="pieChartButton" onclick="reportView('pieChart', event)"><i class="fa fa-pie-chart"></i></button>
-        <button class="btn" id="barChartButton" onclick="reportView('barChart', event)"><i class="fa fa-bar-chart"></i></button>
-        <button class="btn" id="lineChartButton" onclick="reportView('lineChart', event)"><i class="fa fa-line-chart"></i></button>
-    </div>
-    <div class="pull-right col-md-4">
-        <div id="ExportAll" style="display:none;" class="pull-right">
-            <a href="@RegisterUrls.ApiReportUrlFormat(Request, " json")" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
-            <a href="@RegisterUrls.ApiReportUrlFormat(Request, " csv")" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
-        </div>
-
-        <div id="ExportSelected" style="display:inline-block" class="pull-right">
-            <a href="@RegisterUrls.ApiReportUrlFormat(Request, " json", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
-            <a href="@RegisterUrls.ApiReportUrlFormat(Request, " csv", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
-        </div>
-
-        <div class="text-center pull-right btn-space" style="display: inline-block; vertical-align: top">
-            <label>Alle rapporter</label>
-            <input type="checkbox" id="cbExportReport" onclick="ToggleExportReport(this)">
-        </div>
-    </div>
-    <div class="col-md-12 col-sm-12">
-        <div class="text-center btn-space" style="display: inline-block; vertical-align: top">
-            <label>@DataSet.Dataset (@Model.InspireDatasetStatusReport.NumberOfInspireDatasets)</label>
-            <input type="checkbox" id="cbToggleDataset" onclick="ToggleDatasetReport(this)">
-            <label>@InspireDataSet.Service (@Model.InspireDataserviceStatusReport.NumberOfInspireDataservices)</label>
-            <input type="checkbox" id="cbToggleDataService" onclick="ToggleDataServiceReport(this)">
-        </div>
-    </div>
-</div>
-
-
-<div id="tabel" class="reportViewContent">
-    <table class="table table-bordered table-responsive">
-        <thead>
-            <tr>
-                <th></th>
-                <th>@DataSet.DOK_Delivery_Status_Good</th>
-                <th>@DataSet.DOK_Delivery_Status_Useable</th>
-                <th>@DataSet.DOK_Delivery_Status_Deficient</th>
-                <th>@DataSet.DOK_Delivery_Status_NotSet</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr>
-                <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithMetadata)</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Good</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Useable</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Deficient</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Notset</td>
-            </tr>
-
-            <tr>
-                <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithMetadataService)</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Good</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Useable</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Deficient</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Notset</td>
-            </tr>
-
-            <tr>
-                <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithDistribution)</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Good</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Useable</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Deficient</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Notset</td>
-            </tr>
-
-            <tr>
-                <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithWms)</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWms.Good</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWms.Useable</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWms.Deficient</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWms.Notset</td>
-            </tr>
-
-            <tr>
-                <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithWfs)</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfs.Good</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfs.Useable</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfs.Deficient</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfs.Notset</td>
-            </tr>
-
-            <tr>
-                <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom)</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Good</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Useable</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Deficient</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Notset</td>
-            </tr>
-
-            <tr>
-                <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed)</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Good</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Useable</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Deficient</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Notset</td>
-            </tr>
-
-            <tr>
-                <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData)</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Good</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Useable</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Deficient</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Notset</td>
-            </tr>
-
-            <tr>
-                <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService)</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Good</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Useable</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Deficient</td>
-                <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Notset</td>
-            </tr>
-
-        </tbody>
-    </table>
-</div>
-
-<div id="pieChart" style="display:none" class="reportViewContent">
-    <div class="col-md-12 row text-center grid">
-        
-        <div class="col-md-12 col-sm-12">
-            <h3>@DataSet.Dataset</h3>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="metadataPieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="metadataServicePieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="distributionPieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="WmsPieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="WfsPieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="wfsOrAtomPieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="atomFeedPieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="harmonizedDataPieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="spatialDataPieChart"></canvas>
-        </div>
-        
-        <div class="col-md-12 col-sm-12">
-            <h3>@InspireDataSet.Service</h3>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="InspireDatasServiceMetadataPieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="InspireDatasServiceMetadatasearchServicePieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="InspireDatasServiceSearchServicePieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="InspireDatasSdsPieChart"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-            <canvas id="InspireDatasNetworkServicePieChart"></canvas>
-        </div>
-
-    </div>
-</div>
-
-<div id="barChart" style="display: none" class="reportViewContent">
-    <div class="row col-md-12">
-        <canvas id="statusBarChart"></canvas>
-    </div>
-</div>
-
-<div id="lineChart" style="display: none" class="reportViewContent">
-    <div class="row">
-        <div class="col-md-4 col-sm-12 form-group">
+    <div class="row margin-top-10">
+        <div class="col-md-4 col-sm-12">
             @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
             {
 
-            @Html.Hidden("InspireRegisteryType", "report")
-            @Html.DropDownList("StatusType", Model.InspireDatasetStatusReport.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
+                @Html.Hidden("InspireRegisteryType", "inspirereport")
+                @Html.DropDownList("SelectedReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
             }
         </div>
-
-        <div id="lineChartStatus">
-            <div class="col-md-12">
-                <canvas id="LineChartStatus" height="200" chart-colors="colors"></canvas>
-            </div>
-
-            <div class="col-md-12">
-                <canvas id="LineChartStatusInspireDataService" height="200" chart-colors="colors"></canvas>
-            </div>
-        
+        <div id="reportViewButtons" class="col-md-4 col-sm-12">
+            <button class="btn" id="tabelButton" onclick="reportView('tabel', event)"><i class="fa fa-table"></i></button>
+            <button class="btn" id="pieChartButton" onclick="reportView('pieChart', event)"><i class="fa fa-pie-chart"></i></button>
+            <button class="btn" id="barChartButton" onclick="reportView('barChart', event)"><i class="fa fa-bar-chart"></i></button>
+            <button class="btn" id="lineChartButton" onclick="reportView('lineChart', event)"><i class="fa fa-line-chart"></i></button>
         </div>
-
-        <div id="lineChartAll">
-            <div class="col-md-12">
-                <h3>@DataSet.Dataset</h3>
-                <canvas id="InspireDatasetLineChart" height="200" style="background-color: #ffffff"></canvas>
+        <div class="pull-right col-md-4">
+            <div id="ExportAll" style="display:none;" class="pull-right">
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, " json")" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, " csv")" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
             </div>
-            
-            <div class="col-md-12">
+
+            <div id="ExportSelected" style="display:inline-block" class="pull-right">
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, " json", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
+                <a href="@RegisterUrls.ApiReportUrlFormat(Request, " csv", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
+            </div>
+
+            <div class="text-center pull-right btn-space" style="display: inline-block; vertical-align: top">
+                <label>Alle rapporter</label>
+                <input type="checkbox" id="cbExportReport" onclick="ToggleExportReport(this)">
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <div class="text-center btn-space" style="display: inline-block; vertical-align: top">
+                <label>@DataSet.Dataset (@Model.InspireDatasetStatusReport.NumberOfInspireDatasets)</label>
+                <input type="checkbox" id="cbToggleDataset" onclick="ToggleDatasetReport(this)">
+                <label>@InspireDataSet.Service (@Model.InspireDataserviceStatusReport.NumberOfInspireDataservices)</label>
+                <input type="checkbox" id="cbToggleDataService" onclick="ToggleDataServiceReport(this)">
+            </div>
+        </div>
+    </div>
+
+
+    <div id="tabel" class="reportViewContent">
+        <h3>@DataSet.Dataset</h3>
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@DataSet.DOK_Delivery_Status_Good</th>
+                    <th>@DataSet.DOK_Delivery_Status_Useable</th>
+                    <th>@DataSet.DOK_Delivery_Status_Deficient</th>
+                    <th>@DataSet.DOK_Delivery_Status_NotSet</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithMetadata)</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Good</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Useable</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Deficient</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Notset</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithMetadataService)</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Good</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Useable</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Deficient</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Notset</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithDistribution)</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Good</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Useable</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Deficient</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Notset</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithWms)</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWms.Good</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWms.Useable</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWms.Deficient</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWms.Notset</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithWfs)</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfs.Good</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfs.Useable</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfs.Deficient</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfs.Notset</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom)</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Good</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Useable</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Deficient</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Notset</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed)</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Good</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Useable</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Deficient</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Notset</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData)</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Good</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Useable</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Deficient</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Notset</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService)</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Good</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Useable</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Deficient</td>
+                    <td>@Model.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Notset</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <h3>@InspireDataSet.Service</h3>
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@DataSet.DOK_Delivery_Status_Good</th>
+                    <th>@DataSet.DOK_Delivery_Status_Useable</th>
+                    <th>@DataSet.DOK_Delivery_Status_Deficient</th>
+                    <th>@DataSet.DOK_Delivery_Status_NotSet</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDataserviceStatusReport.NumberOfItemsWithMetadata)</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadata.Good</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadata.Useable</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadata.Deficient</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadata.Notset</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDataserviceStatusReport.NumberOfItemsWithMetadataInSearchService)</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadataInSearchService.Good</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadataInSearchService.Useable</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadataInSearchService.Deficient</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadataInSearchService.Notset</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDataserviceStatusReport.NumberOfItemsWithServiceStatus)</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithServiceStatus.Good</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithServiceStatus.Useable</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithServiceStatus.Deficient</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithServiceStatus.Notset</td>
+                </tr>
+
+                <tr>
+                    <th></th>
+                    <th>@Shared.Yes</th>
+                    <th>@Shared.No</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDataserviceStatusReport.NumberOfItemsWithSds)</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithSds</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithoutSds()</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => model.InspireDataserviceStatusReport.NumberOfItemsWithNetworkService)</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithNetworkService</td>
+                    <td>@Model.InspireDataserviceStatusReport.NumberOfItemsWithoutNetworkService()</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="pieChart" style="display:none" class="reportViewContent">
+        <div class="col-md-12 row grid">
+
+            <h3>@DataSet.Dataset</h3>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="metadataPieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="metadataServicePieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="distributionPieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="WmsPieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="WfsPieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="wfsOrAtomPieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="atomFeedPieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="harmonizedDataPieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="spatialDataPieChart"></canvas>
+            </div>
+            <div class="col-md-12 col-sm-12 row">
                 <h3>@InspireDataSet.Service</h3>
-                <canvas id="InspireDataServiceLineChart" height="200" style="background-color: #ffffff"></canvas>
+            </div>
+
+
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="InspireDatasServiceMetadataPieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="InspireDatasServiceMetadatasearchServicePieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="InspireDatasServiceSearchServicePieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="InspireDatasSdsPieChart"></canvas>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <canvas id="InspireDatasNetworkServicePieChart"></canvas>
             </div>
 
         </div>
     </div>
-</div>
+
+    <div id="barChart" style="display: none" class="reportViewContent">
+        <div class="row col-md-12">
+            <h3>@DataSet.Dataset</h3>
+            <canvas id="statusBarChart"></canvas>
+        </div>
+        <div class="row col-md-12">
+            <h3>@InspireDataSet.Service</h3>
+            <div class="chart-container">
+                <canvas id="InspireServiceStatusBarChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div id="lineChart" style="display: none" class="reportViewContent">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 form-group">
+                @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
+                {
+
+                    @Html.Hidden("InspireRegisteryType", "report")
+                    @Html.DropDownList("StatusType", Model.InspireDatasetStatusReport.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
+                }
+            </div>
+
+            <div id="lineChartAll">
+                <div class="col-md-12">
+                    <h3>@DataSet.Dataset</h3>
+                    <canvas id="InspireDatasetLineChart" height="200" style="background-color: #ffffff"></canvas>
+                </div>
+            </div>
+
+            <div id="lineChartStatus">
+                <div class="col-md-12">
+                    <canvas id="LineChartStatus" height="200" chart-colors="colors"></canvas>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 col-sm-12 form-group">
+                @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
+                {
+
+                    @Html.Hidden("InspireRegisteryType", "report")
+                    @Html.DropDownList("StatusType", Model.InspireDataserviceStatusReport.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
+                }
+            </div>
+
+            <div id="lineChartAllService">
+                <div class="col-md-12">
+                    <h3>@InspireDataSet.Service</h3>
+                    <canvas id="InspireDataServiceLineChart" height="200" style="background-color: #ffffff"></canvas>
+                </div>
+            </div>
+
+            <div id="lineChartStatusService">
+                <div class="col-md-12">
+                    <canvas id="LineChartStatusInspireDataService" height="200" chart-colors="colors"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 }

@@ -93,18 +93,26 @@
 
     function ShowAllChart() {
         var chartAll = document.getElementById("lineChartAll");
+        var chartAllService = document.getElementById("lineChartAllService");
         var chartStatus = document.getElementById("lineChartStatus");
+        var chartStatusService = document.getElementById("lineChartStatusService");
 
         chartAll.style.display = "block";
+        chartAllService.style.display = "block";
         chartStatus.style.display = "none";
+        chartStatusService.style.display = "none";
     }
 
     function ShowStatusChart() {
         var chartAll = document.getElementById("lineChartAll");
+        var chartAllService = document.getElementById("lineChartAllService");
         var chartStatus = document.getElementById("lineChartStatus");
+        var chartStatusService = document.getElementById("lineChartStatusService");
 
         chartAll.style.display = "none";
+        chartAllService.style.display = "none";
         chartStatus.style.display = "block";
+        chartStatusService.style.display = "block";
     }
 
 
@@ -248,7 +256,7 @@
                     fill: false
                 },
                 {
-                    label: "@InspireDataSet.MetadataServiceStatus",
+                    label: "@InspireDataSet.MetadataInSearchService",
                     fill: false,
                     backgroundColor: 'rgb(240, 179, 35)',
                     borderColor: 'rgb(240, 179, 35)',
@@ -430,7 +438,7 @@
 
 
     var dataMetadata = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
             {
                 fill: true,
@@ -446,7 +454,7 @@
 
     var dataMetadataService = {
         labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable",
-            "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"
+            "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"
         ],
         datasets: [
             {
@@ -463,7 +471,7 @@
     };
 
     var dataDistribution = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
             datasets: [
                 {
                     fill: true,
@@ -477,7 +485,7 @@
     };
 
     var dataWms = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
             {
                 fill: true,
@@ -491,7 +499,7 @@
     };
 
     var dataWfs = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
             {
                 fill: true,
@@ -505,7 +513,7 @@
     };
 
     var dataWfsOrAtom = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
             {
                 fill: true,
@@ -519,7 +527,7 @@
     };
 
     var dataAtomFeed = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
             {
                 fill: true,
@@ -533,7 +541,7 @@
     };
 
     var dataHarmonizedData = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
             {
                 fill: true,
@@ -547,7 +555,7 @@
     };
 
     var dataSpatialDataService = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
             {
                 fill: true,
@@ -561,7 +569,7 @@
     };
 
     var dataMetadataInspireDataService = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
             {
                 fill: true,
@@ -575,7 +583,7 @@
     };
 
     var dataMetadataSearchService = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
             {
                 fill: true,
@@ -589,7 +597,7 @@
     };
 
     var dataServiceStatus = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
             {
                 fill: true,
@@ -790,7 +798,7 @@
             legend: legendPie,
             title: {
                 display: true,
-                text: '@InspireDataSet.MetadataServiceStatus',
+                text: '@InspireDataSet.MetadataInSearchService',
                 fontSize: 20
             }
         }
@@ -823,6 +831,7 @@
                 text: '@InspireDataSet.SpatialDataServiceStatus',
                 fontSize: 20
             }
+            
         }
     });
 
@@ -843,6 +852,129 @@
 
 
     // BAR CHART
+
+    var ctx = document.getElementById("InspireServiceStatusBarChart").getContext('2d');
+    var InspireServiceStatusBarChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: [
+                '@InspireDataSet.Metadata',
+                '@InspireDataSet.MetadataInSearchService',
+                '@InspireDataSet.ServiceStatus',
+                '@InspireDataSet.SpatialDataServiceStatus',
+                '@InspireDataSet.NetworkService',
+            ],
+            datasets: [
+                {
+                    label: '@DataSet.DOK_Delivery_Status_Good',
+                    data: [
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadata.Good)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadataInSearchService.Good)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithServiceStatus.Good)))),
+                        0,
+                        0,
+                    ],
+                    backgroundColor: '#36c545',
+                },
+                {
+                    label: '@DataSet.DOK_Delivery_Status_Useable',
+                    data: [
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadata.Useable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadataInSearchService.Useable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithServiceStatus.Useable)))),
+                        0,
+                        0
+                    ],
+                    backgroundColor: '#fed633',
+                },
+                {
+                    label: '@DataSet.DOK_Delivery_Status_Deficient',
+                    data: [
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadata.Deficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadataInSearchService.Deficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithServiceStatus.Deficient)))),
+                        0,
+                        0
+                    ],
+                    backgroundColor: '#ee432a',
+                },
+                {
+                    label: '@DataSet.DOK_Delivery_Status_NotSetShort',
+                    data: [
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadata.Notset)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithMetadataInSearchService.Notset)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithServiceStatus.Notset)))),
+                        0,
+                        0
+                    ],
+                    backgroundColor: '#d8d8d8',
+                },
+                {
+                    label: '@Shared.Yes',
+                    data: [
+                        0,
+                        0,
+                        0,
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithSds)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithNetworkService))))
+                    ],
+                    backgroundColor: '#36c545',
+                },
+                {
+                    label: '@Shared.No',
+                    data: [
+                        0,
+                        0,
+                        0,
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithoutSds())))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.Percent(Model.InspireDataserviceStatusReport.NumberOfItemsWithoutNetworkService()))))
+                    ],
+                    backgroundColor: '#ee432a',
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            label: {
+                width:1000
+            },
+            scales: {
+                xAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                            steps: 10,
+                            stepValue: 5,
+                            max: 100,
+                            callback: function(value, index, values) {
+                                return value + " %";
+                            }
+                        },
+                        scaleLabel: {
+                            display: true,
+                        },
+                        stacked: true,
+                    }
+                ],
+                yAxes: [
+                    {
+                        stacked: true,
+                        barThickness: 40,
+                        categoryPercentage: 0.9,
+                       
+                    }]
+            },
+            tooltips: {
+                enabled: true,
+                mode: 'single',
+                callbacks: {
+                    label: function (tooltipItems, data) {
+                        return tooltipItems.yLabel + ': ' + tooltipItems.xLabel + ' %';
+                    }
+                }
+            },
+        }
+    });
 
     var ctx = document.getElementById("statusBarChart").getContext('2d');
     var InspireDatasetStatusBarChart = new Chart(ctx, {

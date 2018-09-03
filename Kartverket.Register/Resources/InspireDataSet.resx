@@ -138,14 +138,20 @@
   <data name="Metadata" xml:space="preserve">
     <value>Metadata</value>
   </data>
+  <data name="MetadataInSearchService" xml:space="preserve">
+    <value>Metadata i søketjeneste</value>
+  </data>
   <data name="MetadataServiceStatus" xml:space="preserve">
     <value>Metadatatjeneste</value>
   </data>
   <data name="NetworkService" xml:space="preserve">
-    <value>Network service</value>
+    <value>Nettverkstjeneste</value>
   </data>
   <data name="NewDataset" xml:space="preserve">
     <value>Legg til nytt inspire datasett</value>
+  </data>
+  <data name="Sds" xml:space="preserve">
+    <value>Sds</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Tjeneste</value>

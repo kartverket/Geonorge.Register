@@ -570,6 +570,11 @@ namespace Kartverket.Register.Services
 
                 _dbContext.SaveChanges();
             }
+            else
+            {
+                synchronizationJob.FailCount++;
+                synchronizationJob.FailLog.Add(new SyncLogEntry("Feil ved henting av metadata"));
+            }
         }
 
         public InspireDataService UpdateInspireDataServiceFromKartkatalogen(InspireDataService originalInspireDataService)

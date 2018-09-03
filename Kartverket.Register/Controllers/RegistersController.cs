@@ -125,7 +125,7 @@ namespace Kartverket.Register.Controllers
             StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : inspireStatusReports.FirstOrDefault();
 
 
-            var viewModel = new RegisterV2ViewModel(register, page, statusReport, inspireStatusReports, filter.InspireRegisteryType);
+            var viewModel = new RegisterV2ViewModel(register, page, statusReport, inspireStatusReports, filter.StatusType);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
 

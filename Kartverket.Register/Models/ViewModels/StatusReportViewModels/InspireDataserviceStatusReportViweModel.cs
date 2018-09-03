@@ -90,7 +90,7 @@ namespace Kartverket.Register.Models.ViewModels
             return NumberOfInspireDataservices - NumberOfItemsWithSds;
         }
 
-        public object NumberOfItemsWithoutNetworkService()
+        public int NumberOfItemsWithoutNetworkService()
         {
             return NumberOfInspireDataservices - NumberOfItemsWithNetworkService;
         }

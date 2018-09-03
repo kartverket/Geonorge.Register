@@ -396,3 +396,10 @@ a.link-unstyled {
 .grid > div {
     padding-bottom: 30px;
 }
+
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 360px;
+    width: auto;
+}

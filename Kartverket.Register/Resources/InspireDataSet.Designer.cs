@@ -124,6 +124,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Metadata i søketjeneste.
+        /// </summary>
+        public static string MetadataInSearchService {
+            get {
+                return ResourceManager.GetString("MetadataInSearchService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metadatatjeneste.
         /// </summary>
         public static string MetadataServiceStatus {
@@ -133,7 +142,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Network service.
+        ///   Looks up a localized string similar to Nettverkstjeneste.
         /// </summary>
         public static string NetworkService {
             get {
@@ -147,6 +156,15 @@ namespace Resources {
         public static string NewDataset {
             get {
                 return ResourceManager.GetString("NewDataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sds.
+        /// </summary>
+        public static string Sds {
+            get {
+                return ResourceManager.GetString("Sds", resourceCulture);
             }
         }
         

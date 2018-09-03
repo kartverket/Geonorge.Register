@@ -129,6 +129,9 @@
   <data name="Metadata" xml:space="preserve">
     <value>Metadata</value>
   </data>
+  <data name="MetadataInSearchService" xml:space="preserve">
+    <value>Metadata in search service</value>
+  </data>
   <data name="MetadataServiceStatus" xml:space="preserve">
     <value>Metadata service status</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="NewDataset" xml:space="preserve">
     <value>Add a new inspire data set</value>
+  </data>
+  <data name="Sds" xml:space="preserve">
+    <value>Sds</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Service</value>

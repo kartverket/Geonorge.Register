@@ -74,7 +74,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string SelectedInspireRegisteryType { get; set; }
         public string SelectedDokTab { get; set; }
 
-        public RegisterV2ViewModel(Register register, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null, string statusType = null)
+        public RegisterV2ViewModel(Register register, FilterParameters filter, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null)
         {
             if (register != null)
             {
@@ -97,7 +97,7 @@ namespace Kartverket.Register.Models.ViewModels
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
                 SynchronizationJobs = new SynchronizationViewModel(register.Synchronizes, page);
-                StatusReport = GetStatsReport(statusReport, statusReports, statusType);
+                StatusReport = GetStatsReport(statusReport, statusReports, filter);
 
 
                 if (register.accessId != null) AccessId = register.accessId.Value;
@@ -113,18 +113,18 @@ namespace Kartverket.Register.Models.ViewModels
         }
 
         
-        private StatusReportViewModel GetStatsReport(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
+        private StatusReportViewModel GetStatsReport(StatusReport statusReport, List<StatusReport> statusReports, FilterParameters filter)
         {
             if (statusReport != null)
             {
                 if (statusReport.IsDokReport())
                 {
-                    return new DokStatusReportViewModel(statusReport, statusReports, statusType);
+                    return new DokStatusReportViewModel(statusReport, statusReports, filter.StatusType);
                 }
 
                 if (statusReport.IsInspireRegistryReport())
                 {
-                    return new InspireRegistryStatusReportViewModel(statusReport, statusReports, statusType);
+                    return new InspireRegistryStatusReportViewModel(statusReport, statusReports, filter);
                 }
             }
             return null;

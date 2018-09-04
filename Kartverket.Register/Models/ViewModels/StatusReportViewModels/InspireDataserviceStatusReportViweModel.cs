@@ -19,6 +19,8 @@ namespace Kartverket.Register.Models.ViewModels
 
         public int NumberOfInspireDataservices { get; set; }
         public SelectList StatusTypeSelectList { get; set; }
+        public StatusLineChart StatusChart { get; set; }
+
 
         public InspireDataServiceLineChart LineChart { get; set; }
 
@@ -43,10 +45,12 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItemsWithNetworkService { get; set; }
 
 
-        public InspireDataserviceStatusReportViweModel(StatusReport statusReport, List<StatusReport> statusReports)
+        public InspireDataserviceStatusReportViweModel(StatusReport statusReport, List<StatusReport> statusReports, string inspireDataServiceStatusType)
         {
             StatusTypeSelectList = CreateStatusTypeSelectList();
             LineChart = new InspireDataServiceLineChart(statusReports, statusReport);
+            StatusChart = new StatusLineChart(statusReports, statusReport, inspireDataServiceStatusType);
+
             if (statusReport != null)
             {
                 NumberOfItemsWithMetadata = new NumberOfStatuses(statusReport.NumberOfInspireDataServiceWithMetadata(Good), statusReport.NumberOfInspireDataServiceWithMetadata(Useable), statusReport.NumberOfInspireDataServiceWithMetadata(Deficient), statusReport.NumberOfInspireDataServiceWithMetadata(Notset));

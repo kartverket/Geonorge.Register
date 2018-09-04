@@ -125,7 +125,7 @@ namespace Kartverket.Register.Controllers
             StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : inspireStatusReports.FirstOrDefault();
 
 
-            var viewModel = new RegisterV2ViewModel(register, page, statusReport, inspireStatusReports, filter.StatusType);
+            var viewModel = new RegisterV2ViewModel(register, filter, page, statusReport, inspireStatusReports);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
 
@@ -181,7 +181,7 @@ namespace Kartverket.Register.Controllers
             StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : dokStatusReports.FirstOrDefault();
             
 
-            var viewModel = new RegisterV2ViewModel(register, null, statusReport, dokStatusReports, filter.StatusType);
+            var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, dokStatusReports);
             viewModel.SelectedDokTab = filter.DokSelectedTab;
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
 
@@ -221,7 +221,7 @@ namespace Kartverket.Register.Controllers
             if (register == null) return HttpNotFound();
 
             register = FilterRegisterItems(register, filter);
-            var viewModel = new RegisterV2ViewModel(register);
+            var viewModel = new RegisterV2ViewModel(register, filter);
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);

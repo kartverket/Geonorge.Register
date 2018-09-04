@@ -14,6 +14,8 @@ namespace Kartverket.Register.Models
         public FilterParameters()
         {
             InspireRegisteryType = Dataset;
+            InspireDatasetStatusType = "all";
+            InspireDataServiceStatusType = "all";
             StatusType = "all";
         }
         public string text { get; set; }
@@ -32,6 +34,8 @@ namespace Kartverket.Register.Models
         public string DokSelectedTab { get; set; }
         public string SelectedReport { get; set; }
         public string StatusType { get; set; }
+        public string InspireDatasetStatusType { get; set; }
+        public string InspireDataServiceStatusType { get; set; }
 
         public bool InspireRegistertTypeIsDataset()
         {

@@ -3,28 +3,44 @@
 <script>
 
     $(document).ready(function () {
-        var parameterStatusType = getParameterByName("statustype");
-        var statusTypeAll = parameterStatusType == "all" || parameterStatusType == "";
-        console.log(parameterStatusType);
-        console.log(statusTypeAll);
+        var parameterInspireDataServiceStatusType = getParameterByName("inspiredataservicestatustype");
+        var parameterInspireDatasetStatusType = getParameterByName("inspiredatasetstatustype");
+
+        var inspireDatasetStatusType = parameterInspireDatasetStatusType == "all" || parameterInspireDatasetStatusType == "";
+        var inspireDataServiceStatusType = parameterInspireDataServiceStatusType == "all" || parameterInspireDataServiceStatusType == "";
+        
         var selectedView = localStorage.getItem("SelectedViewButtons");
 
-        if (statusTypeAll) {
-            ShowAllChart();
-        } else {
-            ShowStatusChart();
+        var cbDatasetChecked = localStorage.getItem("cbToggleDataset");
+        var cbDataServiceChecked = localStorage.getItem("cbToggleDataService");
+
+        if (cbDatasetChecked) {
+            var cbDataset = document.getElementById("cbToggleDataset");
+            cbDataset.checked = true;
         }
+        if (cbDataServiceChecked) {
+            var cbService = document.getElementById("cbToggleDataService");
+            cbService.checked = true;
+        }
+        if (inspireDatasetStatusType) {
+            ShowAllDatasetChart();
+        } else {
+            ShowStatusDatasetChart();
+        }
+        if (inspireDataServiceStatusType) {
+            ShowAllDataServiceChart();
+        } else {
+            ShowStatusServiceChart();
+        }
+  
         reportView(selectedView, null);
         var cb = document.getElementById("cbExportReport");
         ToggleExportReport(cb);
-        var cbDataset = document.getElementById("cbToggleDataset");
-        ToggleExportReport(cbDataset);
-        var cbService = document.getElementById("cbToggleDataService");
-        ToggleExportReport(cbService);
+        ToggleDataServiceReport(cbDataServiceChecked);
+        ToggleDatasetReport(cbDatasetChecked);
     });
 
     function ToggleExportReport(cb) {
-
         if (cb.checked) {
             document.getElementById("ExportAll").style.display = "inline-block";
             document.getElementById("ExportSelected").style.display = "none";
@@ -34,21 +50,24 @@
         }
     }
 
-    function ToggleDatasetReport(cb) {
-
-        if (cb.checked) {
+    function ToggleDatasetReport(checked) {
+        if (checked) {
+            document.getElementById("datasetLineChart").style.display = "inline-block";
+            localStorage.setItem("cbToggleDataset", true);
             
         } else {
-            
+            document.getElementById("datasetLineChart").style.display = "none";
+            localStorage.setItem("cbToggleDataset", false);
         }
     }
 
-    function ToggleDataServiceReport(cb) {
-
-        if (cb.checked) {
-            
+    function ToggleDataServiceReport(checked) {
+        if (checked) {
+            document.getElementById("serviceLineChart").style.display = "inline-block";
+            localStorage.setItem("cbToggleDataService", true);
         } else {
-            
+            document.getElementById("serviceLineChart").style.display = "none";
+            localStorage.setItem("cbToggleDataService", false);
         }
     }
 
@@ -79,40 +98,50 @@
         localStorage.setItem("SelectedViewButtons", view);
     }
 
-    function SelectLineChartType() {
-        var chartAll = document.getElementById("lineChartAll");
+    //function SelectLineChartType() {
+    //    var chartAll = document.getElementById("lineChartAll");
 
-        if (chartAll.style.display === "none") {
-            ShowAllChart();
-            localStorage.setItem("ShowAllLineCart", true);
-        } else {
-            ShowStatusChart();
-            localStorage.setItem("ShowAllLineCart", false);
-        }
-    }
+    //    if (chartAll.style.display === "none") {
+    //        ShowAllChart();
+    //        localStorage.setItem("ShowAllLineCart", true);
+    //    } else {
+    //        ShowStatusChart();
+    //        localStorage.setItem("ShowAllLineCart", false);
+    //    }
+    //}
 
-    function ShowAllChart() {
+    function ShowAllDatasetChart() {
         var chartAll = document.getElementById("lineChartAll");
-        var chartAllService = document.getElementById("lineChartAllService");
         var chartStatus = document.getElementById("lineChartStatus");
-        var chartStatusService = document.getElementById("lineChartStatusService");
 
         chartAll.style.display = "block";
-        chartAllService.style.display = "block";
         chartStatus.style.display = "none";
-        chartStatusService.style.display = "none";
+
     }
 
-    function ShowStatusChart() {
+    function ShowAllDataServiceChart() {
+        var chartAll = document.getElementById("lineChartAllService");
+        var chartStatus = document.getElementById("lineChartStatusService");
+
+        chartAll.style.display = "block";
+        chartStatus.style.display = "none";
+    }
+
+    
+    function ShowStatusDatasetChart() {
         var chartAll = document.getElementById("lineChartAll");
-        var chartAllService = document.getElementById("lineChartAllService");
         var chartStatus = document.getElementById("lineChartStatus");
-        var chartStatusService = document.getElementById("lineChartStatusService");
 
         chartAll.style.display = "none";
-        chartAllService.style.display = "none";
         chartStatus.style.display = "block";
-        chartStatusService.style.display = "block";
+    }
+
+    function ShowStatusServiceChart() {
+        var chartAll = document.getElementById("lineChartAllService");
+        var chartStatus = document.getElementById("lineChartStatusService");
+
+        chartAll.style.display = "none";
+        chartStatus.style.display = "block";
     }
 
 
@@ -306,15 +335,15 @@
             type: 'line',
             fill: false,
             data: {
-                labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Labels))),
+                labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.Labels))),
             datasets: [
                 {
                     label: "@DataSet.DOK_Delivery_Status_Good",
                     borderColor: '#36c545',
-                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Good))),
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.Good))),
                     backgroundColor: "#36c545",
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.PointSize))),
                     fill: false
                 },
                 {
@@ -322,27 +351,27 @@
                     fill: false,
                     backgroundColor: '#fed633',
                     borderColor: '#fed633',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Useable))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.Useable))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.PointSize))),
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Status_Deficient",
                     backgroundColor: "#ee432a",
                     fill: false,
                     borderColor: '#ee432a',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Deficient))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.Deficient))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.PointSize))),
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Status_NotSet",
                     backgroundColor: "#d8d8d8",
                     fill: false,
                     borderColor: '#d8d8d8',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Notset))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.Notset))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDatasetStatusReport.StatusChart.PointSize))),
                 }
             ]
         }
@@ -354,15 +383,15 @@
             type: 'line',
             fill: false,
             data: {
-                labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Labels))),
+                labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.Labels))),
             datasets: [
                 {
                     label: "@DataSet.DOK_Delivery_Status_Good",
                     borderColor: '#36c545',
-                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Good))),
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.Good))),
                     backgroundColor: "#36c545",
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.PointSize))),
                     fill: false
                 },
                 {
@@ -370,27 +399,27 @@
                     fill: false,
                     backgroundColor: '#fed633',
                     borderColor: '#fed633',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Useable))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.Useable))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.PointSize))),
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Status_Deficient",
                     backgroundColor: "#ee432a",
                     fill: false,
                     borderColor: '#ee432a',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Deficient))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.Deficient))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.PointSize))),
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Status_NotSet",
                     backgroundColor: "#d8d8d8",
                     fill: false,
                     borderColor: '#d8d8d8',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Notset))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.Notset))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.StatusChart.PointSize))),
                 }
             ]
         }

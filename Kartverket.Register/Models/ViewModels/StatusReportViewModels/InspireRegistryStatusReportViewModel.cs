@@ -16,12 +16,10 @@ namespace Kartverket.Register.Models.ViewModels
         public InspireDataserviceStatusReportViweModel InspireDataserviceStatusReport { get; set; }
 
         //public DokLineChart DokHistoricalChart { get; set; }
-        public StatusLineChart StatusChart { get; set; }
         
-        public InspireRegistryStatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
+        public InspireRegistryStatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports, FilterParameters filter)
         {
             ReportsSelectList = CreateSelectList(statusReports);
-            StatusChart = new StatusLineChart(statusReports, statusReport, statusType);
 
             if (statusReport != null)
             {
@@ -30,8 +28,8 @@ namespace Kartverket.Register.Models.ViewModels
                 Date = statusReport.Date;
                 NumberOfItems = statusReport.NumberOfIems();
 
-                InspireDatasetStatusReport = new InspireDatasetStatusReportViweModel(statusReport, statusReports);
-                InspireDataserviceStatusReport = new InspireDataserviceStatusReportViweModel(statusReport, statusReports);                
+                InspireDatasetStatusReport = new InspireDatasetStatusReportViweModel(statusReport, statusReports, filter.InspireDatasetStatusType);
+                InspireDataserviceStatusReport = new InspireDataserviceStatusReportViweModel(statusReport, statusReports, filter.InspireDataServiceStatusType);                
             }
             else
             {

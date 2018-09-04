@@ -44,9 +44,9 @@ else
         <div class="col-md-12 col-sm-12">
             <div class="text-center btn-space" style="display: inline-block; vertical-align: top">
                 <label>@DataSet.Dataset (@Model.InspireDatasetStatusReport.NumberOfInspireDatasets)</label>
-                <input type="checkbox" id="cbToggleDataset" onclick="ToggleDatasetReport(this)">
+                <input type="checkbox" checked="checked" id="cbToggleDataset" onclick="ToggleDatasetReport(this.checked)">
                 <label>@InspireDataSet.Service (@Model.InspireDataserviceStatusReport.NumberOfInspireDataservices)</label>
-                <input type="checkbox" id="cbToggleDataService" onclick="ToggleDataServiceReport(this)">
+                <input type="checkbox" checked="checked" id="cbToggleDataService" onclick="ToggleDataServiceReport(this.checked)">
             </div>
         </div>
     </div>
@@ -290,50 +290,56 @@ else
 
     <div id="lineChart" style="display: none" class="reportViewContent">
         <div class="row">
-            <div class="col-md-4 col-sm-12 form-group">
-                @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
-                {
 
-                    @Html.Hidden("InspireRegisteryType", "report")
-                    @Html.DropDownList("StatusType", Model.InspireDatasetStatusReport.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
-                }
-            </div>
+            <div id="datasetLineChart" class="col-sm-12">
+                <h3 class="col-sm-12">@DataSet.Dataset</h3>
+                <div class="col-md-4 col-sm-12 form-group">
+                    @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
+                    {
+                        @Html.Hidden("InspireDataServiceStatusType", Model.InspireDataserviceStatusReport.StatusTypeSelectList.SelectedValue)
+                        @Html.Hidden("InspireRegisteryType", "report")
+                        @Html.DropDownList("InspireDatasetStatusType", Model.InspireDatasetStatusReport.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
+                    }
+                </div>
 
-            <div id="lineChartAll">
-                <div class="col-md-12">
-                    <h3>@DataSet.Dataset</h3>
-                    <canvas id="InspireDatasetLineChart" height="200" style="background-color: #ffffff"></canvas>
+                <div id="lineChartAll">
+                    <div class="col-md-12">
+
+                        <canvas id="InspireDatasetLineChart" height="200" style="background-color: #ffffff"></canvas>
+                    </div>
+                </div>
+
+                <div id="lineChartStatus">
+                    <div class="col-md-12">
+                        <canvas id="LineChartStatus" height="200" chart-colors="colors"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <div id="lineChartStatus">
-                <div class="col-md-12">
-                    <canvas id="LineChartStatus" height="200" chart-colors="colors"></canvas>
-                </div>
-            </div>
+            <div id="serviceLineChart" class="col-sm-12">
+                <h3 class="col-sm-12">@InspireDataSet.Service</h3>
 
-
-            <div class="col-md-4 col-sm-12 form-group">
-                @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
-                {
-
-                    @Html.Hidden("InspireRegisteryType", "report")
-                    @Html.DropDownList("StatusType", Model.InspireDataserviceStatusReport.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
-                }
-            </div>
-
-            <div id="lineChartAllService">
-                <div class="col-md-12">
-                    <h3>@InspireDataSet.Service</h3>
-                    <canvas id="InspireDataServiceLineChart" height="200" style="background-color: #ffffff"></canvas>
-                </div>
-            </div>
-
-            <div id="lineChartStatusService">
-                <div class="col-md-12">
-                    <canvas id="LineChartStatusInspireDataService" height="200" chart-colors="colors"></canvas>
+                <div class="col-md-4 col-sm-12 form-group">
+                    @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
+                    {
+                        @Html.Hidden("InspireDatasetStatusType", Model.InspireDatasetStatusReport.StatusTypeSelectList.SelectedValue)
+                        @Html.Hidden("InspireRegisteryType", "report")
+                        @Html.DropDownList("InspireDataServiceStatusType", Model.InspireDataserviceStatusReport.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
+                    }
                 </div>
 
+                <div id="lineChartAllService">
+                    <div class="col-md-12">
+                        <canvas id="InspireDataServiceLineChart" height="200" style="background-color: #ffffff"></canvas>
+                    </div>
+                </div>
+
+                <div id="lineChartStatusService">
+                    <div class="col-md-12">
+                        <canvas id="LineChartStatusInspireDataService" height="200" chart-colors="colors"></canvas>
+                    </div>
+
+                </div>
             </div>
 
         </div>

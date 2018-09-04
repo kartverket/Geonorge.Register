@@ -25,6 +25,7 @@ namespace Kartverket.Register.Tests.Services
         private readonly Models.Register _register;
         private Document _document;
         private Dataset _dataset;
+        private FilterParameters _filter;
         private readonly Organization _organization;
         private readonly Organization _municipality;
         private readonly AccessControlService _accessControlService;
@@ -180,7 +181,7 @@ namespace Kartverket.Register.Tests.Services
         public void AccessEditRegisterWhenUserIsAdminAndRegisterIsNotServiceAlertRegister()
         {
             SetClaims(Role, Admin);
-            var registerViewModel = new RegisterV2ViewModel(_register);
+            var registerViewModel = new RegisterV2ViewModel(_register, _filter);
             _accessControlService.EditRegister(registerViewModel).Should().BeTrue();
         }
 
@@ -189,7 +190,7 @@ namespace Kartverket.Register.Tests.Services
         {
             SetClaims(Role, Admin);
             _register.systemId = Guid.Parse("0f428034-0b2d-4fb7-84ea-c547b872b418");
-            var registerViewModel = new RegisterV2ViewModel(_register);
+            var registerViewModel = new RegisterV2ViewModel(_register, _filter);
             _accessControlService.EditRegister(registerViewModel).Should().BeFalse();
         }
 
@@ -198,7 +199,7 @@ namespace Kartverket.Register.Tests.Services
         {
             SetClaims(Role, Admin);
             _register.name = "Det offentlige kartgrunnlaget - Kommunalt";
-            var registerViewModel = new RegisterV2ViewModel(_register);
+            var registerViewModel = new RegisterV2ViewModel(_register, _filter);
             registerViewModel.Municipality = _municipality;
             _accessControlService.AddToRegister(registerViewModel).Should().BeTrue();
         }
@@ -207,7 +208,7 @@ namespace Kartverket.Register.Tests.Services
         {
             SetClaims(Role, Admin);
             _register.name = "Det offentlige kartgrunnlaget - Kommunalt";
-            var registerViewModel = new RegisterV2ViewModel(_register);
+            var registerViewModel = new RegisterV2ViewModel(_register, _filter);
             _accessControlService.AddToRegister(registerViewModel).Should().BeFalse();
         }
 
@@ -215,7 +216,7 @@ namespace Kartverket.Register.Tests.Services
         public void AccessAddToRegisterWhenRegisterIsNotDokMunicipal()
         {
             SetClaims(Role, Admin);
-            var registerViewModel = new RegisterV2ViewModel(_register);
+            var registerViewModel = new RegisterV2ViewModel(_register, _filter);
             _accessControlService.AddToRegister(registerViewModel).Should().BeTrue();
         }
 
@@ -223,7 +224,7 @@ namespace Kartverket.Register.Tests.Services
         public void AccessEditRegisterItemListWhenMunicipalityIsNotNull()
         {
             SetClaims(Role, Admin);
-            var registerViewModel = new RegisterV2ViewModel(_register);
+            var registerViewModel = new RegisterV2ViewModel(_register, _filter);
             registerViewModel.Municipality = _municipality;
             _accessControlService.EditRegisterItemsList(registerViewModel).Should().BeTrue();
         }

@@ -21,6 +21,8 @@ namespace Kartverket.Register.Models.ViewModels
         public SelectList StatusTypeSelectList { get; set; }
 
         public InspireDatasetLineChart LineChart { get; set; }
+        public StatusLineChart StatusChart { get; set; }
+
 
         // Metadata
         [Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
@@ -59,9 +61,11 @@ namespace Kartverket.Register.Models.ViewModels
         public NumberOfStatuses NumberOfItemsWithSpatialDataService { get; set; }
 
 
-        public InspireDatasetStatusReportViweModel(StatusReport statusReport, List<StatusReport> statusReports)
+        public InspireDatasetStatusReportViweModel(StatusReport statusReport, List<StatusReport> statusReports, string inspireDatasetStatusType)
         {
             StatusTypeSelectList = CreateStatusTypeSelectList();
+            StatusChart = new StatusLineChart(statusReports, statusReport, inspireDatasetStatusType);
+
             LineChart = new InspireDatasetLineChart(statusReports, statusReport);
             if (statusReport != null)
             {

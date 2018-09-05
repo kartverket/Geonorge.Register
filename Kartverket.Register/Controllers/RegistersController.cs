@@ -121,7 +121,7 @@ namespace Kartverket.Register.Controllers
             filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
 
-            List<StatusReport> inspireStatusReports = _statusReportService.GetInspireStatusReports(12, filter.InspireRegisteryType);
+            List<StatusReport> inspireStatusReports = _statusReportService.GetInspireStatusReports(12);
             StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : inspireStatusReports.FirstOrDefault();
 
 

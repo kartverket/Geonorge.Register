@@ -902,6 +902,7 @@
     <Compile Include="Models\Api\SearchParameters.cs" />
     <Compile Include="Models\Api\SearchResult.cs" />
     <Compile Include="Models\Api\AlertService.cs" />
+    <Compile Include="Models\Api\DokStatusReport.cs" />
     <Compile Include="Models\Api\StatusReport.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />

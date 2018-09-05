@@ -32,7 +32,9 @@ namespace Kartverket.Register.Formatter
                 type == typeof(List<Models.Api.Register>) ||
                 type == typeof(IEnumerable<Registeritem>) ||
                 type == typeof(StatusReport) ||
+                type == typeof(DokStatusReport) ||
                 type == typeof(List<StatusReport>) ||
+                type == typeof(List<DokStatusReport>) ||
                 type == typeof(List<Registeritem>))
 
                 return true;
@@ -57,7 +59,9 @@ namespace Kartverket.Register.Formatter
                 type == typeof(List<Models.Api.Register>) ||
                 type == typeof(IEnumerable<Registeritem>) ||
                 type == typeof(StatusReport) ||
+                type == typeof(DokStatusReport) ||
                 type == typeof(List<StatusReport>) ||
+                type == typeof(List<DokStatusReport>) ||
                 type == typeof(List<Registeritem>))
                 BuildCSV(value, writeStream, content.Headers.ContentType.MediaType);
         }
@@ -102,86 +106,86 @@ namespace Kartverket.Register.Formatter
                 }
             }
 
-            if (models is StatusReport statusReport)
+            if (models is DokStatusReport dokStatusReport)
             {
                 streamWriter.WriteLine(SingelStatusReportHeading());
-                WriteStatusesInTable(streamWriter, statusReport);
+                WriteDokStatusesInTable(streamWriter, dokStatusReport);
             }
 
-            if (models is List<StatusReport> statusReports)
+            if (models is List<DokStatusReport> dokStatusReports)
             {
                 streamWriter.WriteLine(StatusReportHeading());
                 streamWriter.WriteLine(StatusReportHeadingStatusValues());
 
-                foreach (var report in statusReports)
+                foreach (var report in dokStatusReports)
                 {
-                    streamWriter.WriteLine(WriteStatusReport(report));
+                    streamWriter.WriteLine(WriteDokStatusReport(report));
                 }
             }
             streamWriter.Close();
         }
 
-        private void WriteStatusesInTable(StreamWriter streamWriter, StatusReport statusReport)
+        private void WriteDokStatusesInTable(StreamWriter streamWriter, DokStatusReport dokStatusReport)
         {
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Metadata,
-                                                    statusReport.NumberOfItemsWithMetadataGood,
-                                                    statusReport.NumberOfItemsWithMetadataUseable,
-                                                    statusReport.NumberOfItemsWithMetadataDeficient,
-                                                    statusReport.NumberOfItemsWithMetadataNotSet));
+                dokStatusReport.NumberOfItemsWithMetadataGood,
+                dokStatusReport.NumberOfItemsWithMetadataUseable,
+                dokStatusReport.NumberOfItemsWithMetadataDeficient,
+                dokStatusReport.NumberOfItemsWithMetadataNotSet));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_ProductSheet,
-                                    statusReport.NumberOfItemsWithProductsheetGood,
-                                    statusReport.NumberOfItemsWithProductsheetUseable,
-                                    statusReport.NumberOfItemsWithProductsheetDeficient,
-                                    statusReport.NumberOfItemsWithProductsheetNotSet));
+                dokStatusReport.NumberOfItemsWithProductsheetGood,
+                dokStatusReport.NumberOfItemsWithProductsheetUseable,
+                dokStatusReport.NumberOfItemsWithProductsheetDeficient,
+                dokStatusReport.NumberOfItemsWithProductsheetNotSet));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_PresentationRules,
-                                    statusReport.NumberOfItemsWithPresentationRulesGood,
-                                    statusReport.NumberOfItemsWithPresentationRulesUseable,
-                                    statusReport.NumberOfItemsWithPresentationRulesDeficient,
-                                    statusReport.NumberOfItemsWithPresentationRulesNotSet));
+                dokStatusReport.NumberOfItemsWithPresentationRulesGood,
+                dokStatusReport.NumberOfItemsWithPresentationRulesUseable,
+                dokStatusReport.NumberOfItemsWithPresentationRulesDeficient,
+                dokStatusReport.NumberOfItemsWithPresentationRulesNotSet));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_ProductSpesification,
-                statusReport.NumberOfItemsWithProductSpecificationGood,
-                statusReport.NumberOfItemsWithProductSpecificationUseable,
-                statusReport.NumberOfItemsWithProductSpecificationDeficient,
-                statusReport.NumberOfItemsWithProductSpecificationNotSet));
+                dokStatusReport.NumberOfItemsWithProductSpecificationGood,
+                dokStatusReport.NumberOfItemsWithProductSpecificationUseable,
+                dokStatusReport.NumberOfItemsWithProductSpecificationDeficient,
+                dokStatusReport.NumberOfItemsWithProductSpecificationNotSet));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Wms,
-                statusReport.NumberOfItemsWithWmsGood,
-                statusReport.NumberOfItemsWithWmsUseable,
-                statusReport.NumberOfItemsWithWmsDeficient,
-                statusReport.NumberOfItemsWithWmsNotSet));
+                dokStatusReport.NumberOfItemsWithWmsGood,
+                dokStatusReport.NumberOfItemsWithWmsUseable,
+                dokStatusReport.NumberOfItemsWithWmsDeficient,
+                dokStatusReport.NumberOfItemsWithWmsNotSet));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Wfs,
-                statusReport.NumberOfItemsWithWfsGood,
-                statusReport.NumberOfItemsWithWfsUseable,
-                statusReport.NumberOfItemsWithWfsDeficient,
-                statusReport.NumberOfItemsWithWfsNotSet));
+                dokStatusReport.NumberOfItemsWithWfsGood,
+                dokStatusReport.NumberOfItemsWithWfsUseable,
+                dokStatusReport.NumberOfItemsWithWfsDeficient,
+                dokStatusReport.NumberOfItemsWithWfsNotSet));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_GmlRequirements,
-                statusReport.NumberOfItemsWithGmlRequirementsGood,
-                statusReport.NumberOfItemsWithGmlRequirementsUseable,
-                statusReport.NumberOfItemsWithGmlRequirementsDeficient,
-                statusReport.NumberOfItemsWithGmlRequirementsNotSet));
+                dokStatusReport.NumberOfItemsWithGmlRequirementsGood,
+                dokStatusReport.NumberOfItemsWithGmlRequirementsUseable,
+                dokStatusReport.NumberOfItemsWithGmlRequirementsDeficient,
+                dokStatusReport.NumberOfItemsWithGmlRequirementsNotSet));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_SosiRequirements,
-                statusReport.NumberOfItemsWithSosiRequirementsGood,
-                statusReport.NumberOfItemsWithSosiRequirementsUseable,
-                statusReport.NumberOfItemsWithSosiRequirementsDeficient,
-                statusReport.NumberOfItemsWithSosiRequirementsNotSet));
+                dokStatusReport.NumberOfItemsWithSosiRequirementsGood,
+                dokStatusReport.NumberOfItemsWithSosiRequirementsUseable,
+                dokStatusReport.NumberOfItemsWithSosiRequirementsDeficient,
+                dokStatusReport.NumberOfItemsWithSosiRequirementsNotSet));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_AtomFeed,
-                statusReport.NumberOfItemsWithAtomFeedGood,
-                statusReport.NumberOfItemsWithAtomFeedUseable,
-                statusReport.NumberOfItemsWithAtomFeedDeficient,
-                statusReport.NumberOfItemsWithAtomFeedNotSet));
+                dokStatusReport.NumberOfItemsWithAtomFeedGood,
+                dokStatusReport.NumberOfItemsWithAtomFeedUseable,
+                dokStatusReport.NumberOfItemsWithAtomFeedDeficient,
+                dokStatusReport.NumberOfItemsWithAtomFeedNotSet));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Distribution,
-                statusReport.NumberOfItemsWithDistributionGood,
-                statusReport.NumberOfItemsWithDistributionUseable,
-                statusReport.NumberOfItemsWithDistributionDeficient,
-                statusReport.NumberOfItemsWithDistributionNotSet));
+                dokStatusReport.NumberOfItemsWithDistributionGood,
+                dokStatusReport.NumberOfItemsWithDistributionUseable,
+                dokStatusReport.NumberOfItemsWithDistributionDeficient,
+                dokStatusReport.NumberOfItemsWithDistributionNotSet));
         }
 
         private string StatusByType(string statusType, int good, int useable, int deficient, int notSet)
@@ -197,59 +201,58 @@ namespace Kartverket.Register.Formatter
                    DataSet.DOK_Delivery_Status_NotSet;
         }
 
-        private string WriteStatusReport(StatusReport statusReport)
+        private string WriteDokStatusReport(DokStatusReport dokStatusReport)
         {
-            return statusReport.Date + ";" +
-                   statusReport.NumberOfItemsWithMetadataGood + ";" +
-                   statusReport.NumberOfItemsWithMetadataUseable + ";" +
-                   statusReport.NumberOfItemsWithMetadataDeficient + ";" +
-                   statusReport.NumberOfItemsWithMetadataNotSet + ";" +
+            return dokStatusReport.Date + ";" +
+                   dokStatusReport.NumberOfItemsWithMetadataGood + ";" +
+                   dokStatusReport.NumberOfItemsWithMetadataUseable + ";" +
+                   dokStatusReport.NumberOfItemsWithMetadataDeficient + ";" +
+                   dokStatusReport.NumberOfItemsWithMetadataNotSet + ";" +
 
-                   statusReport.NumberOfItemsWithProductsheetGood + ";" +
-                   statusReport.NumberOfItemsWithProductsheetUseable + ";" +
-                   statusReport.NumberOfItemsWithProductsheetDeficient + ";" +
-                   statusReport.NumberOfItemsWithProductsheetNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithProductsheetGood + ";" +
+                   dokStatusReport.NumberOfItemsWithProductsheetUseable + ";" +
+                   dokStatusReport.NumberOfItemsWithProductsheetDeficient + ";" +
+                   dokStatusReport.NumberOfItemsWithProductsheetNotSet + ";" +
 
-                   statusReport.NumberOfItemsWithPresentationRulesGood + ";" +
-                   statusReport.NumberOfItemsWithPresentationRulesUseable + ";" +
-                   statusReport.NumberOfItemsWithPresentationRulesDeficient + ";" +
-                   statusReport.NumberOfItemsWithPresentationRulesNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithPresentationRulesGood + ";" +
+                   dokStatusReport.NumberOfItemsWithPresentationRulesUseable + ";" +
+                   dokStatusReport.NumberOfItemsWithPresentationRulesDeficient + ";" +
+                   dokStatusReport.NumberOfItemsWithPresentationRulesNotSet + ";" +
 
-                   statusReport.NumberOfItemsWithProductSpecificationGood + ";" +
-                   statusReport.NumberOfItemsWithProductSpecificationUseable + ";" +
-                   statusReport.NumberOfItemsWithProductSpecificationDeficient + ";" +
-                   statusReport.NumberOfItemsWithProductSpecificationNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithProductSpecificationGood + ";" +
+                   dokStatusReport.NumberOfItemsWithProductSpecificationUseable + ";" +
+                   dokStatusReport.NumberOfItemsWithProductSpecificationDeficient + ";" +
+                   dokStatusReport.NumberOfItemsWithProductSpecificationNotSet + ";" +
 
-                   statusReport.NumberOfItemsWithWmsGood + ";" +
-                   statusReport.NumberOfItemsWithWmsUseable + ";" +
-                   statusReport.NumberOfItemsWithWmsDeficient + ";" +
-                   statusReport.NumberOfItemsWithWmsNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithWmsGood + ";" +
+                   dokStatusReport.NumberOfItemsWithWmsUseable + ";" +
+                   dokStatusReport.NumberOfItemsWithWmsDeficient + ";" +
+                   dokStatusReport.NumberOfItemsWithWmsNotSet + ";" +
 
-                   statusReport.NumberOfItemsWithWfsGood + ";" +
-                   statusReport.NumberOfItemsWithWfsUseable + ";" +
-                   statusReport.NumberOfItemsWithWfsDeficient + ";" +
-                   statusReport.NumberOfItemsWithWfsNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithWfsGood + ";" +
+                   dokStatusReport.NumberOfItemsWithWfsUseable + ";" +
+                   dokStatusReport.NumberOfItemsWithWfsDeficient + ";" +
+                   dokStatusReport.NumberOfItemsWithWfsNotSet + ";" +
 
-                   statusReport.NumberOfItemsWithSosiRequirementsGood + ";" +
-                   statusReport.NumberOfItemsWithSosiRequirementsUseable + ";" +
-                   statusReport.NumberOfItemsWithSosiRequirementsDeficient + ";" +
-                   statusReport.NumberOfItemsWithSosiRequirementsNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithSosiRequirementsGood + ";" +
+                   dokStatusReport.NumberOfItemsWithSosiRequirementsUseable + ";" +
+                   dokStatusReport.NumberOfItemsWithSosiRequirementsDeficient + ";" +
+                   dokStatusReport.NumberOfItemsWithSosiRequirementsNotSet + ";" +
 
-                   statusReport.NumberOfItemsWithGmlRequirementsGood + ";" +
-                   statusReport.NumberOfItemsWithGmlRequirementsUseable + ";" +
-                   statusReport.NumberOfItemsWithGmlRequirementsDeficient + ";" +
-                   statusReport.NumberOfItemsWithGmlRequirementsNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithGmlRequirementsGood + ";" +
+                   dokStatusReport.NumberOfItemsWithGmlRequirementsUseable + ";" +
+                   dokStatusReport.NumberOfItemsWithGmlRequirementsDeficient + ";" +
+                   dokStatusReport.NumberOfItemsWithGmlRequirementsNotSet + ";" +
 
-                   statusReport.NumberOfItemsWithAtomFeedGood + ";" +
-                   statusReport.NumberOfItemsWithAtomFeedUseable + ";" +
-                   statusReport.NumberOfItemsWithAtomFeedDeficient + ";" +
-                   statusReport.NumberOfItemsWithAtomFeedNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithAtomFeedGood + ";" +
+                   dokStatusReport.NumberOfItemsWithAtomFeedUseable + ";" +
+                   dokStatusReport.NumberOfItemsWithAtomFeedDeficient + ";" +
+                   dokStatusReport.NumberOfItemsWithAtomFeedNotSet + ";" +
 
-                   statusReport.NumberOfItemsWithDistributionGood + ";" +
-                   statusReport.NumberOfItemsWithDistributionUseable + ";" +
-                   statusReport.NumberOfItemsWithDistributionDeficient + ";" +
-                   statusReport.NumberOfItemsWithDistributionNotSet;
-
+                   dokStatusReport.NumberOfItemsWithDistributionGood + ";" +
+                   dokStatusReport.NumberOfItemsWithDistributionUseable + ";" +
+                   dokStatusReport.NumberOfItemsWithDistributionDeficient + ";" +
+                   dokStatusReport.NumberOfItemsWithDistributionNotSet;
         }
 
 

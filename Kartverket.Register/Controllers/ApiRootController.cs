@@ -133,7 +133,7 @@ namespace Kartverket.Register.Controllers
         [Route("api/register/{registerName}/report/{id}.{ext}")]
         [Route("api/register/{registerName}/report/{id}")]
         [HttpGet]
-        public IHttpActionResult StatusReport(string id)
+        public IHttpActionResult StatusReport(string id, bool dataset = true, bool service = true)
         {
             SetLanguage(Request);
             var statusReport = _statusReportService.GetStatusReportById(id);
@@ -145,10 +145,21 @@ namespace Kartverket.Register.Controllers
 
             if (statusReport.IsInspireRegistryReport())
             {
-            //return Ok(new Models.Api.InspireStatusReport(statusReport));
+                if (dataset && service)
+                {
+                return Ok(new InspireRegistryStatusReport(statusReport));
+                }
+                if (dataset)
+                {
+                return Ok(new Models.Api.InspireDataSetStatusReport(statusReport));
+                }
+                if (service)
+                {
+                    return Ok(new InspireServiceStatusReport(statusReport));
+                }
 
             }
-            return Ok(new Models.Api.StatusReport());
+            return Ok();
 
         }
 
@@ -161,7 +172,6 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult StatusReports(string registerName)
         {
             SetLanguage(Request);
-            List<Models.Api.StatusReport> statusReportsApi = new List<Models.Api.StatusReport>();
             var register = _registerService.GetRegisterByName(registerName);
             List<StatusReport> statusReports = new List<StatusReport>();
             if (register.IsInspireStatusRegister())
@@ -174,14 +184,17 @@ namespace Kartverket.Register.Controllers
             }
             else if (register.IsDokStatusRegister())
             {
+                List<DokStatusReport> dokStatusReportsApi = new List<DokStatusReport>();
                 statusReports = _statusReportService.GetDokStatusReports();
+
                 foreach (var report in statusReports)
                 {
-                    statusReportsApi.Add(new Models.Api.DokStatusReport(report));
+                    dokStatusReportsApi.Add(new DokStatusReport(report));
                 }
+                return Ok(dokStatusReportsApi);
             }
-            
-            return Ok(statusReportsApi);
+
+            return Ok();
         }
 
 

@@ -502,7 +502,7 @@
             Save dok status report to db
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.StatusReport(System.String)">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.StatusReport(System.String,System.Boolean,System.Boolean)">
             <summary>
             Gets selected status report
             </summary>

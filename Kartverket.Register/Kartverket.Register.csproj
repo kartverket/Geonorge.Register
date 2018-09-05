@@ -891,6 +891,9 @@
     <Compile Include="Models\AccessType.cs" />
     <Compile Include="Models\Api\Concept.cs" />
     <Compile Include="Models\Api\ConceptSheme.cs" />
+    <Compile Include="Models\Api\InspireDatasetStatusReport.cs" />
+    <Compile Include="Models\Api\InspireServiceStatusReport.cs" />
+    <Compile Include="Models\Api\InspireRegistryStatusReport.cs" />
     <Compile Include="Models\Api\Facet.cs" />
     <Compile Include="Models\Api\FacetInput.cs" />
     <Compile Include="Models\Api\FieldValueModelBinder.cs" />
@@ -903,7 +906,6 @@
     <Compile Include="Models\Api\SearchResult.cs" />
     <Compile Include="Models\Api\AlertService.cs" />
     <Compile Include="Models\Api\DokStatusReport.cs" />
-    <Compile Include="Models\Api\StatusReport.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />

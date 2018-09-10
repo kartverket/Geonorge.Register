@@ -124,7 +124,7 @@ namespace Kartverket.Register.Services
                 {
                     foreach (var service in metadata)
                     {
-                        if (service.Protocol == "WMS-tjeneste" || service.Protocol == "OGC:WMS"
+                        if (service.Protocol == "WMS-tjeneste" || service.Protocol == "OGC:WMS" || service.Protocol == "WMS service"
                         ) hasServiceUrl = true;
                     }
                 }

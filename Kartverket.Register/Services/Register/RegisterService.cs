@@ -303,7 +303,7 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl, item.dokDeliveryProductSpecificationStatusAutoUpdate, item.dokDeliveryProductSpecificationStatusId);
                 item.dokDeliverySosiRequirementsStatusId = GetSosiRequirements(item.Uuid, item.GetProductSpecificationUrl(), item.dokDeliverySosiStatusAutoUpdate, item.dokDeliverySosiRequirementsStatusId);
                 item.dokDeliveryGmlRequirementsStatusId = GetGmlRequirements(item.Uuid, item.dokDeliveryGmlRequirementsStatusAutoUpdate, item.dokDeliveryGmlRequirementsStatusId);
-                item.dokDeliveryWmsStatusId = GetDokDeliveryServiceStatus(item.Uuid, item.dokDeliveryWmsStatusAutoUpdate, item.dokDeliveryWmsStatusId, item.UuidService);
+                item.dokDeliveryWmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(item.Uuid, item.dokDeliveryWmsStatusAutoUpdate, item.dokDeliveryWmsStatusId, item.UuidService);
                 item.dokDeliveryAtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(item.Uuid, item.dokDeliveryAtomFeedStatusAutoUpdate, item.dokDeliveryAtomFeedStatusId);
                 item.dokDeliveryWfsStatusId = _datasetDeliveryService.GetWfsStatus(item.Uuid, item.dokDeliveryWfsStatusAutoUpdate, item.dokDeliveryWfsStatusId);
                 item.dokDeliveryDistributionStatusId = GetDeliveryDownloadStatus(item.Uuid, item.dokDeliveryDistributionStatusAutoUpdate, item.dokDeliveryDistributionStatusId);
@@ -349,132 +349,6 @@ namespace Kartverket.Register.Services.Register
             }
 
             return statusValue;
-        }
-
-        public string GetDokDeliveryServiceStatus(string uuid, bool autoUpdate, string currentStatus, string uuidService)
-        {
-            bool hasServiceUrl = false;
-
-            string status = (!string.IsNullOrEmpty(currentStatus) ? currentStatus : "notset");
-
-            if (autoUpdate)
-            {
-                try
-                {
-                    string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
-                    System.Net.WebClient c = new System.Net.WebClient();
-                    c.Encoding = System.Text.Encoding.UTF8;
-
-                    var json = c.DownloadString(metadataUrl);
-
-                    dynamic metadata = Newtonsoft.Json.Linq.JObject.Parse(json);
-
-                    if (metadata != null)
-                    {
-
-                        if (metadata.Related != null)
-                        {
-                            foreach (var service in metadata.Related)
-                            {
-                                if (service.DistributionDetails != null)
-                                {
-                                    if (service.DistributionDetails.Protocol.Value == "OGC:WMS")
-                                        hasServiceUrl = true;
-                                }
-                            }
-                        }
-
-                    }
-
-                }
-                catch (Exception e)
-                {
-
-                }
-
-
-
-                string statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
-                statusUrl = statusUrl + uuidService;
-                using (var client = new HttpClient())
-                {
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    try
-                    {
-                        HttpResponseMessage response = client.GetAsync(new Uri(statusUrl)).Result;
-
-                        if (response.StatusCode == HttpStatusCode.OK)
-                        {
-                            var text = response.Content.ReadAsStringAsync().Result;
-                            dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
-
-                            var responseTime = (double)data.svartid;
-                            var resposeGetCapabilities = false;
-                            var supportCors = false;
-                            var epsgSupport = false;
-                            var featuresSupport = false;
-                            var hasLegend = false;
-                            var hasCoverage = false;
-                            var connectSoso = false;
-
-                            if (data.connect.vurdering == "yes")
-                                resposeGetCapabilities = true;
-
-                            if (data.connect.vurdering == "soso")
-                                connectSoso = true;
-
-                            if (data.cors.vurdering == "yes")
-                                supportCors = true;
-
-                            if (data.epsgSupported.vurdering == "yes")
-                                epsgSupport = true; //Todo check epsg code
-
-                            if (data.hasGFI.vurdering == "yes")
-                                featuresSupport = true;
-
-                            if (data.hasLegend.vurdering == "yes")
-                                hasLegend = true;
-
-                            if (data.bbox.vurdering == "yes")
-                                hasCoverage = true;
-
-                            if (!hasServiceUrl)
-                                status = "deficient";
-                            //Grønn på WMS:
-                            //Respons fra GetCapabilities
-                            //Svartid innen 4 sekunder
-                            //Støtter CORS
-                            //EPSG: 25832, 25833, 25835
-                            //Støtter egenskapsspørringer
-                            //Støtter tegnforklaring
-                            //Oppgir dekningsområde
-                            else if ((resposeGetCapabilities && responseTime <= 4
-                                && supportCors && epsgSupport && featuresSupport
-                                && hasLegend && hasCoverage) || connectSoso)
-                                status = "good";
-                            //Gul:
-                            //Respons fra GetCapabilities
-                            //Svartid innen 10 sekunder
-                            //Støtter CORS
-                            //EPSG: 25833, 25835 eller 32633
-                            //Støtter tegnforklaring
-                            //Oppgir dekningsområde
-                            else if ((resposeGetCapabilities && responseTime <= 10
-                                && epsgSupport && hasLegend && hasCoverage) || connectSoso)
-                                status = "useable";
-                            //Rød:
-                            //Feiler på en av testene til gul
-                            else
-                                status = "deficient";
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
-                }
-            }
-            return status;
         }
 
         public ICollection<Models.Register> OrderBy(ICollection<Models.Register> registers, string orderBy)

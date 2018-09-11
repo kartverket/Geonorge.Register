@@ -1,4 +1,4 @@
-﻿using Kartverket.Register.Models;
+using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;

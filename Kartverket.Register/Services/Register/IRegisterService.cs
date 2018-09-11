@@ -37,7 +37,6 @@ namespace Kartverket.Register.Services.Register
         string GetSosiRequirements(string uuid, string url, bool autoUpdate, string currentStatus);
         string GetGmlRequirements(string uuid, bool dokDeliveryGmlRequirementsStatusAutoUpdate, string dokDeliveryGmlRequirementsStatusId);
         List<Models.RegisterItem> GetConfirmdDatasetBySelectedMunicipality(Models.Register dokMunicipalRegister, Organization municipality);
-        string GetDokDeliveryServiceStatus(string uuid, bool autoUpdate, string currentStatus, string uuidService);
         RegisterGrouped GetRegistersGrouped();
         ICollection<Models.Register> OrderBy(ICollection<Models.Register> registers, string sorting);
         Guid GetInspireStatusRegisterId();

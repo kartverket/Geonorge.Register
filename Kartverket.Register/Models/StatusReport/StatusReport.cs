@@ -474,7 +474,7 @@ namespace Kartverket.Register.Models
             int number = 0;
             foreach (RegisterItemStatusReport item in StatusRegisterItems)
             {
-                if (item is InspireDatasetStatusReport inspireDatasetStatusReport)
+                if (item is InspireDatasetStatusReport)
                 {
                     number++;
                 }

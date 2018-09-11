@@ -173,14 +173,16 @@ namespace Kartverket.Register.Controllers
         {
             SetLanguage(Request);
             var register = _registerService.GetRegisterByName(registerName);
-            List<StatusReport> statusReports = new List<StatusReport>();
+            List<StatusReport> statusReports;
             if (register.IsInspireStatusRegister())
             {
+                List<InspireRegistryStatusReport> inspireStatusReportsApi = new List<InspireRegistryStatusReport>();
                 statusReports = _statusReportService.GetInspireStatusReports();
-                //foreach (var report in statusReports)
-                //{
-                //    statusReportsApi.Add(new Models.Api.InspireStatusReport(report));
-                //}
+                foreach (var report in statusReports)
+                {
+                    inspireStatusReportsApi.Add(new InspireRegistryStatusReport(report));
+                }
+                return Ok(inspireStatusReportsApi);
             }
             else if (register.IsDokStatusRegister())
             {

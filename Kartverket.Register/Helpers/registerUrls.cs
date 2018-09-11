@@ -215,7 +215,7 @@ namespace Kartverket.Register.Helpers
             return "/dok/rapport";
         }
 
-        public static object ApiReportUrlFormat(HttpRequestBase request, string format, string id = null)
+        public static string ApiReportUrlFormat(HttpRequestBase request, string format, string id = null)
         {
             string url = "#";
             if (string.IsNullOrWhiteSpace(id))

@@ -18,7 +18,7 @@ namespace Kartverket.Register.Tests.Controllers
     {
         public static Models.Register _register = new Models.Register { name = "RegisterName" };
         public static FilterParameters _filter = new FilterParameters();
-        public static RegisterV2ViewModel _viewModel = new RegisterV2ViewModel(_register);
+        public static RegisterV2ViewModel _viewModel = new RegisterV2ViewModel(_register, new FilterParameters());
 
 
         private static Mock<IRegisterService> CreateRegisterServiceMock()

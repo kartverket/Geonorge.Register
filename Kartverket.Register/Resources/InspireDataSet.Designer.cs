@@ -124,6 +124,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Metadata i søketjeneste.
+        /// </summary>
+        public static string MetadataInSearchService {
+            get {
+                return ResourceManager.GetString("MetadataInSearchService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metadatatjeneste.
         /// </summary>
         public static string MetadataServiceStatus {
@@ -133,11 +142,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nettverkstjeneste.
+        /// </summary>
+        public static string NetworkService {
+            get {
+                return ResourceManager.GetString("NetworkService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Legg til nytt inspire datasett.
         /// </summary>
         public static string NewDataset {
             get {
                 return ResourceManager.GetString("NewDataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sds.
+        /// </summary>
+        public static string Sds {
+            get {
+                return ResourceManager.GetString("Sds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjeneste.
+        /// </summary>
+        public static string Service {
+            get {
+                return ResourceManager.GetString("Service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjenestestatus.
+        /// </summary>
+        public static string ServiceStatus {
+            get {
+                return ResourceManager.GetString("ServiceStatus", resourceCulture);
             }
         }
         

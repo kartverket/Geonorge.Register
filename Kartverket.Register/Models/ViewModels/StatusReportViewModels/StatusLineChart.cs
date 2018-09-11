@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Kartverket.Register.Models
 {
-    public class StatusChart
+    public class StatusLineChart
     {
         public List<string> Labels { get; set; }
 
@@ -13,7 +13,7 @@ namespace Kartverket.Register.Models
         public List<int> Notset { get; set; }
         public List<int> Useable { get; set; }
 
-        public StatusChart(List<StatusReport> statusReports, StatusReport selectedStatusReport, string statusType = "Metadata")
+        public StatusLineChart(List<StatusReport> statusReports, StatusReport selectedStatusReport, string statusType = "Metadata")
         {
             Labels = new List<string>();
             PointSize = new List<int>();
@@ -25,7 +25,6 @@ namespace Kartverket.Register.Models
 
             if (statusReports != null)
             {
-
                 foreach (var statusReport in statusReports)
                 {
                     PointSize.Add(selectedStatusReport != null && statusReport.Id == selectedStatusReport.Id ? 7 : 3);

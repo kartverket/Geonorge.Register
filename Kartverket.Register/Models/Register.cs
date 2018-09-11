@@ -21,6 +21,7 @@ namespace Kartverket.Register.Models
     {
         private const string _geodatalovStatusRegister = "Geodatalov statusregister";
         private readonly Guid _inspireStatusRegister = Guid.Parse("9A9BEF28-285B-477E-85F1-504F8227FF45");
+        private readonly Guid _dokStatusRegister = Guid.Parse("CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD");
         private const string _DetOffentligeKartgrunnlagetKommunalt = "Det offentlige kartgrunnlaget - Kommunalt";
 
         public Register()
@@ -147,6 +148,11 @@ namespace Kartverket.Register.Models
         public bool IsInspireStatusRegister()
         {
             return systemId == _inspireStatusRegister && parentRegister == null;
+        }
+
+        public bool IsDokStatusRegister()
+        {
+            return systemId == _dokStatusRegister && parentRegister == null;
         }
 
         public bool IsGeodatalovStatusRegister()

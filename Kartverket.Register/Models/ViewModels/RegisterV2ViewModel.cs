@@ -13,6 +13,7 @@ namespace Kartverket.Register.Models.ViewModels
     public class RegisterV2ViewModel
     {
         private int? page;
+        private Register _register;
 
         public Guid SystemId { get; set; }
 
@@ -73,10 +74,11 @@ namespace Kartverket.Register.Models.ViewModels
         public string SelectedInspireRegisteryType { get; set; }
         public string SelectedDokTab { get; set; }
 
-        public RegisterV2ViewModel(Register register, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null, string statusType = null)
+        public RegisterV2ViewModel(Register register, FilterParameters filter, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null)
         {
             if (register != null)
             {
+                _register = register;
                 SystemId = register.systemId;
                 Owner = register.owner;
                 Name = register.NameTranslated();
@@ -95,7 +97,7 @@ namespace Kartverket.Register.Models.ViewModels
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
                 SynchronizationJobs = new SynchronizationViewModel(register.Synchronizes, page);
-                StatusReport = new StatusReportViewModel(statusReport, statusReports, statusType);
+                StatusReport = GetStatsReport(statusReport, statusReports, filter);
 
 
                 if (register.accessId != null) AccessId = register.accessId.Value;
@@ -108,6 +110,24 @@ namespace Kartverket.Register.Models.ViewModels
                     }
                 }
             }
+        }
+
+        
+        private StatusReportViewModel GetStatsReport(StatusReport statusReport, List<StatusReport> statusReports, FilterParameters filter)
+        {
+            if (statusReport != null)
+            {
+                if (statusReport.IsDokReport())
+                {
+                    return new DokStatusReportViewModel(statusReport, statusReports, filter.StatusType);
+                }
+
+                if (statusReport.IsInspireRegistryReport())
+                {
+                    return new InspireRegistryStatusReportViewModel(statusReport, statusReports, filter);
+                }
+            }
+            return null;
         }
 
 
@@ -275,9 +295,9 @@ namespace Kartverket.Register.Models.ViewModels
             return ParentRegister == null ? "/" : ParentRegister.GetObjectUrl();
         }
 
-        public bool SelectedInspireRegisteryTypeIsReport()
+        public bool SelectedInspireRegisteryTypeIsInspireReport()
         {
-            return SelectedInspireRegisteryType == "report";
+            return SelectedInspireRegisteryType == "inspirereport";
         }
 
         public bool SelectedInspireRegisteryTypeIsSynchronizations()
@@ -285,9 +305,19 @@ namespace Kartverket.Register.Models.ViewModels
             return SelectedInspireRegisteryType == "synchronizations";
         }
 
+        public bool SelectedInspireRegisteryTypeIsReport()
+        {
+            return SelectedInspireRegisteryType == "report";
+        }
+
         public bool SelectedDokTabIsReport()
         {
             return SelectedDokTab == "report";
+        }
+
+        public bool SelectedInspireRegisteryTypeIsService()
+        {
+            return SelectedInspireRegisteryType == "service";
         }
     }
 }

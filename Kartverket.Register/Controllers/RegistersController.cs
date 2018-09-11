@@ -121,11 +121,15 @@ namespace Kartverket.Register.Controllers
             filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
 
-            var viewModel = new RegisterV2ViewModel(register, page);
+            List<StatusReport> inspireStatusReports = _statusReportService.GetInspireStatusReports(12);
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : inspireStatusReports.FirstOrDefault();
+
+
+            var viewModel = new RegisterV2ViewModel(register, filter, page, statusReport, inspireStatusReports);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
 
-            if (viewModel.SelectedInspireRegisteryTypeIsReport())
+            if (viewModel.SelectedInspireRegisteryTypeIsInspireReport())
             {
                 viewModel.InspireReport = _inspireMonitoringService.GetInspireReportViewModel(register, filter);
             }
@@ -173,10 +177,11 @@ namespace Kartverket.Register.Controllers
 
             register = FilterRegisterItems(register, filter);
 
-            StatusReport statusReport = filter.SelectedDokReport != null ? _statusReportService.GetStatusReportById(filter.SelectedDokReport) : _statusReportService.GetLatestReport();
+            List<StatusReport> dokStatusReports = _statusReportService.GetDokStatusReports(12);
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : dokStatusReports.FirstOrDefault();
             
 
-            var viewModel = new RegisterV2ViewModel(register, null, statusReport, _statusReportService.GetStatusReports(12), filter.StatusType);
+            var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, dokStatusReports);
             viewModel.SelectedDokTab = filter.DokSelectedTab;
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
 
@@ -186,14 +191,6 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
-
-        //[Route("api/register/det-offentlige-kartgrunnlaget/report.{ext}")]
-        //[Route("api/register/det-offentlige-kartgrunnlaget/report")]
-        //[HttpGet]
-        //public void GetDokStatusReport(Guid id, bool selectAll)
-        //{
-            
-        //}
 
         private void StartSynchronizationDataset()
         {
@@ -224,7 +221,7 @@ namespace Kartverket.Register.Controllers
             if (register == null) return HttpNotFound();
 
             register = FilterRegisterItems(register, filter);
-            var viewModel = new RegisterV2ViewModel(register);
+            var viewModel = new RegisterV2ViewModel(register, filter);
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
@@ -238,7 +235,7 @@ namespace Kartverket.Register.Controllers
 
         private string GetInspireRegistryType(string filter)
         {
-            if (filter == "report")
+            if (filter == "inspirereport")
             {
                 if (!IsAdmin())
                 {

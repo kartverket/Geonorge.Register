@@ -18,13 +18,27 @@ namespace Kartverket.Register.Services
         public void CreateStatusReport(Models.Register register)
         {
             var statusReport = new StatusReport();
+            statusReport.Register = register;
             foreach (var item in register.items)
             {
                 if (item is Dataset dataset)
                 {
                     var datasetStatuses = new DatasetStatusHistory(dataset);
-                    statusReport.StatusHistories.Add(datasetStatuses);
-                    //dataset.StatusHistories.Add(datasetStatuses);
+                    statusReport.StatusRegisterItems.Add(datasetStatuses);
+                }
+            }
+
+            foreach (var item in register.RegisterItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    var inspireDatasetStatuses = new InspireDatasetStatusReport(inspireDataset);
+                    statusReport.StatusRegisterItems.Add(inspireDatasetStatuses);
+                }
+                if (item is InspireDataService inspireDataService)
+                {
+                    var inspireDataserviceStatuses = new InspireDataserviceStatusReport(inspireDataService);
+                    statusReport.StatusRegisterItems.Add(inspireDataserviceStatuses);
                 }
             }
 
@@ -35,8 +49,8 @@ namespace Kartverket.Register.Services
         public ICollection<DatasetStatusHistory> GetStatusHistoriesByDataset(Dataset dataset)
         {
             var queryResult = from d in _dbContext.DatasetStatusHistories
-                                where d.DatasetUuid == dataset.Uuid
-                                select d;
+                              where d.DatasetUuid == dataset.Uuid
+                              select d;
 
             return queryResult.ToList();
         }
@@ -44,7 +58,7 @@ namespace Kartverket.Register.Services
         public StatusReport GetLatestReport()
         {
             var queryResults = from r in _dbContext.StatusReports
-                              select r;
+                               select r;
 
             StatusReport latestReport = queryResults.OrderByDescending(o => o.Date).FirstOrDefault();
             return latestReport;
@@ -53,7 +67,7 @@ namespace Kartverket.Register.Services
         public List<StatusReport> GetStatusReports(int numberOfReports = 0)
         {
             var queryResults = from r in _dbContext.StatusReports
-                select r;
+                               select r;
 
 
             if (numberOfReports > 0)
@@ -70,10 +84,55 @@ namespace Kartverket.Register.Services
         {
             var queryResults = from r in _dbContext.StatusReports
                                where r.Id.ToString() == statusReportId
-                                select r;
+                               select r;
 
             return queryResults.FirstOrDefault();
         }
 
+        public List<StatusReport> GetDokStatusReports(int numberOfReports)
+        {
+            List<StatusReport> statusReports = GetStatusReports();
+            List<StatusReport> dokStatusReports = new List<StatusReport>();
+
+            foreach (var report in statusReports)
+            {
+                if (report.IsDokReport())
+                {
+                    dokStatusReports.Add(report);
+                    if (numberOfReports != 0)
+                    {
+                        if (dokStatusReports.Count > numberOfReports)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return dokStatusReports;
+        }
+
+        public List<StatusReport> GetInspireStatusReports(int numberOfReports = 0)
+        {
+            List<StatusReport> statusReports = GetStatusReports();
+            List<StatusReport> inpsireStatusReports = new List<StatusReport>();
+
+            foreach (var report in statusReports)
+            {
+                if (report.IsInspireDatasetReport())
+                {
+                    inpsireStatusReports.Add(report);
+                    if (numberOfReports != 0)
+                    {
+                        if (inpsireStatusReports.Count > numberOfReports)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return inpsireStatusReports;
+        }
     }
 }

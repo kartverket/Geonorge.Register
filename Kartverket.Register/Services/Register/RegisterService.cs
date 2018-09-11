@@ -38,11 +38,11 @@ namespace Kartverket.Register.Services.Register
             var registerItems = new List<Models.RegisterItem>();
             var registerItemsv2 = new List<RegisterItemV2>();
 
-            if (register.containedItemClass == "Document")
+            if (register.ContainedItemClassIsDocument())
             {
                 FilterDocument(register, filter, registerItems);
             }
-            else if (register.containedItemClass == "Dataset")
+            else if (register.ContainedItemClassIsDataset())
             {
                 FilterDataset(register, filter, registerItems);
             }
@@ -94,18 +94,18 @@ namespace Kartverket.Register.Services.Register
             {
                 if (filter.InspireRegisteryType != null)
                 {
-                    if (filter.InspireRegisteryType == "dataset")
+                    if (filter.InspireRegistertTypeIsDataset())
                     {
                         GetInspireDatasets(filter, registerItemsv2, item);
                     }
-                    else if (filter.InspireRegisteryType == "service")
+                    else if (filter.InspireRegistertTypeIsService())
                     {
                         if (item is InspireDataService inspireDataService)
                         {
                             GetInspireDataServices(filter, registerItemsv2, inspireDataService);
                         }
                     }
-                    else if (filter.InspireRegisteryType == "report")
+                    else if (filter.InspireRegisteryTypeIsisInspireReport())
                     {
                         registerItemsv2.Add(item);
                     }

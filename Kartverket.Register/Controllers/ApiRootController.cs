@@ -111,52 +111,92 @@ namespace Kartverket.Register.Controllers
         /// Save dok status report to db
         /// </summary>
         [Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        [Route("api/register/det-offentlige-kartgrunnlaget/report/save")]
+        [Route("api/register/{registerName}/report/save")]
         [HttpGet]
-        public IHttpActionResult DokReport()
+        public IHttpActionResult NewStatusReport(string registerName)
         {
             try
             {
-                var register = _registerService.GetDokStatusRegister();
+                var register = _registerService.GetRegisterByName(registerName);
                 _statusReportService.CreateStatusReport(register);
                 return Ok("Saved");
             }
-            catch
+            catch(Exception e)
             {
-                return Ok("Error");
+                return Ok(e);
             }
         }
 
         /// <summary>
         /// Gets selected status report
         /// </summary>
-        [Route("api/register/det-offentlige-kartgrunnlaget/report/{id}.{ext}")]
-        [Route("api/register/det-offentlige-kartgrunnlaget/report/{id}")]
+        [Route("api/register/{registerName}/report/{id}.{ext}")]
+        [Route("api/register/{registerName}/report/{id}")]
         [HttpGet]
-        public IHttpActionResult DokStatusReport(string id)
+        public IHttpActionResult StatusReport(string id, bool dataset = true, bool service = true)
         {
             SetLanguage(Request);
             var statusReport = _statusReportService.GetStatusReportById(id);
-            return Ok(new Models.Api.StatusReport(statusReport));
+
+            if (statusReport.IsDokReport())
+            {
+                return Ok(new DokStatusReport(statusReport));
+            }
+
+            if (statusReport.IsInspireRegistryReport())
+            {
+                if (dataset && service)
+                {
+                return Ok(new InspireRegistryStatusReport(statusReport));
+                }
+                if (dataset)
+                {
+                return Ok(new Models.Api.InspireDataSetStatusReport(statusReport));
+                }
+                if (service)
+                {
+                    return Ok(new InspireServiceStatusReport(statusReport));
+                }
+
+            }
+            return Ok();
+
         }
 
         /// <summary>
         /// Gets selected status report
         /// </summary>
-        [Route("api/register/det-offentlige-kartgrunnlaget/report.{ext}")]
-        [Route("api/register/det-offentlige-kartgrunnlaget/report")]
+        [Route("api/register/{registerName}/report.{ext}")]
+        [Route("api/register/{registerName}/report")]
         [HttpGet]
-        public IHttpActionResult DokStatusReports()
+        public IHttpActionResult StatusReports(string registerName)
         {
             SetLanguage(Request);
-            List<Models.Api.StatusReport> statusReportsApi = new List<Models.Api.StatusReport>();
-            List<StatusReport> statusReports = _statusReportService.GetStatusReports();
-
-            foreach (var report in statusReports)
+            var register = _registerService.GetRegisterByName(registerName);
+            List<StatusReport> statusReports;
+            if (register.IsInspireStatusRegister())
             {
-                statusReportsApi.Add(new Models.Api.StatusReport(report));
+                List<InspireRegistryStatusReport> inspireStatusReportsApi = new List<InspireRegistryStatusReport>();
+                statusReports = _statusReportService.GetInspireStatusReports();
+                foreach (var report in statusReports)
+                {
+                    inspireStatusReportsApi.Add(new InspireRegistryStatusReport(report));
+                }
+                return Ok(inspireStatusReportsApi);
             }
-            return Ok(statusReportsApi);
+            else if (register.IsDokStatusRegister())
+            {
+                List<DokStatusReport> dokStatusReportsApi = new List<DokStatusReport>();
+                statusReports = _statusReportService.GetDokStatusReports();
+
+                foreach (var report in statusReports)
+                {
+                    dokStatusReportsApi.Add(new DokStatusReport(report));
+                }
+                return Ok(dokStatusReportsApi);
+            }
+
+            return Ok();
         }
 
 
@@ -346,8 +386,8 @@ namespace Kartverket.Register.Controllers
         /// </summary>
         /// <param name="register">The name of the register</param>
         /// <param name="itemowner">The name of the organization</param>
-        [Route("api/register/{register}/{itemowner}.{ext}")]
-        [Route("api/register/{register}/{itemowner}")]
+        [Route("api/register/{register}/{itemowner}.{ext}", Order = 1)]
+        [Route("api/register/{register}/{itemowner}", Order = 1)]
         [HttpGet]
         public IHttpActionResult GetRegisterItemsByOrganization(string register, string itemowner)
         {

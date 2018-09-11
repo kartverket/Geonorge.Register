@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Kartverket.Register.Models
 {
-    public class DatasetStatusHistory : StatusHistory
+    public class DatasetStatusHistory : RegisterItemStatusReport
     {
         public DatasetStatusHistory()
         {

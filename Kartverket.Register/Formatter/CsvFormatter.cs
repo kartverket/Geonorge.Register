@@ -29,10 +29,12 @@ namespace Kartverket.Register.Formatter
             if (type == typeof(Models.Api.Register) ||
                 type == typeof(Registeritem) ||
                 type == typeof(IEnumerable<Models.Api.Register>) ||
+                type == typeof(InspireRegistryStatusReport) ||
                 type == typeof(List<Models.Api.Register>) ||
                 type == typeof(IEnumerable<Registeritem>) ||
-                type == typeof(StatusReport) ||
-                type == typeof(List<StatusReport>) ||
+                type == typeof(List<InspireRegistryStatusReport>) ||
+                type == typeof(DokStatusReport) ||
+                type == typeof(List<DokStatusReport>) ||
                 type == typeof(List<Registeritem>))
 
                 return true;
@@ -44,6 +46,7 @@ namespace Kartverket.Register.Formatter
         {
             return SupportedTypeCSV(type);
         }
+
         public override bool CanReadType(Type type)
         {
             return false;
@@ -56,8 +59,10 @@ namespace Kartverket.Register.Formatter
                 type == typeof(IEnumerable<Models.Api.Register>) ||
                 type == typeof(List<Models.Api.Register>) ||
                 type == typeof(IEnumerable<Registeritem>) ||
-                type == typeof(StatusReport) ||
-                type == typeof(List<StatusReport>) ||
+                type == typeof(InspireRegistryStatusReport) ||
+                type == typeof(DokStatusReport) ||
+                type == typeof(List<InspireRegistryStatusReport>) ||
+                type == typeof(List<DokStatusReport>) ||
                 type == typeof(List<Registeritem>))
                 BuildCSV(value, writeStream, content.Headers.ContentType.MediaType);
         }
@@ -70,6 +75,7 @@ namespace Kartverket.Register.Formatter
                 Models.Api.Register register = (Models.Api.Register)models;
                 ConvertRegisters(streamWriter, register);
             }
+
             if (models is Registeritem)
             {
                 Registeritem registerItem = (Registeritem)models;
@@ -80,6 +86,7 @@ namespace Kartverket.Register.Formatter
                     ConvertRegisterItemToCSV(streamWriter, item);
                 }
             }
+
             if (models is List<Models.Api.Register>)
             {
                 streamWriter.WriteLine(RegisterHeading());
@@ -89,6 +96,7 @@ namespace Kartverket.Register.Formatter
                     ConvertRegisterToCSV(streamWriter, reg);
                 }
             }
+
             if (models is List<Registeritem>)
             {
                 List<Registeritem> registerItems = (List<Registeritem>)models;
@@ -102,86 +110,316 @@ namespace Kartverket.Register.Formatter
                 }
             }
 
-            if (models is StatusReport statusReport)
+            if (models is DokStatusReport dokStatusReport)
             {
                 streamWriter.WriteLine(SingelStatusReportHeading());
-                WriteStatusesInTable(streamWriter, statusReport);
+                WriteDokStatusesInTable(streamWriter, dokStatusReport);
             }
 
-            if (models is List<StatusReport> statusReports)
+            if (models is List<DokStatusReport> dokStatusReports)
             {
-                streamWriter.WriteLine(StatusReportHeading());
+                streamWriter.WriteLine(DokStatusReportHeading());
                 streamWriter.WriteLine(StatusReportHeadingStatusValues());
 
-                foreach (var report in statusReports)
+                foreach (var report in dokStatusReports)
                 {
-                    streamWriter.WriteLine(WriteStatusReport(report));
+                    streamWriter.WriteLine(WriteDokStatusReport(report));
                 }
             }
+
+            if (models is InspireRegistryStatusReport inspireRegisteryStatusReport)
+            {
+                WriteInspireStatusesInTable(streamWriter, inspireRegisteryStatusReport);
+            }
+
+            if (models is List<InspireRegistryStatusReport> inspireStatusReports)
+            {
+                WriteInspireStatusesInList(streamWriter, inspireStatusReports);
+            }
+
             streamWriter.Close();
         }
 
-        private void WriteStatusesInTable(StreamWriter streamWriter, StatusReport statusReport)
+        private void WriteInspireStatusesInList(StreamWriter streamWriter, List<InspireRegistryStatusReport> inspireRegisteryStatusReports)
+        {
+            WriteInspireDatasetStatusToList(streamWriter, inspireRegisteryStatusReports);
+            streamWriter.WriteLine();
+            WriteInspireServiceStatusToList(streamWriter, inspireRegisteryStatusReports);
+        }
+
+        private void WriteInspireServiceStatusToList(StreamWriter streamWriter, List<InspireRegistryStatusReport> inspireRegisteryStatusReports)
+        {
+            streamWriter.WriteLine(InspireDataSet.Service);
+            streamWriter.WriteLine(InspireServiceReportHeading());
+            streamWriter.WriteLine(InspireServiceStatusReportHeadingStatusValues());
+
+            foreach (var report in inspireRegisteryStatusReports)
+            {
+                streamWriter.WriteLine(WriteInspireServiceStatusReport(report));
+            }
+        }
+
+        private void WriteInspireDatasetStatusToList(StreamWriter streamWriter, List<InspireRegistryStatusReport> inspireRegisteryStatusReports)
+        {
+            streamWriter.WriteLine(DataSet.Dataset);
+            streamWriter.WriteLine(InspireDatasetReportHeading());
+            streamWriter.WriteLine(StatusReportHeadingStatusValues());
+
+            foreach (var report in inspireRegisteryStatusReports)
+            {
+                streamWriter.WriteLine(WriteInspireDatasetStatusReport(report));
+            }
+        }
+
+        private string InspireServiceReportHeading()
+        {
+            return Registers.Date + ";" +
+                   InspireDataSet.Metadata + ";" + ";" + ";" + ";" +
+                   InspireDataSet.MetadataInSearchService + ";" + ";" + ";" + ";" +
+                   InspireDataSet.ServiceStatus + ";" + ";" + ";" + ";" +
+                   InspireDataSet.Sds + ";" + ";" +
+                   InspireDataSet.NetworkService + ";" + ";";
+        }
+
+        private string WriteInspireDatasetStatusReport(InspireRegistryStatusReport inspreStatusReport)
+        {
+            return inspreStatusReport.InspireDatasetStatusReport.Date + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Good + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Useable + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Deficient + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Notset + ";" +
+
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Good + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Useable + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Deficient + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Notset + ";" +
+
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Good + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Useable + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Deficient + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Notset + ";" +
+
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWms.Good + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWms.Useable + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWms.Deficient + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWms.Notset + ";" +
+
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfs.Good + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfs.Useable + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfs.Deficient + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfs.Notset + ";" +
+
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Good + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Useable + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Deficient + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Notset + ";" +
+
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Good + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Useable + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Deficient + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Notset + ";" +
+
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Good + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Useable + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Deficient + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Notset + ";" +
+
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Good + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Useable + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Deficient + ";" +
+                   inspreStatusReport.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Notset;
+
+        }
+
+        private string WriteInspireServiceStatusReport(InspireRegistryStatusReport inspreStatusReport)
+        {
+            return inspreStatusReport.InspireServiceStatusReport.Date + ";" +
+
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadata.Good + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadata.Useable + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadata.Deficient + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadata.Notset + ";" +
+
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadataInSearchService.Good + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadataInSearchService.Useable + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadataInSearchService.Deficient + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadataInSearchService.Notset + ";" +
+
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithServiceStatus.Good + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithServiceStatus.Useable + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithServiceStatus.Deficient + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithServiceStatus.Notset + ";" +
+
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithSds + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithoutSds + ";" +
+
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithNetworkService + ";" +
+                   inspreStatusReport.InspireServiceStatusReport.NumberOfItemsWithoutNetworkService + ";";
+        }
+
+        private void WriteDokStatusesInTable(StreamWriter streamWriter, DokStatusReport dokStatusReport)
         {
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Metadata,
-                                                    statusReport.NumberOfItemsWithMetadataGood,
-                                                    statusReport.NumberOfItemsWithMetadataUseable,
-                                                    statusReport.NumberOfItemsWithMetadataDeficient,
-                                                    statusReport.NumberOfItemsWithMetadataNotSet));
+                dokStatusReport.NumberOfItemsWithMetadata.Good,
+                dokStatusReport.NumberOfItemsWithMetadata.Useable,
+                dokStatusReport.NumberOfItemsWithMetadata.Deficient,
+                dokStatusReport.NumberOfItemsWithMetadata.Notset));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_ProductSheet,
-                                    statusReport.NumberOfItemsWithProductsheetGood,
-                                    statusReport.NumberOfItemsWithProductsheetUseable,
-                                    statusReport.NumberOfItemsWithProductsheetDeficient,
-                                    statusReport.NumberOfItemsWithProductsheetNotSet));
+                dokStatusReport.NumberOfItemsWithProductsheet.Good,
+                dokStatusReport.NumberOfItemsWithProductsheet.Useable,
+                dokStatusReport.NumberOfItemsWithProductsheet.Deficient,
+                dokStatusReport.NumberOfItemsWithProductsheet.Notset));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_PresentationRules,
-                                    statusReport.NumberOfItemsWithPresentationRulesGood,
-                                    statusReport.NumberOfItemsWithPresentationRulesUseable,
-                                    statusReport.NumberOfItemsWithPresentationRulesDeficient,
-                                    statusReport.NumberOfItemsWithPresentationRulesNotSet));
+                dokStatusReport.NumberOfItemsWithPresentationRules.Good,
+                dokStatusReport.NumberOfItemsWithPresentationRules.Useable,
+                dokStatusReport.NumberOfItemsWithPresentationRules.Deficient,
+                dokStatusReport.NumberOfItemsWithPresentationRules.Notset));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_ProductSpesification,
-                statusReport.NumberOfItemsWithProductSpecificationGood,
-                statusReport.NumberOfItemsWithProductSpecificationUseable,
-                statusReport.NumberOfItemsWithProductSpecificationDeficient,
-                statusReport.NumberOfItemsWithProductSpecificationNotSet));
+                dokStatusReport.NumberOfItemsWithProductSpecification.Good,
+                dokStatusReport.NumberOfItemsWithProductSpecification.Useable,
+                dokStatusReport.NumberOfItemsWithProductSpecification.Deficient,
+                dokStatusReport.NumberOfItemsWithProductSpecification.Notset));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Wms,
-                statusReport.NumberOfItemsWithWmsGood,
-                statusReport.NumberOfItemsWithWmsUseable,
-                statusReport.NumberOfItemsWithWmsDeficient,
-                statusReport.NumberOfItemsWithWmsNotSet));
+                dokStatusReport.NumberOfItemsWithWms.Good,
+                dokStatusReport.NumberOfItemsWithWms.Useable,
+                dokStatusReport.NumberOfItemsWithWms.Deficient,
+                dokStatusReport.NumberOfItemsWithWms.Notset));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Wfs,
-                statusReport.NumberOfItemsWithWfsGood,
-                statusReport.NumberOfItemsWithWfsUseable,
-                statusReport.NumberOfItemsWithWfsDeficient,
-                statusReport.NumberOfItemsWithWfsNotSet));
+                dokStatusReport.NumberOfItemsWithWfs.Good,
+                dokStatusReport.NumberOfItemsWithWfs.Useable,
+                dokStatusReport.NumberOfItemsWithWfs.Deficient,
+                dokStatusReport.NumberOfItemsWithWfs.Notset));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_GmlRequirements,
-                statusReport.NumberOfItemsWithGmlRequirementsGood,
-                statusReport.NumberOfItemsWithGmlRequirementsUseable,
-                statusReport.NumberOfItemsWithGmlRequirementsDeficient,
-                statusReport.NumberOfItemsWithGmlRequirementsNotSet));
+                dokStatusReport.NumberOfItemsWithGmlRequirements.Good,
+                dokStatusReport.NumberOfItemsWithGmlRequirements.Useable,
+                dokStatusReport.NumberOfItemsWithGmlRequirements.Deficient,
+                dokStatusReport.NumberOfItemsWithGmlRequirements.Notset));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_SosiRequirements,
-                statusReport.NumberOfItemsWithSosiRequirementsGood,
-                statusReport.NumberOfItemsWithSosiRequirementsUseable,
-                statusReport.NumberOfItemsWithSosiRequirementsDeficient,
-                statusReport.NumberOfItemsWithSosiRequirementsNotSet));
+                dokStatusReport.NumberOfItemsWithSosiRequirements.Good,
+                dokStatusReport.NumberOfItemsWithSosiRequirements.Useable,
+                dokStatusReport.NumberOfItemsWithSosiRequirements.Deficient,
+                dokStatusReport.NumberOfItemsWithSosiRequirements.Notset));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_AtomFeed,
-                statusReport.NumberOfItemsWithAtomFeedGood,
-                statusReport.NumberOfItemsWithAtomFeedUseable,
-                statusReport.NumberOfItemsWithAtomFeedDeficient,
-                statusReport.NumberOfItemsWithAtomFeedNotSet));
+                dokStatusReport.NumberOfItemsWithAtomFeed.Good,
+                dokStatusReport.NumberOfItemsWithAtomFeed.Useable,
+                dokStatusReport.NumberOfItemsWithAtomFeed.Deficient,
+                dokStatusReport.NumberOfItemsWithAtomFeed.Notset));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Distribution,
-                statusReport.NumberOfItemsWithDistributionGood,
-                statusReport.NumberOfItemsWithDistributionUseable,
-                statusReport.NumberOfItemsWithDistributionDeficient,
-                statusReport.NumberOfItemsWithDistributionNotSet));
+                dokStatusReport.NumberOfItemsWithDistribution.Good,
+                dokStatusReport.NumberOfItemsWithDistribution.Useable,
+                dokStatusReport.NumberOfItemsWithDistribution.Deficient,
+                dokStatusReport.NumberOfItemsWithDistribution.Notset));
+        }
+
+        private void WriteInspireStatusesInTable(StreamWriter streamWriter,
+            InspireRegistryStatusReport inspireStatusReport)
+        {
+            WriteInspireDatasetStatusesInTable(streamWriter, inspireStatusReport);
+            streamWriter.WriteLine();
+            WriteInspireServiceStatusesInTable(streamWriter, inspireStatusReport);
+        }
+
+        private void WriteInspireDatasetStatusesInTable(StreamWriter streamWriter, InspireRegistryStatusReport inspireStatusReport)
+        {
+            streamWriter.WriteLine(SingelStatusReportHeading(DataSet.Dataset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.Metadata,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Good,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Useable,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Deficient,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadata.Notset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.MetadataServiceStatus,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Good,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Useable,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Deficient,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithMetadataService.Notset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.Distribution,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Good,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Useable,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Deficient,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithDistribution.Notset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.WmsStatus,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWms.Good,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWms.Useable,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWms.Deficient,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWms.Notset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.WfsOrAtomStatus,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfs.Good,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfs.Useable,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfs.Deficient,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfs.Notset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.AtomFeedStatus,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Good,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Useable,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Deficient,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithAtomFeed.Notset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.WfsOrAtomStatus,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Good,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Useable,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Deficient,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithWfsOrAtom.Notset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.HarmonizedDataStatus,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Good,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Useable,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Deficient,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithHarmonizedData.Notset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.SpatialDataServiceStatus,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Good,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Useable,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Deficient,
+                inspireStatusReport.InspireDatasetStatusReport.NumberOfItemsWithSpatialDataService.Notset));
+        }
+
+        private void WriteInspireServiceStatusesInTable(StreamWriter streamWriter, InspireRegistryStatusReport inspireStatusReport)
+        {
+            streamWriter.WriteLine(SingelStatusReportHeading(InspireDataSet.Service));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.Metadata,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadata.Good,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadata.Useable,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadata.Deficient,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadata.Notset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.Metadata,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadataInSearchService.Good,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadataInSearchService.Useable,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadataInSearchService.Deficient,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithMetadataInSearchService.Notset));
+
+            streamWriter.WriteLine(StatusByType(InspireDataSet.Distribution,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithServiceStatus.Good,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithServiceStatus.Useable,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithServiceStatus.Deficient,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithServiceStatus.Notset));
+
+            streamWriter.WriteLine(SingelStatusReportHeadingOK());
+
+            streamWriter.WriteLine(StatusOk(InspireDataSet.Sds,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithSds,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithoutSds
+                ));
+
+            streamWriter.WriteLine(StatusOk(InspireDataSet.NetworkService,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithNetworkService,
+                inspireStatusReport.InspireServiceStatusReport.NumberOfItemsWithoutNetworkService
+                ));
         }
 
         private string StatusByType(string statusType, int good, int useable, int deficient, int notSet)
@@ -189,67 +427,77 @@ namespace Kartverket.Register.Formatter
             return statusType + ";" + good + ";" + useable + ";" + deficient + ";" + notSet;
         }
 
-        private string SingelStatusReportHeading()
+        private string StatusOk(string statusType, int ok, int notOk)
         {
-            return ";" + DataSet.DOK_Delivery_Status_Good + ";" +
+            return statusType + ";" + ok + ";" + notOk;
+        }
+
+        private string SingelStatusReportHeading(string label = "")
+        {
+            return label + ";" + DataSet.DOK_Delivery_Status_Good + ";" +
                    DataSet.DOK_Delivery_Status_Useable + ";" +
                    DataSet.DOK_Delivery_Status_Deficient + ";" +
                    DataSet.DOK_Delivery_Status_NotSet;
         }
 
-        private string WriteStatusReport(StatusReport statusReport)
+        private string SingelStatusReportHeadingOK()
         {
-            return statusReport.Date + ";" +
-                   statusReport.NumberOfItemsWithMetadataGood + ";" +
-                   statusReport.NumberOfItemsWithMetadataUseable + ";" +
-                   statusReport.NumberOfItemsWithMetadataDeficient + ";" +
-                   statusReport.NumberOfItemsWithMetadataNotSet + ";" +
+            return ";" + Shared.Yes + ";" +
+                   Shared.No;
+        }
 
-                   statusReport.NumberOfItemsWithProductsheetGood + ";" +
-                   statusReport.NumberOfItemsWithProductsheetUseable + ";" +
-                   statusReport.NumberOfItemsWithProductsheetDeficient + ";" +
-                   statusReport.NumberOfItemsWithProductsheetNotSet + ";" +
+        private string WriteDokStatusReport(DokStatusReport dokStatusReport)
+        {
+            return dokStatusReport.Date + ";" +
+                   dokStatusReport.NumberOfItemsWithMetadata.Good + ";" +
+                   dokStatusReport.NumberOfItemsWithMetadata.Useable + ";" +
+                   dokStatusReport.NumberOfItemsWithMetadata.Deficient + ";" +
+                   dokStatusReport.NumberOfItemsWithMetadata.Notset + ";" +
 
-                   statusReport.NumberOfItemsWithPresentationRulesGood + ";" +
-                   statusReport.NumberOfItemsWithPresentationRulesUseable + ";" +
-                   statusReport.NumberOfItemsWithPresentationRulesDeficient + ";" +
-                   statusReport.NumberOfItemsWithPresentationRulesNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithProductsheet.Good + ";" +
+                   dokStatusReport.NumberOfItemsWithProductsheet.Useable + ";" +
+                   dokStatusReport.NumberOfItemsWithProductsheet.Deficient + ";" +
+                   dokStatusReport.NumberOfItemsWithProductsheet.Notset + ";" +
 
-                   statusReport.NumberOfItemsWithProductSpecificationGood + ";" +
-                   statusReport.NumberOfItemsWithProductSpecificationUseable + ";" +
-                   statusReport.NumberOfItemsWithProductSpecificationDeficient + ";" +
-                   statusReport.NumberOfItemsWithProductSpecificationNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithPresentationRules.Good + ";" +
+                   dokStatusReport.NumberOfItemsWithPresentationRules.Useable + ";" +
+                   dokStatusReport.NumberOfItemsWithPresentationRules.Deficient + ";" +
+                   dokStatusReport.NumberOfItemsWithPresentationRules.Notset + ";" +
 
-                   statusReport.NumberOfItemsWithWmsGood + ";" +
-                   statusReport.NumberOfItemsWithWmsUseable + ";" +
-                   statusReport.NumberOfItemsWithWmsDeficient + ";" +
-                   statusReport.NumberOfItemsWithWmsNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithProductSpecification.Good + ";" +
+                   dokStatusReport.NumberOfItemsWithProductSpecification.Useable + ";" +
+                   dokStatusReport.NumberOfItemsWithProductSpecification.Deficient + ";" +
+                   dokStatusReport.NumberOfItemsWithProductSpecification.Notset + ";" +
 
-                   statusReport.NumberOfItemsWithWfsGood + ";" +
-                   statusReport.NumberOfItemsWithWfsUseable + ";" +
-                   statusReport.NumberOfItemsWithWfsDeficient + ";" +
-                   statusReport.NumberOfItemsWithWfsNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithWms.Good + ";" +
+                   dokStatusReport.NumberOfItemsWithWms.Useable + ";" +
+                   dokStatusReport.NumberOfItemsWithWms.Deficient + ";" +
+                   dokStatusReport.NumberOfItemsWithWms.Notset + ";" +
 
-                   statusReport.NumberOfItemsWithSosiRequirementsGood + ";" +
-                   statusReport.NumberOfItemsWithSosiRequirementsUseable + ";" +
-                   statusReport.NumberOfItemsWithSosiRequirementsDeficient + ";" +
-                   statusReport.NumberOfItemsWithSosiRequirementsNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithWfs.Good + ";" +
+                   dokStatusReport.NumberOfItemsWithWfs.Useable + ";" +
+                   dokStatusReport.NumberOfItemsWithWfs.Deficient + ";" +
+                   dokStatusReport.NumberOfItemsWithWfs.Notset + ";" +
 
-                   statusReport.NumberOfItemsWithGmlRequirementsGood + ";" +
-                   statusReport.NumberOfItemsWithGmlRequirementsUseable + ";" +
-                   statusReport.NumberOfItemsWithGmlRequirementsDeficient + ";" +
-                   statusReport.NumberOfItemsWithGmlRequirementsNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithSosiRequirements.Good + ";" +
+                   dokStatusReport.NumberOfItemsWithSosiRequirements.Useable + ";" +
+                   dokStatusReport.NumberOfItemsWithSosiRequirements.Deficient + ";" +
+                   dokStatusReport.NumberOfItemsWithSosiRequirements.Notset + ";" +
 
-                   statusReport.NumberOfItemsWithAtomFeedGood + ";" +
-                   statusReport.NumberOfItemsWithAtomFeedUseable + ";" +
-                   statusReport.NumberOfItemsWithAtomFeedDeficient + ";" +
-                   statusReport.NumberOfItemsWithAtomFeedNotSet + ";" +
+                   dokStatusReport.NumberOfItemsWithGmlRequirements.Good + ";" +
+                   dokStatusReport.NumberOfItemsWithGmlRequirements.Useable + ";" +
+                   dokStatusReport.NumberOfItemsWithGmlRequirements.Deficient + ";" +
+                   dokStatusReport.NumberOfItemsWithGmlRequirements.Notset + ";" +
 
-                   statusReport.NumberOfItemsWithDistributionGood + ";" +
-                   statusReport.NumberOfItemsWithDistributionUseable + ";" +
-                   statusReport.NumberOfItemsWithDistributionDeficient + ";" +
-                   statusReport.NumberOfItemsWithDistributionNotSet;
+                   dokStatusReport.NumberOfItemsWithAtomFeed.Good + ";" +
+                   dokStatusReport.NumberOfItemsWithAtomFeed.Useable + ";" +
+                   dokStatusReport.NumberOfItemsWithAtomFeed.Deficient + ";" +
+                   dokStatusReport.NumberOfItemsWithAtomFeed.Notset + ";" +
 
+                   dokStatusReport.NumberOfItemsWithDistribution.Good + ";" +
+                   dokStatusReport.NumberOfItemsWithDistribution.Useable + ";" +
+                   dokStatusReport.NumberOfItemsWithDistribution.Deficient + ";" +
+                   dokStatusReport.NumberOfItemsWithDistribution.Notset;
         }
 
 
@@ -524,7 +772,7 @@ namespace Kartverket.Register.Formatter
             return "Id ;" + Registers.Name + ";" + Registers.Description + ";" + Registers.Owner + ";" + Registers.Updated;
         }
 
-        private string StatusReportHeading()
+        private string DokStatusReportHeading()
         {
             return Registers.Date + ";" +
                    DataSet.DOK_Delivery_Metadata + ";" + ";" + ";" + ";" +
@@ -539,6 +787,20 @@ namespace Kartverket.Register.Formatter
                    DataSet.DOK_Delivery_Distribution;
         }
 
+        private string InspireDatasetReportHeading()
+        {
+            return Registers.Date + ";" +
+                   InspireDataSet.Metadata + ";" + ";" + ";" + ";" +
+                   InspireDataSet.MetadataServiceStatus + ";" + ";" + ";" + ";" +
+                   InspireDataSet.Distribution + ";" + ";" + ";" + ";" +
+                   InspireDataSet.WmsStatus + ";" + ";" + ";" + ";" +
+                   InspireDataSet.WfsStatus + ";" + ";" + ";" + ";" +
+                   InspireDataSet.AtomFeedStatus + ";" + ";" + ";" + ";" +
+                   InspireDataSet.WfsOrAtomStatus + ";" + ";" + ";" + ";" +
+                   InspireDataSet.HarmonizedDataStatus + ";" + ";" + ";" + ";" +
+                   InspireDataSet.SpatialDataServiceStatus + ";" + ";" + ";" + ";";
+        }
+
         private string StatusReportHeadingStatusValues()
         {
             return ";" +
@@ -550,13 +812,28 @@ namespace Kartverket.Register.Formatter
                    HeadingStatuses() +
                    HeadingStatuses() +
                    HeadingStatuses() +
-                   HeadingStatuses() +
                    HeadingStatuses();
+        }
+
+        private string InspireServiceStatusReportHeadingStatusValues()
+        {
+            return ";" +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatusesOk() +
+                   HeadingStatusesOk();
+
         }
 
         private static string HeadingStatuses()
         {
             return DataSet.DOK_Delivery_Status_Good + ";" + DataSet.DOK_Delivery_Status_Useable + ";" + DataSet.DOK_Delivery_Status_Deficient + ";" + DataSet.DOK_Delivery_Status_NotSet + ";";
+        }
+
+        private static string HeadingStatusesOk()
+        {
+            return Shared.Yes + ";" + Shared.No + ";";
         }
 
         private string RegisterItemDokMunicipalHeading(Models.Api.Register register)

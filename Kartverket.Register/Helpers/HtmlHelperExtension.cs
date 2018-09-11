@@ -21,9 +21,6 @@ namespace Kartverket.Register.Helpers
         private static readonly IRegisterItemService RegisteritemService = new RegisterItemService(Db);
         private static readonly IAccessControlService AccessControl = new AccessControlService(Db);
         private static readonly IRegisterService RegisterService = new RegisterService(Db);
-
-
-
         public static string EnvironmentName(this HtmlHelper helper)
         {
             return WebConfigurationManager.AppSettings["EnvironmentName"];
@@ -790,6 +787,32 @@ namespace Kartverket.Register.Helpers
         public static string GetThumbnail(string thumbnailSrc)
         {
             return thumbnailSrc ?? "/Content/pdf.jpg";
+        }
+
+        public static double Percent(int numberOf, int total)
+        {
+            var x = Divide(numberOf, total);
+            return Math.Round(x * 100, 2);
+        }
+
+        public static double Divide(int x, int y)
+        {
+            try
+            {
+                if (y == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return (double)x / y;
+                }
+            }
+            catch (Exception e)
+            {
+
+                return 0;
+            }
         }
     }
 }

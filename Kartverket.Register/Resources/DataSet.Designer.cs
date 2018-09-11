@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ikke satt.
+        /// </summary>
+        public static string Deficient {
+            get {
+                return ResourceManager.GetString("Deficient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slett datasett.
         /// </summary>
         public static string DeleteDataset {
@@ -843,15 +852,6 @@ namespace Resources {
         public static string SuggestNewDatasetMunicipality {
             get {
                 return ResourceManager.GetString("SuggestNewDatasetMunicipality", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Egnethet.
-        /// </summary>
-        public static string Suitability {
-            get {
-                return ResourceManager.GetString("Suitability", resourceCulture);
             }
         }
         

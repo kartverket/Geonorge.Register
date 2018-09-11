@@ -262,4 +262,16 @@
   <data name="ShowAll" xml:space="preserve">
     <value>Show all</value>
   </data>
+  <data name="Deficient" xml:space="preserve">
+    <value>Deficient</value>
+  </data>
+  <data name="Good" xml:space="preserve">
+    <value>Good</value>
+  </data>
+  <data name="NotSet" xml:space="preserve">
+    <value>NotSet</value>
+  </data>
+  <data name="Useable" xml:space="preserve">
+    <value>Useable</value>
+  </data>
 </root>

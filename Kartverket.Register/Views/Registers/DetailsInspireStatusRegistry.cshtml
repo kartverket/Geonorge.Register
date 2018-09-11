@@ -16,17 +16,17 @@
     int pageNumber = (page ?? 1);
 }
 @section Scripts {
-    
+
     @if (Model.InspireReport != null)
     {
         @Html.Partial("Vue/_inspireMonitoring", Model.InspireReport)
     }
+    @if (Model.StatusReport != null && !Model.StatusReport.ReportNotExists)
+    {
+        @Html.Partial("js/_inspireReportCharts", (InspireRegistryStatusReportViewModel)Model.StatusReport)
+    }
 
     <script>
-        $(function () {
-            var menu_state = localStorage.setItem("navtabselected", "gjeldende");
-        }
-        );
 
         $(function () {
 
@@ -52,7 +52,6 @@
 
         selectedTab.className = "active";
 
-
     </script>
 }
 
@@ -72,7 +71,6 @@
             <p>
                 @Model.Description
             </p>
-
         </div>
 
         <div class="col-sm-12 col-md-2 text-right">
@@ -89,11 +87,14 @@
                 </li>
                 @if (HtmlHelperExtensions.IsAdmin())
                 {
-                    <li id="report-Tab" class="tab">
-                        @Html.ActionLink("Rapport", "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "report"))
+                    <li id="inspirereport-Tab" class="tab">
+                        @Html.ActionLink("Inspire rapport", "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "inspirereport"))
                     </li>
                     <li id="synchronizations-Tab" class="tab">
                         @Html.ActionLink("Synkronisering", "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "synchronizations"))
+                    </li>
+                    <li id="report-Tab" class="tab">
+                        @Html.ActionLink("Rapport", "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "report"))
                     </li>
                 }
             </ul>
@@ -101,7 +102,7 @@
     </div>
 </section>
 
-@if (!Model.SelectedInspireRegisteryTypeIsReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations())
+@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedInspireRegisteryTypeIsReport())
 {
     <div class="row search-result-navigation">
         <div class="col-md-4">
@@ -130,17 +131,28 @@
 }
 
 
-@if (Model.SelectedInspireRegisteryType == "service")
+@if (Model.SelectedInspireRegisteryTypeIsService())
 {
     @Html.Partial("_inspireDataService", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
 }
-else if (Model.SelectedInspireRegisteryType == "report")
+else if (Model.SelectedInspireRegisteryTypeIsInspireReport())
 {
     @Html.Partial("_inspireMonitoring", Model.InspireReport)
 }
-else if (Model.SelectedInspireRegisteryType == "synchronizations")
+else if (Model.SelectedInspireRegisteryTypeIsSynchronizations())
 {
     @Html.Partial("_synchronizations", Model.SynchronizationJobs)
+}
+else if (Model.SelectedInspireRegisteryType == "report")
+{
+    if (Model.StatusReport != null)
+    {
+        @Html.Partial("_inspireReport", (InspireRegistryStatusReportViewModel)Model.StatusReport)
+    }
+    else
+    {
+            <p>Ingen rapport...</p>
+    }
 }
 else
 {
@@ -148,7 +160,7 @@ else
 }
 
 
-@if (!Model.SelectedInspireRegisteryTypeIsReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations())
+@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedInspireRegisteryTypeIsReport())
 {<div class="clearfix"></div>
     <div class="col-sm-12 row">
         @if (Model.ContainedItemClassIsRegister())
@@ -168,7 +180,7 @@ else
 
 <div class="clearfix"></div>
 <div class="hidden-print">
-    @if (!Model.SelectedInspireRegisteryTypeIsReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations())
+    @if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations())
     {
         if (Model.AccessRegister.EditListOfRegisterItems)
         {

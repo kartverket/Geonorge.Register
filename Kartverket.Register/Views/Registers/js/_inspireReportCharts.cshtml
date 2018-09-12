@@ -51,22 +51,32 @@
     }
 
     function ToggleDatasetReport(checked) {
+        var datasetCharts = document.getElementsByClassName("datasetChart");
         if (checked) {
-            document.getElementById("datasetLineChart").style.display = "inline-block";
+            for (var i = 0; i < datasetCharts.length; i++){
+                datasetCharts[i].style.display = "inline-block";
+            }
             localStorage.setItem("cbToggleDataset", true);
             
         } else {
-            document.getElementById("datasetLineChart").style.display = "none";
+            for (var i = 0; i < datasetCharts.length; i++) {
+                datasetCharts[i].style.display = "none";
+            }
             localStorage.setItem("cbToggleDataset", false);
         }
     }
 
     function ToggleDataServiceReport(checked) {
+        var serviceChart = document.getElementsByClassName("serviceChart");
         if (checked) {
-            document.getElementById("serviceLineChart").style.display = "inline-block";
+            for (var i = 0; i < serviceChart.length; i++) {
+                serviceChart[i].style.display = "inline-block";
+            }
             localStorage.setItem("cbToggleDataService", true);
         } else {
-            document.getElementById("serviceLineChart").style.display = "none";
+            for (var i = 0; i < serviceChart.length; i++) {
+                serviceChart[i].style.display = "none";
+            }
             localStorage.setItem("cbToggleDataService", false);
         }
     }

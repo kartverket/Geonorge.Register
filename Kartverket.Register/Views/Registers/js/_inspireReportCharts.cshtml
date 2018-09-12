@@ -14,6 +14,16 @@
         var cbDatasetChecked = localStorage.getItem("cbToggleDataset");
         var cbDataServiceChecked = localStorage.getItem("cbToggleDataService");
 
+        if (cbDataServiceChecked == null) {
+            cbDataServiceChecked = true;
+        }
+        if (cbDatasetChecked == null) {
+            cbDatasetChecked = true;
+        }
+
+        console.log(cbDatasetChecked);
+        console.log(cbDataServiceChecked);
+
         if (cbDatasetChecked) {
             var cbDataset = document.getElementById("cbToggleDataset");
             cbDataset.checked = true;

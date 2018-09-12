@@ -120,6 +120,9 @@
   <data name="AtomFeedStatus" xml:space="preserve">
     <value>Download service Atom feed</value>
   </data>
+  <data name="Distribution" xml:space="preserve">
+    <value>Distribution</value>
+  </data>
   <data name="DistributionStatus" xml:space="preserve">
     <value>Sharing of data</value>
   </data>
@@ -154,7 +157,7 @@
     <value>Spatial data service</value>
   </data>
   <data name="WfsOrAtomStatus" xml:space="preserve">
-    <value>Nedlastingstjeneste WFS eller Atom-feed</value>
+    <value>Download service WFS or Atom-feed</value>
   </data>
   <data name="WfsStatus" xml:space="preserve">
     <value>Download service WFS</value>

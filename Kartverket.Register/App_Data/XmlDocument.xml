@@ -2007,6 +2007,11 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.Area">
+            <summary>
+              Looks up a localized string similar to Arela.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.AtomFeedStatus">
             <summary>
               Looks up a localized string similar to Nedlastingstjeneste Atom-feed.
@@ -2060,6 +2065,11 @@
         <member name="P:Resources.InspireDataSet.NewDataset">
             <summary>
               Looks up a localized string similar to Legg til nytt inspire datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.RelevantArea">
+            <summary>
+              Looks up a localized string similar to Relevant area.
             </summary>
         </member>
         <member name="P:Resources.InspireDataSet.Sds">

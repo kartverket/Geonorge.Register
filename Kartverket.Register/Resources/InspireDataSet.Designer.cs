@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arela.
+        /// </summary>
+        public static string Area {
+            get {
+                return ResourceManager.GetString("Area", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nedlastingstjeneste Atom-feed.
         /// </summary>
         public static string AtomFeedStatus {
@@ -156,6 +165,15 @@ namespace Resources {
         public static string NewDataset {
             get {
                 return ResourceManager.GetString("NewDataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relevant area.
+        /// </summary>
+        public static string RelevantArea {
+            get {
+                return ResourceManager.GetString("RelevantArea", resourceCulture);
             }
         }
         

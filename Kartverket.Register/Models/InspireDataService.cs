@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
+using Resources;
 
 namespace Kartverket.Register.Models
 {
@@ -10,22 +11,22 @@ namespace Kartverket.Register.Models
     {
         public string InspireDataType { get; set; } // WMS, WFS, REST, Atom feed, metadata --> protocol
 
-        [ForeignKey("InspireDeliveryMetadata"), Required, Display(Name = "Metadata:")]
+        [ForeignKey("InspireDeliveryMetadata"), Required, Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
         public Guid InspireDeliveryMetadataId { get; set; }
         public virtual DatasetDelivery InspireDeliveryMetadata { get; set; } // Finnes = Brukbar, Valid metadata = God. Status fra editor.
 
-        [ForeignKey("InspireDeliveryMetadataInSearchService"), Required, Display(Name = "Metadatatjeneste:")]
+        [ForeignKey("InspireDeliveryMetadataInSearchService"), Required, Display(Name = "MetadataInSearchService", ResourceType = typeof(InspireDataSet))]
         public Guid InspireDeliveryMetadataInSearchServiceId { get; set; }
         public virtual DatasetDelivery InspireDeliveryMetadataInSearchService { get; set; } // Godkjent p� alle
 
-        [ForeignKey("InspireDeliveryServiceStatus"), Required, Display(Name = "Metadatatjeneste:")]
+        [ForeignKey("InspireDeliveryServiceStatus"), Required, Display(Name = "ServiceStatus", ResourceType = typeof(InspireDataSet))]
         public Guid InspireDeliveryServiceStatusId { get; set; }
         public virtual DatasetDelivery InspireDeliveryServiceStatus { get; set; } // Tjenestestatus for WMS/WFS
 
         public int Requests { get; set; } // Manuelt
         public string Url { get; set; } // Til tjenesten, finnes i metadataene
 
-        [Display(Name = "Inspiretema:")]
+        [Display(Name = "InspireTheme", ResourceType = typeof(InspireDataSet))]
         public virtual ICollection<CodelistValue> InspireThemes { get; set; } /// Liste opp alle Annex tjenestene h�rer til..
 
         public string ServiceType { get; set; } 

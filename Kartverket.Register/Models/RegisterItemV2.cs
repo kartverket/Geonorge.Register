@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Resources;
 
 namespace Kartverket.Register.Models
 {
@@ -10,18 +11,18 @@ namespace Kartverket.Register.Models
         public Guid SystemId { get; set; }
 
         [Required]
-        [Display(Name = "Navn:")]
+        [Display(Name = "Name", ResourceType = typeof(Registers))]
         public string Name { get; set; }
 
         [Required]
         public string Seoname { get; set; }
 
-        [Display(Name = "Beskrivelse:")]
+        [Display(Name = "Description", ResourceType = typeof(Registers))]
         public string Description { get; set; }
 
         [ForeignKey("Submitter"), Required]
         public Guid SubmitterId { get; set; }
-        [Display(Name = "Innsender:")]
+        [Display(Name = "Submitter", ResourceType = typeof(Registers))]
         public virtual Organization Submitter { get; set; }
 
         [ForeignKey("Owner"), Required]
@@ -29,11 +30,11 @@ namespace Kartverket.Register.Models
         [Display(Name = "Eier:")]
         public virtual Organization Owner { get; set; }
 
-        [Display(Name = "Dato innsendt:")]
+        [Display(Name = "DateSubmitted", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateSubmitted { get; set; }
 
-        [Display(Name = "Dato endret:")]
+        [Display(Name = "Modified", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Modified { get; set; }
 
@@ -47,12 +48,24 @@ namespace Kartverket.Register.Models
         [Display(Name = "Register:")]
         public virtual Register Register { get; set; }
 
+        [Display(Name = "DateAccepted", ResourceType = typeof(Registers))]
         public DateTime? DateAccepted { get; set; }
+
+        [Display(Name = "DateNotAccepted", ResourceType = typeof(Registers))]
         public DateTime? DateNotAccepted { get; set; }
+
+        [Display(Name = "DateSuperseded", ResourceType = typeof(Registers))]
         public DateTime? DateSuperseded { get; set; }
+
+        [Display(Name = "DateRetired", ResourceType = typeof(Registers))]
         public DateTime? DateRetired { get; set; }
+
+        [Display(Name = "VersionNumber", ResourceType = typeof(Registers))]
         public int VersionNumber { get; set; }
+
+        [Display(Name = "VersionName", ResourceType = typeof(Registers))]
         public string VersionName { get; set; }
+
         [ForeignKey("Versioning")]
         public Guid VersioningId { get; set; }
         public virtual Version Versioning { get; set; }

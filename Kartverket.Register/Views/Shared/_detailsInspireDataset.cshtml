@@ -14,12 +14,6 @@
     <p><strong>@Html.DisplayNameFor(model => Model.InspireThemes): </strong>@Model.InspireThemsAsString()</p>
 </article>
 
-<article class="col-md-12">
-    <h3>DOK-status</h3>
-    <p title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><strong>DOK-status: </strong>@Model.DokStatus.description <i class="statusIcon-@Model.DokStatusId"></i></p>
-    <p><strong>@Html.DisplayNameFor(model => Model.DokStatusDateAccepted): </strong>@Html.DisplayFor(modelItem => Model.DokStatusDateAccepted)</p>
-    <p><strong>@Registers.Updated: </strong>@Html.DisplayFor(model => model.Modified)</p>
-</article>
 
 <article class="col-md-12">
     <h3>Areal</h3>

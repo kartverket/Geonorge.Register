@@ -126,6 +126,15 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Datasett.
         /// </summary>
+        public static string DataSet {
+            get {
+                return ResourceManager.GetString("DataSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasett.
+        /// </summary>
         public static string DatasetHarmonizedData {
             get {
                 return ResourceManager.GetString("DatasetHarmonizedData", resourceCulture);

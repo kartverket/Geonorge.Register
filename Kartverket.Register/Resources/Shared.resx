@@ -148,7 +148,7 @@
     <value>Henter søkeresultater</value>
   </data>
   <data name="Search_Placeholder" xml:space="preserve">
-    <value>Søk etter registerdata</value>
+    <value>Søk etter registerinnhold</value>
   </data>
   <data name="Heading" xml:space="preserve">
     <value>Registrene</value>

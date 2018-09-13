@@ -138,6 +138,9 @@
   <data name="CompareWith" xml:space="preserve">
     <value>Sammenlign med</value>
   </data>
+  <data name="DataSet" xml:space="preserve">
+    <value>Datasett</value>
+  </data>
   <data name="DatasetHarmonizedData" xml:space="preserve">
     <value>Datasett</value>
   </data>

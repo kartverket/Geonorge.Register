@@ -2042,6 +2042,11 @@
               Looks up a localized string similar to Sammenlign med.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.DataSet">
+            <summary>
+              Looks up a localized string similar to Datasett.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.DatasetHarmonizedData">
             <summary>
               Looks up a localized string similar to Datasett.
@@ -4192,7 +4197,7 @@
         </member>
         <member name="P:Resources.Shared.Search_Placeholder">
             <summary>
-              Looks up a localized string similar to Søk etter registerdata.
+              Looks up a localized string similar to Søk etter registerinnhold.
             </summary>
         </member>
         <member name="P:Resources.Shared.SearchFor">

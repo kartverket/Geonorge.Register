@@ -440,7 +440,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Søk etter registerdata.
+        ///   Looks up a localized string similar to Søk etter registerinnhold.
         /// </summary>
         public static string Search_Placeholder {
             get {

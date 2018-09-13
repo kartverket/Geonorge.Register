@@ -25,13 +25,17 @@
         console.log(cbDataServiceChecked);
 
         if (cbDatasetChecked == "true") {
+            cbDatasetChecked = true;
             document.getElementById("cbToggleDataset").checked = true;
         } else {
+            cbDatasetChecked = false;
             document.getElementById("cbToggleDataset").checked = false;
         }
         if (cbDataServiceChecked == "true") {
+            cbDataServiceChecked = true;
             document.getElementById("cbToggleDataService").checked = true;
         } else {
+            cbDataServiceChecked = false;
             document.getElementById("cbToggleDataService").checked = false;
         }
         if (inspireDatasetStatusType) {
@@ -105,7 +109,7 @@
 
     function ToggleDatasetReport(checked) {
         var datasetCharts = document.getElementsByClassName("datasetChart");
-        if (checked == "true") {
+        if (checked) {
             for (var i = 0; i < datasetCharts.length; i++){
                 datasetCharts[i].style.display = "inline-block";
             }
@@ -123,7 +127,7 @@
 
     function ToggleDataServiceReport(checked) {
         var serviceChart = document.getElementsByClassName("serviceChart");
-        if (checked == "true") {
+        if (checked) {
             for (var i = 0; i < serviceChart.length; i++) {
                 serviceChart[i].style.display = "inline-block";
             }

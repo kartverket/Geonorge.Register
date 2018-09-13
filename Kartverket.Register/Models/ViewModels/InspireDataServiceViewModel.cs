@@ -38,10 +38,10 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "Requests")]
         public int Requests { get; set; } // Manuelt
 
-        [Display(Name = "Nettverkstjeneste")]
+        [Display(Name = "NetworkService", ResourceType = typeof(InspireDataSet))]
         public bool NetworkService { get; set; } // view og download = true
 
-        [Display(Name = "Sds")]
+        [Display(Name = "Sds", ResourceType = typeof(InspireDataSet))]
         public bool Sds { get; set; } // tjenester som ikke er WMS eller WFS
 
         [Display(Name = "Url")]
@@ -130,11 +130,11 @@ namespace Kartverket.Register.Models.ViewModels
             {
                 if (inspireTeamsString == null)
                 {
-                    inspireTeamsString += item.name;
+                    inspireTeamsString += item.NameTranslated();
                 }
                 else
                 {
-                    inspireTeamsString += ", " + item.name;
+                    inspireTeamsString += ", " + item.NameTranslated();
                 }
             }
             return inspireTeamsString;

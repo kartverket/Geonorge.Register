@@ -165,6 +165,9 @@
   <data name="InspireReport" xml:space="preserve">
     <value>Inspire rapport</value>
   </data>
+  <data name="InspireServiceStatus" xml:space="preserve">
+    <value>Inspire tjeneste status</value>
+  </data>
   <data name="InspireTheme" xml:space="preserve">
     <value>Inspire tema</value>
   </data>
@@ -203,6 +206,9 @@
   </data>
   <data name="ServiceStatus" xml:space="preserve">
     <value>Tjenestestatus</value>
+  </data>
+  <data name="ServiceType" xml:space="preserve">
+    <value>Tjeneste type</value>
   </data>
   <data name="SpatialDataServiceStatus" xml:space="preserve">
     <value>Spatial data service</value>

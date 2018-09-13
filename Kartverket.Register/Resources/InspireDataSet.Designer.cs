@@ -205,6 +205,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inspire tjeneste status.
+        /// </summary>
+        public static string InspireServiceStatus {
+            get {
+                return ResourceManager.GetString("InspireServiceStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inspire tema.
         /// </summary>
         public static string InspireTheme {
@@ -318,6 +327,15 @@ namespace Resources {
         public static string ServiceStatus {
             get {
                 return ResourceManager.GetString("ServiceStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjeneste type.
+        /// </summary>
+        public static string ServiceType {
+            get {
+                return ResourceManager.GetString("ServiceType", resourceCulture);
             }
         }
         

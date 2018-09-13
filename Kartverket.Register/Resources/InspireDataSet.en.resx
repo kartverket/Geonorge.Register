@@ -159,6 +159,9 @@
   <data name="InspireReport" xml:space="preserve">
     <value>Inspire report</value>
   </data>
+  <data name="InspireServiceStatus" xml:space="preserve">
+    <value>Inspire service status</value>
+  </data>
   <data name="Metadata" xml:space="preserve">
     <value>Metadata</value>
   </data>
@@ -194,6 +197,9 @@
   </data>
   <data name="ServiceStatus" xml:space="preserve">
     <value>Service status</value>
+  </data>
+  <data name="ServiceType" xml:space="preserve">
+    <value>Service type</value>
   </data>
   <data name="SpatialDataServiceStatus" xml:space="preserve">
     <value>Spatial data service</value>

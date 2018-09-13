@@ -2087,6 +2087,11 @@
               Looks up a localized string similar to Inspire rapport.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.InspireServiceStatus">
+            <summary>
+              Looks up a localized string similar to Inspire tjeneste status.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.InspireTheme">
             <summary>
               Looks up a localized string similar to Inspire tema.
@@ -2150,6 +2155,11 @@
         <member name="P:Resources.InspireDataSet.ServiceStatus">
             <summary>
               Looks up a localized string similar to Tjenestestatus.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.ServiceType">
+            <summary>
+              Looks up a localized string similar to Tjeneste type.
             </summary>
         </member>
         <member name="P:Resources.InspireDataSet.SpatialDataServiceStatus">

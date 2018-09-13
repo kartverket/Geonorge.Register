@@ -888,6 +888,10 @@
     <Compile Include="Migrations\201809130820064_RegisterItemV2Translation.Designer.cs">
       <DependentUpon>201809130820064_RegisterItemV2Translation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809131020179_RegisterItemV2SpecificUsageEnglish.cs" />
+    <Compile Include="Migrations\201809131020179_RegisterItemV2SpecificUsageEnglish.Designer.cs">
+      <DependentUpon>201809131020179_RegisterItemV2SpecificUsageEnglish.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2435,6 +2439,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809130820064_RegisterItemV2Translation.resx">
       <DependentUpon>201809130820064_RegisterItemV2Translation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809131020179_RegisterItemV2SpecificUsageEnglish.resx">
+      <DependentUpon>201809131020179_RegisterItemV2SpecificUsageEnglish.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

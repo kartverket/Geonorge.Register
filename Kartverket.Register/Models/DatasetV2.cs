@@ -17,6 +17,7 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "Bruksområde:")]
         public string SpecificUsage { get; set; }
+        public string SpecificUsageEnglish { get; set; }
 
         [Display(Name = "Produktark url:")]
         public string ProductSheetUrl { get; set; }

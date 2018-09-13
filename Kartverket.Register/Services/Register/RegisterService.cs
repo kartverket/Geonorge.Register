@@ -1276,8 +1276,9 @@ namespace Kartverket.Register.Services.Register
             {
                 dynamic metadata = GetMetadata(inspireDataset.Uuid);
                 if(metadata != null) { 
-                inspireDataset.NameEnglish = metadata.EnglishTitle;
-                inspireDataset.DescriptionEnglish = metadata.EnglishAbstract;
+                    inspireDataset.NameEnglish = metadata.EnglishTitle;
+                    inspireDataset.DescriptionEnglish = metadata.EnglishAbstract;
+                    inspireDataset.SpecificUsageEnglish = metadata.SpecificUsage;
                 }
             }
             _dbContext.SaveChanges();
@@ -1302,6 +1303,7 @@ namespace Kartverket.Register.Services.Register
                 {
                     geodatalovDataset.NameEnglish = metadata.EnglishTitle;
                     geodatalovDataset.DescriptionEnglish = metadata.EnglishAbstract;
+                    geodatalovDataset.SpecificUsageEnglish = metadata.SpecificUsage;
                 }
             }
             _dbContext.SaveChanges();
@@ -1309,7 +1311,7 @@ namespace Kartverket.Register.Services.Register
 
         private dynamic GetMetadata(string uuid)
         {
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid + "?lang=en";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

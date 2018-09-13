@@ -27,13 +27,13 @@ else
         </div>
         <div class="pull-right col-md-4">
             <div id="ExportAll" style="display:none;" class="pull-right">
-                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "json")" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
-                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "csv")" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
+                <a id="ExportAllJson" href="@RegisterUrls.ApiReportUrlFormat(Request, "json", null)" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
+                <a id="ExportAllCsv" href="@RegisterUrls.ApiReportUrlFormat(Request, "csv", null)" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
             </div>
 
             <div id="ExportSelected" style="display:inline-block" class="pull-right">
-                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "json", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
-                <a href="@RegisterUrls.ApiReportUrlFormat(Request, "csv", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
+                <a id="ExportSelectedJson" href="@RegisterUrls.ApiReportUrlFormat(Request, "json", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
+                <a id="ExportSelectedCsv" href="@RegisterUrls.ApiReportUrlFormat(Request, "csv", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
             </div>
 
             <div class="text-center pull-right btn-space" style="display: inline-block; vertical-align: top">

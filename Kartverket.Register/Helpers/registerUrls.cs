@@ -215,16 +215,16 @@ namespace Kartverket.Register.Helpers
             return "/dok/rapport";
         }
 
-        public static string ApiReportUrlFormat(HttpRequestBase request, string format, string id = null)
+        public static string ApiReportUrlFormat(HttpRequestBase request, string format, string id = null, bool dataset = true, bool service = true)
         {
-            string url = "#";
+            string url = "/api" + request.FilePath + "/report";
             if (string.IsNullOrWhiteSpace(id))
             {
-                url = "/api" + request.FilePath + "/report." + format + "?" + request.QueryString;
+                url += "." + format + "?" + request.QueryString;
             }
             else
             {
-                url = "/api" + request.FilePath + "/report/" + id + "." + format + "?" + request.QueryString;
+                url += "/" + id + "." + format + "?" + request.QueryString;
             }
             return url;
         }

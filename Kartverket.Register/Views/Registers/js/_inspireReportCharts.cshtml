@@ -15,22 +15,24 @@
         var cbDataServiceChecked = localStorage.getItem("cbToggleDataService");
 
         if (cbDataServiceChecked == null) {
-            cbDataServiceChecked = true;
+            cbDataServiceChecked = "true";
         }
         if (cbDatasetChecked == null) {
-            cbDatasetChecked = true;
+            cbDatasetChecked = "true";
         }
 
         console.log(cbDatasetChecked);
         console.log(cbDataServiceChecked);
 
-        if (cbDatasetChecked) {
-            var cbDataset = document.getElementById("cbToggleDataset");
-            cbDataset.checked = true;
+        if (cbDatasetChecked == "true") {
+            document.getElementById("cbToggleDataset").checked = true;
+        } else {
+            document.getElementById("cbToggleDataset").checked = false;
         }
-        if (cbDataServiceChecked) {
-            var cbService = document.getElementById("cbToggleDataService");
-            cbService.checked = true;
+        if (cbDataServiceChecked == "true") {
+            document.getElementById("cbToggleDataService").checked = true;
+        } else {
+            document.getElementById("cbToggleDataService").checked = false;
         }
         if (inspireDatasetStatusType) {
             ShowAllDatasetChart();
@@ -45,6 +47,7 @@
   
         reportView(selectedView, null);
         var cb = document.getElementById("cbExportReport");
+
         ToggleExportReport(cb);
         ToggleDataServiceReport(cbDataServiceChecked);
         ToggleDatasetReport(cbDatasetChecked);
@@ -60,33 +63,77 @@
         }
     }
 
+    function ExportDataset(dataset) {
+        var esj = document.getElementById("ExportSelectedJson");
+        var esc = document.getElementById("ExportSelectedCsv");
+        var eaj = document.getElementById("ExportAllJson");
+        var eac = document.getElementById("ExportAllCsv");
+
+        var replaseText = "&dataset=" + !dataset;
+        var replaseWith = "";
+
+        esj.href = esj.href.replace(replaseText, replaseWith);
+        esc.href = esc.href.replace(replaseText, replaseWith);
+        eaj.href = eaj.href.replace(replaseText, replaseWith);
+        eac.href = eac.href.replace(replaseText, replaseWith);
+
+        esj.href += "&dataset=" + dataset;
+        esc.href += "&dataset=" + dataset;
+        eaj.href += "&dataset=" + dataset;
+        eac.href += "&dataset=" + dataset;
+    }
+
+    function ExportService(service) {
+        var esj = document.getElementById("ExportSelectedJson");
+        var esc = document.getElementById("ExportSelectedCsv");
+        var eaj = document.getElementById("ExportAllJson");
+        var eac = document.getElementById("ExportAllCsv");
+
+        var replaseText = "&service=" + !service;
+        var replaseWith = "";
+
+        esj.href = esj.href.replace(replaseText, replaseWith);
+        esc.href = esc.href.replace(replaseText, replaseWith);
+        eaj.href = eaj.href.replace(replaseText, replaseWith);
+        eac.href = eac.href.replace(replaseText, replaseWith);
+
+        esj.href += "&service=" + service;
+        esc.href += "&service=" + service;
+        eaj.href += "&service=" + service;
+        eac.href += "&service=" + service;
+    }
+
     function ToggleDatasetReport(checked) {
         var datasetCharts = document.getElementsByClassName("datasetChart");
-        if (checked) {
+        if (checked == "true") {
             for (var i = 0; i < datasetCharts.length; i++){
                 datasetCharts[i].style.display = "inline-block";
             }
+            ExportDataset(true);
             localStorage.setItem("cbToggleDataset", true);
             
         } else {
             for (var i = 0; i < datasetCharts.length; i++) {
                 datasetCharts[i].style.display = "none";
             }
+            ExportDataset(false);
             localStorage.setItem("cbToggleDataset", false);
         }
     }
 
     function ToggleDataServiceReport(checked) {
         var serviceChart = document.getElementsByClassName("serviceChart");
-        if (checked) {
+        if (checked == "true") {
             for (var i = 0; i < serviceChart.length; i++) {
                 serviceChart[i].style.display = "inline-block";
             }
+            ExportService(true);
             localStorage.setItem("cbToggleDataService", true);
         } else {
             for (var i = 0; i < serviceChart.length; i++) {
                 serviceChart[i].style.display = "none";
             }
+            ExportService(false);
             localStorage.setItem("cbToggleDataService", false);
         }
     }
@@ -117,18 +164,6 @@
 
         localStorage.setItem("SelectedViewButtons", view);
     }
-
-    //function SelectLineChartType() {
-    //    var chartAll = document.getElementById("lineChartAll");
-
-    //    if (chartAll.style.display === "none") {
-    //        ShowAllChart();
-    //        localStorage.setItem("ShowAllLineCart", true);
-    //    } else {
-    //        ShowStatusChart();
-    //        localStorage.setItem("ShowAllLineCart", false);
-    //    }
-    //}
 
     function ShowAllDatasetChart() {
         var chartAll = document.getElementById("lineChartAll");

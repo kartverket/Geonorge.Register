@@ -132,8 +132,9 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string GetThemeGroupDescription()
         {
-            return !string.IsNullOrWhiteSpace(Theme?.description) ? Theme.description : "Ikke angitt";
+            return !string.IsNullOrWhiteSpace(Theme?.DescriptionTranslated()) ? Theme.DescriptionTranslated() : "Ikke angitt";
         }
+
 
         public string LogoSrc()
         {

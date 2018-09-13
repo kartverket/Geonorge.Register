@@ -18,7 +18,7 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "Geodatalov", ResourceType = typeof(GeodatalovDataSet))]
         public bool Geodatalov { get; set; }
 
-        [Display(Name = "Metadata:")]
+        [Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
         public string MetadataStatusId { get; set; }
         public virtual DokDeliveryStatus MetadataStatus { get; set; }
         public string MetadataNote { get; set; }

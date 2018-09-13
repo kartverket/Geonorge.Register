@@ -80,35 +80,35 @@ namespace Kartverket.Register.Models.ViewModels
         public DokDatasetViewModel(Dataset dataset)
         {
             Kandidatdato = dataset.Kandidatdato;
-            DokDeliveryMetadataStatus = dataset.dokDeliveryMetadataStatus.description;
+            DokDeliveryMetadataStatus = dataset.dokDeliveryMetadataStatus.DescriptionTranslated();
             DokDeliveryMetadataStatusNote = dataset.dokDeliveryMetadataStatusNote;
 
 
-            DokDeliveryProductSheetStatus = dataset.dokDeliveryProductSheetStatus.description;
+            DokDeliveryProductSheetStatus = dataset.dokDeliveryProductSheetStatus.DescriptionTranslated();
             DokDeliveryProductSheetStatusNote = dataset.dokDeliveryProductSheetStatusNote;
 
-            DokDeliveryPresentationRulesStatus = dataset.dokDeliveryPresentationRulesStatus.description;
+            DokDeliveryPresentationRulesStatus = dataset.dokDeliveryPresentationRulesStatus.DescriptionTranslated();
             DokDeliveryPresentationRulesStatusNote = dataset.dokDeliveryPresentationRulesStatusNote;
 
-            DokDeliveryProductSpecificationStatus = dataset.dokDeliveryProductSpecificationStatus.description;
+            DokDeliveryProductSpecificationStatus = dataset.dokDeliveryProductSpecificationStatus.DescriptionTranslated();
             DokDeliveryProductSpecificationStatusNote = dataset.dokDeliveryProductSpecificationStatusNote;
 
-            DokDeliveryWmsStatus = dataset.dokDeliveryWmsStatus.description;
+            DokDeliveryWmsStatus = dataset.dokDeliveryWmsStatus.DescriptionTranslated();
             DokDeliveryWmsStatusNote = dataset.dokDeliveryWmsStatusNote;
 
-            DokDeliveryWfsStatus = dataset.dokDeliveryWfsStatus.description;
+            DokDeliveryWfsStatus = dataset.dokDeliveryWfsStatus.DescriptionTranslated();
             DokDeliveryWfsStatusNote = dataset.dokDeliveryWfsStatusNote;
 
-            DokDeliveryDistributionStatus = dataset.dokDeliveryDistributionStatus.description;
+            DokDeliveryDistributionStatus = dataset.dokDeliveryDistributionStatus.DescriptionTranslated();
             DokDeliveryDistributionStatusNote = dataset.dokDeliveryDistributionStatusNote;
 
-            DokDeliverySosiRequirementsStatus = dataset.dokDeliverySosiRequirementsStatus.description;
+            DokDeliverySosiRequirementsStatus = dataset.dokDeliverySosiRequirementsStatus.DescriptionTranslated();
             DokDeliverySosiRequirementsStatusNote = dataset.dokDeliverySosiRequirementsStatusNote;
 
-            DokDeliveryGmlRequirementsStatus = dataset.dokDeliveryGmlRequirementsStatus.description;
+            DokDeliveryGmlRequirementsStatus = dataset.dokDeliveryGmlRequirementsStatus.DescriptionTranslated();
             DokDeliveryGmlRequirementsStatusNote = dataset.dokDeliveryGmlRequirementsStatusNote;
 
-            DokDeliveryAtomFeedStatus = dataset.dokDeliveryAtomFeedStatus.description;
+            DokDeliveryAtomFeedStatus = dataset.dokDeliveryAtomFeedStatus.DescriptionTranslated();
             DokDeliveryAtomFeedStatusNote = dataset.dokDeliveryAtomFeedStatusNote;
 
             UuidService = dataset.UuidService;
@@ -117,7 +117,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string GetThemeGroupDescription()
         {
-            return !string.IsNullOrWhiteSpace(Theme?.description) ? Theme.description : "Ikke angitt";
+            return !string.IsNullOrWhiteSpace(Theme?.DescriptionTranslated()) ? Theme.DescriptionTranslated() : "Ikke angitt";
         }
 
         public string LogoSrc()

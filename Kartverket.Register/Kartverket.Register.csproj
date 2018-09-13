@@ -1016,6 +1016,11 @@
     <Compile Include="Models\ViewModels\ShowDatasetCoverageViewModel.cs" />
     <Compile Include="Models\XmlResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\GeodatalovDataSet.en.Designer.cs">
+      <DependentUpon>GeodatalovDataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\GeodatalovDataSet.Designer.cs">
       <DependentUpon>GeodatalovDataSet.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -2442,6 +2447,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809131020179_RegisterItemV2SpecificUsageEnglish.resx">
       <DependentUpon>201809131020179_RegisterItemV2SpecificUsageEnglish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeodatalovDataSet.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

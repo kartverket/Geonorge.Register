@@ -11,7 +11,7 @@
 }
 
 <article class="col-md-12">
-    <p><strong>@Html.DisplayNameFor(model => Model.ThemeGroupId): </strong>@Model.Theme?description</p>
+    <p><strong>@Html.DisplayNameFor(model => Model.ThemeGroupId): </strong>@Model.Theme.DescriptionTranslated()</p>
     <p><strong>@Html.DisplayNameFor(model => Model.InspireTheme): </strong>@HtmlHelperExtensions.TranslateBool(Model.InspireTheme)</p>
     <p><strong>@Html.DisplayNameFor(model => Model.Dok): </strong>@HtmlHelperExtensions.TranslateBool(Model.Dok)</p>
     <p><strong>@Html.DisplayNameFor(model => Model.NationalDataset): </strong>@HtmlHelperExtensions.TranslateBool(Model.NationalDataset)</p>
@@ -39,42 +39,42 @@
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.MetadataStatusId)</div>
-        <div class="col-md-2 col"> @Html.DisplayFor(model => Model.MetadataStatus.description)</div>
+        <div class="col-md-2 col"> @Model.MetadataStatus.DescriptionTranslated()</div>
         <div class="col-md-7 col">@Html.DisplayFor(model => Model.MetadataNote)</div>
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.ProductSpesificationStatusId)</div>
-        <div class="col-md-2 col">@Html.DisplayFor(model => Model.ProductSpesificationStatus.description)</div>
+        <div class="col-md-2 col">@Model.ProductSpesificationStatus.DescriptionTranslated()</div>
         <div class="col-md-7 col">@Html.DisplayFor(model => Model.ProduktspesifikasjonNote)</div>
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.SosiDataStatusId)</div>
-        <div class="col-md-2 col">@Html.DisplayFor(model => Model.SosiDataStatus.description)</div>
+        <div class="col-md-2 col">@Model.SosiDataStatus.DescriptionTranslated()</div>
         <div class="col-md-7 col">@Html.DisplayFor(model => Model.SosiDataNote)</div>
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.GmlDataStatusId)</div>
-        <div class="col-md-2 col">@Html.DisplayFor(model => Model.GmlDataStatus.description)</div>
+        <div class="col-md-2 col">@Model.GmlDataStatus.DescriptionTranslated()</div>
         <div class="col-md-7 col">@Html.DisplayFor(model => Model.GmlDataNote)</div>
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.WmsStatusId)</div>
-        <div class="col-md-2 col">@Html.DisplayFor(model => Model.WmsStatus.description)</div>
+        <div class="col-md-2 col">@Model.WmsStatus.DescriptionTranslated()</div>
         <div class="col-md-7 col">@Html.DisplayFor(model => Model.WmsNote)</div>
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.WfsStatusId)</div>
-        <div class="col-md-2 col">@Html.DisplayFor(model => Model.WfsStatus.description)</div>
+        <div class="col-md-2 col">@Model.WfsStatus.DescriptionTranslated()</div>
         <div class="col-md-7 col">@Html.DisplayFor(model => Model.WfsNote)</div>
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.AtomFeedStatusId)</div>
-        <div class="col-md-2 col">@Html.DisplayFor(model => Model.AtomFeedStatus.description)</div>
+        <div class="col-md-2 col">@Model.AtomFeedStatus.description</div>
         <div class="col-md-7 col">@Html.DisplayFor(model => Model.AtomFeedNote)</div>
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.CommonStatusId)</div>
-        <div class="col-md-2 col">@Html.DisplayFor(model => Model.CommonStatus.description)</div>
+        <div class="col-md-2 col">@Model.CommonStatus.DescriptionTranslated()</div>
         <div class="col-md-7 col">@Html.DisplayFor(model => Model.CommonNote)</div>
     </div>
 </article>

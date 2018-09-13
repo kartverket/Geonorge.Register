@@ -16,11 +16,11 @@
             </div>
             <div class="col-sm-12 col-md-2 text-center">
                 <input v-on:click="compare = !compare" Id="compareCb" type="checkbox" style="vertical-align:middle" v-bind:checked="compare" v-bind:value="compare" name="Compare" />
-                <label for="compareCb" class="control-label">Sammenlign</label>
+                <label for="compareCb" class="control-label">@InspireDataSet.Compare</label>
             </div>
             <div class="col-sm-12 col-md-3">
                 <div v-if="compare">
-                    @Html.DropDownList("SelectedComparableCandidate", Model.InspireCompareMonitoringSelectList, "-- Sammenlign med --", new { onchange = "this.form.submit();", @class = "form-control" })
+                    @Html.DropDownList("SelectedComparableCandidate", Model.InspireCompareMonitoringSelectList, InspireDataSet.CompareWith, new { onchange = "this.form.submit();", @class = "form-control" })
                 </div>
             </div>
         }

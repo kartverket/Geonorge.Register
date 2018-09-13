@@ -42,19 +42,19 @@
 {
     if (Model.ActiveSynchronizationOfDatasets())
     {
-        <a class="btn btn-default btn-space disabled pull-right" title="Synkronisering av datasett pågår">Synkroniser datasett</a>
+        <a class="btn btn-default btn-space disabled pull-right" title="Synkronisering av datasett pågår">@InspireDataSet.SynchronizeDatasets</a>
     }
     else
     {
-        <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="Starter synkronisering" name="dataset" type="submit" value="Synkroniser datasett" />
+        <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="Starter synkronisering" name="dataset" type="submit" value="@InspireDataSet.SynchronizeDatasets" />
     }
     if (Model.ActiveSynchronizationOfServices())
     {
-        <a class="btn btn-default btn-space disabled pull-right" title="Synkronisering av tjenester pågår">Synkroniser tjenester</a>
+        <a class="btn btn-default btn-space disabled pull-right" title="Synkronisering av tjenester pågår">@InspireDataSet.SynchronizeServices</a>
     }
     else
     {
-        <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="Starter synkronisering" name="service" type="submit" value="Synkroniser tjeneste" />
+        <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="Starter synkronisering" name="service" type="submit" value="@InspireDataSet.SynchronizeServices" />
     }
 }
 
@@ -72,15 +72,15 @@
     <table class="table table-bordered table-responsive">
         <thead>
             <tr>
-                <th>Start</th>
-                <th>Stopp</th>
-                <th>Tid</th>
+                <th>@InspireDataSet.Start</th>
+                <th>@InspireDataSet.Stop</th>
+                <th>@InspireDataSet.Duration</th>
                 <th>Type</th>
-                <th>Antall</th>
-                <th>Synkronisert</th>
-                <th>Lagt til</th>
-                <th>Slettet</th>
-                <th>Feil</th>
+                <th>@InspireDataSet.Number</th>
+                <th>@InspireDataSet.Synchronize</th>
+                <th>@InspireDataSet.Added</th>
+                <th>@InspireDataSet.Deleted</th>
+                <th>@InspireDataSet.Errors</th>
             </tr>
         </thead>
 
@@ -188,7 +188,7 @@
 
                 <tr id="newItemsLog-@i" class="toggleTableRow" style="display: none">
                     <td colspan="9" style="display: table-cell">
-                        <p><b>Lagt til</b></p>
+                        <p><b>@InspireDataSet.Added</b></p>
                         @foreach (var item in Model.SynchronizationJobs.ElementAt(i).AddedLog)
                         {
                             <div class="col-sm-12"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
@@ -198,7 +198,7 @@
 
                 <tr id="deletedItemsLog-@i" class="toggleTableRow" style="display: none">
                     <td colspan="9" style="display: table-cell">
-                        <p><b>Slettet</b></p>
+                        <p><b>@InspireDataSet.Deleted</b></p>
                         @foreach (var item in Model.SynchronizationJobs.ElementAt(i).DeletedLog)
                         {
                             <div class="col-sm-12"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
@@ -208,7 +208,7 @@
 
                 <tr id="faildItemsLog-@i" class="toggleTableRow" style="display: none">
                     <td colspan="9" style="display: table-cell">
-                        <p><b>Feil</b></p>
+                        <p><b>@InspireDataSet.Errors</b></p>
                         @foreach (var item in Model.SynchronizationJobs.ElementAt(i).FailLog)
                         {
                             <div class="col-sm-4"><a href="@Model.MetadataUrl(item.Uuid)">@item.Uuid</a></div>

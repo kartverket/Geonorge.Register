@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Added" xml:space="preserve">
+    <value>Lagt til</value>
+  </data>
+  <data name="AllReports" xml:space="preserve">
+    <value>All reports</value>
+  </data>
   <data name="Area" xml:space="preserve">
     <value>Arela</value>
   </data>
@@ -126,14 +132,35 @@
   <data name="AtomStatus" xml:space="preserve">
     <value>Atom feed</value>
   </data>
+  <data name="Compare" xml:space="preserve">
+    <value>Sammenlign</value>
+  </data>
+  <data name="CompareWith" xml:space="preserve">
+    <value>Sammenlign med</value>
+  </data>
+  <data name="DatasetHarmonizedData" xml:space="preserve">
+    <value>Datasett</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Slettet</value>
+  </data>
   <data name="Distribution" xml:space="preserve">
     <value>Datadeling</value>
   </data>
   <data name="DistributionStatus" xml:space="preserve">
     <value>Deling av data</value>
   </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Tid</value>
+  </data>
+  <data name="Errors" xml:space="preserve">
+    <value>Feil</value>
+  </data>
   <data name="HarmonizedDataStatus" xml:space="preserve">
     <value>Harmoniserte data</value>
+  </data>
+  <data name="InspireReport" xml:space="preserve">
+    <value>Inspire rapport</value>
   </data>
   <data name="InspireTheme" xml:space="preserve">
     <value>Inspire tema</value>
@@ -153,8 +180,14 @@
   <data name="NewDataset" xml:space="preserve">
     <value>Legg til nytt inspire datasett</value>
   </data>
+  <data name="Number" xml:space="preserve">
+    <value>Antall</value>
+  </data>
   <data name="RelevantArea" xml:space="preserve">
     <value>Relevant area</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Rapport</value>
   </data>
   <data name="Sds" xml:space="preserve">
     <value>Sds</value>
@@ -162,11 +195,32 @@
   <data name="Service" xml:space="preserve">
     <value>Tjeneste</value>
   </data>
+  <data name="ServiceNetworkService" xml:space="preserve">
+    <value>Tjenester</value>
+  </data>
   <data name="ServiceStatus" xml:space="preserve">
     <value>Tjenestestatus</value>
   </data>
   <data name="SpatialDataServiceStatus" xml:space="preserve">
     <value>Spatial data service</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stopp</value>
+  </data>
+  <data name="Synchronization" xml:space="preserve">
+    <value>Synkronisering</value>
+  </data>
+  <data name="Synchronize" xml:space="preserve">
+    <value>Synkronisert</value>
+  </data>
+  <data name="SynchronizeDatasets" xml:space="preserve">
+    <value>Synkroniser datasett</value>
+  </data>
+  <data name="SynchronizeServices" xml:space="preserve">
+    <value>Synkroniser tjenester</value>
   </data>
   <data name="WfsOrAtomStatus" xml:space="preserve">
     <value>Nedlastingstjeneste WFS eller Atom-feed</value>

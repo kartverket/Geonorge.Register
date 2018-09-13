@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Added" xml:space="preserve">
+    <value>Added</value>
+  </data>
   <data name="Area" xml:space="preserve">
     <value>Area</value>
   </data>
   <data name="AtomFeedStatus" xml:space="preserve">
     <value>Download service Atom feed</value>
+  </data>
+  <data name="Compare" xml:space="preserve">
+    <value>Compare</value>
+  </data>
+  <data name="CompareWith" xml:space="preserve">
+    <value>Compare with</value>
+  </data>
+  <data name="DatasetHarmonizedData" xml:space="preserve">
+    <value>Harmonized data</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted</value>
   </data>
   <data name="Distribution" xml:space="preserve">
     <value>Distribution</value>
@@ -129,8 +144,17 @@
   <data name="DistributionStatus" xml:space="preserve">
     <value>Sharing of data</value>
   </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="Errors" xml:space="preserve">
+    <value>Errors</value>
+  </data>
   <data name="HarmonizedDataStatus" xml:space="preserve">
     <value>Harmoniserte data</value>
+  </data>
+  <data name="InspireReport" xml:space="preserve">
+    <value>Inspire report</value>
   </data>
   <data name="Metadata" xml:space="preserve">
     <value>Metadata</value>
@@ -142,13 +166,19 @@
     <value>Metadata service status</value>
   </data>
   <data name="NetworkService" xml:space="preserve">
-    <value>Nettverkstjeneste</value>
+    <value>Network service</value>
   </data>
   <data name="NewDataset" xml:space="preserve">
     <value>Add a new inspire data set</value>
   </data>
+  <data name="Number" xml:space="preserve">
+    <value>Number</value>
+  </data>
   <data name="RelevantArea" xml:space="preserve">
     <value>Relevant area</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Reports</value>
   </data>
   <data name="Sds" xml:space="preserve">
     <value>Sds</value>
@@ -156,11 +186,32 @@
   <data name="Service" xml:space="preserve">
     <value>Service</value>
   </data>
+  <data name="ServiceNetworkService" xml:space="preserve">
+    <value>Network service</value>
+  </data>
   <data name="ServiceStatus" xml:space="preserve">
     <value>Service status</value>
   </data>
   <data name="SpatialDataServiceStatus" xml:space="preserve">
     <value>Spatial data service</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Synchronization" xml:space="preserve">
+    <value>Synchronization</value>
+  </data>
+  <data name="Synchronize" xml:space="preserve">
+    <value>Synchronize</value>
+  </data>
+  <data name="SynchronizeDatasets" xml:space="preserve">
+    <value>Synchronize datasets</value>
+  </data>
+  <data name="SynchronizeServices" xml:space="preserve">
+    <value>Synchronize services</value>
   </data>
   <data name="WfsOrAtomStatus" xml:space="preserve">
     <value>Download service WFS or Atom-feed</value>

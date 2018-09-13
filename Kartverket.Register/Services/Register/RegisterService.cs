@@ -1268,5 +1268,58 @@ namespace Kartverket.Register.Services.Register
 
             return register;
         }
+
+        public void UpdateRegisterItemV2Translations()
+        {
+            var inspireDatasets = _dbContext.InspireDatasets;
+            foreach (var inspireDataset in inspireDatasets)
+            {
+                dynamic metadata = GetMetadata(inspireDataset.Uuid);
+                if(metadata != null) { 
+                inspireDataset.NameEnglish = metadata.EnglishTitle;
+                inspireDataset.DescriptionEnglish = metadata.EnglishAbstract;
+                }
+            }
+            _dbContext.SaveChanges();
+
+            var inspireDataServices = _dbContext.InspireDataServices;
+            foreach (var inspireDataService in inspireDataServices)
+            {
+                dynamic metadata = GetMetadata(inspireDataService.Uuid);
+                if (metadata != null)
+                {
+                    inspireDataService.NameEnglish = metadata.EnglishTitle;
+                    inspireDataService.DescriptionEnglish = metadata.EnglishAbstract;
+                }
+            }
+            _dbContext.SaveChanges();
+
+            var geodatalovDatasets = _dbContext.GeodatalovDatasets;
+            foreach (var geodatalovDataset in geodatalovDatasets)
+            {
+                dynamic metadata = GetMetadata(geodatalovDataset.Uuid);
+                if (metadata != null)
+                {
+                    geodatalovDataset.NameEnglish = metadata.EnglishTitle;
+                    geodatalovDataset.DescriptionEnglish = metadata.EnglishAbstract;
+                }
+            }
+            _dbContext.SaveChanges();
+        }
+
+        private dynamic GetMetadata(string uuid)
+        {
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                return data;
+            }
+            catch { }
+            return null;
+        }
     }
 }

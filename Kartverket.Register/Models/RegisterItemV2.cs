@@ -13,12 +13,14 @@ namespace Kartverket.Register.Models
         [Required]
         [Display(Name = "Name", ResourceType = typeof(Registers))]
         public string Name { get; set; }
+        public string NameEnglish { get; set; }
 
         [Required]
         public string Seoname { get; set; }
 
         [Display(Name = "Description", ResourceType = typeof(Registers))]
         public string Description { get; set; }
+        public string DescriptionEnglish { get; set; }
 
         [ForeignKey("Submitter"), Required]
         public Guid SubmitterId { get; set; }

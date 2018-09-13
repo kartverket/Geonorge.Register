@@ -433,6 +433,16 @@ namespace Kartverket.Register.Controllers
             new CoverageService(db).UpdateDatasetsWithCoverage();
             new DOK.Service.MetadataService(db).UpdateDatasetsWithMetadata();
             _registerService.UpdateDOKStatus();
+            _registerService.UpdateRegisterItemV2Translations();
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronizev2")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeMetadata()
+        {
+            _registerService.UpdateRegisterItemV2Translations();
             return Ok();
         }
 

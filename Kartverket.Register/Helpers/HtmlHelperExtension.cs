@@ -781,7 +781,7 @@ namespace Kartverket.Register.Helpers
 
         public static string TranslateBool(bool value)
         {
-            return value ? "Ja" : "Nei";
+            return value ? Shared.Yes : Shared.No;
         }
 
         public static string GetThumbnail(string thumbnailSrc)

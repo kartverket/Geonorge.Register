@@ -918,6 +918,7 @@
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDataserviceStatusReportViweModel.cs" />

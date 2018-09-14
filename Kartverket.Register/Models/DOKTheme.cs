@@ -12,7 +12,7 @@ using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using Kartverket.Register.Helpers;
-
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Models {
 	public class DOKTheme {
@@ -26,12 +26,19 @@ namespace Kartverket.Register.Models {
 	        var cultureName = CultureHelper.GetCurrentCulture();
 	        var DOKThemeDescription = description;
 	        if (!CultureHelper.IsNorwegian())
-	            DOKThemeDescription = value;
+	            DOKThemeDescription = GetTranslation(value);
 
 	        return DOKThemeDescription;
 	    }
 
+        private string GetTranslation(string value)
+        {
+            var translated = DOKThemeTranslation.NorwegianToEnglish[value];
+            if (translated != null)
+                return translated;
 
+            return value;
+        }
     }//end DOKTheme
 
 }//end namespace Datamodell

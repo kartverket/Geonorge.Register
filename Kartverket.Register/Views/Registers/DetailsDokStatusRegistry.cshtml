@@ -80,10 +80,10 @@
                 <ul id="tabs" class="nav nav-tabs">
 
                     <li id="dataset-Tab" class="tab active">
-                        @Html.ActionLink("Datasett", "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "dataset"))
+                        @Html.ActionLink(DataSet.Dataset, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "dataset"))
                     </li>
                     <li id="report-Tab" class="tab">
-                        @Html.ActionLink("Rapport", "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "report"))
+                        @Html.ActionLink(InspireDataSet.Reports, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "report"))
                     </li>
                 </ul>
             </div>

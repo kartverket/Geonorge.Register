@@ -61,6 +61,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lagt til.
+        /// </summary>
+        public static string Added {
+            get {
+                return ResourceManager.GetString("Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All reports.
+        /// </summary>
+        public static string AllReports {
+            get {
+                return ResourceManager.GetString("AllReports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arela.
+        /// </summary>
+        public static string Area {
+            get {
+                return ResourceManager.GetString("Area", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nedlastingstjeneste Atom-feed.
         /// </summary>
         public static string AtomFeedStatus {
@@ -75,6 +102,51 @@ namespace Resources {
         public static string AtomStatus {
             get {
                 return ResourceManager.GetString("AtomStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sammenlign.
+        /// </summary>
+        public static string Compare {
+            get {
+                return ResourceManager.GetString("Compare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sammenlign med.
+        /// </summary>
+        public static string CompareWith {
+            get {
+                return ResourceManager.GetString("CompareWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasett.
+        /// </summary>
+        public static string DataSet {
+            get {
+                return ResourceManager.GetString("DataSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasett.
+        /// </summary>
+        public static string DatasetHarmonizedData {
+            get {
+                return ResourceManager.GetString("DatasetHarmonizedData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slettet.
+        /// </summary>
+        public static string Deleted {
+            get {
+                return ResourceManager.GetString("Deleted", resourceCulture);
             }
         }
         
@@ -97,11 +169,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tid.
+        /// </summary>
+        public static string Duration {
+            get {
+                return ResourceManager.GetString("Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feil.
+        /// </summary>
+        public static string Errors {
+            get {
+                return ResourceManager.GetString("Errors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Harmoniserte data.
         /// </summary>
         public static string HarmonizedDataStatus {
             get {
                 return ResourceManager.GetString("HarmonizedDataStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspire rapport.
+        /// </summary>
+        public static string InspireReport {
+            get {
+                return ResourceManager.GetString("InspireReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspire tjeneste status.
+        /// </summary>
+        public static string InspireServiceStatus {
+            get {
+                return ResourceManager.GetString("InspireServiceStatus", resourceCulture);
             }
         }
         
@@ -124,11 +232,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Metadata i søketjeneste.
+        /// </summary>
+        public static string MetadataInSearchService {
+            get {
+                return ResourceManager.GetString("MetadataInSearchService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metadatatjeneste.
         /// </summary>
         public static string MetadataServiceStatus {
             get {
                 return ResourceManager.GetString("MetadataServiceStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nettverkstjeneste.
+        /// </summary>
+        public static string NetworkService {
+            get {
+                return ResourceManager.GetString("NetworkService", resourceCulture);
             }
         }
         
@@ -142,11 +268,137 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Antall.
+        /// </summary>
+        public static string Number {
+            get {
+                return ResourceManager.GetString("Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relevant area.
+        /// </summary>
+        public static string RelevantArea {
+            get {
+                return ResourceManager.GetString("RelevantArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rapport.
+        /// </summary>
+        public static string Reports {
+            get {
+                return ResourceManager.GetString("Reports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sds.
+        /// </summary>
+        public static string Sds {
+            get {
+                return ResourceManager.GetString("Sds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjeneste.
+        /// </summary>
+        public static string Service {
+            get {
+                return ResourceManager.GetString("Service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjenester.
+        /// </summary>
+        public static string ServiceNetworkService {
+            get {
+                return ResourceManager.GetString("ServiceNetworkService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjenestestatus.
+        /// </summary>
+        public static string ServiceStatus {
+            get {
+                return ResourceManager.GetString("ServiceStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjeneste type.
+        /// </summary>
+        public static string ServiceType {
+            get {
+                return ResourceManager.GetString("ServiceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spatial data service.
         /// </summary>
         public static string SpatialDataServiceStatus {
             get {
                 return ResourceManager.GetString("SpatialDataServiceStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stopp.
+        /// </summary>
+        public static string Stop {
+            get {
+                return ResourceManager.GetString("Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synkronisering.
+        /// </summary>
+        public static string Synchronization {
+            get {
+                return ResourceManager.GetString("Synchronization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synkronisert.
+        /// </summary>
+        public static string Synchronize {
+            get {
+                return ResourceManager.GetString("Synchronize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synkroniser datasett.
+        /// </summary>
+        public static string SynchronizeDatasets {
+            get {
+                return ResourceManager.GetString("SynchronizeDatasets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synkroniser tjenester.
+        /// </summary>
+        public static string SynchronizeServices {
+            get {
+                return ResourceManager.GetString("SynchronizeServices", resourceCulture);
             }
         }
         

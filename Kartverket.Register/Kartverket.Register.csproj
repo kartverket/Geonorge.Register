@@ -868,6 +868,30 @@
     <Compile Include="Migrations\201807030837390_AddCartographyDetailsUrl.Designer.cs">
       <DependentUpon>201807030837390_AddCartographyDetailsUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808230803403_AddInspireDatasetStatusReport.cs" />
+    <Compile Include="Migrations\201808230803403_AddInspireDatasetStatusReport.Designer.cs">
+      <DependentUpon>201808230803403_AddInspireDatasetStatusReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808230924313_AddInspireDataServiceStatusReport.cs" />
+    <Compile Include="Migrations\201808230924313_AddInspireDataServiceStatusReport.Designer.cs">
+      <DependentUpon>201808230924313_AddInspireDataServiceStatusReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808231320160_AddReferenceToRegisterInStatusReport.cs" />
+    <Compile Include="Migrations\201808231320160_AddReferenceToRegisterInStatusReport.Designer.cs">
+      <DependentUpon>201808231320160_AddReferenceToRegisterInStatusReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808301043005_UpdateInspireDataService.cs" />
+    <Compile Include="Migrations\201808301043005_UpdateInspireDataService.Designer.cs">
+      <DependentUpon>201808301043005_UpdateInspireDataService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809130820064_RegisterItemV2Translation.cs" />
+    <Compile Include="Migrations\201809130820064_RegisterItemV2Translation.Designer.cs">
+      <DependentUpon>201809130820064_RegisterItemV2Translation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809131020179_RegisterItemV2SpecificUsageEnglish.cs" />
+    <Compile Include="Migrations\201809131020179_RegisterItemV2SpecificUsageEnglish.Designer.cs">
+      <DependentUpon>201809131020179_RegisterItemV2SpecificUsageEnglish.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -875,6 +899,9 @@
     <Compile Include="Models\AccessType.cs" />
     <Compile Include="Models\Api\Concept.cs" />
     <Compile Include="Models\Api\ConceptSheme.cs" />
+    <Compile Include="Models\Api\InspireDatasetStatusReport.cs" />
+    <Compile Include="Models\Api\InspireServiceStatusReport.cs" />
+    <Compile Include="Models\Api\InspireRegistryStatusReport.cs" />
     <Compile Include="Models\Api\Facet.cs" />
     <Compile Include="Models\Api\FacetInput.cs" />
     <Compile Include="Models\Api\FieldValueModelBinder.cs" />
@@ -886,15 +913,25 @@
     <Compile Include="Models\Api\SearchParameters.cs" />
     <Compile Include="Models\Api\SearchResult.cs" />
     <Compile Include="Models\Api\AlertService.cs" />
-    <Compile Include="Models\Api\StatusReport.cs" />
+    <Compile Include="Models\Api\DokStatusReport.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
-    <Compile Include="Models\DatasetStatusHistory.cs" />
-    <Compile Include="Models\StatusChart.cs" />
-    <Compile Include="Models\DokHistoricalChrart.cs" />
-    <Compile Include="Models\DokPieChart.cs" />
+    <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\DokStatusReportViewModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDataserviceStatusReportViweModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDataServiceLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDatasetLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDatasetStatusReportViweModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\InspireRegistryStatusReportViewModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\NumberOfStatuses.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\StatusLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\StatusReportViewModel.cs" />
+    <Compile Include="Models\StatusReport\InspireDataserviceStatusReport.cs" />
+    <Compile Include="Models\StatusReport\InspireDatasetStatusReport.cs" />
+    <Compile Include="Models\StatusReport\DatasetStatusHistory.cs" />
     <Compile Include="Models\GeodatalovDataset.cs" />
     <Compile Include="Models\IInspireMonitoring.cs" />
     <Compile Include="Models\InspireDataService.cs" />
@@ -915,8 +952,8 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
-    <Compile Include="Models\StatusHistory.cs" />
-    <Compile Include="Models\StatusReport.cs" />
+    <Compile Include="Models\StatusReport\RegisterItemStatusReport.cs" />
+    <Compile Include="Models\StatusReport\StatusReport.cs" />
     <Compile Include="Models\Synchronize.cs" />
     <Compile Include="Models\Translations\AlertTypes.cs" />
     <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
@@ -940,7 +977,6 @@
     <Compile Include="Models\ViewModels\InspireMonitoringViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireReportViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
-    <Compile Include="Models\ViewModels\StatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\SynchronizationViewModel.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
     <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
@@ -981,6 +1017,11 @@
     <Compile Include="Models\ViewModels\ShowDatasetCoverageViewModel.cs" />
     <Compile Include="Models\XmlResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\GeodatalovDataSet.en.Designer.cs">
+      <DependentUpon>GeodatalovDataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\GeodatalovDataSet.Designer.cs">
       <DependentUpon>GeodatalovDataSet.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1949,6 +1990,8 @@
     <Content Include="Views\Shared\_dokReport.cshtml" />
     <Content Include="Views\Registers\js\_dokReportCharts.cshtml" />
     <Content Include="Views\Shared\Js\_datasetCharts.cshtml" />
+    <Content Include="Views\Shared\_inspireReport.cshtml" />
+    <Content Include="Views\Registers\js\_inspireReportCharts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -2387,6 +2430,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807030837390_AddCartographyDetailsUrl.resx">
       <DependentUpon>201807030837390_AddCartographyDetailsUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808230803403_AddInspireDatasetStatusReport.resx">
+      <DependentUpon>201808230803403_AddInspireDatasetStatusReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808230924313_AddInspireDataServiceStatusReport.resx">
+      <DependentUpon>201808230924313_AddInspireDataServiceStatusReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808231320160_AddReferenceToRegisterInStatusReport.resx">
+      <DependentUpon>201808231320160_AddReferenceToRegisterInStatusReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808301043005_UpdateInspireDataService.resx">
+      <DependentUpon>201808301043005_UpdateInspireDataService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809130820064_RegisterItemV2Translation.resx">
+      <DependentUpon>201809130820064_RegisterItemV2Translation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809131020179_RegisterItemV2SpecificUsageEnglish.resx">
+      <DependentUpon>201809131020179_RegisterItemV2SpecificUsageEnglish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeodatalovDataSet.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

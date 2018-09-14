@@ -180,11 +180,11 @@ namespace Kartverket.Register.Models.ViewModels
                 {
                     if (inspireTeamsString == null)
                     {
-                        inspireTeamsString += item.name;
+                        inspireTeamsString += item.NameTranslated();
                     }
                     else
                     {
-                        inspireTeamsString += ", " + item.name;
+                        inspireTeamsString += ", " + item.NameTranslated();
                     }
                 }
             }            

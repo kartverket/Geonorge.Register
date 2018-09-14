@@ -21,9 +21,6 @@ namespace Kartverket.Register.Helpers
         private static readonly IRegisterItemService RegisteritemService = new RegisterItemService(Db);
         private static readonly IAccessControlService AccessControl = new AccessControlService(Db);
         private static readonly IRegisterService RegisterService = new RegisterService(Db);
-
-
-
         public static string EnvironmentName(this HtmlHelper helper)
         {
             return WebConfigurationManager.AppSettings["EnvironmentName"];
@@ -544,7 +541,7 @@ namespace Kartverket.Register.Helpers
 
             else if (sortingParam == "inspire_theme_status" || sortingParam == "inspire_theme_status_desc")
             {
-                sortTitle = "Inspire tema";
+                sortTitle = InspireDataSet.InspireTheme;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "inspire_serviceType" || sortingParam == "inspire_serviceType_desc")
@@ -559,27 +556,27 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingParam == "sds" || sortingParam == "sds_desc")
             {
-                sortTitle = "Sds";
+                sortTitle = InspireDataSet.Sds;
                 statusIcon += "custom-icon-spatialdataservice";
             }
             else if (sortingParam == "networkService" || sortingParam == "networkService_desc")
             {
-                sortTitle = "Nettverkstjeneste";
+                sortTitle = InspireDataSet.NetworkService;
                 statusIcon += "custom-icon-netverkstjeneste";
             }
             else if (sortingParam == "inspireService_metadata_status" || sortingParam == "inspireService_metadata_status_desc")
             {
-                sortTitle = "Metadata";
+                sortTitle = InspireDataSet.Metadata;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "inspire_metadataSearchService_status" || sortingParam == "inspire_metadataSearchService_status_desc")
             {
-                sortTitle = "Metadata i søketjeneste";
+                sortTitle = InspireDataSet.MetadataInSearchService;
                 statusIcon += "custom-icon-metadata-i-soketjeneste";
             }
             else if (sortingParam == "inspire_service_status" || sortingParam == "inspire_service_status_desc")
             {
-                sortTitle = "Tjenestestatus";
+                sortTitle = InspireDataSet.ServiceStatus;
                 statusIcon += "custom-icon-tjenestestatus";
             }
 
@@ -784,12 +781,38 @@ namespace Kartverket.Register.Helpers
 
         public static string TranslateBool(bool value)
         {
-            return value ? "Ja" : "Nei";
+            return value ? Shared.Yes : Shared.No;
         }
 
         public static string GetThumbnail(string thumbnailSrc)
         {
             return thumbnailSrc ?? "/Content/pdf.jpg";
+        }
+
+        public static double Percent(int numberOf, int total)
+        {
+            var x = Divide(numberOf, total);
+            return Math.Round(x * 100, 2);
+        }
+
+        public static double Divide(int x, int y)
+        {
+            try
+            {
+                if (y == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return (double)x / y;
+                }
+            }
+            catch (Exception e)
+            {
+
+                return 0;
+            }
         }
     }
 }

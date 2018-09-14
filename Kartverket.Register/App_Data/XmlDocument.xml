@@ -497,17 +497,17 @@
             Gets inspiremonitoring xml
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.DokReport">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.NewStatusReport(System.String)">
             <summary>
             Save dok status report to db
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.DokStatusReport(System.String)">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.StatusReport(System.String,System.Boolean,System.Boolean)">
             <summary>
             Gets selected status report
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.DokStatusReports">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.StatusReports(System.String)">
             <summary>
             Gets selected status report
             </summary>
@@ -985,6 +985,20 @@
             <summary>
             Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
             </summary>
+        </member>
+        <member name="M:Kartverket.Register.Models.ViewModels.InspireDataserviceStatusReportViweModel.Percent(System.Int32)">
+            <summary>
+            Percent of inspire datasets
+            </summary>
+            <param name="numberOf"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Models.ViewModels.InspireDatasetStatusReportViweModel.Percent(System.Int32)">
+            <summary>
+            Percent of inspire datasets
+            </summary>
+            <param name="numberOf"></param>
+            <returns></returns>
         </member>
         <member name="P:Kartverket.Register.Models.InspireDataService.ServiceType">
             Liste opp alle Annex tjenestene h�rer til..
@@ -1993,6 +2007,21 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.Added">
+            <summary>
+              Looks up a localized string similar to Lagt til.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.AllReports">
+            <summary>
+              Looks up a localized string similar to All reports.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Area">
+            <summary>
+              Looks up a localized string similar to Arela.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.AtomFeedStatus">
             <summary>
               Looks up a localized string similar to Nedlastingstjeneste Atom-feed.
@@ -2001,6 +2030,31 @@
         <member name="P:Resources.InspireDataSet.AtomStatus">
             <summary>
               Looks up a localized string similar to Atom feed.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Compare">
+            <summary>
+              Looks up a localized string similar to Sammenlign.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.CompareWith">
+            <summary>
+              Looks up a localized string similar to Sammenlign med.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.DataSet">
+            <summary>
+              Looks up a localized string similar to Datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.DatasetHarmonizedData">
+            <summary>
+              Looks up a localized string similar to Datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Deleted">
+            <summary>
+              Looks up a localized string similar to Slettet.
             </summary>
         </member>
         <member name="P:Resources.InspireDataSet.Distribution">
@@ -2013,9 +2067,29 @@
               Looks up a localized string similar to Deling av data.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.Duration">
+            <summary>
+              Looks up a localized string similar to Tid.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Errors">
+            <summary>
+              Looks up a localized string similar to Feil.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.HarmonizedDataStatus">
             <summary>
               Looks up a localized string similar to Harmoniserte data.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.InspireReport">
+            <summary>
+              Looks up a localized string similar to Inspire rapport.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.InspireServiceStatus">
+            <summary>
+              Looks up a localized string similar to Inspire tjeneste status.
             </summary>
         </member>
         <member name="P:Resources.InspireDataSet.InspireTheme">
@@ -2028,9 +2102,19 @@
               Looks up a localized string similar to Metadata.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.MetadataInSearchService">
+            <summary>
+              Looks up a localized string similar to Metadata i søketjeneste.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.MetadataServiceStatus">
             <summary>
               Looks up a localized string similar to Metadatatjeneste.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.NetworkService">
+            <summary>
+              Looks up a localized string similar to Nettverkstjeneste.
             </summary>
         </member>
         <member name="P:Resources.InspireDataSet.NewDataset">
@@ -2038,9 +2122,79 @@
               Looks up a localized string similar to Legg til nytt inspire datasett.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.Number">
+            <summary>
+              Looks up a localized string similar to Antall.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.RelevantArea">
+            <summary>
+              Looks up a localized string similar to Relevant area.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Reports">
+            <summary>
+              Looks up a localized string similar to Rapport.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Sds">
+            <summary>
+              Looks up a localized string similar to Sds.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Service">
+            <summary>
+              Looks up a localized string similar to Tjeneste.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.ServiceNetworkService">
+            <summary>
+              Looks up a localized string similar to Tjenester.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.ServiceStatus">
+            <summary>
+              Looks up a localized string similar to Tjenestestatus.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.ServiceType">
+            <summary>
+              Looks up a localized string similar to Tjeneste type.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.SpatialDataServiceStatus">
             <summary>
               Looks up a localized string similar to Spatial data service.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Start">
+            <summary>
+              Looks up a localized string similar to Start.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Stop">
+            <summary>
+              Looks up a localized string similar to Stopp.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Synchronization">
+            <summary>
+              Looks up a localized string similar to Synkronisering.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Synchronize">
+            <summary>
+              Looks up a localized string similar to Synkronisert.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.SynchronizeDatasets">
+            <summary>
+              Looks up a localized string similar to Synkroniser datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.SynchronizeServices">
+            <summary>
+              Looks up a localized string similar to Synkroniser tjenester.
             </summary>
         </member>
         <member name="P:Resources.InspireDataSet.WfsOrAtomStatus">
@@ -2475,6 +2629,11 @@
               Looks up a localized string similar to Datasett.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.Deficient">
+            <summary>
+              Looks up a localized string similar to Ikke satt.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DeleteDataset">
             <summary>
               Looks up a localized string similar to Slett datasett.
@@ -2886,11 +3045,6 @@
         <member name="P:Resources.DataSet.SuggestNewDatasetMunicipality">
             <summary>
               Looks up a localized string similar to Legg til ekstra DOK-datasett for din kommune.
-            </summary>
-        </member>
-        <member name="P:Resources.DataSet.Suitability">
-            <summary>
-              Looks up a localized string similar to Egnethet.
             </summary>
         </member>
         <member name="P:Resources.DataSet.SuitabilityArealText">
@@ -3875,6 +4029,11 @@
               Looks up a localized string similar to Kontakt oss.
             </summary>
         </member>
+        <member name="P:Resources.Shared.Deficient">
+            <summary>
+              Looks up a localized string similar to Ikke levert.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Delete">
             <summary>
               Looks up a localized string similar to Slett.
@@ -3929,6 +4088,11 @@
         <member name="P:Resources.Shared.GeneralInformation">
             <summary>
               Looks up a localized string similar to Generell informasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Good">
+            <summary>
+              Looks up a localized string similar to God.
             </summary>
         </member>
         <member name="P:Resources.Shared.Heading">
@@ -4001,6 +4165,11 @@
               Looks up a localized string similar to Vi finner ikke siden du leter etter, men Geonorge skal hjelpe deg videre..
             </summary>
         </member>
+        <member name="P:Resources.Shared.NotSet">
+            <summary>
+              Looks up a localized string similar to Leveransestatus er ikke satt.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Previous">
             <summary>
               Looks up a localized string similar to Forrige.
@@ -4038,7 +4207,7 @@
         </member>
         <member name="P:Resources.Shared.Search_Placeholder">
             <summary>
-              Looks up a localized string similar to Søk etter registerdata.
+              Looks up a localized string similar to Søk etter registerinnhold.
             </summary>
         </member>
         <member name="P:Resources.Shared.SearchFor">
@@ -4074,6 +4243,11 @@
         <member name="P:Resources.Shared.Title">
             <summary>
               Looks up a localized string similar to Tittel.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Useable">
+            <summary>
+              Looks up a localized string similar to Brukbar.
             </summary>
         </member>
         <member name="P:Resources.Shared.ValidationSummary">

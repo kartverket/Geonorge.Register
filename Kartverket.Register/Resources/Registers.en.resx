@@ -130,7 +130,7 @@
     <value>Description</value>
   </data>
   <data name="DOKCoverageContent" xml:space="preserve">
-    <value>The coverage map shows which data sets in the public map of the map are covered by the various municipalities.</value>
+    <value>The coverage map shows which datasets in the public map of the map are covered by the various municipalities.</value>
   </data>
   <data name="Hits" xml:space="preserve">
     <value>hits</value>
@@ -301,7 +301,7 @@
     <value>Data models and standards</value>
   </data>
   <data name="GroupDocumentRegistry" xml:space="preserve">
-    <value>Document registry</value>
+    <value>Document registers</value>
   </data>
   <data name="GroupStatusAndReporting" xml:space="preserve">
     <value>Status and reporting</value>

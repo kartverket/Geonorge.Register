@@ -148,7 +148,7 @@
     <value>Henter søkeresultater</value>
   </data>
   <data name="Search_Placeholder" xml:space="preserve">
-    <value>Søk etter registerdata</value>
+    <value>Søk etter registerinnhold</value>
   </data>
   <data name="Heading" xml:space="preserve">
     <value>Registrene</value>
@@ -264,5 +264,17 @@
   </data>
   <data name="ShowAll" xml:space="preserve">
     <value>Vis alle</value>
+  </data>
+  <data name="Deficient" xml:space="preserve">
+    <value>Ikke levert</value>
+  </data>
+  <data name="Good" xml:space="preserve">
+    <value>God</value>
+  </data>
+  <data name="NotSet" xml:space="preserve">
+    <value>Leveransestatus er ikke satt</value>
+  </data>
+  <data name="Useable" xml:space="preserve">
+    <value>Brukbar</value>
   </data>
 </root>

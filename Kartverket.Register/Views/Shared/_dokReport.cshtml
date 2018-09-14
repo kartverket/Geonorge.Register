@@ -1,24 +1,23 @@
 ﻿@using Kartverket.Register.Helpers
-@model Kartverket.Register.Models.ViewModels.StatusReportViewModel
+@using Kartverket.Register.Models.ViewModels
+@model DokStatusReportViewModel
+
+@{
+
+}
 
 @if (Model.ReportNotExists)
 {
     <p>Ingen rapporter enda...</p>
 }
-else
-{
-    <div class="row">
-        <h2 class="col-md-6"> Rapport </h2>
-    </div>
-    <p>Antall datasett: @Model.NumberOfItems</p>
-
-    <div class="row">
+else{
+    <div class="row margin-top-10">
         <div class="col-md-4 col-sm-12">
             @using (Html.BeginForm("DetailsDokStatusRegistry", "Registers", FormMethod.Get))
             {
 
                 @Html.Hidden("DokSelectedTab", "report")
-                @Html.DropDownList("SelectedDokReport", Model.DokReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
+                @Html.DropDownList("SelectedReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
             }
         </div>
         <div id="reportViewButtons" class="col-md-4 col-sm-12">
@@ -43,8 +42,9 @@ else
                 <input type="checkbox" id="cbExportReport" onclick="ToggleExportReport(this)">
             </div>
         </div>
+        
     </div>
-
+    <p>Antall datasett: @Model.NumberOfItems</p>
 
     <div id="tabel" class="reportViewContent">
         <table class="table table-bordered table-responsive">

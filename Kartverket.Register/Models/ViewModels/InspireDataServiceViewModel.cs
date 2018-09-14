@@ -19,7 +19,7 @@ namespace Kartverket.Register.Models.ViewModels
         public bool MetadataAutoUpdate { get; set; }
 
 
-        [Display(Name = "Metadata i søketjenesten:")]
+        [Display(Name = "MetadataInSearchService", ResourceType = typeof(InspireDataSet))]
         public Guid InspireDeliveryMetadataInSearchServiceId { get; set; }
         public virtual DatasetDelivery InspireDeliveryMetadataInSearchService { get; set; } // Godkjent på alle
         public string MetadataInSearchServiceStatusId { get; set; }
@@ -27,7 +27,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string MetadataInSearchServiceNote { get; set; }
         public bool MetadataInSearchAutoUpdate { get; set; }
 
-        [Display(Name = "Tjenestestatus")]
+        [Display(Name = "ServiceStatus", ResourceType = typeof(InspireDataSet))]
         public Guid InspireDeliveryServiceStatusId { get; set; }
         public virtual DatasetDelivery InspireDeliveryServiceStatus { get; set; } // Tjenestestatus for WMS/WFS
         public string ServiceStatusId { get; set; }
@@ -38,10 +38,10 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "Requests")]
         public int Requests { get; set; } // Manuelt
 
-        [Display(Name = "Nettverkstjeneste")]
+        [Display(Name = "NetworkService", ResourceType = typeof(InspireDataSet))]
         public bool NetworkService { get; set; } // view og download = true
 
-        [Display(Name = "Sds")]
+        [Display(Name = "Sds", ResourceType = typeof(InspireDataSet))]
         public bool Sds { get; set; } // tjenester som ikke er WMS eller WFS
 
         [Display(Name = "Url")]
@@ -77,7 +77,7 @@ namespace Kartverket.Register.Models.ViewModels
                     MetadataAutoUpdate = inspireDataService.InspireDeliveryMetadata.AutoUpdate;
                     MetadataNote = inspireDataService.InspireDeliveryMetadata.Note;
                     MetadataStatusId = inspireDataService.InspireDeliveryMetadata.Status.value;
-                    MetadataStatus = inspireDataService.InspireDeliveryMetadata.Status.description;
+                    MetadataStatus = inspireDataService.InspireDeliveryMetadata.Status.DescriptionTranslated();
                     InspireDeliveryMetadataId = inspireDataService.InspireDeliveryMetadataId;
                 }
                 if (inspireDataService.InspireDeliveryMetadataInSearchService != null)
@@ -87,7 +87,7 @@ namespace Kartverket.Register.Models.ViewModels
                     MetadataInSearchAutoUpdate = inspireDataService.InspireDeliveryMetadataInSearchService.AutoUpdate;
                     MetadataInSearchServiceNote = inspireDataService.InspireDeliveryMetadataInSearchService.Note;
                     MetadataInSearchServiceStatusId = inspireDataService.InspireDeliveryMetadataInSearchService.Status.value;
-                    MetadataInSearchServiceStatus = inspireDataService.InspireDeliveryMetadataInSearchService.Status.description;
+                    MetadataInSearchServiceStatus = inspireDataService.InspireDeliveryMetadataInSearchService.Status.DescriptionTranslated();
                 }
                     if (inspireDataService.InspireDeliveryServiceStatus != null)
                 {
@@ -96,7 +96,7 @@ namespace Kartverket.Register.Models.ViewModels
                     ServiceStatusAutoUpdate = inspireDataService.InspireDeliveryServiceStatus.AutoUpdate;
                     ServiceStatusNote = inspireDataService.InspireDeliveryServiceStatus.Note;
                     ServiceStatusId = inspireDataService.InspireDeliveryServiceStatus.Status.value;
-                    ServiceStatus = inspireDataService.InspireDeliveryServiceStatus.Status.description;
+                    ServiceStatus = inspireDataService.InspireDeliveryServiceStatus.Status.DescriptionTranslated();
                 }
 
                 InspireDataType = inspireDataService.InspireDataType;
@@ -130,11 +130,11 @@ namespace Kartverket.Register.Models.ViewModels
             {
                 if (inspireTeamsString == null)
                 {
-                    inspireTeamsString += item.name;
+                    inspireTeamsString += item.NameTranslated();
                 }
                 else
                 {
-                    inspireTeamsString += ", " + item.name;
+                    inspireTeamsString += ", " + item.NameTranslated();
                 }
             }
             return inspireTeamsString;

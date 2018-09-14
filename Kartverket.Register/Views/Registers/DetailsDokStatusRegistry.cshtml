@@ -15,12 +15,12 @@
     int pageSize = 50;
     int pageNumber = (page ?? 1);
 }
-@section Scripts {
-    @if (!Model.StatusReport.ReportNotExists)
-    {
-        @Html.Partial("js/_dokReportCharts", Model.StatusReport)
-    }
 
+@section Scripts {
+    @if (Model.StatusReport != null && !Model.StatusReport.ReportNotExists)
+    {
+        @Html.Partial("js/_dokReportCharts", (DokStatusReportViewModel)Model.StatusReport)
+    }
 
     <script>
 
@@ -52,8 +52,6 @@
 
 }
 
-
-
 @Html.Partial("_SearchBarPartial")
 
 <section>
@@ -70,7 +68,6 @@
             <p>
                 @Model.Description
             </p>
-
         </div>
 
         <div class="col-sm-12 col-md-2 text-right">
@@ -83,10 +80,10 @@
                 <ul id="tabs" class="nav nav-tabs">
 
                     <li id="dataset-Tab" class="tab active">
-                        @Html.ActionLink("Datasett", "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "dataset"))
+                        @Html.ActionLink(DataSet.Dataset, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "dataset"))
                     </li>
                     <li id="report-Tab" class="tab">
-                        @Html.ActionLink("Rapport", "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "report"))
+                        @Html.ActionLink(InspireDataSet.Reports, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "report"))
                     </li>
                 </ul>
             </div>
@@ -124,7 +121,10 @@
 
 @if (Model.SelectedDokTabIsReport())
 {
-    @Html.Partial("_dokReport", Model.StatusReport)
+    if (Model.StatusReport is DokStatusReportViewModel)
+    {
+        @Html.Partial("_dokReport", (DokStatusReportViewModel)Model.StatusReport)
+    }
 }
 else
 {
@@ -132,7 +132,7 @@ else
 }
 
 
-@if (!Model.SelectedInspireRegisteryTypeIsReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations())
+@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport())
 {<div class="clearfix"></div>
     <div class="col-sm-12 row">
         @if (Model.ContainedItemClassIsRegister())
@@ -152,7 +152,7 @@ else
 
 <div class="clearfix"></div>
 <div class="hidden-print">
-    @if (!Model.SelectedInspireRegisteryTypeIsReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations())
+    @if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport())
     {
         if (Model.AccessRegister.EditListOfRegisterItems)
         {

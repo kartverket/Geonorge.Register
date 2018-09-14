@@ -1,4 +1,5 @@
-﻿using Resources;
+﻿using Kartverket.Register.Helpers;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -73,10 +74,15 @@ namespace Kartverket.Register.Models.ViewModels
 
         public void UpdateDataset(DatasetV2 dataset)
         {
+            var cultureName = CultureHelper.GetCurrentCulture();
+
+            string specificUsage = !CultureHelper.IsNorwegian(cultureName) && !string.IsNullOrEmpty(dataset.SpecificUsageEnglish)
+                          ? dataset.SpecificUsageEnglish : dataset.SpecificUsage;
+
             Uuid = dataset.Uuid;
             Notes = dataset.Notes;
             MetadataUrl = dataset.MetadataUrl;
-            SpecificUsage = dataset.SpecificUsage;
+            SpecificUsage = specificUsage;
             ProductSheetUrl = dataset.ProductSheetUrl;
             PresentationRulesUrl = dataset.PresentationRulesUrl;
             ProductSpecificationUrl = dataset.ProductSpecificationUrl;
@@ -126,8 +132,9 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string GetThemeGroupDescription()
         {
-            return !string.IsNullOrWhiteSpace(Theme?.description) ? Theme.description : "Ikke angitt";
+            return !string.IsNullOrWhiteSpace(Theme?.DescriptionTranslated()) ? Theme.DescriptionTranslated() : "Ikke angitt";
         }
+
 
         public string LogoSrc()
         {

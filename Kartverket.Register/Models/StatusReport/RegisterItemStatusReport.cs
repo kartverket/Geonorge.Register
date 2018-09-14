@@ -6,9 +6,9 @@ using System.Web;
 
 namespace Kartverket.Register.Models
 {
-    public class StatusHistory
+    public class RegisterItemStatusReport
     {
-        public StatusHistory()
+        public RegisterItemStatusReport()
         {
             Id = Guid.NewGuid();
         }

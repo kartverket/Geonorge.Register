@@ -38,11 +38,11 @@ namespace Kartverket.Register.Services.Register
             var registerItems = new List<Models.RegisterItem>();
             var registerItemsv2 = new List<RegisterItemV2>();
 
-            if (register.containedItemClass == "Document")
+            if (register.ContainedItemClassIsDocument())
             {
                 FilterDocument(register, filter, registerItems);
             }
-            else if (register.containedItemClass == "Dataset")
+            else if (register.ContainedItemClassIsDataset())
             {
                 FilterDataset(register, filter, registerItems);
             }
@@ -94,18 +94,18 @@ namespace Kartverket.Register.Services.Register
             {
                 if (filter.InspireRegisteryType != null)
                 {
-                    if (filter.InspireRegisteryType == "dataset")
+                    if (filter.InspireRegistertTypeIsDataset())
                     {
                         GetInspireDatasets(filter, registerItemsv2, item);
                     }
-                    else if (filter.InspireRegisteryType == "service")
+                    else if (filter.InspireRegistertTypeIsService())
                     {
                         if (item is InspireDataService inspireDataService)
                         {
                             GetInspireDataServices(filter, registerItemsv2, inspireDataService);
                         }
                     }
-                    else if (filter.InspireRegisteryType == "report")
+                    else if (filter.InspireRegisteryTypeIsisInspireReport())
                     {
                         registerItemsv2.Add(item);
                     }
@@ -1267,6 +1267,61 @@ namespace Kartverket.Register.Services.Register
             });
 
             return register;
+        }
+
+        public void UpdateRegisterItemV2Translations()
+        {
+            var inspireDatasets = _dbContext.InspireDatasets;
+            foreach (var inspireDataset in inspireDatasets)
+            {
+                dynamic metadata = GetMetadata(inspireDataset.Uuid);
+                if(metadata != null) { 
+                    inspireDataset.NameEnglish = metadata.EnglishTitle;
+                    inspireDataset.DescriptionEnglish = metadata.EnglishAbstract;
+                    inspireDataset.SpecificUsageEnglish = metadata.SpecificUsage;
+                }
+            }
+            _dbContext.SaveChanges();
+
+            var inspireDataServices = _dbContext.InspireDataServices;
+            foreach (var inspireDataService in inspireDataServices)
+            {
+                dynamic metadata = GetMetadata(inspireDataService.Uuid);
+                if (metadata != null)
+                {
+                    inspireDataService.NameEnglish = metadata.EnglishTitle;
+                    inspireDataService.DescriptionEnglish = metadata.EnglishAbstract;
+                }
+            }
+            _dbContext.SaveChanges();
+
+            var geodatalovDatasets = _dbContext.GeodatalovDatasets;
+            foreach (var geodatalovDataset in geodatalovDatasets)
+            {
+                dynamic metadata = GetMetadata(geodatalovDataset.Uuid);
+                if (metadata != null)
+                {
+                    geodatalovDataset.NameEnglish = metadata.EnglishTitle;
+                    geodatalovDataset.DescriptionEnglish = metadata.EnglishAbstract;
+                    geodatalovDataset.SpecificUsageEnglish = metadata.SpecificUsage;
+                }
+            }
+            _dbContext.SaveChanges();
+        }
+
+        private dynamic GetMetadata(string uuid)
+        {
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid + "?lang=en";
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                return data;
+            }
+            catch { }
+            return null;
         }
     }
 }

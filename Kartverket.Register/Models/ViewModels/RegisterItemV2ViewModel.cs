@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Kartverket.Register.Helpers;
 using Resources;
 
 namespace Kartverket.Register.Models.ViewModels
@@ -63,14 +64,22 @@ namespace Kartverket.Register.Models.ViewModels
 
         public void UpdateRegisterItem(RegisterItemV2 item)
         {
+            var cultureName = CultureHelper.GetCurrentCulture();
+
+            string name = !CultureHelper.IsNorwegian(cultureName) && !string.IsNullOrEmpty(item.NameEnglish)
+                          ? item.NameEnglish : item.Name;
+
+            string description = !CultureHelper.IsNorwegian(cultureName) && !string.IsNullOrEmpty(item.DescriptionEnglish)
+              ? item.DescriptionEnglish : item.Description;
+
             SystemId = item.SystemId;
-            Name = item.Name;
+            Name = name;
             Seoname = item.Seoname;
             Submitter = item.Submitter;
             SubmitterId = item.SubmitterId;
             Owner = item.Owner;
             OwnerId = item.OwnerId;
-            Description = item.Description;
+            Description = description;
             DateSubmitted = item.DateSubmitted;
             Modified = item.Modified;
             Status = item.Status;

@@ -25,11 +25,11 @@
         <div class="col-sm-12 col-md-10">
             @if (Model is InspireDataServiceViewModel)
             {
-                <span title="" data-toggle="tooltip" data-placement="bottom" class="label label-tjeneste" style="width: auto;" data-original-title="Tilgjengelig som Tjeneste">Tjeneste</span>
+                <span title="" data-toggle="tooltip" data-placement="bottom" class="label label-tjeneste" style="width: auto;" data-original-title="Tilgjengelig som Tjeneste">@InspireDataSet.Service</span>
             }
             else if (Model is InspireDatasetViewModel)
             {
-            <span title="" data-toggle="tooltip" data-placement="bottom" class="label label-dataset" style="width: auto;" data-original-title="Tilgjengelig som datasett">Datasett</span>
+                <span title="" data-toggle="tooltip" data-placement="bottom" class="label label-dataset" style="width: auto;" data-original-title="Tilgjengelig som datasett">@InspireDataSet.DataSet</span>
             }
 
             @if (Model.Register.containedItemClass != "NameSpace")

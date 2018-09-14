@@ -2,10 +2,10 @@
 @model Kartverket.Register.Models.ViewModels.InspireDataServiceViewModel
 
 <article class="col-md-12">
-    <h3>Tjenesten</h3>
+    <h3>@InspireDataSet.Service</h3>
     <p><strong>Type: </strong>@Model.InspireDataType</p>
-    <p><strong>Tjeneste type: </strong>@Model.ServiceType</p>
-    <p><strong>Inspire tema: </strong>@Model.InspireThemsAsString()</p>
+    <p><strong>@InspireDataSet.ServiceType </strong>@Model.ServiceType</p>
+    <p><strong>@InspireDataSet.InspireTheme </strong>@Model.InspireThemsAsString()</p>
     <p><strong>@Html.DisplayNameFor(model => Model.Requests): </strong>@Html.DisplayFor(modelItem => Model.Requests)</p>
     <p><strong>@Html.DisplayNameFor(model => Model.NetworkService): </strong>@HtmlHelperExtensions.TranslateBool(Model.NetworkService)</p>
     <p><strong>@Html.DisplayNameFor(model => Model.Sds): </strong>@HtmlHelperExtensions.TranslateBool(Model.Sds)</p>
@@ -18,10 +18,8 @@
 
 
 <article class="col-md-12">
-    <h3>Inspire tjeneste status</h3>
-    @*<div class="row">
-        <div class="col-md-12"><p><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">@DataSet.DOK_EvaluationCriteria</a></p></div>
-    </div>*@
+    <h3>@InspireDataSet.InspireServiceStatus</h3>
+
     <div class="table-heading col-md-12">
         <div class="col-md-3 col">@DataSet.DOK_AssessmentPoint.ToUpper()</div>
         <div class="col-md-2 col">@DataSet.DOK_StatusValueHeader.ToUpper()</div>

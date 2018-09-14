@@ -1,4 +1,4 @@
-﻿@model Kartverket.Register.Models.ViewModels.StatusReportViewModel
+﻿@model Kartverket.Register.Models.ViewModels.DokStatusReportViewModel
 
 <script>
 
@@ -261,10 +261,10 @@
             {
                 fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokMetadataPieChart.Good))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokMetadataPieChart.Useable))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokMetadataPieChart.Deficient))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokMetadataPieChart.NotSet)))
+                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithMetadataGood))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithMetadataUseable))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithMetadataDeficient))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithMetadataNotSet)))
                 ],
             }
         ]
@@ -318,10 +318,10 @@
                 fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                 data: [
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.Good))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.NotSet)))
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductsheetGood))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductsheetUseable))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductsheetDeficient))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductsheetNotSet)))
                 ],
             }
         ]
@@ -333,10 +333,10 @@
                 {
                     fill: true,
                     backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                    data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokPresentationRulesPieChart.Good))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokPresentationRulesPieChart.Useable))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokPresentationRulesPieChart.Deficient))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokPresentationRulesPieChart.NotSet)))],
+                    data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRulesGood))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRulesUseable))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRulesDeficient))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRulesNotSet)))],
                 }
             ]
     };
@@ -347,10 +347,10 @@
                 {
                     fill: true,
                     backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                    data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSpecificationPieChart.Good))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSpecificationPieChart.Useable))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSpecificationPieChart.Deficient))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSpecificationPieChart.NotSet)))],
+                    data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSpecificationGood))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSpecificationUseable))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSpecificationDeficient))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSpecificationNotSet)))],
                 }
             ]
     };
@@ -361,10 +361,10 @@
             {
                 fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokWmsPieChart.Good))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokWmsPieChart.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokWmsPieChart.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokWmsPieChart.NotSet)))],
+                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWmsGood))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWmsUseable))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWmsDeficient))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWmsNotSet)))],
             }
         ]
     };
@@ -375,10 +375,10 @@
             {
                 fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokWfsPieChart.Good))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokWfsPieChart.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokWfsPieChart.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokWfsPieChart.NotSet)))],
+                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWfsGood))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWfsUseable))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWfsDeficient))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWfsNotSet)))],
             }
         ]
     };
@@ -389,10 +389,10 @@
             {
                 fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokSosiRequirementsPieChart.Good))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokSosiRequirementsPieChart.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokSosiRequirementsPieChart.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokSosiRequirementsPieChart.NotSet)))],
+                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithSosiRequirementsGood))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithSosiRequirementsUseable))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithSosiRequirementsDeficient))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithSosiRequirementsNotSet)))],
             }
         ]
     };
@@ -403,10 +403,10 @@
             {
                 fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokGmlRequirementsPieChart.Good))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokGmlRequirementsPieChart.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokGmlRequirementsPieChart.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokGmlRequirementsPieChart.NotSet)))],
+                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithGmlRequirementsGood))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithGmlRequirementsUseable))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithGmlRequirementsDeficient))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithGmlRequirementsNotSet)))],
             }
         ]
     };
@@ -417,10 +417,10 @@
             {
                 fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokAtomFeedPieChart.Good))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokAtomFeedPieChart.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokAtomFeedPieChart.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokAtomFeedPieChart.NotSet)))],
+                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAtomFeedGood))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAtomFeedUseable))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAtomFeedDeficient))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAtomFeedNotSet)))],
             }
         ]
     };
@@ -431,10 +431,10 @@
             {
                 fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.Good))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.NotSet)))],
+                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithDistributionGood))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithDistributionUseable))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithDistributionDeficient))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithDistributionNotSet)))],
             }
         ]
     };

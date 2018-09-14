@@ -148,7 +148,7 @@
     <value>Retrieving search results</value>
   </data>
   <data name="Search_Placeholder" xml:space="preserve">
-    <value>Search for registerdata</value>
+    <value>Search for register content</value>
   </data>
   <data name="Heading" xml:space="preserve">
     <value>Norwegian NSDI registers</value>
@@ -261,5 +261,17 @@
   </data>
   <data name="ShowAll" xml:space="preserve">
     <value>Show all</value>
+  </data>
+  <data name="Deficient" xml:space="preserve">
+    <value>Deficient</value>
+  </data>
+  <data name="Good" xml:space="preserve">
+    <value>Good</value>
+  </data>
+  <data name="NotSet" xml:space="preserve">
+    <value>NotSet</value>
+  </data>
+  <data name="Useable" xml:space="preserve">
+    <value>Useable</value>
   </data>
 </root>

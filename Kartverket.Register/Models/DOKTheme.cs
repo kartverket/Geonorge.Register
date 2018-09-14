@@ -11,28 +11,34 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
-
+using Kartverket.Register.Helpers;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Models {
 	public class DOKTheme {
         [Key]
         public string value { get; set; }
         public string description { get; set; }
-        //public Samfunnssikkerhet;
-        //public Forurensning;
-        //public Friluftsliv;
-        //public Landskap;
-        //public Natur;
-        //public Kulturminner;
-        //public Landbruk;
-        //public Energi;
-        //public Geologi;
-        //public Kyst/Fiskeri;
-        //public Samferdsel;
-        //public Basis geodata;
 
-		
 
-	}//end DOKTheme
+	    public string DescriptionTranslated()
+	    {
+	        var cultureName = CultureHelper.GetCurrentCulture();
+	        var DOKThemeDescription = description;
+	        if (!CultureHelper.IsNorwegian())
+	            DOKThemeDescription = GetTranslation(value);
+
+	        return DOKThemeDescription;
+	    }
+
+        private string GetTranslation(string value)
+        {
+            var translated = DOKThemeTranslation.NorwegianToEnglish[value];
+            if (translated != null)
+                return translated;
+
+            return value;
+        }
+    }//end DOKTheme
 
 }//end namespace Datamodell

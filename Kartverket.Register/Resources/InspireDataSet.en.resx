@@ -133,7 +133,7 @@
     <value>Compare with</value>
   </data>
   <data name="DataSet" xml:space="preserve">
-    <value>Data set</value>
+    <value>Dataset</value>
   </data>
   <data name="DatasetHarmonizedData" xml:space="preserve">
     <value>Harmonized data</value>
@@ -175,7 +175,7 @@
     <value>Network service</value>
   </data>
   <data name="NewDataset" xml:space="preserve">
-    <value>Add a new inspire data set</value>
+    <value>Add a new inspire dataset</value>
   </data>
   <data name="Number" xml:space="preserve">
     <value>Number</value>

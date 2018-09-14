@@ -121,7 +121,7 @@
     <value>Confirmation of data to be the municipality's DOK</value>
   </data>
   <data name="DOK_Coverage_Municipality" xml:space="preserve">
-    <value>Coverage shows whether the data set actually exists in the municipality</value>
+    <value>Coverage shows whether thedata set actually exists in the municipality</value>
   </data>
   <data name="DOK_Delivery_AtomFeed" xml:space="preserve">
     <value>ATOM feed status</value>
@@ -184,19 +184,19 @@
     <value>The organization that has an ownership of the dates and can answer in depth about the academic issues surrounding the structure and content of the dataset</value>
   </data>
   <data name="DOK_Kommentar" xml:space="preserve">
-    <value>Must be entered on data one choose not to include, can also be used for other data sets</value>
+    <value>Must be entered on data one choose not to include, can also be used for other datasets</value>
   </data>
   <data name="DOK_Nasjonalt_Kommunalt" xml:space="preserve">
-    <value>Shows whether the data set is national or municipal</value>
+    <value>Shows whether the dataset is national or municipal</value>
   </data>
   <data name="DOK_Nasjonal_Status" xml:space="preserve">
-    <value>Data set its status</value>
+    <value>Dataset its status</value>
   </data>
   <data name="DOK_Temagruppe" xml:space="preserve">
     <value>Theme group</value>
   </data>
   <data name="DOK_Tittel" xml:space="preserve">
-    <value>Official Title (Name) of Data Set</value>
+    <value>Official Title (Name) of Dataset</value>
   </data>
   <data name="DOK_Datasetthumbnail" xml:space="preserve">
     <value>Thumbnail</value>
@@ -307,7 +307,7 @@
     <value>Go to</value>
   </data>
   <data name="ListOfDatasets" xml:space="preserve">
-    <value>List of data sets</value>
+    <value>List of datasets</value>
   </data>
   <data name="MetadataEditor" xml:space="preserve">
     <value>metadata editor</value>
@@ -331,7 +331,7 @@
     <value>This field is required</value>
   </data>
   <data name="ErrorMessageValidationDataset" xml:space="preserve">
-    <value>The data set already exists!</value>
+    <value>The dataset already exists!</value>
   </data>
   <data name="MunicipalConfirmation" xml:space="preserve">
     <value>Municipal confirmation</value>
@@ -391,7 +391,7 @@
     <value>KU impact assessments in connection with area plans</value>
   </data>
   <data name="SuitabilityNoteTitle" xml:space="preserve">
-    <value>Must be entered on data one choose not to include, can also be used for other data sets</value>
+    <value>Must be entered on data one choose not to include, can also be used for other datasets</value>
   </data>
   <data name="SuitabilityOmraadeText" xml:space="preserve">
     <value>Regulatory Area</value>
@@ -416,7 +416,7 @@
   </data>
   <data name="SuitabitityHelpText" xml:space="preserve">
     <value>&lt;b&gt; Municipal proposal for use based on suitability &lt;/b&gt; &lt;br /&gt;
-Here you can enter the municipality's assessment of suitability for each of the datasets. Different municipalities have different challenges and this can affect the assessment of suitability. Registration is not mandatory, but is voluntary to use, it must be a tool for the municipality's own work with DOK. Overall national proposals have been submitted. This proposal is only meant to be grossly guiding from professionals' knowledge of the dataset and knowledge of the tasks and processes to be solved according to the Planning and Building Act. As the quality and coverage of a data set can vary considerably from one municipality to another and one region to another, the municipalities themselves must consider suitability based on the available data for their municipality. The suitability assessment can be made for use in these processes:
+Here you can enter the municipality's assessment of suitability for each of the datasets. Different municipalities have different challenges and this can affect the assessment of suitability. Registration is not mandatory, but is voluntary to use, it must be a tool for the municipality's own work with DOK. Overall national proposals have been submitted. This proposal is only meant to be grossly guiding from professionals' knowledge of the dataset and knowledge of the tasks and processes to be solved according to the Planning and Building Act. As the quality and coverage of a dataset can vary considerably from one municipality to another and one region to another, the municipalities themselves must consider suitability based on the available data for their municipality. The suitability assessment can be made for use in these processes:
                                     &lt;ul&gt;
                                         &lt;li&gt; Region Scheduling &lt;/li&gt;
                                         &lt;li&gt; Processes related to the community plan community &lt;/li&gt;
@@ -436,18 +436,18 @@ Check for the type of tasks you use, or use the dataset. Higher intensity of bac
     <value>Valgte tilleggsdatasett</value>
   </data>
   <data name="SuggestMunicipalitySearchInfo" xml:space="preserve">
-    <value>If the dataset already exists in Geonorge, search for data sets and register it for your municipality</value>
+    <value>If the dataset already exists in Geonorge, search for datasets and register it for your municipality</value>
   </data>
   <data name="SuggestMunicipalitySearchInfoRegisterMetadata" xml:space="preserve">
     <value>Register new metadata</value>
   </data>
   <data name="SuggestNewDatasetMunicipality" xml:space="preserve">
-    <value>Add extra DOK data sets for your municipality</value>
+    <value>Add extra DOK datasets for your municipality</value>
   </data>
   <data name="DOK_SuitabitityHelpText" xml:space="preserve">
     <value>&lt;b&gt; DOK National Appraisal Assessment &lt;/b&gt; &lt;br /&gt;
-&lt;p&gt;Here are the overall national fitness assessments recorded. These are only grossly guiding assessments based on the knowledge of the professionals to the data set and knowledge of the tasks and processes that are to be solved according to the Planning and Building Act.
-As a data set quality and coverage can vary considerably from site to area, the assessments are considered rough and approximate and may differ significantly for specific municipalities or locations.&lt;/p&gt;
+&lt;p&gt;Here are the overall national fitness assessments recorded. These are only grossly guiding assessments based on the knowledge of the professionals to the dataset and knowledge of the tasks and processes that are to be solved according to the Planning and Building Act.
+As a dataset quality and coverage can vary considerably from site to area, the assessments are considered rough and approximate and may differ significantly for specific municipalities or locations.&lt;/p&gt;
                 &lt;p&gt;&lt;u&gt;Appraisal assessment is made for these processes: &lt;/u&gt;
                     &lt;ul&gt;
                         &lt;li&gt; Region Scheduling &lt;/li&gt;

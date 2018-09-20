@@ -16,6 +16,7 @@ using System.Threading;
 using System.Xml.Serialization;
 using Kartverket.Register.Models.Translations;
 using System.Collections.Specialized;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register
 {
@@ -69,13 +70,28 @@ namespace Kartverket.Register
 
         protected void Application_BeginRequest()
         {
-
             ValidateReturnUrl(Context.Request.QueryString);
 
             var cookie = Context.Request.Cookies["_culture"];
+
+            var lang = Context.Request.QueryString["lang"];
+            if (!string.IsNullOrEmpty(lang))
+                cookie = null;
+
             if (cookie == null)
             {
-                cookie = new HttpCookie("_culture", Culture.NorwegianCode);
+                var cultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ?
+                    Request.UserLanguages[0] : null;
+
+                if (!string.IsNullOrEmpty(lang))
+                    cultureName = lang;
+
+                cultureName = CultureHelper.GetImplementedCulture(cultureName);
+                if (CultureHelper.IsNorwegian(cultureName))
+                    cookie = new HttpCookie("_culture", Culture.NorwegianCode);
+                else
+                    cookie = new HttpCookie("_culture", Culture.EnglishCode);
+
                 if (!Request.IsLocal)
                     cookie.Domain = ".geonorge.no";
                 cookie.Expires = DateTime.Now.AddYears(1);

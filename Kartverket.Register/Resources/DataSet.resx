@@ -494,4 +494,7 @@ Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere
   <data name="Deficient" xml:space="preserve">
     <value>Ikke satt</value>
   </data>
+  <data name="Suitability" xml:space="preserve">
+    <value>Egnethet</value>
+  </data>
 </root>

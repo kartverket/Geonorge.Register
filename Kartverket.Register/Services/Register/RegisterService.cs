@@ -15,6 +15,7 @@ using System.Xml;
 using Kartverket.Register.Migrations;
 using Kartverket.Register.Models.ViewModels;
 using Resources;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Services.Register
 {
@@ -584,6 +585,8 @@ namespace Kartverket.Register.Services.Register
                 {
                     string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
                     System.Net.WebClient c = new System.Net.WebClient();
+                    c.Headers.Remove("Accept-Language");
+                    c.Headers.Add("Accept-Language", Culture.NorwegianCode);
                     c.Encoding = System.Text.Encoding.UTF8;
 
                     var json = c.DownloadString(metadataUrl);
@@ -599,7 +602,7 @@ namespace Kartverket.Register.Services.Register
                             {
                                 var qualitySpecification = qualitySpecifications[q];
                                 string explanation = qualitySpecification.Explanation.Value;
-                                if (explanation.StartsWith("SOSI-filer er i henhold"))
+                                if (explanation.StartsWith("SOSI-filer er i henhold") || explanation.StartsWith("The dataset is established according to national specifications"))
                                 {
                                     qualitySpecificationsResult = true;
                                     break;
@@ -672,7 +675,7 @@ namespace Kartverket.Register.Services.Register
                             {
                                 var qualitySpecification = qualitySpecifications[q];
                                 string explanation = qualitySpecification.Explanation.Value;
-                                if (explanation.StartsWith("GML-filer er i henhold"))
+                                if (explanation.StartsWith("GML-filer er i henhold") || explanation.StartsWith("The dataset is established according to national specifications"))
                                 {
                                     qualitySpecificationsResult = true;
                                     break;

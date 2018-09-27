@@ -15,6 +15,8 @@ namespace Kartverket.Register
                 new { id = @"^\d+$" }
             );
 
+            //routes.MapRoute("Register", "{registerName}", new { controller = "Register", action = "Details" });
+            //routes.MapRoute("RegisterItem", "{registerName}/{item}", new { controller = "Register", action = "DetailsRegisterItem" });
             routes.MapRoute("DokReport", "api/register/det-offentlige-kartgrunnlaget/rapport", new { controller = "ApiRoot", action = "GetDokStatusReport" });
             routes.MapRoute("Dataset", "datasett", new { controller = "DisplayDataset", action = "Index" });
             routes.MapRoute("DokDekning", "register/det-offentlige-kartgrunnlaget/dekning", new { controller = "DokCoverage", action = "Index" });

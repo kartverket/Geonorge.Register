@@ -141,7 +141,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string DetailPageUrl()
         {
-            return Register.GetObjectUrl() + "/" + Owner.seoname + "/" + Seoname;
+            return Register.GetObjectUrl() + "/" + Seoname + "/" + SystemId;
         }
 
         public string ItemsByOwnerUrl()

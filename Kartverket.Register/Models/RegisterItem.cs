@@ -230,7 +230,7 @@ namespace Kartverket.Register.Models
             }
             else {
                 if(submitter!=null && !string.IsNullOrEmpty(seoname))
-                    return register.GetObjectUrl() + "/" + submitter.seoname + "/" + seoname;
+                    return register.GetObjectUrl() + "/" + seoname + "/" + systemId;
                 else
                     return register.GetObjectUrl();
             }

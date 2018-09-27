@@ -116,8 +116,8 @@ namespace Kartverket.Register.Models
         public virtual string GetObjectUrl()
         {
             return parentRegisterId == null
-                ? "/register/" + seoname
-                : "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname;
+                ? "/" + seoname
+                : "/" + parentRegister.seoname + "/" + seoname;
         }
 
         public bool IsServiceAlertRegister()
@@ -142,7 +142,7 @@ namespace Kartverket.Register.Models
 
         public string GetDokMunicipalityUrl()
         {
-            return "/register/det-offentlige-kartgrunnlaget-kommunalt";
+            return "/det-offentlige-kartgrunnlaget-kommunalt";
         }
 
         public bool IsInspireStatusRegister()

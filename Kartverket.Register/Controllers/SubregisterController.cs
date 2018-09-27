@@ -35,30 +35,31 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        [Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}.{format}")]
-        [Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}")]
-        public ActionResult DetailsSubregisterItem(string registername, string owner, string subregister, string itemname, string format)
-        {
-            string ApiRedirectUrl = GetApiUrl(ref format);
-            if (!string.IsNullOrWhiteSpace(ApiRedirectUrl))
-            {
-                return Redirect(ApiRedirectUrl);
-            }
+        ////[Route("{registername}/{subregister}/{itemname}/{systemId}")]
+        //[Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}.{format}")]
+        //[Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}")]
+        //public ActionResult DetailsSubregisterItem(string registername, string owner, string subregister, string itemname, string format, string systemId)
+        //{
+        //    string ApiRedirectUrl = GetApiUrl(ref format);
+        //    if (!string.IsNullOrWhiteSpace(ApiRedirectUrl))
+        //    {
+        //        return Redirect(ApiRedirectUrl);
+        //    }
 
-            var queryResults = from o in _db.RegisterItems
-                               where o.seoname == itemname && o.register.seoname == subregister && o.register.parentRegister.seoname == registername
-                               select o.systemId;
+        //    var queryResults = from o in _db.RegisterItems
+        //                       where o.seoname == itemname && o.register.seoname == subregister && o.register.parentRegister.seoname == registername
+        //                       select o.systemId;
 
-            Guid systId = queryResults.FirstOrDefault();
-            Kartverket.Register.Models.RegisterItem registerItem = _db.RegisterItems.Find(systId);
+        //    Guid systId = queryResults.FirstOrDefault();
+        //    Kartverket.Register.Models.RegisterItem registerItem = _db.RegisterItems.Find(systId);
 
-            if (registerItem.register.containedItemClass == "Document")
-            {
-                Kartverket.Register.Models.Document document = _db.Documents.Find(systId);
-                ViewBag.documentOwner = document.documentowner.name;
-            }
-            return View(registerItem);
-        }
+        //    if (registerItem.register.containedItemClass == "Document")
+        //    {
+        //        Kartverket.Register.Models.Document document = _db.Documents.Find(systId);
+        //        ViewBag.documentOwner = document.documentowner.name;
+        //    }
+        //    return View(registerItem);
+        //}
 
         // GET: subregister/Create
         [Authorize]

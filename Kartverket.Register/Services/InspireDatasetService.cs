@@ -663,6 +663,16 @@ namespace Kartverket.Register.Services
             _dbContext.SaveChanges();
         }
 
+        public InspireDataset GetInspireDatasetById(string uuid)
+        {
+            var queryResult = from c in _dbContext.InspireDatasets
+                where c.Uuid == uuid
+                      || c.SystemId == Guid.Parse(uuid)
+                select c;
+
+            return queryResult.FirstOrDefault();
+        }
+
         private List<InspireDataService> FetchInspireDataServicesFromKartkatalogen()
         {
             List<InspireDataService> inspireDataServices = new List<InspireDataService>();
@@ -696,14 +706,6 @@ namespace Kartverket.Register.Services
             }
         }
 
-        //private bool IsNetworkService(string serviceuuid)
-        //{
-        //    SimpleMetadata metadata = MetadataService.FetchMetadata(serviceuuid);
-        //    var serviceType = metadata.ServiceType;
-        //    //var inspireKeywords = SimpleKeyword.Filter(metadata.Keywords, null, SimpleKeyword.THESAURUS_GEMET_INSPIRE_V1);
-
-        //    return serviceType == "view" || serviceType == "download";
-        //}
 
         private bool GetInspireTheme(string serviceuuid)
         {
@@ -761,7 +763,7 @@ namespace Kartverket.Register.Services
 
         public InspireDataService UpdateInspireDataService(InspireDataServiceViewModel viewModel)
         {
-            var inspireDataService = GetInspireDataServiceById(viewModel.SystemId);
+            var inspireDataService = GetInspireDataServiceById(viewModel.SystemId.ToString());
             inspireDataService.Modified = DateTime.Now;
             inspireDataService.Requests = viewModel.Requests;
 
@@ -822,10 +824,11 @@ namespace Kartverket.Register.Services
             return queryResult.FirstOrDefault();
         }
 
-        public InspireDataService GetInspireDataServiceById(Guid systemId)
+        public InspireDataService GetInspireDataServiceById(string uuid)
         {
             var queryResult = from i in _dbContext.InspireDataServices
-                              where i.SystemId == systemId
+                              where i.SystemId == Guid.Parse(uuid)
+                                    || i.Uuid == uuid
                               select i;
 
             return queryResult.FirstOrDefault();

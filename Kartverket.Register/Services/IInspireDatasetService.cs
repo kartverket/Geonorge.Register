@@ -16,9 +16,10 @@ namespace Kartverket.Register.Services
         List<InspireDataService> GetInspireDataService();
         ICollection<InspireDataServiceViewModel> ConvertToViewModel(ICollection<InspireDataService> getInspireDataService);
         InspireDataService GetInspireDataServiceByName(string registername, string itemname);
-        InspireDataService GetInspireDataServiceById(Guid systemId);
+        InspireDataService GetInspireDataServiceById(string systemId);
         InspireDataService UpdateInspireDataService(InspireDataServiceViewModel viewModel);
         InspireDataService UpdateInspireDataServiceFromKartkatalogen(InspireDataService originalInspireDataService);
         void DeleteInspireDataService(InspireDataService inspireDataset);
+        InspireDataset GetInspireDatasetById(string systemId);
     }
 }

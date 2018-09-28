@@ -795,7 +795,7 @@ namespace Kartverket.Register.Controllers
 
             if (register.ContainedItemClassIsDataset())
             {
-                return new DokDatasetViewModel((Dataset)_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
+                return new DokDatasetViewModel(_registerItemService.GetDatasetById(Guid.Parse(systemId)));
             }
             if (register.ContainedItemClassIsDocument())
             {

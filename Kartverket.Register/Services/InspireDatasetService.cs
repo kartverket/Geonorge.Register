@@ -496,6 +496,7 @@ namespace Kartverket.Register.Services
         {
             var queryResult = from i in _dbContext.InspireDatasets
                               where i.Uuid == uuid
+                                    || i.SystemId.ToString() == uuid
                               select i;
 
             return queryResult.FirstOrDefault();
@@ -667,7 +668,7 @@ namespace Kartverket.Register.Services
         {
             var queryResult = from c in _dbContext.InspireDatasets
                 where c.Uuid == uuid
-                      || c.SystemId == Guid.Parse(uuid)
+                      || c.SystemId.ToString() == uuid
                 select c;
 
             return queryResult.FirstOrDefault();
@@ -827,8 +828,8 @@ namespace Kartverket.Register.Services
         public InspireDataService GetInspireDataServiceById(string uuid)
         {
             var queryResult = from i in _dbContext.InspireDataServices
-                              where i.SystemId == Guid.Parse(uuid)
-                                    || i.Uuid == uuid
+                              where i.Uuid == uuid
+                                    || i.SystemId.ToString() == uuid
                               select i;
 
             return queryResult.FirstOrDefault();

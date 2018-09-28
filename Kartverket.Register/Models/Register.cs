@@ -269,5 +269,11 @@ namespace Kartverket.Register.Models
         {
             return Synchronizes.Where(s => s.Active && s.ItemType == "Tjenester").Count(s => s.Active) >= 1;
         }
+
+        public bool RedirectToNewPath(string requestPath)
+        {
+            var newPath = GetObjectUrl();
+            return requestPath != newPath;
+        }
     }
 }

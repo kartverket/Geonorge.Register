@@ -108,6 +108,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details Inspire registry/5
         [Route("inspire-statusregister")]
+        [Route("inspire-statusregister.{format}")]
         [Route("register/inspire-statusregister")]
         [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
@@ -118,6 +119,11 @@ namespace Kartverket.Register.Controllers
 
             var register = _registerService.GetInspireStatusRegister();
             if (register == null) return HttpNotFound();
+
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
 
             filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
@@ -167,6 +173,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details DOK/5
         [Route("det-offentlige-kartgrunnlaget")]
+        [Route("det-offentlige-kartgrunnlaget.{format}")]
         [Route("register/det-offentlige-kartgrunnlaget")]
         [Route("register/det-offentlige-kartgrunnlagetr/{filterOrganization}")]
         public ActionResult DetailsDokStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
@@ -177,12 +184,16 @@ namespace Kartverket.Register.Controllers
 
             var register = _registerService.GetDokStatusRegister();
             if (register == null) return HttpNotFound();
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
 
             register = FilterRegisterItems(register, filter);
 
             List<StatusReport> dokStatusReports = _statusReportService.GetDokStatusReports(12);
             StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : dokStatusReports.FirstOrDefault();
-            
+
 
             var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, dokStatusReports);
             viewModel.SelectedDokTab = filter.DokSelectedTab;
@@ -212,6 +223,7 @@ namespace Kartverket.Register.Controllers
         [Route("{registername}")]
         [Route("{parentRegister}/{registername}/")]
         [Route("{registername}.{format}")]
+        [Route("{parentRegister}/{registername}.{format}/")]
         [Route("register/{registername}")]
         [Route("register/{registername}.{format}")]
         [Route("register/{registername}/{filterOrganization}")]
@@ -226,6 +238,11 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegister(parentRegister, registername);
             if (register == null) return HttpNotFound();
 
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
+
             register = FilterRegisterItems(register, filter);
             var viewModel = new RegisterV2ViewModel(register, filter);
             viewModel.MunicipalityCode = filter.municipality;
@@ -237,6 +254,7 @@ namespace Kartverket.Register.Controllers
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
             return View(viewModel);
         }
+
 
 
         private string GetInspireRegistryType(string filter)
@@ -286,6 +304,10 @@ namespace Kartverket.Register.Controllers
             catch (Exception e)
             {
                 return HttpNotFound();
+            }
+            if (viewModel.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(viewModel.DetailPageUrl());
             }
             viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
             if (string.IsNullOrWhiteSpace(viewModel.Name))
@@ -803,7 +825,7 @@ namespace Kartverket.Register.Controllers
             }
 
             return new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
-            
+
         }
 
         private void ViewbagsRegisterDetails(string sorting, int? page, FilterParameters filter, RegisterV2ViewModel register)

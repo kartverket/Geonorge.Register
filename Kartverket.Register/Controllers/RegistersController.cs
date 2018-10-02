@@ -108,7 +108,6 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details Inspire registry/5
         [Route("inspire-statusregister")]
-        [Route("inspire-statusregister.{format}")]
         [Route("register/inspire-statusregister")]
         [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
@@ -152,6 +151,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("inspire-statusregister")]
         [Route("register/inspire-statusregister")]
+        [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(FilterParameters filter, string dataset, string service)
         {
             if (IsAdmin())
@@ -173,7 +173,6 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details DOK/5
         [Route("det-offentlige-kartgrunnlaget")]
-        [Route("det-offentlige-kartgrunnlaget.{format}")]
         [Route("register/det-offentlige-kartgrunnlaget")]
         [Route("register/det-offentlige-kartgrunnlagetr/{filterOrganization}")]
         public ActionResult DetailsDokStatusRegistry(string sorting, int? page, string format, FilterParameters filter)

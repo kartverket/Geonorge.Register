@@ -75,6 +75,21 @@ namespace Helpers
                 .Returns(GetUrlFileName(url));
             mock.Setup(req => req.PathInfo)
                 .Returns(string.Empty);
+            mock.Setup(req => req.Path)
+                .Returns(url);
+
+            return this;
+        }
+
+        public MvcMockHelper SetupHttpContextRequestPath(string url)
+        {
+            if (url == null)
+                throw new ArgumentNullException("url");
+
+            var mock = HttpContext;
+
+            mock.Setup(cont => cont.Request.Path)
+                .Returns(url);
 
             return this;
         }

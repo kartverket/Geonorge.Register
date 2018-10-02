@@ -271,7 +271,7 @@ namespace Kartverket.Register.Controllers
         {
             SetLanguage(Request);
 
-            var it = _registerService.GetSubregisterByName(parentregister, register) ?? _registerService.GetRegisterBySystemId(Guid.Parse(register));
+            var it = _registerService.GetSubregisterByName(parentregister, register) ?? _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (it == null)
             {
                 return NotFound();
@@ -293,7 +293,7 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.Route("api/register/versjoner/{registerName}/{itemowner}/{item}.{ext}")]
         [System.Web.Http.Route("api/register/versjoner/{registerName}/{itemowner}/{item}")]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetRegisterItemByName(string registerName, string item, string id = null ) 
+        public IHttpActionResult GetRegisterItemByName(string registerName, string item, string id = null)
         {
             SetLanguage(Request);
             var register = _registerService.GetRegister(null, registerName);
@@ -545,17 +545,20 @@ namespace Kartverket.Register.Controllers
         {
             Registeritem currentVersion = null;
             var versjoner = _registerItemService.GetAllVersionsOfItem(parent, register, item);
-            foreach (var v in versjoner)
+            if (versjoner != null)
             {
-                if (v.versioning.currentVersion == v.systemId)
+                foreach (var v in versjoner)
                 {
-                    currentVersion = ConvertRegisterItem(v);
-
-                    foreach (var ve in versjoner)
+                    if (v.versioning.currentVersion == v.systemId)
                     {
-                        if (v.versionNumber != ve.versionNumber)
+                        currentVersion = ConvertRegisterItem(v);
+
+                        foreach (var ve in versjoner)
                         {
-                            currentVersion.versions.Add(ConvertRegisterItem(ve));
+                            if (v.versionNumber != ve.versionNumber)
+                            {
+                                currentVersion.versions.Add(ConvertRegisterItem(ve));
+                            }
                         }
                     }
                 }

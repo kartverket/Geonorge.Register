@@ -360,7 +360,7 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.Route("api/{parentregister}/{register}/{item}/{id}.{ext}")]
         [System.Web.Http.Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}.{ext}")]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string item, string id)
+        public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string item, string id = null)
         {
             SetLanguage(Request);
             Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(parentregister, register, item);

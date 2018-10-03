@@ -276,8 +276,9 @@ namespace Kartverket.Register.Controllers
         }
 
         [Route("{registername}/{itemname}/{systemId}")]
-        [Route("{registername}/{itemname}.{format}")]
+        [Route("{registername}/{itemname}/{systemId}.{format}")]
         [Route("{parentRegister}/{registername}/{itemname}/{systemId}")]
+        [Route("{parentRegister}/{registername}/{itemname}/{systemId}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}")]
         [Route("register/{registername}/{itemowner}/{itemname}/{systemId}")]

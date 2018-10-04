@@ -28,6 +28,15 @@ namespace Kartverket.Register
             routes.MapRoute("EditEPSG", "epsg/{registername}/{organization}/{epsgname}/rediger", new { controller = "EPSGs", action = "Edit", registername = "registername" });
             routes.MapRoute("DeleteEPSGsub", "epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett", new { controller = "EPSGs", action = "Edit", registername = "registername" });
             routes.MapRoute("DeleteEPSG", "epsg/{registername}/{organization}/{epsgname}/slett", new { controller = "EPSGs", action = "Edit", registername = "registername" });
+            // CodelistValue
+            routes.MapRoute("ImportCodelistValueSub", "kodeliste/{parentregister}/{registerowner}/{registername}/ny/import", new { controller = "CodelistValues", action = "Import" });
+            routes.MapRoute("ImportCodelistValue", "kodeliste/{registername}/ny/import", new { controller = "CodelistValues", action = "Import" });
+            routes.MapRoute("CreateCodelistValuesub", "kodeliste/{parentregister}/{registerowner}/{registername}/ny", new { controller = "CodelistValues", action = "Create"});
+            routes.MapRoute("CreateCodelistValue", "kodeliste/{registername}/ny", new { controller = "CodelistValues", action = "Create"});
+            routes.MapRoute("EditCodelistValuesub", "kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", new { controller = "CodelistValues", action = "Edit"});
+            routes.MapRoute("EditCodelistValue", "kodeliste/{registername}/{submitter}/{itemname}/rediger", new { controller = "CodelistValues", action = "Edit"});
+            routes.MapRoute("DeleteCodelistValuesub", "kodeliste/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
+            routes.MapRoute("DeleteCodelistValue", "kodeliste/{registername}/{organization}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
 
 
 

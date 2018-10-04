@@ -1,4 +1,4 @@
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Kartverket.Register
@@ -22,8 +22,14 @@ namespace Kartverket.Register
             routes.MapRoute("EditEPSG", "epsg/{registername}/{organization}/{epsgname}/rediger", new { controller = "EPSGs", action = "Edit", registername = "registername" });
             routes.MapRoute("DeleteEPSGsub", "epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett", new { controller = "EPSGs", action = "Edit", registername = "registername" });
             routes.MapRoute("DeleteEPSG", "epsg/{registername}/{organization}/{epsgname}/slett", new { controller = "EPSGs", action = "Edit", registername = "registername" });
+
+
+
+
+
             routes.MapRoute("SignIn", "AuthServices/SignIn", new { controller = "AuthServices", action = "SignIn" });
             routes.MapRoute("LogOut", "AuthServices/LogOut", new { controller = "AuthServices", action = "LogOut" });
+            routes.MapRoute("Acs", "AuthServices/Acs", new { controller = "AuthServices", action = "Acs" });
             routes.MapRoute("DokReport", "api/register/det-offentlige-kartgrunnlaget/rapport", new { controller = "ApiRoot", action = "GetDokStatusReport" });
             routes.MapRoute("Dataset", "datasett", new { controller = "DisplayDataset", action = "Index" });
             routes.MapRoute("DokDekning", "register/det-offentlige-kartgrunnlaget/dekning", new { controller = "DokCoverage", action = "Index" });

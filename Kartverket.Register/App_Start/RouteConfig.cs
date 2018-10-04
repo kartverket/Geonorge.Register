@@ -24,10 +24,11 @@ namespace Kartverket.Register
             // EPSG
             routes.MapRoute("CreateEPSGsub", "epsg/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "EPSGs", action = "Create", registername = "registername" });
             routes.MapRoute("CreateEPSG", "epsg/{registername}/ny", new { controller = "EPSGs", action = "Create", registername = "registername" });
-            routes.MapRoute("EditEPSGsub", "epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger", new { controller = "EPSGs", action = "Edit", registername = "registername" });
+            routes.MapRoute("EditEPSGsub", "epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger", new { controller = "EPSGs", action = "Edit"});
             routes.MapRoute("EditEPSG", "epsg/{registername}/{organization}/{epsgname}/rediger", new { controller = "EPSGs", action = "Edit", registername = "registername" });
-            routes.MapRoute("DeleteEPSGsub", "epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett", new { controller = "EPSGs", action = "Edit", registername = "registername" });
-            routes.MapRoute("DeleteEPSG", "epsg/{registername}/{organization}/{epsgname}/slett", new { controller = "EPSGs", action = "Edit", registername = "registername" });
+            routes.MapRoute("DeleteEPSGsub", "epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett", new { controller = "EPSGs", action = "Delete"});
+            routes.MapRoute("DeleteEPSG", "epsg/{registername}/{organization}/{epsgname}/slett", new { controller = "EPSGs", action = "Delete"});
+
             // CodelistValue
             routes.MapRoute("ImportCodelistValueSub", "kodeliste/{parentregister}/{registerowner}/{registername}/ny/import", new { controller = "CodelistValues", action = "Import" });
             routes.MapRoute("ImportCodelistValue", "kodeliste/{registername}/ny/import", new { controller = "CodelistValues", action = "Import" });

@@ -49,10 +49,19 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteDatasetSub", "dataset/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "Datasets", action = "Delete" });
             routes.MapRoute("DeleteDataset", "dataset/{registername}/{itemowner}/{itemname}/slett", new { controller = "Datasets", action = "Delete" });
 
+            // Document
+            routes.MapRoute("CreateDocumentSub", "dokument/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "Documents", action = "Create" });
+            routes.MapRoute("CreateDocument", "dokument/{registername}/ny", new { controller = "Documents", action = "Create" });
+            routes.MapRoute("CreateNewVersionDocumentSub", "dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny", new { controller = "Documents", action = "CreateNewVersion" });
+            routes.MapRoute("CreateNewVersionDocument", "dokument/versjon/{registername}/{itemOwner}/{itemname}/ny", new { controller = "Documents", action = "CreateNewVersion" });
+            routes.MapRoute("EditDocumentSub", "dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger", new { controller = "Documents", action = "Edit" });
+            routes.MapRoute("EditDocument", "dokument/{registername}/{itemowner}/{documentname}/rediger", new { controller = "Documents", action = "Edit" });
+            routes.MapRoute("DeleteDocumentSub", "dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett", new { controller = "Documents", action = "Delete" });
+            routes.MapRoute("DeleteDocument", "dokument/{registername}/{organization}/{documentname}/slett", new { controller = "Documents", action = "Delete" });
 
 
 
-
+       
 
 
             routes.MapRoute("SignIn", "AuthServices/SignIn", new { controller = "AuthServices", action = "SignIn" });

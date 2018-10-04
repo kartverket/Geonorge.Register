@@ -1,4 +1,4 @@
-﻿using System.Web.Mvc;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Kartverket.Register
@@ -14,6 +14,12 @@ namespace Kartverket.Register
                 new { controller = "DisplayDataset", action = "Display", name = UrlParameter.Optional },
                 new { id = @"^\d+$" }
             );
+
+            // Register
+            routes.MapRoute("RegisterCreate", "ny", new { controller = "Registers", action = "Create"});
+            routes.MapRoute("RegisterEdit", "rediger/{registername}", new { controller = "Registers", action = "Edit"});
+            routes.MapRoute("RegisterDelete", "slett/{registername}", new { controller = "Registers", action = "Delet"});
+            routes.MapRoute("EditDokMunicipal", "dok/kommunalt/{municipalityCode}/rediger", new { controller = "Registers", action = "EditDokMunicipal" });
 
             // EPSG
             routes.MapRoute("CreateEPSGsub", "epsg/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "EPSGs", action = "Create", registername = "registername" });

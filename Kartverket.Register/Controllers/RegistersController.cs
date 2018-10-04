@@ -358,7 +358,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Register/Create
         [Authorize]
-        [Route("ny")]
+        //[Route("ny")]
         public ActionResult Create()
         {
             if (IsAdmin())
@@ -375,7 +375,7 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
-        [Route("ny")]
+        //[Route("ny")]
         public ActionResult Create(Models.Register register)
         {
             if (IsAdmin())
@@ -412,7 +412,7 @@ namespace Kartverket.Register.Controllers
 
 
         [Authorize]
-        [Route("rediger/{registername}")]
+        //[Route("rediger/{registername}")]
         public ActionResult Edit(string registername)
         {
             var register = _registerService.GetRegister(null, registername);
@@ -432,7 +432,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("rediger/{registername}")]
+        //[Route("rediger/{registername}")]
         [Authorize]
         public ActionResult Edit(Models.Register register, string registername, string accessRegister)
         {
@@ -472,7 +472,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Edit DOK-Municipal-Dataset
         [Authorize]
-        [Route("dok/kommunalt/{municipalityCode}/rediger")]
+        //[Route("dok/kommunalt/{municipalityCode}/rediger")]
         public ActionResult EditDokMunicipal(string municipalityCode)
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
@@ -509,7 +509,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("dok/kommunalt/{municipalityCode}/rediger")]
+        //[Route("dok/kommunalt/{municipalityCode}/rediger")]
         [Authorize]
         public ActionResult EditDokMunicipal(List<DokMunicipalEdit> dokMunicipalList, string municipalityCode, string statusDokMunicipal)
         {
@@ -619,7 +619,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Delete/5
         [Authorize]
-        [Route("slett/{registername}")]
+        //[Route("slett/{registername}")]
         public ActionResult Delete(string registername)
         {
             if (IsAdmin())
@@ -634,7 +634,7 @@ namespace Kartverket.Register.Controllers
 
         // POST: Registers/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("slett/{registername}")]
+        //[Route("slett/{registername}")]
         [Authorize]
         public ActionResult DeleteConfirmed(string registername)
         {

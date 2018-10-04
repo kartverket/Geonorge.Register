@@ -3042,6 +3042,11 @@
               Looks up a localized string similar to Legg til ekstra DOK-datasett for din kommune.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.Suitability">
+            <summary>
+              Looks up a localized string similar to Egnethet.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.SuitabilityArealText">
             <summary>
               Looks up a localized string similar to Kommune-planens areal- del.

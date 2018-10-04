@@ -151,10 +151,10 @@ namespace Kartverket.Register.Models.ViewModels
                     path += inspireDataServiceViewModel.Uuid;
                     break;
                 case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
-                    path = geodatalovDatasetViewModel.Uuid;
+                    path += geodatalovDatasetViewModel.Uuid;
                     break;
                 case DokDatasetViewModel dokDatasetViewModel:
-                    path = dokDatasetViewModel.Uuid;
+                    path += dokDatasetViewModel.Uuid;
                     break;
                 default:
                     path += SystemId;

@@ -1,4 +1,4 @@
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Kartverket.Register
@@ -38,6 +38,18 @@ namespace Kartverket.Register
             routes.MapRoute("EditCodelistValue", "kodeliste/{registername}/{submitter}/{itemname}/rediger", new { controller = "CodelistValues", action = "Edit"});
             routes.MapRoute("DeleteCodelistValuesub", "kodeliste/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
             routes.MapRoute("DeleteCodelistValue", "kodeliste/{registername}/{organization}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
+
+            // Datasett
+            routes.MapRoute("CreateDatasetSub", "dataset/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "Datasets", action = "Create" });
+            routes.MapRoute("CreateDataset", "dataset/{registername}/ny", new { controller = "Datasets", action = "Create" });
+            routes.MapRoute("CreateMunicipalDatasetSub", "dataset/{parentRegister}/{registerowner}/{registername}/{municipality}/ny", new { controller = "Datasets", action = "CreateMunicipalDataset" });
+            routes.MapRoute("CreateMunicipalDataset", "dataset/{registername}/{municipality}/ny", new { controller = "Datasets", action = "CreateMunicipalDataset" });
+            routes.MapRoute("EditDatasetSub", "dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", new { controller = "Datasets", action = "Edit" });
+            routes.MapRoute("EditDataset", "dataset/{registername}/{itemowner}/{itemname}/rediger", new { controller = "Datasets", action = "Edit" });
+            routes.MapRoute("DeleteDatasetSub", "dataset/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "Datasets", action = "Delete" });
+            routes.MapRoute("DeleteDataset", "dataset/{registername}/{itemowner}/{itemname}/slett", new { controller = "Datasets", action = "Delete" });
+
+
 
 
 

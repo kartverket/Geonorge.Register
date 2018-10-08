@@ -87,6 +87,13 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteNamespaceSub", "navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "NameSpaces", action = "Delete" });
             routes.MapRoute("DeleteNamespace", "navnerom/{registername}/{itemowner}/{itemname}/slett", new { controller = "NameSpaces", action = "Delete" });
 
+            // Organization
+            routes.MapRoute("CreateOrganizationSub", "organisasjoner/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "Organizations", action = "Create" });
+            routes.MapRoute("CreateOrganization", "organisasjoner/{registername}/ny", new { controller = "Organizations", action = "Create" });
+            routes.MapRoute("EditOrganizationSub", "organisasjoner/{registerParent}/{registerowner}/{registername}/{itemowner}/{organisasjon}/rediger", new { controller = "Organizations", action = "Edit" });
+            routes.MapRoute("EditOrganization", "organisasjoner/{registername}/{innsender}/{organisasjon}/rediger", new { controller = "Organizations", action = "Edit" });
+            routes.MapRoute("DeleteOrganizationSub", "organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett", new { controller = "Organizations", action = "Delete" });
+            routes.MapRoute("DeleteOrganization", "organisasjoner/{registername}/{submitter}/{organisasjon}/slett", new { controller = "Organizations", action = "Delete" });
 
 
             routes.MapRoute("SignIn", "AuthServices/SignIn", new { controller = "AuthServices", action = "SignIn" });

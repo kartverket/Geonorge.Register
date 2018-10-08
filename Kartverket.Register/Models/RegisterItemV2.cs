@@ -82,6 +82,11 @@ namespace Kartverket.Register.Models
             {
                 return geodatalovDataset.DetailPageUrl();
             }
+
+            if (this is InspireDataService inspireDataService)
+            {
+                return inspireDataService.DetailPageUrl();
+            }
             return Register.GetObjectUrl() + "/" + Seoname + "/" + SystemId;
         }
 

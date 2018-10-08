@@ -67,6 +67,9 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteGeodatalovDatasetSub", "geodatalov/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "GeodatalovDatasets", action = "Delete" });
             routes.MapRoute("DeleteGeodatalovDataset", "geodatalov/{registername}/{itemowner}/{itemname}/slett", new { controller = "GeodatalovDatasets", action = "Delete" });
 
+            // Inspire data service
+            routes.MapRoute("EditInspireDataService", "inspire-data-service/{registername}/{itemowner}/{itemname}/rediger", new { controller = "InspireDataService", action = "Edit" });
+            routes.MapRoute("DeleteInspireDataService", "inspire-data-service/{registername}/{itemowner}/{itemname}/slett", new { controller = "InspireDataService", action = "Delete" });
 
 
 

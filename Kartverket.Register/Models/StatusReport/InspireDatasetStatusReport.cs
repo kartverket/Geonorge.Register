@@ -13,7 +13,7 @@ namespace Kartverket.Register.Models
 
         public InspireDatasetStatusReport(InspireDataset inspireDataset)
         {
-            InspireDataset = inspireDataset;
+            //InspireDataset = inspireDataset;
             UuidInspireDataset = inspireDataset.Uuid;
             MetadataInspireDataset = inspireDataset.InspireDeliveryMetadata.StatusId;
             MetadataServiceInspireDataset = inspireDataset.InspireDeliveryMetadataService.StatusId;
@@ -26,7 +26,7 @@ namespace Kartverket.Register.Models
             SpatialDataServiceInspireDataset = inspireDataset.InspireDeliverySpatialDataService.StatusId;
         }
 
-        public virtual InspireDataset InspireDataset { get; set; }
+        //public virtual InspireDataset InspireDataset { get; set; }
         public string UuidInspireDataset { get; set; }
         public string MetadataInspireDataset { get; set; }
         public string MetadataServiceInspireDataset { get; set; }

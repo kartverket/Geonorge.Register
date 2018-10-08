@@ -56,6 +56,10 @@ namespace Kartverket.Register.Models
         public virtual DatasetDelivery CommonStatus { get; set; }
 
 
+        public string DetailPageUrl()
+        {
+            return Register.GetObjectUrl() + "/" + Seoname + "/" + Uuid;
+        }
     }
 
 }

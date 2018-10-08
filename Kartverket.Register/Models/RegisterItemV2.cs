@@ -78,7 +78,11 @@ namespace Kartverket.Register.Models
 
         public string DetailPageUrl()
         {
-            return Register.GetObjectUrl() + "/" + Owner.seoname + "/" + Seoname;
+            if (this is GeodatalovDataset geodatalovDataset)
+            {
+                return geodatalovDataset.DetailPageUrl();
+            }
+            return Register.GetObjectUrl() + "/" + Seoname + "/" + SystemId;
         }
 
     }

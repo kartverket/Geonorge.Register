@@ -24,19 +24,20 @@ namespace Kartverket.Register.Controllers
 
         public GeodatalovDatasetsController(RegisterDbContext dbContext, IGeodatalovDatasetService geodatalovDatasetService, IAccessControlService accessControllService, IRegisterService registerService, IRegisterItemService registerItemService, IDatasetDeliveryService datasetDeliveryService)
         {
+            _db = dbContext;
             _geodatalovDatasetService = geodatalovDatasetService;
             _accessControlService = accessControllService;
             _metadataService = new MetadataService(_db);
             _registerService = registerService;
             _registerItemService = registerItemService;
             _datasetDeliveryService = datasetDeliveryService;
-            _db = dbContext;
+            
         }
 
         // GET: GeodatalovDatasets/Create
         [Authorize]
-        [Route("geodatalov/{registername}/ny")]
-        [Route("geodatalov/{parentregister}/{registerowner}/{registername}/ny")]
+        //[Route("geodatalov/{registername}/ny")]
+        //[Route("geodatalov/{parentregister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(string registername, string parentregister)
         {
             var viewModel = _geodatalovDatasetService.NewGeodatalovDatasetViewModel(parentregister, registername);
@@ -50,8 +51,8 @@ namespace Kartverket.Register.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("geodatalov/{registername}/ny")]
-        [Route("geodatalov/{parentregister}/{registerowner}/{registername}/ny")]
+        //[Route("geodatalov/{registername}/ny")]
+        //[Route("geodatalov/{parentregister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(GeodatalovDatasetViewModel viewModel, string parentregister, string registername, string metadataUuid)
         {
             viewModel.Register = _registerService.GetRegisterBySystemId(viewModel.RegisterId);
@@ -83,8 +84,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: GeodatalovDatasets/Edit/5
         [Authorize]
-        [Route("geodatalov/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
-        [Route("geodatalov/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("geodatalov/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("geodatalov/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(string registername, string itemname)
         {
             var geodatalovDataset = _geodatalovDatasetService.GetGeodatalovDatasetByName(registername, itemname);
@@ -107,8 +108,8 @@ namespace Kartverket.Register.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("geodatalov/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
-        [Route("geodatalov/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("geodatalov/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("geodatalov/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(GeodatalovDatasetViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -122,8 +123,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: GeodatalovDatasets/Delete/5
         [Authorize]
-        [Route("geodatalov/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("geodatalov/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("geodatalov/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("geodatalov/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult Delete(string parentregister, string registername, string itemname, string itemowner)
         {
             var geodatalovDataset = _geodatalovDatasetService.GetGeodatalovDatasetByName(registername, itemname);
@@ -141,8 +142,8 @@ namespace Kartverket.Register.Controllers
         // POST: GeodatalovDatasets/Delete/5
         [Authorize]
         [HttpPost, ActionName("Delete")]
-        [Route("geodatalov/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("geodatalov/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("geodatalov/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("geodatalov/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult DeleteConfirmed(string registername, string itemname)
         {
             var geodatalovDataset = _geodatalovDatasetService.GetGeodatalovDatasetByName(registername, itemname);

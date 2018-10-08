@@ -219,9 +219,10 @@ namespace Kartverket.Register.Services
 
         public GeodatalovDataset GetGeodatalovDatasetById(string uuid)
         {
+            Guid guid = Guid.Parse(uuid);
             var queryResult = from i in _dbContext.GeodatalovDatasets
                 where i.Uuid == uuid
-                      || i.SystemId == Guid.Parse(uuid)
+                      || i.SystemId == guid
                               select i;
 
             return queryResult.FirstOrDefault();

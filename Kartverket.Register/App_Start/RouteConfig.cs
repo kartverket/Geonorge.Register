@@ -59,9 +59,15 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteDocumentSub", "dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett", new { controller = "Documents", action = "Delete" });
             routes.MapRoute("DeleteDocument", "dokument/{registername}/{organization}/{documentname}/slett", new { controller = "Documents", action = "Delete" });
 
+            // Geodatalov
+            routes.MapRoute("CreateGeodatalovDatasetSub", "geodatalov/{parentregister}/{registerowner}/{registername}/ny", new { controller = "GeodatalovDatasets", action = "Create" });
+            routes.MapRoute("CreateGeodatalovDataset", "geodatalov/{registername}/ny", new { controller = "GeodatalovDatasets", action = "Create" });
+            routes.MapRoute("EditGeodatalovDatasetSub", "geodatalov/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", new { controller = "GeodatalovDatasets", action = "Edit" });
+            routes.MapRoute("EditGeodatalovDataset", "geodatalov/{registername}/{itemowner}/{itemname}/rediger", new { controller = "GeodatalovDatasets", action = "Edit" });
+            routes.MapRoute("DeleteGeodatalovDatasetSub", "geodatalov/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "GeodatalovDatasets", action = "Delete" });
+            routes.MapRoute("DeleteGeodatalovDataset", "geodatalov/{registername}/{itemowner}/{itemname}/slett", new { controller = "GeodatalovDatasets", action = "Delete" });
 
 
-       
 
 
             routes.MapRoute("SignIn", "AuthServices/SignIn", new { controller = "AuthServices", action = "SignIn" });

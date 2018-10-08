@@ -896,6 +896,10 @@
     <Compile Include="Migrations\201810081025026_RemoveInspireDataServiceVirtual.Designer.cs">
       <DependentUpon>201810081025026_RemoveInspireDataServiceVirtual.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810081111359_RemoveInspireDatasetVirtual.cs" />
+    <Compile Include="Migrations\201810081111359_RemoveInspireDatasetVirtual.Designer.cs">
+      <DependentUpon>201810081111359_RemoveInspireDatasetVirtual.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2455,6 +2459,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810081025026_RemoveInspireDataServiceVirtual.resx">
       <DependentUpon>201810081025026_RemoveInspireDataServiceVirtual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810081111359_RemoveInspireDatasetVirtual.resx">
+      <DependentUpon>201810081111359_RemoveInspireDatasetVirtual.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

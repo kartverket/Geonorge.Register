@@ -33,8 +33,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: InspireDatasets/Create
         [Authorize]
-        [Route("inspire/{registername}/ny")]
-        [Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
+        //[Route("inspire/{registername}/ny")]
+        //[Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(string registername, string parentregister)
         {
             var model = _inspireDatasetService.NewInspireDatasetViewModel(parentregister, registername);
@@ -48,8 +48,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("inspire/{registername}/ny")]
-        [Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
+        //[Route("inspire/{registername}/ny")]
+        //[Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(InspireDatasetViewModel viewModel, string parentregister, string registername, string metadataUuid)
         {
             viewModel.Register = _registerService.GetRegisterBySystemId(viewModel.RegisterId);
@@ -81,8 +81,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: InspireDatasets/Edit/5
         [Authorize]
-        [Route("inspire/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
-        [Route("inspire/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("inspire/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("inspire/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(string registername, string itemname)
         {
             var inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registername, itemname);
@@ -106,8 +106,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("inspire/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
-        [Route("inspire/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("inspire/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("inspire/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(InspireDatasetViewModel viewModel, List<System.Guid> inspireThemesId)
         {
             if (ModelState.IsValid)
@@ -121,8 +121,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: InspireDatasets/Delete/5
         [Authorize]
-        [Route("inspire/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("inspire/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("inspire/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("inspire/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult Delete(string parentregister, string registername, string itemname, string itemowner)
         {
             var inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registername, itemname);
@@ -140,8 +140,8 @@ namespace Kartverket.Register.Controllers
         // POST: InspireDatasets/Delete/5
         [Authorize]
         [HttpPost, ActionName("Delete")]
-        [Route("inspire/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("inspire/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("inspire/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("inspire/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult DeleteConfirmed(string registername, string itemname)
         {
             var inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registername, itemname);

@@ -19,7 +19,7 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Get organization by name
         /// </summary>
-        [Route("api/organisasjon/navn/{name}")]
+        //[Route("api/organisasjon/navn/{name}")]
         public IHttpActionResult GetOrganizationByName(string name)
         {
             Organization organization = _organizationService.GetOrganizationByName(name);
@@ -36,7 +36,7 @@ namespace Kartverket.Register.Controllers
         /// Get organization by name translated
         /// </summary>
         [ApiExplorerSettings(IgnoreApi = true)]
-        [Route("api/organisasjon/navn/{name}/{culture}")]
+        //[Route("api/organisasjon/navn/{name}/{culture}")]
         public IHttpActionResult GetOrganizationTranslatedByName(string name, string culture)
         {
             Organization organization = _organizationService.GetOrganizationTranslatedByName(name, culture);
@@ -53,7 +53,7 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Get organization by number
         /// </summary>
-        [Route("api/organisasjon/orgnr/{number}")]
+        //[Route("api/organisasjon/orgnr/{number}")]
         public IHttpActionResult GetOrganizationByNumber(string number)
         {
             Organization organization = _organizationService.GetOrganizationByNumber(number);
@@ -69,7 +69,7 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Get list of municipalities
         /// </summary>
-        [Route("api/v2/organisasjoner/kommuner")]
+        //[Route("api/v2/organisasjoner/kommuner")]
         public IHttpActionResult GetOrganizationsV2()
         {
             List<Organization> organizations = _organizationService.GetMunicipalityOrganizations();
@@ -85,7 +85,7 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Get organization by name
         /// </summary>
-        [Route("api/v2/organisasjon/navn/{name}")]
+        //[Route("api/v2/organisasjon/navn/{name}")]
         public IHttpActionResult GetOrganizationByNameV2(string name)
         {
             Organization organization = _organizationService.GetOrganizationByName(name);
@@ -100,7 +100,7 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Get organization by number
         /// </summary>
-        [Route("api/v2/organisasjon/orgnr/{number}")]
+        //[Route("api/v2/organisasjon/orgnr/{number}")]
         public IHttpActionResult GetOrganizationByNumberV2(string number)
         {
             Organization organization = _organizationService.GetOrganizationByNumber(number);

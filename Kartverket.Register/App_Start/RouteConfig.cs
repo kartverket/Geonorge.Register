@@ -79,6 +79,14 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteInspireDataset", "inspire/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "InspireDatasets", action = "Delete" });
             routes.MapRoute("DeleteInspireDatasetSub", "inspire/{registername}/{itemowner}/{itemname}/slett", new { controller = "InspireDatasets", action = "Delete" });
 
+            // Namespace 
+            routes.MapRoute("CreateNamespaceSub", "navnerom/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "NameSpaces", action = "Create" });
+            routes.MapRoute("CreateNamespace", "navnerom/{registername}/ny", new { controller = "NameSpaces", action = "Create" });
+            routes.MapRoute("EditNamespaceSub", "navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", new { controller = "NameSpaces", action = "Edit" });
+            routes.MapRoute("EditNamespace", "navnerom/{registername}/{itemowner}/{itemname}/rediger", new { controller = "NameSpaces", action = "Edit" });
+            routes.MapRoute("DeleteNamespaceSub", "navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "NameSpaces", action = "Delete" });
+            routes.MapRoute("DeleteNamespace", "navnerom/{registername}/{itemowner}/{itemname}/slett", new { controller = "NameSpaces", action = "Delete" });
+
 
 
             routes.MapRoute("SignIn", "AuthServices/SignIn", new { controller = "AuthServices", action = "SignIn" });

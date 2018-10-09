@@ -78,7 +78,7 @@ namespace Kartverket.Register.Tests.Controllers
             Models.Register register = new Models.Register();
 
             var registerService = new Mock<IRegisterService>();
-            registerService.Setup(s => s.GetSubregisterByName(r1.parentRegister.seoname, r1.seoname)).Returns(r1);
+            registerService.Setup(s => s.GetRegister(r1.parentRegister.seoname, r1.seoname)).Returns(r1);
 
             var controller = createController(url, registerService.Object, null);
             var result = controller.GetSubregisterByName(r1.parentRegister.seoname, r1.seoname) as OkNegotiatedContentResult<Models.Api.Register>;

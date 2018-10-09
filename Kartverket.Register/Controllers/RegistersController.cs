@@ -107,6 +107,7 @@ namespace Kartverket.Register.Controllers
 
 
         // GET: Registers/Details Inspire registry/5
+        [Route("inspire-statusregister")]
         [Route("register/inspire-statusregister")]
         [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
@@ -117,6 +118,11 @@ namespace Kartverket.Register.Controllers
 
             var register = _registerService.GetInspireStatusRegister();
             if (register == null) return HttpNotFound();
+
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
 
             filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
@@ -143,7 +149,9 @@ namespace Kartverket.Register.Controllers
         // POST: Registers/Details/5
         [Authorize]
         [HttpPost]
+        [Route("inspire-statusregister")]
         [Route("register/inspire-statusregister")]
+        [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(FilterParameters filter, string dataset, string service)
         {
             if (IsAdmin())
@@ -164,6 +172,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details DOK/5
+        [Route("det-offentlige-kartgrunnlaget")]
         [Route("register/det-offentlige-kartgrunnlaget")]
         [Route("register/det-offentlige-kartgrunnlagetr/{filterOrganization}")]
         public ActionResult DetailsDokStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
@@ -174,12 +183,16 @@ namespace Kartverket.Register.Controllers
 
             var register = _registerService.GetDokStatusRegister();
             if (register == null) return HttpNotFound();
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
 
             register = FilterRegisterItems(register, filter);
 
             List<StatusReport> dokStatusReports = _statusReportService.GetDokStatusReports(12);
             StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : dokStatusReports.FirstOrDefault();
-            
+
 
             var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, dokStatusReports);
             viewModel.SelectedDokTab = filter.DokSelectedTab;
@@ -206,6 +219,10 @@ namespace Kartverket.Register.Controllers
 
 
         // GET: Registers/Details/5
+        [Route("{registername}")]
+        [Route("{parentRegister}/{registername}/")]
+        [Route("{registername}.{format}")]
+        [Route("{parentRegister}/{registername}.{format}/")]
         [Route("register/{registername}")]
         [Route("register/{registername}.{format}")]
         [Route("register/{registername}/{filterOrganization}")]
@@ -220,6 +237,11 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegister(parentRegister, registername);
             if (register == null) return HttpNotFound();
 
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
+
             register = FilterRegisterItems(register, filter);
             var viewModel = new RegisterV2ViewModel(register, filter);
             viewModel.MunicipalityCode = filter.municipality;
@@ -231,6 +253,7 @@ namespace Kartverket.Register.Controllers
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
             return View(viewModel);
         }
+
 
 
         private string GetInspireRegistryType(string filter)
@@ -252,10 +275,16 @@ namespace Kartverket.Register.Controllers
             viewModel.Subregisters = _registerService.OrderBy(viewModel.Subregisters, sorting);
         }
 
+        [Route("{registername}/{itemname}/{systemId}")]
+        [Route("{registername}/{itemname}/{systemId}.{format}")]
+        [Route("{parentRegister}/{registername}/{itemname}/{systemId}")]
+        [Route("{parentRegister}/{registername}/{itemname}/{systemId}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}")]
         [Route("register/{registername}/{itemowner}/{itemname}/{systemId}")]
-        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, string format, string systemId, string InspireRegisteryType = null)
+        [Route("subregister/{parentRegister}/{owner}/{registername}/{submitter}/{itemname}.{format}")]
+        [Route("subregister/{parentRegister}/{owner}/{registername}/{submitter}/{itemname}")]
+        public ActionResult DetailsRegisterItem(string parentRegister, string registername, string itemowner, string itemname, string format, string systemId, string InspireRegisteryType = null)
         {
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
@@ -265,16 +294,20 @@ namespace Kartverket.Register.Controllers
             {
                 if (string.IsNullOrWhiteSpace(systemId))
                 {
-                    viewModel = GetRegisterItem(null, registername, itemowner, itemname, InspireRegisteryType);
+                    viewModel = GetRegisterItemByName(parentRegister, registername, itemowner, itemname, InspireRegisteryType);
                 }
                 else
                 {
-                    viewModel = new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
+                    viewModel = GetRegisterItemById(parentRegister, registername, systemId, InspireRegisteryType);
                 }
             }
             catch (Exception e)
             {
                 return HttpNotFound();
+            }
+            if (viewModel.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(viewModel.DetailPageUrl());
             }
             viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
             if (string.IsNullOrWhiteSpace(viewModel.Name))
@@ -285,7 +318,6 @@ namespace Kartverket.Register.Controllers
         }
 
 
-
         [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
         [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no")]
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
@@ -294,7 +326,7 @@ namespace Kartverket.Register.Controllers
         {
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
-            var viewModel = GetRegisterItem(parentregister, registername, itemowner, itemname, null, version);
+            var viewModel = GetRegisterItemByName(parentregister, registername, itemowner, itemname, null, version);
             viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
 
             if (viewModel.SystemId == Guid.Empty)
@@ -326,7 +358,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Register/Create
         [Authorize]
-        [Route("ny")]
+        //[Route("ny")]
         public ActionResult Create()
         {
             if (IsAdmin())
@@ -343,7 +375,7 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
-        [Route("ny")]
+        //[Route("ny")]
         public ActionResult Create(Models.Register register)
         {
             if (IsAdmin())
@@ -380,7 +412,7 @@ namespace Kartverket.Register.Controllers
 
 
         [Authorize]
-        [Route("rediger/{registername}")]
+        //[Route("rediger/{registername}")]
         public ActionResult Edit(string registername)
         {
             var register = _registerService.GetRegister(null, registername);
@@ -400,7 +432,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("rediger/{registername}")]
+        //[Route("rediger/{registername}")]
         [Authorize]
         public ActionResult Edit(Models.Register register, string registername, string accessRegister)
         {
@@ -440,7 +472,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Edit DOK-Municipal-Dataset
         [Authorize]
-        [Route("dok/kommunalt/{municipalityCode}/rediger")]
+        //[Route("dok/kommunalt/{municipalityCode}/rediger")]
         public ActionResult EditDokMunicipal(string municipalityCode)
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
@@ -477,7 +509,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("dok/kommunalt/{municipalityCode}/rediger")]
+        //[Route("dok/kommunalt/{municipalityCode}/rediger")]
         [Authorize]
         public ActionResult EditDokMunicipal(List<DokMunicipalEdit> dokMunicipalList, string municipalityCode, string statusDokMunicipal)
         {
@@ -587,7 +619,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Delete/5
         [Authorize]
-        [Route("slett/{registername}")]
+        //[Route("slett/{registername}")]
         public ActionResult Delete(string registername)
         {
             if (IsAdmin())
@@ -602,7 +634,7 @@ namespace Kartverket.Register.Controllers
 
         // POST: Registers/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("slett/{registername}")]
+        //[Route("slett/{registername}")]
         [Authorize]
         public ActionResult DeleteConfirmed(string registername)
         {
@@ -702,7 +734,7 @@ namespace Kartverket.Register.Controllers
             return register;
         }
 
-        private RegisterItemV2ViewModel GetRegisterItem(string parentregister, string registername, string itemowner, string itemname, string inspireRegistryType, int version = 1)
+        private RegisterItemV2ViewModel GetRegisterItemByName(string parentregister, string registername, string itemowner, string itemname, string inspireRegistryType, int version = 1)
         {
             var register = _registerService.GetRegister(parentregister, registername);
 
@@ -746,6 +778,53 @@ namespace Kartverket.Register.Controllers
             }
 
             return new RegisterItemV2ViewModel(_registerItemService.GetRegisterItem(parentregister, registername, itemname, version, itemowner));
+
+        }
+
+        private RegisterItemV2ViewModel GetRegisterItemById(string parentregister, string registername, string systemId, string inspireRegistryType)
+        {
+            var register = _registerService.GetRegister(parentregister, registername);
+
+            if (register.IsInspireStatusRegister())
+            {
+                RegisterItemV2ViewModel viewModel = null;
+                if (string.IsNullOrWhiteSpace(inspireRegistryType) || inspireRegistryType == "dataset")
+                {
+                    var inspireDataset = _inspireDatasetService.GetInspireDatasetById(systemId);
+                    if (inspireDataset != null)
+                    {
+                        viewModel = new InspireDatasetViewModel(inspireDataset);
+                    }
+                    else
+                    {
+                        viewModel = new InspireDataServiceViewModel(_inspireDatasetService.GetInspireDataServiceById(systemId));
+                    }
+                }
+                else
+                {
+                    viewModel = new InspireDataServiceViewModel(_inspireDatasetService.GetInspireDataServiceById(systemId));
+                }
+                return viewModel;
+            }
+            if (register.IsGeodatalovStatusRegister())
+            {
+                return new GeodatalovDatasetViewModel(_geodatalovDatasetService.GetGeodatalovDatasetById(systemId));
+            }
+            if (register.IsDokMunicipal())
+            {
+                return new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
+            }
+
+            if (register.ContainedItemClassIsDataset())
+            {
+                return new DokDatasetViewModel(_registerItemService.GetDatasetById(Guid.Parse(systemId)));
+            }
+            if (register.ContainedItemClassIsDocument())
+            {
+                return new DocumentViewModel((Document)_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
+            }
+
+            return new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
 
         }
 

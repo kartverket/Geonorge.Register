@@ -24,7 +24,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: InspireDataService/Edit/5
         [Authorize]
-        [Route("inspire-data-service/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("inspire-data-service/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(string registername, string itemname)
         {
             var inspireDataService = _inspireDatasetService.GetInspireDataServiceByName(registername, itemname);
@@ -52,7 +52,7 @@ namespace Kartverket.Register.Controllers
         // POST: InspireDataService/Edit/5
         [HttpPost]
         [Authorize]
-        [Route("inspire-data-service/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("inspire-data-service/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(InspireDataServiceViewModel viewModel)
         {
             try
@@ -68,8 +68,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: InspireDataService/Delete/5
         [Authorize]
-        [Route("inspire-data-service/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("inspire-data-service/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("inspire-data-service/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult Delete(string parentregister, string registername, string itemname, string itemowner)
         {
             var inspireDataService = _inspireDatasetService.GetInspireDataServiceByName(registername, itemname);
@@ -87,8 +86,7 @@ namespace Kartverket.Register.Controllers
         // POST: InspireDataService/Delete/5
         [Authorize]
         [HttpPost, ActionName("Delete")]
-        [Route("inspire-data-service/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("inspire-data-service/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("inspire-data-service/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult DeleteConfirmed(string registername, string itemname)
         {
             var inspireDataset = _inspireDatasetService.GetInspireDataServiceByName(registername, itemname);

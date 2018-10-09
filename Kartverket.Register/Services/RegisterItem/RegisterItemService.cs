@@ -658,6 +658,8 @@ namespace Kartverket.Register.Services.RegisterItem
             return queryResult.FirstOrDefault();
         }
 
+        
+
         public string GetDOKMunicipalStatus(Models.RegisterItem municipality)
         {
             var queryResult = from c in _dbContext.Organizations
@@ -1666,6 +1668,16 @@ namespace Kartverket.Register.Services.RegisterItem
                 register.RegisterItems = registerItems;
             }
             return register;
+        }
+
+        public Dataset GetDatasetById(Guid id)
+        {
+            var queryResult = from c in _dbContext.Datasets
+                where c.systemId == id
+                      || c.Uuid == id.ToString()
+                select c;
+
+            return queryResult.FirstOrDefault();
         }
     }
 }

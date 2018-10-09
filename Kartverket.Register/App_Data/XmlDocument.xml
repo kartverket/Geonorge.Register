@@ -486,6 +486,7 @@
             List top level registers. Use id in response to navigate.
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:Kartverket.Register.Controllers.ApiRootController.GetCodelistById(System.String)" -->
         <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterByName(System.String,Kartverket.Register.Models.FilterParameters)">
             <summary>
             Gets register by name
@@ -517,17 +518,12 @@
             Save inspire monitoring report data to database.
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterByName(System.String,System.String)">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterByName(System.String,System.String,System.String)">
             <summary>
             Gets subregister by name
             </summary>
-            <param name="register">The search engine optimized name of the register</param>
+            <param name="register">The search engine optimized name or id of the register</param>
             <param name="parentregister">The search engine optimized name of the parentregister</param>
-        </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterBySystemId(System.String)">
-            <summary>
-            Gets codelist by systemid
-            </summary>
             <param name="systemid">The uniqueidentifier for the register</param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterItemByName(System.String,System.String,System.String)">
@@ -554,7 +550,7 @@
             <param name="item">The search engine optimized name of the register item</param>
             <param name="version">The version id of the registeritem</param>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterItemByName(System.String,System.String,System.String)">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterItemByName(System.String,System.String,System.String,System.String)">
             <summary>
             Gets register item by parent-register, register- organization- and registeritem-name 
             </summary>

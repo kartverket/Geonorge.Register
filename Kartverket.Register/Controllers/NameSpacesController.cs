@@ -31,8 +31,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: NameSpaces/Create
         [Authorize]
-        [Route("navnerom/{parentRegister}/{registerowner}/{registername}/ny")]
-        [Route("navnerom/{registername}/ny")]
+        //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/ny")]
+        //[Route("navnerom/{registername}/ny")]
         public ActionResult Create(string registername, string parentRegister)
         {
             NameSpace nameSpace = new NameSpace();
@@ -59,8 +59,8 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("navnerom/{parentRegister}/{registerowner}/{registername}/ny")]
-        [Route("navnerom/{registername}/ny")]
+        //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/ny")]
+        //[Route("navnerom/{registername}/ny")]
         public ActionResult Create(NameSpace nameSpace, string registername, string parentRegister)
         {
             nameSpace.register = GetRegister(registername, parentRegister);
@@ -93,21 +93,17 @@ namespace Kartverket.Register.Controllers
                 _db.RegisterItems.Add(nameSpace);
                 _db.SaveChanges();
 
-                if (!String.IsNullOrWhiteSpace(parentRegister))
-                {
-                    return Redirect("/subregister/" + parentRegister + "/" + parentRegisterOwner + "/" + registername + "/" + "/" + nameSpace.submitter.seoname + "/" + nameSpace.seoname);
-                }
-                else
-                {
-                    return Redirect("/register/" + registername + "/" + nameSpace.submitter.seoname + "/" + nameSpace.seoname);
-                }
+                
+                return Redirect(nameSpace.GetObjectUrl());
+                
+               
             }
             return View(nameSpace);
         }
 
         // GET: NameSpaces/Edit/5
-        [Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
-        [Route("navnerom/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("navnerom/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(string registername, string itemname, string parentRegister)
         {
             string role = GetSecurityClaim("role");
@@ -132,8 +128,8 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
-        [Route("navnerom/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("navnerom/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(NameSpace nameSpace, string registername, string itemname, string parentRegister)
         {
             NameSpace originalNameSpace = GetRegisterItem(registername, itemname, parentRegister);
@@ -167,22 +163,16 @@ namespace Kartverket.Register.Controllers
                 _db.SaveChanges();
 
                 Viewbags(originalNameSpace);
-                if (!String.IsNullOrWhiteSpace(parentRegister))
-                {
-                    return Redirect("/subregister/" + originalNameSpace.register.parentRegister.seoname + "/" + originalNameSpace.register.parentRegister.owner.seoname + "/" + registername + "/" + "/" + originalNameSpace.submitter.seoname + "/" + originalNameSpace.seoname);
-                }
-                else
-                {
-                    return Redirect("/register/" + registername + "/" + originalNameSpace.submitter.seoname + "/" + originalNameSpace.seoname);
-                }
+                return Redirect(originalNameSpace.GetObjectUrl());
+
             }
             Viewbags(originalNameSpace);
             return View(originalNameSpace);
         }
 
         // GET: NameSpaces/Delete/5
-        [Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("navnerom/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("navnerom/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult Delete(string itemname, string registername, string parentRegister)
         {
             string role = GetSecurityClaim("role");
@@ -204,26 +194,20 @@ namespace Kartverket.Register.Controllers
 
         // POST: NameSpaces/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("navnerom/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("navnerom/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult DeleteConfirmed(string itemname, string registername, string parentRegister, string registerowner)
         {
             NameSpace nameSpace = GetRegisterItem(registername, itemname, parentRegister);
 
-            string parent = null;
-            if (nameSpace.register.parentRegisterId != null)
+            if (nameSpace != null)
             {
-                parent = nameSpace.register.parentRegister.seoname;
+                var registerUrl = nameSpace.register.GetObjectUrl();
+                _db.RegisterItems.Remove(nameSpace);
+                _db.SaveChanges();
+                return Redirect(registerUrl);
             }
-
-            _db.RegisterItems.Remove(nameSpace);
-            _db.SaveChanges();
-
-            if (parent != null)
-            {
-                return Redirect("/subregister/" + parentRegister + "/" + registerowner + "/" + registername);
-            }
-            return Redirect("/register/" + registername);
+            return HttpNotFound("Finner ikke datasettet");
         }
 
         protected override void Dispose(bool disposing)

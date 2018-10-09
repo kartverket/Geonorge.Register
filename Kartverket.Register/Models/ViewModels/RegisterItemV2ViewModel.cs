@@ -141,7 +141,27 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string DetailPageUrl()
         {
-            return Register.GetObjectUrl() + "/" + Owner.seoname + "/" + Seoname;
+            var path = Register.GetObjectUrl() + "/" + Seoname + "/";
+            switch (this)
+            {
+                case InspireDatasetViewModel inspireDatasetViewModel:
+                    path += inspireDatasetViewModel.Uuid;
+                    break;
+                case InspireDataServiceViewModel inspireDataServiceViewModel:
+                    path += inspireDataServiceViewModel.Uuid;
+                    break;
+                case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
+                    path += geodatalovDatasetViewModel.Uuid;
+                    break;
+                case DokDatasetViewModel dokDatasetViewModel:
+                    path += dokDatasetViewModel.Uuid;
+                    break;
+                default:
+                    path += SystemId;
+                    break;
+            }
+
+            return path;
         }
 
         public string ItemsByOwnerUrl()
@@ -306,6 +326,14 @@ namespace Kartverket.Register.Models.ViewModels
         public string DeleteVersionOfDocumentUrl()
         {
             return "/dokument/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett?vnr=" + VersionNumber;
+        }
+
+        public bool RedirectToNewPath(string requestPath)
+        {
+            var newPath = DetailPageUrl();
+            return requestPath != newPath;
+
+
         }
     }
 }

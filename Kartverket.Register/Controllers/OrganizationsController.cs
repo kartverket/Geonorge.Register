@@ -104,8 +104,8 @@ namespace Kartverket.Register.Controllers
 
         //// GET: Organizations/Create
         [Authorize]
-        [Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
-        [Route("organisasjoner/{registername}/ny")]
+        //[Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
+        //[Route("organisasjoner/{registername}/ny")]
         public ActionResult Create(string registername, string parentRegister)
         {
             Organization organisasjon = new Organization();
@@ -127,8 +127,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
-        [Route("organisasjoner/{registername}/ny")]
+        //[Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
+        //[Route("organisasjoner/{registername}/ny")]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string parentRegister, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument, string registerOwner)
         {
             organization.register = _registerService.GetRegister(parentRegister, registername);
@@ -164,42 +164,24 @@ namespace Kartverket.Register.Controllers
 
         //// GET: Organizations/Edit/5
         [Authorize]
-        [Route("organisasjoner/{registerParent}/{registerowner}/{registername}/{itemowner}/{organisasjon}/rediger")]
-        [Route("organisasjoner/{registername}/{innsender}/{organisasjon}/rediger")]
-        public ActionResult Edit(string registername, string organisasjon, string registerParent)
+        //[Route("organisasjoner/{registerParent}/{registerowner}/{registername}/{itemowner}/{organisasjon}/rediger")]
+        //[Route("organisasjoner/{registername}/{itemowner}/{organisasjon}/rediger")]
+        public ActionResult Edit(string registername, string organisasjon, string registerParent, string itemowner)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
+            Organization organization = (Organization)_registerItemService.GetRegisterItem(registerParent, registername, organisasjon, 1, itemowner);
 
-            var queryResultsOrganisasjon = from o in _dbContext.Organizations
-                                           where o.seoname == organisasjon && o.register.seoname == registername
-                                           && o.register.parentRegister.seoname == registerParent
-                                           select o.systemId;
 
-            Guid systId = queryResultsOrganisasjon.FirstOrDefault();
-
-            var queryResultsRegister = from o in _dbContext.Registers
-                                       where o.seoname == registername
-                                       && o.parentRegister.seoname == registerParent
-                                       select o.systemId;
-
-            Guid regId = queryResultsRegister.FirstOrDefault();
-            Models.Register register = _dbContext.Registers.Find(regId);
-
-            if (systId == null)
+            var register = _registerService.GetRegister(registerParent, registername);
+            if (organisasjon == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organization org = _dbContext.Organizations.Find(systId);
-            if (org == null)
+
+            if (_accessControlService.Access(organisasjon))
             {
-                return HttpNotFound();
-            }
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && org.register.accessId == 2 && org.submitter.name.ToLower() == user.ToLower()))
-            {
-                org.AddMissingTranslations();
-                ViewbagsOrganization(org, register);
-                return View(org);
+                organization.AddMissingTranslations();
+                ViewbagsOrganization(organization, register);
+                return View(organization);
             }
             return HttpNotFound("Ingen tilgang");
         }
@@ -225,26 +207,13 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("organisasjoner/{registerParent}/{registerowner}/{registername}/{itemowner}/{organisasjon}/rediger")]
-        [Route("organisasjoner/{registername}/{innsender}/{organisasjon}/rediger")]
+        //[Route("organisasjoner/{registerParent}/{registerowner}/{registername}/{itemowner}/{organisasjon}/rediger")]
+        //[Route("organisasjoner/{registername}/{innsender}/{organisasjon}/rediger")]
         public ActionResult Edit(Organization org, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string organisasjon, string registerParent, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument)
         {
-            var queryResultsRegister = from o in _dbContext.Registers
-                                       where o.seoname == registername
-                                       && o.parentRegister.seoname == registerParent
-                                       select o.systemId;
-
-            Guid regId = queryResultsRegister.First();
-            Models.Register register = _dbContext.Registers.Find(regId);
-          
-            var queryResultsOrganisasjon = from o in _dbContext.Organizations
-                                           where o.seoname == organisasjon && o.register.seoname == registername
-                                           && o.register.parentRegister.seoname == registerParent
-                                           select o.systemId;
-
-            Guid systId = queryResultsOrganisasjon.FirstOrDefault();
-            Organization originalOrganization = _dbContext.Organizations.Find(systId);
-
+            var register = _registerService.GetRegister(registerParent, registername);
+            Organization originalOrganization = (Organization)_registerItemService.GetRegisterItem(registerParent, registername, organisasjon, 1);
+            
             ValidationName(org, register);
 
             if (ModelState.IsValid)
@@ -343,14 +312,7 @@ namespace Kartverket.Register.Controllers
                 _dbContext.SaveChanges();
                 ViewbagsOrganization(org, register);
 
-                if (register.parentRegister != null)
-                {
-                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + originalOrganization.register.seoname + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);
-                }
-                else
-                {
-                    return Redirect("/register/" + originalOrganization.register.seoname + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);    
-                }
+                return Redirect(originalOrganization.GetObjectUrl());
                             
             }
             ViewbagsOrganization(org, register);
@@ -359,8 +321,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Organizations/Delete/5
         [Authorize]
-        [Route("organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett")]
-        [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
+        //[Route("organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett")]
+        //[Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
         public ActionResult Delete(string registername, string submitter, string organisasjon, string parentregister)
         {
             string role = GetSecurityClaim("role");
@@ -392,8 +354,8 @@ namespace Kartverket.Register.Controllers
 
         // POST: Registers/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett")]
-        [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
+        //[Route("organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett")]
+        //[Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
         public ActionResult DeleteConfirmed(Organization organization, string registername, string organisasjon, string parentregister, string parentregisterowner)
         {
             var queryResultsOrganisasjon = from o in _dbContext.Organizations

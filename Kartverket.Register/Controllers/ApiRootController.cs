@@ -20,6 +20,7 @@ using System.Net.Http.Headers;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Formatter;
 using System.Web;
+using System.Web.Mvc;
 using Kartverket.Register.App_Start;
 using StatusReport = Kartverket.Register.Models.StatusReport;
 
@@ -54,9 +55,9 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// List top level registers. Use id in response to navigate.
         /// </summary>
-        [Route("api/register")]
-        [Route("api/register.{ext}")]
-        [HttpGet]
+        [System.Web.Http.Route("api/register")]
+        [System.Web.Http.Route("api/register.{ext}")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisters()
         {
             SetLanguage(Request);
@@ -69,17 +70,39 @@ namespace Kartverket.Register.Controllers
             return Ok(list);
         }
 
+        // <summary>
+        /// Gets subregister by name
+        /// </summary>
+        /// <param name="register">The search engine optimized name or id of the register</param>
+        /// <param name="parentregister">The search engine optimized name of the parentregister</param>
+        /// <param name="systemid">The uniqueidentifier for the register</param>
+        //[System.Web.Http.Route("api/{parentregister}/{register}.{ext}")]
+        //[System.Web.Http.Route("api/kodelister/{systemid}")]
+        //[System.Web.Http.Route("api/{parentregister}/{register}")]
+        //[System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}.{ext}")]
+        //[System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetCodelistById(string systemid)
+        {
+            SetLanguage(Request);
 
-
+            var codelist = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+            if (codelist == null)
+            {
+                return NotFound();
+            }
+            return Ok(ConvertRegisterAndNextLevel(codelist));
+        }
 
 
         /// <summary>
         /// Gets register by name
         /// </summary>
         /// <param name="registerName">The search engine optimized name of the register</param>
-        [Route("api/register/{registerName}.{ext}")]
-        [Route("api/register/{registerName}")]
-        [HttpGet]
+        [System.Web.Http.Route("api/{registerName}.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterByName(string registerName, [FromUri] FilterParameters filter = null)
         {
             SetLanguage(Request);
@@ -95,8 +118,9 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets inspiremonitoring xml
         /// </summary>
-        [Route("api/register/inspire-statusregister/monitoring-report")]
-        [HttpGet]
+        [System.Web.Http.Route("api/inspire-statusregister/monitoring-report")]
+        [System.Web.Http.Route("api/register/inspire-statusregister/monitoring-report")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult InspireMonitoring()
         {
             SetLanguage(Request);
@@ -110,9 +134,10 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Save dok status report to db
         /// </summary>
-        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        [Route("api/register/{registerName}/report/save")]
-        [HttpGet]
+        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [System.Web.Http.Route("api/{registerName}/report/save")]
+        [System.Web.Http.Route("api/register/{registerName}/report/save")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult NewStatusReport(string registerName)
         {
             try
@@ -121,7 +146,7 @@ namespace Kartverket.Register.Controllers
                 _statusReportService.CreateStatusReport(register);
                 return Ok("Saved");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return Ok(e);
             }
@@ -130,13 +155,19 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets selected status report
         /// </summary>
-        [Route("api/register/{registerName}/report/{id}.{ext}")]
-        [Route("api/register/{registerName}/report/{id}")]
-        [HttpGet]
+        [System.Web.Http.Route("api/{registerName}/report/{id}")]
+        [System.Web.Http.Route("api/{registerName}/report/{id}.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}/report/{id}.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}/report/{id}")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult StatusReport(string id, bool dataset = true, bool service = true)
         {
             SetLanguage(Request);
             var statusReport = _statusReportService.GetStatusReportById(id);
+            if (statusReport == null)
+            {
+                return NotFound();
+            }
 
             if (statusReport.IsDokReport())
             {
@@ -147,11 +178,11 @@ namespace Kartverket.Register.Controllers
             {
                 if (dataset && service)
                 {
-                return Ok(new InspireRegistryStatusReport(statusReport));
+                    return Ok(new InspireRegistryStatusReport(statusReport));
                 }
                 if (dataset)
                 {
-                return Ok(new Models.Api.InspireDataSetStatusReport(statusReport));
+                    return Ok(new Models.Api.InspireDataSetStatusReport(statusReport));
                 }
                 if (service)
                 {
@@ -161,14 +192,17 @@ namespace Kartverket.Register.Controllers
             }
             return Ok();
 
+
         }
 
         /// <summary>
         /// Gets selected status report
         /// </summary>
-        [Route("api/register/{registerName}/report.{ext}")]
-        [Route("api/register/{registerName}/report")]
-        [HttpGet]
+        [System.Web.Http.Route("api/{registerName}/report")]
+        [System.Web.Http.Route("api/{registerName}/report.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}/report.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}/report")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult StatusReports(string registerName)
         {
             SetLanguage(Request);
@@ -204,9 +238,10 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Save inspire monitoring report data to database.
         /// </summary>
-        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        [Route("api/register/inspire-statusregister/monitoring-report/save")]
-        [HttpGet]
+        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [System.Web.Http.Route("api/inspire-statusregister/monitoring-report/save")]
+        [System.Web.Http.Route("api/register/inspire-statusregister/monitoring-report/save")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult SaveInspireMonitoringData()
         {
             try
@@ -247,30 +282,24 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets subregister by name
         /// </summary>
-        /// <param name="register">The search engine optimized name of the register</param>
+        /// <param name="register">The search engine optimized name or id of the register</param>
         /// <param name="parentregister">The search engine optimized name of the parentregister</param>
-        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}.{ext}")]
-        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}")]
-        [HttpGet]
-        public IHttpActionResult GetSubregisterByName(string parentregister, string register)
-        {
-            SetLanguage(Request);
-            var it = _registerService.GetSubregisterByName(parentregister, register);
-            return Ok(ConvertRegisterAndNextLevel(it));
-        }
-
-
-        /// <summary>
-        /// Gets codelist by systemid
-        /// </summary>
         /// <param name="systemid">The uniqueidentifier for the register</param>
-        [ApiExplorerSettings(IgnoreApi = true)]
-        [Route("api/kodelister/{systemid}")]
-        [HttpGet]
-        public IHttpActionResult GetRegisterBySystemId(string systemid)
+        [System.Web.Http.Route("api/{parentregister}/{register}.{ext}")]
+        //[System.Web.Http.Route("api/kodelister/{systemid}")]
+        [System.Web.Http.Route("api/{parentregister}/{register}")]
+        [System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}.{ext}")]
+        [System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetSubregisterByName(string parentregister, string register, string systemid = null)
         {
             SetLanguage(Request);
-            var it = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+
+            var it = _registerService.GetRegister(parentregister, register) ?? _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+            if (it == null)
+            {
+                return NotFound();
+            }
             return Ok(ConvertRegisterAndNextLevel(it));
         }
 
@@ -281,26 +310,24 @@ namespace Kartverket.Register.Controllers
         /// <param name="registerName">The search engine optimized name of the register</param>
         /// <param name="itemowner">The search engine optimized name of the register item owner</param>
         /// <param name="item">The search engine optimized name of the register item</param>
-        [Route("api/register/{registerName}/{itemowner}/{item}.{ext}")]
-        [Route("api/register/{registerName}/{itemowner}/{item}")]
-        [Route("api/register/versjoner/{registerName}/{itemowner}/{item}.{ext}")]
-        [Route("api/register/versjoner/{registerName}/{itemowner}/{item}")]
-        [HttpGet]
-        public IHttpActionResult GetRegisterItemByName(string registerName, string itemowner, string item)
+        [System.Web.Http.Route("api/{registerName}/{item}/{id}.{ext}")]
+        [System.Web.Http.Route("api/{registerName}/{item}/{id}")]
+        [System.Web.Http.Route("api/register/{registerName}/{itemowner}/{item}.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}/{itemowner}/{item}")]
+        [System.Web.Http.Route("api/register/versjoner/{registerName}/{itemowner}/{item}.{ext}")]
+        [System.Web.Http.Route("api/register/versjoner/{registerName}/{itemowner}/{item}")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetRegisterItemByName(string registerName, string item, string id = null)
         {
             SetLanguage(Request);
             var register = _registerService.GetRegister(null, registerName);
-
+            if (register == null)
+            {
+                return NotFound();
+            }
             Registeritem currentVersion;
 
-            if (register.IsInspireStatusRegister())
-            {
-                currentVersion = ConvertInspireRegister(registerName, item);
-            }
-            else
-            {
-                currentVersion = ConvertCurrentAndVersions(null, registerName, item);
-            }
+            currentVersion = register.IsInspireStatusRegister() ? ConvertInspireRegister(registerName, item) : ConvertCurrentAndVersions(null, registerName, item);
 
             return Ok(currentVersion);
         }
@@ -311,8 +338,8 @@ namespace Kartverket.Register.Controllers
         /// <param name="registerName">The search engine optimized name of the register</param>
         /// <param name="itemowner">The search engine optimized name of the register item owner</param>
         /// <param name="item">The search engine optimized name of the register item</param>
-        [Route("api/register/{registerName}/{itemowner}/{item}/monitoring-report")]
-        [HttpGet]
+        [System.Web.Http.Route("api/register/{registerName}/{itemowner}/{item}/monitoring-report")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult InspireDatasetMonitoring(string registerName, string itemowner, string item)
         {
             SetLanguage(Request);
@@ -335,9 +362,9 @@ namespace Kartverket.Register.Controllers
         /// <param name="register">The search engine optimized name of the register</param>
         /// <param name="item">The search engine optimized name of the register item</param>
         /// <param name="version">The version id of the registeritem</param>
-        [Route("api/register/versjoner/{register}/{itemowner}/{item}/{version}/no.{ext}")]
-        [Route("api/register/versjoner/{register}/{itemowner}/{item}/{version}/no")]
-        [HttpGet]
+        [System.Web.Http.Route("api/register/versjoner/{register}/{itemowner}/{item}/{version}/no.{ext}")]
+        [System.Web.Http.Route("api/register/versjoner/{register}/{itemowner}/{item}/{version}/no")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterItemByVersionNr(string register, string item, int version)
         {
             SetLanguage(Request);
@@ -352,10 +379,12 @@ namespace Kartverket.Register.Controllers
         /// <param name="parentregister">The search engine optimized name of the parent register</param>
         /// <param name="register">The search engine optimized name of the register</param>
         /// <param name="item">The search engine optimized name of the register item</param>
-        [Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}")]
-        [Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}.{ext}")]
-        [HttpGet]
-        public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string item)
+        [System.Web.Http.Route("api/{parentregister}/{register}/{item}/{id}")]
+        [System.Web.Http.Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}")]
+        [System.Web.Http.Route("api/{parentregister}/{register}/{item}/{id}.{ext}")]
+        [System.Web.Http.Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}.{ext}")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string item, string id = null)
         {
             SetLanguage(Request);
             Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(parentregister, register, item);
@@ -366,8 +395,8 @@ namespace Kartverket.Register.Controllers
         /// List items for specific organization 
         /// </summary>
         /// <param name="name">The name of the organization</param>
-        [Route("api/register/organisasjon/{name}")]
-        [HttpGet]
+        [System.Web.Http.Route("api/register/organisasjon/{name}")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult SearchByOrganizationName(string name)
         {
             List<Models.Api.Item> resultat = new List<Models.Api.Item>();
@@ -386,9 +415,9 @@ namespace Kartverket.Register.Controllers
         /// </summary>
         /// <param name="register">The name of the register</param>
         /// <param name="itemowner">The name of the organization</param>
-        [Route("api/register/{register}/{itemowner}.{ext}", Order = 1)]
-        [Route("api/register/{register}/{itemowner}", Order = 1)]
-        [HttpGet]
+        [System.Web.Http.Route("api/register/{register}/{itemowner}.{ext}", Order = 1)]
+        [System.Web.Http.Route("api/register/{register}/{itemowner}", Order = 1)]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterItemsByOrganization(string register, string itemowner)
         {
             List<Models.RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(null, register, itemowner);
@@ -408,9 +437,9 @@ namespace Kartverket.Register.Controllers
         /// <param name="parent">The name of the parentregister</param>
         /// <param name="register">The name of the register</param>
         /// <param name="itemowner">The name of the organization</param>
-        [Route("api/subregister/{parent}/{registerOwner}/{register}/{itemowner}.{ext}")]
-        [Route("api/subregister/{parent}/{registerOwner}/{register}/{itemowner}")]
-        [HttpGet]
+        [System.Web.Http.Route("api/subregister/{parent}/{registerOwner}/{register}/{itemowner}.{ext}")]
+        [System.Web.Http.Route("api/subregister/{parent}/{registerOwner}/{register}/{itemowner}")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterItemsByOrganization(string parent, string register, string itemowner)
         {
             SetLanguage(Request);
@@ -426,8 +455,8 @@ namespace Kartverket.Register.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        [Route("api/metadata/synchronize")]
-        [HttpGet]
+        [System.Web.Http.Route("api/metadata/synchronize")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult SynchronizeDokMetadata()
         {
             new CoverageService(db).UpdateDatasetsWithCoverage();
@@ -438,8 +467,8 @@ namespace Kartverket.Register.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        [Route("api/metadata/synchronizev2")]
-        [HttpGet]
+        [System.Web.Http.Route("api/metadata/synchronizev2")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult SynchronizeMetadata()
         {
             _registerService.UpdateRegisterItemV2Translations();
@@ -447,8 +476,8 @@ namespace Kartverket.Register.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        [Route("api/metadata/synchronize/inspire-statusregister")]
-        [HttpGet]
+        [System.Web.Http.Route("api/metadata/synchronize/inspire-statusregister")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult SynchronizeInspireStatusregister()
         {
             var register = _registerService.GetInspireStatusRegister();
@@ -475,8 +504,8 @@ namespace Kartverket.Register.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        [Route("api/metadata/synchronize/inspire-statusregister/dataservices")]
-        [HttpGet]
+        [System.Web.Http.Route("api/metadata/synchronize/inspire-statusregister/dataservices")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult SynchronizeInspireDataServices()
         {
             var register = _registerService.GetInspireStatusRegister();
@@ -495,8 +524,8 @@ namespace Kartverket.Register.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        [Route("api/metadata/synchronize/inspire-statusregister/dataset")]
-        [HttpGet]
+        [System.Web.Http.Route("api/metadata/synchronize/inspire-statusregister/dataset")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult SynchronizeInspireDataset()
         {
             var register = _registerService.GetInspireStatusRegister();
@@ -513,8 +542,8 @@ namespace Kartverket.Register.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        [Route("api/metadata/synchronize/geodatalov-statusregister")]
-        [HttpGet]
+        [System.Web.Http.Route("api/metadata/synchronize/geodatalov-statusregister")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult SynchronizeGeodatalovStatusregister()
         {
             new GeodatalovDatasetService(db).SynchronizeGeodatalovDatasets();
@@ -525,8 +554,8 @@ namespace Kartverket.Register.Controllers
         /// DokCoverageMapping
         /// </summary>
         /// <param name="name">DokCoverageMapping</param>
-        [Route("api/metadata/DokCoverageMapping")]
-        [HttpGet]
+        [System.Web.Http.Route("api/metadata/DokCoverageMapping")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult DokCoverageMapping()
         {
             return Ok(DokCoverageWmsMapping.DatasetUuidToWmsLayerMapping);
@@ -540,17 +569,20 @@ namespace Kartverket.Register.Controllers
         {
             Registeritem currentVersion = null;
             var versjoner = _registerItemService.GetAllVersionsOfItem(parent, register, item);
-            foreach (var v in versjoner)
+            if (versjoner != null)
             {
-                if (v.versioning.currentVersion == v.systemId)
+                foreach (var v in versjoner)
                 {
-                    currentVersion = ConvertRegisterItem(v);
-
-                    foreach (var ve in versjoner)
+                    if (v.versioning.currentVersion == v.systemId)
                     {
-                        if (v.versionNumber != ve.versionNumber)
+                        currentVersion = ConvertRegisterItem(v);
+
+                        foreach (var ve in versjoner)
                         {
-                            currentVersion.versions.Add(ConvertRegisterItem(ve));
+                            if (v.versionNumber != ve.versionNumber)
+                            {
+                                currentVersion.versions.Add(ConvertRegisterItem(ve));
+                            }
                         }
                     }
                 }

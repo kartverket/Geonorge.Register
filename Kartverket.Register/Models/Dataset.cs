@@ -238,7 +238,7 @@ namespace Kartverket.Register.Models
 
         public virtual string GetDatasetUrl()
         {
-            return register.GetObjectUrl() + "/" + datasetowner.seoname + "/" + seoname;
+            return register.GetObjectUrl() + "/" + seoname + "/" + Uuid;
         }
 
         public virtual string GetDatasetEditUrl()

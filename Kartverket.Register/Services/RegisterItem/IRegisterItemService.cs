@@ -68,5 +68,6 @@ namespace Kartverket.Register.Services.RegisterItem
         /// <returns></returns>
         Guid GetOrganizationByName(string organizationName);
         Models.Register GetInspireStatusRegisterItems(Models.Register register);
+        Dataset GetDatasetById(Guid parse);
     }
 }

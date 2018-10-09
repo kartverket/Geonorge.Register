@@ -46,8 +46,8 @@ namespace Kartverket.Register.Models.ViewModels
             else
             { 
             return parentRegisterId == null
-                ? "/register/" + seoname
-                : "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname;
+                ? "/" + seoname
+                : "/" + parentRegister.seoname + "/" + seoname;
             }
         }
     }

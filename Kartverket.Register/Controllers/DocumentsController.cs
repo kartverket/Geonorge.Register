@@ -51,8 +51,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Create
         [Authorize]
-        [Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
-        [Route("dokument/{registername}/ny")]
+        //[Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
+        //[Route("dokument/{registername}/ny")]
         public ActionResult Create(string registername, string parentRegister)
         {
             Document document = new Document();
@@ -75,8 +75,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
-        [Route("dokument/{registername}/ny")]
+        //[Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
+        //[Route("dokument/{registername}/ny")]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerowner)
         {
             document.register = _registerService.GetSubregisterByName(parentRegister, registername);
@@ -98,8 +98,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/CreateNewVersion
         [Authorize]
-        [Route("dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny")]
-        [Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
+        //[Route("dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny")]
+        //[Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
         public ActionResult CreateNewVersion(string parentRegister, string registername, string itemname)
         {
             Document document = (Document)_registerItemService.GetCurrentRegisterItem(parentRegister, registername, itemname);
@@ -124,8 +124,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny")]
-        [Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
+        //[Route("dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny")]
+        //[Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
         public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentRegisterOwner, string parentRegister, string registername, string itemname)
         {
             document.register = _registerService.GetSubregisterByName(parentRegister, registername);
@@ -147,8 +147,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Edit/5
         [Authorize]
-        [Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
-        [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
+        //[Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
+        //[Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
         public ActionResult Edit(string parentregister, string registername, string documentname, int vnr)
         {
             var document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, vnr);
@@ -171,8 +171,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
-        [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
+        //[Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
+        //[Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
         public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired, bool sosi)
         {
             var originalDocument = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, document.versionNumber);
@@ -201,8 +201,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Delete/5
         [Authorize]
-        [Route("dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett")]
-        [Route("dokument/{registername}/{organization}/{documentname}/slett")]
+        //[Route("dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett")]
+        //[Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult Delete(string registername, string documentname, int? vnr, string parentregister, string parentregisterowner)
         {
             Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, vnr.Value);
@@ -224,8 +224,8 @@ namespace Kartverket.Register.Controllers
 
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett")]
-        [Route("dokument/{registername}/{organization}/{documentname}/slett")]
+        //[Route("dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett")]
+        //[Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber, string parentregister, string parentregisterowner)
         {
             Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, versionNumber);

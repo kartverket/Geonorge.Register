@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using FluentAssertions;
 using Helpers;
 using Kartverket.Register.Controllers;
@@ -16,9 +19,10 @@ namespace Kartverket.Register.Tests.Controllers
 {
     public class RegistersControllerTest
     {
-        public static Models.Register _register = new Models.Register { name = "RegisterName" };
+        public static Models.Register _register = new Models.Register { name = "RegisterName", seoname = "registername" };
         public static FilterParameters _filter = new FilterParameters();
         public static RegisterV2ViewModel _viewModel = new RegisterV2ViewModel(_register, new FilterParameters());
+        private MvcMockHelper _mockHelper = new MvcMockHelper();
 
 
         private static Mock<IRegisterService> CreateRegisterServiceMock()
@@ -52,37 +56,7 @@ namespace Kartverket.Register.Tests.Controllers
             return accessControlServiceMock;
         }
 
-        /*
-        [Fact]
-        public void ShouldRemoveSessionSearchParamsOnIndexPage()
-        {
-            Mock<IRegisterService> registerServiceMock = CreateRegisterServiceMock();
-            var controller = new RegistersController(null, registerServiceMock.Object, null);
-
-            new MvcMockHelper().For(controller);
-
-            controller.Session["sortingType"] = "blabla";
-
-            controller.Index();
-
-            controller.Session["sortingType"].Should().BeNull();
-        }
-
-        [Fact]
-        public void ShouldReturnListOfRegistersOnIndexPage()
-        {
-            Mock<IRegisterService> registerServiceMock = CreateRegisterServiceMock();
-
-            var controller = new RegistersController(null, registerServiceMock.Object, null);
-            new MvcMockHelper().For(controller);
-
-            var result = controller.Index() as ViewResult;
-
-            var viewModel = result.Model as RegisterViewModel;
-
-            viewModel.Items.Count.Should().Be(1);
-        }
-        */
+       
 
         [Fact]
         public void RegisterDetailsShouldReturnHttpNotFoundWhenRegisterIsNull()
@@ -105,9 +79,10 @@ namespace Kartverket.Register.Tests.Controllers
             registerService.Setup(r => r.GetRegister(null, "RegisterName")).Returns(_register);
             registerItemService.Setup(m => m.GetMunicipalityOrganizationByNr(_viewModel.MunicipalityCode));
 
-
+            //var mockRequest = _mockHelper.SetupHttpContextRequestPath("~/registername");
+            _mockHelper.SetupHttpContextRequestPath(_register.GetObjectUrl());
             var controller = new RegistersController(null, null, registerItemService.Object, null, null, registerService.Object, accessControlService.Object, null, null, null, null, null);
-
+            controller.ControllerContext = new ControllerContext(_mockHelper.HttpContext.Object, new RouteData(), controller);
             var result = controller.Details(null,null, "RegisterName", null, null, null, _filter) as ViewResult;
             result.Should().NotBeNull();
         }

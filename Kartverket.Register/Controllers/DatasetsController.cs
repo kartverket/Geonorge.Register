@@ -45,8 +45,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Datasets/Create
         [Authorize]
-        [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
-        [Route("dataset/{registername}/ny")]
+        //[Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
+        //[Route("dataset/{registername}/ny")]
         public ActionResult Create(string registername, string parentRegister)
         {
             Dataset dataset = new Dataset();
@@ -72,8 +72,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
-        [Route("dataset/{registername}/ny")]
+        //[Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
+        //[Route("dataset/{registername}/ny")]
         public ActionResult Create(Dataset dataset, string registername, string metadataUuid, string parentRegister, string registerowner, string searchString)
         {
             dataset.register = _registerService.GetRegister(parentRegister, registername);
@@ -131,8 +131,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Datasets/Create
         [Authorize]
-        [Route("dataset/{parentRegister}/{registerowner}/{registername}/{municipality}/ny")]
-        [Route("dataset/{registername}/{municipality}/ny")]
+        //[Route("dataset/{parentRegister}/{registerowner}/{registername}/{municipality}/ny")]
+        //[Route("dataset/{registername}/{municipality}/ny")]
         public ActionResult CreateMunicipalDataset(string municipality)
         {
             if (municipality != null)
@@ -160,8 +160,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("dataset/{parentRegister}/{registerowner}/{registername}/{municipality}/ny")]
-        [Route("dataset/{registername}/{municipality}/ny")]
+        //[Route("dataset/{parentRegister}/{registerowner}/{registername}/{municipality}/ny")]
+        //[Route("dataset/{registername}/{municipality}/ny")]
         public ActionResult CreateMunicipalDataset(CreateDokMunicipalViewModel model, string searchString, bool save = false)
         {
             model.Register = _registerService.GetDokMunicipalRegister();
@@ -232,8 +232,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Datasets/Edit/5
         [Authorize]
-        [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
-        [Route("dataset/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("dataset/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(string registername, string itemowner, string itemname, string parentRegister)
         {
             Dataset dataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, itemname, 1, itemowner);
@@ -263,8 +263,8 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
-        [Route("dataset/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("dataset/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(Dataset dataset, CoverageDataset coverage, string registername, string itemname, string metadataUuid, string parentRegister, string registerowner, string itemowner, bool dontUpdateDescription = false)
         {
             Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, itemname, 1, itemowner);
@@ -307,8 +307,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Dataset/Delete/5
         [Authorize]
-        [Route("dataset/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("dataset/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("dataset/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("dataset/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult Delete(string registername, string itemname, string parentregister, string parentregisterowner, string itemowner)
         {
             Dataset dataset = (Dataset)_registerItemService.GetRegisterItem(parentregister, registername, itemname, 1, itemowner);

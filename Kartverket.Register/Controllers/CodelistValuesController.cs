@@ -39,8 +39,8 @@ namespace Kartverket.Register.Controllers
 
 
         [Authorize]
-        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
-        [Route("kodeliste/{registername}/ny/import")]
+        //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
+        //[Route("kodeliste/{registername}/ny/import")]
         public ActionResult Import(string registername, string parentregister)
         {
             var register = _registerService.GetRegister(parentregister, registername);
@@ -58,8 +58,8 @@ namespace Kartverket.Register.Controllers
 
 
         [HttpPost]
-        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
-        [Route("kodeliste/{registername}/ny/import")]
+        //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
+        //[Route("kodeliste/{registername}/ny/import")]
         [Authorize]
         public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner, string parentregister)
         {
@@ -90,8 +90,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: CodelistValues/Create
         [Authorize]
-        [Route("kodeliste/{registername}/ny")]
-        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
+        //[Route("kodeliste/{registername}/ny")]
+        //[Route("/*kodeliste/{parentregister}/{registerowner}/{registername}/ny"*/)]
         public ActionResult Create(string registername, string parentregister)
         {
             var codeListValue = new CodelistValue();
@@ -114,8 +114,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
-        [Route("kodeliste/{registername}/ny")]
+        //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
+        //[Route("kodeliste/{registername}/ny")]
         public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister, string registerowner, List<Guid> narrower, Guid? broader)
         {
             codelistValue.register = _registerService.GetRegister(parentregister, registername);
@@ -160,8 +160,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: CodelistValues/Edit/5
         [Authorize]
-        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", Name = "editCodelist")]
-        [Route("kodeliste/{registername}/{submitter}/{itemname}/rediger")]
+        //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", Name = "editCodelist")]
+        //[Route("kodeliste/{registername}/{submitter}/{itemname}/rediger")]
         public ActionResult Edit(string registername, string itemname, string parentregister)
         {
             var codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
@@ -184,8 +184,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
-        [Route("kodeliste/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        //[Route("kodeliste/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(CodelistValue codelistValue, string itemowner, string registername, string itemname, string parentregister, List<Guid> narrower, Guid? broader, string registerowner)
         {
             var originalCodelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
@@ -218,8 +218,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: CodelistValues/Delete/5
         [Authorize]
-        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("kodeliste/{registername}/{submitter}/{itemname}/slett")]
+        //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("kodeliste/{registername}/{submitter}/{itemname}/slett")]
         public ActionResult Delete(string registername, string itemname, string parentregister)
         {
             string role = GetSecurityClaim("role");
@@ -251,8 +251,8 @@ namespace Kartverket.Register.Controllers
 
         // POST: CodelistValues/Delete/5
         [Authorize]
-        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("kodeliste/{registername}/{submitter}/{itemname}/slett")]
+        //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("kodeliste/{registername}/{submitter}/{itemname}/slett")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(string registername, string itemname, string itemowner, string parentregister)
         {

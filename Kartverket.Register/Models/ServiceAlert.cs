@@ -166,13 +166,7 @@ namespace Kartverket.Register.Models
 
         public string GetServiceAlertUrl()
         {
-            if (register.parentRegisterId == Guid.Empty || register.parentRegister == null)
-            {
-                return "/register/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/" + systemId.ToString();
-            }
-            else {
-                return "/subregister/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/" + systemId.ToString();
-            }
+            return register.GetObjectUrl() + "/" + seoname + "/" + systemId;
         }
     }
 }

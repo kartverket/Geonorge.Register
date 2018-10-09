@@ -11,11 +11,22 @@ namespace Kartverket.Register
     {
         public static void Register(HttpConfiguration config)
         {
+
+            // Organization api
+            config.Routes.MapHttpRoute("GetOrganizationByName", "api/organisasjon/navn/{name}", new { controller = "OrganizationsApi", action = "GetOrganizationByName" });
+            config.Routes.MapHttpRoute("GetOrganizationTranslatedByName", "api/organisasjon/navn/{name}/{culture}", new { controller = "OrganizationsApi", action = "GetOrganizationTranslatedByName" });
+            config.Routes.MapHttpRoute("GetOrganizationByNumber", "api/organisasjon/orgnr/{number}", new { controller = "OrganizationsApi", action = "GetOrganizationByNumber" });
+            config.Routes.MapHttpRoute("GetOrganizationsV2", "api/v2/organisasjoner/kommuner", new { controller = "OrganizationsApi", action = "GetOrganizationsV2" });
+            config.Routes.MapHttpRoute("GetOrganizationByNameV2", "api/v2/organisasjon/navn/{name}", new { controller = "OrganizationsApi", action = "GetOrganizationByNameV2" });
+            config.Routes.MapHttpRoute("GetOrganizationByNumberV2", "api/v2/organisasjon/orgnr/{number}", new { controller = "OrganizationsApi", action = "GetOrganizationByNumberV2" });
+
+
             config.MapHttpAttributeRoutes();
 
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
 
+            
             config.Routes.MapHttpRoute(
                    name: "SearchApi",
                    routeTemplate: "api/search/{search}",

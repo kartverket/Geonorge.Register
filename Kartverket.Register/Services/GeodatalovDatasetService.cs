@@ -217,6 +217,18 @@ namespace Kartverket.Register.Services
             _dbContext.SaveChanges();
         }
 
+        public GeodatalovDataset GetGeodatalovDatasetById(string uuid)
+        {
+            Guid guid = Guid.Parse(uuid);
+            var queryResult = from i in _dbContext.GeodatalovDatasets
+                where i.Uuid == uuid
+                      || i.SystemId == guid
+                              select i;
+
+            return queryResult.FirstOrDefault();
+        }
+
+
         private GeodatalovDataset GetGeodatalovDatasetBySystemId(Guid systemId)
         {
             var queryResult = from i in _dbContext.GeodatalovDatasets
@@ -363,7 +375,7 @@ namespace Kartverket.Register.Services
             return originalDataset;
         }
 
-        private GeodatalovDataset GetGeodatalovDatasetByUuid(string uuid)
+        public GeodatalovDataset GetGeodatalovDatasetByUuid(string uuid)
         {
             var queryResult = from i in _dbContext.GeodatalovDatasets
                 where i.Uuid == uuid

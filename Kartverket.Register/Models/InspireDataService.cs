@@ -144,6 +144,11 @@ namespace Kartverket.Register.Models
                 ServiceType = "invoke";
             }
         }
+
+        public string DetailPageUrl()
+        {
+            return Register.GetObjectUrl() + "/" + Seoname + "/" + Uuid;
+        }
     }
 
 }

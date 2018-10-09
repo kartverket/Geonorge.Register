@@ -13,7 +13,7 @@ namespace Kartverket.Register.Models
 
         public InspireDataserviceStatusReport(InspireDataService inspireDataservice)
         {
-            InspireDataservice = inspireDataservice;
+            //InspireDataservice = inspireDataservice;
             UuidInspireDataService = inspireDataservice.Uuid;
             MetadataInspireDataService = inspireDataservice.InspireDeliveryMetadata.StatusId;
             MetadataInSearchServiceInspireDataService = inspireDataservice.InspireDeliveryMetadataInSearchService.StatusId;
@@ -22,7 +22,7 @@ namespace Kartverket.Register.Models
             NetworkService = inspireDataservice.IsNetworkService();
         }
 
-        public virtual InspireDataService InspireDataservice { get; set; }
+        //public virtual InspireDataService InspireDataservice { get; set; }
         public string UuidInspireDataService { get; set; }
         public string MetadataInspireDataService { get; set; }
         public string MetadataInSearchServiceInspireDataService { get; set; }

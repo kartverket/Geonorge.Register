@@ -5,7 +5,9 @@ using Kartverket.Register.Models;
 using Moq;
 using Kartverket.Register.Services.Register;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http.Results;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.RegisterItem;
@@ -24,18 +26,22 @@ namespace Kartverket.Register.Tests.Controllers
             Models.Register r1 = NewRegister("Navn1");
             Models.Register r2 = NewRegister("Navn2");
             Models.Register r3 = NewRegister("Navn3");
-            
+
             List<Models.Register> registers = new List<Models.Register> { r1, r2, r3 };
 
-            var registerService = new Mock<IRegisterService>();           
+            var registerService = new Mock<IRegisterService>();
             registerService.Setup(r => r.GetRegisters()).Returns(registers);
             var controller = createController(url, registerService.Object, null);
 
             var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
 
             List<Models.Api.Register> actualListOfRegisters = result.Content;
-            actualListOfRegisters.Count.Should().Be(3); 
+            actualListOfRegisters.Count.Should().Be(3);
+
+            
         }
+
+        
 
         [Fact]
         public void GetRegistersByName()
@@ -87,13 +93,11 @@ namespace Kartverket.Register.Tests.Controllers
             //Testdata
             Models.Register r1 = NewRegister("Navn");
 
-            List<Models.Register> registers = new List<Models.Register> { r1 };
-
             var registerService = new Mock<IRegisterService>();
             registerService.Setup(s => s.GetRegisterBySystemId(r1.systemId)).Returns(r1);
 
             var controller = createController(url, registerService.Object, null);
-            var result = controller.GetRegisterBySystemId(r1.systemId.ToString()) as OkNegotiatedContentResult<Models.Api.Register>;
+            var result = controller.GetSubregisterByName(null, r1.seoname, r1.systemId.ToString()) as OkNegotiatedContentResult<Models.Api.Register>;
 
             Models.Api.Register registerApi = result.Content;
             registerApi.label.Should().Be("Navn");
@@ -110,7 +114,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerService.Setup(r => r.GetRegister(null, register.seoname)).Returns(register);
 
             var controller = createController(url, registerService.Object, registerItemService.Object);
-            var result = controller.GetRegisterItemByName(register.seoname, versions[0].submitter.seoname, versions[0].seoname ) as OkNegotiatedContentResult<Models.Api.Registeritem>;
+            var result = controller.GetRegisterItemByName(register.seoname, versions[0].seoname ) as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
             Models.Api.Registeritem actualVersions = result.Content;
             actualVersions.label.Should().Be("itemName");
@@ -141,7 +145,7 @@ namespace Kartverket.Register.Tests.Controllers
             var registerItemService = new Mock<IRegisterItemService>();
             registerItemService.Setup(s => s.GetAllVersionsOfItem(register.parentRegister.seoname, register.seoname, "itemname")).Returns(versions);
             var controller = createController(url, null, registerItemService.Object);
-            var result = controller.GetSubregisterItemByName(register.parentRegister.seoname, register.seoname, "itemname") as OkNegotiatedContentResult<Models.Api.Registeritem>;
+            var result = controller.GetSubregisterItemByName(register.parentRegister.seoname, register.seoname, "itemname", null) as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
             Models.Api.Registeritem actualVersions = result.Content;
             actualVersions.label.Should().Be("itemName");
@@ -177,7 +181,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerService.Setup(r => r.GetRegister(null, register.seoname)).Returns(register);
 
             var controller = createController(url, registerService.Object, registerItemService.Object);
-            var result = controller.GetRegisterItemByName(register.seoname, "kartverket", "itemname") as OkNegotiatedContentResult<Models.Api.Registeritem>;
+            var result = controller.GetRegisterItemByName(register.seoname, "itemname") as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
             Models.Api.Registeritem actualCurrentVersion = result.Content;
             actualCurrentVersion.versions.Count.Should().Be(4);
@@ -203,7 +207,7 @@ namespace Kartverket.Register.Tests.Controllers
 
             Models.Api.Register apiRegister = actualListOfRegisters[0];
 
-            apiRegister.id.Should().Be("https://register.geonorge.no/subregister/parent/testorg/testregister");
+            apiRegister.id.Should().Be("https://register.geonorge.no/parent/testregister");
         }
 
         [Fact]
@@ -221,7 +225,7 @@ namespace Kartverket.Register.Tests.Controllers
 
             Models.Api.Register apiRegister = actualListOfRegisters[0];
 
-            apiRegister.id.Should().Be("https://register.geonorge.no/register/testregister");
+            apiRegister.id.Should().Be("https://register.geonorge.no/testregister");
         }
 
         [Fact]

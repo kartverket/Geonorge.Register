@@ -30,8 +30,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: ServiceAlerts/Create
         [Authorize]
-        [Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
-        [Route("tjenestevarsler/{registerName}/ny")]
+        //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
+        //[Route("tjenestevarsler/{registerName}/ny")]
         public ActionResult Create(string parentRegister, string registerName)
         {
             ServiceAlert serviceAlert = new ServiceAlert();
@@ -55,8 +55,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
-        [Route("tjenestevarsler/{registerName}/ny")]
+        //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
+        //[Route("tjenestevarsler/{registerName}/ny")]
         public ActionResult Create(ServiceAlert serviceAlert, string parentRegister, string registerName)
         {
             serviceAlert.register = _registerService.GetRegister(parentRegister, registerName);

@@ -39,8 +39,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: EPSGs/Create
         [Authorize]
-        [Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
-        [Route("epsg/{registername}/ny")]
+        //[Route("epsg/{registername}/ny")]
+        //[Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(string registername, string parentRegister)
         {
             EPSG ePSg = new EPSG();
@@ -57,13 +57,14 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound("Ingen tilgang");
         }
 
+
         // POST: EPSG/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
-        [Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
-        [Route("epsg/{registername}/ny")]
+        //[Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
+        //[Route("epsg/{registername}/ny")]
         public ActionResult Create(EPSG epsgKode, string registername, string parentRegister, string registerowner)
         {
             epsgKode.register = _registerService.GetRegister(parentRegister, registername);
@@ -94,69 +95,11 @@ namespace Kartverket.Register.Controllers
             return View(epsgKode);
         }
 
-        private bool NameIsValid(EPSG epsgKode)
-        {
-            return _registerItemService.ItemNameAlredyExist(epsgKode);
-        }
-
-        private string EPSGName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return "ikke angitt";
-            }
-            else
-            {
-                return name;
-            }
-        }
-
-        private int GetVersionNr(int versionNumber)
-        {
-            if (versionNumber == 0)
-            {
-                versionNumber = 1;
-            }
-            else
-            {
-                versionNumber++;
-            }
-            return versionNumber;
-        }
-
-        private void initialisationEPSG(EPSG epsgKode)
-        {
-            epsgKode.systemId = Guid.NewGuid();
-            epsgKode.modified = DateTime.Now;
-            epsgKode.dateSubmitted = DateTime.Now;
-            epsgKode.registerId = epsgKode.register.systemId;
-            epsgKode.statusId = "Submitted";
-            epsgKode.versionNumber = GetVersionNr(epsgKode.versionNumber);
-            epsgKode.name = EPSGName(epsgKode.name);
-            epsgKode.seoname = EPSGSeoName(epsgKode.name);
-            epsgKode.versioningId = _registerItemService.NewVersioningGroup(epsgKode);
-            SetEPSGOwnerAndSubmitter(epsgKode);
-            epsgKode.inspireRequirementId = "Notset";
-            epsgKode.nationalRequirementId = "Notset";
-            epsgKode.nationalSeasRequirementId = "Notset";
-        }
-
-        private void SetEPSGOwnerAndSubmitter(EPSG epsgKode)
-        {
-            Organization submitterOrganisasjon = _registerService.GetOrganizationByUserName();
-            epsgKode.submitterId = submitterOrganisasjon.systemId;
-            epsgKode.submitter = submitterOrganisasjon;
-        }
-
-        private string EPSGSeoName(string name)
-        {
-            return Helpers.RegisterUrls.MakeSeoFriendlyString(name);
-        }
 
         // GET: EPSGs/Edit/5
         [Authorize]
-        [Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
-        [Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
+        //[Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
+        //[Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
         public ActionResult Edit(string registername, string epsgname, int? vnr, string parentRegister)
         {
             string role = GetSecurityClaim("role");
@@ -187,13 +130,14 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound("Ingen tilgang");
         }
 
+
         // POST: EPSGs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
-        [Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
-        [Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
+        //[Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
+        //[Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
         //public ActionResult Edit(EPSG ePSG, string name, string id)
         public ActionResult Edit(EPSG ePSG, string epsgname, string parentRegister, string registername)
         {
@@ -270,8 +214,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: EPSGs/Delete/5
         [Authorize]
-        [Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
-        [Route("epsg/{registername}/{organization}/{epsgname}/slett")]
+        //[Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
+        //[Route("epsg/{registername}/{organization}/{epsgname}/slett")]
         public ActionResult Delete(string epsgname, string registername, string parentregister)
         {
             string role = GetSecurityClaim("role");
@@ -284,10 +228,6 @@ namespace Kartverket.Register.Controllers
                                            select o.systemId;
             Guid systId = queryResultsOrganisasjon.FirstOrDefault();
 
-            if (systId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             EPSG ePSG = db.EPSGs.Find(systId);
             if (ePSG == null)
             {
@@ -304,8 +244,8 @@ namespace Kartverket.Register.Controllers
         // POST: EPSGs/Delete/5
         [Authorize]
         [HttpPost, ActionName("Delete")]
-        [Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
-        [Route("epsg/{registername}/{organization}/{epsgname}/slett")]
+        //[Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
+        //[Route("epsg/{registername}/{organization}/{epsgname}/slett")]
         public ActionResult DeleteConfirmed(string epsgname, string registername, string parentregister, string parentregisterowner)
         {
             var queryResultsOrganisasjon = from o in db.EPSGs
@@ -386,6 +326,65 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
             }
+        }
+
+        private bool NameIsValid(EPSG epsgKode)
+        {
+            return _registerItemService.ItemNameAlredyExist(epsgKode);
+        }
+
+        private string EPSGName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return "ikke angitt";
+            }
+            else
+            {
+                return name;
+            }
+        }
+
+        private int GetVersionNr(int versionNumber)
+        {
+            if (versionNumber == 0)
+            {
+                versionNumber = 1;
+            }
+            else
+            {
+                versionNumber++;
+            }
+            return versionNumber;
+        }
+
+        private void initialisationEPSG(EPSG epsgKode)
+        {
+            epsgKode.systemId = Guid.NewGuid();
+            epsgKode.modified = DateTime.Now;
+            epsgKode.dateSubmitted = DateTime.Now;
+            epsgKode.registerId = epsgKode.register.systemId;
+            epsgKode.statusId = "Submitted";
+            epsgKode.versionNumber = GetVersionNr(epsgKode.versionNumber);
+            epsgKode.name = EPSGName(epsgKode.name);
+            epsgKode.seoname = EPSGSeoName(epsgKode.name);
+            epsgKode.versioningId = _registerItemService.NewVersioningGroup(epsgKode);
+            SetEPSGOwnerAndSubmitter(epsgKode);
+            epsgKode.inspireRequirementId = "Notset";
+            epsgKode.nationalRequirementId = "Notset";
+            epsgKode.nationalSeasRequirementId = "Notset";
+        }
+
+        private void SetEPSGOwnerAndSubmitter(EPSG epsgKode)
+        {
+            Organization submitterOrganisasjon = _registerService.GetOrganizationByUserName();
+            epsgKode.submitterId = submitterOrganisasjon.systemId;
+            epsgKode.submitter = submitterOrganisasjon;
+        }
+
+        private string EPSGSeoName(string name)
+        {
+            return Helpers.RegisterUrls.MakeSeoFriendlyString(name);
         }
 
         protected override void OnException(ExceptionContext filterContext)

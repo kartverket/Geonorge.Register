@@ -1,4 +1,5 @@
-﻿using Kartverket.Register.Models;
+﻿using System;
+using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Services
@@ -11,5 +12,6 @@ namespace Kartverket.Register.Services
         GeodatalovDataset UpdateGeodatalovDatasetFromKartkatalogen(GeodatalovDataset geodatalovDataset);
         GeodatalovDataset UpdateGeodatalovDataset(GeodatalovDatasetViewModel viewModel);
         void DeleteGeodatalovDataset(GeodatalovDataset geodatalovDataset);
+        GeodatalovDataset GetGeodatalovDatasetById(string uuid);
     }
 }

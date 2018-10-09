@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.ServiceModel.Security;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
@@ -35,40 +36,14 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        ////[Route("{registername}/{subregister}/{itemname}/{systemId}")]
-        //[Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}.{format}")]
-        //[Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}")]
-        //public ActionResult DetailsSubregisterItem(string registername, string owner, string subregister, string itemname, string format, string systemId)
-        //{
-        //    string ApiRedirectUrl = GetApiUrl(ref format);
-        //    if (!string.IsNullOrWhiteSpace(ApiRedirectUrl))
-        //    {
-        //        return Redirect(ApiRedirectUrl);
-        //    }
-
-        //    var queryResults = from o in _db.RegisterItems
-        //                       where o.seoname == itemname && o.register.seoname == subregister && o.register.parentRegister.seoname == registername
-        //                       select o.systemId;
-
-        //    Guid systId = queryResults.FirstOrDefault();
-        //    Kartverket.Register.Models.RegisterItem registerItem = _db.RegisterItems.Find(systId);
-
-        //    if (registerItem.register.containedItemClass == "Document")
-        //    {
-        //        Kartverket.Register.Models.Document document = _db.Documents.Find(systId);
-        //        ViewBag.documentOwner = document.documentowner.name;
-        //    }
-        //    return View(registerItem);
-        //}
-
         // GET: subregister/Create
         [Authorize]
-        [Route("subregister/{parentregister}/{parentRegisterOwner}/{registername}/ny")]
-        [Route("subregister/{registername}/ny")]
-        public ActionResult Create(string registername, string parentregister)
+        //[Route("subregister/{registerparant}/{parentRegisterOwner}/{registername}/ny")]
+        //[Route("subregister/{registername}/ny")]
+        public ActionResult Create(string registerparant, string parentRegisterOwner, string registername)
         {
             var register = new Models.Register();
-            register.parentRegister = _registerService.GetSubregisterByName(parentregister, registername);
+            register.parentRegister = _registerService.GetRegister(registerparant, registername);
 
             if (_accessControlService.Access(register.parentRegister))
             {
@@ -87,8 +62,8 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
-        [Route("subregister/{registerparant}/{parentRegisterOwner}/{registerName}/ny")]
-        [Route("subregister/{registerName}/ny")]
+        //[Route("subregister/{registerparant}/{parentRegisterOwner}/{registerName}/ny")]
+        //[Route("subregister/{registerName}/ny")]
         public ActionResult Create(Models.Register subRegister, string registerName, string registerparant)
         {
             subRegister.parentRegister = _registerService.GetRegister(registerparant, registerName);
@@ -105,7 +80,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Subregister/Edit/5
         [Authorize]
-        [Route("subregister/{registername}/{owner}/{subregister}/rediger")]
+        //[Route("subregister/{registername}/{registerOwner}/{subregister}/rediger")]
         public ActionResult Edit(string registername, string subregister)
         {
             var register = _registerService.GetRegister(registername, subregister);
@@ -121,100 +96,105 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("subregister/{registername}/{ownerSubregister}/{subregister}/rediger")]
+        [Authorize]
+        //[Route("subregister/{registername}/{registerOwner}/{subregister}/rediger")]
         public ActionResult Edit(Models.Register register, string registername, string subregister)
         {
             var originalRegister = _registerService.GetRegister(registername, subregister);
-            ValidationName(register, registername);
-
-            if (ModelState.IsValid)
+            if (_accessControlService.Access(originalRegister))
             {
-                if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
-                if (register.description != null) originalRegister.description = register.description;
-                if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
-                if (register.managerId != null) originalRegister.managerId = register.managerId;
-                if (register.targetNamespace != null) originalRegister.targetNamespace = register.targetNamespace;
-                originalRegister.accessId = register.accessId;
-                originalRegister.parentRegisterId = register.parentRegisterId;
+                ValidationName(register, registername);
 
-
-                originalRegister.modified = DateTime.Now;
-                if (register.statusId != null)
+                if (ModelState.IsValid)
                 {
-                    originalRegister.statusId = register.statusId;
-                    if (originalRegister.statusId != "Valid" && register.statusId == "Valid")
+                    if (register.name != null) originalRegister.name = register.name;
+                    originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
+                    if (register.description != null) originalRegister.description = register.description;
+                    if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
+                    if (register.managerId != null) originalRegister.managerId = register.managerId;
+                    if (register.targetNamespace != null) originalRegister.targetNamespace = register.targetNamespace;
+                    originalRegister.accessId = register.accessId;
+                    originalRegister.parentRegisterId = register.parentRegisterId;
+
+
+                    originalRegister.modified = DateTime.Now;
+                    if (register.statusId != null)
                     {
-                        originalRegister.dateAccepted = DateTime.Now;
-                    }
-                    if (originalRegister.statusId == "Valid" && register.statusId != "Valid")
-                    {
-                        originalRegister.dateAccepted = null;
-                    }
-                }
-                originalRegister.MakeAllItemsValid = register.MakeAllItemsValid;
-                if (originalRegister.MakeAllItemsValid) _registerItemService.MakeAllRegisterItemsValid(originalRegister);
-                _translationService.UpdateTranslations(register, originalRegister);
-                _db.Entry(originalRegister).State = EntityState.Modified;
-                _db.SaveChanges();
-                Viewbags(register);
+                        originalRegister.statusId = register.statusId;
+                        if (originalRegister.statusId != "Valid" && register.statusId == "Valid")
+                        {
+                            originalRegister.dateAccepted = DateTime.Now;
+                        }
 
-                if (originalRegister.parentRegisterId == null)
-                {
-                    return Redirect("/register/" + originalRegister.seoname);
-                }
-                else
-                {
-                    return Redirect("/subregister/" + originalRegister.parentRegister.seoname + "/" + originalRegister.parentRegister.owner.seoname + "/" + originalRegister.seoname);
-                }
+                        if (originalRegister.statusId == "Valid" && register.statusId != "Valid")
+                        {
+                            originalRegister.dateAccepted = null;
+                        }
+                    }
 
+                    originalRegister.MakeAllItemsValid = register.MakeAllItemsValid;
+                    if (originalRegister.MakeAllItemsValid)
+                        _registerItemService.MakeAllRegisterItemsValid(originalRegister);
+                    _translationService.UpdateTranslations(register, originalRegister);
+                    _db.Entry(originalRegister).State = EntityState.Modified;
+                    _db.SaveChanges();
+                    Viewbags(register);
+
+                    return Redirect(originalRegister.GetObjectUrl());
+
+                }
             }
+            else
+            {
+                throw new HttpException(401, "Access Denied");
+            }
+
             Viewbags(register);
             return View(originalRegister);
         }
 
         // GET: Subregister/Delete/5
         [Authorize]
-        [Route("subregister/{registername}/{owner}/{subregister}/slett")]
+        //[Route("subregister/{registername}/{owner}/{subregister}/slett")]
         public ActionResult Delete(string registername, string owner, string subregister)
         {
-
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-            var queryResults = from o in _db.Registers
-                               where o.seoname == subregister && o.parentRegister.seoname == registername
-                               select o.systemId;
-
-            Guid systId = queryResults.FirstOrDefault();
-            Models.Register register = _db.Registers.Find(systId);
+            Models.Register register = _registerService.GetRegister(registername, subregister);
 
             if (register == null)
             {
                 return HttpNotFound();
             }
 
-            if (role == "nd.metadata_admin")
+            if (_accessControlService.Access(register))
             {
                 return View(register);
             }
 
-            if ((role == "nd.metadata" || user == register.owner.name) && register.accessId == 2)
-            {
-                return View(register);
-            }
-            return HttpNotFound();
+            throw new HttpException(401, "Access Denied");
         }
 
         // POST: Subregister/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
-        [Route("subregister/{registername}/{owner}/{subregister}/slett")]
+        //[Route("subregister/{registername}/{owner}/{subregister}/slett")]
         public ActionResult DeleteConfirmed(string registername, string owner, string subregister)
         {
             var register = _registerService.GetRegister(registername, subregister);
-            var parentRegisterUrl = register.parentRegister.GetObjectUrl();
+            if (register != null)
+            {
+                if (!_accessControlService.Access(register))
+                {
+                    throw new HttpException(401, "Access Denied");
+                }
 
-            _registerService.DeleteRegister(register);
+                var parentRegisterUrl = register.parentRegister.GetObjectUrl();
 
-            return Redirect(parentRegisterUrl);
+                _registerService.DeleteRegister(register);
+
+                return Redirect(parentRegisterUrl);
+            }
+
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

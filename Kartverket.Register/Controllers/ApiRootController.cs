@@ -70,6 +70,30 @@ namespace Kartverket.Register.Controllers
             return Ok(list);
         }
 
+        // <summary>
+        /// Gets subregister by name
+        /// </summary>
+        /// <param name="register">The search engine optimized name or id of the register</param>
+        /// <param name="parentregister">The search engine optimized name of the parentregister</param>
+        /// <param name="systemid">The uniqueidentifier for the register</param>
+        //[System.Web.Http.Route("api/{parentregister}/{register}.{ext}")]
+        //[System.Web.Http.Route("api/kodelister/{systemid}")]
+        //[System.Web.Http.Route("api/{parentregister}/{register}")]
+        //[System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}.{ext}")]
+        //[System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetCodelistById(string systemid)
+        {
+            SetLanguage(Request);
+
+            var codelist = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+            if (codelist == null)
+            {
+                return NotFound();
+            }
+            return Ok(ConvertRegisterAndNextLevel(codelist));
+        }
+
 
         /// <summary>
         /// Gets register by name
@@ -262,7 +286,7 @@ namespace Kartverket.Register.Controllers
         /// <param name="parentregister">The search engine optimized name of the parentregister</param>
         /// <param name="systemid">The uniqueidentifier for the register</param>
         [System.Web.Http.Route("api/{parentregister}/{register}.{ext}")]
-        [System.Web.Http.Route("api/kodelister/{systemid}")]
+        //[System.Web.Http.Route("api/kodelister/{systemid}")]
         [System.Web.Http.Route("api/{parentregister}/{register}")]
         [System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}.{ext}")]
         [System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}")]
@@ -271,7 +295,7 @@ namespace Kartverket.Register.Controllers
         {
             SetLanguage(Request);
 
-            var it = _registerService.GetSubregisterByName(parentregister, register) ?? _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+            var it = _registerService.GetRegister(parentregister, register) ?? _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (it == null)
             {
                 return NotFound();

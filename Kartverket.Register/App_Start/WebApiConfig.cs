@@ -20,6 +20,8 @@ namespace Kartverket.Register
             config.Routes.MapHttpRoute("GetOrganizationByNameV2", "api/v2/organisasjon/navn/{name}", new { controller = "OrganizationsApi", action = "GetOrganizationByNameV2" });
             config.Routes.MapHttpRoute("GetOrganizationByNumberV2", "api/v2/organisasjon/orgnr/{number}", new { controller = "OrganizationsApi", action = "GetOrganizationByNumberV2" });
 
+            config.Routes.MapHttpRoute("GetCodelistById", "api/kodelister/{systemid}", new { controller = "ApiRoot", action = "GetCodelistById" });
+
 
             config.MapHttpAttributeRoutes();
 

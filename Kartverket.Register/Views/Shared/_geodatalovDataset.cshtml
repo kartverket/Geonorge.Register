@@ -30,7 +30,7 @@
 {
     <div class="resultItemRow col-md-12 ">
         <div class="col-md-3 col-sm-2 col"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
-        <div class="col-md-2 col"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.NameTranslated()</a></div>
+        <div class="col-md-2 col"><a href="@item.Owner.GetObjectUrl()" title="Datasett eier: @item.Owner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.NameTranslated()</a></div>
         <div class="col-md-2 col"><span>@item.GetThemeGroupDescription()</span></div>
         <div class="col-md-5 col-sm-5 status-icons pull-right">
             @HtmlHelperExtensions.Checked(item.InspireTheme, GeodatalovDataSet.InspireTheme)

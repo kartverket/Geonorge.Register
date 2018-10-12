@@ -77,25 +77,16 @@ namespace Kartverket.Register.Controllers
         /// <param name="parentregister">The search engine optimized name of the parentregister</param>
         /// <param name="systemid">The uniqueidentifier for the register</param>
         //[System.Web.Http.Route("api/kodelister/{systemid}")]
+        //[System.Web.Http.Route("api/kodelister/{systemid}.{ext}")]
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetCodelistById(string systemid)
         {
             SetLanguage(Request);
-            Guid guid;
-            bool isValid = Guid.TryParse(systemid, out guid);
+            bool isValid = Guid.TryParse(systemid, out var guid);
 
             var codelist = new Models.Register();
 
-            if (isValid)
-            {
-                codelist = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
-            }
-            else
-            {
-                var name = systemid.Split('.');
-                codelist = _registerService.GetRegister("kodelister", name[0]);
-            }
-
+            codelist = isValid ? _registerService.GetRegisterBySystemId(Guid.Parse(systemid)) : _registerService.GetRegister("kodelister", systemid);
 
             if (codelist == null)
             {

@@ -15,6 +15,9 @@ namespace Kartverket.Register
                 new { id = @"^\d+$" }
             );
 
+            // Search
+            routes.MapRoute("SearchResult", "search", new { controller = "Search", action = "Index" });
+
             // Register
             routes.MapRoute("RegisterCreate", "ny", new { controller = "Registers", action = "Create"});
             routes.MapRoute("RegisterEdit", "rediger/{registername}", new { controller = "Registers", action = "Edit"});

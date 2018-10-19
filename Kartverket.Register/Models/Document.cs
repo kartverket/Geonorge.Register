@@ -102,7 +102,7 @@ namespace Kartverket.Register.Models
 
         public string ItemsByDocumentOwnerUrl()
         {
-            return register.GetObjectUrl() + "/" + documentowner.seoname;
+            return register.GetObjectUrl() + "?filterOrganization=" + documentowner.seoname;
         }
 
         public void Update(Document document)

@@ -548,7 +548,12 @@ namespace Kartverket.Register.Models
 
         public string ItemsByDatasetOwnerUrl()
         {
-            return register.GetObjectUrl() + "/" + datasetowner.seoname;
+            return register.GetObjectUrl() + "?filterOrganization=" + datasetowner.seoname;
+        }
+
+        public string FilterOrganizationUrl()
+        {
+            return FilterOrganizationUrl() + datasetowner.seoname;
         }
     }//end Dataset
 

@@ -438,7 +438,7 @@ namespace Kartverket.Register.Models
                 case Dataset dataset:
                     return dataset.ItemsByDatasetOwnerUrl();
             }
-            return register.GetObjectUrl() + "/" + submitter.seoname;
+            return register.GetObjectUrl() + "?filterOrganization=" + submitter.seoname;
         }
     }
 }//end namespace Datamodell

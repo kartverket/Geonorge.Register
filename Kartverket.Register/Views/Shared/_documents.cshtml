@@ -20,7 +20,7 @@
             <a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
         </div>
         <div class="col-md-4 col-sm-12 col">
-            <a href="@item.documentowner.GetObjectUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">
+            <a href="@item.ItemsByOwnerUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">
                 @item.documentowner.NameTranslated()
             </a>
         </div>

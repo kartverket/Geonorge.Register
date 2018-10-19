@@ -163,5 +163,10 @@ namespace Kartverket.Register.Models.ViewModels
             }
             return "/geodatalov/" + Register.parentRegister.seoname + "/" + Register.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
         }
+
+        public object FilterByOrganization()
+        {
+            return FilterOrganizationUrl() + Owner.seoname;
+        }
     }
 }

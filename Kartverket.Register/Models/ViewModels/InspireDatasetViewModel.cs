@@ -190,5 +190,10 @@ namespace Kartverket.Register.Models.ViewModels
             }            
             return inspireTeamsString;
         }
+
+        public string FilterByOrganizationUrl()
+        {
+            return FilterOrganizationUrl() + Owner.seoname;
+        }
     }
 }

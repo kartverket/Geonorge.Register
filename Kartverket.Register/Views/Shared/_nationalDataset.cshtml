@@ -28,7 +28,7 @@
             <a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.NameTranslated()</a>
         </div>
         <div class="col-md-2 col-sm-12 col">
-            <a href="@item.datasetowner.GetObjectUrl()" title="Datasett eier: @item.datasetowner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.datasetowner.NameTranslated()</a>
+            <a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.datasetowner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.datasetowner.NameTranslated()</a>
         </div>
         <div class="col-md-2 col-sm-12 col">
             @item.ThemeGroupIdTranslated()

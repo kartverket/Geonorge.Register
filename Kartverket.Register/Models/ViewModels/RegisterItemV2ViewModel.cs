@@ -166,7 +166,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string ItemsByOwnerUrl()
         {
-            return Register.GetObjectUrl() + "/" + Owner.seoname;
+            return Register.GetObjectUrl() + "?filterOrganization=" + Owner.seoname;
         }
 
         public string GetDescriptionAsSubstring()
@@ -332,8 +332,11 @@ namespace Kartverket.Register.Models.ViewModels
         {
             var newPath = DetailPageUrl();
             return requestPath != newPath;
+        }
 
-
+        public string FilterOrganizationUrl()
+        {
+            return Register.GetObjectUrl() + "?filterOrganization=";
         }
     }
 }

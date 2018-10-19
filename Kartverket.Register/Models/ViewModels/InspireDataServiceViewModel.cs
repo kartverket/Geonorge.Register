@@ -148,5 +148,10 @@ namespace Kartverket.Register.Models.ViewModels
             }
             return "/inspire-data-service/" + Register.parentRegister.seoname + "/" + Register.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
         }
+
+        public string FilterByOrganizationUrl()
+        {
+            return FilterOrganizationUrl() + Owner.seoname;
+        }
     }
 }

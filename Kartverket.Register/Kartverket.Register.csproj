@@ -900,6 +900,10 @@
     <Compile Include="Migrations\201810081111359_RemoveInspireDatasetVirtual.Designer.cs">
       <DependentUpon>201810081111359_RemoveInspireDatasetVirtual.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810220656535_AddGeondatalovDatasetStatusReport.cs" />
+    <Compile Include="Migrations\201810220656535_AddGeondatalovDatasetStatusReport.Designer.cs">
+      <DependentUpon>201810220656535_AddGeondatalovDatasetStatusReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -926,6 +930,7 @@
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
     <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokStatusReportViewModel.cs" />
@@ -937,9 +942,9 @@
     <Compile Include="Models\ViewModels\StatusReportViewModels\NumberOfStatuses.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\StatusLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\StatusReportViewModel.cs" />
-    <Compile Include="Models\StatusReport\InspireDataserviceStatusReport.cs" />
-    <Compile Include="Models\StatusReport\InspireDatasetStatusReport.cs" />
-    <Compile Include="Models\StatusReport\DatasetStatusHistory.cs" />
+    <Compile Include="Models\StatusReports\InspireDataserviceStatusReport.cs" />
+    <Compile Include="Models\StatusReports\InspireDatasetStatusReport.cs" />
+    <Compile Include="Models\StatusReports\DatasetStatusHistory.cs" />
     <Compile Include="Models\GeodatalovDataset.cs" />
     <Compile Include="Models\IInspireMonitoring.cs" />
     <Compile Include="Models\InspireDataService.cs" />
@@ -960,8 +965,8 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
-    <Compile Include="Models\StatusReport\RegisterItemStatusReport.cs" />
-    <Compile Include="Models\StatusReport\StatusReport.cs" />
+    <Compile Include="Models\StatusReports\RegisterItemStatusReport.cs" />
+    <Compile Include="Models\StatusReports\StatusReport.cs" />
     <Compile Include="Models\Synchronize.cs" />
     <Compile Include="Models\Translations\AlertTypes.cs" />
     <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
@@ -2462,6 +2467,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810081111359_RemoveInspireDatasetVirtual.resx">
       <DependentUpon>201810081111359_RemoveInspireDatasetVirtual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810220656535_AddGeondatalovDatasetStatusReport.resx">
+      <DependentUpon>201810220656535_AddGeondatalovDatasetStatusReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

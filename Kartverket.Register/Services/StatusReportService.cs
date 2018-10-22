@@ -141,5 +141,48 @@ namespace Kartverket.Register.Services
 
             return inpsireStatusReports;
         }
+
+        public List<StatusReport> GetGeodatalovStatusReports(int numberOfReports)
+        {
+            List<StatusReport> statusReports = GetStatusReports();
+            List<StatusReport> geodatalovStatusReports = new List<StatusReport>();
+
+            foreach (var report in statusReports)
+            {
+                if (report.IsGeodatalovDatasetReport())
+                {
+                    geodatalovStatusReports.Add(report);
+                    if (numberOfReports != 0)
+                    {
+                        if (geodatalovStatusReports.Count > numberOfReports)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return geodatalovStatusReports;
+        }
+
+        public List<StatusReport> GetStatusReportsByRegister(Models.Register register, int numberOfReports = 0)
+        {
+            if (register.IsDokStatusRegister())
+            {
+                return GetDokStatusReports(numberOfReports);
+            }
+
+            if (register.IsInspireStatusRegister())
+            {
+                return GetInspireStatusReports(numberOfReports);
+            }
+
+            if (register.IsGeodatalovStatusRegister())
+            {
+                return GetGeodatalovStatusReports(numberOfReports);
+            }
+
+            return new List<StatusReport>();
+        }
     }
 }

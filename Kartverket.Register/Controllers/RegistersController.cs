@@ -242,8 +242,11 @@ namespace Kartverket.Register.Controllers
                 return RedirectPermanent(register.GetObjectUrl());
             }
 
+            List<StatusReport> statusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : statusReports.FirstOrDefault();
+
             register = FilterRegisterItems(register, filter);
-            var viewModel = new RegisterV2ViewModel(register, filter);
+            var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, statusReports);
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 using Kartverket.Register.Helpers;
+using Kartverket.Register.Models.StatusReports;
 using Kartverket.Register.Models.Translations;
 using Resources;
 
@@ -125,6 +126,11 @@ namespace Kartverket.Register.Models.ViewModels
                 if (statusReport.IsInspireRegistryReport())
                 {
                     return new InspireRegistryStatusReportViewModel(statusReport, statusReports, filter);
+                }
+
+                if (statusReport.IsGeodatalovDatasetReport())
+                {
+                    return new GeodatalovDatasetStatusReportViewModel(statusReport, statusReports, filter.StatusType);
                 }
             }
             return null;

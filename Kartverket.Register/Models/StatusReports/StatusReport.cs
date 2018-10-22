@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Kartverket.Register.Models.StatusReports;
 
 namespace Kartverket.Register.Models
 {
@@ -53,10 +54,17 @@ namespace Kartverket.Register.Models
             //return StatusRegisterItems.Where(is InspireDatasetStatusReport).FirstOrDefault() is InspireDatasetStatusReport;
         }
 
+        public bool IsGeodatalovDatasetReport()
+        {
+            return StatusRegisterItems.FirstOrDefault() is GeodatalovDatasetStatusReport;
+        }
+
         public bool IsInspireDataserviceReport()
         {
             return StatusRegisterItems.FirstOrDefault() is InspireDataserviceStatusReport;
         }
+
+
 
         public int NumberOfItemsWithMetadata(string status)
         {
@@ -99,6 +107,22 @@ namespace Kartverket.Register.Models
                 if (item is InspireDataserviceStatusReport inspireDataServiceStatusReport)
                 {
                     if (inspireDataServiceStatusReport.MetadataInspireDataService == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfGeodatalovDatasetsWithMetadata(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.MetadataGeodatalovDataset == status)
                     {
                         number++;
                     }
@@ -155,6 +179,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfGeodatalovDatasetsWithProductSpecification(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.ProductSpesificationGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithWms(string status)
         {
             int number = 0;
@@ -179,6 +219,22 @@ namespace Kartverket.Register.Models
                 if (item is InspireDatasetStatusReport inspireDatasetStatusReport)
                 {
                     if (inspireDatasetStatusReport.WmsInspireDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfGeodatalovDatasetsWithWms(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.WmsGeodatalovDataset == status)
                     {
                         number++;
                     }
@@ -235,6 +291,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfGeodatalovDatasetsWithWfs(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.WfsGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithSosiRequirements(string status)
         {
             int number = 0;
@@ -251,6 +323,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfGeodatalovDatasetsWithSosiRequirements(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.SosiDataGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithGmlRequirements(string status)
         {
             int number = 0;
@@ -259,6 +347,22 @@ namespace Kartverket.Register.Models
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
                     if (datasetStatusHistory.GmlRequirements == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfGeodatalovDatasetsWithGmlRequirements(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.GmlDataGeodatalovDataset == status)
                     {
                         number++;
                     }
@@ -291,6 +395,22 @@ namespace Kartverket.Register.Models
                 if (item is InspireDatasetStatusReport inspireDatasetStatusReport)
                 {
                     if (inspireDatasetStatusReport.AtomFeedInspireDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfGeodatalovDatasetsWithAtomFeed(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.AtomFeedGeodatalovDataset == status)
                     {
                         number++;
                     }
@@ -411,6 +531,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfItemsWithCommon(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.CommonStatusGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
 
         public int NumberOfItemsByType(string statusType, string status)
         {
@@ -522,6 +658,86 @@ namespace Kartverket.Register.Models
                 if (item is InspireDataserviceStatusReport)
                 {
                     number++;
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfGeodatalovDatasetsWithInspireTheme()
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.InspireTheme)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfGeodatalovDatasetsWithDok()
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.Dok)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfGeodatalovDatasetsWithNationalDataset()
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.Dok)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfGeodatalovDatasetsWithPlan()
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.Dok)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfGeodatalovDatasetsWithGeodatalov()
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+                {
+                    if (geodatalovDatasetStatusReport.Dok)
+                    {
+                        number++;
+                    }
                 }
             }
             return number;

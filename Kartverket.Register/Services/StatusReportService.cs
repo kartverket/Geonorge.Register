@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Kartverket.Register.Models;
+using Kartverket.Register.Models.StatusReports;
 
 namespace Kartverket.Register.Services
 {
@@ -39,6 +40,12 @@ namespace Kartverket.Register.Services
                 {
                     var inspireDataserviceStatuses = new InspireDataserviceStatusReport(inspireDataService);
                     statusReport.StatusRegisterItems.Add(inspireDataserviceStatuses);
+                }
+
+                if (item is GeodatalovDataset geodatalovDataset)
+                {
+                    var geodatalovDatasetStatuses = new GeodatalovDatasetStatusReport(geodatalovDataset);
+                    statusReport.StatusRegisterItems.Add(geodatalovDatasetStatuses);
                 }
             }
 

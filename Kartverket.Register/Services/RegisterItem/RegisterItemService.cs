@@ -1670,12 +1670,12 @@ namespace Kartverket.Register.Services.RegisterItem
             return register;
         }
 
-        public Dataset GetDatasetById(Guid id)
+        public Dataset GetDatasetById(Guid id, Guid reigsterId)
         {
             var queryResult = from c in _dbContext.Datasets
-                where c.systemId == id
-                      || c.Uuid == id.ToString()
-                select c;
+                where (c.systemId == id
+                      || c.Uuid == id.ToString()) && c.register.systemId == reigsterId
+                              select c;
 
             return queryResult.FirstOrDefault();
         }

@@ -330,8 +330,8 @@ namespace Kartverket.Register.Controllers
 
         // POST: Dataset/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("dataset/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("dataset/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("dataset/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        //[Route("dataset/{registername}/{itemowner}/{itemname}/slett")]        //[Route("dataset/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult DeleteConfirmed(string registername, string itemname, string parentregister, string registerowner, string itemowner)
         {
             Dataset dataset = (Dataset)_registerItemService.GetCurrentRegisterItem(parentregister, registername, itemname);

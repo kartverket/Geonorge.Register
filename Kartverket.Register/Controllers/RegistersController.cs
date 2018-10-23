@@ -109,7 +109,6 @@ namespace Kartverket.Register.Controllers
         // GET: Registers/Details Inspire registry/5
         [Route("inspire-statusregister")]
         [Route("register/inspire-statusregister")]
-        [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
         {
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
@@ -151,7 +150,6 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("inspire-statusregister")]
         [Route("register/inspire-statusregister")]
-        [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(FilterParameters filter, string dataset, string service)
         {
             if (IsAdmin())
@@ -174,7 +172,6 @@ namespace Kartverket.Register.Controllers
         // GET: Registers/Details DOK/5
         [Route("det-offentlige-kartgrunnlaget")]
         [Route("register/det-offentlige-kartgrunnlaget")]
-        [Route("register/det-offentlige-kartgrunnlagetr/{filterOrganization}")]
         public ActionResult DetailsDokStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
         {
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
@@ -225,7 +222,6 @@ namespace Kartverket.Register.Controllers
         [Route("{parentRegister}/{registername}.{format}/")]
         [Route("register/{registername}")]
         [Route("register/{registername}.{format}")]
-        [Route("register/{registername}/{filterOrganization}")]
         [Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
         [Route("subregister/{parentRegister}/{owner}/{registername}")]
         public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)

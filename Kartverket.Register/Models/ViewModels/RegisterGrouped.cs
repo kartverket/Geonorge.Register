@@ -26,16 +26,19 @@ namespace Kartverket.Register.Models.ViewModels
         public RegisterView() { }
         public RegisterView(Register register)
         {
-            this.systemId = register.systemId;
-            this.name = register.name;
-            this.description = register.description;
-            this.Translations = register.Translations;
-            this.parentRegisterId = register.parentRegisterId;
-            this.seoname = register.seoname;
-            if(register.parentRegister != null)
-                this.parentRegister.seoname = register.parentRegister.seoname;
-            if(register != null && register.owner != null)
-                this.owner = new Organization { seoname = register.owner.seoname };
+            if(register != null)
+            { 
+                this.systemId = register.systemId;
+                this.name = register.name;
+                this.description = register.description;
+                this.Translations = register.Translations;
+                this.parentRegisterId = register.parentRegisterId;
+                this.seoname = register.seoname;
+                if(register.parentRegister != null)
+                    this.parentRegister.seoname = register.parentRegister.seoname;
+                if(register != null && register.owner != null)
+                    this.owner = new Organization { seoname = register.owner.seoname };
+            }
 
         }
 

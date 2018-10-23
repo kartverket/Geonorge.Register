@@ -16,24 +16,24 @@ namespace Kartverket.Register.Migrations
     {
         public override void Up()
         {
-            RegisterDbContext db = new RegisterDbContext();
+            //RegisterDbContext db = new RegisterDbContext();
 
-            var queryResultsRegister = from r in db.Datasets
-                                       where r.MetadataUrl.Contains("www.geonorge.no/geonetwork/")
-                                       select r.systemId;
+            //var queryResultsRegister = from r in db.Datasets
+            //                           where r.MetadataUrl.Contains("www.geonorge.no/geonetwork/")
+            //                           select r.systemId;
 
-            List<Guid> systIdListe = queryResultsRegister.ToList();
+            //List<Guid> systIdListe = queryResultsRegister.ToList();
 
-            foreach (Guid item in systIdListe)
-            {
-                Dataset dataset = db.Datasets.Find(item);
+            //foreach (Guid item in systIdListe)
+            //{
+            //    Dataset dataset = db.Datasets.Find(item);
 
-                string metadataUrl = dataset.MetadataUrl.Replace("www.geonorge.no/geonetwork/?uuid=", "kartkatalog.geonorge.no/metadata/uuid/");
+            //    string metadataUrl = dataset.MetadataUrl.Replace("www.geonorge.no/geonetwork/?uuid=", "kartkatalog.geonorge.no/metadata/uuid/");
 
 
-                Sql("UPDATE Registeritems SET MetadataUrl = '" + metadataUrl + "' WHERE  (systemId = '" + dataset.systemId.ToString() + "')");
+            //    Sql("UPDATE Registeritems SET MetadataUrl = '" + metadataUrl + "' WHERE  (systemId = '" + dataset.systemId.ToString() + "')");
 
-            }
+            //}
         }
         
         public override void Down()

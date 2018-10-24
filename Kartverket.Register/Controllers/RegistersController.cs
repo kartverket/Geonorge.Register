@@ -201,6 +201,36 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
+        // GET: Registers/Details DOK/5
+        [Route("geodatalov-statusregister")]
+        [Route("register/geodatalov-statusregister")]
+        public ActionResult DetailsGeodatalovStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
+        {
+            RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
+            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+
+            var register = _registerService.GetGeodatalovDatasetRegister();
+            if (register == null) return HttpNotFound();
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
+
+            register = FilterRegisterItems(register, filter);
+
+            List<StatusReport> geodatalovStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : geodatalovStatusReports.FirstOrDefault();
+
+            var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, geodatalovStatusReports);
+            viewModel.SelectedGeodatalovTab = filter.GeodatalovSelectedTab;
+            viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+
+            ItemsOrderBy(sorting, viewModel);
+            ViewbagsRegisterDetails(sorting, page, filter, viewModel);
+            return View(viewModel);
+        }
+
 
         private void StartSynchronizationDataset()
         {

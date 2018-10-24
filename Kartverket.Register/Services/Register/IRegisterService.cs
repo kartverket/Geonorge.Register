@@ -49,5 +49,6 @@ namespace Kartverket.Register.Services.Register
         void UpdateDateModified(Models.Register register);
         Models.Register GetDokStatusRegister();
         void UpdateRegisterItemV2Translations();
+        Models.Register GetGeodatalovDatasetRegister();
     }
 }

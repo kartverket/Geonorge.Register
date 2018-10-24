@@ -74,6 +74,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string SelectedInspireRegisteryType { get; set; }
         public string SelectedDokTab { get; set; }
+        public string SelectedGeodatalovTab { get; set; }
 
         public RegisterV2ViewModel(Register register, FilterParameters filter, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null)
         {
@@ -184,17 +185,27 @@ namespace Kartverket.Register.Models.ViewModels
 
         public bool IsDokMunicipal()
         {
-            return Name == "Det offentlige kartgrunnlaget - Kommunalt";
+            return SystemId == Guid.Parse(GlobalVariables.DokMunicipalRegistryId);
         }
 
         public bool IsServiceAlertRegister()
         {
-            return SystemId == Guid.Parse("0f428034-0b2d-4fb7-84ea-c547b872b418");
+            return SystemId == Guid.Parse(GlobalVariables.ServiceAlertRegistryId);
         }
 
         public bool IsDokRegistry()
         {
             return SystemId == Guid.Parse(GlobalVariables.DokRegistryId);
+        }
+
+        public bool IsInspireStatusRegistry()
+        {
+            return SystemId == Guid.Parse(GlobalVariables.InspireRegistryId);
+        }
+
+        public bool IsGeodatalovStatusRegistry()
+        {
+            return SystemId == Guid.Parse(GlobalVariables.InspireRegistryId);
         }
 
         public bool ContainedItemClassIsOrganization()
@@ -284,12 +295,6 @@ namespace Kartverket.Register.Models.ViewModels
                 : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
         }
 
-        public virtual string GetObjectUrl()
-        {
-            return ParentRegister == null
-                ? "/register/" + Seoname
-                : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname;
-        }
 
         public string GetEditListUrl()
         {
@@ -324,6 +329,11 @@ namespace Kartverket.Register.Models.ViewModels
         public bool SelectedInspireRegisteryTypeIsService()
         {
             return SelectedInspireRegisteryType == "service";
+        }
+
+        public bool SelectedGeodatalovTabIsReport()
+        {
+            return SelectedGeodatalovTab == "report";
         }
     }
 }

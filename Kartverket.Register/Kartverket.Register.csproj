@@ -2006,6 +2006,9 @@
     <Content Include="Views\Shared\Js\_datasetCharts.cshtml" />
     <Content Include="Views\Shared\_inspireReport.cshtml" />
     <Content Include="Views\Registers\js\_inspireReportCharts.cshtml" />
+    <Content Include="Views\Registers\DetailsGeodatalovStatusRegistry.cshtml" />
+    <Content Include="Views\Registers\js\_geodatalovReportCharts.cshtml" />
+    <Content Include="Views\Shared\_geodatalovReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

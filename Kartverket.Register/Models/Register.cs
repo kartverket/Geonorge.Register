@@ -122,7 +122,7 @@ namespace Kartverket.Register.Models
 
         public bool IsServiceAlertRegister()
         {
-            return systemId == Guid.Parse("0f428034-0b2d-4fb7-84ea-c547b872b418");
+            return systemId == Guid.Parse(GlobalVariables.ServiceAlertRegistryId);
         }
 
         public bool IsOfTypeDataset()
@@ -132,7 +132,7 @@ namespace Kartverket.Register.Models
 
         public bool IsDokMunicipal()
         {
-            return name == _DetOffentligeKartgrunnlagetKommunalt;
+            return systemId == Guid.Parse(GlobalVariables.DokMunicipalRegistryId);
         }
 
         public Guid GetSystemId()
@@ -147,17 +147,17 @@ namespace Kartverket.Register.Models
 
         public bool IsInspireStatusRegister()
         {
-            return systemId == _inspireStatusRegister && parentRegister == null;
+            return systemId == Guid.Parse(GlobalVariables.InspireRegistryId);
         }
 
         public bool IsDokStatusRegister()
         {
-            return systemId == _dokStatusRegister && parentRegister == null;
+            return systemId == Guid.Parse(GlobalVariables.DokRegistryId);
         }
 
         public bool IsGeodatalovStatusRegister()
         {
-            return name == _geodatalovStatusRegister && parentRegister == null;
+            return systemId == Guid.Parse(GlobalVariables.GeodatalovRegistryId);
         }
 
         public bool ContainedItemClassIsOrganization()

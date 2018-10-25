@@ -935,6 +935,7 @@
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\GeodatalovDatasetStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokStatusReportViewModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\GeodatalovLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDataserviceStatusReportViweModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDataServiceLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\InspireDatasetLineChart.cs" />

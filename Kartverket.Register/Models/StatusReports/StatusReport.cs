@@ -550,6 +550,11 @@ namespace Kartverket.Register.Models
 
         public int NumberOfItemsByType(string statusType, string status)
         {
+            if (IsGeodatalovDatasetReport())
+            {
+                return NumberOfGeodatalovDatasetByType(statusType, status);
+            }
+
             switch (statusType)
             {
                 case "Metadata":
@@ -600,6 +605,45 @@ namespace Kartverket.Register.Models
                     return NumberOfItemsWithHarmonizedData(status);
                 case "SpatialDataService":
                     return NumberOfItemsWithSpatialDataService(status);
+            }
+
+            return 0;
+
+
+
+
+        }
+
+        private int NumberOfGeodatalovDatasetByType(string statusType, string status)
+        {
+            switch (statusType)
+            {
+                case "Metadata":
+                    return NumberOfGeodatalovDatasetsWithMetadata(status);
+                case "ProductSpecification":
+                    return NumberOfGeodatalovDatasetsWithProductSpecification(status);
+                case "SosiRequirements":
+                    return NumberOfGeodatalovDatasetsWithSosiRequirements(status);
+                case "GmlRequirements":
+                    return NumberOfGeodatalovDatasetsWithGmlRequirements(status);
+                case "Wms":
+                    return NumberOfGeodatalovDatasetsWithWms(status);
+                case "Wfs":
+                    return NumberOfGeodatalovDatasetsWithWfs(status);
+                case "AtomFeed":
+                    return NumberOfGeodatalovDatasetsWithAtomFeed(status);
+                case "Common":
+                    return NumberOfItemsWithCommon(status);
+                case "InspireTheme":
+                    return NumberOfGeodatalovDatasetsWithInspireTheme();
+                case "Dok":
+                    return NumberOfGeodatalovDatasetsWithDok();
+                case "NationalDataset":
+                    return NumberOfGeodatalovDatasetsWithNationalDataset();
+                case "Plan":
+                    return NumberOfGeodatalovDatasetsWithPlan();
+                case "Geodatalov":
+                    return NumberOfGeodatalovDatasetsWithGeodatalov();
             }
 
             return 0;
@@ -702,7 +746,7 @@ namespace Kartverket.Register.Models
             {
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
-                    if (geodatalovDatasetStatusReport.Dok)
+                    if (geodatalovDatasetStatusReport.NationalDataset)
                     {
                         number++;
                     }
@@ -718,7 +762,7 @@ namespace Kartverket.Register.Models
             {
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
-                    if (geodatalovDatasetStatusReport.Dok)
+                    if (geodatalovDatasetStatusReport.Plan)
                     {
                         number++;
                     }
@@ -734,7 +778,7 @@ namespace Kartverket.Register.Models
             {
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
-                    if (geodatalovDatasetStatusReport.Dok)
+                    if (geodatalovDatasetStatusReport.Geodatalov)
                     {
                         number++;
                     }

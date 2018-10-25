@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kartverket.Register.Models.ViewModels.StatusReportViewModels;
 using Kartverket.Register.Services;
 using Resources;
 using SolrNet.Mapping.Validation.Rules;
@@ -17,7 +18,7 @@ namespace Kartverket.Register.Models.ViewModels
         private const string Notset = "notset";
         private const string Useable = "useable";
 
-        public DokLineChart DokHistoricalChart { get; set; }
+        public GeodatalovLineChart GeodatalovLineChart { get; set; }
         public StatusLineChart StatusChart { get; set; }
 
         // Metadata
@@ -62,30 +63,30 @@ namespace Kartverket.Register.Models.ViewModels
 
         //Inspire theme
         [Display(Name = "InspireTheme", ResourceType = typeof(GeodatalovDataSet))]
-        public int InspireTheme { get; set; }
+        public int NumberOfItemsWithInspireTheme { get; set; }
 
         // Dok
         [Display(Name = "Dok", ResourceType = typeof(GeodatalovDataSet))]
-        public int Dok { get; set; }
+        public int NumberOfItemsWithDok { get; set; }
 
         // National dataset
         [Display(Name = "NationalDataset", ResourceType = typeof(GeodatalovDataSet))]
-        public int NationalDataset { get; set; }
+        public int NumberOfItemsWithNationalDataset { get; set; }
 
         // Plan
         [Display(Name = "Plan", ResourceType = typeof(GeodatalovDataSet))]
-        public int Plan { get; set; }
+        public int NumberOfItemsWithPlan { get; set; }
 
         // Geodatalov
         [Display(Name = "Geodatalov", ResourceType = typeof(GeodatalovDataSet))]
-        public int Geodatalov { get; set; }
+        public int NumberOfItemsWithGeodatalov { get; set; }
 
 
         public GeodatalovDatasetStatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
         {
             ReportsSelectList = CreateSelectList(statusReports);
             StatusTypeSelectList = CreateStatusTypeSelectList();  // TODO
-            DokHistoricalChart = new DokLineChart(statusReports, statusReport, statusType);
+            GeodatalovLineChart = new GeodatalovLineChart(statusReports, statusReport, statusType);
             StatusChart = new StatusLineChart(statusReports, statusReport, statusType);
 
             if (statusReport != null)
@@ -95,20 +96,20 @@ namespace Kartverket.Register.Models.ViewModels
                 Date = statusReport.Date;
                 NumberOfItems = statusReport.NumberOfIems();
 
-                NumberOfItemsWithMetadata = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithMetadata(Good), statusReport.NumberOfGeodatalovDatasetsWithMetadata(Deficient), statusReport.NumberOfGeodatalovDatasetsWithMetadata(Notset), statusReport.NumberOfGeodatalovDatasetsWithMetadata(Useable));
-                NumberOfItemsWithProductSpecification = new NumberOfStatuses(statusReport.NumberOfItemsWithProductSpecification(Good), statusReport.NumberOfItemsWithProductSpecification(Deficient), statusReport.NumberOfItemsWithProductSpecification(Notset), statusReport.NumberOfItemsWithProductSpecification(Useable));
-                NumberOfItemsWithSosiRequirements = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithSosiRequirements(Good), statusReport.NumberOfGeodatalovDatasetsWithSosiRequirements(Deficient), statusReport.NumberOfGeodatalovDatasetsWithSosiRequirements(Notset), statusReport.NumberOfGeodatalovDatasetsWithSosiRequirements(Useable));
-                NumberOfItemsWithGmlRequirements = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithGmlRequirements(Good), statusReport.NumberOfGeodatalovDatasetsWithGmlRequirements(Deficient), statusReport.NumberOfGeodatalovDatasetsWithGmlRequirements(Notset), statusReport.NumberOfGeodatalovDatasetsWithGmlRequirements(Useable));
-                NumberOfItemsWithWms = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithWms(Good), statusReport.NumberOfGeodatalovDatasetsWithWms(Deficient), statusReport.NumberOfGeodatalovDatasetsWithWms(Notset), statusReport.NumberOfGeodatalovDatasetsWithWms(Useable));
-                NumberOfItemsWithWfs = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithWfs(Good), statusReport.NumberOfGeodatalovDatasetsWithWfs(Deficient), statusReport.NumberOfGeodatalovDatasetsWithWfs(Notset), statusReport.NumberOfGeodatalovDatasetsWithWfs(Useable));
-                NumberOfItemsWithAtomFeed = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithAtomFeed(Good), statusReport.NumberOfGeodatalovDatasetsWithAtomFeed(Deficient), statusReport.NumberOfGeodatalovDatasetsWithAtomFeed(Notset), statusReport.NumberOfGeodatalovDatasetsWithAtomFeed(Useable));
-                NumberOfItemsWithCommon = new NumberOfStatuses(statusReport.NumberOfItemsWithCommon(Good), statusReport.NumberOfItemsWithCommon(Deficient), statusReport.NumberOfItemsWithCommon(Notset), statusReport.NumberOfItemsWithCommon(Useable));
+                NumberOfItemsWithMetadata = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithMetadata(Good), statusReport.NumberOfGeodatalovDatasetsWithMetadata(Useable), statusReport.NumberOfGeodatalovDatasetsWithMetadata(Deficient), statusReport.NumberOfGeodatalovDatasetsWithMetadata(Notset));
+                NumberOfItemsWithProductSpecification = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithProductSpecification(Good), statusReport.NumberOfGeodatalovDatasetsWithProductSpecification(Useable), statusReport.NumberOfGeodatalovDatasetsWithProductSpecification(Deficient), statusReport.NumberOfGeodatalovDatasetsWithProductSpecification(Notset));
+                NumberOfItemsWithSosiRequirements = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithSosiRequirements(Good), statusReport.NumberOfGeodatalovDatasetsWithSosiRequirements(Useable), statusReport.NumberOfGeodatalovDatasetsWithSosiRequirements(Deficient), statusReport.NumberOfGeodatalovDatasetsWithSosiRequirements(Notset));
+                NumberOfItemsWithGmlRequirements = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithGmlRequirements(Good), statusReport.NumberOfGeodatalovDatasetsWithGmlRequirements(Useable), statusReport.NumberOfGeodatalovDatasetsWithGmlRequirements(Deficient), statusReport.NumberOfGeodatalovDatasetsWithGmlRequirements(Notset));
+                NumberOfItemsWithWms = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithWms(Good), statusReport.NumberOfGeodatalovDatasetsWithWms(Useable), statusReport.NumberOfGeodatalovDatasetsWithWms(Deficient), statusReport.NumberOfGeodatalovDatasetsWithWms(Notset));
+                NumberOfItemsWithWfs = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithWfs(Good), statusReport.NumberOfGeodatalovDatasetsWithWfs(Useable), statusReport.NumberOfGeodatalovDatasetsWithWfs(Deficient), statusReport.NumberOfGeodatalovDatasetsWithWfs(Notset));
+                NumberOfItemsWithAtomFeed = new NumberOfStatuses(statusReport.NumberOfGeodatalovDatasetsWithAtomFeed(Good), statusReport.NumberOfGeodatalovDatasetsWithAtomFeed(Useable), statusReport.NumberOfGeodatalovDatasetsWithAtomFeed(Deficient), statusReport.NumberOfGeodatalovDatasetsWithAtomFeed(Notset));
+                NumberOfItemsWithCommon = new NumberOfStatuses(statusReport.NumberOfItemsWithCommon(Good), statusReport.NumberOfItemsWithCommon(Useable), statusReport.NumberOfItemsWithCommon(Deficient), statusReport.NumberOfItemsWithCommon(Notset));
 
-                InspireTheme = statusReport.NumberOfGeodatalovDatasetsWithInspireTheme();
-                Dok = statusReport.NumberOfGeodatalovDatasetsWithDok();
-                NationalDataset = statusReport.NumberOfGeodatalovDatasetsWithNationalDataset();
-                Plan = statusReport.NumberOfGeodatalovDatasetsWithPlan();
-                Geodatalov = statusReport.NumberOfGeodatalovDatasetsWithGeodatalov();
+                NumberOfItemsWithInspireTheme = statusReport.NumberOfGeodatalovDatasetsWithInspireTheme();
+                NumberOfItemsWithDok = statusReport.NumberOfGeodatalovDatasetsWithDok();
+                NumberOfItemsWithNationalDataset = statusReport.NumberOfGeodatalovDatasetsWithNationalDataset();
+                NumberOfItemsWithPlan = statusReport.NumberOfGeodatalovDatasetsWithPlan();
+                NumberOfItemsWithGeodatalov = statusReport.NumberOfGeodatalovDatasetsWithGeodatalov();
             }
             else
             {
@@ -141,6 +142,29 @@ namespace Kartverket.Register.Models.ViewModels
             return selectList;
         }
 
+        public int NumberOfItemsWithoutInspireTheme()
+        {
+            return NumberOfItems - NumberOfItemsWithInspireTheme;
+        }
 
+        public int NumberOfItemsWithoutDok()
+        {
+            return NumberOfItems - NumberOfItemsWithDok;
+        }
+
+        public int NumberOfItemsWithoutNationalDataset()
+        {
+            return NumberOfItems - NumberOfItemsWithNationalDataset;
+        }
+
+        public int NumberOfItemsWithoutPlan()
+        {
+            return NumberOfItems - NumberOfItemsWithPlan;
+        }
+
+        public int NumberOfItemsWithoutGeodatalov()
+        {
+            return NumberOfItems - NumberOfItemsWithGeodatalov;
+        }
     }
 }

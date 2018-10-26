@@ -19,8 +19,6 @@ using System.Threading;
 using System.Net.Http.Headers;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Formatter;
-using System.Web;
-using System.Web.Mvc;
 using Kartverket.Register.App_Start;
 using StatusReport = Kartverket.Register.Models.StatusReport;
 
@@ -55,8 +53,8 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// List top level registers. Use id in response to navigate.
         /// </summary>
-        [System.Web.Http.Route("api/register")]
         [System.Web.Http.Route("api/register.{ext}")]
+        [System.Web.Http.Route("api/register")]
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisters()
         {
@@ -78,7 +76,7 @@ namespace Kartverket.Register.Controllers
         /// <param name="systemid">The uniqueidentifier for the register</param>
         //[System.Web.Http.Route("api/kodelister/{systemid}")]
         //[System.Web.Http.Route("api/kodelister/{systemid}.{ext}")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public IHttpActionResult GetCodelistById(string systemid)
         {
             SetLanguage(Request);
@@ -100,10 +98,10 @@ namespace Kartverket.Register.Controllers
         /// Gets register by name
         /// </summary>
         /// <param name="registerName">The search engine optimized name of the register</param>
-        [System.Web.Http.Route("api/{registerName}.{ext}")]
-        [System.Web.Http.Route("api/register/{registerName}.{ext}")]
-        [System.Web.Http.Route("api/register/{registerName}")]
-        [System.Web.Http.HttpGet]
+        [Route("api/{registerName}.{ext}")]
+        [Route("api/register/{registerName}.{ext}")]
+        [Route("api/register/{registerName}")]
+        [HttpGet]
         public IHttpActionResult GetRegisterByName(string registerName, [FromUri] FilterParameters filter = null)
         {
             SetLanguage(Request);
@@ -119,9 +117,9 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets inspiremonitoring xml
         /// </summary>
-        [System.Web.Http.Route("api/inspire-statusregister/monitoring-report")]
-        [System.Web.Http.Route("api/register/inspire-statusregister/monitoring-report")]
-        [System.Web.Http.HttpGet]
+        [Route("api/inspire-statusregister/monitoring-report")]
+        [Route("api/register/inspire-statusregister/monitoring-report")]
+        [HttpGet]
         public IHttpActionResult InspireMonitoring()
         {
             SetLanguage(Request);
@@ -135,10 +133,10 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Save dok status report to db
         /// </summary>
-        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        [System.Web.Http.Route("api/{registerName}/report/save")]
-        [System.Web.Http.Route("api/register/{registerName}/report/save")]
-        [System.Web.Http.HttpGet]
+        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [Route("api/{registerName}/report/save")]
+        [Route("api/register/{registerName}/report/save")]
+        [HttpGet]
         public IHttpActionResult NewStatusReport(string registerName)
         {
             try
@@ -156,12 +154,12 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets selected status report
         /// </summary>
-        [System.Web.Http.Route("api/{registerName}/report/{id}")]
-        [System.Web.Http.Route("api/{registerName}/report/{id}.{ext}")]
-        [System.Web.Http.Route("api/register/{registerName}/report/{id}.{ext}")]
-        [System.Web.Http.Route("api/register/{registerName}/report/{id}")]
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult StatusReport(string id, bool dataset = true, bool service = true)
+        [Route("api/{registerName}/report/{id}")]
+        [Route("api/{registerName}/report/{id}.{ext}")]
+        [Route("api/register/{registerName}/report/{id}.{ext}")]
+        [Route("api/register/{registerName}/report/{id}")]
+        [HttpGet]
+        public IHttpActionResult StatusReport(string id, string ext, bool dataset = true, bool service = true)
         {
             SetLanguage(Request);
             var statusReport = _statusReportService.GetStatusReportById(id);
@@ -183,7 +181,7 @@ namespace Kartverket.Register.Controllers
                 }
                 if (dataset)
                 {
-                    return Ok(new Models.Api.InspireDataSetStatusReport(statusReport));
+                    return Ok(new InspireDataSetStatusReport(statusReport));
                 }
                 if (service)
                 {
@@ -191,6 +189,12 @@ namespace Kartverket.Register.Controllers
                 }
 
             }
+
+            if (statusReport.IsGeodatalovDatasetReport())
+            {
+                return Ok(new GeodatalovDatasetStatusReport(statusReport));
+            }
+
             return Ok();
 
 
@@ -199,10 +203,10 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets selected status report
         /// </summary>
-        [System.Web.Http.Route("api/{registerName}/report")]
-        [System.Web.Http.Route("api/{registerName}/report.{ext}")]
-        [System.Web.Http.Route("api/register/{registerName}/report.{ext}")]
-        [System.Web.Http.Route("api/register/{registerName}/report")]
+        //[System.Web.Http.Route("api/{registerName}/report.{ext}")]
+        //[System.Web.Http.Route("api/{registerName}/report")]
+        //[System.Web.Http.Route("api/register/{registerName}/report.{ext}")]
+        //[System.Web.Http.Route("api/register/{registerName}/report")]
         [System.Web.Http.HttpGet]
         public IHttpActionResult StatusReports(string registerName)
         {
@@ -230,6 +234,17 @@ namespace Kartverket.Register.Controllers
                 }
                 return Ok(dokStatusReportsApi);
             }
+            else if (register.IsGeodatalovStatusRegister())
+            {
+                List<GeodatalovDatasetStatusReport> geodatalovDatasetStatusReportApi = new List<GeodatalovDatasetStatusReport>();
+                statusReports = _statusReportService.GetGeodatalovStatusReports();
+
+                foreach (var report in statusReports)
+                {
+                    geodatalovDatasetStatusReportApi.Add(new GeodatalovDatasetStatusReport(report));
+                }
+                return Ok(geodatalovDatasetStatusReportApi);
+            }   
 
             return Ok();
         }
@@ -239,10 +254,10 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Save inspire monitoring report data to database.
         /// </summary>
-        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        [System.Web.Http.Route("api/inspire-statusregister/monitoring-report/save")]
-        [System.Web.Http.Route("api/register/inspire-statusregister/monitoring-report/save")]
-        [System.Web.Http.HttpGet]
+        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [Route("api/inspire-statusregister/monitoring-report/save")]
+        [Route("api/register/inspire-statusregister/monitoring-report/save")]
+        [HttpGet]
         public IHttpActionResult SaveInspireMonitoringData()
         {
             try

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Kartverket.Register.Models;
+using Kartverket.Register.Models.StatusReports;
 
 namespace Kartverket.Register.Services
 {
@@ -39,6 +40,12 @@ namespace Kartverket.Register.Services
                 {
                     var inspireDataserviceStatuses = new InspireDataserviceStatusReport(inspireDataService);
                     statusReport.StatusRegisterItems.Add(inspireDataserviceStatuses);
+                }
+
+                if (item is GeodatalovDataset geodatalovDataset)
+                {
+                    var geodatalovDatasetStatuses = new GeodatalovDatasetStatusReport(geodatalovDataset);
+                    statusReport.StatusRegisterItems.Add(geodatalovDatasetStatuses);
                 }
             }
 
@@ -133,6 +140,49 @@ namespace Kartverket.Register.Services
             }
 
             return inpsireStatusReports;
+        }
+
+        public List<StatusReport> GetGeodatalovStatusReports(int numberOfReports = 0)
+        {
+            List<StatusReport> statusReports = GetStatusReports();
+            List<StatusReport> geodatalovStatusReports = new List<StatusReport>();
+
+            foreach (var report in statusReports)
+            {
+                if (report.IsGeodatalovDatasetReport())
+                {
+                    geodatalovStatusReports.Add(report);
+                    if (numberOfReports != 0)
+                    {
+                        if (geodatalovStatusReports.Count > numberOfReports)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return geodatalovStatusReports;
+        }
+
+        public List<StatusReport> GetStatusReportsByRegister(Models.Register register, int numberOfReports = 0)
+        {
+            if (register.IsDokStatusRegister())
+            {
+                return GetDokStatusReports(numberOfReports);
+            }
+
+            if (register.IsInspireStatusRegister())
+            {
+                return GetInspireStatusReports(numberOfReports);
+            }
+
+            if (register.IsGeodatalovStatusRegister())
+            {
+                return GetGeodatalovStatusReports(numberOfReports);
+            }
+
+            return new List<StatusReport>();
         }
     }
 }

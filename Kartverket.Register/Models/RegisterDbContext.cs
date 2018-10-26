@@ -11,6 +11,7 @@ using System.Data.Entity.Infrastructure;
 using Kartverket.Geonorge.Utilities.LogEntry;
 using System.Web.Configuration;
 using System.Security.Claims;
+using Kartverket.Register.Models.StatusReports;
 
 namespace Kartverket.Register.Models
 {
@@ -57,6 +58,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<DatasetStatusHistory> DatasetStatusHistories  { get; set; }
         public virtual DbSet<InspireDatasetStatusReport> StatusInspireDatasets { get; set; }
         public virtual DbSet<InspireDataserviceStatusReport> StatusInspireDataservices { get; set; }
+        public virtual DbSet<GeodatalovDatasetStatusReport> StatusGeodatalovDatasets { get; set; }
 
 
         public ILogEntryService LogEntryService

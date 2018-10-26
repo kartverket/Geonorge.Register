@@ -109,7 +109,6 @@ namespace Kartverket.Register.Controllers
         // GET: Registers/Details Inspire registry/5
         [Route("inspire-statusregister")]
         [Route("register/inspire-statusregister")]
-        [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
         {
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
@@ -151,7 +150,6 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("inspire-statusregister")]
         [Route("register/inspire-statusregister")]
-        [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(FilterParameters filter, string dataset, string service)
         {
             if (IsAdmin())
@@ -174,7 +172,6 @@ namespace Kartverket.Register.Controllers
         // GET: Registers/Details DOK/5
         [Route("det-offentlige-kartgrunnlaget")]
         [Route("register/det-offentlige-kartgrunnlaget")]
-        [Route("register/det-offentlige-kartgrunnlagetr/{filterOrganization}")]
         public ActionResult DetailsDokStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
         {
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
@@ -204,6 +201,36 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
+        // GET: Registers/Details DOK/5
+        [Route("geodatalov-statusregister")]
+        [Route("register/geodatalov-statusregister")]
+        public ActionResult DetailsGeodatalovStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
+        {
+            RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
+            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+
+            var register = _registerService.GetGeodatalovDatasetRegister();
+            if (register == null) return HttpNotFound();
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
+
+            register = FilterRegisterItems(register, filter);
+
+            List<StatusReport> geodatalovStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : geodatalovStatusReports.FirstOrDefault();
+
+            var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, geodatalovStatusReports);
+            viewModel.SelectedGeodatalovTab = filter.GeodatalovSelectedTab;
+            viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+
+            ItemsOrderBy(sorting, viewModel);
+            ViewbagsRegisterDetails(sorting, page, filter, viewModel);
+            return View(viewModel);
+        }
+
 
         private void StartSynchronizationDataset()
         {
@@ -225,7 +252,6 @@ namespace Kartverket.Register.Controllers
         [Route("{parentRegister}/{registername}.{format}/")]
         [Route("register/{registername}")]
         [Route("register/{registername}.{format}")]
-        [Route("register/{registername}/{filterOrganization}")]
         [Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
         [Route("subregister/{parentRegister}/{owner}/{registername}")]
         public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
@@ -242,8 +268,11 @@ namespace Kartverket.Register.Controllers
                 return RedirectPermanent(register.GetObjectUrl());
             }
 
+            List<StatusReport> statusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : statusReports.FirstOrDefault();
+
             register = FilterRegisterItems(register, filter);
-            var viewModel = new RegisterV2ViewModel(register, filter);
+            var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, statusReports);
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);

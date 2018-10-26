@@ -243,6 +243,7 @@ namespace Kartverket.Register.Services
             var geodatalovDatasetsFromKartkatalogen = FetchGeodatalovDatasetsFromKartkatalogen();
             RemoveGeodatalovDatasets(geodatalovDatasetsFromKartkatalogen);
             UpdateGeodatalovDataset(geodatalovDatasetsFromKartkatalogen);
+            
 
             _dbContext.SaveChanges();
         }

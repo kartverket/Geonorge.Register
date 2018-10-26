@@ -911,6 +911,7 @@
     <Compile Include="Models\AccessType.cs" />
     <Compile Include="Models\Api\Concept.cs" />
     <Compile Include="Models\Api\ConceptSheme.cs" />
+    <Compile Include="Models\Api\GeodatalovDatasetStatusReport.cs" />
     <Compile Include="Models\Api\InspireDatasetStatusReport.cs" />
     <Compile Include="Models\Api\InspireServiceStatusReport.cs" />
     <Compile Include="Models\Api\InspireRegistryStatusReport.cs" />

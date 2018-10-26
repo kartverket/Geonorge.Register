@@ -15,5 +15,6 @@ namespace Kartverket.Register.Services
         List<StatusReport> GetDokStatusReports(int i = 0);
         List<StatusReport> GetInspireStatusReports(int i = 0);
         List<StatusReport> GetStatusReportsByRegister(Models.Register register, int i = 0);
+        List<StatusReport> GetGeodatalovStatusReports(int i = 0);
     }
 }

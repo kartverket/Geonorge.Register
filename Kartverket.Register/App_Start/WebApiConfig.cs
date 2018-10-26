@@ -24,6 +24,13 @@ namespace Kartverket.Register
             config.Routes.MapHttpRoute("GetCodelistById", "api/kodelister/{systemid}", new { controller = "ApiRoot", action = "GetCodelistById" });
 
 
+            // Status reports
+            config.Routes.MapHttpRoute("GetStatusReportsExt", "api/{registerName}/report.{ext}", new { controller = "ApiRoot", action = "StatusReports" });
+            config.Routes.MapHttpRoute("GetStatusReports", "api/{registerName}/report", new { controller = "ApiRoot", action = "StatusReports" });
+            config.Routes.MapHttpRoute("GetStatusReportsOldExt", "api/register/{registerName}/report.{ext}", new { controller = "ApiRoot", action = "StatusReports" });
+            config.Routes.MapHttpRoute("GetStatusReportsOld", "api/register/{registerName}/report", new { controller = "ApiRoot", action = "StatusReports" });
+
+
             config.MapHttpAttributeRoutes();
 
             var cors = new EnableCorsAttribute("*", "*", "*");

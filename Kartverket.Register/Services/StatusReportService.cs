@@ -142,7 +142,7 @@ namespace Kartverket.Register.Services
             return inpsireStatusReports;
         }
 
-        public List<StatusReport> GetGeodatalovStatusReports(int numberOfReports)
+        public List<StatusReport> GetGeodatalovStatusReports(int numberOfReports = 0)
         {
             List<StatusReport> statusReports = GetStatusReports();
             List<StatusReport> geodatalovStatusReports = new List<StatusReport>();

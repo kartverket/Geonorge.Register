@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
 using Moq;
@@ -198,7 +199,7 @@ namespace Kartverket.Register.Tests.Services
         public void AccessAddToRegisterWhenRegisterIsDokMunicipalAndMunicipalityIsNotNull()
         {
             SetClaims(Role, Admin);
-            _register.name = "Det offentlige kartgrunnlaget - Kommunalt";
+            _register.systemId = Guid.Parse(GlobalVariables.DokMunicipalRegistryId);
             var registerViewModel = new RegisterV2ViewModel(_register, _filter);
             registerViewModel.Municipality = _municipality;
             _accessControlService.AddToRegister(registerViewModel).Should().BeTrue();
@@ -207,7 +208,7 @@ namespace Kartverket.Register.Tests.Services
         public void NotAccessAddToRegisterWhenRegisterIsDokMunicipalAndMunicipalityIsNull()
         {
             SetClaims(Role, Admin);
-            _register.name = "Det offentlige kartgrunnlaget - Kommunalt";
+            _register.systemId = Guid.Parse(GlobalVariables.DokMunicipalRegistryId);
             var registerViewModel = new RegisterV2ViewModel(_register, _filter);
             _accessControlService.AddToRegister(registerViewModel).Should().BeFalse();
         }

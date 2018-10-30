@@ -375,12 +375,9 @@
                     backgroundColor: "rgb(125, 161, 196)",
                     fill: false,
                     borderColor: 'rgb(125, 161, 196)',
-                    data:
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.LineChart.NetworkService))),
-                    pointRadius:
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.LineChart.PointSize))),
-                    pointHoverRadius:
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.LineChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.LineChart.NetworkService))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.LineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InspireDataserviceStatusReport.LineChart.PointSize))),
                     }
                 ]
             }

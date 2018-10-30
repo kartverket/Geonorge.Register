@@ -1037,8 +1037,10 @@ namespace Kartverket.Register.Services.Register
 
         public Models.Register GetDokMunicipalRegister()
         {
+            var dokMunicipalRegisterId = Guid.Parse(GlobalVariables.DokMunicipalRegistryId);
+
             var queryResult = from r in _dbContext.Registers
-                              where r.name == "Det offentlige kartgrunnlaget - Kommunalt"
+                              where r.systemId == dokMunicipalRegisterId
                               select r;
             return queryResult.FirstOrDefault();
         }
@@ -1050,6 +1052,16 @@ namespace Kartverket.Register.Services.Register
             var queryResult = from r in _dbContext.Registers
                 where r.systemId == dokId
                 select r;
+            return queryResult.FirstOrDefault();
+        }
+
+        public Models.Register GetGeodatalovDatasetRegister()
+        {
+            var geodatalovRegisterId = Guid.Parse(GlobalVariables.GeodatalovRegistryId);
+
+            var queryResult = from r in _dbContext.Registers
+                where r.systemId == geodatalovRegisterId
+                              select r;
             return queryResult.FirstOrDefault();
         }
 

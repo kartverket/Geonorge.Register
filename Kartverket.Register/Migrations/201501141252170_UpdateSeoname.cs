@@ -16,31 +16,31 @@ namespace Kartverket.Register.Migrations
     {
         public override void Up()
         {
-            RegisterDbContext db = new RegisterDbContext();
+            //RegisterDbContext db = new RegisterDbContext();
 
-            var queryResultsRegister = from r in db.Registers
-                                       where r.seoname == null
-                                       select r.systemId;
+            //var queryResultsRegister = from r in db.Registers
+            //                           where r.seoname == null
+            //                           select r.systemId;
 
-            List<Guid> systIdListe = queryResultsRegister.ToList();
+            //List<Guid> systIdListe = queryResultsRegister.ToList();
 
-            //Guid systemID = queryResultsRegister.First();
+            ////Guid systemID = queryResultsRegister.First();
 
-            foreach (Guid item in systIdListe)
-            {
-                Register register = db.Registers.Find(item);
+            //foreach (Guid item in systIdListe)
+            //{
+            //    Register register = db.Registers.Find(item);
 
-                string name = register.name;
-                string seoName = ToUrl(name);
+            //    string name = register.name;
+            //    string seoName = ToUrl(name);
 
-                //register.seoname = seoName;
+            //    //register.seoname = seoName;
 
-                //db.Entry(register).State = EntityState.Modified;
-                //db.SaveChanges();
+            //    //db.Entry(register).State = EntityState.Modified;
+            //    //db.SaveChanges();
 
-                Sql("UPDATE Registers SET seoname = '" + seoName + "' WHERE  (systemId = '" + register.systemId.ToString() + "')");
+            //    Sql("UPDATE Registers SET seoname = '" + seoName + "' WHERE  (systemId = '" + register.systemId.ToString() + "')");
 
-            }
+            //}
 
 
 

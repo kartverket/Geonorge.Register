@@ -16,24 +16,24 @@ namespace Kartverket.Register.Migrations
     {
         public override void Up()
         {
-            RegisterDbContext db = new RegisterDbContext();
+            //RegisterDbContext db = new RegisterDbContext();
 
-            var queryResultsRegister = from r in db.Registers
-                                            where r.statusId == null
-                                            select r.systemId;
+            //var queryResultsRegister = from r in db.Registers
+            //                                where r.statusId == null
+            //                                select r.systemId;
 
-            List<Guid> systIdListe = queryResultsRegister.ToList();
+            //List<Guid> systIdListe = queryResultsRegister.ToList();
 
-            foreach (Guid item in systIdListe)
-            {
-                Register register = db.Registers.Find(item);
+            //foreach (Guid item in systIdListe)
+            //{
+            //    Register register = db.Registers.Find(item);
 
-                string statusId = "Submitted";
+            //    string statusId = "Submitted";
 
 
-                Sql("UPDATE Registers SET statusId = '" + statusId + "' WHERE  (systemId = '" + register.systemId.ToString() + "')");
+            //    Sql("UPDATE Registers SET statusId = '" + statusId + "' WHERE  (systemId = '" + register.systemId.ToString() + "')");
 
-            }
+            //}
         }
         
         public override void Down()

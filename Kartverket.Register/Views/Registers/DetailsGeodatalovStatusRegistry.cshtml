@@ -19,7 +19,7 @@
 @section Scripts {
     @if (Model.StatusReport != null && !Model.StatusReport.ReportNotExists)
     {
-        @Html.Partial("js/_dokReportCharts", (DokStatusReportViewModel)Model.StatusReport)
+        @Html.Partial("js/_GeodatalovReportCharts", (GeodatalovDatasetStatusReportViewModel)Model.StatusReport)
     }
 
     <script>
@@ -27,7 +27,6 @@
         $(function () {
 
             var tabs = document.querySelectorAll('.tab');
-            console.log(tabs);
 
             for (var i = 0; i < tabs.length; i++) {
                 var item = tabs[i]; // Calling myNodeList.item(i) isn't necessary in JavaScript
@@ -35,7 +34,7 @@
             }
         });
 
-        var selectedTabParameter = getParameterByName("dokselectedtab");
+        var selectedTabParameter = getParameterByName("geodatalovselectedtab");
         var selectedTab = document.getElementById('dataset-Tab');
         console.log(selectedTabParameter);
         if (selectedTabParameter != "") {
@@ -80,10 +79,10 @@
                 <ul id="tabs" class="nav nav-tabs">
 
                     <li id="dataset-Tab" class="tab active">
-                        @Html.ActionLink(DataSet.Dataset, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "dataset"))
+                        @Html.ActionLink(DataSet.Dataset, "DetailsGeodatalovStatusRegistry", Request.QueryString.ToRouteValueDictionary("GeodatalovSelectedTab", "dataset"))
                     </li>
                     <li id="report-Tab" class="tab">
-                        @Html.ActionLink(InspireDataSet.Reports, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "report"))
+                        @Html.ActionLink(InspireDataSet.Reports, "DetailsGeodatalovStatusRegistry", Request.QueryString.ToRouteValueDictionary("GeodatalovSelectedTab", "report"))
                     </li>
                 </ul>
             </div>
@@ -91,7 +90,7 @@
     </div>
 </section>
 
-@if (!Model.SelectedDokTabIsReport())
+@if (!Model.SelectedGeodatalovTabIsReport())
 {
     <div class="row search-result-navigation">
         <div class="col-md-4">
@@ -119,26 +118,25 @@
 }
 
 
-@if (Model.SelectedDokTabIsReport())
+@if (Model.SelectedGeodatalovTabIsReport())
 {
-    if (Model.StatusReport is DokStatusReportViewModel)
+    if (Model.StatusReport is GeodatalovDatasetStatusReportViewModel)
     {
-        @Html.Partial("_dokReport", (DokStatusReportViewModel)Model.StatusReport)
+        @Html.Partial("_geodatalovReport", (GeodatalovDatasetStatusReportViewModel)Model.StatusReport)
     }
 }
 else
 {
-    @Html.Partial("_dataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+    @Html.Partial("_geodatalovDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
 }
 
 
-@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport())
+@if (!Model.SelectedGeodatalovTabIsReport())
 {<div class="clearfix"></div>
     <div class="col-sm-12 row">
         @if (Model.ContainedItemClassIsRegister())
         {
             @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
-        }
         }
         else if (Model.RegisterItemsV2.Any())
         {
@@ -153,7 +151,7 @@ else
 
 <div class="clearfix"></div>
 <div class="hidden-print">
-    @if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport())
+    @if (!Model.SelectedGeodatalovTabIsReport())
     {
         if (Model.AccessRegister.EditListOfRegisterItems)
         {

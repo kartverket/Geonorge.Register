@@ -39,7 +39,7 @@ namespace Kartverket.Register.Models.Api
                     statusReport.NumberOfItemsWithPresentationRules(Notset));
 
                 NumberOfItemsWithProductSpecification = new NumberOfStatuses(
-                    statusReport.NumberOfItemsWithPresentationRules(Good),
+                    statusReport.NumberOfItemsWithProductSpecification(Good),
                     statusReport.NumberOfItemsWithProductSpecification(Useable),
                     statusReport.NumberOfItemsWithProductSpecification(Deficient),
                     statusReport.NumberOfItemsWithProductSpecification(Notset));

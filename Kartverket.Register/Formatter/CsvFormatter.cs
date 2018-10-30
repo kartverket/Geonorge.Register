@@ -34,6 +34,8 @@ namespace Kartverket.Register.Formatter
                 type == typeof(IEnumerable<Registeritem>) ||
                 type == typeof(List<InspireRegistryStatusReport>) ||
                 type == typeof(DokStatusReport) ||
+                type == typeof(GeodatalovDatasetStatusReport) ||
+                type == typeof(List<GeodatalovDatasetStatusReport>) ||
                 type == typeof(List<DokStatusReport>) ||
                 type == typeof(List<Registeritem>))
 
@@ -63,6 +65,8 @@ namespace Kartverket.Register.Formatter
                 type == typeof(DokStatusReport) ||
                 type == typeof(List<InspireRegistryStatusReport>) ||
                 type == typeof(List<DokStatusReport>) ||
+                type == typeof(GeodatalovDatasetStatusReport) ||
+                type == typeof(List<GeodatalovDatasetStatusReport>) ||
                 type == typeof(List<Registeritem>))
                 BuildCSV(value, writeStream, content.Headers.ContentType.MediaType);
         }
@@ -135,6 +139,23 @@ namespace Kartverket.Register.Formatter
             if (models is List<InspireRegistryStatusReport> inspireStatusReports)
             {
                 WriteInspireStatusesInList(streamWriter, inspireStatusReports);
+            }
+
+            if (models is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+            {
+                streamWriter.WriteLine(SingelStatusReportHeading());
+                WriteGeodatalovStatusesInTable(streamWriter, geodatalovDatasetStatusReport);
+            }
+
+            if (models is List<GeodatalovDatasetStatusReport> geodatalovDatasetStatusReports)
+            {
+                streamWriter.WriteLine(GeodatalovStatusReportHeading());
+                streamWriter.WriteLine(StatusReportHeadingStatusValuesGeodatalov());
+
+                foreach (var report in geodatalovDatasetStatusReports)
+                {
+                    streamWriter.WriteLine(WriteGeodatalovStatusReport(report));
+                }
             }
 
             streamWriter.Close();
@@ -320,6 +341,84 @@ namespace Kartverket.Register.Formatter
                 dokStatusReport.NumberOfItemsWithDistribution.Notset));
         }
 
+        private void WriteGeodatalovStatusesInTable(StreamWriter streamWriter, GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
+        {
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Metadata,
+                geodatalovDatasetStatusReport.NumberOfItemsWithMetadata.Good,
+                geodatalovDatasetStatusReport.NumberOfItemsWithMetadata.Useable,
+                geodatalovDatasetStatusReport.NumberOfItemsWithMetadata.Deficient,
+                geodatalovDatasetStatusReport.NumberOfItemsWithMetadata.Notset));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_ProductSpesification,
+                geodatalovDatasetStatusReport.NumberOfItemsWithProductSpecification.Good,
+                geodatalovDatasetStatusReport.NumberOfItemsWithProductSpecification.Useable,
+                geodatalovDatasetStatusReport.NumberOfItemsWithProductSpecification.Deficient,
+                geodatalovDatasetStatusReport.NumberOfItemsWithProductSpecification.Notset));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_GmlRequirements,
+                geodatalovDatasetStatusReport.NumberOfItemsWithGmlRequirements.Good,
+                geodatalovDatasetStatusReport.NumberOfItemsWithGmlRequirements.Useable,
+                geodatalovDatasetStatusReport.NumberOfItemsWithGmlRequirements.Deficient,
+                geodatalovDatasetStatusReport.NumberOfItemsWithGmlRequirements.Notset));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_SosiRequirements,
+                geodatalovDatasetStatusReport.NumberOfItemsWithSosiRequirements.Good,
+                geodatalovDatasetStatusReport.NumberOfItemsWithSosiRequirements.Useable,
+                geodatalovDatasetStatusReport.NumberOfItemsWithSosiRequirements.Deficient,
+                geodatalovDatasetStatusReport.NumberOfItemsWithSosiRequirements.Notset));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Wms,
+                geodatalovDatasetStatusReport.NumberOfItemsWithWms.Good,
+                geodatalovDatasetStatusReport.NumberOfItemsWithWms.Useable,
+                geodatalovDatasetStatusReport.NumberOfItemsWithWms.Deficient,
+                geodatalovDatasetStatusReport.NumberOfItemsWithWms.Notset));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Wfs,
+                geodatalovDatasetStatusReport.NumberOfItemsWithWfs.Good,
+                geodatalovDatasetStatusReport.NumberOfItemsWithWfs.Useable,
+                geodatalovDatasetStatusReport.NumberOfItemsWithWfs.Deficient,
+                geodatalovDatasetStatusReport.NumberOfItemsWithWfs.Notset));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_AtomFeed,
+                geodatalovDatasetStatusReport.NumberOfItemsWithAtomFeed.Good,
+                geodatalovDatasetStatusReport.NumberOfItemsWithAtomFeed.Useable,
+                geodatalovDatasetStatusReport.NumberOfItemsWithAtomFeed.Deficient,
+                geodatalovDatasetStatusReport.NumberOfItemsWithAtomFeed.Notset));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Distribution,
+                geodatalovDatasetStatusReport.NumberOfItemsWithCommon.Good,
+                geodatalovDatasetStatusReport.NumberOfItemsWithCommon.Useable,
+                geodatalovDatasetStatusReport.NumberOfItemsWithCommon.Deficient,
+                geodatalovDatasetStatusReport.NumberOfItemsWithCommon.Notset));
+
+            streamWriter.WriteLine(SingelStatusReportHeadingOK());
+
+            streamWriter.WriteLine(StatusOk(GeodatalovDataSet.InspireTheme,
+                geodatalovDatasetStatusReport.NumberOfItemsWithInspireTheme,
+                geodatalovDatasetStatusReport.NumberOfItemsWithoutInspireTheme
+            ));
+
+            streamWriter.WriteLine(StatusOk(GeodatalovDataSet.Dok,
+                geodatalovDatasetStatusReport.NumberOfItemsWithDok,
+                geodatalovDatasetStatusReport.NumberOfItemsWithoutDok
+            ));
+
+            streamWriter.WriteLine(StatusOk(GeodatalovDataSet.NationalDataset,
+                geodatalovDatasetStatusReport.NumberOfItemsWithNationalDatasets,
+                geodatalovDatasetStatusReport.NumberOfItemsWithoutNationalDatasets
+            ));
+
+            streamWriter.WriteLine(StatusOk(GeodatalovDataSet.Plan,
+                geodatalovDatasetStatusReport.NumberOfItemsWithPlan,
+                geodatalovDatasetStatusReport.NumberOfItemsWithoutPlan
+            ));
+
+            streamWriter.WriteLine(StatusOk(GeodatalovDataSet.Geodatalov,
+                geodatalovDatasetStatusReport.NumberOfItemsWithGeodatalov,
+                geodatalovDatasetStatusReport.NumberOfItemsWithoutGeodatalov
+            ));
+        }
+
         private void WriteInspireStatusesInTable(StreamWriter streamWriter,
             InspireRegistryStatusReport inspireStatusReport)
         {
@@ -498,6 +597,68 @@ namespace Kartverket.Register.Formatter
                    dokStatusReport.NumberOfItemsWithDistribution.Useable + ";" +
                    dokStatusReport.NumberOfItemsWithDistribution.Deficient + ";" +
                    dokStatusReport.NumberOfItemsWithDistribution.Notset;
+        }
+
+
+        private string WriteGeodatalovStatusReport(GeodatalovDatasetStatusReport geodatalovStatusReport)
+        {
+            return geodatalovStatusReport.Date + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithMetadata.Good + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithMetadata.Useable + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithMetadata.Deficient + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithMetadata.Notset + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithProductSpecification.Good + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithProductSpecification.Useable + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithProductSpecification.Deficient + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithProductSpecification.Notset + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithSosiRequirements.Good + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithSosiRequirements.Useable + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithSosiRequirements.Deficient + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithSosiRequirements.Notset + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithGmlRequirements.Good + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithGmlRequirements.Useable + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithGmlRequirements.Deficient + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithGmlRequirements.Notset + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithWms.Good + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithWms.Useable + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithWms.Deficient + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithWms.Notset + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithWfs.Good + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithWfs.Useable + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithWfs.Deficient + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithWfs.Notset + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithAtomFeed.Good + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithAtomFeed.Useable + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithAtomFeed.Deficient + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithAtomFeed.Notset + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithCommon.Good + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithCommon.Useable + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithCommon.Deficient + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithCommon.Notset + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithInspireTheme + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithoutInspireTheme + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithDok + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithoutDok + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithNationalDatasets + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithoutNationalDatasets + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithPlan + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithoutPlan + ";" +
+
+                   geodatalovStatusReport.NumberOfItemsWithGeodatalov + ";" +
+                   geodatalovStatusReport.NumberOfItemsWithoutGeodatalov + ";";
+
+
         }
 
 
@@ -786,6 +947,24 @@ namespace Kartverket.Register.Formatter
                    DataSet.DOK_Delivery_AtomFeed + ";" + ";" + ";" + ";" +
                    DataSet.DOK_Delivery_Distribution;
         }
+        private string GeodatalovStatusReportHeading()
+        {
+            return Registers.Date + ";" +
+                   DataSet.DOK_Delivery_Metadata + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_ProductSpesification + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_SosiRequirements + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_GmlRequirements + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_Wms + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_Wfs + ";" + ";" + ";" + ";" +
+                   DataSet.DOK_Delivery_AtomFeed + ";" + ";" + ";" + ";" +
+                   GeodatalovDataSet.Common + ";" + ";" + ";" + ";" +
+                   GeodatalovDataSet.InspireTheme + ";" + ";" +
+                   GeodatalovDataSet.Dok + ";" + ";" +
+                   GeodatalovDataSet.NationalDataset + ";" + ";" +
+                   GeodatalovDataSet.Plan + ";" + ";" +
+                   GeodatalovDataSet.Geodatalov + ";" + ";";
+        }
+
 
         private string InspireDatasetReportHeading()
         {
@@ -813,6 +992,24 @@ namespace Kartverket.Register.Formatter
                    HeadingStatuses() +
                    HeadingStatuses() +
                    HeadingStatuses();
+        }
+
+        private string StatusReportHeadingStatusValuesGeodatalov()
+        {
+            return ";" +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatuses() +
+                   HeadingStatusesOk() +
+                   HeadingStatusesOk() +
+                   HeadingStatusesOk() +
+                   HeadingStatusesOk() +
+                   HeadingStatusesOk();
         }
 
         private string InspireServiceStatusReportHeadingStatusValues()

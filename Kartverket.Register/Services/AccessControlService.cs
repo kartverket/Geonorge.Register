@@ -167,6 +167,7 @@ namespace Kartverket.Register.Services
                     {
                         return IsItemOwner(registerItemViewModel.Owner.name, UserName()) && VersionIsEditable(docuementViewModel.StatusId);
                     }
+                    return IsItemOwner(registerItemViewModel.Owner.name, UserName());
                 }
             }
             return false;

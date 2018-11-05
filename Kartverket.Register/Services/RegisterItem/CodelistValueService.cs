@@ -33,6 +33,21 @@ namespace Kartverket.Register.Services.RegisterItem
                 case 5:
                     codelistValue.Translations.Add(Translation(codelistValueImport, codelistValue));
                     break;
+                case 10:
+                    codelistValue.systemId = Guid.NewGuid();
+
+                    codelistValue.name = codelistValueImport[0];
+                    codelistValue.value = codelistValueImport[1];
+                    codelistValue.description = codelistValueImport[7];
+                    codelistValue.registerId = register.systemId;
+                    codelistValue.register = register;
+
+                    codelistValue.submitterId = _userService.GetUserOrganizationId();
+                    codelistValue.modified = DateTime.Now;
+                    codelistValue.dateSubmitted = DateTime.Now;
+                    codelistValue.statusId = "Submitted";
+                    codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
+                    return codelistValue;
                 default:
                     return null;
             }

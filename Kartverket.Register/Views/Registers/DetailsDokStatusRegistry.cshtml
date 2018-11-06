@@ -139,7 +139,6 @@ else
         {
             @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
         }
-        }
         else if (Model.RegisterItemsV2.Any())
         {
             @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))

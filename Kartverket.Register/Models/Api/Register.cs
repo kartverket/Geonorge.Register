@@ -50,8 +50,8 @@ namespace Kartverket.Register.Models.Api
                 lastUpdated = item.modified;
                 targetNamespace = item.targetNamespace;
                 containedItemClass = item.containedItemClass;
-                if (item.owner != null) owner = item.owner.seoname;
-                if (item.manager != null) manager = item.manager.seoname;
+                if (item.owner != null) owner = item.owner.NameTranslated();
+                if (item.manager != null) manager = item.manager.NameTranslated();
                 containeditems = new List<Registeritem>();
                 containedSubRegisters = new List<Register>();
                 SelectedDOKMunicipality = selectedDOKMunicipality;

@@ -245,7 +245,7 @@ namespace Kartverket.Register.Tests.Controllers
 
             Models.Api.Register apiRegister = actualListOfRegisters[0];
 
-            apiRegister.owner.Should().Be("kartverket");
+            apiRegister.owner.Should().Be("Kartverket");
         }
 
         [Fact]
@@ -265,7 +265,7 @@ namespace Kartverket.Register.Tests.Controllers
 
             Models.Api.Register apiRegister = actualListOfRegisters[0];
 
-            apiRegister.manager.Should().Be("kartverket");
+            apiRegister.manager.Should().Be("Kartverket");
         }
 
 

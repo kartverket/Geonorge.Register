@@ -6,34 +6,42 @@
     var selectedMunicipalName = HtmlHelperExtensions.GetSelectedMunicipalityName(selectedMunicipality);
 }
 
-@if (selectedMunicipality != null)
-{
-    <div class="table-heading col-md-12">
-        <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "theme", selectedMunicipality.value)</div>
-        <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", selectedMunicipality.value)</div>
-        <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "datasetOwner", selectedMunicipality.value)</div>
-        <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "DOK status", "dokstatus", selectedMunicipality.value)</div>
-        <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.RegionType, "type", selectedMunicipality.value)</div>
-        <div class="col-md-1 col-sm-12 col">@DataSet.DOK_Confirmed</div>
-        <div class="col-md-1 col-sm-12 col">@DataSet.DOK_Coverage</div>
-        <div class="col-md-2 col-sm-12 col">@DataSet.DOK_MunicipalityNote</div>
-    </div>
-
-    foreach (Dataset item in Model)
+<div class="table-view">
+    @if (selectedMunicipality != null)
     {
-        <div class="resultItemRow col-md-12 ">
-            <div class="col-md-2 col-sm-12 col">
-                <span title="@DataSet.DOK_Delivery_Theme @item.name: @item.ThemeGroupId">@item.ThemeGroupIdTranslated()</span>
-            </div>
-            <div class="col-md-2 col-sm-12 col">
-                <span title="@item.name">
-                    @if (item.MetadataUrl != null)
-                    {
-                        if (item.MetadataUrl.Contains("http"))
+        <div class="table-heading search-results-table-heading col-md-12">
+            <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "theme", selectedMunicipality.value)</div>
+            <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", selectedMunicipality.value)</div>
+            <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "datasetOwner", selectedMunicipality.value)</div>
+            <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "DOK status", "dokstatus", selectedMunicipality.value)</div>
+            <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.RegionType, "type", selectedMunicipality.value)</div>
+            <div class="col-md-1 col-sm-12 col">@DataSet.DOK_Confirmed</div>
+            <div class="col-md-1 col-sm-12 col">@DataSet.DOK_Coverage</div>
+            <div class="col-md-2 col-sm-12 col">@DataSet.DOK_MunicipalityNote</div>
+        </div>
+
+        foreach (Dataset item in Model)
+        {
+            <div class="resultItemRow col-md-12 ">
+                <div class="col-md-2 col-sm-12 col">
+                    <span title="@DataSet.DOK_Delivery_Theme @item.name: @item.ThemeGroupId">@item.ThemeGroupIdTranslated()</span>
+                </div>
+                <div class="col-md-2 col-sm-12 col">
+                    <span title="@item.name">
+                        @if (item.MetadataUrl != null)
                         {
-                            <a href="@item.MetadataUrl" data-loading-message="@DataSet.LoadingMessageDataset" class="show-loading-animation">
-                                @item.NameTranslated()
-                            </a>
+                            if (item.MetadataUrl.Contains("http"))
+                            {
+                                <a href="@item.MetadataUrl" data-loading-message="@DataSet.LoadingMessageDataset" class="show-loading-animation">
+                                    @item.NameTranslated()
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@item.GetObjectUrl()" data-loading-message="@DataSet.LoadingMessageDataset" class="show-loading-animation">
+                                    @item.NameTranslated()
+                                </a>
+                            }
                         }
                         else
                         {
@@ -41,49 +49,43 @@
                                 @item.NameTranslated()
                             </a>
                         }
-                    }
-                    else
-                    {
-                        <a href="@item.GetObjectUrl()" data-loading-message="@DataSet.LoadingMessageDataset" class="show-loading-animation">
-                            @item.NameTranslated()
-                        </a>
-                    }
-                </span>
-            </div>
-            <div class="col-md-2 col-sm-12 col">
-                <span title="@DataSet.DOK_Owner Datasett eier: @item.datasetowner.seoname">
-                    @item.datasetowner.NameTranslated()
-                </span>
-            </div>
-            <div class="col-md-1 col-sm-12 col">
-                <span title="@DataSet.DOK_Nasjonal_Status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipality)">
-                    @HtmlHelperExtensions.GetNationalDokStatus(item)
-                </span>
-            </div>
-            <div class="col-md-1 col-sm-12 col">
+                    </span>
+                </div>
+                <div class="col-md-2 col-sm-12 col">
+                    <span title="@DataSet.DOK_Owner Datasett eier: @item.datasetowner.seoname">
+                        @item.datasetowner.NameTranslated()
+                    </span>
+                </div>
+                <div class="col-md-1 col-sm-12 col">
+                    <span title="@DataSet.DOK_Nasjonal_Status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipality)">
+                        @HtmlHelperExtensions.GetNationalDokStatus(item)
+                    </span>
+                </div>
+                <div class="col-md-1 col-sm-12 col">
                     <span title="@DataSet.DOK_DatasetType: @item.DatasetType" class="label label-@item.DatasetType">@item.GetDatasetType()</span>
+                </div>
+                <div class="col-md-1 col-sm-12 col text-center">
+                    <span style="text-align: center" title="@DataSet.DOK_Bekreftet_Kommune: @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipality)">
+                        @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipality)
+                    </span>
+                </div>
+                <div class="col-md-1 col-sm-12 col text-center">
+                    <span style="text-align: center" title="@DataSet.DOK_Coverage: @HtmlHelperExtensions.GetCoverage(item, selectedMunicipality)">
+                        @HtmlHelperExtensions.GetCoverage(item, selectedMunicipality)
+                    </span>
+                </div>
+                <div class="col-md-2 col-sm-12 col">
+                    <span title="Merknad: @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipality)">
+                        @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipality)
+                    </span>
+                </div>
             </div>
-            <div class="col-md-1 col-sm-12 col text-center">
-                <span style="text-align: center" title="@DataSet.DOK_Bekreftet_Kommune: @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipality)">
-                    @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipality)
-                </span>
-            </div>
-            <div class="col-md-1 col-sm-12 col text-center">
-                <span style="text-align: center" title="@DataSet.DOK_Coverage: @HtmlHelperExtensions.GetCoverage(item, selectedMunicipality)">
-                    @HtmlHelperExtensions.GetCoverage(item, selectedMunicipality)
-                </span>
-            </div>
-            <div class="col-md-2 col-sm-12 col">
-                <span title="Merknad: @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipality)">
-                    @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipality)
-                </span>
-            </div>
-        </div>
+        }
     }
-}
+</div>
 
 
-<script>
+    <script>
     var dropdown = '@Html.Raw(Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control", onchange = "this.form.submit()" }).ToString().Replace("\n", "").Replace("\r", "").Trim())';
     var htmlBlock = '<div class="col-sm-3 col-md-3 col-lg-3">';
     htmlBlock += '<form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-6" style="margin-top: 10px; float: right; width: 100%; padding: 0px;">';
@@ -99,4 +101,4 @@
     $(document).on('change', '#municipality', function () {
         showLoadingAnimation('@Registers.LoadingMessage');
     });
-</script>
+    </script>

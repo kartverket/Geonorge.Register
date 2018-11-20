@@ -2,45 +2,46 @@
 @using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
 
-<div class="table-heading col-md-12">
-    <div class="col-md-4 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Tittel", "name")</div>
-    <div class="col-md-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderEpsg, "epsg")</div>
-    <div class="col-md-1 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderSosi, "sosi")</div>
-    <div class="col-md-1 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderVertikalReferenceSystem, "vertical")</div>
-    <div class="col-md-1 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderHorizontalReferenceSystem, "horizontal")</div>
-    <div class="col-md-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderDimension, "dimension")</div>
-    <div class="col-md-1 col text-right">@EPSGs.TableHeaderEksternalReference</div>
-</div>
-
-@foreach (EPSG item in Model)
-{
-    <div class="resultItemRow col-md-12 ">
-        <div class="col-md-4 col-sm-12 col">
-            <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
-        </div>
-        <div class="col-md-2 col-sm-12 col">
-            <span title="@EPSGs.EpsgCode: @item.epsgcode">@item.epsgcode</span>
-        </div>
-        <div class="col-md-1 col-sm-12 col">
-            <span title="@EPSGs.SosiReferencesystem: @item.sosiReferencesystem">@item.sosiReferencesystem</span>
-        </div>
-        <div class="col-md-1 col-sm-12 col">
-            <span title="@EPSGs.VerticalReferenceSystem: @item.verticalReferenceSystem">@item.verticalReferenceSystem</span>
-        </div>
-        <div class="col-md-1 col-sm-12 col">
-            <span title="@EPSGs.HorizontalReferenceSystem: @item.horizontalReferenceSystem">@item.horizontalReferenceSystem</span>
-        </div>
-        <div class="col-md-2 col-sm-12 col">
-            @if (item.dimension != null)
-            {
-                <span title="@EPSGs.Dimension: @item.dimension.DescriptionTranslated()">@item.dimension.DescriptionTranslated()</span>
-            }
-        </div>
-        <div class="col-md-1 col-sm-12 col text-right">
-            <a href="@item.externalReference" title="@EPSGs.ExternalReference @item.name"><i class="custom-icon-sm custom-icon-eksternlink"></i></a>
-        </div>
+<div class="table-view">
+    <div class="table-heading search-results-table-heading col-md-12">
+        <div class="col-md-4 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Tittel", "name")</div>
+        <div class="col-md-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderEpsg, "epsg")</div>
+        <div class="col-md-1 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderSosi, "sosi")</div>
+        <div class="col-md-1 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderVertikalReferenceSystem, "vertical")</div>
+        <div class="col-md-1 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderHorizontalReferenceSystem, "horizontal")</div>
+        <div class="col-md-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderDimension, "dimension")</div>
+        <div class="col-md-1 col text-right">@EPSGs.TableHeaderEksternalReference</div>
     </div>
-}
 
+    @foreach (EPSG item in Model)
+    {
+        <div class="resultItemRow col-md-12 ">
+            <div class="col-md-4 col-sm-12 col">
+                <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
+            </div>
+            <div class="col-md-2 col-sm-12 col">
+                <span title="@EPSGs.EpsgCode: @item.epsgcode">@item.epsgcode</span>
+            </div>
+            <div class="col-md-1 col-sm-12 col">
+                <span title="@EPSGs.SosiReferencesystem: @item.sosiReferencesystem">@item.sosiReferencesystem</span>
+            </div>
+            <div class="col-md-1 col-sm-12 col">
+                <span title="@EPSGs.VerticalReferenceSystem: @item.verticalReferenceSystem">@item.verticalReferenceSystem</span>
+            </div>
+            <div class="col-md-1 col-sm-12 col">
+                <span title="@EPSGs.HorizontalReferenceSystem: @item.horizontalReferenceSystem">@item.horizontalReferenceSystem</span>
+            </div>
+            <div class="col-md-2 col-sm-12 col">
+                @if (item.dimension != null)
+                {
+                    <span title="@EPSGs.Dimension: @item.dimension.DescriptionTranslated()">@item.dimension.DescriptionTranslated()</span>
+                }
+            </div>
+            <div class="col-md-1 col-sm-12 col text-right">
+                <a href="@item.externalReference" title="@EPSGs.ExternalReference @item.name"><i class="custom-icon-sm custom-icon-eksternlink"></i></a>
+            </div>
+        </div>
+    }
+</div>
 
 

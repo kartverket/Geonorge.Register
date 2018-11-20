@@ -4,28 +4,29 @@
 
 <h3 style="margin-top: 0;">@CodelistValues.Codelist</h3>
 
-<div class="table-heading col-md-12">
-    <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Navn", "name")</div>
-    <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Beskrivelse", "description")</div>
-    <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Kodeverdi", "codevalue")</div>
-    <div class="col-md-2 col-sm-12 col text-right">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Status", "status")</div>
-</div>
-
-@foreach (CodelistValue item in Model)
-{
-    <div class="resultItemRow col-md-12 ">
-        <div class="col-md-3 col-sm-12 col">
-            <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
-        </div>
-        <div class="col-md-4 col-sm-12 col">
-            <span>@item.DescriptionTranslated()</span>
-        </div>
-        <div class="col-md-3 col-sm-12 col">
-            <span title="@CodelistValues.CodeValue: @item.value">@item.value</span>
-        </div>
-        <div class="col-md-2 col-sm-12 col text-right">
-            <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))">@item.status.DescriptionTranslated() <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
-        </div>
+<div class="table-view">
+    <div class="table-heading search-results-table-heading col-md-12">
+        <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Navn", "name")</div>
+        <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Beskrivelse", "description")</div>
+        <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Kodeverdi", "codevalue")</div>
+        <div class="col-md-2 col-sm-12 col text-right">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Status", "status")</div>
     </div>
-}
 
+    @foreach (CodelistValue item in Model)
+    {
+        <div class="resultItemRow col-md-12 ">
+            <div class="col-md-3 col-sm-12 col">
+                <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
+            </div>
+            <div class="col-md-4 col-sm-12 col">
+                <span>@item.DescriptionTranslated()</span>
+            </div>
+            <div class="col-md-3 col-sm-12 col">
+                <span title="@CodelistValues.CodeValue: @item.value">@item.value</span>
+            </div>
+            <div class="col-md-2 col-sm-12 col text-right">
+                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))">@item.status.DescriptionTranslated() <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
+            </div>
+        </div>
+    }
+</div>

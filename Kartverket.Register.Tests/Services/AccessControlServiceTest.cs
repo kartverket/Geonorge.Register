@@ -30,6 +30,8 @@ namespace Kartverket.Register.Tests.Services
         private readonly Organization _organization;
         private readonly Organization _municipality;
         private readonly AccessControlService _accessControlService;
+        private readonly RegisterItemV2ViewModel _codelistValue;
+
 
 
         public AccessControlServiceTest()
@@ -39,10 +41,11 @@ namespace Kartverket.Register.Tests.Services
 
             Thread.CurrentPrincipal = null;
             _register = new Models.Register();
-            _organization = new Organization { name = "Kartverket" };
+            _organization = CreateOrganization();
             _document = CreateDocument();
             _dataset = CreateDataset();
             _municipality = CreateMunicipality();
+            _codelistValue = CreateCodelistValue();
         }
 
 
@@ -152,7 +155,7 @@ namespace Kartverket.Register.Tests.Services
         public void AccessRegisterIfRegisterAccessLevelIsMunicipalUserDokEditorAndDokAdminAndUserIsMunicipality()
         {
             SetClaims(Orgnr, "840098222");
-            
+
             _register.accessId = 4;
 
             _accessControlService.AccessRegister(_register).Should().BeTrue();
@@ -255,7 +258,7 @@ namespace Kartverket.Register.Tests.Services
             var registerItem = new CodelistValue();
             registerItem.register = _register;
             registerItem.register.owner = _organization;
-            registerItem.submitter = new Organization(){ name = "Norges geologiske undersøkelse"};
+            registerItem.submitter = new Organization() { name = "Norges geologiske undersøkelse" };
 
             _accessControlService.AccessRegisterItem(registerItem).Should().BeTrue();
         }
@@ -302,6 +305,16 @@ namespace Kartverket.Register.Tests.Services
             _accessControlService.AccessRegisterItem(_dataset).Should().BeFalse();
         }
 
+
+        [Fact]
+        public void AccessRegisterItemIfUserIsNotItemOwnerAndUserIsRegisterOwner()
+        {
+            SetClaims(Role, Editor, Orgnr, "970188290", Org, "Norges geologiske undersøkelse");
+            var codelistValue = CreateCodelistValue();
+            codelistValue.Register.owner = CreateOrganization("Norges geologiske undersøkelse");
+            codelistValue.Register.accessId = 2;
+            _accessControlService.Access(codelistValue).Should().BeTrue();
+        }
 
         // User name and claims
 
@@ -399,6 +412,28 @@ namespace Kartverket.Register.Tests.Services
                 MunicipalityCode = "1622",
                 number = "840098222"
             };
+        }
+
+        private RegisterItemV2ViewModel CreateCodelistValue()
+        {
+            var codelistValue = new RegisterItemV2ViewModel();
+            codelistValue.Register = CreateCodelist();
+            codelistValue.Owner = _organization;
+            return codelistValue;
+        }
+
+        private Models.Register CreateCodelist(Organization owner = null)
+        {
+            return new Models.Register
+            {
+                owner = owner != null ? _organization : owner,
+                containedItemClass = "CodelistValue"
+            };
+        }
+
+        private Organization CreateOrganization(string ownerName = "Kartverket")
+        {
+            return new Organization { name = ownerName };
         }
 
         private IEnumerable<Organization> OrganizationList()

@@ -338,5 +338,10 @@ namespace Kartverket.Register.Models.ViewModels
         {
             return Register.GetObjectUrl() + "?filterOrganization=";
         }
+
+        public bool IsCodelistValue()
+        {
+            return Register.ContainedItemClassIsCodelistValue();
+        }
     }
 }

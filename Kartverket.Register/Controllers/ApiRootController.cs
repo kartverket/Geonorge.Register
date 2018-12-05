@@ -98,6 +98,7 @@ namespace Kartverket.Register.Controllers
         /// Gets register by name
         /// </summary>
         /// <param name="registerName">The search engine optimized name of the register</param>
+        [Route("api/{registerName}")]
         [Route("api/{registerName}.{ext}")]
         [Route("api/register/{registerName}.{ext}")]
         [Route("api/register/{registerName}")]

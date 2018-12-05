@@ -1,4 +1,9 @@
-﻿using System.Web.Configuration;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Configuration;
+using ExpressiveAnnotations.Attributes;
+using Kartverket.Register.Models.Translations;
+using Resources;
 
 namespace Kartverket.Register.Models.Api
 {
@@ -16,6 +21,9 @@ namespace Kartverket.Register.Models.Api
 
         public string Status { get; set; }
 
+        public Contact ContactInformation { get; set; }
+
+
         public void Convert(Models.Organization input)
         {
             Number = input.number;
@@ -24,6 +32,23 @@ namespace Kartverket.Register.Models.Api
             ShortName = input.shortname;
             Name = input.name;
             Status = input.statusId;
+            ContactInformation = new Contact(input.contact, input.epost);
+        }
+    }
+
+    public class Contact
+    {
+        public string Name { get; set; }
+        public string Epost { get; set; }
+
+        public Contact(string contact, string epost)
+        {
+            Name = contact;
+            Epost = epost;
+        }
+
+        public Contact()
+        {
         }
     }
 }

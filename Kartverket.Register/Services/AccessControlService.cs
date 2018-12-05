@@ -145,8 +145,9 @@ namespace Kartverket.Register.Services
                         return IsItemOwner(dataset.datasetowner.name, UserName()) || IsDokAdmin();
                     }
                 }
-                else {
-                    return IsItemOwner(registerItem.submitter.name, UserName()) || IsRegisterOwner(registerItem.register.owner.name, UserName()) ;
+                else
+                {
+                    return IsItemOwner(registerItem.submitter.name, UserName()) || IsRegisterOwner(registerItem.register.owner.name, UserName());
                 }
             }
             return false;
@@ -167,7 +168,8 @@ namespace Kartverket.Register.Services
                     {
                         return IsItemOwner(registerItemViewModel.Owner.name, UserName()) && VersionIsEditable(docuementViewModel.StatusId);
                     }
-                    return IsItemOwner(registerItemViewModel.Owner.name, UserName());
+
+                    return IsItemOwner(registerItemViewModel.Owner.name, UserName()) || IsRegisterOwner(registerItemViewModel.Register.owner.name, UserName());
                 }
             }
             return false;

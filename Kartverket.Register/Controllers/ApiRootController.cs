@@ -659,7 +659,7 @@ namespace Kartverket.Register.Controllers
             else
             {
                 tmp.containedSubRegisters = new List<Models.Api.Register>();
-                var subregisters = _registerService.GetSubregistersOfRegister(item);
+                var subregisters = _registerService.GetSubregisters(item);
                 if (subregisters != null)
                 {
                     foreach (var reg in subregisters)

@@ -5,14 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Runtime.Caching;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
-using System.Xml;
-using Kartverket.Register.Migrations;
 using Kartverket.Register.Models.ViewModels;
 using Resources;
 using Kartverket.Register.Models.Translations;
@@ -39,23 +34,25 @@ namespace Kartverket.Register.Services.Register
             var registerItems = new List<Models.RegisterItem>();
             var registerItemsv2 = new List<RegisterItemV2>();
 
-            if (register.ContainedItemClassIsDocument())
+            // Document, Dataset, ServiceAlert, CodelistValue, EPSG, Namespace
+            if (register.items.Any())
             {
-                FilterDocument(register, filter, registerItems);
-            }
-            else if (register.ContainedItemClassIsDataset())
-            {
-                FilterDataset(register, filter, registerItems);
-            }
-            else
-            {
-                foreach (var item in register.items)
+                if (register.ContainedItemClassIsDocument())
                 {
-                    registerItems.Add(item);
+                    FilterDocument(register, filter, registerItems);
+                }
+                else if (register.ContainedItemClassIsDataset())
+                {
+                    FilterDataset(register, filter, registerItems);
+                }
+                else
+                {
+                    registerItems.AddRange(register.items);
                 }
             }
 
-            if (register.RegisterItems.Any())
+            // Geodatalov, Inspire, 
+            else if (register.RegisterItems.Any())
             {
                 if (register.IsInspireStatusRegister())
                 {
@@ -67,7 +64,7 @@ namespace Kartverket.Register.Services.Register
                     {
                         if (filter.filterOrganization != null)
                         {
-                            if (FilterOrganization(filter.filterOrganization, item.Owner.seoname))
+                            if (FilterOrganization(filter.filterOrganization, item.Owner))
                             {
                                 registerItemsv2.Add(item);
                             }
@@ -77,9 +74,7 @@ namespace Kartverket.Register.Services.Register
                             registerItemsv2.Add(item);
                         }
                     }
-
                 }
-
             }
 
             register.items = registerItems;
@@ -128,7 +123,7 @@ namespace Kartverket.Register.Services.Register
         {
             if (filter.filterOrganization != null)
             {
-                if (FilterOrganization(filter.filterOrganization, inspireDataService.Owner.seoname))
+                if (FilterOrganization(filter.filterOrganization, inspireDataService.Owner))
                 {
                     registerItemsv2.Add(inspireDataService);
                 }
@@ -145,7 +140,7 @@ namespace Kartverket.Register.Services.Register
             {
                 if (filter.filterOrganization != null)
                 {
-                    if (FilterOrganization(filter.filterOrganization, inspireDataset.Owner.seoname))
+                    if (FilterOrganization(filter.filterOrganization, inspireDataset.Owner))
                     {
                         registerItemsv2.Add(inspireDataset);
                     }
@@ -157,9 +152,11 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
-        private bool FilterOrganization(string organization, string owner)
+        private bool FilterOrganization(string organization, Organization owner)
         {
-            if (owner == organization)
+            if (organization == owner.number || 
+                organization == owner.name ||
+                organization == owner.seoname)
             {
                 return true;
             }
@@ -727,7 +724,7 @@ namespace Kartverket.Register.Services.Register
                 {
                     if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
                     {
-                        if (item.documentowner.seoname == filter.filterOrganization)
+                        if (FilterOrganization(filter.filterOrganization, item.documentowner))
                         {
                             filterRegisterItems.Add(item);
                         }
@@ -740,59 +737,14 @@ namespace Kartverket.Register.Services.Register
         {
             foreach (Dataset item in register.items)
             {
-                if (item.datasetowner.seoname == filter.filterOrganization)
+                if (FilterOrganization(filter.filterOrganization, item.datasetowner))
                 {
                     filterRegisterItems.Add(item);
                 }
             }
         }
 
-        private void FilterEPSGkode(Models.Register register, FilterParameters filter, List<Models.RegisterItem> filterRegisterItems)
-        {
-            bool filterHorisontalt = filter.filterHorisontalt;
-            bool filterVertikalt = filter.filterVertikalt;
-            string filterDimensjon;
-            string filterInspire = filter.InspireRequirement;
-            string filterNational = filter.nationalRequirement;
-            string filterNationalSea = filter.nationalSeaRequirement;
-
-            foreach (EPSG item in register.items)
-            {
-                if (filterHorisontalt && filterVertikalt)
-                {
-                    filterDimensjon = "compound";
-                }
-                else
-                {
-                    if (filterHorisontalt)
-                    {
-                        filterDimensjon = "horizontal";
-                    }
-                    else if (filterVertikalt)
-                    {
-                        filterDimensjon = "vertical";
-                    }
-                    else
-                    {
-                        filterDimensjon = item.dimensionId;
-                    }
-                }
-
-                var queryResult = from e in _dbContext.EPSGs
-                                  where e.dimensionId == filterDimensjon
-                                  && e.systemId == item.systemId
-                                  select e;
-
-                if (queryResult.Count() > 0)
-                {
-                    Kartverket.Register.Models.EPSG epsgkode = queryResult.First();
-                    filterRegisterItems.Add(epsgkode);
-                }
-                filterHorisontalt = filter.filterHorisontalt;
-                filterVertikalt = filter.filterVertikalt;
-            }
-        }
-
+       
         public string ContentNegotiation(ControllerContext context)
         {
             HttpResponseBase response = context.HttpContext.Response;
@@ -875,17 +827,8 @@ namespace Kartverket.Register.Services.Register
 
         }
 
-        public List<Models.Register> GetSubregisters()
-        {
-            var queryResult = from r in _dbContext.Registers
-                              where r.parentRegisterId != null
-                              select r;
 
-            return queryResult.ToList();
-
-        }
-
-        public List<Models.Register> GetSubregistersOfRegister(Models.Register register)
+        public List<Models.Register> GetSubregisters(Models.Register register)
         {
             var queryResult = from r in _dbContext.Registers
                               where r.parentRegisterId == register.systemId
@@ -1065,26 +1008,6 @@ namespace Kartverket.Register.Services.Register
             return queryResult.FirstOrDefault();
         }
 
-        public List<Models.RegisterItem> GetConfirmdDatasetBySelectedMunicipality(Models.Register dokMunicipalRegister, Organization municipality)
-        {
-            List<Models.RegisterItem> datasets = new List<Models.RegisterItem>();
-            GetNationalDatasetsConfirmdByMunicipality(datasets, municipality);
-
-            //Gå gjennom alle datasett i registeret
-            foreach (Dataset item in dokMunicipalRegister.items)
-            {
-                //Gå gjennom dekningslisten for datasettet
-                foreach (CoverageDataset coverage in item.Coverage)
-                {
-                    //Er det registrert dekning av datasett for valgt kommune...
-                    if (coverage.Municipality.systemId == municipality.systemId)
-                    {
-                        datasets.Add(item);
-                    }
-                }
-            }
-            return datasets;
-        }
 
         public Guid GetOrganizationIdByUserName()
         {

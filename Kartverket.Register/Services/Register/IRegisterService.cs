@@ -17,8 +17,7 @@ namespace Kartverket.Register.Services.Register
         Models.Register GetRegisterByName(string name);
         Models.Register GetSubregisterByName(string parentName, string registerName);
         List<Models.Register> GetRegisters();
-        List<Models.Register> GetSubregisters();
-        List<Models.Register> GetSubregistersOfRegister(Models.Register register);
+        List<Models.Register> GetSubregisters(Models.Register register);
         Models.Register GetRegisterBySystemId(Guid systemId);
         Models.Register GetRegister(string parentRegister, string register);
         Guid GetRegisterId(string parentRegister, string register);
@@ -36,7 +35,6 @@ namespace Kartverket.Register.Services.Register
         string GetDeliveryDownloadStatus(string uuid, bool autoUpdate, string currentStatus);
         string GetSosiRequirements(string uuid, string url, bool autoUpdate, string currentStatus);
         string GetGmlRequirements(string uuid, bool dokDeliveryGmlRequirementsStatusAutoUpdate, string dokDeliveryGmlRequirementsStatusId);
-        List<Models.RegisterItem> GetConfirmdDatasetBySelectedMunicipality(Models.Register dokMunicipalRegister, Organization municipality);
         RegisterGrouped GetRegistersGrouped();
         ICollection<Models.Register> OrderBy(ICollection<Models.Register> registers, string sorting);
         Guid GetInspireStatusRegisterId();

@@ -275,5 +275,25 @@ namespace Kartverket.Register.Models
             var newPath = GetObjectUrl();
             return requestPath != newPath;
         }
+
+        public int NumberOfCurrentVersions()
+        {
+            int number = 0;
+            foreach (var item in items)
+            {
+                if (item is Document document)
+                {
+                    if (document.isCurrentVersion())
+                    {
+                        number++;
+                    }
+                }
+                else
+                {
+                    number++;
+                }
+            }
+            return number;
+        }
     }
 }

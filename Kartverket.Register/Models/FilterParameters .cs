@@ -18,6 +18,9 @@ namespace Kartverket.Register.Models
             InspireDataServiceStatusType = "all";
             StatusType = "all";
         }
+
+        public int Offset { get; set; }
+        public int Limit { get; set; }
         public string text { get; set; }
         public bool filterVertikalt { get; set; }
         public bool filterHorisontalt { get; set; }

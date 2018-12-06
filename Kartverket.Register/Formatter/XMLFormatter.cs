@@ -33,6 +33,7 @@ namespace Kartverket.Register.Formatter
         {
             if (type == typeof(Models.Api.Register) || type == typeof(Registeritem) 
             || type == typeof(Monitoring) 
+                                                    || type == typeof(Result)
             || type == typeof(SpatialDataSet))
                 return true;
             else
@@ -53,7 +54,7 @@ namespace Kartverket.Register.Formatter
         {
             return Task.Factory.StartNew(() =>
             {
-                if (type == typeof(Models.Api.Register) || type == typeof(Registeritem) || type == typeof(Monitoring) || type == typeof(SpatialDataSet))
+                if (type == typeof(Models.Api.Register) || type == typeof(Registeritem) || type == typeof(Result) || type == typeof(Monitoring) || type == typeof(SpatialDataSet))
                     BuildXMLFeed(value, writeStream);
             });
         }

@@ -77,6 +77,18 @@ namespace Kartverket.Register.Services.Register
                 }
             }
 
+            if (filter.Offset > 0)
+            {
+                registerItems = registerItems.Skip(filter.Offset).ToList();
+                registerItemsv2 = registerItemsv2.Skip(filter.Offset).ToList();
+            }
+
+            if (filter.Limit > 0 )
+            {
+                registerItems = registerItems.Take(filter.Limit).ToList();
+                registerItemsv2 = registerItemsv2.Take(filter.Limit).ToList();
+            }
+
             register.items = registerItems;
             register.RegisterItems = registerItemsv2;
             return register;
@@ -280,11 +292,8 @@ namespace Kartverket.Register.Services.Register
                 foreach (Document item in register.items)
                 {
                     if (item.isCurrentVersion())
-                    {
-                        if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
-                        {
-                            registerItems.Add(item);
-                        }
+                    {                        
+                        registerItems.Add(item);
                     }
                 }
             }

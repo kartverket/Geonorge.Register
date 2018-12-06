@@ -1679,5 +1679,16 @@ namespace Kartverket.Register.Services.RegisterItem
 
             return queryResult.FirstOrDefault();
         }
+
+        public Organization GetOrganizationByFilterOrganizationParameter(string filterFilterOrganization)
+        {
+            var queryResult = from o in _dbContext.Organizations
+                where (o.seoname == filterFilterOrganization
+                       || o.name == filterFilterOrganization
+                       || o.number == filterFilterOrganization)
+                select o;
+
+            return queryResult.FirstOrDefault();
+        }
     }
 }

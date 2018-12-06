@@ -113,7 +113,8 @@ namespace Kartverket.Register.Controllers
 
             if (register != null)
             {
-                var totalNumberOfItems = register.NumberOfCurrentVersions();
+                int totalNumberOfItems = GetTotalNumberOfCurrentItemsByOrganization(filter, register);
+
                 if (filter != null || register.IsDokMunicipal())
                 {
                     register = RegisterItems(register, filter);
@@ -126,6 +127,22 @@ namespace Kartverket.Register.Controllers
             }
 
             return NotFound();
+        }
+
+        private int GetTotalNumberOfCurrentItemsByOrganization(FilterParameters filter, Models.Register register)
+        {
+            var totalNumberOfItems = 0;
+            if (filter?.filterOrganization != null)
+            {
+                Models.Organization organization = _registerItemService.GetOrganizationByFilterOrganizationParameter(filter.filterOrganization);
+                totalNumberOfItems = register.NumberOfCurrentVersions(organization);
+            }
+            else
+            {
+                totalNumberOfItems = register.NumberOfCurrentVersions();
+            }
+
+            return totalNumberOfItems;
         }
 
         /// <summary>

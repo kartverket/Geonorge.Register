@@ -83,7 +83,7 @@ namespace Kartverket.Register.Services.Register
                 registerItemsv2 = registerItemsv2.Skip(filter.Offset).ToList();
             }
 
-            if (filter.Limit > 0 )
+            if (filter.Limit > 0)
             {
                 registerItems = registerItems.Take(filter.Limit).ToList();
                 registerItemsv2 = registerItemsv2.Take(filter.Limit).ToList();
@@ -166,7 +166,7 @@ namespace Kartverket.Register.Services.Register
 
         private bool FilterOrganization(string organization, Organization owner)
         {
-            if (organization == owner.number || 
+            if (organization == owner.number ||
                 organization == owner.name ||
                 organization == owner.seoname)
             {
@@ -292,7 +292,7 @@ namespace Kartverket.Register.Services.Register
                 foreach (Document item in register.items)
                 {
                     if (item.isCurrentVersion())
-                    {                        
+                    {
                         registerItems.Add(item);
                     }
                 }
@@ -731,12 +731,9 @@ namespace Kartverket.Register.Services.Register
             {
                 if (item.isCurrentVersion())
                 {
-                    if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
+                    if (FilterOrganization(filter.filterOrganization, item.documentowner))
                     {
-                        if (FilterOrganization(filter.filterOrganization, item.documentowner))
-                        {
-                            filterRegisterItems.Add(item);
-                        }
+                        filterRegisterItems.Add(item);
                     }
                 }
             }
@@ -753,7 +750,7 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
-       
+
         public string ContentNegotiation(ControllerContext context)
         {
             HttpResponseBase response = context.HttpContext.Response;
@@ -807,7 +804,7 @@ namespace Kartverket.Register.Services.Register
         public Models.Register GetSubregisterByName(string parentName, string registerName)
         {
             var queryResultsSubregister = from r in _dbContext.Registers
-                                          where (r.seoname == registerName || r.name == registerName) && 
+                                          where (r.seoname == registerName || r.name == registerName) &&
                                                 (r.parentRegister.seoname == parentName || r.parentRegister.name == parentName)
                                           select r;
 
@@ -1002,8 +999,8 @@ namespace Kartverket.Register.Services.Register
             var dokId = Guid.Parse(GlobalVariables.DokRegistryId);
 
             var queryResult = from r in _dbContext.Registers
-                where r.systemId == dokId
-                select r;
+                              where r.systemId == dokId
+                              select r;
             return queryResult.FirstOrDefault();
         }
 
@@ -1012,7 +1009,7 @@ namespace Kartverket.Register.Services.Register
             var geodatalovRegisterId = Guid.Parse(GlobalVariables.GeodatalovRegistryId);
 
             var queryResult = from r in _dbContext.Registers
-                where r.systemId == geodatalovRegisterId
+                              where r.systemId == geodatalovRegisterId
                               select r;
             return queryResult.FirstOrDefault();
         }
@@ -1222,7 +1219,8 @@ namespace Kartverket.Register.Services.Register
             foreach (var inspireDataset in inspireDatasets)
             {
                 dynamic metadata = GetMetadata(inspireDataset.Uuid);
-                if(metadata != null) { 
+                if (metadata != null)
+                {
                     inspireDataset.NameEnglish = metadata.EnglishTitle;
                     inspireDataset.DescriptionEnglish = metadata.EnglishAbstract;
                     inspireDataset.SpecificUsageEnglish = metadata.SpecificUsage;

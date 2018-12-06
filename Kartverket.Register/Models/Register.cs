@@ -276,14 +276,18 @@ namespace Kartverket.Register.Models
             return requestPath != newPath;
         }
 
-        public int NumberOfCurrentVersions()
+        public int NumberOfCurrentVersions(Organization organization = null)
         {
             int number = 0;
             foreach (var item in items)
             {
                 if (item is Document document)
                 {
-                    if (document.isCurrentVersion())
+                    if (organization != null && (document.isCurrentVersion() && organization.number == document.documentowner.number))
+                    {
+                        number++;
+                    }
+                    else if (organization == null && document.isCurrentVersion())
                     {
                         number++;
                     }

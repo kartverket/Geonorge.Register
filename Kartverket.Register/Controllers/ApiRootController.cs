@@ -76,7 +76,8 @@ namespace Kartverket.Register.Controllers
         /// <param name="systemid">The uniqueidentifier for the register</param>
         //[System.Web.Http.Route("api/kodelister/{systemid}")]
         //[System.Web.Http.Route("api/kodelister/{systemid}.{ext}")]
-        [HttpGet]
+        [System.Web.Http.Route("api/ApiRoot")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetCodelistById(string systemid)
         {
             SetLanguage(Request);
@@ -88,7 +89,8 @@ namespace Kartverket.Register.Controllers
 
             if (codelist == null)
             {
-                return NotFound();
+                codelist = _registerService.GetRegisterByName(systemid);
+                return codelist == null ? (IHttpActionResult) NotFound() : Ok(ConvertRegisterAndNextLevel(codelist));
             }
             return Ok(ConvertRegisterAndNextLevel(codelist));
         }

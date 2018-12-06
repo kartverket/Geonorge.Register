@@ -767,7 +767,7 @@ namespace Kartverket.Register.Controllers
 
         private static void DocumentAccessByUser(Models.Register register)
         {
-            if (register.ContainedItemClassIsDocument())
+            if (register != null && register.ContainedItemClassIsDocument())
             {
                 var registeItems = new List<RegisterItem>();
                 foreach (Document document in register.items)

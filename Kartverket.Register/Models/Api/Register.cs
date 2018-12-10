@@ -11,6 +11,9 @@ namespace Kartverket.Register.Models.Api
     public class Register
     {
         [DataMemberAttribute]
+        public Result ContainedItemsResult { get; set; }
+
+        [DataMemberAttribute]
         public string id { get; set; }
         [DataMemberAttribute]
         public string label { get; set; }

@@ -17,6 +17,7 @@ using Kartverket.Register.Models.Translations;
 using System.Globalization;
 using System.Threading;
 using System.Net.Http.Headers;
+using System.Web.Mvc;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Formatter;
 using Kartverket.Register.App_Start;
@@ -68,16 +69,17 @@ namespace Kartverket.Register.Controllers
             return Ok(list);
         }
 
+
         // <summary>
-        /// Gets subregister by name
+        /// Gets subregister by id
         /// </summary>
         /// <param name="register">The search engine optimized name or id of the register</param>
         /// <param name="parentregister">The search engine optimized name of the parentregister</param>
         /// <param name="systemid">The uniqueidentifier for the register</param>
         //[System.Web.Http.Route("api/kodelister/{systemid}")]
         //[System.Web.Http.Route("api/kodelister/{systemid}.{ext}")]
-        [HttpGet]
-        public IHttpActionResult GetCodelistById(string systemid)
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetRegisterById(string systemid)
         {
             SetLanguage(Request);
             bool isValid = Guid.TryParse(systemid, out var guid);
@@ -88,7 +90,8 @@ namespace Kartverket.Register.Controllers
 
             if (codelist == null)
             {
-                return NotFound();
+                codelist = _registerService.GetRegisterByName(systemid);
+                return codelist == null ? (IHttpActionResult) NotFound() : Ok(ConvertRegisterAndNextLevel(codelist));
             }
             return Ok(ConvertRegisterAndNextLevel(codelist));
         }
@@ -98,28 +101,56 @@ namespace Kartverket.Register.Controllers
         /// Gets register by name
         /// </summary>
         /// <param name="registerName">The search engine optimized name of the register</param>
-        [Route("api/{registerName}.{ext}")]
-        [Route("api/register/{registerName}.{ext}")]
-        [Route("api/register/{registerName}")]
-        [HttpGet]
+        [System.Web.Http.Route("api/{registerName}")]
+        [System.Web.Http.Route("api/{registerName}.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterByName(string registerName, [FromUri] FilterParameters filter = null)
         {
             SetLanguage(Request);
             var register = _registerService.GetRegisterByName(registerName);
-            if (filter != null || register.IsDokMunicipal())
+
+            if (register != null)
             {
-                register = RegisterItems(register, filter);
+                int totalNumberOfItems = GetTotalNumberOfCurrentItemsByOrganization(filter, register);
+
+                if (filter != null || register.IsDokMunicipal())
+                {
+                    register = RegisterItems(register, filter);
+                }
+
+                var result = ConvertRegisterAndNextLevel(register, filter);
+                result.ContainedItemsResult.Total = totalNumberOfItems;
+
+                return Ok(result);
             }
 
-            return Ok(ConvertRegisterAndNextLevel(register, filter));
+            return NotFound();
+        }
+
+        private int GetTotalNumberOfCurrentItemsByOrganization(FilterParameters filter, Models.Register register)
+        {
+            var totalNumberOfItems = 0;
+            if (filter?.filterOrganization != null)
+            {
+                Models.Organization organization = _registerItemService.GetOrganizationByFilterOrganizationParameter(filter.filterOrganization);
+                totalNumberOfItems = register.NumberOfCurrentVersions(organization);
+            }
+            else
+            {
+                totalNumberOfItems = register.NumberOfCurrentVersions();
+            }
+
+            return totalNumberOfItems;
         }
 
         /// <summary>
         /// Gets inspiremonitoring xml
         /// </summary>
-        [Route("api/inspire-statusregister/monitoring-report")]
-        [Route("api/register/inspire-statusregister/monitoring-report")]
-        [HttpGet]
+        [System.Web.Http.Route("api/inspire-statusregister/monitoring-report")]
+        [System.Web.Http.Route("api/register/inspire-statusregister/monitoring-report")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult InspireMonitoring()
         {
             SetLanguage(Request);
@@ -133,10 +164,10 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Save dok status report to db
         /// </summary>
-        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        [Route("api/{registerName}/report/save")]
-        [Route("api/register/{registerName}/report/save")]
-        [HttpGet]
+        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [System.Web.Http.Route("api/{registerName}/report/save")]
+        [System.Web.Http.Route("api/register/{registerName}/report/save")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult NewStatusReport(string registerName)
         {
             try
@@ -154,11 +185,11 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets selected status report
         /// </summary>
-        [Route("api/{registerName}/report/{id}")]
-        [Route("api/{registerName}/report/{id}.{ext}")]
-        [Route("api/register/{registerName}/report/{id}.{ext}")]
-        [Route("api/register/{registerName}/report/{id}")]
-        [HttpGet]
+        [System.Web.Http.Route("api/{registerName}/report/{id}")]
+        [System.Web.Http.Route("api/{registerName}/report/{id}.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}/report/{id}.{ext}")]
+        [System.Web.Http.Route("api/register/{registerName}/report/{id}")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult StatusReport(string id, string ext, bool dataset = true, bool service = true)
         {
             SetLanguage(Request);
@@ -254,10 +285,10 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Save inspire monitoring report data to database.
         /// </summary>
-        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        [Route("api/inspire-statusregister/monitoring-report/save")]
-        [Route("api/register/inspire-statusregister/monitoring-report/save")]
-        [HttpGet]
+        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [System.Web.Http.Route("api/inspire-statusregister/monitoring-report/save")]
+        [System.Web.Http.Route("api/register/inspire-statusregister/monitoring-report/save")]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult SaveInspireMonitoringData()
         {
             try
@@ -316,7 +347,9 @@ namespace Kartverket.Register.Controllers
             {
                 return NotFound();
             }
-            return Ok(ConvertRegisterAndNextLevel(it));
+
+            var result = ConvertRegisterAndNextLevel(it);
+            return Ok(result);
         }
 
 
@@ -642,9 +675,9 @@ namespace Kartverket.Register.Controllers
             {
                 foreach (var d in item.items)
                 {
-                    if (d.register.containedItemClass == "Document")
+                    if (d is Document document)
                     {
-                        if (d.statusId != "Submitted" && d.versioning.currentVersion == d.systemId)
+                        if (document.isCurrentVersion())
                         {
                             tmp.containeditems.Add(ConvertRegisterItem(d, filter));
                         }
@@ -658,7 +691,7 @@ namespace Kartverket.Register.Controllers
             else
             {
                 tmp.containedSubRegisters = new List<Models.Api.Register>();
-                var subregisters = _registerService.GetSubregistersOfRegister(item);
+                var subregisters = _registerService.GetSubregisters(item);
                 if (subregisters != null)
                 {
                     foreach (var reg in subregisters)
@@ -667,6 +700,8 @@ namespace Kartverket.Register.Controllers
                     }
                 }
             }
+
+            tmp.ContainedItemsResult = new Result(filter, tmp.containeditems.Count);
 
             return tmp;
         }
@@ -687,7 +722,7 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        private Models.Api.Item Convert(SearchResultItem searchitem)
+        private Item Convert(SearchResultItem searchitem)
         {
             var tmp = new Models.Api.Item
             {
@@ -704,72 +739,6 @@ namespace Kartverket.Register.Controllers
             return tmp;
         }
 
-        private RegisterItem GetCurrentVersion(string parent, string register, string item)
-        {
-            List<RegisterItem> itemList = new List<RegisterItem>();
-            var queryresult = from d in db.RegisterItems
-                              where d.register.seoname == register
-                              && (d.register.parentRegister == null || d.register.parentRegister.seoname == parent)
-                              && d.seoname == item
-                              select d;
-
-
-            foreach (var ri in queryresult.ToList())
-            {
-                if (ri.statusId != "Submitted")
-                {
-                    itemList.Add(ri);
-                }
-            }
-            if (itemList.Count() > 1)
-            {
-                foreach (RegisterItem version in itemList)
-                {
-                    if (version.systemId == version.versioning.currentVersion)
-                    {
-                        return version;
-                    }
-                }
-            }
-            return queryresult.FirstOrDefault();
-        }
-
-        private Models.Register GetRegister(string parent, string register)
-        {
-            var queryresult = from d in db.Registers
-                              where d.seoname == register
-                              && (d.parentRegister == null || d.parentRegister.seoname == parent)
-                              select d;
-
-            return queryresult.FirstOrDefault();
-        }
-
-        private Models.RegisterItem GetVersion(string parent, string register, string item, int version)
-        {
-            var queryresult = from d in db.RegisterItems
-                              where d.seoname == item
-                              && d.register.seoname == register
-                              && (d.register.parentRegister == null || d.register.parentRegister.seoname == parent)
-                              && d.versionNumber == version
-                              select d;
-
-            return queryresult.FirstOrDefault();
-        }
-
-        private List<Models.Api.Registeritem> GetVersions(RegisterItem rit)
-        {
-            List<Models.Api.Registeritem> versions = new List<Models.Api.Registeritem>();
-            var queryResult = from ri in db.RegisterItems
-                              where ri.versioningId == rit.versioningId
-                              select ri;
-
-            foreach (var item in queryResult.ToList())
-            {
-                versions.Add(ConvertRegisterItem(item));
-            }
-            versions.OrderBy(o => o.status);
-            return versions;
-        }
 
         private void SetLanguage(HttpRequestMessage request)
         {

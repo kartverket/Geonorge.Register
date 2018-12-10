@@ -923,6 +923,7 @@
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\RegisterData.cs" />
     <Compile Include="Models\Api\Registeritem.cs" />
+    <Compile Include="Models\Api\Result.cs" />
     <Compile Include="Models\Api\SearchParameters.cs" />
     <Compile Include="Models\Api\SearchResult.cs" />
     <Compile Include="Models\Api\AlertService.cs" />

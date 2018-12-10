@@ -760,7 +760,26 @@ namespace Kartverket.Register.Controllers
         {
             if (Search(filter)) register = _searchService.Search(register, filter.text);
             register = _registerService.FilterRegisterItems(register, filter);
+            DocumentAccessByUser(register);
+
             return register;
+        }
+
+        private static void DocumentAccessByUser(Models.Register register)
+        {
+            if (register != null && register.ContainedItemClassIsDocument())
+            {
+                var registeItems = new List<RegisterItem>();
+                foreach (Document document in register.items)
+                {
+                    if ((document.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(document))
+                    {
+                        registeItems.Add(document);
+                    }
+                }
+
+                register.items = registeItems;
+            }
         }
 
         private RegisterItemV2ViewModel GetRegisterItemByName(string parentregister, string registername, string itemowner, string itemname, string inspireRegistryType, int version = 1)

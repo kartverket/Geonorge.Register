@@ -2,51 +2,54 @@
 @using Kartverket.Register.Models
 @using Kartverket.Register.Helpers
 
-<div class="table-heading col-md-12">
-    <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
-    <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "datasetOwner")</div>
-    <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Temagruppe, "theme")</div>
-<div class="col-md-4 col-sm-12 status-icons">
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryMetadataStatus")
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryProductSheetStatus")
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryPresentationRulesStatus")
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryProductSpecificationStatus")
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryWmsStatus")
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryWfsStatus")
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliverySosiRequirementsStatus")
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryGmlRequirementsStatus")
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryAtomFeedStatus")
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryDistributionStatus")
-    @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus")
-    </div>
-</div>
 
-@foreach (Dataset item in Model)
-{
-    <div class="resultItemRow col-md-12 ">
-        <div class="col-md-4 col-sm-12 col">
-            <a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.NameTranslated()</a>
-        </div>
-        <div class="col-md-2 col-sm-12 col">
-            <a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.datasetowner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.datasetowner.NameTranslated()</a>
-        </div>
-        <div class="col-md-2 col-sm-12 col">
-            @item.ThemeGroupIdTranslated()
-        </div>
+<div class="table-view">
+    <div class="table-heading search-results-table-heading col-md-12">
+        <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
+        <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "datasetOwner")</div>
+        <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Temagruppe, "theme")</div>
         <div class="col-md-4 col-sm-12 status-icons">
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryMetadataStatusId, false, DataSet.DOK_Delivery_Metadata, "metadata")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, false, DataSet.DOK_Delivery_ProductSheet)
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, false, DataSet.DOK_Delivery_PresentationRules)
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryProductSpecificationStatusId, false, DataSet.DOK_Delivery_ProductSpesification)
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryWmsStatusId, item.restricted, DataSet.DOK_Delivery_Wms)
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryWfsStatusId, item.restricted, DataSet.DOK_Delivery_Wfs)
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliverySosiRequirementsStatusId, false, DataSet.DOK_Delivery_SosiRequirements)
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryGmlRequirementsStatusId, false, DataSet.DOK_Delivery_GmlRequirements)
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryAtomFeedStatusId, item.restricted, DataSet.DOK_Delivery_AtomFeed)
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, false, DataSet.DOK_Delivery_Distribution)
-            <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.dokStatus.DescriptionTranslated()'>
-                <i class="statusIcon-@item.dokStatusId"></i>
-            </span>
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryMetadataStatus")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryProductSheetStatus")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryPresentationRulesStatus")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryProductSpecificationStatus")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryWmsStatus")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryWfsStatus")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliverySosiRequirementsStatus")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryGmlRequirementsStatus")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryAtomFeedStatus")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokDeliveryDistributionStatus")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus")
         </div>
     </div>
-}
+
+    @foreach (Dataset item in Model)
+    {
+        <div class="resultItemRow col-md-12 ">
+            <div class="col-md-4 col-sm-12 col">
+                <a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.NameTranslated()</a>
+            </div>
+            <div class="col-md-2 col-sm-12 col">
+                <a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.datasetowner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.datasetowner.NameTranslated()</a>
+            </div>
+            <div class="col-md-2 col-sm-12 col">
+                @item.ThemeGroupIdTranslated()
+            </div>
+            <div class="col-md-4 col-sm-12 status-icons">
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryMetadataStatusId, false, DataSet.DOK_Delivery_Metadata, "metadata")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, false, DataSet.DOK_Delivery_ProductSheet)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, false, DataSet.DOK_Delivery_PresentationRules)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryProductSpecificationStatusId, false, DataSet.DOK_Delivery_ProductSpesification)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryWmsStatusId, item.restricted, DataSet.DOK_Delivery_Wms)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryWfsStatusId, item.restricted, DataSet.DOK_Delivery_Wfs)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliverySosiRequirementsStatusId, false, DataSet.DOK_Delivery_SosiRequirements)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryGmlRequirementsStatusId, false, DataSet.DOK_Delivery_GmlRequirements)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryAtomFeedStatusId, item.restricted, DataSet.DOK_Delivery_AtomFeed)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, false, DataSet.DOK_Delivery_Distribution)
+                <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.dokStatus.DescriptionTranslated()'>
+                    <i class="statusIcon-@item.dokStatusId"></i>
+                </span>
+            </div>
+        </div>
+    }
+</div>

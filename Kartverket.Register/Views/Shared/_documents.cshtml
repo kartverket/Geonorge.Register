@@ -6,7 +6,8 @@
     var registerName = ViewBag.register;
 }
 
-<div class="table-heading col-md-12">
+<div class="table-view">
+<div class="table-heading search-results-table-heading col-md-12">
     <div class="col-md-5 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
     <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Documents.DocumentOwner, "documentOwner")</div>
     <div class="col-md-1 col-sm-12 col">@Documents.Download</div>
@@ -36,3 +37,4 @@
         </div>
     </div>
 }
+</div>

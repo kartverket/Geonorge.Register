@@ -1,4 +1,4 @@
-﻿using Kartverket.Register.Formatter;
+using Kartverket.Register.Formatter;
 using Newtonsoft.Json;
 using System.Net.Http.Formatting;
 using System.Web.Http;
@@ -20,8 +20,9 @@ namespace Kartverket.Register
             config.Routes.MapHttpRoute("GetOrganizationByNameV2", "api/v2/organisasjon/navn/{name}", new { controller = "OrganizationsApi", action = "GetOrganizationByNameV2" });
             config.Routes.MapHttpRoute("GetOrganizationByNumberV2", "api/v2/organisasjon/orgnr/{number}", new { controller = "OrganizationsApi", action = "GetOrganizationByNumberV2" });
 
-            config.Routes.MapHttpRoute("GetCodelistByIdExt", "api/kodelister/{systemid}.{ext}", new { controller = "ApiRoot", action = "GetCodelistById" });
-            config.Routes.MapHttpRoute("GetCodelistById", "api/kodelister/{systemid}", new { controller = "ApiRoot", action = "GetCodelistById" });
+            config.Routes.MapHttpRoute("GetRegisterByIdExt", "api/kodelister/{systemid}.{ext}", new { controller = "ApiRoot", action = "GetRegisterById" });
+            config.Routes.MapHttpRoute("GetRegisterById", "api/kodelister/{systemid}", new { controller = "ApiRoot", action = "GetRegisterById" });
+            config.Routes.MapHttpRoute("GetRegister", "api/ApiRoot", new { controller = "ApiRoot", action = "GetRegisterById" });
 
 
             // Status reports
@@ -29,7 +30,6 @@ namespace Kartverket.Register
             config.Routes.MapHttpRoute("GetStatusReports", "api/{registerName}/report", new { controller = "ApiRoot", action = "StatusReports" });
             config.Routes.MapHttpRoute("GetStatusReportsOldExt", "api/register/{registerName}/report.{ext}", new { controller = "ApiRoot", action = "StatusReports" });
             config.Routes.MapHttpRoute("GetStatusReportsOld", "api/register/{registerName}/report", new { controller = "ApiRoot", action = "StatusReports" });
-
 
             config.MapHttpAttributeRoutes();
 

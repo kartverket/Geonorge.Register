@@ -4,6 +4,13 @@ using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using System.Collections.Generic;
 using System.Web.Http.Description;
+using System.Net.Http;
+using Kartverket.Register.Models.Translations;
+using System.Linq;
+using Kartverket.Register.Helpers;
+using System.Net.Http.Headers;
+using System.Globalization;
+using System.Threading;
 
 namespace Kartverket.Register.Controllers
 {
@@ -56,7 +63,9 @@ namespace Kartverket.Register.Controllers
         //[Route("api/organisasjon/orgnr/{number}")]
         public IHttpActionResult GetOrganizationByNumber(string number)
         {
-            Organization organization = _organizationService.GetOrganizationByNumber(number);
+            SetLanguage(Request);
+
+            Organization organization = _organizationService.GetOrganizationByNumber(number, CultureHelper.GetCurrentCulture());
 
             if (organization == null)
                 return NotFound();
@@ -111,6 +120,34 @@ namespace Kartverket.Register.Controllers
             Models.Api.OrganizationV2 apiModel = Models.Api.OrganizationV2.Convert(organization);
 
             return Ok(apiModel);
+        }
+
+        private void SetLanguage(HttpRequestMessage request)
+        {
+            string language = Culture.NorwegianCode;
+
+            IEnumerable<string> headerValues;
+            if (request.Headers.TryGetValues("Accept-Language", out headerValues))
+            {
+                language = headerValues.FirstOrDefault();
+                if (CultureHelper.IsNorwegian(language))
+                    language = Culture.NorwegianCode;
+                else
+                    language = Culture.EnglishCode;
+            }
+            else
+            {
+                CookieHeaderValue cookie = request.Headers.GetCookies("_culture").FirstOrDefault();
+                if (cookie != null && !string.IsNullOrEmpty(cookie["_culture"].Value))
+                {
+                    language = cookie["_culture"].Value;
+                }
+            }
+
+            var culture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+
         }
 
     }

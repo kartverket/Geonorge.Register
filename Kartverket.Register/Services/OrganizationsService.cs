@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Kartverket.Register.Models;
 using System.Collections.Generic;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Services
 {
@@ -18,9 +19,25 @@ namespace Kartverket.Register.Services
             return _dbContext.Organizations.FirstOrDefault(o => o.name == name);
         }
 
-        public Organization GetOrganizationByNumber(string number)
+        public Organization GetOrganizationByNumber(string number, string culture = Culture.NorwegianCode)
         {
-            return _dbContext.Organizations.FirstOrDefault(o => o.number == number);
+            Organization organization = null;
+
+            if (culture == Culture.NorwegianCode)
+                organization = _dbContext.Organizations.FirstOrDefault(o => o.number == number);
+            else
+            { 
+                organization = _dbContext.Organizations.FirstOrDefault(o => o.number == number && o.Translations.Any(oo => oo.CultureName == culture));
+
+                if (organization != null)
+                {
+                    var translated = organization.Translations.Where(t => t.CultureName == culture).FirstOrDefault();
+                    organization.name = translated.Name;
+                    organization.description = translated.Description;
+                }
+            }
+
+            return organization;
         }
 
         public Organization GetOrganization(string organizationName)

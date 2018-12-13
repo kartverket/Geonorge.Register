@@ -60,7 +60,7 @@ namespace Kartverket.Register.Tests.Controllers
         public void ShouldReturnOrganizationByNumber()
         {
             var service = new Mock<IOrganizationService>();
-            service.Setup(s => s.GetOrganizationByNumber(OrganizationNumber)).Returns(_organization);
+            service.Setup(s => s.GetOrganizationByNumber(OrganizationNumber, "no")).Returns(_organization);
             var controller = new OrganizationsApiController(service.Object);
             //controller.Url = CreateMockUrlHelper();
 

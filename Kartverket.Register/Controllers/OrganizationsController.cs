@@ -159,7 +159,7 @@ namespace Kartverket.Register.Controllers
 
         private bool NameIsValid(Organization organization)
         {
-            return _registerItemService.ItemNameAlredyExist(organization);
+            return _registerItemService.ItemNameIsValid(organization);
         }
 
         //// GET: Organizations/Edit/5

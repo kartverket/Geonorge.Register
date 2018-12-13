@@ -93,7 +93,12 @@ namespace Kartverket.Register.Controllers
                 codelist = _registerService.GetRegisterByName(systemid);
                 return codelist == null ? (IHttpActionResult) NotFound() : Ok(ConvertRegisterAndNextLevel(codelist));
             }
-            return Ok(ConvertRegisterAndNextLevel(codelist));
+
+            var totalNumberOfItems = codelist.items.Count;
+            var result = (ConvertRegisterAndNextLevel(codelist));
+            result.ContainedItemsResult.Total = totalNumberOfItems;
+
+            return Ok(result);
         }
 
 

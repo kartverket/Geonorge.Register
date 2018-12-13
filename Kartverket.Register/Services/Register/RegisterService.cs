@@ -1081,20 +1081,17 @@ namespace Kartverket.Register.Services.Register
             _dbContext.SaveChanges();
         }
 
-        public bool RegisterNameAlredyExist(object model)
+        public bool RegisterNameIsValid(object model)
         {
             if (model is Models.Register register)
             {
                 var queryResults = from o in _dbContext.Registers
-                                   where o.name == register.name &&
+                                   where (o.name == register.name || o.seoname == RegisterUrls.MakeSeoFriendlyString(register.name)) &&
                                          o.systemId != register.systemId &&
                                          o.parentRegisterId == register.parentRegister.systemId
                                    select o.systemId;
 
-                if (queryResults.ToList().Any())
-                {
-                    return true;
-                }
+                return !queryResults.ToList().Any();
             }
             return false;
         }

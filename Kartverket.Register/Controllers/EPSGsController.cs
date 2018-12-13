@@ -330,7 +330,7 @@ namespace Kartverket.Register.Controllers
 
         private bool NameIsValid(EPSG epsgKode)
         {
-            return _registerItemService.ItemNameAlredyExist(epsgKode);
+            return _registerItemService.ItemNameIsValid(epsgKode);
         }
 
         private string EPSGName(string name)

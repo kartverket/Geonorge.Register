@@ -124,7 +124,7 @@ namespace Kartverket.Register.Controllers
                 codelistValue.registerId = codelistValue.register.systemId;
                 if (_accessControlService.Access(codelistValue.register))
                 {
-                    if (!_registerItemService.ItemNameAlredyExist(codelistValue))
+                    if (!_registerItemService.ItemNameIsValid(codelistValue))
                     {
                         ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
                         return View(codelistValue);
@@ -348,7 +348,7 @@ namespace Kartverket.Register.Controllers
 
         private bool NameIsValid(CodelistValue codelistValue)
         {
-            return _registerItemService.ItemNameAlredyExist(codelistValue);
+            return _registerItemService.ItemNameIsValid(codelistValue);
         }
 
         private void InitialisationCodelistValue(CodelistValue codelistValue, List<Guid> narrower, Guid? broader, CodelistValue originalCodelistValue)

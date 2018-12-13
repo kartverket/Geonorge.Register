@@ -1052,7 +1052,7 @@
             <param name="organizationName"></param>
             <returns></returns>
         </member>
-        <member name="M:Kartverket.Register.Services.RegisterItem.RegisterItemService.ItemNameAlredyExist(System.Object)">
+        <member name="M:Kartverket.Register.Services.RegisterItem.RegisterItemService.ItemNameIsValid(System.Object)">
             <summary>
             Item name must be unique in one registery
             </summary>

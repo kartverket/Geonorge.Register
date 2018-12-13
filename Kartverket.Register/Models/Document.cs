@@ -93,6 +93,10 @@ namespace Kartverket.Register.Models
 
         internal bool isCurrentVersion()
         {
+            if (seoname == "breutstrekning-for-perioden-1999-2006")
+            {
+                var test = status.description;
+            }
             if (versioning != null)
             {
                 return systemId == versioning.currentVersion;

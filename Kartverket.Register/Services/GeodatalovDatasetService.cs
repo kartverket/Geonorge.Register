@@ -267,7 +267,7 @@ namespace Kartverket.Register.Services
 
         private void NewGeodatalovDatasetFromKartkatalogen(GeodatalovDataset geodatalovDataset)
         {
-            if (_registerItemService.ItemNameAlredyExist(geodatalovDataset)) return;
+            if (!_registerItemService.ItemNameIsValid(geodatalovDataset)) return;
             geodatalovDataset.SystemId = Guid.NewGuid();
             geodatalovDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(geodatalovDataset.Name);
             geodatalovDataset.SubmitterId = _registerService.GetOrganizationIdByUserName();

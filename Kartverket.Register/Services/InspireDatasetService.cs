@@ -90,7 +90,7 @@ namespace Kartverket.Register.Services
 
         private void NewInspireDatasetFromKartkatalogen(InspireDataset inspireDataset, Synchronize synchronizationJob)
         {
-            if (_registerItemService.ItemNameAlredyExist(inspireDataset))
+            if (!_registerItemService.ItemNameIsValid(inspireDataset))
             {
                 synchronizationJob.FailCount++;
                 synchronizationJob.FailLog.Add(new SyncLogEntry(inspireDataset, "Navn finnes fra før"));
@@ -607,7 +607,7 @@ namespace Kartverket.Register.Services
 
         private void NewInspireDataServiceFromKartkatalogen(InspireDataService inspireDataService, Synchronize synchronizationJob)
         {
-            if (_registerItemService.ItemNameAlredyExist(inspireDataService)) return;
+            if (!_registerItemService.ItemNameIsValid(inspireDataService)) return;
             inspireDataService.SystemId = Guid.NewGuid();
             inspireDataService.Seoname = RegisterUrls.MakeSeoFriendlyString(inspireDataService.Name);
             inspireDataService.SubmitterId = _registerService.GetOrganizationIdByUserName();

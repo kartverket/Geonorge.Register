@@ -72,7 +72,7 @@ namespace Kartverket.Register.Controllers
                     ModelState.AddModelError("ErrorMessage", "Det har oppstått en feil ved henting av metadata...");
                 }
             }
-            if (_registerItemService.ItemNameAlredyExist(viewModel))
+            if (!_registerItemService.ItemNameIsValid(viewModel))
             {
                 ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
                 return View(viewModel);

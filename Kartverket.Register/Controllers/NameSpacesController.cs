@@ -70,34 +70,36 @@ namespace Kartverket.Register.Controllers
             {
                 parentRegisterOwner = nameSpace.register.parentRegister.owner.seoname;
             }
-            
-            ValidationName(nameSpace, nameSpace.register);
 
-            if (ModelState.IsValid)
+            if (_registerItemService.ItemNameIsValid(nameSpace))
             {
-                nameSpace.systemId = Guid.NewGuid();
-                if (nameSpace.name == null)
-                    nameSpace.name = "ikke angitt";
-                nameSpace.systemId = Guid.NewGuid();
-                nameSpace.modified = DateTime.Now;
-                nameSpace.dateSubmitted = DateTime.Now;
-                nameSpace.registerId = nameSpace.register.systemId;
-                nameSpace.statusId = "Submitted";
-                nameSpace.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(nameSpace.name);
-                nameSpace.versionNumber = 1;
-                nameSpace.versioningId = _registerItemService.NewVersioningGroup(nameSpace);
+                if (ModelState.IsValid)
+                {
+                    nameSpace.systemId = Guid.NewGuid();
+                    if (nameSpace.name == null)
+                        nameSpace.name = "ikke angitt";
+                    nameSpace.systemId = Guid.NewGuid();
+                    nameSpace.modified = DateTime.Now;
+                    nameSpace.dateSubmitted = DateTime.Now;
+                    nameSpace.registerId = nameSpace.register.systemId;
+                    nameSpace.statusId = "Submitted";
+                    nameSpace.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(nameSpace.name);
+                    nameSpace.versionNumber = 1;
+                    nameSpace.versioningId = _registerItemService.NewVersioningGroup(nameSpace);
 
-                Organization organization = GetSubmitter(nameSpace);
-                nameSpace.submitterId = organization.systemId;
+                    Organization organization = GetSubmitter(nameSpace);
+                    nameSpace.submitterId = organization.systemId;
 
-                _db.RegisterItems.Add(nameSpace);
-                _db.SaveChanges();
+                    _db.RegisterItems.Add(nameSpace);
+                    _db.SaveChanges();
 
-                
-                return Redirect(nameSpace.GetObjectUrl());
-                
-               
+
+                    return Redirect(nameSpace.GetObjectUrl());
+
+
+                }
             }
+
             return View(nameSpace);
         }
 

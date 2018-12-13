@@ -64,7 +64,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.Access(serviceAlert.register))
                 {
-                    if (!_registerItemService.ItemNameAlredyExist(serviceAlert))
+                    if (!_registerItemService.ItemNameIsValid(serviceAlert))
                     {
                         ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
                         return View(serviceAlert);

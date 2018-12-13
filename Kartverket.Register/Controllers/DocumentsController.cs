@@ -178,7 +178,7 @@ namespace Kartverket.Register.Controllers
             var originalDocument = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, document.versionNumber);
             if (originalDocument != null)
             {
-                if (!_registerItemService.ItemNameAlredyExist(document))
+                if (!_registerItemService.ItemNameIsValid(document))
                 {
                     ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
                 }
@@ -270,7 +270,7 @@ namespace Kartverket.Register.Controllers
         /// <returns></returns>
         private bool NameIsValid(Document document)
         {
-            return _registerItemService.ItemNameAlredyExist(document);
+            return _registerItemService.ItemNameIsValid(document);
         }
 
         /// <summary>

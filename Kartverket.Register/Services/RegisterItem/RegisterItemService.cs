@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Services.RegisterItem
@@ -367,29 +368,22 @@ namespace Kartverket.Register.Services.RegisterItem
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool ItemNameAlredyExist(object model)
+        public bool ItemNameIsValid(object model)
         {
             if (model is Models.RegisterItem)
             {
-                if (model is Dataset)
-                {
-                    return ValidateNameDataset(model);
-                }
-                else
-                {
-                    return ValidateNameRegisterItem(model);
-                }
+                return model is Dataset ? ValidateNameDataset(model) : ValidateNameRegisterItem(model);
             }
             if (model is RegisterItemV2ViewModel)
             {
                 if (model is InspireDatasetViewModel)
                 {
-                    return InspireDatasetNameAlreadyExist((InspireDatasetViewModel)model);
+                    return ValidNameInspireDataset((InspireDatasetViewModel)model);
                 }
             }
             if (model is InspireDataset)
             {
-                return InspireDatasetNameAlreadyExist((InspireDataset)model);
+                return ValidNameInspireDataset((InspireDataset)model);
             }
             if (model is GeodatalovDataset)
             {
@@ -402,83 +396,67 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             if (geodatalovDataset == null) throw new ArgumentNullException(nameof(geodatalovDataset));
             var queryResults = from o in _dbContext.GeodatalovDatasets
-                               where o.Name == geodatalovDataset.Name &&
+                               where (o.Name == geodatalovDataset.Name || o.Seoname == RegisterUrls.MakeSeoFriendlyString(geodatalovDataset.Name)) &&
                                      o.SystemId != geodatalovDataset.SystemId
                                      && o.RegisterId == geodatalovDataset.RegisterId
                                select o.SystemId;
 
-            return queryResults.Any();
+            return !queryResults.Any();
         }
 
-        private bool InspireDatasetNameAlreadyExist(InspireDatasetViewModel inspireDataset)
+        private bool ValidNameInspireDataset(InspireDatasetViewModel inspireDataset)
         {
             var queryResults = from o in _dbContext.InspireDatasets
-                               where o.Name == inspireDataset.Name &&
+                               where (o.Name == inspireDataset.Name || o.Seoname == RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name)) &&
                                      o.SystemId != inspireDataset.SystemId
                                      && o.RegisterId == inspireDataset.RegisterId
                                select o.SystemId;
 
-            return queryResults.Any();
+            return !queryResults.ToList().Any();
         }
 
-        private bool InspireDatasetNameAlreadyExist(InspireDataset inspireDataset)
+        private bool ValidNameInspireDataset(InspireDataset inspireDataset)
         {
             if (inspireDataset == null) throw new ArgumentNullException(nameof(inspireDataset));
             var queryResults = from o in _dbContext.InspireDatasets
-                               where o.Name == inspireDataset.Name &&
+                               where (o.Name == inspireDataset.Name || o.Seoname == RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name)) &&
                                      o.SystemId != inspireDataset.SystemId
                                      && o.RegisterId == inspireDataset.RegisterId
                                select o.SystemId;
 
-            return queryResults.Any();
+            return !queryResults.ToList().Any();
         }
 
         private bool ValidateNameRegisterItem(object model)
         {
             Models.RegisterItem registeritem = (Models.RegisterItem)model;
             var queryResults = from o in _dbContext.RegisterItems
-                               where o.name == registeritem.name &&
+                               where (o.name == registeritem.name || o.seoname == RegisterUrls.MakeSeoFriendlyString(registeritem.name)) &&
                                      o.systemId != registeritem.systemId
                                      && o.registerId == registeritem.registerId
                                      && o.versioningId != registeritem.versioningId
                                select o;
 
-            if (queryResults.Count() > 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return !queryResults.ToList().Any();
         }
 
         private bool ValidateNameDataset(object model)
         {
             Dataset dataset = (Dataset)model;
-            if (dataset.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+            if (dataset.register.IsDokMunicipal())
             {
                 var queryResultsDataset = from o in _dbContext.Datasets
-                                          where o.name == dataset.name
+                                          where (o.name == dataset.name || o.seoname == RegisterUrls.MakeSeoFriendlyString(dataset.name))
                                                 && o.systemId != dataset.systemId
                                                 && o.registerId == dataset.registerId
                                                 //&& o.versioningId != dataset.versioningId
                                                 && o.datasetownerId == dataset.datasetownerId
                                           select o.systemId;
 
-                if (queryResultsDataset.Count() > 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return !queryResultsDataset.ToList().Any();
             }
-            else
-            {
-                return ValidateNameRegisterItem(model);
-            }
+
+            return ValidateNameRegisterItem(model);
         }
 
         public void SaveNewRegisterItem(Models.RegisterItem item)
@@ -1618,7 +1596,7 @@ namespace Kartverket.Register.Services.RegisterItem
                     var codeListValueImport = line.Split(';');
 
                     var codelistValue = _codelistValueService.NewCodelistValueFromImport(register, codeListValueImport);
-                    if (!ItemNameAlredyExist(codelistValue)) return;
+                    if (!ItemNameIsValid(codelistValue)) return;
                     codelistValue.versionNumber = 1;
                     codelistValue.versioningId = NewVersioningGroup(codelistValue);
                     SaveNewRegisterItem(codelistValue);

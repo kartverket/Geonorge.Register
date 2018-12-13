@@ -79,7 +79,7 @@ namespace Kartverket.Register.Controllers
         //[Route("dokument/{registername}/ny")]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerowner)
         {
-            document.register = _registerService.GetSubregisterByName(parentRegister, registername);
+            document.register = _registerService.GetRegister(parentRegister, registername);
             if (_accessControlService.Access(document.register))
             {
                 if (!NameIsValid(document))

@@ -396,10 +396,11 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             if (geodatalovDataset == null) throw new ArgumentNullException(nameof(geodatalovDataset));
             var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(geodatalovDataset.Name);
+            var registerId = geodatalovDataset.Register?.systemId ?? geodatalovDataset.RegisterId;
             var queryResults = from o in _dbContext.GeodatalovDatasets
                                where (o.Name == geodatalovDataset.Name || o.Seoname == seoFriendlyName) &&
                                      o.SystemId != geodatalovDataset.SystemId
-                                     && o.RegisterId == geodatalovDataset.RegisterId
+                                     && o.RegisterId == registerId
                                select o.SystemId;
 
             return !queryResults.Any();
@@ -408,10 +409,11 @@ namespace Kartverket.Register.Services.RegisterItem
         private bool ValidNameInspireDataset(InspireDatasetViewModel inspireDataset)
         {
             var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
+            var registerId = inspireDataset.Register?.systemId ?? inspireDataset.RegisterId;
             var queryResults = from o in _dbContext.InspireDatasets
                                where (o.Name == inspireDataset.Name || o.Seoname == seoFriendlyName) &&
                                      o.SystemId != inspireDataset.SystemId
-                                     && o.RegisterId == inspireDataset.RegisterId
+                                     && o.RegisterId == registerId
                                select o.SystemId;
 
             return !queryResults.ToList().Any();
@@ -421,10 +423,11 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             if (inspireDataset == null) throw new ArgumentNullException(nameof(inspireDataset));
             var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
+            var registerId = inspireDataset.Register?.systemId ?? inspireDataset.RegisterId;
             var queryResults = from o in _dbContext.InspireDatasets
                                where (o.Name == inspireDataset.Name || o.Seoname == seoFriendlyName) &&
                                      o.SystemId != inspireDataset.SystemId
-                                     && o.RegisterId == inspireDataset.RegisterId
+                                     && o.RegisterId == registerId
                                select o.SystemId;
 
             return !queryResults.ToList().Any();
@@ -434,10 +437,13 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             Models.RegisterItem registeritem = (Models.RegisterItem)model;
             var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(registeritem.name);
+            var registerId = registeritem.register?.systemId ?? registeritem.registerId;
+
+
             var queryResults = from o in _dbContext.RegisterItems
                                where (o.name == registeritem.name || o.seoname == seoFriendlyName) &&
                                      o.systemId != registeritem.systemId
-                                     && o.registerId == registeritem.registerId
+                                     && o.registerId == registerId
                                      && o.versioningId != registeritem.versioningId
                                select o;
 
@@ -447,13 +453,14 @@ namespace Kartverket.Register.Services.RegisterItem
         private bool ValidateNameDataset(object model)
         {
             Dataset dataset = (Dataset)model;
+            var registerId = dataset.register?.systemId ?? dataset.registerId;
             if (dataset.register.IsDokMunicipal())
             {
                 var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(dataset.name);
                 var queryResultsDataset = from o in _dbContext.Datasets
                                           where (o.name == dataset.name || o.seoname == seoFriendlyName)
                                                 && o.systemId != dataset.systemId
-                                                && o.registerId == dataset.registerId
+                                                && o.registerId == registerId
                                                 //&& o.versioningId != dataset.versioningId
                                                 && o.datasetownerId == dataset.datasetownerId
                                           select o.systemId;

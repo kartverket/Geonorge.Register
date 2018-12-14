@@ -426,10 +426,7 @@ namespace Kartverket.Register.Controllers
             {
                 return _registerItemService.NewVersioningGroup(dataset);
             }
-            else
-            {
                 return dataset.GetVersioningId();
-            }
         }
 
 
@@ -575,12 +572,12 @@ namespace Kartverket.Register.Controllers
             dataset.dokDeliveryAtomFeedStatusAutoUpdate = inputDataset.dokDeliveryAtomFeedStatusAutoUpdate;
             dataset.SpecificUsage = inputDataset.SpecificUsage;
             dataset.restricted = inputDataset.restricted;
-            dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDownloadStatus(dataset.Uuid, dataset.dokDeliveryDistributionStatusAutoUpdate, dataset.dokDeliveryDistributionStatusId);
+            //dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDownloadStatus(dataset.Uuid, dataset.dokDeliveryDistributionStatusAutoUpdate, dataset.dokDeliveryDistributionStatusId);
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             dataset.dokDeliveryDistributionStatusNote = inputDataset.dokDeliveryDistributionStatusNote;
             dataset.dokDeliveryDistributionStatusAutoUpdate = inputDataset.dokDeliveryDistributionStatusAutoUpdate;
             dataset.dokDeliveryDistributionStatusId = inputDataset.dokDeliveryDistributionStatusId;
-            dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDownloadStatus(dataset.Uuid, dataset.dokDeliveryDistributionStatusAutoUpdate, dataset.dokDeliveryDistributionStatusId);
+            dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDownloadStatus(dataset.Uuid, dataset.dokDeliveryDistributionStatusAutoUpdate, dataset.dokDeliveryDistributionStatusId, dataset.dokDeliveryWfsStatusId, dataset.dokDeliveryAtomFeedStatusId);
 
             dataset.RegionalPlan = inputDataset.RegionalPlan;
             dataset.RegionalPlanNote = inputDataset.RegionalPlanNote;

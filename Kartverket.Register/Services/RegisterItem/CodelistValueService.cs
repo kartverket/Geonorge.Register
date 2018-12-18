@@ -38,7 +38,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
                     codelistValue.name = codelistValueImport[0];
                     codelistValue.value = codelistValueImport[1];
-                    codelistValue.description = codelistValueImport[7];
+                    codelistValue.description = codelistValueImport[6];
                     codelistValue.registerId = register.systemId;
                     codelistValue.register = register;
 

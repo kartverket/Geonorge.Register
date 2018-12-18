@@ -1085,13 +1085,14 @@ namespace Kartverket.Register.Services.Register
         {
             if (model is Models.Register register)
             {
+                var registerNameSeo = RegisterUrls.MakeSeoFriendlyString(register.name);
                 var queryResults = from o in _dbContext.Registers
-                                   where (o.name == register.name || o.seoname == RegisterUrls.MakeSeoFriendlyString(register.name)) &&
+                                   where (o.name == register.name || o.seoname == registerNameSeo) &&
                                          o.systemId != register.systemId &&
                                          o.parentRegisterId == register.parentRegister.systemId
                                    select o.systemId;
 
-                return !queryResults.ToList().Any();
+                return queryResults.ToList().Any();
             }
             return false;
         }

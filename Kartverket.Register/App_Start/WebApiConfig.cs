@@ -31,6 +31,8 @@ namespace Kartverket.Register
             config.Routes.MapHttpRoute("GetStatusReportsOldExt", "api/register/{registerName}/report.{ext}", new { controller = "ApiRoot", action = "StatusReports" });
             config.Routes.MapHttpRoute("GetStatusReportsOld", "api/register/{registerName}/report", new { controller = "ApiRoot", action = "StatusReports" });
 
+            config.Routes.MapHttpRoute("ReportPost", "api/Report", new { controller = "Report", action = "Post" });
+
             config.MapHttpAttributeRoutes();
 
             var cors = new EnableCorsAttribute("*", "*", "*");

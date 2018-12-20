@@ -86,7 +86,16 @@ namespace Kartverket.Register.Controllers
         {
             string language = Culture.NorwegianCode;
 
+            var lang = Kartverket.Register.Helpers.HttpRequestMessageExtensions.GetQueryString(request, "lang");
+
             CookieHeaderValue cookie = request.Headers.GetCookies("_culture").FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(lang))
+            {
+                cookie = null;
+                language = lang;
+            }
+
             if (cookie != null && !string.IsNullOrEmpty(cookie["_culture"].Value))
             {
                 language = cookie["_culture"].Value;

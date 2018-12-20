@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Kartverket.Register.Controllers;
 using WebApi.BasicAuth;
 
 namespace Kartverket.Register
@@ -11,6 +12,8 @@ namespace Kartverket.Register
     {
         public static void Register(HttpConfiguration config)
         {
+            // Search
+            config.Routes.MapHttpRoute("ApiSearch", "api/Search", new { controller = "ApiSearch", action = "Get" });
 
             // Organization api
             config.Routes.MapHttpRoute("GetOrganizationByName", "api/organisasjon/navn/{name}", new { controller = "OrganizationsApi", action = "GetOrganizationByName" });
@@ -30,6 +33,8 @@ namespace Kartverket.Register
             config.Routes.MapHttpRoute("GetStatusReports", "api/{registerName}/report", new { controller = "ApiRoot", action = "StatusReports" });
             config.Routes.MapHttpRoute("GetStatusReportsOldExt", "api/register/{registerName}/report.{ext}", new { controller = "ApiRoot", action = "StatusReports" });
             config.Routes.MapHttpRoute("GetStatusReportsOld", "api/register/{registerName}/report", new { controller = "ApiRoot", action = "StatusReports" });
+
+            config.Routes.MapHttpRoute("ReportPost", "api/Report", new { controller = "Report", action = "Post" });
 
             config.MapHttpAttributeRoutes();
 

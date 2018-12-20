@@ -858,7 +858,7 @@ namespace Kartverket.Register.Services.Register
             if (string.IsNullOrWhiteSpace(parentRegisterName))
             {
                 var queryResults = from r in _dbContext.Registers
-                                   where r.seoname == registerName &&
+                                   where (r.seoname == registerName || r.name == registerName) &&
                                    r.parentRegister == null
                                    select r;
 
@@ -871,8 +871,8 @@ namespace Kartverket.Register.Services.Register
             else
             {
                 var queryResults = from r in _dbContext.Registers
-                                   where r.seoname == registerName &&
-                                   r.parentRegister.seoname == parentRegisterName
+                                   where (r.seoname == registerName || r.name == registerName) &&
+                                  (r.parentRegister.seoname == parentRegisterName || r.parentRegister.name == parentRegisterName)
                                    select r;
 
                 var result = queryResults.FirstOrDefault();

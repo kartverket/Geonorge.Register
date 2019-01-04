@@ -59,10 +59,8 @@ namespace Kartverket.Register.Controllers
                 {
                     return View(dataset);
                 }
-                else
-                {
-                    throw new HttpException(401, "Access Denied");
-                }
+
+                throw new HttpException(401, "Access Denied");
             }
             return HttpNotFound("Finner ikke registeret");
         }
@@ -101,7 +99,6 @@ namespace Kartverket.Register.Controllers
                     }
                     else if (!string.IsNullOrWhiteSpace(dataset.name))
                     {
-                        // TODO fikse validering... 
                         if (!NameIsValid(dataset))
                         {
                             ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
@@ -110,9 +107,8 @@ namespace Kartverket.Register.Controllers
                         }
                         if (ModelState.IsValid)
                         {
-                            dataset = initialisationDataset(dataset);
                             dataset = GetMetadataFromKartkatalogen(dataset, dataset.Uuid);
-                            dataset.datasetowner = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.datasetownerId);
+                            dataset = _datasetService.UpdateDataset(dataset);
                             dataset.StatusHistories = _statusReportService.GetStatusHistoriesByDataset(dataset);
                             _registerItemService.SaveNewRegisterItem(dataset);
                             return Redirect(dataset.GetObjectUrl());
@@ -168,7 +164,6 @@ namespace Kartverket.Register.Controllers
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(model.MunicipalityCode))
             {
                 ViewBag.SearchString = searchString;
-
                 model.DatasetOwner = _registerItemService.GetMunicipalityOrganizationByNr(model.MunicipalityCode);
 
                 if (model.SelectedList != null)
@@ -194,7 +189,7 @@ namespace Kartverket.Register.Controllers
                             {
                                 model.SelectedList = new List<MetadataItemViewModel>();
                             }
-                            if(!model.SelectedList.Any(metaItem => metaItem.Uuid == item.Uuid))
+                            if(model.SelectedList.All(metaItem => metaItem.Uuid != item.Uuid))
                                 model.SelectedList.Add(item);
                         }
                     }
@@ -210,13 +205,12 @@ namespace Kartverket.Register.Controllers
                 {
                     foreach (var item in model.SelectedList)
                     {
-
                             Dataset dataset = new Dataset();
                             dataset = GetMetadataFromKartkatalogen(dataset, item.Uuid);
                             dataset.register = model.Register;
                             dataset.datasetowner = model.DatasetOwner;
                             dataset.datasetownerId = model.DatasetOwner.systemId;
-                            dataset = initialisationDataset(dataset);
+                            dataset = _datasetService.UpdateDataset(dataset);
                             _registerItemService.SaveNewRegisterItem(dataset);
                     }
                     return Redirect(model.Register.GetObjectUrl() + "?municipality=" + model.MunicipalityCode);
@@ -243,7 +237,7 @@ namespace Kartverket.Register.Controllers
                 {
                     if (!string.IsNullOrEmpty(dataset.Uuid))
                     {
-                        Dataset model = GetMetadataFromKartkatalogen(dataset, dataset.Uuid, false);
+                        Dataset model = GetMetadataFromKartkatalogen(dataset, dataset.Uuid);
                         Viewbags(model);
                         return View(model);
                     }
@@ -281,18 +275,18 @@ namespace Kartverket.Register.Controllers
                 {
                     if (_accessControlService.IsAdmin())
                     {
-                        return EditDataset(dataset, registername, parentRegister, registerowner, originalDataset);
+                        return EditDataset(dataset, originalDataset);
                     }
                     if (_accessControlService.IsMunicipalUser())
                     {
-                        return EditCoverageDataset(coverage, registername, parentRegister, registerowner, originalDataset);
+                        return EditCoverageDataset(coverage, originalDataset);
                     }
                 }
                 else if (_accessControlService.Access(originalDataset))
                 {
                     if (ModelState.IsValid)
                     {
-                        return EditDataset(dataset, registername, parentRegister, registerowner, originalDataset, coverage);
+                        return EditDataset(dataset, originalDataset, coverage);
                     }
                 }
                 else
@@ -353,8 +347,8 @@ namespace Kartverket.Register.Controllers
                 for (int s = 0; s < res.Items.Length; s++)
                 {
                     MetadataItemViewModel m = new MetadataItemViewModel();
-                    m.Uuid = ((www.opengis.net.DCMIRecordType)(res.Items[s])).Items[0].Text[0];
-                    m.Title = ((www.opengis.net.DCMIRecordType)(res.Items[s])).Items[2].Text[0];
+                    m.Uuid = ((DCMIRecordType)(res.Items[s])).Items[0].Text[0];
+                    m.Title = ((DCMIRecordType)(res.Items[s])).Items[2].Text[0];
                     result.Add(m);
                 }
             }
@@ -366,16 +360,6 @@ namespace Kartverket.Register.Controllers
         {
             SearchResultsType result = new MetadataService(db).SearchMetadata(searchString);
             return result;
-        }
-
-        private Guid GetDatasetOwnerId(Guid datasetownerId)
-        {
-            if (datasetownerId == null || datasetownerId == Guid.Empty)
-            {
-                Organization datasetOwner = _registerService.GetOrganizationByUserName();
-                return datasetOwner.systemId;
-            }
-            return datasetownerId;
         }
 
         protected override void Dispose(bool disposing)
@@ -409,27 +393,6 @@ namespace Kartverket.Register.Controllers
             return registerName == "Det offentlige kartgrunnlaget - Kommunalt";
         }
 
-        private bool GetConfirmedDok(CoverageDataset inputCoverage)
-        {
-            if (inputCoverage != null)
-            {
-                return inputCoverage.ConfirmedDok;
-            }
-            else {
-                return false;
-            }
-        }
-
-        private Guid GetVersioningId(Dataset dataset)
-        {
-            if (dataset.versioningId == null || dataset.versioningId == Guid.Empty)
-            {
-                return _registerItemService.NewVersioningGroup(dataset);
-            }
-                return dataset.GetVersioningId();
-        }
-
-
         private bool NameIsValid(Dataset dataset)
         {
             return _registerItemService.ItemNameIsValid(dataset);
@@ -440,7 +403,7 @@ namespace Kartverket.Register.Controllers
             var model = new Dataset();
             try
             {
-                model = new MetadataService(db).UpdateDatasetWithMetadata(dataset, uuid, dataset, dontUpdateDescription);
+                model = new MetadataService(db).UpdateDatasetWithMetadata(dataset, uuid, dontUpdateDescription);
             }
             catch (Exception e)
             {
@@ -478,7 +441,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.EenvironmentalImpactAssessment = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.EenvironmentalImpactAssessment);
         }
 
-        private ActionResult EditDataset(Dataset dataset, string registername, string parentRegister, string registerowner, Dataset originalDataset, CoverageDataset coverage = null)
+        private ActionResult EditDataset(Dataset dataset, Dataset originalDataset, CoverageDataset coverage = null)
         {
             dataset.register = originalDataset.register;
             if (!NameIsValid(dataset))
@@ -487,206 +450,18 @@ namespace Kartverket.Register.Controllers
                 Viewbags(originalDataset);
                 return View(originalDataset);
             }
-            initialisationDataset(dataset, originalDataset, coverage);
+
+            dataset = _datasetService.UpdateDataset(dataset, originalDataset, coverage);
             _translationService.UpdateTranslations(dataset, originalDataset);
             _registerItemService.SaveEditedRegisterItem(originalDataset);
             return Redirect(originalDataset.GetObjectUrl());
         }
 
-        private ActionResult EditCoverageDataset(CoverageDataset coverage, string registername, string parentRegister, string registerowner, Dataset originalDataset)
+        private ActionResult EditCoverageDataset(CoverageDataset coverage, Dataset originalDataset)
         {
-            initialisationCoverageDataset(coverage, originalDataset);
+            originalDataset.Coverage = _datasetService.EditDatasetCoverage(coverage, originalDataset);
             _registerItemService.SaveEditedRegisterItem(originalDataset);
             return Redirect(originalDataset.register.GetDokMunicipalityUrl());
-        }
-
-        private Guid SetMunicipality()
-        {
-            Organization municipality = _registerService.GetOrganizationByUserName();
-            return municipality.systemId;
-        }
-
-
-        private Dataset initialisationDataset(Dataset inputDataset, Dataset originalDataset = null, CoverageDataset inputCoverage = null)
-        {
-            Dataset dataset = GetDataset(originalDataset);
-            dataset.systemId = inputDataset.GetSystemId();
-            dataset.modified = dataset.GetDateModified();
-            dataset.dateSubmitted = dataset.GetDateSubmbitted();
-            dataset.registerId = inputDataset.register.GetSystemId();
-            dataset.register = GetRegister(inputDataset.register, dataset.register);
-            dataset.DatasetType = dataset.GetDatasetType();
-            dataset.statusId = dataset.SetStatusId();
-            dataset.dokStatusId = inputDataset.GetDokStatus();
-            dataset.dokStatusDateAccepted = inputDataset.GetDokStatusDateAccepted();
-            dataset.Kandidatdato = inputDataset.Kandidatdato;
-            dataset.versionNumber = dataset.GetVersionNr();
-            dataset.name = inputDataset.GetName();
-            dataset.seoname = RegisterUrls.MakeSeoFriendlyString(dataset.name);
-            dataset.description = inputDataset.GetDescription();
-            dataset.versioningId = GetVersioningId(dataset);
-            Guid originalDatasetownerId = GetDatasetOriginalOwnerId(originalDataset);
-            dataset.datasetownerId = GetDatasetOwnerId(inputDataset.datasetownerId);
-            dataset.datasetowner = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.datasetownerId);
-            dataset.submitterId = GetSubmitterId(inputDataset.submitterId);
-            dataset.submitter = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.submitterId);
-            dataset.DistributionUrl = inputDataset.GetDistributionUrl();
-            dataset.MetadataUrl = inputDataset.GetMetadataUrl();
-            dataset.PresentationRulesUrl = inputDataset.GetPresentationRulesUrl();
-            dataset.ProductSheetUrl = inputDataset.GetProductSheetUrl();
-            dataset.ProductSpecificationUrl = inputDataset.GetProductSpecificationUrl();
-            dataset.UuidService = inputDataset.UuidService;
-            dataset.WmsUrl = inputDataset.GetWmsUrl();
-            dataset.DistributionFormat = inputDataset.GetDistributionFormat();
-            dataset.DistributionArea = inputDataset.GetDistributionArea();
-            dataset.Notes = inputDataset.GetNotes();
-            dataset.ThemeGroupId = inputDataset.GetThemeGroupId();
-            dataset.datasetthumbnail = inputDataset.Getdatasetthumbnail();
-            dataset.Uuid = inputDataset.Uuid;
-            dataset.dokDeliveryMetadataStatusId = _datasetDeliveryService.GetMetadataStatus(inputDataset.Uuid, inputDataset.dokDeliveryMetadataStatusAutoUpdate, inputDataset.dokDeliveryMetadataStatusId);
-            dataset.dokDeliveryMetadataStatusNote = inputDataset.dokDeliveryMetadataStatusNote;
-            dataset.dokDeliveryMetadataStatusAutoUpdate = inputDataset.dokDeliveryMetadataStatusAutoUpdate;
-            dataset.dokDeliveryProductSheetStatusId = _registerService.GetDOKStatus(inputDataset.GetProductSheetUrl(), inputDataset.dokDeliveryProductSheetStatusAutoUpdate, inputDataset.dokDeliveryProductSheetStatusId);
-            dataset.dokDeliveryProductSheetStatusNote = inputDataset.dokDeliveryProductSheetStatusNote;
-            dataset.dokDeliveryProductSheetStatusAutoUpdate = inputDataset.dokDeliveryProductSheetStatusAutoUpdate;
-            dataset.dokDeliveryPresentationRulesStatusId = _registerService.GetDOKStatus(inputDataset.GetPresentationRulesUrl(), inputDataset.dokDeliveryPresentationRulesStatusAutoUpdate, inputDataset.dokDeliveryPresentationRulesStatusId);
-            dataset.dokDeliveryPresentationRulesStatusNote = inputDataset.dokDeliveryPresentationRulesStatusNote;
-            dataset.dokDeliveryPresentationRulesStatusAutoUpdate = inputDataset.dokDeliveryPresentationRulesStatusAutoUpdate;
-            dataset.dokDeliveryProductSpecificationStatusId = _registerService.GetDOKStatus(inputDataset.GetProductSpecificationUrl(), inputDataset.dokDeliveryProductSpecificationStatusAutoUpdate, inputDataset.dokDeliveryProductSpecificationStatusId);
-            dataset.dokDeliveryProductSpecificationStatusNote = inputDataset.dokDeliveryProductSpecificationStatusNote;
-            dataset.dokDeliveryProductSpecificationStatusAutoUpdate = inputDataset.dokDeliveryProductSpecificationStatusAutoUpdate;
-            dataset.dokDeliveryWmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(inputDataset.Uuid, inputDataset.dokDeliveryWmsStatusAutoUpdate, inputDataset.dokDeliveryWmsStatusId, inputDataset.UuidService);
-            dataset.dokDeliveryWmsStatusNote = inputDataset.dokDeliveryWmsStatusNote;
-            dataset.dokDeliveryWmsStatusAutoUpdate = inputDataset.dokDeliveryWmsStatusAutoUpdate;
-            dataset.dokDeliveryWfsStatusId = _datasetDeliveryService.GetWfsStatus(inputDataset.Uuid, inputDataset.dokDeliveryWfsStatusAutoUpdate, inputDataset.dokDeliveryWfsStatusId);
-            dataset.dokDeliveryWfsStatusNote = inputDataset.dokDeliveryWfsStatusNote;
-            dataset.dokDeliveryWfsStatusAutoUpdate = inputDataset.dokDeliveryWfsStatusAutoUpdate;
-            dataset.dokDeliverySosiRequirementsStatusId = _registerService.GetSosiRequirements(inputDataset.Uuid, inputDataset.GetProductSpecificationUrl(), inputDataset.dokDeliverySosiStatusAutoUpdate, inputDataset.dokDeliverySosiRequirementsStatusId);
-            dataset.dokDeliverySosiRequirementsStatusNote = inputDataset.dokDeliverySosiRequirementsStatusNote;
-            dataset.dokDeliverySosiStatusAutoUpdate = inputDataset.dokDeliverySosiStatusAutoUpdate;
-            dataset.dokDeliveryGmlRequirementsStatusId = _registerService.GetGmlRequirements(inputDataset.Uuid, inputDataset.dokDeliveryGmlRequirementsStatusAutoUpdate, inputDataset.dokDeliveryGmlRequirementsStatusId);
-            dataset.dokDeliveryGmlRequirementsStatusNote = inputDataset.dokDeliveryGmlRequirementsStatusNote;
-            dataset.dokDeliveryGmlRequirementsStatusAutoUpdate = inputDataset.dokDeliveryGmlRequirementsStatusAutoUpdate;
-            dataset.dokDeliveryAtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(inputDataset.Uuid, inputDataset.dokDeliveryAtomFeedStatusAutoUpdate, inputDataset.dokDeliveryAtomFeedStatusId);
-            dataset.dokDeliveryAtomFeedStatusNote = inputDataset.dokDeliveryAtomFeedStatusNote;
-            dataset.dokDeliveryAtomFeedStatusAutoUpdate = inputDataset.dokDeliveryAtomFeedStatusAutoUpdate;
-            dataset.SpecificUsage = inputDataset.SpecificUsage;
-            dataset.restricted = inputDataset.restricted;
-            //dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDownloadStatus(dataset.Uuid, dataset.dokDeliveryDistributionStatusAutoUpdate, dataset.dokDeliveryDistributionStatusId);
-            initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
-            dataset.dokDeliveryDistributionStatusNote = inputDataset.dokDeliveryDistributionStatusNote;
-            dataset.dokDeliveryDistributionStatusAutoUpdate = inputDataset.dokDeliveryDistributionStatusAutoUpdate;
-            dataset.dokDeliveryDistributionStatusId = inputDataset.dokDeliveryDistributionStatusId;
-            dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDownloadStatus(dataset.Uuid, dataset.dokDeliveryDistributionStatusAutoUpdate, dataset.dokDeliveryDistributionStatusId, dataset.dokDeliveryWfsStatusId, dataset.dokDeliveryAtomFeedStatusId);
-
-            dataset.RegionalPlan = inputDataset.RegionalPlan;
-            dataset.RegionalPlanNote = inputDataset.RegionalPlanNote;
-            dataset.MunicipalSocialPlan = inputDataset.MunicipalSocialPlan;
-            dataset.MunicipalSocialPlanNote = inputDataset.MunicipalSocialPlanNote;
-            dataset.MunicipalLandUseElementPlan = inputDataset.MunicipalLandUseElementPlan;
-            dataset.MunicipalLandUseElementPlanNote = inputDataset.MunicipalLandUseElementPlanNote;
-            dataset.ZoningPlanArea = inputDataset.ZoningPlanArea;
-            dataset.ZoningPlanAreaNote = inputDataset.ZoningPlanAreaNote;
-            dataset.ZoningPlanDetails = inputDataset.ZoningPlanDetails;
-            dataset.ZoningPlanDetailsNote = inputDataset.ZoningPlanDetailsNote;
-            dataset.BuildingMatter = inputDataset.BuildingMatter;
-            dataset.BuildingMatterNote = inputDataset.BuildingMatterNote;
-            dataset.PartitionOff = inputDataset.PartitionOff;
-            dataset.PartitionOffNote = inputDataset.PartitionOffNote;
-            dataset.EenvironmentalImpactAssessment = inputDataset.EenvironmentalImpactAssessment;
-            dataset.EenvironmentalImpactAssessmentNote = inputDataset.EenvironmentalImpactAssessmentNote;
-
-            return dataset;
-        }
-
-        private Guid GetSubmitterId(Guid submitterId)
-        {
-            if (submitterId == null || submitterId == Guid.Empty)
-            {
-                Organization submitter = _registerService.GetOrganizationByUserName();
-                return submitter.systemId;
-            }
-            return submitterId;
-        }
-
-        private Guid GetDatasetOriginalOwnerId(Dataset originalDataset)
-        {
-            if (originalDataset != null)
-            {
-                return originalDataset.datasetownerId;
-            }
-            else {
-                return Guid.Empty;
-            }
-        }
-
-        private Models.Register GetRegister(Models.Register inputRegister, Models.Register register)
-        {
-            if (register == null)
-            {
-                return inputRegister;
-            }
-            else {
-                return register;
-            }
-        }
-
-        private void initialisationCoverageDataset(CoverageDataset coverage, Dataset dataset, Guid? originalDatasetOwnerId = null)
-        {
-            if (coverage != null)
-            {
-                CoverageDataset originalCoverage = _registerItemService.GetMunicipalityCoverage(dataset, originalDatasetOwnerId);
-
-                if (dataset.IsMunicipalDataset())
-                {
-                    if (originalCoverage != null)
-                    {
-                        originalCoverage.MunicipalityId = dataset.datasetownerId;
-                        originalCoverage.CoverageDOKStatusId = dataset.dokStatusId;
-                        originalCoverage.ConfirmedDok = GetConfirmedDok(coverage);
-                        _registerItemService.Save();
-                    }
-                }
-                else
-                {
-                    if (originalCoverage == null)
-                    {
-                        CoverageDataset newCoverage = new CoverageDataset()
-                        {
-                            CoverageId = Guid.NewGuid(),
-                            CoverageDOKStatus = coverage.CoverageDOKStatus,
-                            CoverageDOKStatusId = coverage.CoverageDOKStatusId,
-                            ConfirmedDok = coverage.ConfirmedDok,
-                            DatasetId = dataset.systemId,
-                            MunicipalityId = SetMunicipality(),
-                            Note = coverage.Note,
-                        };
-                        _registerItemService.SaveNewCoverage(newCoverage);
-                        dataset.Coverage.Add(newCoverage);
-                    }
-                    else {
-                        originalCoverage.ConfirmedDok = coverage.ConfirmedDok;
-                        originalCoverage.CoverageDOKStatusId = coverage.CoverageDOKStatusId;
-                        originalCoverage.Note = coverage.Note;
-                    }
-                }
-            }
-            else if (coverage == null && dataset.IsMunicipalDataset())
-            {
-                dataset.Coverage.Add(_registerItemService.NewCoverage(dataset));
-            }
-        }
-
-
-        private Dataset GetDataset(Dataset originalDataset)
-        {
-            if (originalDataset != null)
-            {
-                return originalDataset;
-            }
-            else {
-                return new Dataset();
-            }
         }
     }
 }

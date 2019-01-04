@@ -1038,6 +1038,14 @@
         <member name="P:Kartverket.Register.Models.InspireDataService.ServiceType">
             Liste opp alle Annex tjenestene h�rer til..
         </member>
+        <member name="M:Kartverket.Register.Models.Dataset.GetDatasetType">
+            <summary>
+            Municipal or National dataset. 
+            Municipal datasets is dataset created for a municipality in dok municipal registry.
+            National dataset is dataset in dok-status registry
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Kartverket.Register.Models.Organization.OrganizationType">
             <summary>
             Determines what kind of organization: regular or municipality.

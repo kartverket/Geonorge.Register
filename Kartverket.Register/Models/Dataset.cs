@@ -277,14 +277,7 @@ namespace Kartverket.Register.Models
         {
             if (dokStatusId == null)
             {
-                if (IsMunicipalDataset())
-                {
-                    return "Accepted";
-                }
-                else
-                {
-                    return "Proposal";
-                }
+                return IsMunicipalDataset() ? "Accepted" : "Proposal";
             }
             else {
                 return dokStatusId;
@@ -303,17 +296,15 @@ namespace Kartverket.Register.Models
             return dokStatusDateAccepted;
         }
 
-
+        /// <summary>
+        /// Municipal or National dataset. 
+        /// Municipal datasets is dataset created for a municipality in dok municipal registry.
+        /// National dataset is dataset in dok-status registry
+        /// </summary>
+        /// <returns></returns>
         public string GetDatasetType()
         {
-            if (register.IsDokMunicipal())
-            {
-                return DataSet.TypeMunicipality;
-            }
-            else
-            {
-                return DataSet.TypeNational;
-            }
+            return register.IsDokMunicipal() ? DataSet.TypeMunicipality : DataSet.TypeNational;
         }
 
         public string GetDistributionUrl()
@@ -554,6 +545,21 @@ namespace Kartverket.Register.Models
         public string FilterOrganizationUrl()
         {
             return FilterOrganizationUrl() + datasetowner.seoname;
+        }
+
+        public Register SetRegister(Register inputRegister)
+        {
+            return register ?? inputRegister;
+        }
+
+        public Guid GetRegisterId()
+        {
+            return register.GetSystemId();
+        }
+
+        public string GetServceUuid()
+        {
+            return UuidService;
         }
     }//end Dataset
 

@@ -53,7 +53,7 @@
                     <div v-for="item in filteredItems" class="list-item">
                         <div class="row">
                             <div class="col-md-12">
-                                <a v-bind:href="item.ShowDetailsUrl" v-bind:title="'Vis detaljer for ' + item.Title">{{item.Title}}</a>
+                                <a v-bind:href="item.ShowDetailsUrl" v-bind:title="'Vis detaljer for ' + item.DatasetName">{{item.DatasetName}}</a>
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                 items: null,
                 numberOfVisibleItems: 0,
                 filterProperties: [
-                    'Title',
+                    'DatasetName',
                 ]
             }
         },

@@ -71,7 +71,7 @@ namespace Kartverket.Register.Controllers
                     }
                     if (ModelState.IsValid)
                     {
-                        var alertTranslation = new AlertTypes().GetAlertType(serviceAlert.AlertType);
+                        var alertTranslation = new AlertTypes(_registerService).GetAlertType(serviceAlert.AlertType);
                         serviceAlert.GetMetadataByUuid();
                         serviceAlert.submitter = _registerService.GetOrganizationByUserName();
                         serviceAlert.InitializeNewServiceAlert();
@@ -96,7 +96,7 @@ namespace Kartverket.Register.Controllers
         private void ViewBags(ServiceAlert serviceAlert)
         {
             //ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
-            ViewBag.AlertType = new SelectList(new AlertTypes().GetAlertTypes() , "Key", "Value", serviceAlert.AlertType);
+            ViewBag.AlertType = new SelectList(new AlertTypes(_registerService).GetAlertTypes() , "Key", "Value", serviceAlert.AlertType);
             ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", serviceAlert.ServiceUuid);
         }
 

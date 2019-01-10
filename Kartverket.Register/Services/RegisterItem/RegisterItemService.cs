@@ -394,6 +394,10 @@ namespace Kartverket.Register.Services.RegisterItem
 
         private bool GeodatalovDatasetNameAlreadyExist(GeodatalovDataset geodatalovDataset)
         {
+            if (string.IsNullOrWhiteSpace(geodatalovDataset.Name))
+            {
+                return false;
+            }
             if (geodatalovDataset == null) throw new ArgumentNullException(nameof(geodatalovDataset));
             var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(geodatalovDataset.Name);
             var registerId = geodatalovDataset.Register?.systemId ?? geodatalovDataset.RegisterId;
@@ -408,19 +412,30 @@ namespace Kartverket.Register.Services.RegisterItem
 
         private bool ValidNameInspireDataset(InspireDatasetViewModel inspireDataset)
         {
-            var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
-            var registerId = inspireDataset.Register?.systemId ?? inspireDataset.RegisterId;
-            var queryResults = from o in _dbContext.InspireDatasets
-                               where (o.Name == inspireDataset.Name || o.Seoname == seoFriendlyName) &&
-                                     o.SystemId != inspireDataset.SystemId
-                                     && o.RegisterId == registerId
-                               select o.SystemId;
+            if (!string.IsNullOrWhiteSpace(inspireDataset.Name))
+            {
+                var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
+                var registerId = inspireDataset.Register?.systemId ?? inspireDataset.RegisterId;
+                var queryResults = from o in _dbContext.InspireDatasets
+                    where (o.Name == inspireDataset.Name || o.Seoname == seoFriendlyName) &&
+                          o.SystemId != inspireDataset.SystemId
+                          && o.RegisterId == registerId
+                    select o.SystemId;
 
-            return !queryResults.ToList().Any();
+                return !queryResults.ToList().Any();
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private bool ValidNameInspireDataset(InspireDataset inspireDataset)
         {
+            if (string.IsNullOrWhiteSpace(inspireDataset.Name))
+            {
+                return false;
+            }
             if (inspireDataset == null) throw new ArgumentNullException(nameof(inspireDataset));
             var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
             var registerId = inspireDataset.Register?.systemId ?? inspireDataset.RegisterId;
@@ -436,18 +451,23 @@ namespace Kartverket.Register.Services.RegisterItem
         private bool ValidateNameRegisterItem(object model)
         {
             Models.RegisterItem registeritem = (Models.RegisterItem)model;
-            var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(registeritem.name);
-            var registerId = registeritem.register?.systemId ?? registeritem.registerId;
+            if (!string.IsNullOrWhiteSpace(registeritem.name))
+            {
+                var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(registeritem.name);
+                var registerId = registeritem.register?.systemId ?? registeritem.registerId;
 
 
-            var queryResults = from o in _dbContext.RegisterItems
-                               where (o.name == registeritem.name || o.seoname == seoFriendlyName) &&
-                                     o.systemId != registeritem.systemId
-                                     && o.registerId == registerId
-                                     && o.versioningId != registeritem.versioningId
-                               select o;
+                var queryResults = from o in _dbContext.RegisterItems
+                    where (o.name == registeritem.name || o.seoname == seoFriendlyName) &&
+                          o.systemId != registeritem.systemId
+                          && o.registerId == registerId
+                          && o.versioningId != registeritem.versioningId
+                    select o;
 
-            return !queryResults.ToList().Any();
+                return !queryResults.ToList().Any();
+            }
+
+            return false;
         }
 
         private bool ValidateNameDataset(object model)

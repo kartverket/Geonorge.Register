@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DOK_Bekreftet_Kommune" xml:space="preserve">
-    <value>Bekreftelse på data som skal være kommunes DOK</value>
+    <value>Salgt som en del av kommunes DOK</value>
   </data>
   <data name="DOK_Coverage_Municipality" xml:space="preserve">
     <value>Dekning viser om datasettet faktisk finnes i kommunen</value>
@@ -250,10 +250,10 @@
     <value>Velg kommune</value>
   </data>
   <data name="MunicipalDOKConfirmedInfoPlaceholder" xml:space="preserve">
-    <value>Kommunen har {0} bekreftet at registrering er sluttført for året</value>
+    <value>Kommunen har {0} valgt DOK for året</value>
   </data>
   <data name="MunicipalDOKStatusDraft" xml:space="preserve">
-    <value>Kommunen jobber med å sluttføre registreringen for året</value>
+    <value>Kommunen jobber med å velge DOK for året</value>
   </data>
   <data name="NotConfirmedMunicipalDOK" xml:space="preserve">
     <value>ikke</value>
@@ -277,7 +277,7 @@
     <value>Vurderingspunkt</value>
   </data>
   <data name="DOK_Confirmed" xml:space="preserve">
-    <value>Bekreftet</value>
+    <value>Valgt som DOK</value>
   </data>
   <data name="DOK_Coverage" xml:space="preserve">
     <value>Dekning</value>
@@ -331,7 +331,7 @@
     <value>Datasettet finnes fra før!</value>
   </data>
   <data name="MunicipalConfirmation" xml:space="preserve">
-    <value>Kommunal bekreftelse</value>
+    <value>Status for valg av DOK</value>
   </data>
   <data name="DisplayInfoRegistration" xml:space="preserve">
     <value>Vis veiledning om registrering</value>
@@ -343,7 +343,7 @@
     <value>Bakgrunnsfarge</value>
   </data>
   <data name="Coverage" xml:space="preserve">
-    <value>Bekrefte DOK</value>
+    <value>Valg av DOK</value>
   </data>
   <data name="LoadingCoverage" xml:space="preserve">
     <value>Laster Bekrefte DOK</value>

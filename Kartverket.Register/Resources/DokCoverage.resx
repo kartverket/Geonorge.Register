@@ -121,7 +121,7 @@
     <value>Dekningsområde for dette datasettet</value>
   </data>
   <data name="Confirmed" xml:space="preserve">
-    <value>Kommunen har bekreftet dette datasettet</value>
+    <value>Kommunen har valgt dette datasettet som sitt DOK</value>
   </data>
   <data name="DatasetSelection" xml:space="preserve">
     <value>Velg datasett</value>

@@ -121,7 +121,7 @@
     <value>Coverage area of this dataset</value>
   </data>
   <data name="Confirmed" xml:space="preserve">
-    <value>The municipality has confirmed this dataset</value>
+    <value>The municipality has selected this dataset</value>
   </data>
   <data name="DatasetSelection" xml:space="preserve">
     <value>Select dataset</value>

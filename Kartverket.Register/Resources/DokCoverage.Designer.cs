@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kommunen har bekreftet dette datasettet.
+        ///   Looks up a localized string similar to Kommunen har valgt dette datasettet som sitt DOK.
         /// </summary>
         public static string Confirmed {
             get {

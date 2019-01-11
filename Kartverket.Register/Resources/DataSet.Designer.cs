@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bekrefte DOK.
+        ///   Looks up a localized string similar to Valg av DOK.
         /// </summary>
         public static string Coverage {
             get {
@@ -160,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bekreftelse på data som skal være kommunes DOK.
+        ///   Looks up a localized string similar to Salgt som en del av kommunes DOK.
         /// </summary>
         public static string DOK_Bekreftet_Kommune {
             get {
@@ -169,7 +169,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bekreftet.
+        ///   Looks up a localized string similar to Valgt som DOK.
         /// </summary>
         public static string DOK_Confirmed {
             get {
@@ -739,7 +739,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kommunal bekreftelse.
+        ///   Looks up a localized string similar to Status for valg av DOK.
         /// </summary>
         public static string MunicipalConfirmation {
             get {
@@ -748,7 +748,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kommunen har {0} bekreftet at registrering er sluttført for året.
+        ///   Looks up a localized string similar to Kommunen har {0} valgt DOK for året.
         /// </summary>
         public static string MunicipalDOKConfirmedInfoPlaceholder {
             get {
@@ -757,7 +757,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kommunen jobber med å sluttføre registreringen for året.
+        ///   Looks up a localized string similar to Kommunen jobber med å velge DOK for året.
         /// </summary>
         public static string MunicipalDOKStatusDraft {
             get {

@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Kartverket.Register.Controllers
 {
-    public class ServiceAlertsController : Controller
+    public class AlertsController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
         private IRegisterService _registerService;
@@ -20,7 +20,7 @@ namespace Kartverket.Register.Controllers
         private IAccessControlService _accessControlService;
         private IVersioningService _versioningService;
 
-        public ServiceAlertsController(IRegisterItemService registerItemServive, IRegisterService registerService, IAccessControlService accessControlService, IVersioningService versioningService)
+        public AlertsController(IRegisterItemService registerItemServive, IRegisterService registerService, IAccessControlService accessControlService, IVersioningService versioningService)
         {
             _registerItemService = registerItemServive;
             _registerService = registerService;
@@ -28,76 +28,76 @@ namespace Kartverket.Register.Controllers
             _versioningService = versioningService;
         }
 
-        // GET: ServiceAlerts/Create
+        // GET: Alerts/Create
         [Authorize]
         //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
         //[Route("tjenestevarsler/{registerName}/ny")]
         public ActionResult Create(string parentRegister, string registerName)
         {
-            ServiceAlert serviceAlert = new ServiceAlert();
-            serviceAlert.AddMissingTranslations();
-            serviceAlert.register = _registerService.GetRegister(parentRegister, registerName);
-            ViewBags(serviceAlert);
+            Alert alert = new Alert();
+            alert.AddMissingTranslations();
+            alert.register = _registerService.GetRegister(parentRegister, registerName);
+            ViewBags(alert);
 
-            if (serviceAlert.register != null)
+            if (alert.register != null)
             {
-                if (_accessControlService.Access(serviceAlert.register))
+                if (_accessControlService.Access(alert.register))
                 {
-                    return View(serviceAlert);
+                    return View(alert);
                 }
             }
             return HttpNotFound();
         }
 
 
-        // POST: ServiceAlerts/Create
+        // POST: Alerts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
         //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
         //[Route("tjenestevarsler/{registerName}/ny")]
-        public ActionResult Create(ServiceAlert serviceAlert, string parentRegister, string registerName)
+        public ActionResult Create(Alert alert, string parentRegister, string registerName)
         {
-            serviceAlert.register = _registerService.GetRegister(parentRegister, registerName);
-            if (serviceAlert.register != null)
+            alert.register = _registerService.GetRegister(parentRegister, registerName);
+            if (alert.register != null)
             {
-                if (_accessControlService.Access(serviceAlert.register))
+                if (_accessControlService.Access(alert.register))
                 {
-                    if (!_registerItemService.ItemNameIsValid(serviceAlert))
-                    {
-                        ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                        return View(serviceAlert);
-                    }
+                    //if (!_registerItemService.ItemNameIsValid(alert))
+                    //{
+                    //    ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                    //    return View(alert);
+                    //}
                     if (ModelState.IsValid)
                     {
-                        var alertTranslation = new AlertTypes(_registerService).GetAlertType(serviceAlert.AlertType);
-                        serviceAlert.GetMetadataByUuid();
-                        serviceAlert.submitter = _registerService.GetOrganizationByUserName();
-                        serviceAlert.InitializeNewServiceAlert();
-                        serviceAlert.AlertType = alertTranslation.Key.Value;
-                        for (int t = 0; t < serviceAlert.Translations.Count; t++)
+                        var alertTranslation = new AlertTypes(_registerService).GetAlertType(alert.AlertType);
+                        alert.GetMetadataByUuid();
+                        alert.submitter = _registerService.GetOrganizationByUserName();
+                        alert.InitializeNewAlert();
+                        alert.AlertType = alertTranslation.Key.Value;
+                        for (int t = 0; t < alert.Translations.Count; t++)
                         {
                             var translation = alertTranslation.Value;
-                            serviceAlert.Translations[t].AlertType = translation.Where(c => c.Culture.Equals(serviceAlert.Translations[t].CultureName)).Select(s => s.AlertType).FirstOrDefault();
+                            alert.Translations[t].AlertType = translation.Where(c => c.Culture.Equals(alert.Translations[t].CultureName)).Select(s => s.AlertType).FirstOrDefault();
                         }
-                        serviceAlert.versioningId = _registerItemService.NewVersioningGroup(serviceAlert);
-                        serviceAlert.register.modified = System.DateTime.Now;
-                        _registerItemService.SaveNewRegisterItem(serviceAlert);
-                        return Redirect(serviceAlert.GetObjectUrl());
+                        alert.versioningId = _registerItemService.NewVersioningGroup(alert);
+                        alert.register.modified = System.DateTime.Now;
+                        _registerItemService.SaveNewRegisterItem(alert);
+                        return Redirect(alert.GetObjectUrl());
                     }
                 }
             }
-            ViewBags(serviceAlert);
-            return View(serviceAlert);
+            ViewBags(alert);
+            return View(alert);
         }
 
 
-        private void ViewBags(ServiceAlert serviceAlert)
+        private void ViewBags(Alert alert)
         {
-            //ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
-            ViewBag.AlertType = new SelectList(new AlertTypes(_registerService).GetAlertTypes() , "Key", "Value", serviceAlert.AlertType);
-            ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", serviceAlert.ServiceUuid);
+            //ViewBag.AlertType = new SelectList(alert.GetAlertTypes(), alert.AlertType);
+            ViewBag.AlertType = new SelectList(new AlertTypes(_registerService).GetAlertTypes() , "Key", "Value", alert.AlertType);
+            ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", alert.UuidExternal);
         }
 
         public Dictionary<string, string> GetServicesFromKartkatalogen()

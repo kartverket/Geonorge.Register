@@ -80,9 +80,9 @@ namespace Kartverket.Register.Migrations
             }
         }
 
-        internal class ServiceAlertTranslationConfiguration : EntityTypeConfiguration<ServiceAlert>
+        internal class AlertTranslationConfiguration : EntityTypeConfiguration<Alert>
         {
-            public ServiceAlertTranslationConfiguration()
+            public AlertTranslationConfiguration()
             {
                 HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterItemId);
             }
@@ -172,7 +172,7 @@ namespace Kartverket.Register.Migrations
                 new ContainedItemClass { value = "EPSG", description = "EPSG koder" },
                 new ContainedItemClass { value = "Organization", description = "Organisasjoner" },
                 new ContainedItemClass { value = "NameSpace", description = "Navnerom" },
-                new ContainedItemClass { value = "ServiceAlert", description = "Tjenestevarsel" }
+                new ContainedItemClass { value = "Alert", description = "Varsler" }
             );
 
             context.Dimensions.AddOrUpdate(

@@ -45,11 +45,11 @@ namespace Kartverket.Register.Controllers
             string parentRegister = null;
             string registerName = "tjenestevarsler";
 
-            ServiceAlert serviceAlert = new ServiceAlert();
+            Alert serviceAlert = new Alert();
             serviceAlert.name = "navn";
             serviceAlert.AlertType = alertService.AlertType;
             serviceAlert.Note = alertService.Note;
-            serviceAlert.ServiceUuid = alertService.ServiceUuid;
+            serviceAlert.UuidExternal = alertService.ServiceUuid;
             if (alertService.AlertDate.HasValue)
                 serviceAlert.AlertDate = alertService.AlertDate.Value;
 
@@ -64,7 +64,7 @@ namespace Kartverket.Register.Controllers
                     {
                         serviceAlert.GetMetadataByUuid();
                         serviceAlert.submitterId = new Guid("10087020-F17C-45E1-8542-02ACBCF3D8A3");
-                        serviceAlert.InitializeNewServiceAlert();
+                        serviceAlert.InitializeNewAlert();
                         serviceAlert.versioningId = _registerItemService.NewVersioningGroup(serviceAlert);
                         serviceAlert.register.modified = System.DateTime.Now;
                         _registerItemService.SaveNewRegisterItem(serviceAlert);

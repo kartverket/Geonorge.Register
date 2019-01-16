@@ -4,19 +4,19 @@
 
 <div class="table-view">
     <div class="table-heading search-results-table-heading col-md-12">
-        <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], ServiceAlerts.ServiceName, "name")</div>
-        <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], ServiceAlerts.TableHeder_alert, "servicealert")</div>
+        <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.ServiceName, "name")</div>
+        <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeder_alert, "alert")</div>
         <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
-        <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], ServiceAlerts.TableHeader_description, "description")</div>
-        <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], ServiceAlerts.TableHeader_alertDate, "alertdate")</div>
-        <div class="col-md-2 col-sm-12 col text-right">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], ServiceAlerts.TableHeader_effektivedate, "effektivedate")</div>
+        <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeader_description, "description")</div>
+        <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeader_alertDate, "alertdate")</div>
+        <div class="col-md-2 col-sm-12 col text-right">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeader_effektivedate, "effektivedate")</div>
     </div>
 
-    @foreach (ServiceAlert item in Model)
+    @foreach (Alert item in Model)
     {
         <div class="resultItemRow col-md-12">
             <div class="col-sm-12 col-md-3 col">
-                <a href="@item.ServiceMetadataUrl" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
+                <a href="@item.UrlExternal" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
             </div>
             <div class="col-md-2 col-sm-12 col">
                 <p>@item.AlertTypeTranslated()</p>

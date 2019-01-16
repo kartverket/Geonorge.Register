@@ -1526,55 +1526,55 @@ namespace Kartverket.Register.Services.RegisterItem
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
 
-                // ***** ServiceAlert
+                // ***** Alert
                 else if (sorting == "alertdate")
                 {
-                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderBy(o => o.AlertDate);
+                    var epsgSorting = registerItems.OfType<Alert>().OrderBy(o => o.AlertDate);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "alertdate_desc")
                 {
-                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderByDescending(o => o.AlertDate);
+                    var epsgSorting = registerItems.OfType<Alert>().OrderByDescending(o => o.AlertDate);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "effektivedate")
                 {
-                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderBy(o => o.EffectiveDate);
+                    var epsgSorting = registerItems.OfType<Alert>().OrderBy(o => o.EffectiveDate);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "effektivedate_desc")
                 {
-                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderByDescending(o => o.EffectiveDate);
+                    var epsgSorting = registerItems.OfType<Alert>().OrderByDescending(o => o.EffectiveDate);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "owner")
                 {
-                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderBy(o => o.Owner);
+                    var epsgSorting = registerItems.OfType<Alert>().OrderBy(o => o.Owner);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "owner_desc")
                 {
-                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderByDescending(o => o.Owner);
+                    var epsgSorting = registerItems.OfType<Alert>().OrderByDescending(o => o.Owner);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "servicetype")
                 {
-                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderBy(o => o.ServiceType);
+                    var epsgSorting = registerItems.OfType<Alert>().OrderBy(o => o.Type);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "servicetype_desc")
                 {
-                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderByDescending(o => o.ServiceType);
+                    var epsgSorting = registerItems.OfType<Alert>().OrderByDescending(o => o.Type);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "servicealert")
+                else if (sorting == "alert")
                 {
-                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderBy(o => o.AlertType);
+                    var epsgSorting = registerItems.OfType<Alert>().OrderBy(o => o.AlertType);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "servicealert_desc")
+                else if (sorting == "alert_desc")
                 {
-                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderByDescending(o => o.AlertType);
+                    var epsgSorting = registerItems.OfType<Alert>().OrderByDescending(o => o.AlertType);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
 

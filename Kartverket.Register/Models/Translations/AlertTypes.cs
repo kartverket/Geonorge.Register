@@ -53,8 +53,10 @@ namespace Kartverket.Register.Models.Translations
             foreach(var alertType in alertTypes.items.Cast<CodelistValue>())
             {
                 if(alertType.value != null)
-                { 
-                    Translated translation = new Translated { AlertType = alertType.NameTranslated(), Culture = Culture.EnglishCode };
+                {
+                    var translationEnglish = alertType.Translations.Where(t => t.CultureName == Culture.EnglishCode).FirstOrDefault();
+                    string nameTranslated = translationEnglish != null ? translationEnglish.Name : alertType.name;
+                    Translated translation = new Translated { AlertType = nameTranslated, Culture = Culture.EnglishCode };
                     List<Translated> translations = new List<Translated>();
                     translations.Add(translation);
                     Items.Add( new Alert { Key = alertType.value, Value = alertType.name }, translations) ;

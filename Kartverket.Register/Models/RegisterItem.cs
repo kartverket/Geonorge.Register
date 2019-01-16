@@ -146,10 +146,10 @@ namespace Kartverket.Register.Models
                 if (string.IsNullOrEmpty(nameTranslated))
                     nameTranslated = name;
             }
-            else if (this is ServiceAlert)
+            else if (this is Alert)
             {
-                ServiceAlert serviceAlert = (ServiceAlert)this;
-                nameTranslated = serviceAlert.Translations[cultureName]?.Name;
+                Alert alert = (Alert)this;
+                nameTranslated = alert.Translations[cultureName]?.Name;
                 if (string.IsNullOrEmpty(nameTranslated))
                     nameTranslated = name;
             }
@@ -199,10 +199,10 @@ namespace Kartverket.Register.Models
                 if (string.IsNullOrEmpty(descriptionTranslated))
                     descriptionTranslated = description;
             }
-            else if (this is ServiceAlert)
+            else if (this is Alert)
             {
-                ServiceAlert serviceAlert = (ServiceAlert)this;
-                descriptionTranslated = serviceAlert.Translations[cultureName]?.Description;
+                Alert alert = (Alert)this;
+                descriptionTranslated = alert.Translations[cultureName]?.Description;
                 if (string.IsNullOrEmpty(descriptionTranslated))
                     descriptionTranslated = description;
             }
@@ -223,10 +223,10 @@ namespace Kartverket.Register.Models
                 Document document = (Document)this;
                 return document.GetDocumentUrl();
             }
-            else if (this is ServiceAlert)
+            else if (this is Alert)
             {
-                ServiceAlert serviceAlert = (ServiceAlert)this;
-                return serviceAlert.GetServiceAlertUrl();
+                Alert alert = (Alert)this;
+                return alert.GetAlertUrl();
             }
             else {
                 if(submitter!=null && !string.IsNullOrEmpty(seoname))
@@ -366,9 +366,9 @@ namespace Kartverket.Register.Models
                 case Organization _:
                     var organization = (Organization)this;
                     return organization.GetOrganizationEditUrl();
-                case ServiceAlert _:
-                    var serviceAlert = (ServiceAlert)this;
-                    return serviceAlert.GetServiceAlertEditUrl();
+                case Alert _:
+                    var alert = (Alert)this;
+                    return alert.GetAlertEditUrl();
             }
             return "#";
         }
@@ -395,9 +395,9 @@ namespace Kartverket.Register.Models
                 case Organization _:
                     var organization = (Organization)this;
                     return organization.GetOrganizationDeleteUrl();
-                case ServiceAlert _:
-                    var serviceAlert = (ServiceAlert)this;
-                    return serviceAlert.GetServiceAlertDeleteUrl();
+                case Alert _:
+                    var alert = (Alert)this;
+                    return alert.GetAlertDeleteUrl();
             }
             return "#";
         }

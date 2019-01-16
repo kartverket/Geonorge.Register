@@ -11,58 +11,58 @@ using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Models
 {
-    public class ServiceAlert : RegisterItem
+    public class Alert : RegisterItem
     {
-        public ServiceAlert()
+        public Alert()
         {
             AlertDate = DateTime.Now;
             EffectiveDate = DateTime.Now.AddMonths(3);
-            Translations = new TranslationCollection<ServiceAlertTranslation>();
+            Translations = new TranslationCollection<AlertTranslation>();
         }
 
-        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "AlertDateErrorMessage")]
-        [Display(Name = "AlertDate", ResourceType = typeof(ServiceAlerts))]
+        [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "AlertDateErrorMessage")]
+        [Display(Name = "AlertDate", ResourceType = typeof(Alerts))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime AlertDate { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "EffectiveDateErrorMessage")]
-        [Display(Name = "EffectiveDate", ResourceType = typeof(ServiceAlerts))]
+        [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "EffectiveDateErrorMessage")]
+        [Display(Name = "EffectiveDate", ResourceType = typeof(Alerts))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime EffectiveDate { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "AlertTypeErrorMessage")]
-        [Display(Name = "AlertType", ResourceType = typeof(ServiceAlerts))]
+        [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "AlertTypeErrorMessage")]
+        [Display(Name = "AlertType", ResourceType = typeof(Alerts))]
         public string AlertType { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "ServiceTypeErrorMessage")]
-        [Display(Name = "ServiceType", ResourceType = typeof(ServiceAlerts))]
-        public string ServiceType { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "ServiceTypeErrorMessage")]
+        [Display(Name = "ServiceType", ResourceType = typeof(Alerts))]
+        public string Type { get; set; }
 
         [Required]
         public string Owner { get; set; }
 
-        public string ServiceMetadataUrl { get; set; }
+        public string UrlExternal{ get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "ServiceTypeErrorMessage")]
-        public string ServiceUuid { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "ServiceTypeErrorMessage")]
+        public string UuidExternal { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "NoteErrorMessage")]
+        [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "NoteErrorMessage")]
         [StringLength(500, MinimumLength = 3)]
-        [Display(Name = "Note", ResourceType = typeof(ServiceAlerts))]
+        [Display(Name = "Note", ResourceType = typeof(Alerts))]
         public string Note { get; set; }
 
 
         public void GetMetadataByUuid()
         {
-            SimpleMetadata metadata = MetadataService.FetchMetadata(ServiceUuid);
-            ServiceType = "Ikke satt";
+            SimpleMetadata metadata = MetadataService.FetchMetadata(UuidExternal);
+            Type = "Ikke satt";
             if (metadata != null)
             {
                 name = metadata.Title;
                 Translations[0].Name = metadata.EnglishTitle;
                 if (metadata.DistributionDetails != null && metadata.DistributionDetails?.Protocol != null) 
                 {
-                    ServiceType = metadata.DistributionDetails.Protocol;
+                    Type = metadata.DistributionDetails.Protocol;
                 }
 
                 if (metadata.ContactOwner != null)
@@ -70,11 +70,11 @@ namespace Kartverket.Register.Models
                     Owner = metadata.ContactOwner.Organization;
                     Translations[0].Owner = metadata.ContactOwner.OrganizationEnglish;
                 }
-                ServiceMetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + ServiceUuid;
+                UrlExternal = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + UuidExternal;
             }
         }
 
-        public virtual TranslationCollection<ServiceAlertTranslation> Translations { get; set; }
+        public virtual TranslationCollection<AlertTranslation> Translations { get; set; }
         public void AddMissingTranslations()
         {
             Translations.AddMissingTranslations();
@@ -123,7 +123,7 @@ namespace Kartverket.Register.Models
             return ownerTranslated;
         }
 
-        public virtual string GetServiceAlertEditUrl()
+        public virtual string GetAlertEditUrl()
         {
             if (register.parentRegister == null)
             {
@@ -135,7 +135,7 @@ namespace Kartverket.Register.Models
             }
         }
 
-        public virtual string GetServiceAlertDeleteUrl()
+        public virtual string GetAlertDeleteUrl()
         {
             if (register.parentRegister == null)
             {
@@ -147,24 +147,24 @@ namespace Kartverket.Register.Models
             }
         }
 
-        public void InitializeNewServiceAlert()
+        public void InitializeNewAlert()
         {
             InitializeNew();
         }
 
-        public void UpdateServiceAlert(ServiceAlert serviceAlert)
+        public void UpdateAlert(Alert alert)
         {
-            serviceAlert.GetMetadataByUuid();
-            name = serviceAlert.name;
-            ServiceUuid = serviceAlert.ServiceUuid;
-            ServiceMetadataUrl = serviceAlert.ServiceMetadataUrl;
-            AlertDate = serviceAlert.AlertDate;
-            AlertType = serviceAlert.AlertType;
-            EffectiveDate = serviceAlert.EffectiveDate;
-            Note = serviceAlert.Note;
+            alert.GetMetadataByUuid();
+            name = alert.name;
+            UuidExternal = alert.UuidExternal;
+            UrlExternal = alert.UrlExternal;
+            AlertDate = alert.AlertDate;
+            AlertType = alert.AlertType;
+            EffectiveDate = alert.EffectiveDate;
+            Note = alert.Note;
         }
 
-        public string GetServiceAlertUrl()
+        public string GetAlertUrl()
         {
             return register.GetObjectUrl() + "/" + seoname + "/" + systemId;
         }

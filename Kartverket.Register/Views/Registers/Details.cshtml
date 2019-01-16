@@ -70,13 +70,13 @@
             }
                 </p>
 
-                @if (Model.IsServiceAlertRegister())
+                @if (Model.IsAlertRegister())
                 {
                     if (!Request.IsAuthenticated)
                     {
                         <span><a href="@Url.Action("SignIn", "AuthServices")"> Logg inn</a> for å legge til nye varsler.</span><br />
                     }
-                    <a href="@RegisterUrls.urlFormat(Request, "atom")" class="">@ServiceAlerts.SubscribeServiceAlert</a><br />
+                    <a href="@RegisterUrls.urlFormat(Request, "atom")" class="">@Alerts.SubscribeServiceAlert</a><br />
                 }
 
             </div>
@@ -177,9 +177,9 @@
     {
         @Html.Partial("_nameSpace", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
     }
-    @if (Model.ContainedItemClassIsServiceAlert())
+    @if (Model.ContainedItemClassIsAlert())
     {
-        @Html.Partial("_serviceAlert", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+        @Html.Partial("_alert", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
     }
     @if (Model.ContainedItemClassIsInspireDataset())
     {

@@ -34,7 +34,7 @@ namespace Kartverket.Register.Services.Register
             var registerItems = new List<Models.RegisterItem>();
             var registerItemsv2 = new List<RegisterItemV2>();
 
-            // Document, Dataset, ServiceAlert, CodelistValue, EPSG, Namespace
+            // Document, Dataset, Alert, CodelistValue, EPSG, Namespace
             if (register.items.Any())
             {
                 if (register.ContainedItemClassIsDocument())

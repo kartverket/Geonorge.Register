@@ -46,7 +46,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<Sorting> Sorting { get; set; }
         public virtual DbSet<ContainedItemClass> ContainedItemClass { get; set; }
         public virtual DbSet<CoverageDataset> CoverageDatasets { get; set; }
-        public virtual DbSet<ServiceAlert> ServiceAlerts { get; set; }
+        public virtual DbSet<Alert> Alerts { get; set; }
         public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
         public virtual DbSet<GeodatalovDataset> GeodatalovDatasets { get; set; }
         public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
@@ -85,7 +85,7 @@ namespace Kartverket.Register.Models
             modelBuilder.Configurations.Add(new DatasetTranslationConfiguration());
             modelBuilder.Configurations.Add(new DocumentTranslationConfiguration());
             modelBuilder.Configurations.Add(new NamespaceTranslationConfiguration());
-            modelBuilder.Configurations.Add(new ServiceAlertTranslationConfiguration());
+            modelBuilder.Configurations.Add(new AlertTranslationConfiguration());
 
             modelBuilder.Entity<InspireDataset>().Map(m =>
             {

@@ -273,7 +273,7 @@
     <Compile Include="Controllers\RegistersController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Controllers\ServiceAlertsController.cs" />
+    <Compile Include="Controllers\AlertsController.cs" />
     <Compile Include="Controllers\SubregisterController.cs" />
     <Compile Include="Formatter\CsvFormatter.cs" />
     <Compile Include="Formatter\XMLFormatter.cs" />
@@ -905,6 +905,14 @@
     <Compile Include="Migrations\201810220656535_AddGeondatalovDatasetStatusReport.Designer.cs">
       <DependentUpon>201810220656535_AddGeondatalovDatasetStatusReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901151020101_ServiceAlertRenameAlert.cs" />
+    <Compile Include="Migrations\201901151020101_ServiceAlertRenameAlert.Designer.cs">
+      <DependentUpon>201901151020101_ServiceAlertRenameAlert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901151143487_ServiceAlertTranslationRenameAlert.cs" />
+    <Compile Include="Migrations\201901151143487_ServiceAlertTranslationRenameAlert.Designer.cs">
+      <DependentUpon>201901151143487_ServiceAlertTranslationRenameAlert.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -967,7 +975,7 @@
     <Compile Include="Models\FilterParameters .cs" />
     <Compile Include="Models\RegisterIndexDoc.cs" />
     <Compile Include="Models\RegisterItemV2.cs" />
-    <Compile Include="Models\ServiceAlert.cs" />
+    <Compile Include="Models\Alert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
     <Compile Include="Models\StatusReports\RegisterItemStatusReport.cs" />
@@ -982,7 +990,7 @@
     <Compile Include="Models\Translations\NamespaceTranslation.cs" />
     <Compile Include="Models\Translations\OrganizationTranslation.cs" />
     <Compile Include="Models\Translations\RegisterTranslation.cs" />
-    <Compile Include="Models\Translations\ServiceAlertTranslation.cs" />
+    <Compile Include="Models\Translations\AlertTranslation.cs" />
     <Compile Include="Models\Translations\Translation.cs" />
     <Compile Include="Models\Translations\TranslationCollection.cs" />
     <Compile Include="Models\VersionsItem.cs" />
@@ -1075,13 +1083,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\ServiceAlerts.Designer.cs">
-      <DependentUpon>ServiceAlerts.resx</DependentUpon>
+    <Compile Include="Resources\Alerts.Designer.cs">
+      <DependentUpon>Alerts.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\ServiceAlerts.en.Designer.cs">
-      <DependentUpon>ServiceAlerts.en.resx</DependentUpon>
+    <Compile Include="Resources\Alerts.en.Designer.cs">
+      <DependentUpon>Alerts.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -1212,6 +1220,7 @@
   <ItemGroup>
     <Content Include="App_Data\XmlDocument.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="bin\gsdll32.dll">
@@ -1975,9 +1984,9 @@
     <Content Include="Views\Shared\_pagedListPager.cshtml" />
     <Content Include="Views\Datasets\CreateMunicipalDataset.cshtml" />
     <Content Include="Views\Shared\_pagedListPagerSubRegisters.cshtml" />
-    <Content Include="Views\ServiceAlerts\Create.cshtml" />
-    <Content Include="Views\Shared\_serviceAlert.cshtml" />
-    <Content Include="Views\Shared\_detailsServiceAlert.cshtml" />
+    <Content Include="Views\Alerts\Create.cshtml" />
+    <Content Include="Views\Shared\_alert.cshtml" />
+    <Content Include="Views\Shared\_detailsAlert.cshtml" />
     <Content Include="settings.default.config" />
     <Content Include="Views\Organizations\_Fields.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
@@ -2479,6 +2488,12 @@
     <EmbeddedResource Include="Migrations\201810220656535_AddGeondatalovDatasetStatusReport.resx">
       <DependentUpon>201810220656535_AddGeondatalovDatasetStatusReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901151020101_ServiceAlertRenameAlert.resx">
+      <DependentUpon>201901151020101_ServiceAlertRenameAlert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901151143487_ServiceAlertTranslationRenameAlert.resx">
+      <DependentUpon>201901151143487_ServiceAlertTranslationRenameAlert.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodatalovDataSet.en.Designer.cs</LastGenOutput>
@@ -2527,15 +2542,15 @@
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ServiceAlerts.resx">
+    <EmbeddedResource Include="Resources\Alerts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ServiceAlerts.Designer.cs</LastGenOutput>
+      <LastGenOutput>Alerts.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ServiceAlerts.en.resx">
+    <EmbeddedResource Include="Resources\Alerts.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ServiceAlerts.en.Designer.cs</LastGenOutput>
+      <LastGenOutput>Alerts.en.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>

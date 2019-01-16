@@ -27,7 +27,7 @@ namespace Kartverket.Register.Helpers
             get { return "E807439B-2BFC-4DA5-87C0-B40E7B0CDFB8"; }
         }
 
-        public static string ServiceAlertRegistryId
+        public static string AlertRegistryId
         {
             get { return "0f428034-0b2d-4fb7-84ea-c547b872b418"; }
         }

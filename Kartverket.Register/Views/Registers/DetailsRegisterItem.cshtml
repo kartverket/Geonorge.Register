@@ -111,16 +111,16 @@
     {
         @Html.Partial("_detailsNameSpace", (NameSpace)Model.RegisterItem)
     }
-    else if (Model.RegisterItem is ServiceAlert)
+    else if (Model.RegisterItem is Alert)
     {
-        @Html.Partial("_detailsServiceAlert", (ServiceAlert)Model.RegisterItem)
+        @Html.Partial("_detailsAlert", (Alert)Model.RegisterItem)
     }
 </div>
 
 
 <div class="clearfix"></div>
 <div class="hidden-print navbar-bottom">
-    @if (!(Model.RegisterItem is ServiceAlert) && Request.IsAuthenticated && Model.AccessRegisterItem)
+    @if (!(Model.RegisterItem is Alert) && Request.IsAuthenticated && Model.AccessRegisterItem)
     {
         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>

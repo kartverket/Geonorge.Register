@@ -1,5 +1,7 @@
 ﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Models
 @model Kartverket.Register.Models.Alert
+@using Kartverket.Register.Resources
 ﻿@using Kartverket.Register.Helpers
 
 @{
@@ -28,23 +30,29 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(false, Shared.ValidationSummary, new { @class = "alert alert-danger" })
         @Html.Hidden("name", "navn")
-
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="radio" name="category" value="@Constants.AlertCategoryService" onclick="location.href='?category=@Constants.AlertCategoryService'" @(ViewBag.Category == Constants.AlertCategoryService || string.IsNullOrEmpty(ViewBag.Category) ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryService)
+                <input type="radio" name="category" value="@Constants.AlertCategoryDataset" onclick="location.href='?category=@Constants.AlertCategoryDataset'" @(ViewBag.Category == Constants.AlertCategoryDataset ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryDataset)
+                <input type="radio" name="category" value="@Constants.AlertCategoryOperation" onclick="location.href='?category=@Constants.AlertCategoryOperation'" @(ViewBag.Category == @Constants.AlertCategoryOperation ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryOperation)
+            </div>
+        </div>
         <div class="form-group required has-feedback">
-            @Html.LabelFor(model => model.UuidExternal, Alerts.Service, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UuidExternal, Alerts.AppliesTo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    @Html.DropDownList("UuidExternal", null, Alerts.SelectService, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("UuidExternal", null, Alerts.Select, htmlAttributes: new { @class = "form-control" })
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
-                    <p class="help-text bg-success" id="help-text-serviceuuid" style="display: none">
-                        @Alerts.HelpTextServiceuuid
+                    <p class="help-text bg-success" id="help-text-uuid" style="display: none">
+                        @Alerts.HelpTextUuid
                     </p>
                 </div>
             </div>
             <div class="col-sm-1 pull-right">
                 <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-serviceuuid" class="badge help-text-toggle">?</a>
+                    <a href="#" data-help-text-id="help-text-uuid" class="badge help-text-toggle">?</a>
                 </p>
             </div>
         </div>
@@ -55,7 +63,7 @@
             @Html.LabelFor(model => model.AlertType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    @Html.DropDownList("AlertType", null, Alerts.SelectServiceAlert, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("AlertType", null, Alerts.Select, htmlAttributes: new { @class = "form-control" })
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
@@ -177,7 +185,7 @@
             }
             else
                 $('#AlertDate_validationMessage').removeClass("field-validation-error");
-                $('#AlertDate_validationMessage').addClass("field-validation-valid")
+            $('#AlertDate_validationMessage').addClass("field-validation-valid")
         });
 
         $('.input-validation-error').each(function () {

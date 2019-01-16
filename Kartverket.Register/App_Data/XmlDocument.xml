@@ -2453,6 +2453,31 @@
               Looks up a localized string similar to Valg av type varsel er påkrevd.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.AppliesTo">
+            <summary>
+              Looks up a localized string similar to Gjelder for.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Datasettvarsel">
+            <summary>
+              Looks up a localized string similar to Datasettvarsel.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Description">
+            <summary>
+              Looks up a localized string similar to Beskrivelse.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Details">
+            <summary>
+              Looks up a localized string similar to Detaljer.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Driftsmelding">
+            <summary>
+              Looks up a localized string similar to Driftsmelding.
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.EffectiveDate">
             <summary>
               Looks up a localized string similar to Ikrafttredelsesdato.
@@ -2475,24 +2500,29 @@
         </member>
         <member name="P:Resources.Alerts.HelpTextEffectivedate">
             <summary>
-              Looks up a localized string similar to Her velger du den datoen hvor tjenesten vil bli endret. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet..
+              Looks up a localized string similar to Her velger du den datoen hvor endringen vil tre i kraft. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet..
             </summary>
         </member>
         <member name="P:Resources.Alerts.HelpTextNote">
              <summary>
-               Looks up a localized string similar to Her skriver du inn hvilke konkrete endringer som vil bli gjort i tjenesten som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
+               Looks up a localized string similar to Her skriver du inn hvilke konkrete endringer som vil bli gjort som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
             Dersom varselet gjelder endring i datakvalitet eller datastruktur, bør du opplyse hva disse endringene innebærer slik at brukere/utviklere kan oppdatere sin klienter i tråd med endringene.
-            I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de [rest of string was truncated]&quot;;.
+            I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de får informa [rest of string was truncated]&quot;;.
              </summary>
         </member>
-        <member name="P:Resources.Alerts.HelpTextServiceuuid">
+        <member name="P:Resources.Alerts.HelpTextUuid">
             <summary>
-              Looks up a localized string similar to Velg en tjeneste fra nedtrekkslisten. Du kan kun velge en tjeneste som allerede er registrert i Geonorge. Dersom tjenesten du skal legge inn nytt varsel for ikke finnes i nedtrekkslista, må du registrere tjenesten i Geonorge via metadataeditoren og din BAAT-bruker..
+              Looks up a localized string similar to Velg en tjeneste/et datasett fra nedtrekkslisten. Du kan kun velge en tjeneste/et datasett som allerede er registrert i Geonorge. Dersom du skal legge inn nytt varsel som ikke finnes i nedtrekkslista, må du registrere i Geonorge via metadataeditoren og din BAAT-bruker. For driftsmeldinger er det ingen valg..
             </summary>
         </member>
         <member name="P:Resources.Alerts.LastAlert">
             <summary>
               Looks up a localized string similar to Siste varsel.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Name">
+            <summary>
+              Looks up a localized string similar to Navn.
             </summary>
         </member>
         <member name="P:Resources.Alerts.Note">
@@ -2510,39 +2540,14 @@
               Looks up a localized string similar to Varselet gjelder på engelsk.
             </summary>
         </member>
-        <member name="P:Resources.Alerts.SelectService">
+        <member name="P:Resources.Alerts.Select">
             <summary>
-              Looks up a localized string similar to Velg tjeneste.
-            </summary>
-        </member>
-        <member name="P:Resources.Alerts.SelectServiceAlert">
-            <summary>
-              Looks up a localized string similar to Velg tjenestevarsel.
+              Looks up a localized string similar to Velg.
             </summary>
         </member>
         <member name="P:Resources.Alerts.Service">
             <summary>
               Looks up a localized string similar to Tjeneste.
-            </summary>
-        </member>
-        <member name="P:Resources.Alerts.ServiceDesription">
-            <summary>
-              Looks up a localized string similar to Tjenestebeskrivelse.
-            </summary>
-        </member>
-        <member name="P:Resources.Alerts.ServiceName">
-            <summary>
-              Looks up a localized string similar to Tjenestenavn.
-            </summary>
-        </member>
-        <member name="P:Resources.Alerts.ServiceType">
-            <summary>
-              Looks up a localized string similar to Tjenestetype.
-            </summary>
-        </member>
-        <member name="P:Resources.Alerts.ServiceTypeErrorMessage">
-            <summary>
-              Looks up a localized string similar to Valg av tjeneste er påkrevd.
             </summary>
         </member>
         <member name="P:Resources.Alerts.SubscribeServiceAlert">
@@ -2572,7 +2577,22 @@
         </member>
         <member name="P:Resources.Alerts.Title">
             <summary>
-              Looks up a localized string similar to Foreslå nytt tjenestevarsel.
+              Looks up a localized string similar to Legg til nytt varsel.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Tjenestevarsel">
+            <summary>
+              Looks up a localized string similar to Tjenestevarsel.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Type">
+            <summary>
+              Looks up a localized string similar to Type.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.TypeErrorMessage">
+            <summary>
+              Looks up a localized string similar to Valg av tjeneste/datasett/driftsmelding er påkrevd.
             </summary>
         </member>
         <member name="T:Resources.DokCoverage">

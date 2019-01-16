@@ -106,6 +106,51 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gjelder for.
+        /// </summary>
+        public static string AppliesTo {
+            get {
+                return ResourceManager.GetString("AppliesTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasettvarsel.
+        /// </summary>
+        public static string Datasettvarsel {
+            get {
+                return ResourceManager.GetString("Datasettvarsel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beskrivelse.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detaljer.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Driftsmelding.
+        /// </summary>
+        public static string Driftsmelding {
+            get {
+                return ResourceManager.GetString("Driftsmelding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ikrafttredelsesdato.
         /// </summary>
         public static string EffectiveDate {
@@ -142,7 +187,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Her velger du den datoen hvor tjenesten vil bli endret. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet..
+        ///   Looks up a localized string similar to Her velger du den datoen hvor endringen vil tre i kraft. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet..
         /// </summary>
         public static string HelpTextEffectivedate {
             get {
@@ -151,9 +196,9 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Her skriver du inn hvilke konkrete endringer som vil bli gjort i tjenesten som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
+        ///   Looks up a localized string similar to Her skriver du inn hvilke konkrete endringer som vil bli gjort som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
         ///Dersom varselet gjelder endring i datakvalitet eller datastruktur, bør du opplyse hva disse endringene innebærer slik at brukere/utviklere kan oppdatere sin klienter i tråd med endringene.
-        ///I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de [rest of string was truncated]&quot;;.
+        ///I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de får informa [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpTextNote {
             get {
@@ -162,11 +207,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Velg en tjeneste fra nedtrekkslisten. Du kan kun velge en tjeneste som allerede er registrert i Geonorge. Dersom tjenesten du skal legge inn nytt varsel for ikke finnes i nedtrekkslista, må du registrere tjenesten i Geonorge via metadataeditoren og din BAAT-bruker..
+        ///   Looks up a localized string similar to Velg en tjeneste/et datasett fra nedtrekkslisten. Du kan kun velge en tjeneste/et datasett som allerede er registrert i Geonorge. Dersom du skal legge inn nytt varsel som ikke finnes i nedtrekkslista, må du registrere i Geonorge via metadataeditoren og din BAAT-bruker. For driftsmeldinger er det ingen valg..
         /// </summary>
-        public static string HelpTextServiceuuid {
+        public static string HelpTextUuid {
             get {
-                return ResourceManager.GetString("HelpTextServiceuuid", resourceCulture);
+                return ResourceManager.GetString("HelpTextUuid", resourceCulture);
             }
         }
         
@@ -176,6 +221,15 @@ namespace Resources {
         public static string LastAlert {
             get {
                 return ResourceManager.GetString("LastAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navn.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         
@@ -207,20 +261,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Velg tjeneste.
+        ///   Looks up a localized string similar to Velg.
         /// </summary>
-        public static string SelectService {
+        public static string Select {
             get {
-                return ResourceManager.GetString("SelectService", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Velg tjenestevarsel.
-        /// </summary>
-        public static string SelectServiceAlert {
-            get {
-                return ResourceManager.GetString("SelectServiceAlert", resourceCulture);
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         
@@ -230,42 +275,6 @@ namespace Resources {
         public static string Service {
             get {
                 return ResourceManager.GetString("Service", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tjenestebeskrivelse.
-        /// </summary>
-        public static string ServiceDesription {
-            get {
-                return ResourceManager.GetString("ServiceDesription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tjenestenavn.
-        /// </summary>
-        public static string ServiceName {
-            get {
-                return ResourceManager.GetString("ServiceName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tjenestetype.
-        /// </summary>
-        public static string ServiceType {
-            get {
-                return ResourceManager.GetString("ServiceType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Valg av tjeneste er påkrevd.
-        /// </summary>
-        public static string ServiceTypeErrorMessage {
-            get {
-                return ResourceManager.GetString("ServiceTypeErrorMessage", resourceCulture);
             }
         }
         
@@ -315,11 +324,38 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Foreslå nytt tjenestevarsel.
+        ///   Looks up a localized string similar to Legg til nytt varsel.
         /// </summary>
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjenestevarsel.
+        /// </summary>
+        public static string Tjenestevarsel {
+            get {
+                return ResourceManager.GetString("Tjenestevarsel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valg av tjeneste/datasett/driftsmelding er påkrevd.
+        /// </summary>
+        public static string TypeErrorMessage {
+            get {
+                return ResourceManager.GetString("TypeErrorMessage", resourceCulture);
             }
         }
     }

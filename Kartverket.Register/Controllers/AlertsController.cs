@@ -32,12 +32,12 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
         //[Route("tjenestevarsler/{registerName}/ny")]
-        public ActionResult Create(string parentRegister, string registerName)
+        public ActionResult Create(string parentRegister, string registerName, string category = Constants.AlertCategoryService)
         {
             Alert alert = new Alert();
             alert.AddMissingTranslations();
             alert.register = _registerService.GetRegister(parentRegister, registerName);
-            ViewBags(alert);
+            ViewBags(alert, category);
 
             if (alert.register != null)
             {
@@ -57,7 +57,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
         //[Route("tjenestevarsler/{registerName}/ny")]
-        public ActionResult Create(Alert alert, string parentRegister, string registerName)
+        public ActionResult Create(Alert alert, string parentRegister, string registerName, string category = Constants.AlertCategoryService)
         {
             alert.register = _registerService.GetRegister(parentRegister, registerName);
             if (alert.register != null)
@@ -71,10 +71,16 @@ namespace Kartverket.Register.Controllers
                     //}
                     if (ModelState.IsValid)
                     {
-                        var alertTranslation = new AlertTypes(_registerService).GetAlertType(alert.AlertType);
+                        var alertTranslation = new AlertTypes(_registerService, category).GetAlertType(alert.AlertType);
                         alert.GetMetadataByUuid();
+                        alert.AlertCategory = category;
                         alert.submitter = _registerService.GetOrganizationByUserName();
                         alert.InitializeNewAlert();
+                        if (category == Constants.AlertCategoryOperation)
+                        {
+                            alert.Owner = alert.submitter.name;
+                            alert.name = alert.UuidExternal;
+                        }
                         alert.AlertType = alertTranslation.Key.Value;
                         for (int t = 0; t < alert.Translations.Count; t++)
                         {
@@ -88,22 +94,32 @@ namespace Kartverket.Register.Controllers
                     }
                 }
             }
-            ViewBags(alert);
+            ViewBags(alert, category);
             return View(alert);
         }
 
 
-        private void ViewBags(Alert alert)
+        private void ViewBags(Alert alert, string category)
         {
             //ViewBag.AlertType = new SelectList(alert.GetAlertTypes(), alert.AlertType);
-            ViewBag.AlertType = new SelectList(new AlertTypes(_registerService).GetAlertTypes() , "Key", "Value", alert.AlertType);
-            ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", alert.UuidExternal);
+            ViewBag.AlertType = new SelectList(new AlertTypes(_registerService, category).GetAlertTypes() , "Key", "Value", alert.AlertType);
+            ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(category), "Key", "Value", alert.UuidExternal);
+            ViewBag.Category = category;
+            ViewBag.AlertType = new SelectList(new AlertTypes(_registerService, category).GetAlertTypes(), "Key", "Value", alert.AlertType);
+            Dictionary<string, string> items = new Dictionary<string, string>();
+            var operation = Resources.Resource.AlertCategory(Constants.AlertCategoryOperation);
+            items.Add(operation, operation);
+            ViewBag.UuidExternal = new SelectList(items, "Key", "Value", operation);
+            if (category == Constants.AlertCategoryService || category == Constants.AlertCategoryDataset)
+                ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(category), "Key", "Value", alert.UuidExternal);
         }
 
-        public Dictionary<string, string> GetServicesFromKartkatalogen()
+        public Dictionary<string, string> GetServicesFromKartkatalogen(string category)
         {
             Dictionary<string, string> ServiceList = new Dictionary<string, string>();
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=service&limit=1000&orderby=title";
+            if (category == Constants.AlertCategoryDataset)
+                url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=2000&orderby=title&facets[1]name=organization&facets[1]value=Kartverket";
             WebClient c = new WebClient();
             c.Encoding = System.Text.Encoding.UTF8;
             var data = c.DownloadString(url);
@@ -121,8 +137,12 @@ namespace Kartverket.Register.Controllers
 
                 if (!ServiceList.ContainsKey(ServiceUuid))
                 {
-                    if(_accessControlService.IsAdmin() || _accessControlService.IsItemOwner(Organization, _accessControlService.GetSecurityClaim("organization")[0]))
-                    ServiceList.Add(ServiceUuid, service["Title"].ToString());
+                    if (_accessControlService.IsAdmin() || _accessControlService.IsItemOwner(Organization, _accessControlService.GetSecurityClaim("organization")[0]))
+                    {
+                        if (!service["Title"].ToString().StartsWith("Høydedata"))
+                            ServiceList.Add(ServiceUuid, service["Title"].ToString());
+                    }
+                    
                 }
             }
             return ServiceList;

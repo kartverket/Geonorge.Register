@@ -913,6 +913,10 @@
     <Compile Include="Migrations\201901151143487_ServiceAlertTranslationRenameAlert.Designer.cs">
       <DependentUpon>201901151143487_ServiceAlertTranslationRenameAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901161145027_AddAlertCategory.cs" />
+    <Compile Include="Migrations\201901161145027_AddAlertCategory.Designer.cs">
+      <DependentUpon>201901161145027_AddAlertCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2493,6 +2497,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901151143487_ServiceAlertTranslationRenameAlert.resx">
       <DependentUpon>201901151143487_ServiceAlertTranslationRenameAlert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161145027_AddAlertCategory.resx">
+      <DependentUpon>201901161145027_AddAlertCategory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

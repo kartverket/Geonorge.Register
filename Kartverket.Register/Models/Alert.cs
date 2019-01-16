@@ -34,16 +34,18 @@ namespace Kartverket.Register.Models
         [Display(Name = "AlertType", ResourceType = typeof(Alerts))]
         public string AlertType { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "ServiceTypeErrorMessage")]
-        [Display(Name = "ServiceType", ResourceType = typeof(Alerts))]
+        [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "TypeErrorMessage")]
+        [Display(Name = "Type", ResourceType = typeof(Alerts))]
         public string Type { get; set; }
+
+        public string AlertCategory { get; set; }
 
         [Required]
         public string Owner { get; set; }
 
         public string UrlExternal{ get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "ServiceTypeErrorMessage")]
+        [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "ErrorMessage")]
         public string UuidExternal { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "NoteErrorMessage")]

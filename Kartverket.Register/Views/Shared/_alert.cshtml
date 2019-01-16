@@ -4,7 +4,7 @@
 
 <div class="table-view">
     <div class="table-heading search-results-table-heading col-md-12">
-        <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.ServiceName, "name")</div>
+        <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
         <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeder_alert, "alert")</div>
         <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
         <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeader_description, "description")</div>
@@ -16,7 +16,13 @@
     {
         <div class="resultItemRow col-md-12">
             <div class="col-sm-12 col-md-3 col">
+                @if (!string.IsNullOrEmpty(item.UrlExternal)) { 
                 <a href="@item.UrlExternal" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
+                }
+                else
+                {
+                    @item.NameTranslated()
+                }
             </div>
             <div class="col-md-2 col-sm-12 col">
                 <p>@item.AlertTypeTranslated()</p>

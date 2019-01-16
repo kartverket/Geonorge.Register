@@ -132,6 +132,21 @@
   <data name="AlertTypeErrorMessage" xml:space="preserve">
     <value>Valg av type varsel er påkrevd</value>
   </data>
+  <data name="AppliesTo" xml:space="preserve">
+    <value>Gjelder for</value>
+  </data>
+  <data name="Datasettvarsel" xml:space="preserve">
+    <value>Datasettvarsel</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Beskrivelse</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detaljer</value>
+  </data>
+  <data name="Driftsmelding" xml:space="preserve">
+    <value>Driftsmelding</value>
+  </data>
   <data name="EffectiveDate" xml:space="preserve">
     <value>Ikrafttredelsesdato</value>
   </data>
@@ -145,18 +160,21 @@
     <value>Velg en type varsel fra nedtrekkslisten. Dersom du ikke finner en passende type varsel kan du sende en epost til &lt;a href="mailto:post@norgedigitalt.no"&gt;post@norgedigitalt.no&lt;/a&gt; og fremme ditt ønske om nye typer varsler. Men husk at for brukerne som mottar varslene så må varseltype være så konkret og presis som mulig, samtidig som det kan være forvirrende med altfor mange ulike typer varsel. Ofte er det godt nok med en varseltype som dekker et litt større emne. Forsøk derfor å bruke de foreslåtte varseltypene og gi heller en utdypende forklaring i feltet for "Varselet gjelder".</value>
   </data>
   <data name="HelpTextEffectivedate" xml:space="preserve">
-    <value>Her velger du den datoen hvor tjenesten vil bli endret. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet.</value>
+    <value>Her velger du den datoen hvor endringen vil tre i kraft. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet.</value>
   </data>
   <data name="HelpTextNote" xml:space="preserve">
-    <value>Her skriver du inn hvilke konkrete endringer som vil bli gjort i tjenesten som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
+    <value>Her skriver du inn hvilke konkrete endringer som vil bli gjort som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
 Dersom varselet gjelder endring i datakvalitet eller datastruktur, bør du opplyse hva disse endringene innebærer slik at brukere/utviklere kan oppdatere sin klienter i tråd med endringene.
-I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de får informasjon om hvorfor det er nødvendig å endre i tjenesten.</value>
+I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de får informasjon om hvorfor det er nødvendig å endre.</value>
   </data>
-  <data name="HelpTextServiceuuid" xml:space="preserve">
-    <value>Velg en tjeneste fra nedtrekkslisten. Du kan kun velge en tjeneste som allerede er registrert i Geonorge. Dersom tjenesten du skal legge inn nytt varsel for ikke finnes i nedtrekkslista, må du registrere tjenesten i Geonorge via metadataeditoren og din BAAT-bruker.</value>
+  <data name="HelpTextUuid" xml:space="preserve">
+    <value>Velg en tjeneste/et datasett fra nedtrekkslisten. Du kan kun velge en tjeneste/et datasett som allerede er registrert i Geonorge. Dersom du skal legge inn nytt varsel som ikke finnes i nedtrekkslista, må du registrere i Geonorge via metadataeditoren og din BAAT-bruker. For driftsmeldinger er det ingen valg.</value>
   </data>
   <data name="LastAlert" xml:space="preserve">
     <value>Siste varsel</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Navn</value>
   </data>
   <data name="Note" xml:space="preserve">
     <value>Varselet gjelder</value>
@@ -167,26 +185,11 @@ I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden bruke
   <data name="NoteTranslated" xml:space="preserve">
     <value>Varselet gjelder på engelsk</value>
   </data>
-  <data name="SelectService" xml:space="preserve">
-    <value>Velg tjeneste</value>
-  </data>
-  <data name="SelectServiceAlert" xml:space="preserve">
-    <value>Velg tjenestevarsel</value>
+  <data name="Select" xml:space="preserve">
+    <value>Velg</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Tjeneste</value>
-  </data>
-  <data name="ServiceDesription" xml:space="preserve">
-    <value>Tjenestebeskrivelse</value>
-  </data>
-  <data name="ServiceName" xml:space="preserve">
-    <value>Tjenestenavn</value>
-  </data>
-  <data name="ServiceType" xml:space="preserve">
-    <value>Tjenestetype</value>
-  </data>
-  <data name="ServiceTypeErrorMessage" xml:space="preserve">
-    <value>Valg av tjeneste er påkrevd</value>
   </data>
   <data name="SubscribeServiceAlert" xml:space="preserve">
     <value>Abonnere på tjenestevarsler</value>
@@ -204,6 +207,15 @@ I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden bruke
     <value>Varsel</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Foreslå nytt tjenestevarsel</value>
+    <value>Legg til nytt varsel</value>
+  </data>
+  <data name="Tjenestevarsel" xml:space="preserve">
+    <value>Tjenestevarsel</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="TypeErrorMessage" xml:space="preserve">
+    <value>Valg av tjeneste/datasett/driftsmelding er påkrevd</value>
   </data>
 </root>

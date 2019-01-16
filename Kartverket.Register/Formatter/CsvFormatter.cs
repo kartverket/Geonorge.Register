@@ -922,7 +922,7 @@ namespace Kartverket.Register.Formatter
             }
             if (containedItemClass == "Alert")
             {
-                return Alerts.LastAlert + ";" + Alerts.EffectiveDate + ";" + Alerts.Service + ";" + Alerts.ServiceType + ";" + Alerts.AlertType + ";" + Registers.Owner + ";" + Alerts.Note + ";" + Alerts.ServiceDesription;
+                return Alerts.LastAlert + ";" + Alerts.EffectiveDate + ";" + Alerts.Service + ";" + Alerts.Type + ";" + Alerts.AlertType + ";" + Registers.Owner + ";" + Alerts.Note + ";" + Alerts.Description;
             }
 
             return null;

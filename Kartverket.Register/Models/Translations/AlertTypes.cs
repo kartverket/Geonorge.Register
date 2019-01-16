@@ -13,10 +13,10 @@ namespace Kartverket.Register.Models.Translations
         public Dictionary<Alert, List<Translated>> Items;
         private IRegisterService _registerService;
 
-        public AlertTypes(IRegisterService registerService)
+        public AlertTypes(IRegisterService registerService, string category)
         {
             _registerService = registerService;
-            CreateAlertTypes();
+            CreateAlertTypes(category);
         }
 
         public KeyValuePair<Alert, List<Translated>> GetAlertType(string type)
@@ -45,12 +45,20 @@ namespace Kartverket.Register.Models.Translations
             return alertTypes;
         }
 
-        public void CreateAlertTypes()
+        public void CreateAlertTypes(string category)
         {
             Items = new Dictionary<Alert, List<Translated>>();
 
-            var alertTypes = _registerService.GetRegister("Metadata kodelister", "Tjenestevarsel");
-            foreach(var alertType in alertTypes.items.Cast<CodelistValue>())
+            Register alertTypes;
+
+            if (category == Constants.AlertCategoryDataset)
+                alertTypes = _registerService.GetRegister("Metadata kodelister", "Datasettvarsel");
+            else if (category == Constants.AlertCategoryOperation)
+                alertTypes = _registerService.GetRegister("Metadata kodelister", "Driftsmeldinger");
+            else
+                alertTypes = _registerService.GetRegister("Metadata kodelister", "Tjenestevarsel");
+
+            foreach (var alertType in alertTypes.items.Cast<CodelistValue>())
             {
                 if(alertType.value != null)
                 {

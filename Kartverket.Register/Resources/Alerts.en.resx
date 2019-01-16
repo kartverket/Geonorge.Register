@@ -132,6 +132,21 @@
   <data name="AlertTypeErrorMessage" xml:space="preserve">
     <value>Alert type is required</value>
   </data>
+  <data name="AppliesTo" xml:space="preserve">
+    <value>Applies to</value>
+  </data>
+  <data name="Datasettvarsel" xml:space="preserve">
+    <value>Dataset alert</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Driftsmelding" xml:space="preserve">
+    <value>Operations alert</value>
+  </data>
   <data name="EffectiveDate" xml:space="preserve">
     <value>Effective date</value>
   </data>
@@ -145,18 +160,21 @@
     <value>Select a type of alert from the drop-down list. If you can not find an appropriate type of alert, please email &lt;a href="mailto:post@norgedigitalt.no"&gt; post@norgedigitalt.no &lt;/a&gt; and promote your wish for new types of alerts. But keep in mind that for users who receive the notifications, the alert type must be as specific and precise as possible, while it may be confusing with too many different types of notification. Often it is good enough with a warning type that covers a slightly larger subject. Therefore, try to use the suggested alert types and give an in-depth explanation in the field of "The alert message".</value>
   </data>
   <data name="HelpTextEffectivedate" xml:space="preserve">
-    <value>Here you choose the date when the service will be changed. In Norway digitally there is 3 months notification time for changing or removing services. The system therefore proposes a date 3 months ahead of time for this field.</value>
+    <value>Here you choose the date for the change. In Norway digitally there is 3 months notification time for changing or removing services. The system therefore proposes a date 3 months ahead of time for this field.</value>
   </data>
   <data name="HelpTextNote" xml:space="preserve">
     <value>Here you enter what specific changes will be made to the service that this notification includes. If the notification concerns the change of a URL, you should specify what the new URL will be.
 If the notification concerns a change in data quality or data structure, you should state what these changes mean so that users / developers can update their clients in line with the changes.
 In all cases, it is also advisable to state the reason for the changes, as users are often more understandable for changes if they receive information about why it is necessary to change the service.</value>
   </data>
-  <data name="HelpTextServiceuuid" xml:space="preserve">
+  <data name="HelpTextUuid" xml:space="preserve">
     <value>Select a service from the drop-down list. You can only select a service that is already registered in Geonorge. If the service you wish to enter a new notice for not found in the drop down list, you must register the service in Geonorge via the metadata editor and your BAAT user.</value>
   </data>
   <data name="LastAlert" xml:space="preserve">
     <value>Last alert</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="Note" xml:space="preserve">
     <value>The alert message</value>
@@ -167,8 +185,8 @@ In all cases, it is also advisable to state the reason for the changes, as users
   <data name="NoteTranslated" xml:space="preserve">
     <value>The alert message in english</value>
   </data>
-  <data name="SelectService" xml:space="preserve">
-    <value>Select service</value>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
   </data>
   <data name="SelectServiceAlert" xml:space="preserve">
     <value>Select service alert</value>
@@ -176,22 +194,19 @@ In all cases, it is also advisable to state the reason for the changes, as users
   <data name="Service" xml:space="preserve">
     <value>Service</value>
   </data>
-  <data name="ServiceDesription" xml:space="preserve">
-    <value>Service desription</value>
-  </data>
-  <data name="ServiceName" xml:space="preserve">
-    <value>Service name</value>
-  </data>
-  <data name="ServiceType" xml:space="preserve">
-    <value>Service type</value>
-  </data>
-  <data name="ServiceTypeErrorMessage" xml:space="preserve">
-    <value>Service type is required</value>
-  </data>
   <data name="SubscribeServiceAlert" xml:space="preserve">
     <value>Subscribe to service notifications</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Suggest a new service alert</value>
+    <value>Add new alert</value>
+  </data>
+  <data name="Tjenestevarsel" xml:space="preserve">
+    <value>Service alert</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="TypeErrorMessage" xml:space="preserve">
+    <value>Selection of service/data set/operating message is required</value>
   </data>
 </root>

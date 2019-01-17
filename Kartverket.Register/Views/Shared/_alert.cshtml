@@ -2,6 +2,41 @@
 @using Kartverket.Register.Models
 @using Kartverket.Register.Helpers
 
+@functions {
+
+    string Active(string category)
+    {
+        var categorySelected = Request.QueryString["category"];
+
+        if (string.IsNullOrEmpty(categorySelected) && string.IsNullOrEmpty(category))
+            return "active";
+        else if (!string.IsNullOrEmpty(categorySelected) && categorySelected == category)
+            return "active";
+        else
+            return "";
+    }
+
+}
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 ">
+        <ul id="tabs" class="nav nav-tabs">
+            <li id="allAlerts-Tab" class="tab @Active("")">
+                <a href="?category=">@Shared.All</a>
+            </li>
+            <li id="serviceAlert-Tab" class="tab @Active(Constants.AlertCategoryService)">
+                <a href="?category=Tjenestevarsel">@Alerts.Tjenestevarsel</a>
+            </li>
+            <li id="datasetAlert-Tab" class="tab @Active(Constants.AlertCategoryDataset)">
+                <a href="?category=Datasettvarsel">@Alerts.Datasettvarsel</a>
+            </li>
+            <li id="operationAlert-Tab" class="tab @Active(Constants.AlertCategoryOperation)">
+                <a href="?category=Driftsmelding">@Alerts.Driftsmelding</a>
+            </li>
+        </ul>
+
+    </div>
+</div>
 <div class="table-view">
     <div class="table-heading search-results-table-heading col-md-12">
         <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
@@ -16,8 +51,9 @@
     {
         <div class="resultItemRow col-md-12">
             <div class="col-sm-12 col-md-3 col">
-                @if (!string.IsNullOrEmpty(item.UrlExternal)) { 
-                <a href="@item.UrlExternal" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
+                @if (!string.IsNullOrEmpty(item.UrlExternal))
+                {
+                    <a href="@item.UrlExternal" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
                 }
                 else
                 {

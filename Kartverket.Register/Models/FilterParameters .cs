@@ -22,6 +22,7 @@ namespace Kartverket.Register.Models
         public int Offset { get; set; }
         public int Limit { get; set; }
         public string text { get; set; }
+        public string Category { get; set; }
         public bool filterVertikalt { get; set; }
         public bool filterHorisontalt { get; set; }
         public string InspireRequirement { get; set; }

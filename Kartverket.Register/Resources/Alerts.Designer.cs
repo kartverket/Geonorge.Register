@@ -279,7 +279,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Abonnere på tjenestevarsler.
+        ///   Looks up a localized string similar to Abonnere på varsler.
         /// </summary>
         public static string SubscribeServiceAlert {
             get {

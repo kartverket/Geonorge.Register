@@ -192,7 +192,7 @@ I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden bruke
     <value>Tjeneste</value>
   </data>
   <data name="SubscribeServiceAlert" xml:space="preserve">
-    <value>Abonnere på tjenestevarsler</value>
+    <value>Abonnere på varsler</value>
   </data>
   <data name="TableHeader_alertDate" xml:space="preserve">
     <value>Siste</value>

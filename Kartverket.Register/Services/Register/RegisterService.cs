@@ -45,6 +45,10 @@ namespace Kartverket.Register.Services.Register
                 {
                     FilterDataset(register, filter, registerItems);
                 }
+                else if (register.ContainedItemClassIsAlert() && ! string.IsNullOrEmpty(filter.Category))
+                {
+                    FilterAlert(register, filter, registerItems);
+                }
                 else
                 {
                     registerItems.AddRange(register.items);
@@ -92,6 +96,13 @@ namespace Kartverket.Register.Services.Register
             register.items = registerItems;
             register.RegisterItems = registerItemsv2;
             return register;
+        }
+
+        private void FilterAlert(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
+        {
+            var alerts = register.items.Cast<Alert>();
+            foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category))
+                    registerItems.Add(item);
         }
 
         private List<RegisterItemV2> FilterInspireStatusregister(Models.Register register, FilterParameters filter, List<RegisterItemV2> registerItems)

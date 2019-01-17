@@ -195,7 +195,7 @@ In all cases, it is also advisable to state the reason for the changes, as users
     <value>Service</value>
   </data>
   <data name="SubscribeServiceAlert" xml:space="preserve">
-    <value>Subscribe to service notifications</value>
+    <value>Subscribe alerts</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Add new alert</value>

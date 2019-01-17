@@ -32,7 +32,6 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Add service alert
         /// </summary>
-        // POST: api/ApiServiceAlerts
         [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         [ResponseType(typeof(AlertService))]
         public IHttpActionResult PostServiceAlert(AlertService alertService)
@@ -43,10 +42,11 @@ namespace Kartverket.Register.Controllers
             }
 
             string parentRegister = null;
-            string registerName = "tjenestevarsler";
+            string registerName = "varsler";
 
             Alert serviceAlert = new Alert();
             serviceAlert.name = "navn";
+            serviceAlert.AlertCategory = Constants.AlertCategoryService;
             serviceAlert.AlertType = alertService.AlertType;
             serviceAlert.Note = alertService.Note;
             serviceAlert.UuidExternal = alertService.ServiceUuid;

@@ -270,7 +270,7 @@ namespace Kartverket.Register.Models.ViewModels
             if (ContainedItemClassIsOrganization()) return "/organisasjoner/" + url;
             if (ContainedItemClassIsEpsg()) return "/epsg/" + url;
             if (ContainedItemClassIsNameSpace()) return "/navnerom/" + url;
-            if (ContainedItemClassIsAlert()) return "/tjenestevarsler/" + url;
+            if (ContainedItemClassIsAlert()) return "/varsler/" + url;
             if (ContainedItemClassIsInspireDataset()) return "/inspire/" + url;
             if (ContainedItemClassIsGeodatalovDataset()) return "/geodatalov/" + url;
             if (ContainedItemClassIsDataset())

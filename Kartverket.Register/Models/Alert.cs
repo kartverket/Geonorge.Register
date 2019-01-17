@@ -61,6 +61,8 @@ namespace Kartverket.Register.Models
             if (metadata != null)
             {
                 name = metadata.Title;
+                if (Translations.Count == 0)
+                    Translations.Add(new AlertTranslation());
                 Translations[0].Name = metadata.EnglishTitle;
                 if (metadata.DistributionDetails != null && metadata.DistributionDetails?.Protocol != null) 
                 {
@@ -129,10 +131,10 @@ namespace Kartverket.Register.Models
         {
             if (register.parentRegister == null)
             {
-                return "/tjenestevarsler/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
+                return "/varsler/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
             }
             else {
-                return "/tjenestevarsler/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
+                return "/varsler/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
 
             }
         }
@@ -141,10 +143,10 @@ namespace Kartverket.Register.Models
         {
             if (register.parentRegister == null)
             {
-                return "/tjenestevarsler/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
+                return "/varsler/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
             }
             else {
-                return "/tjenestevarsler/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
+                return "/varsler/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
 
             }
         }

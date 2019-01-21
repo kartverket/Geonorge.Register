@@ -1,0 +1,80 @@
+﻿@model PagedList.IPagedList<RegisterItem>
+@using Kartverket.Register.Models
+@using Kartverket.Register.Helpers
+
+@functions {
+
+    string Active(string category)
+    {
+        var categorySelected = Request.QueryString["category"];
+
+        if (string.IsNullOrEmpty(categorySelected) && string.IsNullOrEmpty(category))
+            return "active";
+        else if (!string.IsNullOrEmpty(categorySelected) && categorySelected == category)
+            return "active";
+        else
+            return "";
+    }
+
+}
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 ">
+        <ul id="tabs" class="nav nav-tabs">
+            <li id="allAlerts-Tab" class="tab @Active("")">
+                <a href="?category=">@Shared.All</a>
+            </li>
+            <li id="serviceAlert-Tab" class="tab @Active(Constants.AlertCategoryService)">
+                <a href="?category=Tjenestevarsel">@Alerts.Tjenestevarsel</a>
+            </li>
+            <li id="datasetAlert-Tab" class="tab @Active(Constants.AlertCategoryDataset)">
+                <a href="?category=Datasettvarsel">@Alerts.Datasettvarsel</a>
+            </li>
+            <li id="operationAlert-Tab" class="tab @Active(Constants.AlertCategoryOperation)">
+                <a href="?category=Driftsmelding">@Alerts.Driftsmelding</a>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<div class="table-view">
+    <div class="table-heading search-results-table-heading col-md-12">
+        <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
+        <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeder_alert, "alert")</div>
+        <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
+        <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeader_description, "description")</div>
+        <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeader_alertDate, "alertdate")</div>
+        <div class="col-md-2 col-sm-12 col text-right">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeader_effektivedate, "effektivedate")</div>
+    </div>
+
+    @foreach (Alert item in Model)
+    {
+        <div class="resultItemRow col-md-12">
+            <div class="col-sm-12 col-md-3 col">
+                @if (!string.IsNullOrEmpty(item.UrlExternal))
+                {
+                    <a href="@item.UrlExternal" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
+                }
+                else
+                {
+                    @item.NameTranslated()
+                }
+            </div>
+            <div class="col-md-2 col-sm-12 col">
+                <p>@item.AlertTypeTranslated()</p>
+            </div>
+            <div class="col-md-3 col-sm-12 col">
+                <p>@item.OwnerTranslated()</p>
+            </div>
+            <div class="col-md-1 col-sm-12 col">
+                <a href="@item.GetObjectUrl()" title="Beskrivelse av @item.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Shared.Details</a>
+            </div>
+            <div class="col-md-1 col-sm-12 col">
+                <p>@Html.DisplayFor(model => item.AlertDate)</p>
+            </div>
+            <div class="col-md-2 col-sm-12 col text-right">
+                <p>@Html.DisplayFor(model => item.EffectiveDate)</p>
+            </div>
+        </div>
+    }
+</div>

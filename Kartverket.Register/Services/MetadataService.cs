@@ -21,7 +21,7 @@ namespace Kartverket.DOK.Service
         }
 
 
-        public Dataset UpdateDatasetWithMetadata(Dataset dataset, string uuid, Dataset originalDataset, bool dontUpdateDescription)
+        public Dataset UpdateDatasetWithMetadata(Dataset dataset, string uuid, bool dontUpdateDescription)
         {
             Dataset metadata = FetchDatasetFromKartkatalogen(uuid);
             if (metadata != null)
@@ -35,41 +35,12 @@ namespace Kartverket.DOK.Service
                 dataset.ProductSheetUrl = metadata.ProductSheetUrl;
                 dataset.ProductSpecificationUrl = metadata.ProductSpecificationUrl;
                 dataset.datasetthumbnail = metadata.datasetthumbnail;
-                dataset.register = originalDataset.register;
 
-                dataset.dokStatusId = originalDataset.dokStatusId;
                 dataset.datasetownerId = metadata.datasetownerId;
-                dataset.datasetowner = originalDataset.datasetowner;
                 dataset.ThemeGroupId = metadata.ThemeGroupId;
                 dataset.UuidService = metadata.UuidService;
                 dataset.WmsUrl = metadata.WmsUrl;
-                dataset.registerId = originalDataset.registerId;
-                dataset.dokStatusDateAccepted = originalDataset.dokStatusDateAccepted;
-                dataset.Notes = originalDataset.Notes;
                 dataset.SpecificUsage = metadata.SpecificUsage;
-                dataset.submitterId = originalDataset.submitterId;
-                dataset.submitter = originalDataset.submitter;
-                dataset.DatasetType = originalDataset.DatasetType;
-
-                dataset.RegionalPlan = originalDataset.RegionalPlan;
-                dataset.RegionalPlanNote = originalDataset.RegionalPlanNote;
-                dataset.MunicipalSocialPlan = originalDataset.MunicipalSocialPlan;
-                dataset.MunicipalSocialPlanNote = originalDataset.MunicipalSocialPlanNote;
-                dataset.MunicipalLandUseElementPlan = originalDataset.MunicipalLandUseElementPlan;
-                dataset.MunicipalLandUseElementPlanNote = originalDataset.MunicipalLandUseElementPlanNote;
-                dataset.ZoningPlanArea = originalDataset.ZoningPlanArea;
-                dataset.ZoningPlanAreaNote = originalDataset.ZoningPlanAreaNote;
-                dataset.ZoningPlanDetails = originalDataset.ZoningPlanDetails;
-                dataset.ZoningPlanDetailsNote = originalDataset.ZoningPlanDetailsNote;
-                dataset.BuildingMatter = originalDataset.BuildingMatter;
-                dataset.BuildingMatterNote = originalDataset.BuildingMatterNote;
-                dataset.PartitionOff = originalDataset.PartitionOff;
-                dataset.PartitionOffNote = originalDataset.PartitionOffNote;
-                dataset.EenvironmentalImpactAssessment = originalDataset.EenvironmentalImpactAssessment;
-                dataset.EenvironmentalImpactAssessmentNote = originalDataset.EenvironmentalImpactAssessmentNote;
-
-
-                if (dontUpdateDescription) dataset.description = originalDataset.description;
 
                 dataset.restricted = metadata.restricted;
 
@@ -495,7 +466,7 @@ namespace Kartverket.DOK.Service
 
             foreach (var dataset in datasets)
             {
-                UpdateDatasetWithMetadata(dataset, dataset.Uuid, dataset, false);
+                UpdateDatasetWithMetadata(dataset, dataset.Uuid, false);
                 _dbContext.Entry(dataset).State = System.Data.Entity.EntityState.Modified;
                 _dbContext.SaveChanges();
             }

@@ -168,7 +168,7 @@ namespace Kartverket.Register.Formatter
             item.Authors.Add(new SyndicationPerson() { Name = u.owner });
             item.Categories.Add(new SyndicationCategory() { Name = u.status });
             item.Categories.Add(new SyndicationCategory() { Name = u.owner });
-            if (u.itemclass == "ServiceAlert" && !string.IsNullOrEmpty(u.ServiceUuid))
+            if (u.itemclass == "Alert" && !string.IsNullOrEmpty(u.ServiceUuid))
                 item.ElementExtensions.Add(new XElement("uuid", u.ServiceUuid));
             return item;
         }
@@ -177,7 +177,7 @@ namespace Kartverket.Register.Formatter
         {
             var content = u.description;
 
-            if(u.itemclass == "ServiceAlert")
+            if(u.itemclass == "Alert")
             {
                 if (!string.IsNullOrEmpty(content))
                     content = content + "<br>";

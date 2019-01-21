@@ -17,6 +17,20 @@ namespace Kartverket.Register.Services.Versioning
             _dbContext = dbContext;
         }
 
+        public Guid NewVersioningGroup(Models.RegisterItem registerItem)
+        {
+            Models.Version versjoneringsGruppe = new Models.Version();
+            versjoneringsGruppe.systemId = Guid.NewGuid();
+            versjoneringsGruppe.currentVersion = registerItem.systemId;
+            versjoneringsGruppe.containedItemClass = registerItem.register.containedItemClass;
+            versjoneringsGruppe.lastVersionNumber = registerItem.versionNumber;
+
+            _dbContext.Entry(versjoneringsGruppe).State = EntityState.Modified;
+            _dbContext.Versions.Add(versjoneringsGruppe);
+            _dbContext.SaveChanges();
+            return versjoneringsGruppe.systemId;
+        }
+
         public void DeleteVersionGroup(Guid versioningId)
         {
             var queryResult = from v in _dbContext.Versions

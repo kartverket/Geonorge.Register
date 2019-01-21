@@ -18,5 +18,10 @@ namespace Kartverket.Register.Resources
         {
             return Shared.ResourceManager.GetString("NameFor_" + lang);
         }
+
+        public static string AlertCategory(string category)
+        {
+            return Alerts.ResourceManager.GetString(category);
+        }
     }
 }

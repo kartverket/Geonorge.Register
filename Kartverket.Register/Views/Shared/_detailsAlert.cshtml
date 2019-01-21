@@ -1,18 +1,19 @@
-﻿@model Kartverket.Register.Models.ServiceAlert
+﻿@model Kartverket.Register.Models.Alert
+@using Kartverket.Register.Resources
 
 <article class="col-sm-12 col-md-12">
-    <h3>@ServiceAlerts.Service</h3>
+    <h3>@Alerts.Details @Resource.AlertCategory(Model.AlertCategory).ToLower()</h3>
     <p><b>@Html.DisplayNameFor(model => model.AlertType): </b>@Model.AlertTypeTranslated()</p>
-    <p><b>@Html.DisplayNameFor(model => model.ServiceType): </b>@Model.ServiceType</p>
+    <p><b>@Html.DisplayNameFor(model => model.Type): </b>@Model.Type</p>
     <p><b>@Html.DisplayNameFor(model => model.AlertDate): </b>@Html.DisplayFor(model => model.AlertDate)</p>
     <p><b>@Html.DisplayNameFor(model => model.EffectiveDate): </b>@Html.DisplayFor(model => model.EffectiveDate)</p>
     <p><b>@Html.DisplayNameFor(model => model.Note):</b> @Model.NoteTranslated()</p>
 </article>
 
-@if (!string.IsNullOrWhiteSpace(Model.ServiceMetadataUrl))
+@if (!string.IsNullOrWhiteSpace(Model.UrlExternal))
 {
     <article class="col-md-12">
-        <h3>@ServiceAlerts.ServiceDesription</h3>
-        <p><a href="@Model.ServiceMetadataUrl" class="btn"><span class="glyphicon glyphicon-globe"></span> @DataSet.DisplayKartkatalogen</a></p>
+        <h3>@Alerts.Description</h3>
+        <p><a href="@Model.UrlExternal" class="btn"><span class="glyphicon glyphicon-globe"></span> @DataSet.DisplayKartkatalogen</a></p>
     </article>
 }

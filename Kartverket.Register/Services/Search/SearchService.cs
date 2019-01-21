@@ -75,9 +75,9 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
-            if (register.ContainedItemClassIsServiceAlert())
+            if (register.ContainedItemClassIsAlert())
             {
-                var queryResults = (from o in _dbContext.ServiceAlerts
+                var queryResults = (from o in _dbContext.Alerts
                                     where o.name.Contains(text)
                                     || o.Translations.Any(oo => oo.Name.Contains(text))
                                     select o);
@@ -86,8 +86,8 @@ namespace Kartverket.Register.Services.Search
                 {
                     foreach (var item in queryResults.ToList())
                     {
-                        ServiceAlert serviceAlert = item;
-                        registerItems.Add(serviceAlert);
+                        Alert alert = item;
+                        registerItems.Add(alert);
                     }
                 }
 
@@ -861,7 +861,7 @@ namespace Kartverket.Register.Services.Search
                                      Type = null,
                                      currentVersion = e.versioning.currentVersion
                                  }).Union(
-                                (from o in _dbContext.ServiceAlerts
+                                (from o in _dbContext.Alerts
                                  where o.register.name.Contains(parameters.Text)
                                  || o.register.description.Contains(parameters.Text)
                                  || o.register.name.Contains(parameters.Text)

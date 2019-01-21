@@ -756,7 +756,7 @@ namespace Kartverket.Register.Formatter
             {
                 text = item.label + ";" + item.owner + ";" + item.description + ";" + item.serviceUrl + ";";
             }
-            else if (item.itemclass == "ServiceAlert")
+            else if (item.itemclass == "Alert")
             {
                 text = item.AlertDate.ToString("dd/MM/yyyy") + ";" + item.EffectiveDate.ToString("dd/MM/yyyy") + ";" + item.label + ";" + item.ServiceType + ";" + item.AlertType + ";" + item.owner + ";" + RemoveBreaksAndSemicolon(item.Note) + ";" + item.MetadataUrl;
             }
@@ -920,9 +920,9 @@ namespace Kartverket.Register.Formatter
             {
                 return Registers.Name + ";" + Registers.Etat + ";" + Namespace.Content + ";" + Namespace.Service;
             }
-            if (containedItemClass == "ServiceAlert")
+            if (containedItemClass == "Alert")
             {
-                return ServiceAlerts.LastAlert + ";" + ServiceAlerts.EffectiveDate + ";" + ServiceAlerts.Service + ";" + ServiceAlerts.ServiceType + ";" + ServiceAlerts.AlertType + ";" + Registers.Owner + ";" + ServiceAlerts.Note + ";" + ServiceAlerts.ServiceDesription;
+                return Alerts.LastAlert + ";" + Alerts.EffectiveDate + ";" + Alerts.Service + ";" + Alerts.Type + ";" + Alerts.AlertType + ";" + Registers.Owner + ";" + Alerts.Note + ";" + Alerts.Description;
             }
 
             return null;

@@ -80,9 +80,9 @@ namespace Kartverket.Register.Migrations
             }
         }
 
-        internal class ServiceAlertTranslationConfiguration : EntityTypeConfiguration<ServiceAlert>
+        internal class AlertTranslationConfiguration : EntityTypeConfiguration<Alert>
         {
-            public ServiceAlertTranslationConfiguration()
+            public AlertTranslationConfiguration()
             {
                 HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterItemId);
             }
@@ -172,7 +172,7 @@ namespace Kartverket.Register.Migrations
                 new ContainedItemClass { value = "EPSG", description = "EPSG koder" },
                 new ContainedItemClass { value = "Organization", description = "Organisasjoner" },
                 new ContainedItemClass { value = "NameSpace", description = "Navnerom" },
-                new ContainedItemClass { value = "ServiceAlert", description = "Tjenestevarsel" }
+                new ContainedItemClass { value = "Alert", description = "Varsler" }
             );
 
             context.Dimensions.AddOrUpdate(
@@ -369,6 +369,9 @@ namespace Kartverket.Register.Migrations
             //    statusId = "Valid",
             //    accessId = 2
             //};
+
+            context.Database.ExecuteSqlCommand("UPDATE Registers SET name = 'Varsler', description = 'Register over alle varsler registrert i Geonorge', seoname = 'varsler'  WHERE  systemid='0f428034-0b2d-4fb7-84ea-c547b872b418'");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET AlertCategory = '" + Constants.AlertCategoryService+ "'  WHERE  [AlertCategory] is  null and Discriminator='Alert'");
 
             //context.Registers.AddOrUpdate(
             //    produktspesifikasjon,

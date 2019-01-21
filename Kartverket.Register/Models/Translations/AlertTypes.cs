@@ -1,4 +1,6 @@
 ﻿using Kartverket.Register.Helpers;
+using Kartverket.Register.Services.Register;
+using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,12 @@ namespace Kartverket.Register.Models.Translations
     public class AlertTypes
     {
         public Dictionary<Alert, List<Translated>> Items;
+        private IRegisterService _registerService;
 
-        public AlertTypes()
+        public AlertTypes(IRegisterService registerService, string category)
         {
-            CreateAlertTypes();
+            _registerService = registerService;
+            CreateAlertTypes(category);
         }
 
         public KeyValuePair<Alert, List<Translated>> GetAlertType(string type)
@@ -41,54 +45,34 @@ namespace Kartverket.Register.Models.Translations
             return alertTypes;
         }
 
-        public void CreateAlertTypes()
+        public void CreateAlertTypes(string category)
         {
-            Alert ChangeUrl = new Alert { Key = "ChangedUrl", Value ="Endret Url" };
-            Translated ChangedUrlTranslated = new Translated { AlertType = "Changed Url", Culture = "en" };
-            List<Translated> ChangedUrlTranslatedList = new List<Translated>();
-            ChangedUrlTranslatedList.Add(ChangedUrlTranslated);
-
-            Alert ChangeDataQuality = new Alert { Key = "ChangedDataQuality", Value = "Endret datakvalitet" };
-            Translated ChangeDataQualityTranslated = new Translated { AlertType = "Changed data quality", Culture = "en" };
-            List<Translated> ChangeDataQualityTranslatedList = new List<Translated>();
-            ChangeDataQualityTranslatedList.Add(ChangeDataQualityTranslated);
-
-            Alert ChangedDataStructure = new Alert { Key = "ChangedDatastructure", Value = "Endret datastruktur" };
-            Translated ChangedDataStructureTranslated = new Translated { AlertType = "Changed data structure", Culture = "en" };
-            List<Translated> ChangedDataStructureTranslatedList = new List<Translated>();
-            ChangedDataStructureTranslatedList.Add(ChangedDataStructureTranslated);
-
-            Alert NewService = new Alert { Key = "NewService", Value = "Ny tjeneste" };
-            Translated NewServiceTranslated = new Translated { AlertType = "New service", Culture = "en" };
-            List<Translated> NewServiceTranslatedList = new List<Translated>();
-            NewServiceTranslatedList.Add(NewServiceTranslated);
-
-            Alert RemovedService = new Alert { Key = "RemovedService", Value = "Fjernet tjeneste" };
-            Translated RemovedServiceTranslated = new Translated { AlertType = "Removed service", Culture = "en" };
-            List<Translated> RemovedServiceTranslatedList = new List<Translated>();
-            RemovedServiceTranslatedList.Add(RemovedServiceTranslated);
-
-            Alert ChangedDataContent = new Alert { Key = "ChangedDataContent", Value = "Endret datainnhold" };
-            Translated ChangedDataContentTranslated = new Translated { AlertType = "Changed data content", Culture = "en" };
-            List<Translated> ChangedDataContentTranslatedList = new List<Translated>();
-            ChangedDataContentTranslatedList.Add(ChangedDataContentTranslated);
-
-            Alert ChangedCodeList = new Alert { Key = "ChangedCodelist", Value = "Endret kodelister" };
-            Translated ChangedCodeListTranslated = new Translated { AlertType = "Changed codelists", Culture = "en" };
-            List<Translated> ChangedCodeListTranslatedList = new List<Translated>();
-            ChangedCodeListTranslatedList.Add(ChangedCodeListTranslated);
-
             Items = new Dictionary<Alert, List<Translated>>();
 
-            Items.Add(ChangeUrl, ChangedUrlTranslatedList);
-            Items.Add(ChangeDataQuality, ChangeDataQualityTranslatedList);
-            Items.Add(ChangedDataStructure, ChangedDataStructureTranslatedList);
-            Items.Add(NewService, NewServiceTranslatedList);
-            Items.Add(RemovedService, RemovedServiceTranslatedList);
-            Items.Add(ChangedDataContent, ChangedDataContentTranslatedList);
-            Items.Add(ChangedCodeList, ChangedCodeListTranslatedList);
+            Register alertTypes;
 
-        }
+            if (category == Constants.AlertCategoryDataset)
+                alertTypes = _registerService.GetRegister("Metadata kodelister", "Datasettvarsel");
+            else if (category == Constants.AlertCategoryOperation)
+                alertTypes = _registerService.GetRegister("Metadata kodelister", "Driftsmeldinger");
+            else
+                alertTypes = _registerService.GetRegister("Metadata kodelister", "Tjenestevarsel");
+
+            foreach (var alertType in alertTypes.items.Cast<CodelistValue>())
+            {
+                if(alertType.value != null)
+                {
+                    var translationEnglish = alertType.Translations.Where(t => t.CultureName == Culture.EnglishCode).FirstOrDefault();
+                    string nameTranslated = translationEnglish != null ? translationEnglish.Name : alertType.name;
+                    Translated translation = new Translated { AlertType = nameTranslated, Culture = Culture.EnglishCode };
+                    List<Translated> translations = new List<Translated>();
+                    translations.Add(translation);
+                    Items.Add( new Alert { Key = alertType.value, Value = alertType.name }, translations) ;
+                }
+            }
+
+
+    }
 
         public class Alert
         {

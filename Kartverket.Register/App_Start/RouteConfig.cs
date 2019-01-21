@@ -98,9 +98,9 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteOrganizationSub", "organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett", new { controller = "Organizations", action = "Delete" });
             routes.MapRoute("DeleteOrganization", "organisasjoner/{registername}/{submitter}/{organisasjon}/slett", new { controller = "Organizations", action = "Delete" });
 
-            // Service alerts
-            routes.MapRoute("CreateServiceAlertSub", "tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny", new { controller = "ServiceAlerts", action = "Create" });
-            routes.MapRoute("CreateServiceAlert", "tjenestevarsler/{registerName}/ny", new { controller = "ServiceAlerts", action = "Create" });
+            // Alerts
+            routes.MapRoute("CreateAlertSub", "varsler/{parentregister}/{registerowner}/{registerName}/ny", new { controller = "Alerts", action = "Create" });
+            routes.MapRoute("CreateAlert", "varsler/{registerName}/ny", new { controller = "Alerts", action = "Create" });
 
             // Subregister
             routes.MapRoute("CreateSubRegistrySub", "subregister/{registerparant}/{parentRegisterOwner}/{registerName}/ny", new { controller = "Subregister", action = "Create" });

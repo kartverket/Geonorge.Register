@@ -518,19 +518,19 @@ namespace Kartverket.Register.Models.Api
                 BoundingBoxWest = organization.BoundingBoxWest;
                 ShortName = organization.shortname;
             }
-            else if (item is ServiceAlert)
+            else if (item is Alert)
             {
-                itemclass = "ServiceAlert";
-                var s = (ServiceAlert)item;
+                itemclass = "Alert";
+                var s = (Alert)item;
                 label = GetNameLocale(s);
                 owner = GetOwnerLocale(s);
-                MetadataUrl = s.ServiceMetadataUrl;
+                MetadataUrl = s.UrlExternal;
                 AlertDate = s.AlertDate;
                 AlertType = GetAlertTypeLocale(s);
-                ServiceType = s.ServiceType;
+                ServiceType = s.Type;
                 EffectiveDate = s.EffectiveDate;
                 Note = GetNoteLocale(s);
-                ServiceUuid = s.ServiceUuid;
+                ServiceUuid = s.UuidExternal;
             }
         }
 
@@ -589,7 +589,7 @@ namespace Kartverket.Register.Models.Api
             return name;
         }
 
-        private string GetNameLocale(Models.ServiceAlert item)
+        private string GetNameLocale(Models.Alert item)
         {
             var culture = CultureHelper.GetCurrentCulture();
             var name = item.Translations[culture]?.Name;
@@ -599,7 +599,7 @@ namespace Kartverket.Register.Models.Api
             return name;
         }
 
-        private string GetOwnerLocale(Models.ServiceAlert item)
+        private string GetOwnerLocale(Models.Alert item)
         {
             var culture = CultureHelper.GetCurrentCulture();
             var name = item.Translations[culture]?.Owner;
@@ -609,7 +609,7 @@ namespace Kartverket.Register.Models.Api
             return name;
         }
 
-        private string GetAlertTypeLocale(Models.ServiceAlert item)
+        private string GetAlertTypeLocale(Models.Alert item)
         {
             var culture = CultureHelper.GetCurrentCulture();
             var name = item.Translations[culture]?.AlertType;
@@ -619,7 +619,7 @@ namespace Kartverket.Register.Models.Api
             return name;
         }
 
-        private string GetNoteLocale(Models.ServiceAlert item)
+        private string GetNoteLocale(Models.Alert item)
         {
             var culture = CultureHelper.GetCurrentCulture();
             var name = item.Translations[culture]?.Note;

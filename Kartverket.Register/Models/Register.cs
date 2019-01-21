@@ -120,9 +120,9 @@ namespace Kartverket.Register.Models
                 : "/" + parentRegister.seoname + "/" + seoname;
         }
 
-        public bool IsServiceAlertRegister()
+        public bool IsAlertRegister()
         {
-            return systemId == Guid.Parse(GlobalVariables.ServiceAlertRegistryId);
+            return systemId == Guid.Parse(GlobalVariables.AlertRegistryId);
         }
 
         public bool IsOfTypeDataset()
@@ -195,9 +195,9 @@ namespace Kartverket.Register.Models
             return containedItemClass == "NameSpace";
         }
 
-        public bool ContainedItemClassIsServiceAlert()
+        public bool ContainedItemClassIsAlert()
         {
-            return containedItemClass == "ServiceAlert";
+            return containedItemClass == "Alert";
         }
 
         public bool ContainedItemClassIsInspireDataset()
@@ -222,7 +222,7 @@ namespace Kartverket.Register.Models
             if (ContainedItemClassIsOrganization()) return "/organisasjoner/" + url;
             if (ContainedItemClassIsEpsg()) return "/epsg/" + url;
             if (ContainedItemClassIsNameSpace()) return "/navnerom/" + url;
-            if (ContainedItemClassIsServiceAlert()) return "/tjenestevarsler/" + url;
+            if (ContainedItemClassIsAlert()) return "/varsler/" + url;
             if (ContainedItemClassIsInspireDataset()) return "/inspire/" + url;
             if (ContainedItemClassIsGeodatalovDataset()) return "/geodatalov/" + url;
             if (ContainedItemClassIsDataset())

@@ -252,9 +252,9 @@ namespace Kartverket.Register.Models.ViewModels
                 case Organization _:
                     var organization = (Organization)RegisterItem;
                     return organization.GetOrganizationEditUrl();
-                case ServiceAlert _:
-                    var serviceAlert = (ServiceAlert)RegisterItem;
-                    return serviceAlert.GetServiceAlertEditUrl();
+                case Alert _:
+                    var alert = (Alert)RegisterItem;
+                    return alert.GetAlertEditUrl();
             }
             return "#";
         }
@@ -294,9 +294,9 @@ namespace Kartverket.Register.Models.ViewModels
                 case Organization _:
                     var organization = (Organization)RegisterItem;
                     return organization.GetOrganizationDeleteUrl();
-                case ServiceAlert _:
-                    var serviceAlert = (ServiceAlert)RegisterItem;
-                    return serviceAlert.GetServiceAlertDeleteUrl();
+                case Alert _:
+                    var alert = (Alert)RegisterItem;
+                    return alert.GetAlertDeleteUrl();
             }
             return "#";
         }

@@ -87,7 +87,7 @@ namespace Kartverket.Register.Services
 
         public bool EditRegister(RegisterV2ViewModel registerViewModel)
         {
-            return (IsAdmin() || IsRegisterOwner(registerViewModel.Owner.name, UserName())) && !registerViewModel.IsServiceAlertRegister();
+            return (IsAdmin() || IsRegisterOwner(registerViewModel.Owner.name, UserName())) && !registerViewModel.IsAlertRegister();
         }
 
         public bool AccessRegister(Models.Register register)
@@ -160,7 +160,7 @@ namespace Kartverket.Register.Services
 
         private bool AccessRegisterItem(RegisterItemV2ViewModel registerItemViewModel)
         {
-            if (!registerItemViewModel.Register.IsServiceAlertRegister())
+            if (!registerItemViewModel.Register.IsAlertRegister())
             {
                 if (AccessRegister(registerItemViewModel.Register))
                 {

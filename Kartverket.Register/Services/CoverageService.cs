@@ -106,5 +106,22 @@ namespace Kartverket.Register.Services
                 catch { }
             }
         }
+
+        public CoverageDataset NewCoverage(Dataset dataset)
+        {
+            CoverageDataset coverage = new CoverageDataset();
+            coverage.CoverageId = Guid.NewGuid();
+            coverage.CoverageDOKStatusId = "Accepted";
+            coverage.ConfirmedDok = true;
+            coverage.DatasetId = dataset.systemId;
+            dataset.dokStatusDateAccepted = DateTime.Now;
+            coverage.MunicipalityId = dataset.datasetownerId;
+            coverage.Note = dataset.Notes;
+            coverage.Coverage = true;
+
+            _context.Entry(coverage).State = EntityState.Modified;
+            _context.CoverageDatasets.Add(coverage);
+            return coverage;
+        }
     }
 }

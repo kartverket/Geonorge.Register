@@ -34,7 +34,7 @@ namespace Kartverket.Register.Services.Register
             var registerItems = new List<Models.RegisterItem>();
             var registerItemsv2 = new List<RegisterItemV2>();
 
-            // Document, Dataset, ServiceAlert, CodelistValue, EPSG, Namespace
+            // Document, Dataset, Alert, CodelistValue, EPSG, Namespace
             if (register.items.Any())
             {
                 if (register.ContainedItemClassIsDocument())
@@ -44,6 +44,10 @@ namespace Kartverket.Register.Services.Register
                 else if (register.ContainedItemClassIsDataset())
                 {
                     FilterDataset(register, filter, registerItems);
+                }
+                else if (register.ContainedItemClassIsAlert() && ! string.IsNullOrEmpty(filter.Category))
+                {
+                    FilterAlert(register, filter, registerItems);
                 }
                 else
                 {
@@ -92,6 +96,13 @@ namespace Kartverket.Register.Services.Register
             register.items = registerItems;
             register.RegisterItems = registerItemsv2;
             return register;
+        }
+
+        private void FilterAlert(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
+        {
+            var alerts = register.items.Cast<Alert>();
+            foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category))
+                    registerItems.Add(item);
         }
 
         private List<RegisterItemV2> FilterInspireStatusregister(Models.Register register, FilterParameters filter, List<RegisterItemV2> registerItems)
@@ -313,7 +324,7 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliveryWmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(item.Uuid, item.dokDeliveryWmsStatusAutoUpdate, item.dokDeliveryWmsStatusId, item.UuidService);
                 item.dokDeliveryAtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(item.Uuid, item.dokDeliveryAtomFeedStatusAutoUpdate, item.dokDeliveryAtomFeedStatusId);
                 item.dokDeliveryWfsStatusId = _datasetDeliveryService.GetWfsStatus(item.Uuid, item.dokDeliveryWfsStatusAutoUpdate, item.dokDeliveryWfsStatusId);
-                item.dokDeliveryDistributionStatusId = GetDeliveryDownloadStatus(item.Uuid, item.dokDeliveryDistributionStatusAutoUpdate, item.dokDeliveryDistributionStatusId);
+                item.dokDeliveryDistributionStatusId = GetDeliveryDownloadStatus(item.Uuid, item.dokDeliveryDistributionStatusAutoUpdate, item.dokDeliveryDistributionStatusId, item.dokDeliveryWfsStatusId, item.dokDeliveryAtomFeedStatusId);
             }
             _dbContext.SaveChanges();
         }
@@ -528,13 +539,13 @@ namespace Kartverket.Register.Services.Register
             return sortedList;
         }
 
-        public string GetDeliveryDownloadStatus(string uuid, bool autoUpdate, string currentStatus)
+        public string GetDeliveryDownloadStatus(string uuid, bool autoUpdate, string currentStatus, string wfsStatus, string atomStatus)
         {
             string status = currentStatus;
 
             try
             {
-                string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+                string metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
                 System.Net.WebClient c = new System.Net.WebClient();
                 c.Encoding = System.Text.Encoding.UTF8;
 
@@ -559,9 +570,9 @@ namespace Kartverket.Register.Services.Register
 
                 if (autoUpdate)
                 {
-                    if (currentStatus == "good" || currentStatus == "good")
+                    if (wfsStatus == "good" || atomStatus == "good")
                         status = "good";
-                    else if (currentStatus == "useable" || currentStatus == "useable" || hasDistributionUrl)
+                    else if (wfsStatus == "useable" || atomStatus == "useable" || hasDistributionUrl)
                         status = "useable";
                     else
                         status = "deficient";

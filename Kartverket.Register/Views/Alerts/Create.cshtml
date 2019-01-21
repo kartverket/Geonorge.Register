@@ -1,19 +1,21 @@
 ﻿@using Kartverket.Register.Helpers
-@model Kartverket.Register.Models.ServiceAlert
+@using Kartverket.Register.Models
+@model Kartverket.Register.Models.Alert
+@using Kartverket.Register.Resources
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = ServiceAlerts.Title;
+    ViewBag.Title = Alerts.Title;
 }
 
 @section breadcrumb {
-    <li>@ServiceAlerts.Title</li>
+    <li>@Alerts.Title</li>
 }
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                @ServiceAlerts.Title
+                @Alerts.Title
             </h2>
         </div>
         <div class="col-sm-12">
@@ -22,45 +24,51 @@
     </div>
 </section>
 
-@using (Html.BeginForm("Create", "ServiceAlerts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Alerts", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
     <div class="form-horizontal">
         @Html.ValidationSummary(false, Shared.ValidationSummary, new { @class = "alert alert-danger" })
         @Html.Hidden("name", "navn")
-
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="radio" name="category" value="@Constants.AlertCategoryService" onclick="location.href='?category=@Constants.AlertCategoryService'" @(ViewBag.Category == Constants.AlertCategoryService || string.IsNullOrEmpty(ViewBag.Category) ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryService)
+                <input type="radio" name="category" value="@Constants.AlertCategoryDataset" onclick="location.href='?category=@Constants.AlertCategoryDataset'" @(ViewBag.Category == Constants.AlertCategoryDataset ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryDataset)
+                <input type="radio" name="category" value="@Constants.AlertCategoryOperation" onclick="location.href='?category=@Constants.AlertCategoryOperation'" @(ViewBag.Category == @Constants.AlertCategoryOperation ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryOperation)
+            </div>
+        </div>
         <div class="form-group required has-feedback">
-            @Html.LabelFor(model => model.ServiceUuid, ServiceAlerts.Service, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UuidExternal, Alerts.AppliesTo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    @Html.DropDownList("ServiceUuid", null, ServiceAlerts.SelectService, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("UuidExternal", null, Alerts.Select, htmlAttributes: new { @class = "form-control" })
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
-                    <p class="help-text bg-success" id="help-text-serviceuuid" style="display: none">
-                        @ServiceAlerts.HelpTextServiceuuid
+                    <p class="help-text bg-success" id="help-text-uuid" style="display: none">
+                        @Alerts.HelpTextUuid
                     </p>
                 </div>
             </div>
             <div class="col-sm-1 pull-right">
                 <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-serviceuuid" class="badge help-text-toggle">?</a>
+                    <a href="#" data-help-text-id="help-text-uuid" class="badge help-text-toggle">?</a>
                 </p>
             </div>
         </div>
 
-        @Html.Hidden("ServiceType", Registers.NotSet)
+        @Html.Hidden("Type", Registers.NotSet)
 
         <div class="form-group required has-feedback">
             @Html.LabelFor(model => model.AlertType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    @Html.DropDownList("AlertType", null, ServiceAlerts.SelectServiceAlert, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("AlertType", null, Alerts.Select, htmlAttributes: new { @class = "form-control" })
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-alerttype" style="display: none">
-                        @Html.Raw(ServiceAlerts.HelpTextAlerttype)
+                        @Html.Raw(Alerts.HelpTextAlerttype)
                     </p>
                 </div>
             </div>
@@ -78,12 +86,12 @@
             <div class="col-md-9">
                 <div class="col-md-4 row">
                     @Html.EditorFor(model => model.AlertDate, new { cssClass = "date" })
-                    <span class="field-validation-valid" id="AlertDate_validationMessage">@ServiceAlerts.AlertDateValidationMessage</span>
+                    <span class="field-validation-valid" id="AlertDate_validationMessage">@Alerts.AlertDateValidationMessage</span>
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-alertdate" style="display: none">
-                        @ServiceAlerts.HelpTextAlertdate
+                        @Alerts.HelpTextAlertdate
                     </p>
                 </div>
             </div>
@@ -103,7 +111,7 @@
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-effectivedate" style="display: none">
-                        @ServiceAlerts.HelpTextEffectivedate
+                        @Alerts.HelpTextEffectivedate
                     </p>
                 </div>
             </div>
@@ -123,7 +131,7 @@
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-note" style="display: none">
-                        @ServiceAlerts.HelpTextNote
+                        @Alerts.HelpTextNote
                     </p>
                 </div>
             </div>
@@ -177,7 +185,7 @@
             }
             else
                 $('#AlertDate_validationMessage').removeClass("field-validation-error");
-                $('#AlertDate_validationMessage').addClass("field-validation-valid")
+            $('#AlertDate_validationMessage').addClass("field-validation-valid")
         });
 
         $('.input-validation-error').each(function () {

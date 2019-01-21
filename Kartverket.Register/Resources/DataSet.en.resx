@@ -280,7 +280,7 @@
     <value>Assessment point</value>
   </data>
   <data name="DOK_Confirmed" xml:space="preserve">
-    <value>Confirmed</value>
+    <value>Selected as DOK</value>
   </data>
   <data name="DOK_Coverage" xml:space="preserve">
     <value>Coverage</value>
@@ -334,7 +334,7 @@
     <value>The dataset already exists!</value>
   </data>
   <data name="MunicipalConfirmation" xml:space="preserve">
-    <value>Municipal confirmation</value>
+    <value>Status selection of DOK</value>
   </data>
   <data name="DisplayInfoRegistration" xml:space="preserve">
     <value>Show instructions for registration</value>
@@ -346,7 +346,7 @@
     <value>Background color</value>
   </data>
   <data name="Coverage" xml:space="preserve">
-    <value>Confirm DOK</value>
+    <value>Selection of DOK</value>
   </data>
   <data name="LoadingCoverage" xml:space="preserve">
     <value>Loading DOK</value>

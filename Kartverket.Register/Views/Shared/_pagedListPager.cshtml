@@ -9,4 +9,5 @@
 + (Session["text"] != null && !string.IsNullOrEmpty(Session["text"].ToString()) ? "&text=" + Session["text"].ToString() : "")
 + (Session["filterVertikalt"] != null && !string.IsNullOrEmpty(Session["filterVertikalt"].ToString()) ? "&filterVertikalt=" + Session["filterVertikalt"].ToString() : "")
 + (Session["filterHorisontalt"] != null && !string.IsNullOrEmpty(Session["filterHorisontalt"].ToString()) ? "&filterHorisontalt=" + Session["filterHorisontalt"].ToString() : "")
++ (!string.IsNullOrEmpty(Request.QueryString["category"]) ? "&category=" + Request.QueryString["category"].ToString() : "")
 + (Session["municipality"] != null && !string.IsNullOrEmpty(Session["municipality"].ToString()) ? "&municipality=" + Session["municipality"] : ""), new PagedListRenderOptions { MaximumPageNumbersToDisplay = 1, DisplayEllipsesWhenNotShowingAllPageNumbers = false })

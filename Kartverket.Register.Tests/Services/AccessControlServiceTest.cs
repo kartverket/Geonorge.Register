@@ -182,7 +182,7 @@ namespace Kartverket.Register.Tests.Services
         }
 
         [Fact]
-        public void AccessEditRegisterWhenUserIsAdminAndRegisterIsNotServiceAlertRegister()
+        public void AccessEditRegisterWhenUserIsAdminAndRegisterIsNotAlertRegister()
         {
             SetClaims(Role, Admin);
             var registerViewModel = new RegisterV2ViewModel(_register, _filter);
@@ -190,7 +190,7 @@ namespace Kartverket.Register.Tests.Services
         }
 
         [Fact]
-        public void NotAccessEditRegisterWhenUserIsAdminAndRegisterIsServiceAlertRegister()
+        public void NotAccessEditRegisterWhenUserIsAdminAndRegisterIsAlertRegister()
         {
             SetClaims(Role, Admin);
             _register.systemId = Guid.Parse("0f428034-0b2d-4fb7-84ea-c547b872b418");

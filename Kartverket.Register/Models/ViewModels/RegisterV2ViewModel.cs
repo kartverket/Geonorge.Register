@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.StatusReports;
@@ -270,7 +271,7 @@ namespace Kartverket.Register.Models.ViewModels
             if (ContainedItemClassIsOrganization()) return "/organisasjoner/" + url;
             if (ContainedItemClassIsEpsg()) return "/epsg/" + url;
             if (ContainedItemClassIsNameSpace()) return "/navnerom/" + url;
-            if (ContainedItemClassIsAlert()) return "/varsler/" + url;
+            if (ContainedItemClassIsAlert()) return "/varsler/" + url + $"?category={HttpContext.Current.Request.QueryString["category"]}";
             if (ContainedItemClassIsInspireDataset()) return "/inspire/" + url;
             if (ContainedItemClassIsGeodatalovDataset()) return "/geodatalov/" + url;
             if (ContainedItemClassIsDataset())

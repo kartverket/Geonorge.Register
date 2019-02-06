@@ -118,8 +118,15 @@ namespace Kartverket.Register.Controllers
         {
             Dictionary<string, string> ServiceList = new Dictionary<string, string>();
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=service&limit=1000&orderby=title";
-            if (category == Constants.AlertCategoryDataset)
-                url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=2000&orderby=title&facets[1]name=organization&facets[1]value=Kartverket";
+            var organization = _accessControlService.GetSecurityClaim("organization")[0];
+            if (category == Constants.AlertCategoryDataset) { 
+                if(_accessControlService.IsAdmin())
+                    url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=7000&orderby=title";
+                else if(organization.ToLower() == "kartverket")
+                    url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=4000&orderby=title&facets[1]name=organization&facets[1]value=Kartverket&facets[2]name=organization&facets[2]value=Geovekst";
+                else
+                    url= System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=4000&orderby=title&facets[1]name=organization&facets[1]value=" + organization;
+            }
             WebClient c = new WebClient();
             c.Encoding = System.Text.Encoding.UTF8;
             var data = c.DownloadString(url);
@@ -139,7 +146,7 @@ namespace Kartverket.Register.Controllers
                 {
                     if (_accessControlService.IsAdmin() || _accessControlService.IsItemOwner(Organization, _accessControlService.GetSecurityClaim("organization")[0]))
                     {
-                        if (!service["Title"].ToString().StartsWith("Høydedata"))
+                        if (!service["Title"].ToString().StartsWith("Høydedata") && !service["Title"].ToString().StartsWith("Ortofoto"))
                             ServiceList.Add(ServiceUuid, service["Title"].ToString());
                     }
                     

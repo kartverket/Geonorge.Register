@@ -101,6 +101,8 @@ namespace Kartverket.Register.Controllers
 
         private void ViewBags(Alert alert, string category)
         {
+            if (string.IsNullOrEmpty(category))
+                category = Constants.AlertCategoryService;
             //ViewBag.AlertType = new SelectList(alert.GetAlertTypes(), alert.AlertType);
             ViewBag.AlertType = new SelectList(new AlertTypes(_registerService, category).GetAlertTypes() , "Key", "Value", alert.AlertType);
             ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(category), "Key", "Value", alert.UuidExternal);

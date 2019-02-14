@@ -354,9 +354,10 @@ namespace Kartverket.Register.Controllers
             {
                 string filtype;
                 string seofilename = MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
+                string documentNameSeo = RegisterUrls.MakeSeoFriendlyString(document.name);
 
-                string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
-                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_thumbnail_" + document.name + "_v" + document.versionNumber + "_" + seofilename + ".jpg");
+                string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
+                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_thumbnail_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + ".jpg");
                 GhostscriptWrapper.GenerateOutput(input, output, GsSettings());
 
                 ImageResizer.ImageJob newImage =
@@ -365,7 +366,7 @@ namespace Kartverket.Register.Controllers
 
                 newImage.Build();
 
-                return url + document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + "_" + seofilename + ".jpg";
+                return url + document.register.seoname + "_thumbnail_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + ".jpg";
 
             }
             else
@@ -403,7 +404,7 @@ namespace Kartverket.Register.Controllers
         {
             string filtype;
             string seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
-
+            name = RegisterUrls.MakeSeoFriendlyString(name);
             string filename = register + "_" + name + "_v" + vnr + "_" + seofilename + "." + filtype;
             var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
             file.SaveAs(path);

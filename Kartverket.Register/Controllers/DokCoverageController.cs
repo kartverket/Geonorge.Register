@@ -66,7 +66,10 @@ namespace Kartverket.Register.Controllers
 
 
             ShowDatasetCoverageViewModel model = new ShowDatasetCoverageViewModel();
-            
+
+            if (string.IsNullOrWhiteSpace(dataset))
+                DokCoverageWmsMapping.UpdateMappings();
+
             if (!string.IsNullOrWhiteSpace(dataset))
             {
                 Dataset datasetItem = GetDatasetByUuid(dataset);

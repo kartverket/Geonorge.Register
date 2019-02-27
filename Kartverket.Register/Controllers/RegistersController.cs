@@ -741,7 +741,8 @@ namespace Kartverket.Register.Controllers
 
         public string RedirectToApiIfFormatIsNotNull(string format)
         {
-            Log.Info("Request.FilePath = " + Request.FilePath);
+            if(Log != null && Request != null)
+                Log.Info("Request.FilePath = " + Request.FilePath);
             if (Request != null && Request.FilePath != null && Request.FilePath.Contains("/register/tjenestevarsler"))
                 return WebConfigurationManager.AppSettings["RegistryUrl"] + "varsler.atom";
 

@@ -24,7 +24,7 @@ namespace Kartverket.Register.Controllers
     public class RegistersController : Controller
     {
         private readonly RegisterDbContext _db;
-
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IVersioningService _versioningService;
         private readonly IRegisterService _registerService;
         private readonly ISearchService _searchService;
@@ -741,6 +741,7 @@ namespace Kartverket.Register.Controllers
 
         public string RedirectToApiIfFormatIsNotNull(string format)
         {
+            Log.Info("Request.FilePath = " + Request.FilePath);
             if (Request != null && Request.FilePath != null && Request.FilePath.Contains("/register/tjenestevarsler"))
                 return WebConfigurationManager.AppSettings["RegistryUrl"] + "varsler.atom";
 

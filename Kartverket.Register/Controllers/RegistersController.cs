@@ -741,6 +741,9 @@ namespace Kartverket.Register.Controllers
 
         public string RedirectToApiIfFormatIsNotNull(string format)
         {
+            if (Request != null && Request.FilePath != null && (Request.FilePath.Contains("/register/tjenestevarsler") || Request.FilePath.Contains("geonorge.no/varsler.atom")))
+                return WebConfigurationManager.AppSettings["RegistryUrl"] + "varsler.atom";
+
             if (!string.IsNullOrWhiteSpace(format))
             {
                 return "/api/" + Request.FilePath + "?" + Request.QueryString;

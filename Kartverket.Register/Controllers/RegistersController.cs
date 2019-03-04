@@ -24,7 +24,7 @@ namespace Kartverket.Register.Controllers
     public class RegistersController : Controller
     {
         private readonly RegisterDbContext _db;
-
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IVersioningService _versioningService;
         private readonly IRegisterService _registerService;
         private readonly ISearchService _searchService;
@@ -756,6 +756,7 @@ namespace Kartverket.Register.Controllers
                     return "/api/" + Request.FilePath + "." + format + "?" + Request.QueryString;
                 }
             }
+
             return null;
         }
 

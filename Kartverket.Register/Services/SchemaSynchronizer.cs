@@ -18,7 +18,7 @@ namespace Kartverket.Register.Services
         public string Synchronize(HttpPostedFileBase file, string filename)
         {
             string syncFile = "";
-            if (file != null && file.ContentLength > 0 && file.ContentType == "text/xml")
+            if (file != null && file.ContentLength > 0 && (file.ContentType == "text/xml" || file.ContentType == "application/xml"))
             {
                 var document = new XmlDocument();
                 document.Load(file.InputStream);

@@ -138,20 +138,7 @@
                         <label class="col-md-4" for="editor">Admin + Editor</label>
                     </div>
                 </div>
-            if (Model.ContainedItemClassIsCodelistValue())
-            {
-                <div class="form-group">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-10">
-                        @Html.LabelFor(model => model.MakeAllItemsValid)
-                    </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-10">
-                        @Html.CheckBoxFor(m => m.MakeAllItemsValid, new { title = Registers.MakeAllItemsValidMessage, @class = "checkbox-inline" })
-                        <small>@Registers.MakeAllItemsValidMessage.</small>
-                    </div>
-                </div>
-            }
+            
         }
         else
         {
@@ -160,6 +147,22 @@
             @Html.HiddenFor(model => model.ownerId)
             @Html.HiddenFor(model => model.statusId)
         }
+        
+        @if (Model.ContainedItemClassIsCodelistValue())
+        {
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                @Html.LabelFor(model => model.MakeAllItemsValid)
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                @Html.CheckBoxFor(m => m.MakeAllItemsValid, new { title = Registers.MakeAllItemsValidMessage, @class = "checkbox-inline" })
+                <small>@Registers.MakeAllItemsValidMessage.</small>
+            </div>
+        </div>
+        }
+
     </div>
     <div class="form-group">
         <hr />

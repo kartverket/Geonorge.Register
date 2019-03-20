@@ -185,7 +185,9 @@ namespace Kartverket.DOK.Service
 
                 var englishTitle = data.EnglishTitle;
                 var englishAbstract = data.EnglishAbstract;
-                var keywordsNationalThemeEnglish = data.KeywordsNationalTheme[0].EnglishKeyword;
+                string keywordsNationalThemeEnglish = "";
+                if (data.KeywordsNationalTheme.Count > 0)
+                    keywordsNationalThemeEnglish = data.KeywordsNationalTheme[0].EnglishKeyword;
                 metadata.Translations.Add(new DatasetTranslation
                 {
                     CultureName = Culture.EnglishCode,

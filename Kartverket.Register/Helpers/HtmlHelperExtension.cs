@@ -363,7 +363,7 @@ namespace Kartverket.Register.Helpers
             return 0;
         }
 
-        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryType = null)
+        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryType = null, string filterOrganization = null)
         {
 
             var sortingClass = "";
@@ -664,6 +664,9 @@ namespace Kartverket.Register.Helpers
                 linkSort += "&text=" + text;
             if (string.IsNullOrWhiteSpace(tittel))
                 tittel = "<span class='" + statusIcon + "'></span>";
+
+            if(!string.IsNullOrEmpty(filterOrganization))
+                linkSort += "&filterOrganization=" + filterOrganization;
 
             linkSort = linkSort + "'>" + tittel + "</a>";
 

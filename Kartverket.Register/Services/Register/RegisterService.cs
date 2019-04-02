@@ -619,7 +619,7 @@ namespace Kartverket.Register.Services.Register
                             {
                                 var qualitySpecification = qualitySpecifications[q];
                                 string explanation = qualitySpecification.Explanation.Value;
-                                if (explanation.StartsWith("SOSI-filer er i henhold") || explanation.StartsWith("The dataset is established according to national specifications"))
+                                if (explanation.StartsWith("SOSI-filer er i henhold"))
                                 {
                                     qualitySpecificationsResult = true;
                                     break;
@@ -692,7 +692,7 @@ namespace Kartverket.Register.Services.Register
                             {
                                 var qualitySpecification = qualitySpecifications[q];
                                 string explanation = qualitySpecification.Explanation.Value;
-                                if (explanation.StartsWith("GML-filer er i henhold") || explanation.StartsWith("The dataset is established according to national specifications"))
+                                if (explanation.StartsWith("GML-filer er i henhold"))
                                 {
                                     qualitySpecificationsResult = true;
                                     break;

@@ -44,16 +44,28 @@
             <div v-show="expanded">
                 <div class="list-header d-none d-md-block">
                     <div class="row">
-                        <div class="col-md-12">
-                            Tittel
+                        <div class="col-md-4">
+                            <b>Metadatanavn</b>
+                        </div>
+                        <div class="col-md-4">
+                            <b>Organisasjon</b>
+                        </div>
+                        <div class="col-md-4">
+                            <b>Datasett-id</b>
                         </div>
                     </div>
                 </div>
                 <div class="list-content" v-bind:class="{'loading-data': loadingData}">
                     <div v-for="item in filteredItems" class="list-item">
                         <div class="row">
-                            <div class="col-md-12">
-                                <a v-bind:href="item.ShowDetailsUrl" v-bind:title="'Vis detaljer for ' + item.DatasetName">{{item.DatasetName}}</a>
+                            <div class="col-md-4">
+                                <a v-bind:href="item.ShowDetailsUrl" v-bind:title="'Vis detaljer for ' + item.DatasetName">{{item.Title}}</a>
+                            </div>
+                            <div class="col-md-4">
+                                {{item.Organization}}
+                            </div>
+                            <div class="col-md-4">
+                                {{item.DatasetName}}
                             </div>
                         </div>
                     </div>

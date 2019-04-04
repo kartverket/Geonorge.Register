@@ -170,6 +170,9 @@ I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden bruke
   <data name="HelpTextUuid" xml:space="preserve">
     <value>Velg en tjeneste/et datasett fra nedtrekkslisten. Du kan kun velge en tjeneste/et datasett som allerede er registrert i Geonorge. Dersom du skal legge inn nytt varsel som ikke finnes i nedtrekkslista, må du registrere i Geonorge via metadataeditoren og din BAAT-bruker. For driftsmeldinger er det ingen valg.</value>
   </data>
+  <data name="HelpTextUuidOperation" xml:space="preserve">
+    <value>Oppgi navnet på systemet/løsningen eller applikasjonene som har driftsproblemer. Feks: "Geonorge", Geonorge - kartkatalog, "Matrikkelen", "WMS-servere fra Kystverket", "Tjenester fra Miljødirektoratet"</value>
+  </data>
   <data name="LastAlert" xml:space="preserve">
     <value>Siste varsel</value>
   </data>

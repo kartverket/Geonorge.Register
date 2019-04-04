@@ -216,6 +216,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oppgi navnet på systemet/løsningen eller applikasjonene som har driftsproblemer. Feks: &quot;Geonorge&quot;, Geonorge - kartkatalog, &quot;Matrikkelen&quot;, &quot;WMS-servere fra Kystverket&quot;, &quot;Tjenester fra Miljødirektoratet&quot;.
+        /// </summary>
+        public static string HelpTextUuidOperation {
+            get {
+                return ResourceManager.GetString("HelpTextUuidOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Siste varsel.
         /// </summary>
         public static string LastAlert {

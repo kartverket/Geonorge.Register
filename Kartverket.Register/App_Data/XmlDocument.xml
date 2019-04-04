@@ -2515,6 +2515,11 @@
               Looks up a localized string similar to Velg en tjeneste/et datasett fra nedtrekkslisten. Du kan kun velge en tjeneste/et datasett som allerede er registrert i Geonorge. Dersom du skal legge inn nytt varsel som ikke finnes i nedtrekkslista, må du registrere i Geonorge via metadataeditoren og din BAAT-bruker. For driftsmeldinger er det ingen valg..
             </summary>
         </member>
+        <member name="P:Resources.Alerts.HelpTextUuidOperation">
+            <summary>
+              Looks up a localized string similar to Oppgi navnet på systemet/løsningen eller applikasjonene som har driftsproblemer. Feks: &quot;Geonorge&quot;, Geonorge - kartkatalog, &quot;Matrikkelen&quot;, &quot;WMS-servere fra Kystverket&quot;, &quot;Tjenester fra Miljødirektoratet&quot;.
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.LastAlert">
             <summary>
               Looks up a localized string similar to Siste varsel.

@@ -170,6 +170,9 @@ In all cases, it is also advisable to state the reason for the changes, as users
   <data name="HelpTextUuid" xml:space="preserve">
     <value>Select a service from the drop-down list. You can only select a service that is already registered in Geonorge. If the service you wish to enter a new notice for not found in the drop down list, you must register the service in Geonorge via the metadata editor and your BAAT user.</value>
   </data>
+  <data name="HelpTextUuidOperation" xml:space="preserve">
+    <value>Enter the name of the system / solution or applications that have operational problems. For example: "Geonorge", Geonorge - map directory, "Matrikkelen", "WMS-servers from the Norwegian Coastal Administration", "Services from the Environment Agency"</value>
+  </data>
   <data name="LastAlert" xml:space="preserve">
     <value>Last alert</value>
   </data>

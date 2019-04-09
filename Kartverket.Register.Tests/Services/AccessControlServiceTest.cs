@@ -24,15 +24,12 @@ namespace Kartverket.Register.Tests.Services
         private const string Orgnr = "orgnr";
         private const string Org = "organization";
         private readonly Models.Register _register;
-        private Document _document;
-        private Dataset _dataset;
-        private FilterParameters _filter;
+        private readonly Document _document;
+        private readonly Dataset _dataset;
+        private readonly FilterParameters _filter = null;
         private readonly Organization _organization;
         private readonly Organization _municipality;
         private readonly AccessControlService _accessControlService;
-        private readonly RegisterItemV2ViewModel _codelistValue;
-
-
 
         public AccessControlServiceTest()
         {
@@ -45,7 +42,6 @@ namespace Kartverket.Register.Tests.Services
             _document = CreateDocument();
             _dataset = CreateDataset();
             _municipality = CreateMunicipality();
-            _codelistValue = CreateCodelistValue();
         }
 
 
@@ -203,8 +199,7 @@ namespace Kartverket.Register.Tests.Services
         {
             SetClaims(Role, Admin);
             _register.systemId = Guid.Parse(GlobalVariables.DokMunicipalRegistryId);
-            var registerViewModel = new RegisterV2ViewModel(_register, _filter);
-            registerViewModel.Municipality = _municipality;
+            var registerViewModel = new RegisterV2ViewModel(_register, _filter) {Municipality = _municipality};
             _accessControlService.AddToRegister(registerViewModel).Should().BeTrue();
         }
         [Fact]
@@ -228,8 +223,7 @@ namespace Kartverket.Register.Tests.Services
         public void AccessEditRegisterItemListWhenMunicipalityIsNotNull()
         {
             SetClaims(Role, Admin);
-            var registerViewModel = new RegisterV2ViewModel(_register, _filter);
-            registerViewModel.Municipality = _municipality;
+            var registerViewModel = new RegisterV2ViewModel(_register, _filter) {Municipality = _municipality};
             _accessControlService.EditRegisterItemsList(registerViewModel).Should().BeTrue();
         }
 
@@ -245,9 +239,7 @@ namespace Kartverket.Register.Tests.Services
         public void AccessRegisterItemIfUserIsItemOwner()
         {
             SetClaims(Role, Editor, Orgnr, "971040238", Org, "Kartverket");
-            var registerItem = new CodelistValue();
-            registerItem.register = _register;
-            registerItem.submitter = _organization;
+            var registerItem = new CodelistValue {register = _register, submitter = _organization};
             _accessControlService.AccessRegisterItem(registerItem).Should().BeTrue();
         }
 
@@ -255,8 +247,7 @@ namespace Kartverket.Register.Tests.Services
         public void AccessRegisterItemIfUserIsRegisterOwnerAndNotItemOwner()
         {
             SetClaims(Role, Editor, Orgnr, "971040238", Org, "Kartverket");
-            var registerItem = new CodelistValue();
-            registerItem.register = _register;
+            var registerItem = new CodelistValue {register = _register};
             registerItem.register.owner = _organization;
             registerItem.submitter = new Organization() { name = "Norges geologiske undersøkelse" };
 
@@ -386,8 +377,7 @@ namespace Kartverket.Register.Tests.Services
 
         private Document CreateDocument()
         {
-            var document = new Document();
-            document.register = _register;
+            var document = new Document {register = _register};
             document.register.accessId = 2;
             document.documentowner = _organization;
             document.statusId = "Submitted";
@@ -396,8 +386,7 @@ namespace Kartverket.Register.Tests.Services
 
         private Dataset CreateDataset()
         {
-            var dataset = new Dataset();
-            dataset.register = _register;
+            var dataset = new Dataset {register = _register};
             dataset.register.accessId = 2;
             dataset.datasetowner = _organization;
             dataset.DatasetType = "Kommunalt";
@@ -416,9 +405,7 @@ namespace Kartverket.Register.Tests.Services
 
         private RegisterItemV2ViewModel CreateCodelistValue()
         {
-            var codelistValue = new RegisterItemV2ViewModel();
-            codelistValue.Register = CreateCodelist();
-            codelistValue.Owner = _organization;
+            var codelistValue = new RegisterItemV2ViewModel {Register = CreateCodelist(), Owner = _organization};
             return codelistValue;
         }
 

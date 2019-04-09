@@ -1601,7 +1601,7 @@ namespace Kartverket.Register.Tests.Services
                     return (double)x / y;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
                 return 0;
@@ -1621,7 +1621,7 @@ namespace Kartverket.Register.Tests.Services
                     return x / y;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
                 return 0;
@@ -1630,19 +1630,20 @@ namespace Kartverket.Register.Tests.Services
 
         private ICollection<RegisterItemV2> CreateInspireDataServices()
         {
-            var inspireDataServices = new List<RegisterItemV2>();
-            inspireDataServices.Add(CreateInspireDataService());
+            var inspireDataServices = new List<RegisterItemV2> {CreateInspireDataService()};
 
             return inspireDataServices;
         }
 
         private InspireDataService CreateInspireDataService()
         {
-            var inspireDataService = new InspireDataService();
-            inspireDataService.InspireThemes = new List<CodelistValue>();
-            inspireDataService.Name = "Test Navn";
-            inspireDataService.Owner = CreateOrganization();
-            inspireDataService.Uuid = "1234";
+            var inspireDataService = new InspireDataService
+            {
+                InspireThemes = new List<CodelistValue>(),
+                Name = "Test Navn",
+                Owner = CreateOrganization(),
+                Uuid = "1234"
+            };
             inspireDataService.InspireThemes = CreateThemes();
             inspireDataService.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
             inspireDataService.ServiceType = "view";
@@ -1654,27 +1655,27 @@ namespace Kartverket.Register.Tests.Services
 
         private Models.Register CreateRegister()
         {
-            var register = new Models.Register();
-            register.RegisterItems = new List<RegisterItemV2>();
+            var register = new Models.Register {RegisterItems = new List<RegisterItemV2>()};
 
             return register;
         }
 
         private ICollection<RegisterItemV2> CreateInspireDatasets()
         {
-            var inspireDatasets = new List<RegisterItemV2>();
-            inspireDatasets.Add(CreateInspireDataset());
+            var inspireDatasets = new List<RegisterItemV2> {CreateInspireDataset()};
 
             return inspireDatasets;
         }
 
         private InspireDataset CreateInspireDataset()
         {
-            var inspireDataset = new InspireDataset();
-            inspireDataset.InspireThemes = new List<CodelistValue>();
-            inspireDataset.Name = "Test Navn";
-            inspireDataset.Owner = CreateOrganization();
-            inspireDataset.Uuid = "1234";
+            var inspireDataset = new InspireDataset
+            {
+                InspireThemes = new List<CodelistValue>(),
+                Name = "Test Navn",
+                Owner = CreateOrganization(),
+                Uuid = "1234"
+            };
             inspireDataset.InspireThemes = CreateThemes();
             inspireDataset.Area = 233;
             inspireDataset.RelevantArea = 322;
@@ -1688,10 +1689,10 @@ namespace Kartverket.Register.Tests.Services
 
         private List<CodelistValue> CreateThemes()
         {
-            var inspireThemes = new List<CodelistValue>();
-            inspireThemes.Add(ThemeOfTypeAnnexI());
-            inspireThemes.Add(ThemeOfTypeAnnexII());
-            inspireThemes.Add(ThemeOfTypeAnnexIII());
+            var inspireThemes = new List<CodelistValue>
+            {
+                ThemeOfTypeAnnexI(), ThemeOfTypeAnnexII(), ThemeOfTypeAnnexIII()
+            };
             return inspireThemes;
         }
 

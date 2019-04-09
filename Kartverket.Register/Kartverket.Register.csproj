@@ -96,10 +96,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Kartverket.Geonorge.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.41\lib\net45\Kartverket.Geonorge.Utilities.dll</HintPath>
+      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.45\lib\net45\Kartverket.Geonorge.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Kartverket.ReportApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.ReportApi.10.0.205\lib\net452\Kartverket.ReportApi.dll</HintPath>
+      <HintPath>..\packages\Kartverket.ReportApi.10.2.217\lib\net472\Kartverket.ReportApi.dll</HintPath>
     </Reference>
     <Reference Include="Kentor.AuthServices, Version=0.17.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Kentor.AuthServices.0.17.2\lib\net45\Kentor.AuthServices.dll</HintPath>
@@ -126,7 +126,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.41\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.45\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -142,7 +142,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.41\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.45\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.ServiceModel" />

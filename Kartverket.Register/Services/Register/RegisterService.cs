@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using Kartverket.Register.Models.ViewModels;
 using Resources;
 using Kartverket.Register.Models.Translations;
+using Newtonsoft.Json.Linq;
 
 namespace Kartverket.Register.Services.Register
 {
@@ -317,7 +318,7 @@ namespace Kartverket.Register.Services.Register
             {
                 item.dokDeliveryMetadataStatusId = _datasetDeliveryService.GetMetadataStatus(item.Uuid, item.dokDeliveryMetadataStatusAutoUpdate, item.dokDeliveryMetadataStatusId);
                 item.dokDeliveryProductSheetStatusId = GetDOKStatus(item.ProductSheetUrl, item.dokDeliveryProductSheetStatusAutoUpdate, item.dokDeliveryProductSheetStatusId);
-                item.dokDeliveryPresentationRulesStatusId = GetDOKStatus(item.PresentationRulesUrl, item.dokDeliveryPresentationRulesStatusAutoUpdate, item.dokDeliveryPresentationRulesStatusId);
+                item.dokDeliveryPresentationRulesStatusId = GetDOKStatusPresentationRules(item.PresentationRulesUrl, item.dokDeliveryPresentationRulesStatusAutoUpdate, item.dokDeliveryPresentationRulesStatusId, item.Uuid);
                 item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl, item.dokDeliveryProductSpecificationStatusAutoUpdate, item.dokDeliveryProductSpecificationStatusId);
                 item.dokDeliverySosiRequirementsStatusId = GetSosiRequirements(item.Uuid, item.GetProductSpecificationUrl(), item.dokDeliverySosiStatusAutoUpdate, item.dokDeliverySosiRequirementsStatusId);
                 item.dokDeliveryGmlRequirementsStatusId = GetGmlRequirements(item.Uuid, item.dokDeliveryGmlRequirementsStatusAutoUpdate, item.dokDeliveryGmlRequirementsStatusId);
@@ -354,6 +355,48 @@ namespace Kartverket.Register.Services.Register
                                 return "good";
                             else
                                 return "useable";
+                        }
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    return "deficient";
+                }
+
+            }
+
+            return statusValue;
+        }
+
+        public string GetDOKStatusPresentationRules(string url, bool autoUpdate, string currentStatus, string metadataUuid)
+        {
+            string statusValue = currentStatus;
+
+            if (autoUpdate)
+            {
+                statusValue = "deficient";
+
+                if (!string.IsNullOrEmpty(url))
+                    statusValue = "useable";
+
+                try
+                {
+                    if (!string.IsNullOrEmpty(metadataUuid))
+                    {
+                        System.Net.WebClient c = new System.Net.WebClient();
+                        c.Encoding = System.Text.Encoding.UTF8;
+                        var urlCartography = WebConfigurationManager.AppSettings["RegistryCartographyUrl"] + "api/kartografi?text=" + metadataUuid;
+                        var data = c.DownloadString(urlCartography);
+                        var response = Newtonsoft.Json.Linq.JArray.Parse(data);
+
+                        foreach (var cartography in response)
+                        {
+                            JToken datasetUuidToken = cartography["DatasetUuid"];
+                            string datasetUuid = datasetUuidToken?.ToString();
+                            if(datasetUuid == metadataUuid)
+                                return "good";
                         }
                     }
 

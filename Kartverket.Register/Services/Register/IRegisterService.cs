@@ -32,6 +32,7 @@ namespace Kartverket.Register.Services.Register
         Models.Register GetDokMunicipalRegister();
         void UpdateDOKStatus();
         string GetDOKStatus(string url, bool autoUpdate, string currentStatus);
+        string GetDOKStatusPresentationRules(string url, bool dokDeliveryPresentationRulesStatusAutoUpdate, string dokDeliveryPresentationRulesStatusId, string metadataUuid);
 
         string GetDeliveryDownloadStatus(string uuid, bool autoUpdate, string currentStatus, string wfsStatus, string atomStatus);
         string GetSosiRequirements(string uuid, string url, bool autoUpdate, string currentStatus);

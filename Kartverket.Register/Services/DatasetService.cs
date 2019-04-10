@@ -86,7 +86,7 @@ namespace Kartverket.Register.Services
             dataset.dokDeliveryProductSheetStatusId = _registerService.GetDOKStatus(inputDataset.GetProductSheetUrl(), inputDataset.dokDeliveryProductSheetStatusAutoUpdate, inputDataset.dokDeliveryProductSheetStatusId);
             dataset.dokDeliveryProductSheetStatusNote = inputDataset.dokDeliveryProductSheetStatusNote;
             dataset.dokDeliveryProductSheetStatusAutoUpdate = inputDataset.dokDeliveryProductSheetStatusAutoUpdate;
-            dataset.dokDeliveryPresentationRulesStatusId = _registerService.GetDOKStatus(inputDataset.GetPresentationRulesUrl(), inputDataset.dokDeliveryPresentationRulesStatusAutoUpdate, inputDataset.dokDeliveryPresentationRulesStatusId);
+            dataset.dokDeliveryPresentationRulesStatusId = _registerService.GetDOKStatusPresentationRules(inputDataset.GetPresentationRulesUrl(), inputDataset.dokDeliveryPresentationRulesStatusAutoUpdate, inputDataset.dokDeliveryPresentationRulesStatusId, dataset.Uuid);
             dataset.dokDeliveryPresentationRulesStatusNote = inputDataset.dokDeliveryPresentationRulesStatusNote;
             dataset.dokDeliveryPresentationRulesStatusAutoUpdate = inputDataset.dokDeliveryPresentationRulesStatusAutoUpdate;
             dataset.dokDeliveryProductSpecificationStatusId = _registerService.GetDOKStatus(inputDataset.GetProductSpecificationUrl(), inputDataset.dokDeliveryProductSpecificationStatusAutoUpdate, inputDataset.dokDeliveryProductSpecificationStatusId);

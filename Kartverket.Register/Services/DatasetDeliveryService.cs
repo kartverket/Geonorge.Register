@@ -239,7 +239,7 @@ namespace Kartverket.Register.Services
                         //EPSG: 25833, 25835 eller 32633
                         //Støtter tegnforklaring
                         //Oppgir dekningsområde
-                        else if ((resposeGetCapabilities && responseTime <= 10
+                        else if ((resposeGetCapabilities
                                   && epsgSupport && hasLegend && hasCoverage))
                             status = Useable;
                         //Rød:

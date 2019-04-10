@@ -229,7 +229,7 @@ namespace Kartverket.Register.Services
                         //Støtter tegnforklaring
                         //Oppgir dekningsområde
                         else if ((resposeGetCapabilities && responseTime <= 4
-                                  && supportCors && epsgSupport && featuresSupport
+                            && epsgSupport && featuresSupport
                                   && hasLegend && hasCoverage) || connectSoso)
                             status = Good;
                         //Gul:

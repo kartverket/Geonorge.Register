@@ -2764,7 +2764,7 @@
         </member>
         <member name="P:Resources.DataSet.DOK_Delivery_Distribution">
             <summary>
-              Looks up a localized string similar to Nedlastning status.
+              Looks up a localized string similar to Geonorge nedlastnings-api status.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DOK_Delivery_GmlRequirements">

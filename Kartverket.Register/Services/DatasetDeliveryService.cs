@@ -228,7 +228,7 @@ namespace Kartverket.Register.Services
                         //Støtter egenskapsspørringer
                         //Støtter tegnforklaring
                         //Oppgir dekningsområde
-                        else if ((resposeGetCapabilities && responseTime <= 4
+                        else if ((resposeGetCapabilities && responseTime <= 4 && supportCors
                             && epsgSupport && featuresSupport
                                   && hasLegend && hasCoverage) || connectSoso)
                             status = Good;

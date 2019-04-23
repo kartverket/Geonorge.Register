@@ -230,7 +230,7 @@ namespace Kartverket.Register.Services
                         //Oppgir dekningsområde
                         else if ((resposeGetCapabilities && responseTime <= 4 && supportCors
                             && epsgSupport && featuresSupport
-                                  && hasLegend && hasCoverage) || connectSoso)
+                                  && hasLegend) || connectSoso)
                             status = Good;
                         //Gul:
                         //Respons fra GetCapabilities
@@ -240,7 +240,7 @@ namespace Kartverket.Register.Services
                         //Støtter tegnforklaring
                         //Oppgir dekningsområde
                         else if ((resposeGetCapabilities
-                                  && epsgSupport && hasLegend && hasCoverage))
+                                  && epsgSupport && hasLegend))
                             status = Useable;
                         //Rød:
                         //Feiler på en av testene til gul

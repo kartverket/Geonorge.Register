@@ -679,7 +679,7 @@ namespace Kartverket.Register.Helpers
             var symbolDeficient = "custom-icon custom-icon-smile-red";
             var symbolUseable = "custom-icon custom-icon-smile-yellow";
             var symbolGood = "custom-icon custom-icon-smile-green";
-            var symbolNotSet = "custom-icon";
+            var symbolNotSet = "custom-icon custom-status-not-set";
 
             var statusSymbol = symbolUseable;
             var title = "";

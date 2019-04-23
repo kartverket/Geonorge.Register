@@ -131,6 +131,8 @@ namespace Kartverket.Register.Services
             dataset.EenvironmentalImpactAssessment = inputDataset.EenvironmentalImpactAssessment;
             dataset.EenvironmentalImpactAssessmentNote = inputDataset.EenvironmentalImpactAssessmentNote;
 
+            dataset.SetAtomAndGmlIsEitherOrRequirement(dataset);
+
             return dataset;
         }
 

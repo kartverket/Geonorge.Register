@@ -326,6 +326,7 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliveryAtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(item.Uuid, item.dokDeliveryAtomFeedStatusAutoUpdate, item.dokDeliveryAtomFeedStatusId);
                 item.dokDeliveryWfsStatusId = _datasetDeliveryService.GetWfsStatus(item.Uuid, item.dokDeliveryWfsStatusAutoUpdate, item.dokDeliveryWfsStatusId);
                 item.dokDeliveryDistributionStatusId = GetDeliveryDownloadStatus(item.Uuid, item.dokDeliveryDistributionStatusAutoUpdate, item.dokDeliveryDistributionStatusId, item.dokDeliveryWfsStatusId, item.dokDeliveryAtomFeedStatusId);
+                item.SetAtomAndGmlIsEitherOrRequirement(item);
             }
             _dbContext.SaveChanges();
         }

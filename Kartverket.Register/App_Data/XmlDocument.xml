@@ -4318,6 +4318,11 @@
               Looks up a localized string similar to Tittel.
             </summary>
         </member>
+        <member name="P:Resources.Shared.Unknown">
+            <summary>
+              Looks up a localized string similar to Ukjent.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Useable">
             <summary>
               Looks up a localized string similar to Brukbar.

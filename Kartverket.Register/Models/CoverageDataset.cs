@@ -19,7 +19,7 @@ namespace Kartverket.Register.Models
         public bool ConfirmedDok { get; set; }
 
         [Display(Name = "Dekning")]
-        public bool Coverage { get; set; }
+        public bool? Coverage { get; set; }
 
         [ForeignKey("dataset")]
         [Display(Name = "Datasett")]

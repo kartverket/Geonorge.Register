@@ -273,7 +273,7 @@ namespace Kartverket.Register.Services.RegisterItem
                 dataset.dokStatusDateAccepted = DateTime.Now;
                 coverage.MunicipalityId = dataset.datasetownerId;
                 coverage.Note = dataset.Notes;
-                coverage.Coverage = true;
+                coverage.Coverage = null;
             }
 
             _dbContext.Entry(coverage).State = EntityState.Modified;

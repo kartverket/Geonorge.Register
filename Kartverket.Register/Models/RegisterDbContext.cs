@@ -108,6 +108,8 @@ namespace Kartverket.Register.Models
             modelBuilder.Entity<RegisterItemV2>()
                 .Property(p => p.SystemId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
+            modelBuilder.Entity<CoverageDataset>().Property(e => e.Coverage).IsOptional();
+
         }
 
         public override int SaveChanges()

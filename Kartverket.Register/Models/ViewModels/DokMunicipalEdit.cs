@@ -15,7 +15,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string NationalDokStatus { get; set; }
         public string Type { get; set; }
         public bool Confirmed { get; set; }
-        public bool Coverage { get; set; }
+        public bool? Coverage { get; set; }
         public string Note { get; set; }
         public bool Delete { get; set; }
         public Guid MunicipalityId { get; set; }

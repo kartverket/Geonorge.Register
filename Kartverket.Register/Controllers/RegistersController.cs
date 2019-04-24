@@ -569,7 +569,7 @@ namespace Kartverket.Register.Controllers
                     }
                     else
                     {
-                        var coverageFound = originalCoverage?.Coverage ?? false;
+                        bool? coverageFound = originalCoverage?.Coverage ?? false;
                         try
                         {
                             coverageFound = coverage.GetCoverage(originalDataset.Uuid);
@@ -721,7 +721,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.organizationMunicipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
         }
 
-        private CoverageDataset CreateNewCoverage(DokMunicipalEdit item, Dataset originalDataset, string municipalityCode, bool coverageFound)
+        private CoverageDataset CreateNewCoverage(DokMunicipalEdit item, Dataset originalDataset, string municipalityCode, bool? coverageFound)
         {
             Organization municipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
             CoverageDataset coverage = new CoverageDataset

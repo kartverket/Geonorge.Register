@@ -404,13 +404,13 @@ namespace Kartverket.Register.Models
             return false;
         }
 
-        public bool GetCoverageByUser(Guid municipalityId)
+        public bool? GetCoverageByUser(Guid municipalityId)
         {
             foreach (CoverageDataset coverage in Coverage)
             {
                 if (coverage.MunicipalityId == municipalityId)
                 {
-                    return coverage.Coverage;
+                    return coverage.Coverage ?? null;
                 }
             }
             return false;

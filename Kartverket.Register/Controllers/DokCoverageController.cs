@@ -82,7 +82,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else
                 {
-                    ViewBag.Warning = "Dekningskart mangler for valgte datasett.";
+                    ViewBag.Warning = "Dekningskart mangler for dette datasettet";
                 }
             }
 

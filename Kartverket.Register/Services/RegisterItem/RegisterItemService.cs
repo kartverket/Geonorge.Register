@@ -385,6 +385,10 @@ namespace Kartverket.Register.Services.RegisterItem
             {
                 return ValidNameInspireDataset((InspireDataset)model);
             }
+            if (model is Kartverket.Register.Models.InspireDataService)
+            {
+                return ValidNameInspireDatasetService((Kartverket.Register.Models.InspireDataService)model);
+            }
             if (model is GeodatalovDataset)
             {
                 return GeodatalovDatasetNameAlreadyExist((GeodatalovDataset)model);
@@ -421,6 +425,26 @@ namespace Kartverket.Register.Services.RegisterItem
                           o.SystemId != inspireDataset.SystemId
                           && o.RegisterId == registerId
                     select o.SystemId;
+
+                return !queryResults.ToList().Any();
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidNameInspireDatasetService(Kartverket.Register.Models.InspireDataService inspireDatasetService)
+        {
+            if (!string.IsNullOrWhiteSpace(inspireDatasetService.Name))
+            {
+                var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(inspireDatasetService.Name);
+                var registerId = inspireDatasetService.Register?.systemId ?? inspireDatasetService.RegisterId;
+                var queryResults = from o in _dbContext.InspireDataServices
+                                   where (o.Name == inspireDatasetService.Name || o.Seoname == seoFriendlyName) &&
+                                         o.SystemId != inspireDatasetService.SystemId
+                                         && o.RegisterId == registerId
+                                   select o.SystemId;
 
                 return !queryResults.ToList().Any();
             }

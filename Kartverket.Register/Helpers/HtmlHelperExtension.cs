@@ -717,11 +717,7 @@ namespace Kartverket.Register.Helpers
             if (!string.IsNullOrEmpty(label))
                 title = label + ": " + title;
 
-            var html = "";
-            if (status == "notset")
-                html = "<span class='" + symbolNotSet + "'></span>";
-            else
-                html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></span>";
+            var html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></span>";
 
             return new HtmlString(html);
         }

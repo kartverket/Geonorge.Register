@@ -11,7 +11,7 @@ namespace Kartverket.Register
             bundles.Add(new StyleBundle("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles").Include(
                 "~/Content/bower_components/kartverket-felleskomponenter/assets/css/vendor.min.css",
                 "~/Content/bower_components/kartverket-felleskomponenter/assets/css/vendorfonts.min.css",
-                "~/Content/bower_components/kartverket-felleskomponenter/assets/css/main.min.css"
+                "~/Content/bower_components/kartverket-felleskomponenter/assets/css/all.min.css"
             ));
 
             bundles.Add(new StyleBundle("~/shared-partials-styles").Include(

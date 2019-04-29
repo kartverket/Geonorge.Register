@@ -223,7 +223,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nedlastning status.
+        ///   Looks up a localized string similar to Geonorge nedlastnings-api status.
         /// </summary>
         public static string DOK_Delivery_Distribution {
             get {

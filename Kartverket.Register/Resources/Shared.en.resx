@@ -274,4 +274,7 @@
   <data name="Useable" xml:space="preserve">
     <value>Useable</value>
   </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
 </root>

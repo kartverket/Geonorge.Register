@@ -277,4 +277,7 @@
   <data name="Useable" xml:space="preserve">
     <value>Brukbar</value>
   </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Ukjent</value>
+  </data>
 </root>

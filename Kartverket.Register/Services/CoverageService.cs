@@ -40,9 +40,9 @@ namespace Kartverket.Register.Services
         }
 
 
-        public bool GetCoverage(string datasetUuid)
+        public bool? GetCoverage(string datasetUuid)
         {
-            bool coverage = false;
+            bool? coverage = null;
             string name;
 
             if (!string.IsNullOrEmpty(datasetUuid) && DokCoverageWmsMapping.DatasetUuidToWmsLayerMapping.ContainsKey(datasetUuid))
@@ -80,7 +80,7 @@ namespace Kartverket.Register.Services
                     var coverageDatasets = _context.CoverageDatasets.Where(c => c.Municipality.MunicipalityCode == municipalityCode).Select(d => d).ToList();
                     foreach (var coverage in coverageDatasets)
                     { 
-                        bool coverageFound = false;
+                        bool? coverageFound = null;
                         coverageFound = GetCoverage(coverage.dataset.Uuid);
                         coverage.Coverage = coverageFound;
 
@@ -103,7 +103,7 @@ namespace Kartverket.Register.Services
             foreach(var org in orgList)
             {
                 try {
-                    var sql = "INSERT INTO CoverageDatasets SELECT NEWID() AS CoverageId, '" + org.systemId + "' AS MunicipalityId, 0 AS ConfirmedDok, systemId AS datasetId, NULL AS Note, dokStatusId AS CoverageDOKStatusId, systemId AS Dataset_systemId, 0 AS coverage, RegionalPlan = 0, MunicipalSocialPlan = 0, MunicipalLandUseElementPlan = 0, ZoningPlanArea = 0, ZoningPlanDetails = 0, BuildingMatter = 0, PartitionOff = 0, EenvironmentalImpactAssessment = 0, suitabilityAssessmentText = ''  FROM RegisterItems WHERE(Discriminator = 'Dataset') AND(DatasetType <> 'Kommunalt') AND(systemId NOT IN(SELECT  DatasetId FROM CoverageDatasets AS CoverageDatasets_1 WHERE(MunicipalityId = '" + org.systemId + "')))";
+                    var sql = "INSERT INTO CoverageDatasets SELECT NEWID() AS CoverageId, '" + org.systemId + "' AS MunicipalityId, 0 AS ConfirmedDok, systemId AS datasetId, NULL AS Note, dokStatusId AS CoverageDOKStatusId, systemId AS Dataset_systemId, NULL AS coverage, RegionalPlan = 0, MunicipalSocialPlan = 0, MunicipalLandUseElementPlan = 0, ZoningPlanArea = 0, ZoningPlanDetails = 0, BuildingMatter = 0, PartitionOff = 0, EenvironmentalImpactAssessment = 0, suitabilityAssessmentText = ''  FROM RegisterItems WHERE(Discriminator = 'Dataset') AND(DatasetType <> 'Kommunalt') AND(systemId NOT IN(SELECT  DatasetId FROM CoverageDatasets AS CoverageDatasets_1 WHERE(MunicipalityId = '" + org.systemId + "')))";
                     _context.Database.ExecuteSqlCommand(sql);
                 }
                 catch (Exception ex) {
@@ -122,7 +122,7 @@ namespace Kartverket.Register.Services
             dataset.dokStatusDateAccepted = DateTime.Now;
             coverage.MunicipalityId = dataset.datasetownerId;
             coverage.Note = dataset.Notes;
-            coverage.Coverage = true;
+            coverage.Coverage = null;
 
             _context.Entry(coverage).State = EntityState.Modified;
             _context.CoverageDatasets.Add(coverage);

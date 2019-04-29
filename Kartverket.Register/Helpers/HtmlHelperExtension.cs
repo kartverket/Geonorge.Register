@@ -267,13 +267,15 @@ namespace Kartverket.Register.Helpers
             var coverage = Coverage(item, selectedMunicipality);
             if (coverage != null)
             {
-                if (coverage.Coverage)
+                if(!coverage.Coverage.HasValue)
+                    return Shared.Unknown;
+                else if (coverage.Coverage.HasValue && coverage.Coverage.Value == true)
                 {
                     return Shared.Yes;
                 }
                 return Shared.No;
             }
-            else return Shared.No;
+            else return Shared.Unknown;
 
         }
 
@@ -679,7 +681,7 @@ namespace Kartverket.Register.Helpers
             var symbolDeficient = "custom-icon custom-icon-smile-red";
             var symbolUseable = "custom-icon custom-icon-smile-yellow";
             var symbolGood = "custom-icon custom-icon-smile-green";
-            var symbolNotSet = "custom-icon";
+            var symbolNotSet = "custom-icon custom-icon-status-not-set";
 
             var statusSymbol = symbolUseable;
             var title = "";
@@ -715,11 +717,7 @@ namespace Kartverket.Register.Helpers
             if (!string.IsNullOrEmpty(label))
                 title = label + ": " + title;
 
-            var html = "";
-            if (status == "notset")
-                html = "<span class='" + symbolNotSet + "'></span>";
-            else
-                html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></span>";
+            var html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></span>";
 
             return new HtmlString(html);
         }

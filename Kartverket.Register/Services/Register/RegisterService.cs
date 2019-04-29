@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using Kartverket.Register.Models.ViewModels;
 using Resources;
 using Kartverket.Register.Models.Translations;
+using Newtonsoft.Json.Linq;
 
 namespace Kartverket.Register.Services.Register
 {
@@ -317,7 +318,7 @@ namespace Kartverket.Register.Services.Register
             {
                 item.dokDeliveryMetadataStatusId = _datasetDeliveryService.GetMetadataStatus(item.Uuid, item.dokDeliveryMetadataStatusAutoUpdate, item.dokDeliveryMetadataStatusId);
                 item.dokDeliveryProductSheetStatusId = GetDOKStatus(item.ProductSheetUrl, item.dokDeliveryProductSheetStatusAutoUpdate, item.dokDeliveryProductSheetStatusId);
-                item.dokDeliveryPresentationRulesStatusId = GetDOKStatus(item.PresentationRulesUrl, item.dokDeliveryPresentationRulesStatusAutoUpdate, item.dokDeliveryPresentationRulesStatusId);
+                item.dokDeliveryPresentationRulesStatusId = GetDOKStatusPresentationRules(item.PresentationRulesUrl, item.dokDeliveryPresentationRulesStatusAutoUpdate, item.dokDeliveryPresentationRulesStatusId, item.Uuid);
                 item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl, item.dokDeliveryProductSpecificationStatusAutoUpdate, item.dokDeliveryProductSpecificationStatusId);
                 item.dokDeliverySosiRequirementsStatusId = GetSosiRequirements(item.Uuid, item.GetProductSpecificationUrl(), item.dokDeliverySosiStatusAutoUpdate, item.dokDeliverySosiRequirementsStatusId);
                 item.dokDeliveryGmlRequirementsStatusId = GetGmlRequirements(item.Uuid, item.dokDeliveryGmlRequirementsStatusAutoUpdate, item.dokDeliveryGmlRequirementsStatusId);
@@ -325,6 +326,7 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliveryAtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(item.Uuid, item.dokDeliveryAtomFeedStatusAutoUpdate, item.dokDeliveryAtomFeedStatusId);
                 item.dokDeliveryWfsStatusId = _datasetDeliveryService.GetWfsStatus(item.Uuid, item.dokDeliveryWfsStatusAutoUpdate, item.dokDeliveryWfsStatusId);
                 item.dokDeliveryDistributionStatusId = GetDeliveryDownloadStatus(item.Uuid, item.dokDeliveryDistributionStatusAutoUpdate, item.dokDeliveryDistributionStatusId, item.dokDeliveryWfsStatusId, item.dokDeliveryAtomFeedStatusId);
+                item.SetAtomAndGmlIsEitherOrRequirement(item);
             }
             _dbContext.SaveChanges();
         }
@@ -354,6 +356,48 @@ namespace Kartverket.Register.Services.Register
                                 return "good";
                             else
                                 return "useable";
+                        }
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    return "deficient";
+                }
+
+            }
+
+            return statusValue;
+        }
+
+        public string GetDOKStatusPresentationRules(string url, bool autoUpdate, string currentStatus, string metadataUuid)
+        {
+            string statusValue = currentStatus;
+
+            if (autoUpdate)
+            {
+                statusValue = "deficient";
+
+                if (!string.IsNullOrEmpty(url))
+                    statusValue = "useable";
+
+                try
+                {
+                    if (!string.IsNullOrEmpty(metadataUuid))
+                    {
+                        System.Net.WebClient c = new System.Net.WebClient();
+                        c.Encoding = System.Text.Encoding.UTF8;
+                        var urlCartography = WebConfigurationManager.AppSettings["RegistryCartographyUrl"] + "api/kartografi?text=" + metadataUuid;
+                        var data = c.DownloadString(urlCartography);
+                        var response = Newtonsoft.Json.Linq.JArray.Parse(data);
+
+                        foreach (var cartography in response)
+                        {
+                            JToken datasetUuidToken = cartography["DatasetUuid"];
+                            string datasetUuid = datasetUuidToken?.ToString();
+                            if(datasetUuid == metadataUuid)
+                                return "good";
                         }
                     }
 
@@ -561,8 +605,7 @@ namespace Kartverket.Register.Services.Register
                     if (distribution != null && distribution.Protocol != null && distribution.URL != null)
                     {
                         if (Uri.IsWellFormedUriString(distribution.URL.Value, UriKind.Absolute)
-                            && (distribution.Protocol.Value == "WWW:DOWNLOAD-1.0-http--download"
-                            || distribution.Protocol.Value == "GEONORGE:FILEDOWNLOAD" || distribution.Protocol.Value == "GEONORGE:DOWNLOAD"))
+                            && (distribution.Protocol.Value == "GEONORGE:DOWNLOAD"))
                             hasDistributionUrl = true;
                     }
 
@@ -570,10 +613,8 @@ namespace Kartverket.Register.Services.Register
 
                 if (autoUpdate)
                 {
-                    if (wfsStatus == "good" || atomStatus == "good")
+                    if (hasDistributionUrl)
                         status = "good";
-                    else if (wfsStatus == "useable" || atomStatus == "useable" || hasDistributionUrl)
-                        status = "useable";
                     else
                         status = "deficient";
                 }

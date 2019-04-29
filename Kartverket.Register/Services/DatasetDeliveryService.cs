@@ -228,9 +228,9 @@ namespace Kartverket.Register.Services
                         //Støtter egenskapsspørringer
                         //Støtter tegnforklaring
                         //Oppgir dekningsområde
-                        else if ((resposeGetCapabilities && responseTime <= 4
-                                  && supportCors && epsgSupport && featuresSupport
-                                  && hasLegend && hasCoverage) || connectSoso)
+                        else if ((resposeGetCapabilities && responseTime <= 4 && supportCors
+                            && epsgSupport && featuresSupport
+                                  && hasLegend) || connectSoso)
                             status = Good;
                         //Gul:
                         //Respons fra GetCapabilities
@@ -239,8 +239,8 @@ namespace Kartverket.Register.Services
                         //EPSG: 25833, 25835 eller 32633
                         //Støtter tegnforklaring
                         //Oppgir dekningsområde
-                        else if ((resposeGetCapabilities && responseTime <= 10
-                                  && epsgSupport && hasLegend && hasCoverage))
+                        else if ((resposeGetCapabilities
+                                  && epsgSupport && hasLegend))
                             status = Useable;
                         //Rød:
                         //Feiler på en av testene til gul

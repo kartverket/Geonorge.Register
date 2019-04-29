@@ -27,16 +27,40 @@
 @using (Html.BeginForm("Create", "Alerts", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(false, Shared.ValidationSummary, new { @class = "alert alert-danger" })
-        @Html.Hidden("name", "navn")
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="radio" name="category" value="@Constants.AlertCategoryService" onclick="location.href='?category=@Constants.AlertCategoryService'" @(ViewBag.Category == Constants.AlertCategoryService || string.IsNullOrEmpty(ViewBag.Category) ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryService)
-                <input type="radio" name="category" value="@Constants.AlertCategoryDataset" onclick="location.href='?category=@Constants.AlertCategoryDataset'" @(ViewBag.Category == Constants.AlertCategoryDataset ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryDataset)
-                <input type="radio" name="category" value="@Constants.AlertCategoryOperation" onclick="location.href='?category=@Constants.AlertCategoryOperation'" @(ViewBag.Category == @Constants.AlertCategoryOperation ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryOperation)
+<div class="form-horizontal">
+    @Html.ValidationSummary(false, Shared.ValidationSummary, new { @class = "alert alert-danger" })
+    @Html.Hidden("name", "navn")
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="radio" name="category" value="@Constants.AlertCategoryService" onclick="location.href='?category=@Constants.AlertCategoryService'" @(ViewBag.Category == Constants.AlertCategoryService || string.IsNullOrEmpty(ViewBag.Category) ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryService)
+            <input type="radio" name="category" value="@Constants.AlertCategoryDataset" onclick="location.href='?category=@Constants.AlertCategoryDataset'" @(ViewBag.Category == Constants.AlertCategoryDataset ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryDataset)
+            <input type="radio" name="category" value="@Constants.AlertCategoryOperation" onclick="location.href='?category=@Constants.AlertCategoryOperation'" @(ViewBag.Category == @Constants.AlertCategoryOperation ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryOperation)
+        </div>
+    </div>
+    @if (ViewBag.UuidExternal != null && ViewBag.UuidExternal.Items.Count == 1)
+    {
+        <div class="form-group required has-feedback">
+            @Html.LabelFor(model => model.UuidExternal, Alerts.AppliesTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-9">
+                <div class="col-md-6 row">
+                    <input type="text" name="UuidExternal" />
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-uuid" style="display: none">
+                        @Alerts.HelpTextUuidOperation
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-1 pull-right">
+                <p class="form-control-static">
+                    <a href="#" data-help-text-id="help-text-uuid" class="badge help-text-toggle">?</a>
+                </p>
             </div>
         </div>
+    }
+    else
+    {
         <div class="form-group required has-feedback">
             @Html.LabelFor(model => model.UuidExternal, Alerts.AppliesTo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
@@ -56,110 +80,110 @@
                 </p>
             </div>
         </div>
+    }
 
-        @Html.Hidden("Type", Registers.NotSet)
-
-        <div class="form-group required has-feedback">
-            @Html.LabelFor(model => model.AlertType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-9">
-                <div class="col-md-6 row">
-                    @Html.DropDownList("AlertType", null, Alerts.Select, htmlAttributes: new { @class = "form-control" })
-                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-                </div>
-                <div class="col-md-12 row">
-                    <p class="help-text bg-success" id="help-text-alerttype" style="display: none">
-                        @Html.Raw(Alerts.HelpTextAlerttype)
-                    </p>
-                </div>
+    @Html.Hidden("Type", Registers.NotSet)
+    <div class="form-group required has-feedback">
+        @Html.LabelFor(model => model.AlertType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-9">
+            <div class="col-md-6 row">
+                @Html.DropDownList("AlertType", null, Alerts.Select, htmlAttributes: new { @class = "form-control" })
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
             </div>
-            <div class="col-sm-1 pull-right">
-                <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-alerttype" class="badge help-text-toggle">?</a>
+            <div class="col-md-12 row">
+                <p class="help-text bg-success" id="help-text-alerttype" style="display: none">
+                    @Html.Raw(Alerts.HelpTextAlerttype)
                 </p>
             </div>
         </div>
-
-        @Html.Hidden("Owner", Registers.NotSet)
-
-        <div class="form-group required has-feedback">
-            @Html.LabelFor(model => model.AlertDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-9">
-                <div class="col-md-4 row">
-                    @Html.EditorFor(model => model.AlertDate, new { cssClass = "date" })
-                    <span class="field-validation-valid" id="AlertDate_validationMessage">@Alerts.AlertDateValidationMessage</span>
-                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-                </div>
-                <div class="col-md-12 row">
-                    <p class="help-text bg-success" id="help-text-alertdate" style="display: none">
-                        @Alerts.HelpTextAlertdate
-                    </p>
-                </div>
-            </div>
-            <div class="col-sm-1 pull-right">
-                <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-alertdate" class="badge help-text-toggle">?</a>
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group required has-feedback">
-            @Html.LabelFor(model => model.EffectiveDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-9">
-                <div class="col-md-4 row">
-                    @Html.EditorFor(model => model.EffectiveDate, new { cssClass = "date" })
-                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-                </div>
-                <div class="col-md-12 row">
-                    <p class="help-text bg-success" id="help-text-effectivedate" style="display: none">
-                        @Alerts.HelpTextEffectivedate
-                    </p>
-                </div>
-            </div>
-            <div class="col-sm-1 pull-right">
-                <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-effectivedate" class="badge help-text-toggle">?</a>
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group required has-feedback">
-            @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-9">
-                <div class="col-md-12 row">
-                    @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
-                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-                </div>
-                <div class="col-md-12 row">
-                    <p class="help-text bg-success" id="help-text-note" style="display: none">
-                        @Alerts.HelpTextNote
-                    </p>
-                </div>
-            </div>
-            <div class="col-sm-1 pull-right">
-                <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-note" class="badge help-text-toggle">?</a>
-                </p>
-            </div>
-        </div>
-
-        @for (int t = 0; t < Model.Translations.Count; t++)
-        {
-            @Html.HiddenFor(m => Model.Translations[t].CultureName)
-            <div class="form-group">
-                @Html.LabelFor(m => Model.Translations[t].Note, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => Model.Translations[t].Note, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => Model.Translations[t].Note)
-                </div>
-            </div>
-        }
-
-        <div class="form-group">
-            <hr />
-            <input type="submit" value="@Registers.Publish" class="btn btn-default pull-right" />
-            <a href="@Model.register.GetObjectUrl()">@Shared.Back</a>
+        <div class="col-sm-1 pull-right">
+            <p class="form-control-static">
+                <a href="#" data-help-text-id="help-text-alerttype" class="badge help-text-toggle">?</a>
+            </p>
         </div>
     </div>
+
+    @Html.Hidden("Owner", Registers.NotSet)
+
+    <div class="form-group required has-feedback">
+        @Html.LabelFor(model => model.AlertDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-9">
+            <div class="col-md-4 row">
+                @Html.EditorFor(model => model.AlertDate, new { cssClass = "date" })
+                <span class="field-validation-valid" id="AlertDate_validationMessage">@Alerts.AlertDateValidationMessage</span>
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+            </div>
+            <div class="col-md-12 row">
+                <p class="help-text bg-success" id="help-text-alertdate" style="display: none">
+                    @Alerts.HelpTextAlertdate
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-1 pull-right">
+            <p class="form-control-static">
+                <a href="#" data-help-text-id="help-text-alertdate" class="badge help-text-toggle">?</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group required has-feedback">
+        @Html.LabelFor(model => model.EffectiveDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-9">
+            <div class="col-md-4 row">
+                @Html.EditorFor(model => model.EffectiveDate, new { cssClass = "date" })
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+            </div>
+            <div class="col-md-12 row">
+                <p class="help-text bg-success" id="help-text-effectivedate" style="display: none">
+                    @Alerts.HelpTextEffectivedate
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-1 pull-right">
+            <p class="form-control-static">
+                <a href="#" data-help-text-id="help-text-effectivedate" class="badge help-text-toggle">?</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group required has-feedback">
+        @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-9">
+            <div class="col-md-12 row">
+                @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+            </div>
+            <div class="col-md-12 row">
+                <p class="help-text bg-success" id="help-text-note" style="display: none">
+                    @Alerts.HelpTextNote
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-1 pull-right">
+            <p class="form-control-static">
+                <a href="#" data-help-text-id="help-text-note" class="badge help-text-toggle">?</a>
+            </p>
+        </div>
+    </div>
+
+    @for (int t = 0; t < Model.Translations.Count; t++)
+    {
+        @Html.HiddenFor(m => Model.Translations[t].CultureName)
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Translations[t].Note, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => Model.Translations[t].Note, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.Translations[t].Note)
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <hr />
+        <input type="submit" value="@Registers.Publish" class="btn btn-default pull-right" />
+        <a href="@Model.register.GetObjectUrl()">@Shared.Back</a>
+    </div>
+</div>
 }
 <script>
     $(function () {

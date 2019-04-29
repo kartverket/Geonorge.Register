@@ -489,7 +489,7 @@ namespace Kartverket.Register.Models.Api
                         {
                             NoteMunicipal = coverage.Note;
                             ConfirmedDok = coverage.ConfirmedDok ? "JA" : "NEI";
-                            Coverage = coverage.Coverage ? "JA" : "NEI";
+                            Coverage = !coverage.Coverage.HasValue ? "Ukjent" : coverage.Coverage.HasValue ? "JA" : "NEI";
                         }
                     }
                 }

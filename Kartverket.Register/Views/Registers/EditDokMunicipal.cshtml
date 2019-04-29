@@ -183,7 +183,7 @@
                                             </span>
                                         </td>
                                         <td style="text-align: center" title="@DataSet.DOK_Coverage_Municipality">
-                                            @if (Model[i].Coverage)
+                                            @if (Model[i].Coverage.HasValue && Model[i].Coverage.Value == true)
                                             {
                                                 <span>@Shared.Yes</span>
                                             }

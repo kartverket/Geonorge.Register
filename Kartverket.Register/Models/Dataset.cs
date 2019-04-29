@@ -205,6 +205,37 @@ namespace Kartverket.Register.Models
         public int? EenvironmentalImpactAssessment { get; set; }
         public string EenvironmentalImpactAssessmentNote { get; set; }
 
+        public void SetAtomAndGmlIsEitherOrRequirement(Dataset dataset)
+        {
+            //SET "WFS status" LIKE "rød"
+            string wfsStatus = "deficient";
+
+            //SET "Atom Feed status" LIKE "rød"
+            string atomfeedStatus = "deficient";
+
+            //IF "WFS status" er "gul" eller "grønn" OR "Atom Feed status" er "gul" eller "grønn"
+            if((dataset.dokDeliveryWfsStatusId == "useable" || dataset.dokDeliveryWfsStatusId == "good") || (dataset.dokDeliveryAtomFeedStatusId == "useable" || dataset.dokDeliveryAtomFeedStatusId == "good") )
+            {
+                //SET "Atom Feed status" LIKE "grå"
+                //SET "WFS status" LIKE "grå"
+                wfsStatus = "notset";
+                atomfeedStatus = "notset";
+            }
+
+
+            //IF "WFS status" er gul eller grønn
+            if ((dataset.dokDeliveryWfsStatusId == "useable" || dataset.dokDeliveryWfsStatusId == "good"))
+                wfsStatus = dataset.dokDeliveryWfsStatusId; //SET "WFS status" LIKE(Gul / Grønn)
+
+            //IF "AtomFeed status" er gul eller grønn
+            if ((dataset.dokDeliveryAtomFeedStatusId == "useable" || dataset.dokDeliveryAtomFeedStatusId == "good"))
+                atomfeedStatus = dataset.dokDeliveryAtomFeedStatusId; //SET "Atom Feed status" LIKE(Gul / Grønn)
+
+            dokDeliveryWfsStatusId = wfsStatus;
+            dokDeliveryAtomFeedStatusId = atomfeedStatus;
+
+        }
+
         public virtual TranslationCollection<DatasetTranslation> Translations { get; set; }
 
         public virtual ICollection<DatasetStatusHistory> StatusHistories { get; set; }
@@ -373,13 +404,13 @@ namespace Kartverket.Register.Models
             return false;
         }
 
-        public bool GetCoverageByUser(Guid municipalityId)
+        public bool? GetCoverageByUser(Guid municipalityId)
         {
             foreach (CoverageDataset coverage in Coverage)
             {
                 if (coverage.MunicipalityId == municipalityId)
                 {
-                    return coverage.Coverage;
+                    return coverage.Coverage ?? null;
                 }
             }
             return false;

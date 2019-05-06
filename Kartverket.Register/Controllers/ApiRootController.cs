@@ -514,9 +514,9 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeDokMetadata()
         {
             new CoverageService(db).UpdateDatasetsWithCoverage();
-            //new DOK.Service.MetadataService(db).UpdateDatasetsWithMetadata();
-            //_registerService.UpdateDOKStatus();
-            //_registerService.UpdateRegisterItemV2Translations();
+            new DOK.Service.MetadataService(db).UpdateDatasetsWithMetadata();
+            _registerService.UpdateDOKStatus();
+            _registerService.UpdateRegisterItemV2Translations();
             return Ok();
         }
 

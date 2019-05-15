@@ -3978,7 +3978,8 @@ header.main-header {
   line-height: 14pt; }
   #tableView .search-results-table-heading > div,
   .table-view .search-results-table-heading > div {
-    height: 40px; }
+    height: 40px;
+    font-size: 14px; }
     #tableView .search-results-table-heading > div > p,
     .table-view .search-results-table-heading > div > p {
       position: absolute;
@@ -4314,6 +4315,7 @@ a.status-icon-link:hover {
 [class^="statusIcon-"],
 [class*=" statusIcon-"] {
   font-family: 'statusicon';
+  font-size: 18px;
   speak: none;
   font-style: normal;
   font-weight: normal;

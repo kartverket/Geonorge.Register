@@ -2,8 +2,9 @@
 using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
+using Autofac.Core;
+using Autofac.Core.Activators.Reflection;
 using Autofac.Integration.Mvc;
-using Autofac.Integration.WebApi;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Search;
@@ -17,23 +18,38 @@ using Kartverket.Geonorge.Utilities.Organization;
 using Kartverket.Geonorge.Utilities.LogEntry;
 using System.Collections.Generic;
 using System.Web.Configuration;
-using Autofac.Core;
-using Autofac.Core.Activators.Reflection;
+using Autofac.Integration.WebApi;
+using Geonorge.AuthLib.NetFull;
 
 namespace Kartverket.Register
 {
     public static class DependencyConfig
     {
-        public static void Configure(ContainerBuilder builder)
+        public static IContainer Configure(ContainerBuilder builder)
         {
-            // in app
-            builder.RegisterType<SolrRegisterIndexer>().As<RegisterIndexer>();
-            builder.RegisterType<SolrIndexer>().As<Indexer>();
-            builder.RegisterType<SolrIndexDocumentCreator>().As<IndexDocumentCreator>();
-
             builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly()).PropertiesAutowired();
             builder.RegisterModule(new AutofacWebTypesModule());
+            builder.RegisterModule<GeonorgeAuthenticationModule>();
+
+            ConfigureAppDependencies(builder);
+
+            var container = builder.Build();
+
+            // dependency resolver for MVC
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+            // dependency resolver for Web API
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+            return container;
+        }
+
+        private static void ConfigureAppDependencies(ContainerBuilder builder)
+        {
+            builder.RegisterType<SolrRegisterIndexer>().As<RegisterIndexer>();
+            builder.RegisterType<SolrIndexer>().As<Indexer>();
+            builder.RegisterType<SolrIndexDocumentCreator>().As<IndexDocumentCreator>();
 
             builder.RegisterType<RegisterDbContext>().InstancePerRequest().AsSelf();
             builder.RegisterType<OrganizationsService>().As<Services.IOrganizationService>();
@@ -65,15 +81,6 @@ namespace Kartverket.Register
                 new NamedParameter("apiKey", WebConfigurationManager.AppSettings["LogApiKey"]),
                 new AutowiringParameter()
             });
-
-            var container = builder.Build();
-
-            // dependency resolver for MVC
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-
-            // dependency resolver for Web API
-            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-
         }
     }
 }

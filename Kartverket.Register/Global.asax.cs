@@ -2,25 +2,22 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Autofac;
 using System.Data.Entity;
 using Kartverket.Register.Models;
 using Kartverket.Register.Formatter;
 using System;
 using System.Web;
-using SolrNet;
 using System.Web.Configuration;
 using System.Net.Http.Formatting;
 using System.Globalization;
 using System.Threading;
-using System.Xml.Serialization;
 using Kartverket.Register.Models.Translations;
 using System.Collections.Specialized;
 using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -34,8 +31,6 @@ namespace Kartverket.Register
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            DependencyConfig.Configure(new ContainerBuilder());
 
             GlobalConfiguration.Configuration.Formatters.Add(new SyndicationFeedFormatter());
             //Database.SetInitializer<RegisterDbContext>(new RegisterInitializer());
@@ -51,7 +46,7 @@ namespace Kartverket.Register
 
             log4net.Config.XmlConfigurator.Configure();
 
-            Startup.Init<RegisterIndexDoc>(WebConfigurationManager.AppSettings["IndexServerPath"]);
+            SolrNet.Startup.Init<RegisterIndexDoc>(WebConfigurationManager.AppSettings["IndexServerPath"]);
 
         }
 
@@ -98,7 +93,7 @@ namespace Kartverket.Register
                 HttpContext.Current.Response.Cookies.Add(cookie);
             }
 
-            if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
+            if (!string.IsNullOrEmpty(cookie.Value))
             {
                 var culture = new CultureInfo(cookie.Value);
                 Thread.CurrentThread.CurrentCulture = culture;

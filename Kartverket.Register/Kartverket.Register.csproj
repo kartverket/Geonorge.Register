@@ -395,6 +395,7 @@
     <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GeodatalovDatasetsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\InspireDataServiceController.cs" />
     <Compile Include="Controllers\InspireDatasetsController.cs" />

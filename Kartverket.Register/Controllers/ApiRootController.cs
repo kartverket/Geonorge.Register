@@ -70,11 +70,9 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        // <summary>
+        /// <summary>
         /// Gets subregister by id
         /// </summary>
-        /// <param name="register">The search engine optimized name or id of the register</param>
-        /// <param name="parentregister">The search engine optimized name of the parentregister</param>
         /// <param name="systemid">The uniqueidentifier for the register</param>
         //[System.Web.Http.Route("api/kodelister/{systemid}")]
         //[System.Web.Http.Route("api/kodelister/{systemid}.{ext}")]
@@ -106,6 +104,7 @@ namespace Kartverket.Register.Controllers
         /// Gets register by name
         /// </summary>
         /// <param name="registerName">The search engine optimized name of the register</param>
+        /// <param name="filter"></param>
         [System.Web.Http.Route("api/{registerName}")]
         [System.Web.Http.Route("api/{registerName}.{ext}")]
         [System.Web.Http.Route("api/register/{registerName}.{ext}")]
@@ -362,8 +361,8 @@ namespace Kartverket.Register.Controllers
         /// Gets current and historical versions of register item by register- organization- and registeritem-name 
         /// </summary>
         /// <param name="registerName">The search engine optimized name of the register</param>
-        /// <param name="itemowner">The search engine optimized name of the register item owner</param>
         /// <param name="item">The search engine optimized name of the register item</param>
+        /// <param name="id"></param>
         [System.Web.Http.Route("api/{registerName}/{item}/{id}.{ext}")]
         [System.Web.Http.Route("api/{registerName}/{item}/{id}")]
         [System.Web.Http.Route("api/register/{registerName}/{itemowner}/{item}.{ext}")]
@@ -433,6 +432,7 @@ namespace Kartverket.Register.Controllers
         /// <param name="parentregister">The search engine optimized name of the parent register</param>
         /// <param name="register">The search engine optimized name of the register</param>
         /// <param name="item">The search engine optimized name of the register item</param>
+        /// <param name="id"></param>
         [System.Web.Http.Route("api/{parentregister}/{register}/{item}/{id}")]
         [System.Web.Http.Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}")]
         [System.Web.Http.Route("api/{parentregister}/{register}/{item}/{id}.{ext}")]
@@ -607,7 +607,6 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// DokCoverageMapping
         /// </summary>
-        /// <param name="name">DokCoverageMapping</param>
         [System.Web.Http.Route("api/metadata/DokCoverageMapping")]
         [System.Web.Http.HttpGet]
         public IHttpActionResult DokCoverageMapping()

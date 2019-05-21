@@ -330,7 +330,7 @@ namespace Kartverket.Register.Controllers
                     viewModel = GetRegisterItemById(parentRegister, registername, systemId, InspireRegisteryType);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return HttpNotFound();
             }

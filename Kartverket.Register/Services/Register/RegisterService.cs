@@ -361,7 +361,7 @@ namespace Kartverket.Register.Services.Register
 
 
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return "deficient";
                 }
@@ -403,7 +403,7 @@ namespace Kartverket.Register.Services.Register
 
 
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return "deficient";
                 }
@@ -620,7 +620,7 @@ namespace Kartverket.Register.Services.Register
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "deficient";
             }
@@ -694,7 +694,7 @@ namespace Kartverket.Register.Services.Register
                         statusValue = "deficient";
                 }
 
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return "deficient";
                 }
@@ -767,7 +767,7 @@ namespace Kartverket.Register.Services.Register
                         statusValue = "deficient";
                 }
 
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return "deficient";
                 }

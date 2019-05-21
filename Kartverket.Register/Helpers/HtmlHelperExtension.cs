@@ -809,9 +809,8 @@ namespace Kartverket.Register.Helpers
                     return (double)x / y;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
                 return 0;
             }
         }

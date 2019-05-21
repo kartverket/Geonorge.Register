@@ -114,7 +114,7 @@ namespace Kartverket.DOK.Service
                 MD_Metadata_Type metadata = g.GetRecordByUuid(uuid);
                 return metadata != null ? new SimpleMetadata(metadata) : null;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

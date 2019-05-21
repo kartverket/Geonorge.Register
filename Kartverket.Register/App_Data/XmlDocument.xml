@@ -486,12 +486,18 @@
             List top level registers. Use id in response to navigate.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Kartverket.Register.Controllers.ApiRootController.GetRegisterById(System.String)" -->
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterById(System.String)">
+            <summary>
+            Gets subregister by id
+            </summary>
+            <param name="systemid">The uniqueidentifier for the register</param>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterByName(System.String,Kartverket.Register.Models.FilterParameters)">
             <summary>
             Gets register by name
             </summary>
             <param name="registerName">The search engine optimized name of the register</param>
+            <param name="filter"></param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.InspireMonitoring">
             <summary>
@@ -531,8 +537,8 @@
             Gets current and historical versions of register item by register- organization- and registeritem-name 
             </summary>
             <param name="registerName">The search engine optimized name of the register</param>
-            <param name="itemowner">The search engine optimized name of the register item owner</param>
             <param name="item">The search engine optimized name of the register item</param>
+            <param name="id"></param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.InspireDatasetMonitoring(System.String,System.String,System.String)">
             <summary>
@@ -557,6 +563,7 @@
             <param name="parentregister">The search engine optimized name of the parent register</param>
             <param name="register">The search engine optimized name of the register</param>
             <param name="item">The search engine optimized name of the register item</param>
+            <param name="id"></param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.SearchByOrganizationName(System.String)">
             <summary>
@@ -583,7 +590,6 @@
             <summary>
             DokCoverageMapping
             </summary>
-            <param name="name">DokCoverageMapping</param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiSearchController.Get(Kartverket.Register.Models.Api.SearchParameters)">
             <summary>
@@ -808,7 +814,12 @@
             Returns true if current language is norwegian. Otherwise, false.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Kartverket.Register.Helpers.CultureHelper.GetImplementedCulture(System.String)" -->
+        <member name="M:Kartverket.Register.Helpers.CultureHelper.GetImplementedCulture(System.String)">
+            <summary>
+            Returns a valid culture name based on "name" parameter. If "name" is not valid, it returns the default culture "en-US"
+            </summary>
+            <param name="name">Culture's name (e.g. en-US)</param>
+        </member>
         <member name="M:Kartverket.Register.Helpers.CultureHelper.GetDefaultCulture">
             <summary>
             Returns default culture name which is the first name decalared (e.g. en-US)

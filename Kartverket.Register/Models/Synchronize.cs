@@ -53,7 +53,7 @@ namespace Kartverket.Register.Models
             {
                 return (Stop - Start).Value.Minutes.ToString() + " min";
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return "Stoppet";
             }
@@ -62,8 +62,6 @@ namespace Kartverket.Register.Models
 
     public class SyncLogEntry
     {
-        private string v;
-
         public SyncLogEntry()
         {
         }

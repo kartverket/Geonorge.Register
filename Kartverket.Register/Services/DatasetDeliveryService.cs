@@ -65,7 +65,7 @@ namespace Kartverket.Register.Services
 
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 if (_synchronizationJob != null)
                 {
@@ -194,9 +194,9 @@ namespace Kartverket.Register.Services
                         var epsgSupport = false;
                         var featuresSupport = false;
                         var hasLegend = false;
-                        var hasCoverage = false;
                         var connectSoso = false;
-
+                        var hasCoverage = false;
+                        
                         if (data.connect.vurdering == "yes")
                             resposeGetCapabilities = true;
 
@@ -403,7 +403,7 @@ namespace Kartverket.Register.Services
                 }
             }
 
-            catch (Exception e)
+            catch (Exception)
             {
                 if (_synchronizationJob != null)
                 {
@@ -428,7 +428,7 @@ namespace Kartverket.Register.Services
                 dynamic metadata = Newtonsoft.Json.Linq.JArray.Parse(json);
                 return metadata;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -483,7 +483,7 @@ namespace Kartverket.Register.Services
                 }
             }
 
-            catch (Exception e)
+            catch (Exception)
             {
                 if (_synchronizationJob != null)
                 {

@@ -759,6 +759,12 @@
             <param name="name"></param>
             <returns></returns>
         </member>
+        <member name="M:Kartverket.Register.Controllers.HomeController.SignOutCallback">
+            <summary>
+            This is the action responding to /signout-callback-oidc route after logout at the identity provider
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationByName(System.String)">
             <summary>
             Get organization by name

@@ -121,6 +121,9 @@ namespace Kartverket.Register
 
             //Index
             routes.MapRoute("ReIndex", "Index/ReIndex", new { controller = "Index", action = "ReIndex" });
+            
+            // authentication - openid connect 
+            routes.MapRoute("OIDC-callback-signout", "signout-callback-oidc", new { controller = "Home", action = "SignOutCallback"});
 
             routes.MapMvcAttributeRoutes();
 

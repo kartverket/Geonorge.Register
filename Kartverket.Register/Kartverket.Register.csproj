@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44346</IISExpressSSLPort>
+    <IISExpressSSLPort>44301</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -1850,17 +1850,23 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\FontAwesome.otf" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\I4k9un7TZVWzRVT-T8y3USBnSvpkopQaUR-2r7iU.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\JXh38I15wypJXxuGMBp0EAVxt0G0biEntp43Qt6E.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\KeOuBrn4kERxqtaUH3aCWcynf_cDxXwCLxiixG1c.ttf" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\lAoFXXQEzZoMSUteGWKCWcynf_cDxXwCLxiixG1c.ttf" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\MzqLaYbbbCL9X6EvaIy3USBnSvpkopQaUR-2r7iU.ttf" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\oNo9fC8O2RDydKj12by3USBnSvpkopQaUR-2r7iU.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\rg8zYS_SKggPNwIYqWqhPBQ.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\rg8zYS_SKggPNwIYqWqZPBQ.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\rg8zYS_SKggPNwJYtWqhPBQ.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\rg8zYS_SKggPNwJYtWqZPBQ.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\rg8zYS_SKggPNwN4rWqhPBQ.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\rg8zYS_SKggPNwN4rWqZPBQ.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\rg8zYS_SKggPNwPIsWqhPBQ.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\rg8zYS_SKggPNwPIsWqZPBQ.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\sg8zYS_SKggPNwE44Q4Fv.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\sg8zYS_SKggPNwE44TYFv.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.eot" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.woff" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\tzj9b56b8RgXW8FAriS3USBnSvpkopQaUR-2r7iU.ttf" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\Y3_3JNqUVRAQQRNVteQ.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\ug8zYS_SKggPNyC0ISg.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\ug8zYS_SKggPNyCMISg.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\_ySUJH_bn48VBG8sNSonF5uFdDttMLvmWuJdhhgs.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.min.cshtml" />

@@ -31,12 +31,14 @@
     "test",
     "tests"
   ],
-  "dependencies": {},
+  "dependencies": {
+    
+  },
   "devDependencies": {
     "jquery-ui": "^1.11.4",
     "components-font-awesome": "^4.5.0",
     "chosen": "^1.5.1",
     "openSans": "https://google-fonts.azurewebsites.net/googleFonts/openSans?family=Open+Sans:400,400italic,600,700",
-    "raleway": "https://google-fonts.azurewebsites.net/googleFonts/Raleway?family=Raleway:400,100,300,500,600,700"
+    "raleway": "https://google-fonts.azurewebsites.net/googleFonts/Raleway?family=Raleway:400,100,300,500,600,700&subset=latin-ext"
   }
 }

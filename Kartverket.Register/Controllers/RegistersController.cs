@@ -338,7 +338,7 @@ namespace Kartverket.Register.Controllers
             {
                 return RedirectPermanent(viewModel.DetailPageUrl());
             }
-            viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
+            viewModel.AccessRegisterItem = _accessControlService.HasAccessTo(viewModel);
             if (string.IsNullOrWhiteSpace(viewModel.Name))
             {
                 return HttpNotFound();
@@ -356,7 +356,7 @@ namespace Kartverket.Register.Controllers
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
             var viewModel = GetRegisterItemByName(parentregister, registername, itemowner, itemname, null, version);
-            viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
+            viewModel.AccessRegisterItem = _accessControlService.HasAccessTo(viewModel);
 
             if (viewModel.SystemId == Guid.Empty)
             {
@@ -378,7 +378,7 @@ namespace Kartverket.Register.Controllers
             var versionsItem = _versioningService.Versions(registername, parentRegister, itemname);
             var model = new VersionsViewModel(versionsItem);
             model.AccessCreateNewVersions = _accessControlService.AccessCreateNewVersion(model.CurrentVersion);
-            model.CurrentVersion.AccessRegisterItem = _accessControlService.Access(model.CurrentVersion);
+            model.CurrentVersion.AccessRegisterItem = _accessControlService.HasAccessTo(model.CurrentVersion);
 
             ViewBag.registerItemOwner = registerItemOwner;
             return View(model);

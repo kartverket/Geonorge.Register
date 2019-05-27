@@ -46,7 +46,7 @@ namespace Kartverket.Register.Helpers
 
         public static bool Access(object model)
         {
-            return AccessControl.Access(model);
+            return AccessControl.HasAccessTo(model);
         }
 
         public static bool IsAdmin()
@@ -56,7 +56,7 @@ namespace Kartverket.Register.Helpers
 
         public static bool AccessRegisterItem(RegisterItem item)
         {
-            return AccessControl.Access(item);
+            return AccessControl.HasAccessTo(item);
         }
 
         public static bool AccessEditDokMunicipalBySelectedMunicipality(string selectedMunicipalityCode)

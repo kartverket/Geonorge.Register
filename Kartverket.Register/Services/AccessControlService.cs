@@ -1,4 +1,4 @@
-﻿
+
 using System.Security.Claims;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
@@ -23,7 +23,7 @@ namespace Kartverket.Register.Services
             _organizationService = new OrganizationsService(db);
         }
 
-        public bool Access(object model)
+        public bool HasAccessTo(object model)
         {
             if (IsAdmin())
             {
@@ -317,7 +317,7 @@ namespace Kartverket.Register.Services
             }
             else
             {
-                return Access(dataset);
+                return HasAccessTo(dataset);
             }
         }
 

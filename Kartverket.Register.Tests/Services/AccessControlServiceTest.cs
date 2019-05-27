@@ -304,7 +304,7 @@ namespace Kartverket.Register.Tests.Services
             var codelistValue = CreateCodelistValue();
             codelistValue.Register.owner = CreateOrganization("Norges geologiske undersøkelse");
             codelistValue.Register.accessId = 2;
-            _accessControlService.Access(codelistValue).Should().BeTrue();
+            _accessControlService.HasAccessTo(codelistValue).Should().BeTrue();
         }
 
         // User name and claims

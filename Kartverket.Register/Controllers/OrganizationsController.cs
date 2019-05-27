@@ -113,7 +113,7 @@ namespace Kartverket.Register.Controllers
             organisasjon.register = _registerService.GetRegister(parentRegister, registername);
             if (organisasjon.register != null)
             {
-                if (_accessControlService.Access(organisasjon.register))
+                if (_accessControlService.HasAccessTo(organisasjon.register))
                 {
                     ViewBag.dimensionId = new SelectList(_dbContext.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
                     return View(organisasjon);
@@ -134,7 +134,7 @@ namespace Kartverket.Register.Controllers
             organization.register = _registerService.GetRegister(parentRegister, registername);
             if (organization.register != null)
             {
-                if (_accessControlService.Access(organization.register))
+                if (_accessControlService.HasAccessTo(organization.register))
                 {
                     if (ModelState.IsValid)
                     {
@@ -177,7 +177,7 @@ namespace Kartverket.Register.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (_accessControlService.Access(organisasjon))
+            if (_accessControlService.HasAccessTo(organisasjon))
             {
                 organization.AddMissingTranslations();
                 ViewbagsOrganization(organization, register);

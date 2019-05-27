@@ -46,7 +46,7 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegister(parentregister, registername);
             if (register != null)
             {
-                if (_accessControlService.Access(register))
+                if (_accessControlService.HasAccessTo(register))
                 {
                     ViewbagImport(register);
                     return View();
@@ -65,7 +65,7 @@ namespace Kartverket.Register.Controllers
         {
             var register = _registerService.GetRegister(parentregister, registername);
             if (register == null) return HttpNotFound();
-            if (_accessControlService.Access(register))
+            if (_accessControlService.HasAccessTo(register))
             {
                 if (csvfile != null)
                 {
@@ -99,7 +99,7 @@ namespace Kartverket.Register.Controllers
             codeListValue.register = _registerService.GetRegister(parentregister, registername);
             if (codeListValue.register != null)
             {
-                if (_accessControlService.Access(codeListValue.register))
+                if (_accessControlService.HasAccessTo(codeListValue.register))
                 {
                     ViewBag.broaderItemsList = _registerItemService.GetBroaderItems();
                     return View(codeListValue);
@@ -122,7 +122,7 @@ namespace Kartverket.Register.Controllers
             if (codelistValue.register != null)
             {
                 codelistValue.registerId = codelistValue.register.systemId;
-                if (_accessControlService.Access(codelistValue.register))
+                if (_accessControlService.HasAccessTo(codelistValue.register))
                 {
                     if (!_registerItemService.ItemNameIsValid(codelistValue))
                     {
@@ -167,7 +167,7 @@ namespace Kartverket.Register.Controllers
             var codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
             if (codelistValue != null)
             {
-                if (_accessControlService.Access(codelistValue))
+                if (_accessControlService.HasAccessTo(codelistValue))
                 {
                     Viewbags(codelistValue);
                     codelistValue.AddMissingTranslations();
@@ -191,7 +191,7 @@ namespace Kartverket.Register.Controllers
             var originalCodelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
             if (originalCodelistValue != null)
             {
-                if (_accessControlService.Access(originalCodelistValue))
+                if (_accessControlService.HasAccessTo(originalCodelistValue))
                 {
                     if (ModelState.IsValid)
                     {

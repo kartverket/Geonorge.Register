@@ -1082,6 +1082,31 @@
             </summary>
             <returns>Url</returns>
         </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsAdmin">
+            <summary>
+            Check if user has metadata admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsEditor">
+            <summary>
+            Check if user has metadata editor role.
+            this method had a (legacy?) check on role=nd.metadata before GeoID refactoring.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsDokAdmin">
+            <summary>
+            Check if user has DOK-admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsDokEditor">
+            <summary>
+            Check if user has DOK-editor role.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Services.IAccessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(System.String)">
             <summary>
             Checks if the user has access to create or edit DOK Municipal for selected municipality

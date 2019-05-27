@@ -6,9 +6,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Geonorge.AuthLib.Common;
 using Resources;
 using Kartverket.Register.Helpers;
 
@@ -693,8 +695,7 @@ namespace Kartverket.Register.Formatter
 
         private static void ConvertRegisterItemToCSV(StreamWriter streamWriter, Registeritem item)
         {
-            string role = HtmlHelperExtensions.GetSecurityClaim("role");
-            bool isAdmin = role == "nd.metadata_admin";
+            bool isAdmin = ClaimsPrincipal.Current.IsInRole(GeonorgeRoles.MetadataAdmin);
 
             item.description = RemoveBreaksAndSemicolon(item.description);
             item.label = RemoveBreaksAndSemicolon(item.label);
@@ -844,8 +845,7 @@ namespace Kartverket.Register.Formatter
 
         private string RegisterItemHeading(string containedItemClass)
         {
-            string role = HtmlHelperExtensions.GetSecurityClaim("role");
-            bool isAdmin = role == "nd.metadata_admin";
+            bool isAdmin = ClaimsPrincipal.Current.IsInRole(GeonorgeRoles.MetadataAdmin);
 
             if (containedItemClass == "Document")
             {

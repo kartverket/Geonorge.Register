@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using Geonorge.AuthLib.Common;
 using Kartverket.Register.Models.ViewModels;
 using Resources;
 using Kartverket.Register.Models.Translations;
@@ -866,7 +868,7 @@ namespace Kartverket.Register.Services.Register
 
         private Organization GetOrganization()
         {
-            string organizationLogin = HtmlHelperExtensions.GetSecurityClaim("organization");
+            string organizationLogin = ClaimsPrincipal.Current.GetOrganizationName();
             var queryResults = from o in _dbContext.Organizations
                                where organizationLogin == o.name
                                select o;

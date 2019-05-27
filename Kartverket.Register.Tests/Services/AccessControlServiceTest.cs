@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Geonorge.AuthLib.Common;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
@@ -16,13 +17,13 @@ namespace Kartverket.Register.Tests.Services
 {
     public class AccessControlServiceTest
     {
-        private const string Editor = "nd.metadata";
-        private const string Admin = "nd.metadata_admin";
-        private const string DokEditor = "nd.dok_editor";
-        private const string DokAdmin = "nd.dok_admin";
+        private const string Editor = GeonorgeRoles.MetadataEditor;
+        private const string Admin = GeonorgeRoles.MetadataAdmin;
+        private const string DokEditor = GeonorgeRoles.DokEditor;
+        private const string DokAdmin = GeonorgeRoles.DokAdmin;
         private const string Role = "role";
-        private const string Orgnr = "orgnr";
-        private const string Org = "organization";
+        private const string Orgnr = GeonorgeClaims.OrganizationOrgnr;
+        private const string Org = GeonorgeClaims.OrganizationName;
         private readonly Models.Register _register;
         private readonly Document _document;
         private readonly Dataset _dataset;
@@ -138,7 +139,7 @@ namespace Kartverket.Register.Tests.Services
         [Fact]
         public void AccessRegisterIfUserIsRegisterOwner()
         {
-            SetClaims(Role, Editor, "organization", "Kartverket");
+            SetClaims(Role, Editor, Org, "Kartverket");
 
             _register.accessId = 2;
             _register.containedItemClass = "CodelistValue";
@@ -367,8 +368,19 @@ namespace Kartverket.Register.Tests.Services
             var claims = new List<Claim>();
             for (int i = 0; i < typeAndValues.Length; i += 2)
             {
-                claims.Add(new Claim(typeAndValues[i], typeAndValues[i + 1]));
+                var name = typeAndValues[i];
+                var value = typeAndValues[i + 1];
+
+                if (name == Role)
+                {
+                    name = GeonorgeAuthorizationService.ClaimIdentifierRole; // use claim name for roles from auth lib to enable use of IsInRole()-method
+                }
+
+                claims.Add(new Claim(name, value));
             }
+
+            
+
 
             var identity = new ClaimsIdentity(claims, "TestAuthType");
             var claimsPrincipal = new ClaimsPrincipal(identity);

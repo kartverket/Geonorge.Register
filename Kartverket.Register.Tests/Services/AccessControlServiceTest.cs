@@ -121,7 +121,7 @@ namespace Kartverket.Register.Tests.Services
         public void AccessRegisterIfUserIsAdmin()
         {
             SetClaims(Role, Admin);
-            _accessControlService.AccessRegister(_register).Should().BeTrue();
+            _accessControlService.HasAccessToRegister(_register).Should().BeTrue();
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace Kartverket.Register.Tests.Services
             _register.accessId = 2;
             _register.containedItemClass = "Organization";
 
-            _accessControlService.AccessRegister(_register).Should().BeTrue();
+            _accessControlService.HasAccessToRegister(_register).Should().BeTrue();
         }
 
         [Fact]
@@ -144,7 +144,7 @@ namespace Kartverket.Register.Tests.Services
             _register.containedItemClass = "CodelistValue";
             _register.owner = _organization;
 
-            _accessControlService.AccessRegister(_register).Should().BeTrue();
+            _accessControlService.HasAccessToRegister(_register).Should().BeTrue();
         }
 
         [Fact]
@@ -154,7 +154,7 @@ namespace Kartverket.Register.Tests.Services
 
             _register.accessId = 4;
 
-            _accessControlService.AccessRegister(_register).Should().BeTrue();
+            _accessControlService.HasAccessToRegister(_register).Should().BeTrue();
         }
 
         [Fact]
@@ -164,7 +164,7 @@ namespace Kartverket.Register.Tests.Services
 
             _register.accessId = 4;
 
-            _accessControlService.AccessRegister(_register).Should().BeTrue();
+            _accessControlService.HasAccessToRegister(_register).Should().BeTrue();
         }
 
         [Fact]
@@ -174,7 +174,7 @@ namespace Kartverket.Register.Tests.Services
 
             _register.accessId = 4;
 
-            _accessControlService.AccessRegister(_register).Should().BeTrue();
+            _accessControlService.HasAccessToRegister(_register).Should().BeTrue();
         }
 
         [Fact]

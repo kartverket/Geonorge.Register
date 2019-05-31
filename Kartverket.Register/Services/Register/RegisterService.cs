@@ -1165,7 +1165,7 @@ namespace Kartverket.Register.Services.Register
                 translation.RegisterId = register.systemId;
             }
 
-            _dbContext.Entry(register).State = EntityState.Modified;
+            _dbContext.Entry(register).State = EntityState.Added;
             _dbContext.Registers.Add(register);
             _dbContext.SaveChanges();
 

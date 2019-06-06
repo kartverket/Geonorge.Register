@@ -1,4 +1,6 @@
-﻿@using Kartverket.Register.Helpers
+﻿@using System.Security.Claims
+@using Geonorge.AuthLib.Common
+@using Kartverket.Register.Helpers
 <!DOCTYPE html>
 <html class=" js flexbox no-flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg no-smil svgclippaths">
 <head>
@@ -116,10 +118,10 @@
     <script>
         $(function () {
             $(".jqueryui-marker-datepicker").datepicker({
-                dateFormat: "dd/mm/yy",
-                changeYear: true,
-                showOn: "button"
-            }).css("display", "inline-block")
+                    dateFormat: "dd/mm/yy",
+                    changeYear: true,
+                    showOn: "button"
+                }).css("display", "inline-block")
                 .next("button").button({
                     icons: { primary: "ui-icon-calendar" },
                     label: "Velg dato",
@@ -127,5 +129,22 @@
                 });
         });
     </script>
+
+    @if (Html.EnvironmentName() == "dev" && HttpContext.Current.IsDebuggingEnabled)
+    {
+        <!-- user claims: -->
+        var cp = (ClaimsPrincipal)User;
+        foreach (var claim in cp.Claims)
+        {
+            <!-- @claim.Type = @claim.Value -->
+        }
+
+        <!-- roles: -->
+        var roles = cp.FindAll(GeonorgeAuthorizationService.ClaimIdentifierRole);
+        foreach (var role in roles)
+        {
+            <!-- @role.Value-->
+        }
+    }
 </body>
 </html>

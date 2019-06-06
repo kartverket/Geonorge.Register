@@ -386,6 +386,7 @@
     </Compile>
     <Compile Include="Controllers\ApiSearchController.cs" />
     <Compile Include="Controllers\AlertServiceController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CodelistValuesController.cs" />
     <Compile Include="Controllers\DatasetsController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
@@ -1351,6 +1352,7 @@
     <Compile Include="Services\SynchronizationService.cs" />
     <Compile Include="Services\Translation\ITranslationService.cs" />
     <Compile Include="Services\Translation\TranslationService.cs" />
+    <Compile Include="Services\UserAuthorization.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\Versioning\IVersioningService.cs" />
     <Compile Include="Services\Versioning\VersioningService.cs" />

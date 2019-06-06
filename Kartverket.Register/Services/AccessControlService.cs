@@ -14,12 +14,14 @@ namespace Kartverket.Register.Services
         private readonly IRegisterItemService _registerItemService;
         private readonly IRegisterService _registerService;
         private readonly IOrganizationService _organizationService;
+        private UserAuthorization _userAuthorization;
 
         public AccessControlService(RegisterDbContext db)
         {
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
             _organizationService = new OrganizationsService(db);
+            _userAuthorization = new UserAuthorization();
         }
 
         public bool HasAccessTo(object model)
@@ -179,18 +181,13 @@ namespace Kartverket.Register.Services
             return HasAccessToRegister(registerItemViewModel.Register) && IsItemOwner(registerItemViewModel.Owner.name, UserName()) || IsAdmin();
         }
 
-        private ClaimsPrincipal GetCurrentUser()
-        {
-            return ClaimsPrincipal.Current;
-        }
-
         /// <summary>
-        /// Check if user has metadata admin role.
+        /// Check if current user is Admin
         /// </summary>
         /// <returns></returns>
         public bool IsAdmin()
         {
-            return GetCurrentUser().IsInRole(GeonorgeRoles.MetadataAdmin);
+            return _userAuthorization.IsAdmin();
         }
 
         /// <summary>
@@ -200,7 +197,7 @@ namespace Kartverket.Register.Services
         /// <returns></returns>
         public bool IsEditor()
         {
-            return GetCurrentUser().IsInRole(GeonorgeRoles.MetadataEditor);
+            return _userAuthorization.IsEditor();
         }
         
         /// <summary>
@@ -209,7 +206,7 @@ namespace Kartverket.Register.Services
         /// <returns></returns>
         public bool IsDokAdmin()
         {
-            return GetCurrentUser().IsInRole(GeonorgeRoles.DokAdmin);
+            return _userAuthorization.IsDokAdmin();
         }
 
         /// <summary>
@@ -218,7 +215,7 @@ namespace Kartverket.Register.Services
         /// <returns></returns>
         public bool IsDokEditor()
         {
-            return GetCurrentUser().IsInRole(GeonorgeRoles.DokEditor);
+            return _userAuthorization.IsDokEditor();
         }
 
         public bool IsMunicipalUser()
@@ -245,7 +242,7 @@ namespace Kartverket.Register.Services
 
         public string GetOrganizationNumber()
         {
-            return GetCurrentUser().GetOrganizationOrgnr();
+            return _userAuthorization.GetOrganizationNumber();
         }
 
         public CodelistValue GetMunicipality()

@@ -1,15 +1,12 @@
 ﻿using Kartverket.Register.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
+using Geonorge.AuthLib.Common;
 
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
-    public class IndexController : Controller
+    public class IndexController : BaseController
     {
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -20,7 +17,7 @@ namespace Kartverket.Register.Controllers
             _indexer = indexer;
         }
 
-        [Authorize]
+        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
         public ActionResult Index()
         {
             Log.Info("Run indexing of entire register.");
@@ -30,51 +27,45 @@ namespace Kartverket.Register.Controllers
 
             DateTime stop = DateTime.Now;
             double seconds = stop.Subtract(start).TotalSeconds;
-            Log.Info(string.Format("Indexing fininshed after {0} seconds.", seconds));
+            Log.Info($"Indexing fininshed after {seconds} seconds.");
 
             return View();
         }
 
-        [Route("IndexSingle/{systemID}")]
-        public ActionResult IndexSingle(string systemID)
+        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
+        [Route("IndexSingle/{systemId}")]
+        public ActionResult IndexSingle(string systemId)
         {
             Log.Info("Run indexing of single register.");
             DateTime start = DateTime.Now;
 
-            if (!string.IsNullOrWhiteSpace(systemID))
+            if (!string.IsNullOrWhiteSpace(systemId))
             {
-                Log.Info("Running single indexing of register with systemID=" + systemID);
-                _indexer.RunIndexingOn(systemID);
+                Log.Info("Running single indexing of register with systemID=" + systemId);
+                _indexer.RunIndexingOn(systemId);
                 
             }
 
             DateTime stop = DateTime.Now;
             double seconds = stop.Subtract(start).TotalSeconds;
-            Log.Info(string.Format("Indexing fininshed after {0} seconds.", seconds));
+            Log.Info($"Indexing fininshed after {seconds} seconds.");
 
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
         public ActionResult ReIndex()
         {
-            string role = GetSecurityClaim("role");
-            if (role == "nd.metadata_admin")
-            {
-                Log.Info("Run reindexing of entire register.");
-                DateTime start = DateTime.Now;
+            Log.Info("Run reindexing of entire register.");
+            DateTime start = DateTime.Now;
 
-                _indexer.RunReIndexing();
+            _indexer.RunReIndexing();
 
-                DateTime stop = DateTime.Now;
-                double seconds = stop.Subtract(start).TotalSeconds;
-                Log.Info(string.Format("Indexing fininshed after {0} seconds.", seconds));
-
-           
-                return View();
-            }
-            else
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            DateTime stop = DateTime.Now;
+            double seconds = stop.Subtract(start).TotalSeconds;
+            Log.Info($"Indexing fininshed after {seconds} seconds.");
+       
+            return View();
         }
 
         //[HttpPost]
@@ -115,25 +106,5 @@ namespace Kartverket.Register.Controllers
             Log.Error("Error", filterContext.Exception);
         }
 
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
-        }
     }
 }

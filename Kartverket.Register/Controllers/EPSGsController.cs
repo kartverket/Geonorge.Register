@@ -10,13 +10,15 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services;
 using Kartverket.Register.Helpers;
 using System.Web;
+using System.Web.Http;
+using System.Web.Http.Results;
 using Kartverket.Register.Services.Translation;
 using Resources;
 
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
-    public class EPSGsController : Controller
+    public class EPSGsController : BaseController
     {
         private readonly RegisterDbContext db;
 
@@ -38,7 +40,7 @@ namespace Kartverket.Register.Controllers
 
 
         // GET: EPSGs/Create
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         //[Route("epsg/{registername}/ny")]
         //[Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(string registername, string parentRegister)
@@ -61,8 +63,8 @@ namespace Kartverket.Register.Controllers
         // POST: EPSG/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
-        [HttpPost]
+        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.HttpPost]
         //[Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("epsg/{registername}/ny")]
         public ActionResult Create(EPSG epsgKode, string registername, string parentRegister, string registerowner)
@@ -97,13 +99,12 @@ namespace Kartverket.Register.Controllers
 
 
         // GET: EPSGs/Edit/5
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         //[Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
         //[Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
         public ActionResult Edit(string registername, string epsgname, int? vnr, string parentRegister)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
+            string currentUserOrganizationName = CurrentUserOrganizationName();
 
             var queryResultsEpsg = from o in db.EPSGs
                                    where o.seoname == epsgname &&
@@ -121,7 +122,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && ePSG.register.accessId == 2 && ePSG.submitter.name.ToLower() == user.ToLower()))
+            if (CanEditOrDeleteEpsgItem(ePSG))
             {
                 ePSG.AddMissingTranslations();
                 Viewbags(ePSG);
@@ -130,12 +131,11 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound("Ingen tilgang");
         }
 
-
         // POST: EPSGs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
-        [HttpPost]
+        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.HttpPost]
         //[Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
         //[Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
         //public ActionResult Edit(EPSG ePSG, string name, string id)
@@ -213,14 +213,11 @@ namespace Kartverket.Register.Controllers
 
 
         // GET: EPSGs/Delete/5
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         //[Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
         //[Route("epsg/{registername}/{organization}/{epsgname}/slett")]
         public ActionResult Delete(string epsgname, string registername, string parentregister)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
             var queryResultsOrganisasjon = from o in db.EPSGs
                                            where o.seoname == epsgname
                                            && o.register.seoname == registername
@@ -233,7 +230,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && ePSG.register.accessId == 2 && ePSG.submitter.name.ToLower() == user.ToLower()))
+            if (CanEditOrDeleteEpsgItem(ePSG))
             {
                 Viewbags(ePSG);
                 return View(ePSG);
@@ -241,9 +238,18 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound("Ingen tilgang");
         }
 
+        private bool CanEditOrDeleteEpsgItem(EPSG item)
+        {
+            return IsAdmin()
+                   ||
+                   IsEditor() 
+                        && item.register.accessId == 2 
+                        && item.submitter.name.ToLower() == CurrentUserOrganizationName().ToLower();
+        }
+
         // POST: EPSGs/Delete/5
-        [Authorize]
-        [HttpPost, ActionName("Delete")]
+        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.HttpPost, System.Web.Mvc.ActionName("Delete")]
         //[Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
         //[Route("epsg/{registername}/{organization}/{epsgname}/slett")]
         public ActionResult DeleteConfirmed(string epsgname, string registername, string parentregister, string parentregisterowner)
@@ -256,6 +262,9 @@ namespace Kartverket.Register.Controllers
 
             Guid systId = queryResultsOrganisasjon.FirstOrDefault();
             EPSG ePSG = db.EPSGs.Find(systId);
+
+            if (!CanEditOrDeleteEpsgItem(ePSG))
+                return new HttpUnauthorizedResult("Ingen tilgang");
 
             string parent = null;
             if (ePSG.register.parentRegisterId != null)
@@ -280,27 +289,6 @@ namespace Kartverket.Register.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
         }
 
         private void Viewbags(EPSG ePSG)

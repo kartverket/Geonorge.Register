@@ -14,17 +14,17 @@ namespace Kartverket.Register.Controllers
     {
         public void SignIn()
         {
-            var redirectUrl = Url.Action(nameof(RegistersController.Index), "Registers");
-            HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = redirectUrl },
+            var redirectUri = Url.Action(nameof(RegistersController.Index), "Registers");
+            HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = redirectUri },
                 OpenIdConnectAuthenticationDefaults.AuthenticationType);
         }
 
         public void SignOut()
         {
-            var authenticationProperties = new AuthenticationProperties {RedirectUri = WebConfigurationManager.AppSettings["GeoID:PostLogoutRedirectUri"]};
+            var redirectUri = WebConfigurationManager.AppSettings["GeoID:PostLogoutRedirectUri"];
 
             HttpContext.GetOwinContext().Authentication.SignOut(
-                authenticationProperties,
+                new AuthenticationProperties {RedirectUri = redirectUri},
                 OpenIdConnectAuthenticationDefaults.AuthenticationType,
                 CookieAuthenticationDefaults.AuthenticationType);
         }

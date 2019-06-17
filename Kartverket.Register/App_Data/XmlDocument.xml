@@ -601,6 +601,36 @@
             Add service alert
             </summary>
         </member>
+        <member name="T:Kartverket.Register.Controllers.BaseController">
+            <summary>
+            This class provides utility methods useful in most controllers. Controllers should inherit from this class.
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsAdmin">
+            <summary>
+            Check if current user is Admin
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsEditor">
+            <summary>
+            Check if user has metadata editor role.
+            this method had a (legacy?) check on role=nd.metadata before GeoID refactoring.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsDokAdmin">
+            <summary>
+            Check if user has DOK-admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsDokEditor">
+            <summary>
+            Check if user has DOK-editor role.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Controllers.DocumentsController.NameIsValid(Kartverket.Register.Models.Document)">
             <summary>
             Validate item name. Item name must be unique in a register. 
@@ -1084,7 +1114,7 @@
         </member>
         <member name="M:Kartverket.Register.Services.AccessControlService.IsAdmin">
             <summary>
-            Check if user has metadata admin role.
+            Check if current user is Admin
             </summary>
             <returns></returns>
         </member>
@@ -1146,6 +1176,38 @@
             Item name must be unique in one registery
             </summary>
             <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.Register.RegisterService.RegisterNameIsValid(System.Object)">
+            <summary>
+            Returns true if the name is not in use in any registers.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsAdmin">
+            <summary>
+            Check if user has metadata admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsEditor">
+            <summary>
+            Check if user has metadata editor role.
+            this method had a (legacy?) check on role=nd.metadata before GeoID refactoring.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsDokAdmin">
+            <summary>
+            Check if user has DOK-admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsDokEditor">
+            <summary>
+            Check if user has DOK-editor role.
+            </summary>
             <returns></returns>
         </member>
         <member name="T:Eu.Europa.Ec.Jrc.Inspire.Time">

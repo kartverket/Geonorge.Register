@@ -1135,18 +1135,17 @@ namespace Kartverket.Register.Services.Register
             _dbContext.SaveChanges();
         }
 
+        /// <summary>
+        /// Returns true if the name is not in use in any registers.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public bool RegisterNameIsValid(object model)
         {
             if (model is Models.Register register)
             {
                 var registerNameSeo = RegisterUrls.MakeSeoFriendlyString(register.name);
-                var queryResults = from o in _dbContext.Registers
-                                   where (o.name == register.name || o.seoname == registerNameSeo) &&
-                                         o.systemId != register.systemId &&
-                                         o.parentRegisterId == register.parentRegister.systemId
-                                   select o.systemId;
-
-                return queryResults.ToList().Any();
+                return !_dbContext.Registers.Any(r => r.name == register.name || r.seoname == registerNameSeo);
             }
             return false;
         }

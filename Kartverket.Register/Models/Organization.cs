@@ -177,7 +177,16 @@ namespace Kartverket.Register.Models
             return Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3");
         }
 
-	}
+        public bool BelongsTo(string inputOrganizationName)
+        {
+            if (submitter == null)
+                return false;
+            if (submitter.name.ToLower() == inputOrganizationName.ToLower())
+                return true;
+
+            return false;
+        }
+    }
 
     public static class OrganizationType
     {

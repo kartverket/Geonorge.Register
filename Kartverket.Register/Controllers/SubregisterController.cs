@@ -67,7 +67,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(Models.Register subRegister, string registerName, string registerparant)
         {
             subRegister.parentRegister = _registerService.GetRegister(registerparant, registerName);
-            if (_registerService.RegisterNameIsValid(subRegister)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
+            if (!_registerService.RegisterNameIsValid(subRegister)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
 
             if (ModelState.IsValid)
             {
@@ -245,27 +245,6 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
             }
-        }
-
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
         }
 
         private void Viewbags(Models.Register register)

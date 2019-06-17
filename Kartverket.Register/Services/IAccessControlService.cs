@@ -8,7 +8,6 @@ namespace Kartverket.Register.Services
     {
         bool HasAccessTo(object model);
         AccessViewModel AccessViewModel(RegisterV2ViewModel registerViewModel);
-        List<string> GetSecurityClaim(string type);
         bool IsAdmin();
         bool EditDOK(Dataset dataset);
         bool IsMunicipalUser();

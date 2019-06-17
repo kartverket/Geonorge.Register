@@ -3,29 +3,26 @@ using Kartverket.Register.Models;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services;
-using Kartverket.Register.Helpers;
 using System.Collections.Generic;
 using System.Net;
-using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Models.Translations;
 using System.Linq;
 
 namespace Kartverket.Register.Controllers
 {
-    public class AlertsController : Controller
+    public class AlertsController : BaseController
     {
-        private RegisterDbContext db = new RegisterDbContext();
-        private IRegisterService _registerService;
-        private IRegisterItemService _registerItemService;
-        private IAccessControlService _accessControlService;
-        private IVersioningService _versioningService;
+        private readonly RegisterDbContext _dbContext;
+        private readonly IRegisterService _registerService;
+        private readonly IRegisterItemService _registerItemService;
+        private readonly IAccessControlService _accessControlService;
 
-        public AlertsController(IRegisterItemService registerItemServive, IRegisterService registerService, IAccessControlService accessControlService, IVersioningService versioningService)
+        public AlertsController(RegisterDbContext dbContext, IRegisterItemService registerItemServive, IRegisterService registerService, IAccessControlService accessControlService)
         {
+            _dbContext = dbContext;
             _registerItemService = registerItemServive;
             _registerService = registerService;
             _accessControlService = accessControlService;
-            _versioningService = versioningService;
         }
 
         // GET: Alerts/Create
@@ -118,16 +115,19 @@ namespace Kartverket.Register.Controllers
 
         public Dictionary<string, string> GetServicesFromKartkatalogen(string category)
         {
-            Dictionary<string, string> ServiceList = new Dictionary<string, string>();
-            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=service&limit=1000&orderby=title";
-            var organization = _accessControlService.GetSecurityClaim("organization")[0];
+            Dictionary<string, string> serviceList = new Dictionary<string, string>();
+            var urlToKartkatalogenApi = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"];
+            string url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=service&limit=1000&orderby=title";
+            var currentUserOrganizationName = CurrentUserOrganizationName();
+            
+            // TODO - handle limit in API request
             if (category == Constants.AlertCategoryDataset) { 
                 if(_accessControlService.IsAdmin())
-                    url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=7000&orderby=title";
-                else if(organization.ToLower() == "kartverket")
-                    url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=4000&orderby=title&facets[1]name=organization&facets[1]value=Kartverket&facets[2]name=organization&facets[2]value=Geovekst";
+                    url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=7000&orderby=title";
+                else if(currentUserOrganizationName.ToLower() == "kartverket")
+                    url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=4000&orderby=title&facets[1]name=organization&facets[1]value=Kartverket&facets[2]name=organization&facets[2]value=Geovekst";
                 else
-                    url= System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=4000&orderby=title&facets[1]name=organization&facets[1]value=" + organization;
+                    url= urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=4000&orderby=title&facets[1]name=organization&facets[1]value=" + currentUserOrganizationName;
             }
             WebClient c = new WebClient();
             c.Encoding = System.Text.Encoding.UTF8;
@@ -138,23 +138,21 @@ namespace Kartverket.Register.Controllers
 
             foreach (var service in result)
             {
-                var ServiceUuid = service["Uuid"].ToString();
-                if (string.IsNullOrWhiteSpace(ServiceUuid))
-                    ServiceUuid = service["Uuid"].ToString();
+                var serviceUuid = service["Uuid"].ToString();
 
-                var Organization = service["Organization"] != null ? service["Organization"].ToString() : "";
+                var serviceOrganization = service["Organization"] != null ? service["Organization"].ToString() : "";
 
-                if (!ServiceList.ContainsKey(ServiceUuid))
+                if (!serviceList.ContainsKey(serviceUuid))
                 {
-                    if (_accessControlService.IsAdmin() || _accessControlService.IsItemOwner(Organization, _accessControlService.GetSecurityClaim("organization")[0]))
+                    if (_accessControlService.IsAdmin() || _accessControlService.IsItemOwner(serviceOrganization, currentUserOrganizationName))
                     {
                         if (!service["Title"].ToString().StartsWith("Høydedata") && !service["Title"].ToString().StartsWith("Ortofoto"))
-                            ServiceList.Add(ServiceUuid, service["Title"].ToString());
+                            serviceList.Add(serviceUuid, service["Title"].ToString());
                     }
                     
                 }
             }
-            return ServiceList;
+            return serviceList;
         }
 
 
@@ -162,7 +160,7 @@ namespace Kartverket.Register.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _dbContext.Dispose();
             }
             base.Dispose(disposing);
         }

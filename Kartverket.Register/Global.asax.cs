@@ -75,7 +75,7 @@ namespace Kartverket.Register
             var cookie = Context.Request.Cookies["_culture"];
             var userAgent = Context.Request.UserAgent;
 
-            if(!userAgent.StartsWith("Mozilla"))
+            if(userAgent != null && !userAgent.StartsWith("Mozilla"))
                 cookie = null;
 
             var lang = Context.Request.QueryString["lang"];

@@ -395,8 +395,10 @@ namespace Kartverket.DOK.Service
                     {
                         foreach (var theme in data.KeywordsTheme)
                         {
-                            if (theme.KeywordValue == "Høydedata" || theme.KeywordValue == "Flyfoto")
-                                return null;
+                            string keywordValue = theme.KeywordValue;
+                            if (!string.IsNullOrEmpty(keywordValue) && (keywordValue.ToLower() == "høydedata" || keywordValue.ToLower() == "flyfoto") )
+                                if (!geodatalovDataset.Geodatalov)
+                                    return null;
                         }
                     }
 

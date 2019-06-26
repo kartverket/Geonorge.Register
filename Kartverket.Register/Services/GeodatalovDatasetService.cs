@@ -423,7 +423,7 @@ namespace Kartverket.Register.Services
         {
             var geodatalovDatasetsFromKartkatalogen = new List<GeodatalovDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=geodataloven&Offset=1&limit=500&mediatype=json";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=geodataloven&facets%5b1%5dname=nationalinitiative&facets%5b1%5dvalue=Norge digitalt&Offset=1&limit=6000&mediatype=json";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

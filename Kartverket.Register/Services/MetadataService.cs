@@ -391,6 +391,15 @@ namespace Kartverket.DOK.Service
                         }
                     }
 
+                    if (geodatalovDataset.NationalDataset)
+                    {
+                        foreach (var theme in data.KeywordsTheme)
+                        {
+                            if (theme.KeywordValue == "Høydedata" || theme.KeywordValue == "Flyfoto")
+                                return null;
+                        }
+                    }
+
                 }
             }
             catch (Exception e)

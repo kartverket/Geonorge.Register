@@ -59,7 +59,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisters()
         {
-            SetLanguage(Request);
             var list = new List<Models.Api.Register>();
             List<Models.Register> registers = _registerService.GetRegisters();
             foreach (Models.Register register in registers)
@@ -79,7 +78,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterById(string systemid)
         {
-            SetLanguage(Request);
             bool isValid = Guid.TryParse(systemid, out var guid);
 
             var codelist = new Models.Register();
@@ -112,7 +110,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterByName(string registerName, [FromUri] FilterParameters filter = null)
         {
-            SetLanguage(Request);
             var register = _registerService.GetRegisterByName(registerName);
 
             if (register != null)
@@ -157,7 +154,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult InspireMonitoring()
         {
-            SetLanguage(Request);
             var inspireStatusRegister = _registerService.GetInspireStatusRegister();
             Monitoring inspireMonitoring = _inspireMonitoringService.GetInspireMonitoringReport(inspireStatusRegister);
 
@@ -196,7 +192,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult StatusReport(string id, string ext, bool dataset = true, bool service = true)
         {
-            SetLanguage(Request);
             var statusReport = _statusReportService.GetStatusReportById(id);
             if (statusReport == null)
             {
@@ -245,7 +240,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult StatusReports(string registerName)
         {
-            SetLanguage(Request);
             var register = _registerService.GetRegisterByName(registerName);
             List<StatusReport> statusReports;
             if (register.IsInspireStatusRegister())
@@ -344,8 +338,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetSubregisterByName(string parentregister, string register, string systemid = null)
         {
-            SetLanguage(Request);
-
             var it = _registerService.GetRegister(parentregister, register) ?? _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (it == null)
             {
@@ -372,7 +364,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterItemByName(string registerName, string item, string id = null)
         {
-            SetLanguage(Request);
             var register = _registerService.GetRegister(null, registerName);
             if (register == null)
             {
@@ -395,7 +386,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult InspireDatasetMonitoring(string registerName, string itemowner, string item)
         {
-            SetLanguage(Request);
             Models.InspireDataset inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registerName, item);
             SpatialDataSet inspireDatasetMonitoring = _inspireMonitoringService.MappingSpatialDataSet(inspireDataset);
 
@@ -420,7 +410,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterItemByVersionNr(string register, string item, int version)
         {
-            SetLanguage(Request);
             var registerItem = _registerItemService.GetRegisterItem(null, register, item, version);
             return Ok(ConvertRegisterItem(registerItem));
         }
@@ -440,7 +429,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string item, string id = null)
         {
-            SetLanguage(Request);
             Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(parentregister, register, item);
             return Ok(currentVersion);
         }
@@ -496,7 +484,6 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterItemsByOrganization(string parent, string register, string itemowner)
         {
-            SetLanguage(Request);
             List<RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(parent, register, itemowner);
             List<Registeritem> ConverteditemsByOwner = new List<Registeritem>();
 
@@ -741,35 +728,6 @@ namespace Kartverket.Register.Controllers
             };
 
             return tmp;
-        }
-
-
-        private void SetLanguage(HttpRequestMessage request)
-        {
-            string language = Culture.NorwegianCode;
-
-            IEnumerable<string> headerValues;
-            if (request.Headers.TryGetValues("Accept-Language", out headerValues))
-            {
-                language = headerValues.FirstOrDefault();
-                if (CultureHelper.IsNorwegian(language))
-                    language = Culture.NorwegianCode;
-                else
-                    language = Culture.EnglishCode;
-            }
-            else
-            {
-                CookieHeaderValue cookie = request.Headers.GetCookies("_culture").FirstOrDefault();
-                if (cookie != null && !string.IsNullOrEmpty(cookie["_culture"].Value))
-                {
-                    language = cookie["_culture"].Value;
-                }
-            }
-
-            var culture = new CultureInfo(language);
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
-
         }
     }
 }

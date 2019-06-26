@@ -849,19 +849,19 @@ namespace Kartverket.Register.Formatter
 
             if (containedItemClass == "Document")
             {
-                return Registers.Name + ";" + Documents.DocumentOwner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + Registers.DocumentUrl + "; ID";
+                return Registers.Name + ";" + Documents.DocumentOwner + ";Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + Registers.DocumentUrl + ";ID";
             }
             if (containedItemClass == "CodelistValue")
             {
-                return Registers.Name + ";" + CodelistValues.CodeValue + ";" + Registers.Owner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + CodelistValues.ValidFromDate + ";" + CodelistValues.ValidToDate + "; ID";
+                return Registers.Name + ";" + CodelistValues.CodeValue + ";" + Registers.Owner + ";Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + CodelistValues.ValidFromDate + ";" + CodelistValues.ValidToDate + ";ID";
             }
             if (containedItemClass == "EPSG")
             {
-                return Registers.Name + "; EPSG; SOSI;" + EPSGs.Vertical + ";" + EPSGs.Horizontal + ";" + EPSGs.Dimension + ";" + Registers.Owner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + "; ID";
+                return Registers.Name + "; EPSG; SOSI;" + EPSGs.Vertical + ";" + EPSGs.Horizontal + ";" + EPSGs.Dimension + ";" + Registers.Owner + ";Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";ID";
             }
             if (containedItemClass == "Dataset")
             {
-                return DataSet.DOK_Delivery_Theme + ";" + Registers.Name + ";" + Registers.Owner + "; DOK-status;" + DataSet.DOK_StatusDateAccepted + ";" + DataSet.DOK_Kandidatdato + (isAdmin ? ";" + Registers.Updated : "") + ";" + Registers.VersionNumber + ";" + Registers.Description + "; ID" + ";" + DataSet.DOK_Delivery_Metadata + ";"
+                return DataSet.DOK_Delivery_Theme + ";" + Registers.Name + ";" + Registers.Owner + ";DOK-status;" + DataSet.DOK_StatusDateAccepted + ";" + DataSet.DOK_Kandidatdato + (isAdmin ? ";" + Registers.Updated : "") + ";" + Registers.VersionNumber + ";" + Registers.Description + ";ID" + ";" + DataSet.DOK_Delivery_Metadata + ";"
                     + DataSet.DOK_Delivery_ProductSheet + ";" + DataSet.DOK_Delivery_PresentationRules + ";" + DataSet.DOK_Delivery_ProductSpesification + ";"
                     + DataSet.DOK_Delivery_Wms + ";" + DataSet.DOK_Delivery_Wfs + ";" + DataSet.DOK_Delivery_SosiRequirements + ";"
                     + DataSet.DOK_Delivery_Distribution + ";" + DataSet.DOK_Delivery_GmlRequirements + ";" + DataSet.DOK_Delivery_AtomFeed + (isAdmin ? ";Uuid" : "") + ";" + DataSet.DisplayKartkatalogen;
@@ -870,11 +870,11 @@ namespace Kartverket.Register.Formatter
             {
                 return "InspireTema;" +
                         Registers.Name + ";" +
-                        Registers.Owner + "; DOK-status;" +
+                        Registers.Owner + ";DOK-status;" +
                         DataSet.DOK_StatusDateAccepted + ";" +
                         DataSet.DOK_Kandidatdato + (isAdmin ? ";" + Registers.Updated : "") + ";" +
                         Registers.VersionNumber + ";" +
-                        Registers.Description + "; ID" + ";" +
+                        Registers.Description + ";ID" + ";" +
                         DataSet.DOK_Delivery_Metadata + ";" +
                         InspireDataSet.MetadataServiceStatus + ";" +
                         InspireDataSet.DistributionStatus + ";" +
@@ -930,7 +930,7 @@ namespace Kartverket.Register.Formatter
 
         private string RegisterHeading()
         {
-            return "Id ;" + Registers.Name + ";" + Registers.Description + ";" + Registers.Owner + ";" + Registers.Updated;
+            return "Id;" + Registers.Name + ";" + Registers.Description + ";" + Registers.Owner + ";" + Registers.Updated;
         }
 
         private string DokStatusReportHeading()

@@ -76,6 +76,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="ExpressiveAnnotations, Version=2.7.0.0, Culture=neutral, PublicKeyToken=d3e372f3c1e83cec, processorArchitecture=MSIL">
       <HintPath>..\packages\ExpressiveAnnotations.2.9.1\lib\net45\ExpressiveAnnotations.dll</HintPath>
       <Private>True</Private>
@@ -134,6 +137,7 @@
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="SolrNet">
       <HintPath>..\packages\SolrNet.0.4.0.4001\lib\SolrNet.dll</HintPath>
     </Reference>
@@ -275,6 +279,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\AlertsController.cs" />
     <Compile Include="Controllers\SubregisterController.cs" />
+    <Compile Include="Services\UpdateCodelistService.cs" />
     <Compile Include="Formatter\CsvFormatter.cs" />
     <Compile Include="Formatter\XMLFormatter.cs" />
     <Compile Include="Formatter\GMLFormatter.cs" />
@@ -1878,6 +1883,9 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\package-lock.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\yarn.lock" />
+    <Content Include="App_Data\Kommuner2020.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Formatter\XSD\basictype.xsd">
       <SubType>Designer</SubType>
     </None>

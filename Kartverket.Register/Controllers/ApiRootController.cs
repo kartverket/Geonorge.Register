@@ -601,6 +601,15 @@ namespace Kartverket.Register.Controllers
             return Ok(DokCoverageWmsMapping.DatasetUuidToWmsLayerMapping);
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/codelist/update/kommunenummer-alle")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult UpdateMunicipalitiesAll()
+        {
+            new UpdateCodelistService(db).UpdateMunicipalitiesAll();
+            return Ok();
+        }
+
 
 
         // **** HJELPEMETODER ****

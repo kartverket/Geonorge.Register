@@ -610,6 +610,15 @@ namespace Kartverket.Register.Controllers
             return Ok();
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/codelist/update/kommunenummer-alle-status")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult UpdateMunicipalitiesAllStatus()
+        {
+            new UpdateCodelistService(db).UpdateMunicipalitiesAllStatus();
+            return Ok();
+        }
+
 
 
         // **** HJELPEMETODER ****

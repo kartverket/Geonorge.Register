@@ -55,5 +55,11 @@ namespace Kartverket.Register.Controllers
                 }
             }
         }
+
+        internal void UpdateMunicipalitiesAllStatus()
+        {
+            db.Database.ExecuteSqlCommand("UPDATE [kartverket_register].[dbo].[RegisterItems] set statusId = 'Valid' where registerId = '54DDDFA8-A9D3-4115-8541-4B0905779054' and GETDATE() > ValidFromDate");
+            db.Database.ExecuteSqlCommand("UPDATE [kartverket_register].[dbo].[RegisterItems] set statusId = 'Retired' where registerId = '54DDDFA8-A9D3-4115-8541-4B0905779054' and ValidToDate < GETDATE()");
+        }
     }
 }

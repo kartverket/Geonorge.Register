@@ -109,8 +109,8 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteSubRegistry", "subregister/{registername}/{owner}/{subregister}/slett", new { controller = "Subregister", action = "Delete" });
 
 
-            routes.MapRoute("SignIn", "AuthServices/SignIn", new { controller = "AuthServices", action = "SignIn" });
-            routes.MapRoute("LogOut", "AuthServices/LogOut", new { controller = "AuthServices", action = "LogOut" });
+            routes.MapRoute("SignIn", "SignIn", new { controller = "Home", action = "SignIn" });
+            routes.MapRoute("SignOut", "SignOut", new { controller = "Home", action = "SignOut" });
             routes.MapRoute("Acs", "AuthServices/Acs", new { controller = "AuthServices", action = "Acs" });
             routes.MapRoute("DokReport", "api/register/det-offentlige-kartgrunnlaget/rapport", new { controller = "ApiRoot", action = "GetDokStatusReport" });
             routes.MapRoute("Dataset", "datasett", new { controller = "DisplayDataset", action = "Index" });
@@ -121,6 +121,9 @@ namespace Kartverket.Register
 
             //Index
             routes.MapRoute("ReIndex", "Index/ReIndex", new { controller = "Index", action = "ReIndex" });
+            
+            // authentication - openid connect 
+            routes.MapRoute("OIDC-callback-signout", "signout-callback-oidc", new { controller = "Home", action = "SignOutCallback"});
 
             routes.MapMvcAttributeRoutes();
 

@@ -16,7 +16,7 @@ using Resources;
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
-    public class OrganizationsController : Controller
+    public class OrganizationsController : BaseController
     {
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -38,14 +38,10 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult Import()
         {
-            string role = GetSecurityClaim("role");
-            if (role == "nd.metadata_admin")
-            {
-                return View();
-            }
-            else 
-            return HttpNotFound("Ingen tilgang");
-           
+            if (!IsAdmin())
+                return HttpNotFound("Ingen tilgang");
+
+            return View();
         }
 
         [HttpPost]
@@ -70,10 +66,11 @@ namespace Kartverket.Register.Controllers
                 {
                     organization.name = "ikke angitt";
                 }
-                
-                string organizationLogin = GetSecurityClaim("organization");
+
+                string currentUserOrganizationName = CurrentUserOrganizationName();
+
                 var queryResultsOrganization = from o in _dbContext.Organizations
-                                               where o.name == organizationLogin
+                                               where o.name == currentUserOrganizationName
                                                select o.systemId;
                 Guid orgId = queryResultsOrganization.FirstOrDefault();
                 Organization submitterOrganisasjon = _dbContext.Organizations.Find(orgId);
@@ -113,7 +110,7 @@ namespace Kartverket.Register.Controllers
             organisasjon.register = _registerService.GetRegister(parentRegister, registername);
             if (organisasjon.register != null)
             {
-                if (_accessControlService.Access(organisasjon.register))
+                if (_accessControlService.HasAccessTo(organisasjon.register))
                 {
                     ViewBag.dimensionId = new SelectList(_dbContext.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
                     return View(organisasjon);
@@ -134,7 +131,7 @@ namespace Kartverket.Register.Controllers
             organization.register = _registerService.GetRegister(parentRegister, registername);
             if (organization.register != null)
             {
-                if (_accessControlService.Access(organization.register))
+                if (_accessControlService.HasAccessTo(organization.register))
                 {
                     if (ModelState.IsValid)
                     {
@@ -177,7 +174,7 @@ namespace Kartverket.Register.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (_accessControlService.Access(organisasjon))
+            if (_accessControlService.HasAccessTo(organisasjon))
             {
                 organization.AddMissingTranslations();
                 ViewbagsOrganization(organization, register);
@@ -325,9 +322,6 @@ namespace Kartverket.Register.Controllers
         //[Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
         public ActionResult Delete(string registername, string submitter, string organisasjon, string parentregister)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-            
             var queryResults = from o in _dbContext.Organizations
                                             where o.seoname == organisasjon && o.register.seoname == registername
                                             && o.register.parentRegister.seoname == parentregister
@@ -339,21 +333,25 @@ namespace Kartverket.Register.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organization organization = _dbContext.Organizations.Find(systId);
-            if (organization == null)
+            Organization organizationRegisterItem = _dbContext.Organizations.Find(systId);
+            if (organizationRegisterItem == null)
             {
                 return HttpNotFound();
             }
 
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && organization.register.accessId == 2 && organization.submitter.name.ToLower() == user.ToLower()))
+            if (IsAdmin() || 
+                IsEditor() 
+                && organizationRegisterItem.register.accessId == 2 
+                && organizationRegisterItem.BelongsTo(CurrentUserOrganizationName()))
             {
-                return View(organization);
+                return View(organizationRegisterItem);
             }
             return HttpNotFound("Ingen tilgang");
         }
 
         // POST: Registers/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         //[Route("organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett")]
         //[Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
         public ActionResult DeleteConfirmed(Organization organization, string registername, string organisasjon, string parentregister, string parentregisterowner)
@@ -388,28 +386,6 @@ namespace Kartverket.Register.Controllers
                 _dbContext.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
         }
 
         private string SaveFileToDisk(HttpPostedFileBase file, Organization organization)
@@ -470,7 +446,7 @@ namespace Kartverket.Register.Controllers
                                       && o.register.parentRegisterId == register.parentRegisterId
                                       select o.systemId;
 
-            if (queryResultsDataset.Count() > 0)
+            if (queryResultsDataset.Any())
             {
                 ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
             }

@@ -32,7 +32,7 @@ namespace Kartverket.Register.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (_accessControlService.Access(inspireDataService))
+            if (_accessControlService.HasAccessTo(inspireDataService))
             {
                 inspireDataService = _inspireDatasetService.UpdateInspireDataServiceFromKartkatalogen(inspireDataService);
                 var viewModel = new InspireDataServiceViewModel(inspireDataService);
@@ -74,7 +74,7 @@ namespace Kartverket.Register.Controllers
             var inspireDataService = _inspireDatasetService.GetInspireDataServiceByName(registername, itemname);
             if (inspireDataService != null)
             {
-                if (_accessControlService.Access(inspireDataService))
+                if (_accessControlService.HasAccessTo(inspireDataService))
                 {
                     return View(inspireDataService);
                 }
@@ -93,7 +93,7 @@ namespace Kartverket.Register.Controllers
             if (inspireDataset != null)
             {
                 var registerUrl = inspireDataset.Register.GetObjectUrl();
-                if (_accessControlService.Access(inspireDataset))
+                if (_accessControlService.HasAccessTo(inspireDataset))
                 {
                     _inspireDatasetService.DeleteInspireDataService(inspireDataset);
                     return Redirect(registerUrl);

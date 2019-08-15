@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Organizations {
@@ -232,6 +232,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filtrere etter organisasjonstype.
+        /// </summary>
+        public static string FilterByOrganizationType {
+            get {
+                return ResourceManager.GetString("FilterByOrganizationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Geografisk senterpunkt.
         /// </summary>
         public static string GeographicCenterPoint {
@@ -430,11 +439,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ordinær.
+        ///   Looks up a localized string similar to Nasjonal.
         /// </summary>
-        public static string OrganizationTypeRegular {
+        public static string OrganizationTypeNational {
             get {
-                return ResourceManager.GetString("OrganizationTypeRegular", resourceCulture);
+                return ResourceManager.GetString("OrganizationTypeNational", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regional.
+        /// </summary>
+        public static string OrganizationTypeRegional {
+            get {
+                return ResourceManager.GetString("OrganizationTypeRegional", resourceCulture);
             }
         }
         

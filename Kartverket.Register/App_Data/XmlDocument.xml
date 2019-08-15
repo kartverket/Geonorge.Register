@@ -1095,8 +1095,8 @@
         </member>
         <member name="P:Kartverket.Register.Models.Organization.OrganizationType">
             <summary>
-            Determines what kind of organization: regular or municipality.
-            If empty, then regular organization. 
+            Determines what kind of organization: national, regional or municipality.
+            If empty, then national organization. 
             If set to 'municipality' then the municipality specific attributes below should be populated
             </summary>
         </member>
@@ -3679,6 +3679,11 @@
               Looks up a localized string similar to E-postadresse.
             </summary>
         </member>
+        <member name="P:Resources.Organizations.FilterByOrganizationType">
+            <summary>
+              Looks up a localized string similar to Filtrere etter organisasjonstype.
+            </summary>
+        </member>
         <member name="P:Resources.Organizations.GeographicCenterPoint">
             <summary>
               Looks up a localized string similar to Geografisk senterpunkt.
@@ -3789,9 +3794,14 @@
               Looks up a localized string similar to Kommune.
             </summary>
         </member>
-        <member name="P:Resources.Organizations.OrganizationTypeRegular">
+        <member name="P:Resources.Organizations.OrganizationTypeNational">
             <summary>
-              Looks up a localized string similar to Ordinær.
+              Looks up a localized string similar to Nasjonal.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.OrganizationTypeRegional">
+            <summary>
+              Looks up a localized string similar to Regional.
             </summary>
         </member>
         <member name="P:Resources.Organizations.PriceFormDocument">

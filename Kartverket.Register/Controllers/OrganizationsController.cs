@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -289,6 +289,11 @@ namespace Kartverket.Register.Controllers
                 if (priceformDocument != null)
                 {
                     originalOrganization.priceFormDocument = url + SaveFileToDisk(priceformDocument, originalOrganization);
+                }
+
+                if (org.OrganizationType != null)
+                {
+                    originalOrganization.OrganizationType = org.OrganizationType;
                 }
 
                 if (org.IsMunicipality())

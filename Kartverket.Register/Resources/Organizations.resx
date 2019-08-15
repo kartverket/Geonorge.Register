@@ -210,8 +210,8 @@
   <data name="OrganizationTypeMunicipality" xml:space="preserve">
     <value>Kommune</value>
   </data>
-  <data name="OrganizationTypeRegular" xml:space="preserve">
-    <value>Ordinær</value>
+  <data name="OrganizationTypeRegional" xml:space="preserve">
+    <value>Regional</value>
   </data>
   <data name="PriceFormDocument" xml:space="preserve">
     <value>Prisskjema/Kalkulator</value>
@@ -254,5 +254,11 @@
   </data>
   <data name="ImportFromCSVInfo" xml:space="preserve">
     <value>Velg csv fil i UTF-8 med orgnr, navn, beskrivelse, logofilnavn. Logo må lastes opp manuelt til server</value>
+  </data>
+  <data name="OrganizationTypeNational" xml:space="preserve">
+    <value>Nasjonal</value>
+  </data>
+  <data name="FilterByOrganizationType" xml:space="preserve">
+    <value>Filtrere etter organisasjonstype</value>
   </data>
 </root>

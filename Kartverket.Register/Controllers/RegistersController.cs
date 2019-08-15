@@ -279,10 +279,16 @@ namespace Kartverket.Register.Controllers
 
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);
+            ViewBagOrganizationTypes(viewModel);
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
             return View(viewModel);
         }
 
+        private void ViewBagOrganizationTypes(RegisterV2ViewModel viewModel)
+        {
+            ViewBag.SelectedOrganizationType = new SelectList(OrganizationType.OrganizationTypes(), "Value", "Text");
+            
+        }
 
 
         private string GetInspireRegistryType(string filter)

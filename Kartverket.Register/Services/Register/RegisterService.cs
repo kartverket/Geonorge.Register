@@ -1,4 +1,4 @@
-﻿using Kartverket.Register.Helpers;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
 using System;
@@ -10,10 +10,13 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using Geonorge.AuthLib.Common;
+using Kartverket.Register.Models.Api;
 using Kartverket.Register.Models.ViewModels;
 using Resources;
 using Kartverket.Register.Models.Translations;
 using Newtonsoft.Json.Linq;
+using InspireDataset = Kartverket.Register.Models.InspireDataset;
+using Organization = Kartverket.Register.Models.Organization;
 
 namespace Kartverket.Register.Services.Register
 {
@@ -52,6 +55,21 @@ namespace Kartverket.Register.Services.Register
                 {
                     FilterAlert(register, filter, registerItems);
                 }
+                else if (register.ContainedItemClassIsOrganization())
+                {
+                    if (!string.IsNullOrEmpty(filter.SelectedOrganizationType))
+                    {
+                        registerItems = register.items.Cast<Organization>()
+                            .Where(i => i.OrganizationType == filter.SelectedOrganizationType.ToLower())
+                            .ToList<Models.RegisterItem>();
+              
+                    }
+                    else
+                    {
+                        registerItems = register.items.ToList();
+                    }
+                }
+
                 else
                 {
                     registerItems.AddRange(register.items);

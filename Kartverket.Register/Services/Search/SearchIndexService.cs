@@ -248,7 +248,12 @@ namespace Kartverket.Register.Services.Search
                 }
             }
             else query = SolrQuery.All;
-            
+
+            if (parameters.excludecodelistvalues)
+                query = new SolrMultipleCriteriaQuery(new[]
+                    {query, new SolrQuery(" NOT CodelistValue:*")
+               });
+
             Log.Debug("Query: " + query.ToString());
             return query; 
         }

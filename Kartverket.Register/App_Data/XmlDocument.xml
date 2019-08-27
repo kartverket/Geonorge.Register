@@ -1095,8 +1095,8 @@
         </member>
         <member name="P:Kartverket.Register.Models.Organization.OrganizationType">
             <summary>
-            Determines what kind of organization: national, regional or municipality.
-            If empty, then national organization. 
+            Determines what kind of organization: regular or municipality.
+            If empty, then regular organization. 
             If set to 'municipality' then the municipality specific attributes below should be populated
             </summary>
         </member>

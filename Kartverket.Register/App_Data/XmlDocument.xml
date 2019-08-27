@@ -993,6 +993,11 @@
             Register owner/responsible
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.Status">
+            <summary>
+            Register status
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.SearchParameters.text">
             <summary>
             The text to search for

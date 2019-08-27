@@ -59,7 +59,7 @@ namespace Kartverket.Register.Services.Search
                     Facet = BuildFacetParameters(parameters),
 
                     Fields = new[] { "SystemID", "RegisterName", "RegisterDescription", "RegisterItemName", "RegisterItemName_en", "RegisterItemDescription", "RegisterID", "Discriminator", "RegisterItemUpdated", "type",
-                    "ParentRegisterUrl", "RegisteItemUrl",  "SubregisterUrl","subregisterItemUrl", "theme" , "organization" }
+                    "ParentRegisterUrl", "RegisteItemUrl",  "SubregisterUrl","subregisterItemUrl", "theme" , "organization" , "RegisterItemStatus" }
                     
 
                 });

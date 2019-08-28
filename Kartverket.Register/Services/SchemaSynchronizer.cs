@@ -68,7 +68,7 @@ namespace Kartverket.Register.Services
                     currentDir = currentDir + "\\" + subDir;
                     Directory.CreateDirectory(currentDir);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
             }

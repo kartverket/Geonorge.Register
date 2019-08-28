@@ -114,7 +114,7 @@ namespace Kartverket.DOK.Service
                 MD_Metadata_Type metadata = g.GetRecordByUuid(uuid);
                 return metadata != null ? new SimpleMetadata(metadata) : null;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -388,6 +388,17 @@ namespace Kartverket.DOK.Service
                         else if (keyword.KeywordValue == "arealplanerPBL")
                         {
                             geodatalovDataset.Plan = true;
+                        }
+                    }
+
+                    if (geodatalovDataset.NationalDataset)
+                    {
+                        foreach (var theme in data.KeywordsTheme)
+                        {
+                            string keywordValue = theme.KeywordValue;
+                            if (!string.IsNullOrEmpty(keywordValue) && (keywordValue.ToLower() == "høydedata" || keywordValue.ToLower() == "flyfoto") )
+                                if (!geodatalovDataset.Geodatalov)
+                                    return null;
                         }
                     }
 

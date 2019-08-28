@@ -3,10 +3,9 @@ using System.Security.Claims;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
 using System.Collections.Generic;
-using Kartverket.Register.Helpers;
+using Geonorge.AuthLib.Common;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
-using Resources;
 
 namespace Kartverket.Register.Services
 {
@@ -15,15 +14,17 @@ namespace Kartverket.Register.Services
         private readonly IRegisterItemService _registerItemService;
         private readonly IRegisterService _registerService;
         private readonly IOrganizationService _organizationService;
+        private UserAuthorization _userAuthorization;
 
         public AccessControlService(RegisterDbContext db)
         {
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
             _organizationService = new OrganizationsService(db);
+            _userAuthorization = new UserAuthorization();
         }
 
-        public bool Access(object model)
+        public bool HasAccessTo(object model)
         {
             if (IsAdmin())
             {
@@ -31,7 +32,7 @@ namespace Kartverket.Register.Services
             }
             if (model is Models.Register register)
             {
-                return AccessRegister(register);
+                return HasAccessToRegister(register);
             }
             if (model is RegisterV2ViewModel registerViewModel)
             {
@@ -90,7 +91,7 @@ namespace Kartverket.Register.Services
             return (IsAdmin() || IsRegisterOwner(registerViewModel.Owner.name, UserName())) && !registerViewModel.IsAlertRegister();
         }
 
-        public bool AccessRegister(Models.Register register)
+        public bool HasAccessToRegister(Models.Register register)
         {
             if (IsAdmin()) return true;
             if (register.RegisterAccessAdminAndEditor())
@@ -132,7 +133,7 @@ namespace Kartverket.Register.Services
         public bool AccessRegisterItem(Models.RegisterItem registerItem)
         {
             if (IsAdmin()) return true;
-            if (AccessRegister(registerItem.register))
+            if (HasAccessToRegister(registerItem.register))
             {
                 if (registerItem is Document document)
                 {
@@ -162,7 +163,7 @@ namespace Kartverket.Register.Services
         {
             if (!registerItemViewModel.Register.IsAlertRegister())
             {
-                if (AccessRegister(registerItemViewModel.Register))
+                if (HasAccessToRegister(registerItemViewModel.Register))
                 {
                     if (registerItemViewModel is DocumentViewModel docuementViewModel)
                     {
@@ -177,60 +178,44 @@ namespace Kartverket.Register.Services
 
         public bool AccessCreateNewVersion(RegisterItemV2ViewModel registerItemViewModel)
         {
-            return AccessRegister(registerItemViewModel.Register) && IsItemOwner(registerItemViewModel.Owner.name, UserName()) || IsAdmin();
+            return HasAccessToRegister(registerItemViewModel.Register) && IsItemOwner(registerItemViewModel.Owner.name, UserName()) || IsAdmin();
         }
 
-
+        /// <summary>
+        /// Check if current user is Admin
+        /// </summary>
+        /// <returns></returns>
         public bool IsAdmin()
         {
-            List<string> roles = GetSecurityClaim("role");
-            foreach (string role in roles)
-            {
-                if (role == "nd.metadata_admin")
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _userAuthorization.IsAdmin();
         }
 
+        /// <summary>
+        /// Check if user has metadata editor role.
+        /// this method had a (legacy?) check on role=nd.metadata before GeoID refactoring.
+        /// </summary>
+        /// <returns></returns>
         public bool IsEditor()
         {
-            List<string> roles = GetSecurityClaim("role");
-            foreach (string role in roles)
-            {
-                if (role == "nd.metadata" || role == "nd.metadata_editor")
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _userAuthorization.IsEditor();
         }
-
+        
+        /// <summary>
+        /// Check if user has DOK-admin role.
+        /// </summary>
+        /// <returns></returns>
         public bool IsDokAdmin()
         {
-            List<string> roles = GetSecurityClaim("role");
-            foreach (string role in roles)
-            {
-                if (role == "nd.dok_admin")
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _userAuthorization.IsDokAdmin();
         }
 
+        /// <summary>
+        /// Check if user has DOK-editor role.
+        /// </summary>
+        /// <returns></returns>
         public bool IsDokEditor()
         {
-            List<string> roles = GetSecurityClaim("role");
-            foreach (string role in roles)
-            {
-                if (role == "nd.dok_editor")
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _userAuthorization.IsDokEditor();
         }
 
         public bool IsMunicipalUser()
@@ -257,8 +242,7 @@ namespace Kartverket.Register.Services
 
         public string GetOrganizationNumber()
         {
-            Claim orgnrClaim = ClaimsPrincipal.Current.FindFirst("orgnr");
-            return orgnrClaim?.Value;
+            return _userAuthorization.GetOrganizationNumber();
         }
 
         public CodelistValue GetMunicipality()
@@ -317,7 +301,7 @@ namespace Kartverket.Register.Services
             }
             else
             {
-                return Access(dataset);
+                return HasAccessTo(dataset);
             }
         }
 

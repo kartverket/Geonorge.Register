@@ -44,6 +44,10 @@ namespace Kartverket.Register.Models.Api
         /// Register owner/responsible
         /// </summary>
         public string Organization { get; set; }
+        /// <summary>
+        /// Register status
+        /// </summary>
+        public string Status { get; set; }
 
 
         public RegisterData(SearchResultItem item)
@@ -57,6 +61,10 @@ namespace Kartverket.Register.Models.Api
             RegisterDescription = item.RegisterDescription;
             RegisterUrl = item.ParentRegisterUrl;
             Organization = item.organization;
+            if (Helpers.CultureHelper.IsNorwegian() && Statuses.ContainsKey(item.RegisterItemStatus))
+                Status = Statuses[item.RegisterItemStatus];
+            else
+                Status = item.RegisterItemStatus;
             
         }
 
@@ -64,5 +72,16 @@ namespace Kartverket.Register.Models.Api
         {
             return items.Select(item => new RegisterData(item)).ToList();
         }
+
+        static Dictionary<string,string> Statuses = new Dictionary<string, string>
+        {
+            {"Draft", "Utkast"},
+            {"NotAccepted", "Ikke godkjent"},
+            {"Retired", "Utgått"},
+            {"Sosi-valid", "SOSI godkjent"},
+            {"Submitted", "Sendt inn"},
+            {"Superseded", "Erstattet"},
+            {"Valid", "Gyldig"}
+        };
     }
 }

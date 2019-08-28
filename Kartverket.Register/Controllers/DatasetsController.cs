@@ -55,7 +55,7 @@ namespace Kartverket.Register.Controllers
             {
                 dataset.DatasetType = GetDatasetType(dataset.register.name);
                 Viewbags(dataset);
-                if (_accessControlService.Access(dataset.register))
+                if (_accessControlService.HasAccessTo(dataset.register))
                 {
                     return View(dataset);
                 }
@@ -77,7 +77,7 @@ namespace Kartverket.Register.Controllers
             dataset.register = _registerService.GetRegister(parentRegister, registername);
             if (dataset.register != null)
             {
-                if (_accessControlService.Access(dataset.register))
+                if (_accessControlService.HasAccessTo(dataset.register))
                 {
                     dataset.systemId = dataset.GetSystemId();
                     dataset.registerId = dataset.register.GetSystemId();
@@ -233,7 +233,7 @@ namespace Kartverket.Register.Controllers
             Dataset dataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, itemname, 1, itemowner);
             if (dataset != null)
             {
-                if (_accessControlService.Access(dataset))
+                if (_accessControlService.HasAccessTo(dataset))
                 {
                     if (!string.IsNullOrEmpty(dataset.Uuid))
                     {
@@ -282,7 +282,7 @@ namespace Kartverket.Register.Controllers
                         return EditCoverageDataset(coverage, originalDataset);
                     }
                 }
-                else if (_accessControlService.Access(originalDataset))
+                else if (_accessControlService.HasAccessTo(originalDataset))
                 {
                     if (ModelState.IsValid)
                     {
@@ -308,7 +308,7 @@ namespace Kartverket.Register.Controllers
             Dataset dataset = (Dataset)_registerItemService.GetRegisterItem(parentregister, registername, itemname, 1, itemowner);
             if (dataset != null)
             {
-                if (_accessControlService.Access(dataset))
+                if (_accessControlService.HasAccessTo(dataset))
                 {
                     Viewbags(dataset);
                     return View(dataset);

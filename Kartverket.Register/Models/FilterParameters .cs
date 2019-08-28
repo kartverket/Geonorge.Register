@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -34,6 +34,7 @@ namespace Kartverket.Register.Models
         public bool ShowCurrentInspireMonitoringReport { get; set; }
         public string SelectedInspireMonitoringReport { get; set; }
         public string SelectedComparableCandidate { get; set; }
+        public string SelectedOrganizationType { get; set; }
         public bool Compare { get; set; }
         public string DokSelectedTab { get; set; }
         public string GeodatalovSelectedTab { get; set; }

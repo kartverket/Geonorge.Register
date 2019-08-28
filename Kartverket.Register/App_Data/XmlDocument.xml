@@ -486,12 +486,18 @@
             List top level registers. Use id in response to navigate.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Kartverket.Register.Controllers.ApiRootController.GetRegisterById(System.String)" -->
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterById(System.String)">
+            <summary>
+            Gets subregister by id
+            </summary>
+            <param name="systemid">The uniqueidentifier for the register</param>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterByName(System.String,Kartverket.Register.Models.FilterParameters)">
             <summary>
             Gets register by name
             </summary>
             <param name="registerName">The search engine optimized name of the register</param>
+            <param name="filter"></param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.InspireMonitoring">
             <summary>
@@ -531,8 +537,8 @@
             Gets current and historical versions of register item by register- organization- and registeritem-name 
             </summary>
             <param name="registerName">The search engine optimized name of the register</param>
-            <param name="itemowner">The search engine optimized name of the register item owner</param>
             <param name="item">The search engine optimized name of the register item</param>
+            <param name="id"></param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.InspireDatasetMonitoring(System.String,System.String,System.String)">
             <summary>
@@ -557,6 +563,7 @@
             <param name="parentregister">The search engine optimized name of the parent register</param>
             <param name="register">The search engine optimized name of the register</param>
             <param name="item">The search engine optimized name of the register item</param>
+            <param name="id"></param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.SearchByOrganizationName(System.String)">
             <summary>
@@ -583,7 +590,6 @@
             <summary>
             DokCoverageMapping
             </summary>
-            <param name="name">DokCoverageMapping</param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiSearchController.Get(Kartverket.Register.Models.Api.SearchParameters)">
             <summary>
@@ -594,6 +600,36 @@
             <summary>
             Add service alert
             </summary>
+        </member>
+        <member name="T:Kartverket.Register.Controllers.BaseController">
+            <summary>
+            This class provides utility methods useful in most controllers. Controllers should inherit from this class.
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsAdmin">
+            <summary>
+            Check if current user is Admin
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsEditor">
+            <summary>
+            Check if user has metadata editor role.
+            this method had a (legacy?) check on role=nd.metadata before GeoID refactoring.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsDokAdmin">
+            <summary>
+            Check if user has DOK-admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsDokEditor">
+            <summary>
+            Check if user has DOK-editor role.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Kartverket.Register.Controllers.DocumentsController.NameIsValid(Kartverket.Register.Models.Document)">
             <summary>
@@ -753,6 +789,12 @@
             <param name="name"></param>
             <returns></returns>
         </member>
+        <member name="M:Kartverket.Register.Controllers.HomeController.SignOutCallback">
+            <summary>
+            This is the action responding to /signout-callback-oidc route after logout at the identity provider
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationByName(System.String)">
             <summary>
             Get organization by name
@@ -808,7 +850,12 @@
             Returns true if current language is norwegian. Otherwise, false.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Kartverket.Register.Helpers.CultureHelper.GetImplementedCulture(System.String)" -->
+        <member name="M:Kartverket.Register.Helpers.CultureHelper.GetImplementedCulture(System.String)">
+            <summary>
+            Returns a valid culture name based on "name" parameter. If "name" is not valid, it returns the default culture "en-US"
+            </summary>
+            <param name="name">Culture's name (e.g. en-US)</param>
+        </member>
         <member name="M:Kartverket.Register.Helpers.CultureHelper.GetDefaultCulture">
             <summary>
             Returns default culture name which is the first name decalared (e.g. en-US)
@@ -946,6 +993,11 @@
             Register owner/responsible
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.Status">
+            <summary>
+            Register status
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.SearchParameters.text">
             <summary>
             The text to search for
@@ -1065,6 +1117,31 @@
             </summary>
             <returns>Url</returns>
         </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsAdmin">
+            <summary>
+            Check if current user is Admin
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsEditor">
+            <summary>
+            Check if user has metadata editor role.
+            this method had a (legacy?) check on role=nd.metadata before GeoID refactoring.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsDokAdmin">
+            <summary>
+            Check if user has DOK-admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsDokEditor">
+            <summary>
+            Check if user has DOK-editor role.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Services.IAccessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(System.String)">
             <summary>
             Checks if the user has access to create or edit DOK Municipal for selected municipality
@@ -1104,6 +1181,38 @@
             Item name must be unique in one registery
             </summary>
             <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.Register.RegisterService.RegisterNameIsValid(System.Object)">
+            <summary>
+            Returns true if the name is not in use in any registers.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsAdmin">
+            <summary>
+            Check if user has metadata admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsEditor">
+            <summary>
+            Check if user has metadata editor role.
+            this method had a (legacy?) check on role=nd.metadata before GeoID refactoring.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsDokAdmin">
+            <summary>
+            Check if user has DOK-admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsDokEditor">
+            <summary>
+            Check if user has DOK-editor role.
+            </summary>
             <returns></returns>
         </member>
         <member name="T:Eu.Europa.Ec.Jrc.Inspire.Time">
@@ -3575,6 +3684,11 @@
               Looks up a localized string similar to E-postadresse.
             </summary>
         </member>
+        <member name="P:Resources.Organizations.FilterByOrganizationType">
+            <summary>
+              Looks up a localized string similar to Filtrere etter organisasjonstype.
+            </summary>
+        </member>
         <member name="P:Resources.Organizations.GeographicCenterPoint">
             <summary>
               Looks up a localized string similar to Geografisk senterpunkt.
@@ -3685,9 +3799,14 @@
               Looks up a localized string similar to Kommune.
             </summary>
         </member>
-        <member name="P:Resources.Organizations.OrganizationTypeRegular">
+        <member name="P:Resources.Organizations.OrganizationTypeNational">
             <summary>
-              Looks up a localized string similar to Ordinær.
+              Looks up a localized string similar to Nasjonal.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.OrganizationTypeRegional">
+            <summary>
+              Looks up a localized string similar to Regional.
             </summary>
         </member>
         <member name="P:Resources.Organizations.PriceFormDocument">

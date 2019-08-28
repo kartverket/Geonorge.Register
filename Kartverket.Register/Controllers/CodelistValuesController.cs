@@ -18,7 +18,7 @@ using Resources;
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
-    public class CodelistValuesController : Controller
+    public class CodelistValuesController : BaseController
     {
         private readonly RegisterDbContext _db;
         private readonly IRegisterService _registerService;
@@ -46,7 +46,7 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegister(parentregister, registername);
             if (register != null)
             {
-                if (_accessControlService.Access(register))
+                if (_accessControlService.HasAccessTo(register))
                 {
                     ViewbagImport(register);
                     return View();
@@ -65,7 +65,7 @@ namespace Kartverket.Register.Controllers
         {
             var register = _registerService.GetRegister(parentregister, registername);
             if (register == null) return HttpNotFound();
-            if (_accessControlService.Access(register))
+            if (_accessControlService.HasAccessTo(register))
             {
                 if (csvfile != null)
                 {
@@ -99,7 +99,7 @@ namespace Kartverket.Register.Controllers
             codeListValue.register = _registerService.GetRegister(parentregister, registername);
             if (codeListValue.register != null)
             {
-                if (_accessControlService.Access(codeListValue.register))
+                if (_accessControlService.HasAccessTo(codeListValue.register))
                 {
                     ViewBag.broaderItemsList = _registerItemService.GetBroaderItems();
                     return View(codeListValue);
@@ -122,7 +122,7 @@ namespace Kartverket.Register.Controllers
             if (codelistValue.register != null)
             {
                 codelistValue.registerId = codelistValue.register.systemId;
-                if (_accessControlService.Access(codelistValue.register))
+                if (_accessControlService.HasAccessTo(codelistValue.register))
                 {
                     if (!_registerItemService.ItemNameIsValid(codelistValue))
                     {
@@ -167,7 +167,7 @@ namespace Kartverket.Register.Controllers
             var codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
             if (codelistValue != null)
             {
-                if (_accessControlService.Access(codelistValue))
+                if (_accessControlService.HasAccessTo(codelistValue))
                 {
                     Viewbags(codelistValue);
                     codelistValue.AddMissingTranslations();
@@ -191,7 +191,7 @@ namespace Kartverket.Register.Controllers
             var originalCodelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
             if (originalCodelistValue != null)
             {
-                if (_accessControlService.Access(originalCodelistValue))
+                if (_accessControlService.HasAccessTo(originalCodelistValue))
                 {
                     if (ModelState.IsValid)
                     {
@@ -222,8 +222,7 @@ namespace Kartverket.Register.Controllers
         //[Route("kodeliste/{registername}/{submitter}/{itemname}/slett")]
         public ActionResult Delete(string registername, string itemname, string parentregister)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
+            string currentUserOrganizationName = CurrentUserOrganizationName();
 
             var queryResults = from o in _db.CodelistValues
                                where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
@@ -240,7 +239,12 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && codelistValue.register.accessId == 2 && codelistValue.submitter.name.ToLower() == user.ToLower()))
+
+            
+            if (IsAdmin() || 
+                (IsEditor() 
+                              && codelistValue.register.accessId == 2 
+                              && codelistValue.submitter.name.ToLower() == currentUserOrganizationName.ToLower()))
             {
                 Viewbags(codelistValue);
                 return View(codelistValue);
@@ -297,27 +301,6 @@ namespace Kartverket.Register.Controllers
                 _db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
         }
 
         private void Viewbags(CodelistValue codelistValue)

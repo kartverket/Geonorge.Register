@@ -97,7 +97,7 @@ namespace Kartverket.Register.Tests.Controllers
         private static Mock<IAccessControlService> CreateAccessControlServiceMock()
         {
             var accessControlServiceMock = new Mock<IAccessControlService>();
-            accessControlServiceMock.Setup(m => m.Access(Register)).Returns(true);
+            accessControlServiceMock.Setup(m => m.HasAccessTo(Register)).Returns(true);
             return accessControlServiceMock;
         }
 

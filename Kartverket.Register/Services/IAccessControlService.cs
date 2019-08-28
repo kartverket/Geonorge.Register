@@ -6,9 +6,8 @@ namespace Kartverket.Register.Services
 {
     public interface IAccessControlService
     {
-        bool Access(object model);
+        bool HasAccessTo(object model);
         AccessViewModel AccessViewModel(RegisterV2ViewModel registerViewModel);
-        List<string> GetSecurityClaim(string type);
         bool IsAdmin();
         bool EditDOK(Dataset dataset);
         bool IsMunicipalUser();

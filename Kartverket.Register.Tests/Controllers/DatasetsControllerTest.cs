@@ -14,7 +14,7 @@ using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Tests.Controllers
 {
-    class DatasetsControllerTest
+    public class DatasetsControllerTest
     {
 
         // *** CREATE DATASET
@@ -29,10 +29,10 @@ namespace Kartverket.Register.Tests.Controllers
             var accessControlService = new Mock<IAccessControlService>();
             var registerItemService = new Mock<IRegisterItemService>();
             registerService.Setup(r => r.GetRegister(null, dataset.register.seoname)).Returns(dataset.register);
-            accessControlService.Setup(a => a.Access(It.IsAny<Models.Register>())).Returns(true);
+            accessControlService.Setup(a => a.HasAccessTo(It.IsAny<Models.Register>())).Returns(true);
             registerItemService.Setup(s => s.GetThemeGroupSelectList("ThemeGroup")).Returns(NewList());
 
-            var controller = CreateController(null, registerService.Object, registerItemService.Object, accessControlService.Object, null, null);
+            var controller = CreateController(null, registerService.Object, registerItemService.Object, accessControlService.Object, null, null, null);
             var result = controller.Create(dataset.register.seoname, null) as ViewResult;
             Dataset resultDataset = (Dataset)result.Model;
 
@@ -48,7 +48,7 @@ namespace Kartverket.Register.Tests.Controllers
             var registerService = new Mock<IRegisterService>();
             registerService.Setup(r => r.GetRegister(null, null)).Returns(dataset.register);
 
-            var controller = CreateController(null, registerService.Object, null, null, null, null);
+            var controller = CreateController(null, registerService.Object, null, null, null, null, null);
             var result = controller.Create(null, null) as ViewResult;
 
             result.Should().BeNull();
@@ -64,13 +64,15 @@ namespace Kartverket.Register.Tests.Controllers
             var accessControlService = new Mock<IAccessControlService>();
             var registerItemService = new Mock<IRegisterItemService>();
             registerService.Setup(r => r.GetRegister(null, dataset.register.seoname)).Returns(dataset.register);
-            accessControlService.Setup(a => a.Access(It.IsAny<Models.Register>())).Returns(true);
+            accessControlService.Setup(a => a.HasAccessTo(It.IsAny<Models.Register>())).Returns(true);
             registerItemService.Setup(v => v.ItemNameIsValid(It.IsAny<Dataset>())).Returns(true);
             registerItemService.Setup(o => o.GetRegisterItemBySystemId(dataset.datasetownerId)).Returns(dataset.datasetowner);
-            accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(new List<string> { dataset.submitter.seoname });
+
+            new AuthTestHelper().SetCurrentOrganization(dataset.submitter.seoname).Invoke();
+            
             registerService.Setup(o => o.GetOrganizationByUserName()).Returns(dataset.submitter);
 
-            var controller = CreateController(null, registerService.Object, registerItemService.Object, accessControlService.Object, null, null);
+            var controller = CreateController(null, registerService.Object, registerItemService.Object, accessControlService.Object, null, null, null);
             var result = controller.Create(dataset.register.seoname, null) as ActionResult;
 
             result.Should().NotBeNull();
@@ -88,9 +90,9 @@ namespace Kartverket.Register.Tests.Controllers
             var registerItemService = new Mock<IRegisterItemService>();
 
             registerItemService.Setup(r => r.GetRegisterItem(null, dataset.register.seoname, dataset.seoname, 1, dataset.datasetowner.seoname)).Returns(dataset);
-            accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
+            accessControlService.Setup(a => a.HasAccessTo(It.IsAny<Dataset>())).Returns(true);
 
-            var controller = CreateController(null,null, registerItemService.Object, accessControlService.Object, null, null);
+            var controller = CreateController(null,null, registerItemService.Object, accessControlService.Object, null, null, null);
             var result = controller.Edit(dataset.register.seoname, dataset.datasetowner.seoname, dataset.seoname, null) as ViewResult;
             Dataset resultDataset = (Dataset)result.Model;
 
@@ -105,7 +107,7 @@ namespace Kartverket.Register.Tests.Controllers
             var registerItemService = new Mock<IRegisterItemService>();
             registerItemService.Setup(r => r.GetRegisterItem(null, null, null, 1, null)).Returns(dataset);
 
-            var controller = CreateController(null,null, registerItemService.Object, null, null, null);
+            var controller = CreateController(null,null, registerItemService.Object, null, null, null, null);
             var result = controller.Edit(null, null, null, null) as ViewResult;
 
             result.Should().BeNull();
@@ -118,7 +120,7 @@ namespace Kartverket.Register.Tests.Controllers
             var registerItemService = new Mock<IRegisterItemService>();
             registerItemService.Setup(r => r.GetRegisterItem(null, null, null, 1, null)).Returns(dataset);
 
-            var controller = CreateController(null, null, registerItemService.Object, null, null, null);
+            var controller = CreateController(null, null, registerItemService.Object, null, null, null, null);
             var result = controller.Edit(dataset, null, null, null, "123", null, null, null) as ViewResult;
 
             result.Should().NotBeNull();
@@ -133,13 +135,20 @@ namespace Kartverket.Register.Tests.Controllers
             var registerItemService = new Mock<IRegisterItemService>();
             var registerService = new Mock<IRegisterService>();
             registerItemService.Setup(v => v.GetRegisterItem(null, dataset.register.seoname, dataset.seoname, 1, null)).Returns(dataset);
-            accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
+            accessControlService.Setup(a => a.HasAccessTo(It.IsAny<Dataset>())).Returns(true);
             registerItemService.Setup(v => v.ItemNameIsValid(It.IsAny<Dataset>())).Returns(true);
-            accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(new List<string> { dataset.submitter.seoname });
+
+            new AuthTestHelper().SetCurrentOrganization(dataset.submitter.seoname).Invoke();
+
             registerItemService.Setup(a => a.GetRegisterItemBySystemId(dataset.datasetownerId)).Returns(dataset.datasetowner);
             registerService.Setup(o => o.GetOrganizationByUserName()).Returns(dataset.submitter);
 
-            var controller = CreateController(null, registerService.Object, registerItemService.Object, accessControlService.Object, null, null);
+            var datasetServiceMock = new Mock<IDatasetService>();
+            datasetServiceMock.Setup(m => m.UpdateDataset(It.IsAny<Dataset>(), It.IsAny<Dataset>(), null)).Returns(dataset);
+
+            var translationServiceMock = new Mock<ITranslationService>();
+
+            var controller = CreateController(null, registerService.Object, registerItemService.Object, accessControlService.Object, null, translationServiceMock.Object, datasetServiceMock.Object);
             var result = controller.Edit(dataset, null, dataset.register.seoname, dataset.seoname, null, null, null, null) as ActionResult;
 
             result.Should().NotBeNull();
@@ -156,9 +165,9 @@ namespace Kartverket.Register.Tests.Controllers
             var registerItemService = new Mock<IRegisterItemService>();
 
             registerItemService.Setup(r => r.GetRegisterItem(null, dataset.register.seoname, dataset.seoname, dataset.versionNumber, null)).Returns(dataset);
-            accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
+            accessControlService.Setup(a => a.HasAccessTo(It.IsAny<Dataset>())).Returns(true);
 
-            var controller = CreateController(null, null, registerItemService.Object, accessControlService.Object, null, null);
+            var controller = CreateController(null, null, registerItemService.Object, accessControlService.Object, null, null, null);
             var result = controller.Delete(dataset.register.seoname, dataset.seoname, null, null, null) as ViewResult;
             Dataset resultDataset = (Dataset)result.Model;
 
@@ -173,7 +182,7 @@ namespace Kartverket.Register.Tests.Controllers
             var registerItemService = new Mock<IRegisterItemService>();
             registerItemService.Setup(r => r.GetRegisterItem(null, null, null, 1, null)).Returns(dataset);
 
-            var controller = CreateController(null,null, registerItemService.Object, null, null, null);
+            var controller = CreateController(null,null, registerItemService.Object, null, null, null, null);
             var result = controller.Delete(null, null, null, null, null) as ViewResult;
 
             result.Should().BeNull();
@@ -181,9 +190,12 @@ namespace Kartverket.Register.Tests.Controllers
 
 
         // *** HJELPEMETODER
-        private DatasetsController CreateController(RegisterDbContext dbContext, IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService, IDatasetDeliveryService datasetDeliveryService, ITranslationService translationService)
+        private DatasetsController CreateController(RegisterDbContext dbContext, IRegisterService registerService,
+            IRegisterItemService registerItemService, IAccessControlService accessControlService,
+            IDatasetDeliveryService datasetDeliveryService, ITranslationService translationService,
+            IDatasetService datasetService)
         {
-            var controller = new DatasetsController(dbContext, registerItemService, registerService, accessControlService, datasetDeliveryService, translationService, null, null);
+            var controller = new DatasetsController(dbContext, registerItemService, registerService, accessControlService, datasetDeliveryService, translationService, datasetService, null);
             return controller;
         }
 

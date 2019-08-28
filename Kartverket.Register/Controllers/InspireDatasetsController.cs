@@ -38,7 +38,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             var model = _inspireDatasetService.NewInspireDatasetViewModel(parentregister, registername);
-            if (_accessControlService.Access(model.Register))
+            if (_accessControlService.HasAccessTo(model.Register))
                 return View(model);
             throw new HttpException(401, "Access Denied");
         }
@@ -53,7 +53,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(InspireDatasetViewModel viewModel, string parentregister, string registername, string metadataUuid)
         {
             viewModel.Register = _registerService.GetRegisterBySystemId(viewModel.RegisterId);
-            if (!_accessControlService.Access(viewModel.Register)) throw new HttpException(401, "Access Denied");
+            if (!_accessControlService.HasAccessTo(viewModel.Register)) throw new HttpException(401, "Access Denied");
 
             if (viewModel.SearchString != null)
             {
@@ -90,7 +90,7 @@ namespace Kartverket.Register.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (_accessControlService.Access(inspireDataset))
+            if (_accessControlService.HasAccessTo(inspireDataset))
             {
                 inspireDataset = _inspireDatasetService.UpdateInspireDatasetFromKartkatalogen(inspireDataset);
                 var viewModel = new InspireDatasetViewModel(inspireDataset);
@@ -128,7 +128,7 @@ namespace Kartverket.Register.Controllers
             var inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registername, itemname);
             if (inspireDataset != null)
             {
-                if (_accessControlService.Access(inspireDataset))
+                if (_accessControlService.HasAccessTo(inspireDataset))
                 {
                     return View(inspireDataset);
                 }
@@ -148,7 +148,7 @@ namespace Kartverket.Register.Controllers
             if (inspireDataset != null)
             {
                 var registerUrl = inspireDataset.Register.GetObjectUrl();
-                if (_accessControlService.Access(inspireDataset))
+                if (_accessControlService.HasAccessTo(inspireDataset))
                 {
                     _inspireDatasetService.DeleteInspireDataset(inspireDataset);
                     return Redirect(registerUrl);

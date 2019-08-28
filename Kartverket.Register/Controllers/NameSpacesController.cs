@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
-using System.Text.RegularExpressions;
-using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Resources;
 using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
-    public class NameSpacesController : Controller
+    public class NameSpacesController : BaseController
     {
         private readonly RegisterDbContext _db;
 
@@ -45,10 +39,7 @@ namespace Kartverket.Register.Controllers
                 nameSpace.register.parentRegister = register.parentRegister;
             }
 
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
-            if (UserHasAccess(role, user, nameSpace, "Create"))
+            if (UserHasAccess(nameSpace, "Create"))
             {
                 return View(nameSpace);
             }
@@ -87,7 +78,7 @@ namespace Kartverket.Register.Controllers
                     nameSpace.versionNumber = 1;
                     nameSpace.versioningId = _registerItemService.NewVersioningGroup(nameSpace);
 
-                    Organization organization = GetSubmitter(nameSpace);
+                    Organization organization = GetSubmitter();
                     nameSpace.submitterId = organization.systemId;
 
                     _db.RegisterItems.Add(nameSpace);
@@ -108,9 +99,6 @@ namespace Kartverket.Register.Controllers
         //[Route("navnerom/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(string registername, string itemname, string parentRegister)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
             NameSpace nameSpace = GetRegisterItem(registername, itemname, parentRegister);
 
             if (nameSpace == null)
@@ -118,7 +106,7 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
-            if (UserHasAccess(role, user, nameSpace, "Edit"))
+            if (UserHasAccess(nameSpace, "Edit"))
             {
                 Viewbags(nameSpace);
                 return View(nameSpace);
@@ -177,16 +165,13 @@ namespace Kartverket.Register.Controllers
         //[Route("navnerom/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult Delete(string itemname, string registername, string parentRegister)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
             NameSpace nameSpace = GetRegisterItem(registername, itemname, parentRegister);
 
             if (nameSpace == null)
             {
                 return HttpNotFound();
             }
-            if (UserHasAccess(role, user, nameSpace, "Delete"))
+            if (UserHasAccess(nameSpace, "Delete"))
             {
                 Viewbags(nameSpace);
                 return View(nameSpace);
@@ -221,27 +206,6 @@ namespace Kartverket.Register.Controllers
             base.Dispose(disposing);
         }
 
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
-        }
-
         private Models.Register GetRegister(string registername, string parentRegister)
         {
             var queryResultsRegister = from o in _db.Registers
@@ -252,11 +216,11 @@ namespace Kartverket.Register.Controllers
             return register;
         }
 
-        private Organization GetSubmitter(NameSpace nameSpace)
+        private Organization GetSubmitter()
         {
-            string organizationLogin = GetSecurityClaim("organization");
+            string currentUserOrganizationName = CurrentUserOrganizationName();
             var queryResults = from o in _db.Organizations
-                               where o.name == organizationLogin
+                               where o.name == currentUserOrganizationName
                                select o;
 
             return queryResults.FirstOrDefault();
@@ -264,25 +228,25 @@ namespace Kartverket.Register.Controllers
 
         private NameSpace GetRegisterItem(string registername, string itemname, string parentRegister)
         {
-            var queryResultsNS = from o in _db.NameSpases
+            var query = from o in _db.NameSpases
                                  where o.seoname == itemname &&
                                  o.register.seoname == registername &&
                                  o.register.parentRegister.seoname == parentRegister
                                  select o;
 
-            NameSpace nameSpace = queryResultsNS.FirstOrDefault();
-            return nameSpace;
+            return query.FirstOrDefault();
         }
 
-        private static bool UserHasAccess(string role, string user, NameSpace nameSpace, string when)
+        private bool UserHasAccess(NameSpace nameSpace, string when)
         {
+            var userEditableRegister = nameSpace.register.accessId == 2;
             if (when == "Create")
             {
-                return role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && nameSpace.register.accessId == 2 && nameSpace.submitter.name.ToLower() == user.ToLower());
+                return IsAdmin() || IsEditor() && userEditableRegister && nameSpace.submitter.name.ToLower() == CurrentUserOrganizationName().ToLower();
             }
             else if (when == "Edit" || when == "Delete")
             {
-                return role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && nameSpace.register.accessId == 2);
+                return IsAdmin() || IsEditor() && userEditableRegister;
             }
             
             return false;
@@ -291,8 +255,8 @@ namespace Kartverket.Register.Controllers
 
         private void Viewbags(NameSpace nameSpace)
         {
-            ViewBag.statusId = new SelectList(_db.Statuses.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(o => o.description), "value", "description", nameSpace.statusId);
-            ViewBag.submitterId = new SelectList(_db.Organizations.ToList().Select(s => new { systemId = s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", nameSpace.submitterId);
+            ViewBag.statusId = new SelectList(_db.Statuses.ToList().Select(s => new {s.value, description = s.DescriptionTranslated() }).OrderBy(o => o.description), "value", "description", nameSpace.statusId);
+            ViewBag.submitterId = new SelectList(_db.Organizations.ToList().Select(s => new { s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", nameSpace.submitterId);
         }
 
         private void ValidationName(NameSpace nameSpace, Models.Register register)
@@ -304,7 +268,7 @@ namespace Kartverket.Register.Controllers
                                       o.register.parentRegisterId == register.parentRegisterId
                                       select o.systemId;
 
-            if (queryResultsDataset.Count() > 0)
+            if (queryResultsDataset.Any())
             {
                 ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
             }

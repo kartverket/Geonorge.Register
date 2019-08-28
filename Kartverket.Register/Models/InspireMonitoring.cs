@@ -17,8 +17,6 @@ namespace Kartverket.Register.Models
         private readonly string Discovery = "discovery";
         private readonly string Invoke = "invoke";
         private readonly string Transformation = "transformation";
-        private int _numberOfDatasetsByAnnex;
-
 
         [Key]
         public Guid Id { get; set; }
@@ -999,9 +997,8 @@ namespace Kartverket.Register.Models
                     return (double)x / y;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
                 return 0;
             }
         }
@@ -1019,9 +1016,8 @@ namespace Kartverket.Register.Models
                     return x / y;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
                 return 0;
             }
         }

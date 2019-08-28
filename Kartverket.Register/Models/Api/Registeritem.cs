@@ -185,7 +185,7 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string NoteMunicipal { get; set; }
 
-        // ServiceAlert
+        // Alert
         [DataMemberAttribute]
         public string MetadataUrl { get; set; }
         [DataMemberAttribute]
@@ -200,6 +200,8 @@ namespace Kartverket.Register.Models.Api
         public string Note { get; set; }
         [DataMemberAttribute]
         public string ServiceUuid { get; set; }
+        [DataMemberAttribute]
+        public string AlertCategory { get; set; }
 
         // InspireDataset
         [DataMemberAttribute]
@@ -531,6 +533,7 @@ namespace Kartverket.Register.Models.Api
                 EffectiveDate = s.EffectiveDate;
                 Note = GetNoteLocale(s);
                 ServiceUuid = s.UuidExternal;
+                AlertCategory = s.AlertCategory;
             }
         }
 

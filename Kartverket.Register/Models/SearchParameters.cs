@@ -23,6 +23,7 @@ namespace Kartverket.Register.Models
         public List<FacetParameter> Facets { get; set; }
 
         bool objektkatalog = true;
+        public bool excludecodelistvalues = false;
 
         public bool IncludeObjektkatalog
         {

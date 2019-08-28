@@ -13,10 +13,6 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class StatusReportViewModel
     {
-        private StatusReport statusReport;
-        private List<StatusReport> statusReports;
-
-
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public int NumberOfItems { get; set; }

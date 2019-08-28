@@ -51,7 +51,7 @@ namespace Kartverket.Register.Services.Register
                 {
                     FilterDataset(register, filter, registerItems);
                 }
-                else if (register.ContainedItemClassIsAlert() && ! string.IsNullOrEmpty(filter.Category))
+                else if (register.ContainedItemClassIsAlert())
                 {
                     FilterAlert(register, filter, registerItems);
                 }
@@ -122,7 +122,17 @@ namespace Kartverket.Register.Services.Register
         private void FilterAlert(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
         {
             var alerts = register.items.Cast<Alert>();
-            foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category))
+            if (!string.IsNullOrEmpty(filter.Category) && !string.IsNullOrEmpty(filter.filterOrganization))
+                foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category && a.Owner == filter.filterOrganization))
+                    registerItems.Add(item);
+            else if (!string.IsNullOrEmpty(filter.Category))
+                foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category))
+                    registerItems.Add(item);
+            else if (!string.IsNullOrEmpty(filter.filterOrganization))
+                foreach (Alert item in alerts.Where(a => a.Owner == filter.filterOrganization))
+                    registerItems.Add(item);
+            else
+                foreach (Alert item in alerts)
                     registerItems.Add(item);
         }
 

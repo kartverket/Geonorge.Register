@@ -1137,7 +1137,7 @@ namespace Kartverket.Register.Services.Search
                     RegisterItemUpdated = register.RegisterItemUpdated,
                     RegisterItemStatus = register.RegisterItemStatus,
                     SubregisterUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "subregister/" + register.ParentRegisterSeoname + "/" + register.ParentregisterOwner + "/" + register.RegisterSeoname,
-                    RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.Submitter) + "/" + register.RegisterItemSeoname,
+                    RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + register.ParentRegisterSeoname + "/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.Submitter) + "/" + register.RegisterItemSeoname,
                     RegisteItemUrlDocument = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/versjoner/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.DocumentOwner) + "/" + register.RegisterItemSeoname,
                     RegisteItemUrlDataset = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.DatasetOwner) + "/" + register.RegisterItemSeoname,
                     subregisterItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "subregister/" + register.ParentRegisterSeoname + "/" + register.ParentregisterOwner + "/" + register.RegisterSeoname + "/" + register.Submitter + "/" + register.RegisterItemSeoname,

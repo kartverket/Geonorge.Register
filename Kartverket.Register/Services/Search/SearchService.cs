@@ -685,13 +685,14 @@ namespace Kartverket.Register.Services.Search
 
                                }).Union(
                                 (from d in _dbContext.CodelistValues
-                                 where d.register.name.Contains(parameters.Text)
+                                 where !string.IsNullOrEmpty(d.value) && (  
+                                 d.register.name.Contains(parameters.Text)
                                  || d.name.Contains(parameters.Text)
                                  || d.description.Contains(parameters.Text)
                                  || d.value.Contains(parameters.Text)
                                  || d.systemId.Equals(systemIDSearch)
                                  || d.Translations.Any(dd => dd.Name.Contains(parameters.Text))
-                                 || d.Translations.Any(dd => dd.Description.Contains(parameters.Text))
+                                 || d.Translations.Any(dd => dd.Description.Contains(parameters.Text)))
                                  select new SearchResultItem
                                  {
                                      ParentRegisterId = d.register.parentRegisterId,

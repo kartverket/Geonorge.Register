@@ -114,6 +114,11 @@ namespace Kartverket.Register.Services.Register
                 registerItemsv2 = registerItemsv2.Take(filter.Limit).ToList();
             }
 
+            if (filter.OrderBy.Equals("alertDate"))
+            {
+                registerItemsv2 = registerItemsv2.OrderBy(r => r.DateAccepted).ToList();
+            }
+
             register.items = registerItems;
             register.RegisterItems = registerItemsv2;
             return register;

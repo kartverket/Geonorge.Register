@@ -114,11 +114,6 @@ namespace Kartverket.Register.Services.Register
                 registerItemsv2 = registerItemsv2.Take(filter.Limit).ToList();
             }
 
-            if (filter.OrderBy.Equals("alertDate"))
-            {
-                registerItemsv2 = registerItemsv2.OrderBy(r => r.DateAccepted).ToList();
-            }
-
             register.items = registerItems;
             register.RegisterItems = registerItemsv2;
             return register;
@@ -136,6 +131,8 @@ namespace Kartverket.Register.Services.Register
             else if (!string.IsNullOrEmpty(filter.filterOrganization))
                 foreach (Alert item in alerts.Where(a => a.Owner == filter.filterOrganization).OrderByDescending(o => o.AlertDate))
                     registerItems.Add(item);
+            else if (filter.OrderBy.Equals("alertDate"))
+                registerItems.AddRange(alerts.OrderByDescending(a => a.AlertDate));
             else
                 foreach (Alert item in alerts)
                     registerItems.Add(item);

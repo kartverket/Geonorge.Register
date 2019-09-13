@@ -685,13 +685,14 @@ namespace Kartverket.Register.Services.Search
 
                                }).Union(
                                 (from d in _dbContext.CodelistValues
-                                 where d.register.name.Contains(parameters.Text)
+                                 where !string.IsNullOrEmpty(d.value) && (  
+                                 d.register.name.Contains(parameters.Text)
                                  || d.name.Contains(parameters.Text)
                                  || d.description.Contains(parameters.Text)
                                  || d.value.Contains(parameters.Text)
                                  || d.systemId.Equals(systemIDSearch)
                                  || d.Translations.Any(dd => dd.Name.Contains(parameters.Text))
-                                 || d.Translations.Any(dd => dd.Description.Contains(parameters.Text))
+                                 || d.Translations.Any(dd => dd.Description.Contains(parameters.Text)))
                                  select new SearchResultItem
                                  {
                                      ParentRegisterId = d.register.parentRegisterId,
@@ -1137,7 +1138,7 @@ namespace Kartverket.Register.Services.Search
                     RegisterItemUpdated = register.RegisterItemUpdated,
                     RegisterItemStatus = register.RegisterItemStatus,
                     SubregisterUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "subregister/" + register.ParentRegisterSeoname + "/" + register.ParentregisterOwner + "/" + register.RegisterSeoname,
-                    RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.Submitter) + "/" + register.RegisterItemSeoname,
+                    RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + register.ParentRegisterSeoname + "/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.Submitter) + "/" + register.RegisterItemSeoname,
                     RegisteItemUrlDocument = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/versjoner/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.DocumentOwner) + "/" + register.RegisterItemSeoname,
                     RegisteItemUrlDataset = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.DatasetOwner) + "/" + register.RegisterItemSeoname,
                     subregisterItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "subregister/" + register.ParentRegisterSeoname + "/" + register.ParentregisterOwner + "/" + register.RegisterSeoname + "/" + register.Submitter + "/" + register.RegisterItemSeoname,

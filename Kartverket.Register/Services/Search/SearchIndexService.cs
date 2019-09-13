@@ -55,7 +55,7 @@ namespace Kartverket.Register.Services.Search
                     FilterQueries = BuildFilterQueries(parameters),
                     OrderBy = order,
                     Rows = parameters.Limit,
-                    Start = parameters.Offset -1,
+                    Start = parameters.Offset == 10 ? 10 : parameters.Offset -1,
                     Facet = BuildFacetParameters(parameters),
 
                     Fields = new[] { "SystemID", "RegisterName", "RegisterDescription", "RegisterItemName", "RegisterItemName_en", "RegisterItemDescription", "RegisterID", "Discriminator", "RegisterItemUpdated", "type",

@@ -74,7 +74,7 @@
                 {
                     if (!Request.IsAuthenticated)
                     {
-                        <span><a href="@Url.Action("SignIn", "AuthServices")"> Logg inn</a> for å legge til nye varsler.</span><br />
+                        <span><a href="@Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url })"> Logg inn</a> for å legge til nye varsler.</span><br />
                     }
                     <a href="@RegisterUrls.urlFormat(Request, "atom")" class="">@Alerts.SubscribeServiceAlert</a><br />
                 }

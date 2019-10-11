@@ -61,7 +61,8 @@ namespace Kartverket.Register.Services
 
         private bool DeleteRegister(RegisterV2ViewModel registerViewModel)
         {
-            if (IsAdmin() || IsRegisterOwner(registerViewModel.Owner.name, UserName()))
+            //if (IsAdmin() || IsRegisterOwner(registerViewModel.Owner.name, UserName()))
+            if(HasAccessToRegister(registerViewModel.Register))
             {
                 if (registerViewModel.ParentRegister == null)
                 {
@@ -88,7 +89,8 @@ namespace Kartverket.Register.Services
 
         public bool EditRegister(RegisterV2ViewModel registerViewModel)
         {
-            return (IsAdmin() || IsRegisterOwner(registerViewModel.Owner.name, UserName())) && !registerViewModel.IsAlertRegister();
+            //return (IsAdmin() || IsRegisterOwner(registerViewModel.Owner.name, UserName())) && !registerViewModel.IsAlertRegister();
+            return (HasAccessToRegister(registerViewModel.Register)) && !registerViewModel.IsAlertRegister();
         }
 
         public bool HasAccessToRegister(Models.Register register)

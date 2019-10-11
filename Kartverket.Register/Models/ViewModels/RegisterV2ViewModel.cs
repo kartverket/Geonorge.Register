@@ -16,6 +16,8 @@ namespace Kartverket.Register.Models.ViewModels
     {
         private Register _register;
 
+        public Register Register { get {return _register;} }
+
         public Guid SystemId { get; set; }
 
         [Display(Name = "Owner", ResourceType = typeof(Registers))]

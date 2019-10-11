@@ -14,7 +14,9 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class RegisterV2ViewModel
     {
-        public Register _register;
+        private Register _register;
+
+        public Register Register { get {return _register;} }
 
         public Guid SystemId { get; set; }
 

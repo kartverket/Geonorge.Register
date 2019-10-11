@@ -89,7 +89,7 @@ namespace Kartverket.Register.Services
         public bool EditRegister(RegisterV2ViewModel registerViewModel)
         {
             //return (IsAdmin() || IsRegisterOwner(registerViewModel.Owner.name, UserName())) && !registerViewModel.IsAlertRegister();
-            return (HasAccessToRegister(registerViewModel._register)) && !registerViewModel.IsAlertRegister();
+            return (HasAccessToRegister(registerViewModel.Register)) && !registerViewModel.IsAlertRegister();
         }
 
         public bool HasAccessToRegister(Models.Register register)

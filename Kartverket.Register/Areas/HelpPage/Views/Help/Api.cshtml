@@ -1,6 +1,5 @@
 @using System.Web.Http
 @using Kartverket.Register.Areas.HelpPage.Models
-@using Kartverket.Register.Helpers
 @model HelpPageApiModel
 
 @{
@@ -8,18 +7,15 @@
     ViewBag.Title = description.HttpMethod.Method + " " + description.RelativePath;
 }
 
-@section breadcrumb {
-    <li><a href="@Html.GeonorgeUrl()verktoy/">For utviklere</a></li>
-    <li><a href="@Html.GeonorgeUrl()verktoy/APIer-og-grensesnitt/">APIer og grensesnitt</a></li>
-    <li><a href="@Html.GeonorgeUrl()verktoy/APIer-og-grensesnitt/apier-for-registrene/">API-er for registrene</a></li>
-    <li>@Html.ActionLink("API hjelp", "Index")</li>
-    <li>@description.HttpMethod.Method  @description.RelativePath</li>
-}
-
-
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
 <div id="body" class="help-page">
-    
+    <section class="featured">
+        <div class="content-wrapper">
+            <p>
+                @Html.ActionLink("Help Page Home", "Index")
+            </p>
+        </div>
+    </section>
     <section class="content-wrapper main-content clear-fix">
         @Html.DisplayForModel()
     </section>

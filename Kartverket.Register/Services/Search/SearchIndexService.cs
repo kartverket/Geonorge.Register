@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Kartverket.Register.Models;
-using Microsoft.Practices.ServiceLocation;
 using SolrNet;
 using SolrNet.Commands.Parameters;
 using SearchParameters = Kartverket.Register.Models.SearchParameters;
@@ -10,6 +9,7 @@ using SearchResult = Kartverket.Register.Models.SearchResult;
 using System;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.Translations;
+using CommonServiceLocator;
 
 namespace Kartverket.Register.Services.Search
 {

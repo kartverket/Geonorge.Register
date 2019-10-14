@@ -1,5 +1,5 @@
-/* expressive.annotations.validate.js - v2.6.8
- * Client-side component of ExpresiveAnnotations - annotation-based conditional validation library.
+/* expressive.annotations.validate.js - v2.7.4
+ * Client-side component of ExpressiveAnnotations - annotation-based conditional validation library.
  * https://github.com/jwaliszko/ExpressiveAnnotations
  *
  * Copyright (c) 2014 Jarosław Waliszko
@@ -9,20 +9,38 @@
     'use strict';
 var
     backup = window.ea, // map over the ea in case of overwrite
+    buffer = window.console,
 
-    api = { // to be accesssed from outer scope
+    api = { // to be accessed from outer scope
         settings: {
-            debug: false, // output debug messages to the web console (should be disabled for release code)
-            dependencyTriggers: 'change keyup', // a string containing one or more DOM field event types (such as "change", "keyup" or custom event names) for which fields directly dependent on referenced DOM field are validated
+            debug: false, // outputs debug messages to the web console (should be disabled in release code not to introduce redundant overhead)
+            optimize: true, // if flag is on, requirement expression is not needlessly evaluated for non-empty fields (otherwise, it is evaluated
+                            // and such an evaluation result is provided to the eavalid event)
+            enumsAsNumbers: true, // specifies whether values of enum types are internally treated as integral numerics or string identifiers (should be consistent
+                                  // with the way of how input fields values are stored in HTML)
+            registerAllMethods: false, // specifies whether all of the built-in and custom methods are to be registered within the model context (excluding these
+                                       // having naming conflicts with the field identifiers), or the essential ones only (actually used in the expression)
+            dependencyTriggers: 'change keyup', // a string containing one or more space-separated DOM field event types (such as "change", "keyup" or custom event
+                                                // names) for which fields directly dependent on referenced DOM field are validated - for this feature to be off
+                                                // entirely, initialize with empty string, null or undefined (validation will be fired on form submit attempt only)
 
             apply: function(options) { // alternative way of settings setup (recommended), crucial to invoke e.g. for new set of dependency triggers to be re-bound
                 function verifySetup() {
                     if (!typeHelper.isBool(api.settings.debug)) {
-                        throw 'debug value must be a boolean (true or false)';
+                        throw 'EA settings error: debug value must be a boolean (true or false)';
+                    }
+                    if (!typeHelper.isBool(api.settings.optimize)) {
+                        throw 'EA settings error: optimize value must be a boolean (true or false)';
+                    }
+                    if (!typeHelper.isBool(api.settings.enumsAsNumbers)) {
+                        throw 'EA settings error: enumsAsNumbers value must be a boolean (true or false)';
+                    }
+                    if (!typeHelper.isBool(api.settings.registerAllMethods)) {
+                        throw 'EA settings error: registerAllMethods value must be a boolean (true or false)';
                     }
                     if (!typeHelper.isString(api.settings.dependencyTriggers)
                         && api.settings.dependencyTriggers !== null && api.settings.dependencyTriggers !== undefined) {
-                        throw 'dependencyTriggers value must be a string (multiple event types can be bound at once by including each one separated by a space), null or undefined';
+                        throw 'EA settings error: dependencyTriggers value must be a string (multiple event types can be bound at once by including each one separated by a space), null or undefined';
                     }
                 }
                 function extend(target, source) { // custom implementation over jQuery.extend() because null/undefined merge is needed as well
@@ -40,13 +58,15 @@ var
                     $(this).find('input, select, textarea').off('.expressive.annotations'); // remove all event handlers in the '.expressive.annotations' namespace
                     validationHelper.bindFields(this, true);
                 });
+
+                logger.info(typeHelper.string.format("EA settings applied:\n{0}", options));
             }
         },
         addMethod: function(name, func) {    // provide custom function to be accessible for expression
             toolchain.addMethod(name, func); // parameters: name - method name
         },                                   //             func - method body
                                              // e.g. if server-side uses following attribute: [AssertThat("IsBloodType(BloodType)")], where IsBloodType() is a custom method available at C# side,
-                                             // its client-side equivalet, mainly function of the same signature (name and the number of parameters), must be also provided, i.e.
+                                             // its client-side equivalent, mainly function of the same signature (name and the number of parameters), must be also provided, i.e.
                                              // ea.addMethod('IsBloodType', function(group) {
                                              //     return /^(A|B|AB|0)[\+-]$/.test(group);
                                              // });
@@ -55,7 +75,7 @@ var
         },                                         //             func - parse logic
                                                    // e.g. for objects when stored in non-json format or dates when stored in non-standard format (not proper for Date.parse(dateString)),
                                                    // i.e. suppose DOM field date string is given in dd/mm/yyyy format:
-                                                   // ea.addValueParser('dateparser', function(value, field) { // parameters: value - raw data string extracted by default from DOM element 
+                                                   // ea.addValueParser('dateparser', function(value, field) { // parameters: value - raw data string extracted by default from DOM element
                                                    //                                                          //             field - DOM element name for which parser was invoked
                                                    //     var arr = value.split('/'); return new Date(arr[2], arr[1] - 1, arr[0]).getTime(); // return milliseconds since January 1, 1970, 00:00:00 UTC
                                                    // });
@@ -70,20 +90,29 @@ var
     },
 
     logger = {
-        dump: function(message) {
-            if (api.settings.debug && console && typeof console.log === 'function') { // flush in debug mode only
-                console.log(message);
+        info: function(message) {
+            if (api.settings.debug && buffer && typeof buffer.log === 'function') { // flush in debug mode only
+                buffer.log('[info] ' + logger.prep(message, new Date()));
             }
         },
         warn: function(message) {
-            if (console && typeof console.warn === 'function') {
-                console.warn(message);
+            if (buffer && typeof buffer.warn === 'function') {
+                buffer.warn('[warn] ' + logger.prep(message, new Date()));
             }
         },
         fail: function(message) {
-            if (console && typeof console.error === 'function') {
-                console.error(message);
+            if (buffer && typeof buffer.error === 'function') {
+                buffer.error('[fail] ' + logger.prep(message, new Date()));
             }
+        },
+        prep: function(message, date) {
+            message = typeHelper.string.tryParse(message);
+            var lines = message.split('\n');
+            var stamp = date !== undefined && date !== null ? '(' + typeHelper.datetime.stamp(date) + '): ' : '';
+            var fline = stamp + lines.shift();
+            return lines.length > 0
+                ? fline + '\n' + typeHelper.string.indent(lines.join('\n'), 19)
+                : fline;
         }
     },
 
@@ -101,17 +130,33 @@ var
                 return func.apply(this, arguments); // no exact signature match, most likely variable number of arguments is accepted
             };
         },
-        registerMethods: function(model) {
-            var name, body;
+        registerMethods: function(model, essentialMethods, fieldName) {
+            var i, name, body;
             this.initialize();
-            for (name in this.methods) {
-                if (this.methods.hasOwnProperty(name)) {
+            if (api.settings.registerAllMethods) {
+                for (name in this.methods) {
+                    if (this.methods.hasOwnProperty(name)) {
+                        if (model.hasOwnProperty(name)) {
+                            logger.warn(typeHelper.string.format('Field {0} - skipping {1}(...) method registration, naming conflict with the field identifier.', fieldName, name));
+                            continue;
+                        }
+                        body = this.methods[name];
+                        model[name] = body;
+                    }
+                }
+                return;
+            }
+
+            for (i = 0; i < essentialMethods.length; i++) {
+                name = essentialMethods[i];
+                if (this.methods.hasOwnProperty(name)) { // if not available, exception will be thrown later, during expression evaluation (not thrown here on purpose - too early, let the log to become more complete)
                     body = this.methods[name];
                     model[name] = body;
                 }
             }
         },
         initialize: function() {
+            var that = this;
             this.addMethod('Now', function() { // return milliseconds
                 return Date.now(); // now() is faster than new Date().getTime()
             });
@@ -157,7 +202,7 @@ var
             this.addMethod('CompareOrdinalIgnoreCase', function(strA, strB) {
                 strA = (strA !== null && strA !== undefined) ? strA.toLowerCase() : null;
                 strB = (strB !== null && strB !== undefined) ? strB.toLowerCase() : null;
-                return this.CompareOrdinal(strA, strB);
+                return that.methods.CompareOrdinal(strA, strB);
             });
             this.addMethod('StartsWith', function(str, prefix) {
                 return str !== null && str !== undefined && prefix !== null && prefix !== undefined && str.slice(0, prefix.length) === prefix;
@@ -165,7 +210,7 @@ var
             this.addMethod('StartsWithIgnoreCase', function(str, prefix) {
                 str = (str !== null && str !== undefined) ? str.toLowerCase() : null;
                 prefix = (prefix !== null && prefix !== undefined) ? prefix.toLowerCase() : null;
-                return this.StartsWith(str, prefix);
+                return that.methods.StartsWith(str, prefix);
             });
             this.addMethod('EndsWith', function(str, suffix) {
                 return str !== null && str !== undefined && suffix !== null && suffix !== undefined && str.slice(-suffix.length) === suffix;
@@ -173,7 +218,7 @@ var
             this.addMethod('EndsWithIgnoreCase', function(str, suffix) {
                 str = (str !== null && str !== undefined) ? str.toLowerCase() : null;
                 suffix = (suffix !== null && suffix !== undefined) ? suffix.toLowerCase() : null;
-                return this.EndsWith(str, suffix);
+                return that.methods.EndsWith(str, suffix);
             });
             this.addMethod('Contains', function(str, substr) {
                 return str !== null && str !== undefined && substr !== null && substr !== undefined && str.indexOf(substr) > -1;
@@ -181,7 +226,7 @@ var
             this.addMethod('ContainsIgnoreCase', function(str, substr) {
                 str = (str !== null && str !== undefined) ? str.toLowerCase() : null;
                 substr = (substr !== null && substr !== undefined) ? substr.toLowerCase() : null;
-                return this.Contains(str, substr);
+                return that.methods.Contains(str, substr);
             });
             this.addMethod('IsNullOrWhiteSpace', function(str) {
                 return str === null || !/\S/.test(str);
@@ -195,6 +240,10 @@ var
             this.addMethod('IsEmail', function(str) {
                 // taken from HTML5 specification: http://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
                 return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(str);
+            });
+            this.addMethod('IsPhone', function(str) {
+                // taken from PhoneAttribute implementation: https://referencesource.microsoft.com/#System.ComponentModel.DataAnnotations/DataAnnotations/PhoneAttribute.cs, adjusted for JavaScript regex engine - since JS doesn't use lookbehind feature, alternative approach used (as described here: http://stackoverflow.com/q/7376238/270315)
+                return /^(\+\s?)?((?!\+.*)\(\+?\d+([\s\-\.]?\d+)?\)|\d+)([\s\-\.]?(\(\d+([\s\-\.]?\d+)?\)|\d+))*(\s?(x|ext\.?)\s?\d+)?$/.test(str);
             });
             this.addMethod('IsUrl', function(str) {
                 // contributed by Diego Perini: https://gist.github.com/dperini/729294 (https://mathiasbynens.be/demo/url-regex)
@@ -265,14 +314,14 @@ var
                     if (typeHelper.isArray(values)) {
                         if (values.length === 0)
                             throw "empty sequence";
-                        sum = this.Sum(values);
+                        sum = that.methods.Sum(values);
                         return sum / values.length;
                     }
                 }
                 for (i = 0, l = arguments.length; i < l; i++) {
                     arr.push(arguments[i]);
                 }
-                sum = this.Sum(arr);
+                sum = that.methods.Sum(arr);
                 return sum / arguments.length;
             });
         }
@@ -319,7 +368,13 @@ var
         string: {
             format: function(text, params) {
                 function makeParam(value) {
-                    value = typeHelper.isObject(value) ? JSON.stringify(value, null, 4): value;
+                    var replacer = function(key, value) {
+                        return typeof value === 'function' ? 'function(...) {...}' : value;
+                    }
+                    if (api.settings.registerAllMethods) {
+                        replacer = null; // do not print all of the methods not to disturb the console output
+                    }
+                    value = typeHelper.isObject(value) ? JSON.stringify(value, replacer, 4): value;
                     value = typeHelper.isString(value) ? value.replace(/\$/g, '$$$$'): value; // escape $ sign for string.replace()
                     return value;
                 }
@@ -338,6 +393,10 @@ var
                     text = applyParam(text, makeParam(arguments[i + 1]), i);
                 }
                 return text;
+            },
+            indent: function(str, spaces) {
+                var indent = Array((spaces || 0) + 1).join(' ');
+                return str.replace(/^/gm, indent);
             },
             tryParse: function(value) {
                 if (typeHelper.isString(value)) {
@@ -372,7 +431,7 @@ var
                 if (isNumber(value)) {
                     return parseFloat(value);
                 }
-                return { error: true, msg: 'Given value was not recognized as a valid float.' };
+                return { error: true, msg: 'Given value was not recognized as a valid number.' };
             }
         },
         timespan: {
@@ -398,7 +457,11 @@ var
                 return { error: true, msg: 'Given value was not recognized as a valid .NET style timespan string.' };
             }
         },
-        date: {
+        datetime: {
+            stamp: function(date) {
+                function pad(n) { return ('0' + n).slice(-2); }
+                return pad(date.getHours()) + ':' + pad(date.getMinutes()) + ':' + pad(date.getSeconds());
+            },
             tryParse: function(value) {
                 if (typeHelper.isDate(value)) {
                     return value.getTime(); // return the time value in milliseconds
@@ -418,6 +481,11 @@ var
                     return value.toUpperCase();
                 }
                 return { error: true, msg: 'Given value was not recognized as a valid guid - guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).' };
+            }
+        },
+        enumeration: {
+            tryParse: function(value) {
+                return api.settings.enumsAsNumbers ? typeHelper.number.tryParse(value) : typeHelper.string.tryParse(value);
             }
         },
         isTimeSpan: function(value) {
@@ -455,28 +523,15 @@ var
             }
             parseFunc = typeHelper.findValueParser(field, type); // custom type-specific parser lookup - secondary parsing priority
             if (!parseFunc.error) {
-                logger.warn(typeHelper.string.format('Overriden {0} type parsing runs for {1} field. All fields of {0} type are going to be parsed using your value parser. If such a behavior is unintentional, change the name of your value parser to one, which does not indicate at {0} (or any other) type name.', type, field));
+                logger.warn(typeHelper.string.format('Overridden {0} type parsing runs for {1} field. All fields of {0} type are going to be parsed using your value parser. If such a behavior is unintentional, change the name of your value parser to one, which does not indicate at {0} (or any other) type name.', type, field));
                 return parseFunc(value, field);
             }
             return typeHelper.tryAutoParse(value, type); // built-in parser lookup - lowest parsing priority
         },
         tryAutoParse: function(value, type) {
-            switch (type) {
-                case 'timespan':
-                    return typeHelper.timespan.tryParse(value);
-                case 'datetime':
-                    return typeHelper.date.tryParse(value);
-                case 'numeric':
-                    return typeHelper.number.tryParse(value);
-                case 'string':
-                    return typeHelper.string.tryParse(value);
-                case 'bool':
-                    return typeHelper.bool.tryParse(value);
-                case 'guid':
-                    return typeHelper.guid.tryParse(value);
-                default:
-                    return typeHelper.object.tryParse(value);
-            }
+            return typeHelper.hasOwnProperty(type)
+                ? typeHelper[type].tryParse(value)
+                : typeHelper.object.tryParse(value);
         },
         findValueParser: function(field, parser) {
             var parseFunc = typeHelper.parsers[parser]; // custom parsing lookup
@@ -488,8 +543,8 @@ var
     },
 
     modelHelper = {
-        getPrefix: function(value) {
-            return value.substr(0, value.lastIndexOf('.') + 1);
+        getPrefix: function(str) {
+            return (str !== undefined && str !== null) ? str.substr(0, str.lastIndexOf('.') + 1) : '';
         },
         extractValue: function(form, name, prefix, type, parser) {
             function getValue(element) {
@@ -526,23 +581,24 @@ var
             }
             return parsedValue;
         },
-        deserializeObject: function(form, fieldsMap, constsMap, parsersMap, prefix) {
+        deserializeObject: function(form, fieldsMap, constsMap, enumsMap, parsersMap, prefix) {
             function buildField(fieldName, fieldValue, object) {
-                var props, parent, i, match, arridx;                
+                var props, parent, i, match, arrayIndex, arrayName, arrayPat;
+                arrayPat = /^([a-z_0-9]+)\[([0-9]+)\]$/i;
                 props = fieldName.split('.');
                 parent = object;
                 for (i = 0; i < props.length - 1; i++) {
                     fieldName = props[i];
 
-                    match = /^([a-z_0-9]+)\[([0-9]+)\]$/i.exec(fieldName); // check for array element access
+                    match = arrayPat.exec(fieldName); // check for array element access
                     if (match) {
                         fieldName = match[1];
-                        arridx = match[2];
+                        arrayIndex = match[2];
                         if (!parent.hasOwnProperty(fieldName)) {
                             parent[fieldName] = {};
                         }
-                        parent[fieldName][arridx] = {};
-                        parent = parent[fieldName][arridx];
+                        parent[fieldName][arrayIndex] = parent[fieldName][arrayIndex] || {}; // create if needed
+                        parent = parent[fieldName][arrayIndex];
                         continue;
                     }
 
@@ -552,7 +608,16 @@ var
                     parent = parent[fieldName];
                 }
                 fieldName = props[props.length - 1];
-                parent[fieldName] = fieldValue;
+
+                var endMatch = arrayPat.exec(fieldName);
+                if (endMatch) { // our fieldName matches array access pattern i.e. arr[idx]
+                    arrayName = endMatch[1];
+                    arrayIndex = endMatch[2];
+                    parent[arrayName] = parent[arrayName] || []; // create if needed
+                    parent[arrayName][arrayIndex] = fieldValue;
+                } else {
+                    parent[fieldName] = fieldValue;
+                }
             }
 
             var model = {}, name, type, value, parser;
@@ -567,6 +632,12 @@ var
             for (name in constsMap) {
                 if (constsMap.hasOwnProperty(name)) {
                     value = constsMap[name];
+                    buildField(name, value, model);
+                }
+            }
+            for (name in enumsMap) {
+                if (enumsMap.hasOwnProperty(name)) {
+                    value = api.settings.enumsAsNumbers ? enumsMap[name] : name.split('.').pop();
                     buildField(name, value, model);
                 }
             }
@@ -611,7 +682,7 @@ var
             validator = $(form).validate(); // get validator attached to the form
             referencedFields = this.referencesMap[name];
             if (referencedFields !== undefined && referencedFields !== null) {
-                logger.dump(typeHelper.string.format('Validation triggered for following {0} dependencies: {1}.', name, referencedFields.join(', ')));
+                logger.info(typeHelper.string.format('Validation triggered for the following dependencies of {0} field:\n{1}.', name, referencedFields.join(', ')));
                 i = referencedFields.length;
                 while (i--) {
                     field = $(form).find(typeHelper.string.format(':input[data-val][name="{0}"]', referencedFields[i])).not(validator.settings.ignore);
@@ -620,7 +691,7 @@ var
                     }
                 }
             } else {
-                logger.dump(typeHelper.string.format('No dependencies of {0} field detected.', name));
+                logger.info(typeHelper.string.format('No fields dependent on {0} detected.', name));
             }
         },
         bindFields: function(form, force) { // attach validation handlers to dependency triggers (events) for some form elements
@@ -638,8 +709,8 @@ var
                     return !force && bound;
                 }).on(namespacedEvents.join(' '), function(event) {
                     var field = $(this).attr('name');
-                    logger.dump(typeHelper.string.format('Dependency validation trigger - {0} event, handled.', event.type));
-                    validationHelper.validateReferences(field, form); // validate referenced fields only                    
+                    logger.info(typeHelper.string.format('Dependency validation trigger - {0} event, handled.', event.type));
+                    validationHelper.validateReferences(field, form); // validate referenced fields only
                 });
             }
         }
@@ -676,58 +747,101 @@ var
         options.rules[adapter] = rules;
     },
 
-    computeAssertThat = function(value, element, params) {
-        value = modelHelper.adjustGivenValue(value, element, params); // preprocess given value (here basically we are concerned about determining if such a value is null or not, to determine if the attribute 
+    computeAssertThat = function(method, value, element, params) {
+        value = modelHelper.adjustGivenValue(value, element, params); // preprocess given value (here basically we are concerned about determining if such a value is null or not, to determine if the attribute
                                                                       // logic should be invoked or not - full type-detection parsing is not required at this stage, but we may have to extract such a value using
                                                                       // value parser, e.g. for an array which values are distracted among multiple fields)
-        if (!(value === undefined || value === null || value === '')) { // check if the field value is set (continue if so, otherwise skip condition verification)
-            var model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.constsMap, params.parsersMap, params.prefix);
-            toolchain.registerMethods(model);
-            logger.dump(typeHelper.string.format('AssertThat expression of {0} field:\n{1}\nwill be executed within following context (methods hidden):\n{2}', element.name, params.expression, model));
-            if (!modelHelper.ctxEval(params.expression, model)) { // check if the assertion condition is not satisfied
-                return false; // assertion not satisfied => notify
+        if (value !== undefined && value !== null && value !== '') { // check if the field value is set (continue if so, otherwise skip condition verification)
+            var model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.constsMap, params.enumsMap, params.parsersMap, params.prefix);
+            toolchain.registerMethods(model, params.methodsList, element.name);
+            var message = 'Field {0} - {1} expression:\n[{2}]\nto be executed within the following context{3}:\n{4}';
+            logger.info(typeHelper.string.format(message, element.name, method, params.expression, api.settings.registerAllMethods ? ' (methods not shown)' : '', model));
+            var exprVal = modelHelper.ctxEval(params.expression, model); // verify assertion, if not satisfied => notify (return false)
+            return {
+                valid: exprVal,
+                condition: exprVal
             }
         }
-        return true;
+        return {
+            valid: true,
+            condition: undefined // undefined always when value is set (computation redundant)
+        }
     },
 
-    computeRequiredIf = function(value, element, params) {
+    computeRequiredIf = function(method, value, element, params) {
         value = modelHelper.adjustGivenValue(value, element, params);
-        if(value === undefined || value === null || value === '' // check if the field value is not set (undefined, null or empty string treated at client as null at server)
+
+        var exprVal = undefined, model;
+        var message = 'Field {0} - {1} expression:\n[{2}]\nto be executed within the following context{3}:\n{4}';
+        if (!api.settings.optimize) { // no optimization - compute requirement condition (which now may have changed) despite the fact field value may be provided
+            model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.constsMap, params.enumsMap, params.parsersMap, params.prefix);
+            toolchain.registerMethods(model, params.methodsList, element.name);
+            logger.info(typeHelper.string.format(message, element.name, method, params.expression, api.settings.registerAllMethods ? ' (methods not shown)' : '', model));
+            exprVal = modelHelper.ctxEval(params.expression, model);
+        }
+
+        if (value === undefined || value === null || value === '' // check if the field value is not set (undefined, null or empty string treated at client as null at server)
             || (!/\S/.test(value) && !params.allowEmpty)) {
-            var model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.constsMap, params.parsersMap, params.prefix);
-            toolchain.registerMethods(model);
-            logger.dump(typeHelper.string.format('RequiredIf expression of {0} field:\n{1}\nwill be executed within following context (methods hidden):\n{2}', element.name, params.expression, model));
-            if (modelHelper.ctxEval(params.expression, model)) { // check if the requirement condition is satisfied
-                return false; // requirement confirmed => notify
+
+            if (exprVal !== undefined) {
+                return {
+                    valid: !exprVal,
+                    condition: exprVal
+                }
+            }
+
+            model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.constsMap, params.enumsMap, params.parsersMap, params.prefix);
+            toolchain.registerMethods(model, params.methodsList, element.name);
+            logger.info(typeHelper.string.format(message, element.name, method, params.expression, api.settings.registerAllMethods ? ' (methods not shown)' : '', model));
+            exprVal = modelHelper.ctxEval(params.expression, model); // verify requirement, if satisfied => notify (return false)
+            return {
+                valid: !exprVal,
+                condition: exprVal
             }
         }
-        return true;
+        return {
+            valid: true,
+            condition: exprVal  // undefined when optimize flag is on and value is not set (computation redundant)
+        }
     },
 
     annotations = ' abcdefghijklmnopqrstuvwxyz'; // suffixes for attributes annotating single field multiple times
 
+    // bind requirements first...
     $.each(annotations.split(''), function() { // it would be ideal to have exactly as many handlers as there are unique annotations, but the number of annotations isn't known untill DOM is ready
-        var adapter = typeHelper.string.format('assertthat{0}', $.trim(this));
-        $.validator.unobtrusive.adapters.add(adapter, ['expression', 'fieldsMap', 'constsMap', 'parsersMap', 'errFieldsMap'], function(options) {
-            buildAdapter(adapter, options);
-        });
-    });
-
-    $.each(annotations.split(''), function() {
         var adapter = typeHelper.string.format('requiredif{0}', $.trim(this));
-        $.validator.unobtrusive.adapters.add(adapter, ['expression', 'fieldsMap', 'constsMap', 'parsersMap', 'errFieldsMap', 'allowEmpty'], function(options) {
+        $.validator.unobtrusive.adapters.add(adapter, ['expression', 'fieldsMap', 'constsMap', 'enumsMap', 'methodsList', 'parsersMap', 'errFieldsMap', 'allowEmpty'], function(options) {
+            buildAdapter(adapter, options);
+        });
+    });
+
+    // ...then move to asserts
+    $.each(annotations.split(''), function() {
+        var adapter = typeHelper.string.format('assertthat{0}', $.trim(this));
+        $.validator.unobtrusive.adapters.add(adapter, ['expression', 'fieldsMap', 'constsMap', 'enumsMap', 'methodsList', 'parsersMap', 'errFieldsMap'], function(options) {
             buildAdapter(adapter, options);
         });
     });
 
     $.each(annotations.split(''), function() {
-        var method = typeHelper.string.format('assertthat{0}', $.trim(this));
+        var suffix = $.trim(this);
+        var method = typeHelper.string.format('assertthat{0}', suffix);
         $.validator.addMethod(method, function(value, element, params) {
             try {
-                var valid = computeAssertThat(value, element, params);
-                $(element).trigger('eavalid', ['assertthat', valid, params.expression]);
-                return valid;
+                var result = computeAssertThat(method, value, element, params);
+
+                logger.info(typeHelper.string.format('Field {0} - {1} outcome: {2}, assertion {3}.',
+                    element.name,
+                    method,
+                    result.condition === undefined
+                        ? 'assertion expression computation redundant'
+                        : result.condition
+                            ? 'expression true'
+                            : 'expression false',
+                    result.valid ? 'satisfied' : 'not satisfied'));
+
+                $(element).trigger('eavalid', ['assertthat', result.valid, params.expression]);
+                return result.valid;
             } catch (ex) {
                 logger.fail(ex);
             }
@@ -735,12 +849,24 @@ var
     });
 
     $.each(annotations.split(''), function() {
-        var method = typeHelper.string.format('requiredif{0}', $.trim(this));
+        var suffix = $.trim(this);
+        var method = typeHelper.string.format('requiredif{0}', suffix);
         $.validator.addMethod(method, function(value, element, params) {
             try {
-                var valid = computeRequiredIf(value, element, params);
-                $(element).trigger('eavalid', ['requiredif', valid, params.expression]);
-                return valid;
+                var result = computeRequiredIf(method, value, element, params);
+
+                logger.info(typeHelper.string.format('Field {0} - {1} outcome: {2}, requirement {3}.',
+                    element.name,
+                    method,
+                    result.condition === undefined
+                        ? 'requirement expression computation redundant'
+                        : result.condition
+                            ? 'required'
+                            : 'not required',
+                    result.valid ? 'satisfied' : 'not satisfied'));
+
+                $(element).trigger('eavalid', ['requiredif', result.valid, params.expression, result.condition, annotations.indexOf(suffix)]);
+                return result.valid;
             } catch (ex) {
                 logger.fail(ex);
             }

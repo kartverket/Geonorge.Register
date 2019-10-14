@@ -10,7 +10,7 @@ using Xunit;
 namespace Kartverket.Register.Tests.Services
 {
     
-    class OrganizationServiceTest
+    public class OrganizationServiceTest
     {
         private const string OrganizationName = "Institutt for skog og landskap";
         private const string OrganizationNumber = "1234567890";

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Microsoft.Practices.ServiceLocation;
 using SolrNet;
 using Kartverket.Register.Models;
 using System.Globalization;
+using CommonServiceLocator;
 
 namespace Kartverket.Register.Services
 {

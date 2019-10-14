@@ -1,18 +1,16 @@
 @using System.Web.Http
 @using Kartverket.Register.Areas.HelpPage.ModelDescriptions
-@using Kartverket.Register.Helpers
 @model ModelDescription
 
-@section breadcrumb {
-    <li><a href="@Html.GeonorgeUrl()verktoy/">For utviklere</a></li>
-    <li><a href="@Html.GeonorgeUrl()verktoy/APIer-og-grensesnitt/">APIer og grensesnitt</a></li>
-    <li><a href="@Html.GeonorgeUrl()verktoy/APIer-og-grensesnitt/apier-for-kartkatalogen/">API-er for kartkatalogen</a></li>
-    <li>@Html.ActionLink("API hjelp", "Index")</li>
-    <li>@Model.Name</li>
-}
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
 <div id="body" class="help-page">
-    
+    <section class="featured">
+        <div class="content-wrapper">
+            <p>
+                @Html.ActionLink("Help Page Home", "Index")
+            </p>
+        </div>
+    </section>
     <h1>@Model.Name</h1>
     <p>@Model.Documentation</p>
     <section class="content-wrapper main-content clear-fix">

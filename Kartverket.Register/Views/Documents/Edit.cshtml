@@ -397,6 +397,8 @@
     {
         console.log(value);
         selectedCartograhyUrl = value;
+        if (selectedCartograhyUrl == '')
+            $('#CartographyDetailsUrl').val('');
 
         var checkedFile = false;
 

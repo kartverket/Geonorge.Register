@@ -42,6 +42,8 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteCodelistValuesub", "kodeliste/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
             routes.MapRoute("DeleteCodelistValue", "kodeliste/{registername}/{organization}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
 
+            routes.MapRoute("GetFramework", "rammeverk/{versionnumber}/{registername}/{codevalue}", new { controller = "Registers", action = "DetailsRegisterItemFramework" });
+
             // Datasett
             routes.MapRoute("CreateDatasetSub", "dataset/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "Datasets", action = "Create" });
             routes.MapRoute("CreateDataset", "dataset/{registername}/ny", new { controller = "Datasets", action = "Create" });

@@ -2,8 +2,14 @@
   "version": "1.0.0",
   "name": "asp.net",
   "private": true,
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  },
   "dependencies": {
-    "geonorge-shared-partials": "0.0.59"
+    "geonorge-shared-partials": "https://github.com/kartverket/Geonorge.SharedPartials.git#bower_away",
+    "geonorge-base": "https://github.com/kartverket/felleskomponenter.git#bower_away",
+    "tablesorter": "*",
+    "vue": "^2.6.10",
+    "chart.js": "^2.8.0"
   }
 }

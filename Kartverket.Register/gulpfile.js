@@ -1,10 +1,15 @@
-﻿var gulp = require("gulp"),
-    bundleTask = require('./node_modules/geonorge-shared-partials/gulp-tasks/bundle')(gulp),
-    config = {
-        url: './node_modules/geonorge-shared-partials/bundle.config.js',
-        distFolder: 'dist'
-    };
+﻿const gulp = require("gulp")
 
-gulp.task("default", function () { bundleTask(config) });
-gulp.task("test", function () { bundleTask(config, "test") });
-gulp.task("prod", function () { bundleTask(config, "prod") });
+gulp.task('copy-felles', function () {
+  return gulp.src('./node_modules/geonorge-base/assets/**/*').pipe(
+    gulp.dest('./Content/bower_components/kartverket-felleskomponenter/assets/')
+  )
+})
+
+gulp.task('copy-shared', function () {
+  return gulp.src('./node_modules/geonorge-shared-partials/dist/*').pipe(
+    gulp.dest('./dist/')
+  )
+})
+
+gulp.task('default', gulp.series('copy-felles', 'copy-shared'))

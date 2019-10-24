@@ -8,10 +8,10 @@ namespace Kartverket.Register
         {
 
 
-            bundles.Add(new StyleBundle("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles").Include(
-                "~/Content/bower_components/kartverket-felleskomponenter/assets/css/vendor.min.css",
-                "~/Content/bower_components/kartverket-felleskomponenter/assets/css/vendorfonts.min.css",
-                "~/Content/bower_components/kartverket-felleskomponenter/assets/css/all.min.css"
+            bundles.Add(new StyleBundle("~/node_modules/geonorge-base/assets/css/styles").Include(
+                "~/node_modules/geonorge-base/assets/css/vendor.min.css",
+                "~/node_modules/geonorge-base/assets/css/vendorfonts.min.css",
+                "~/node_modules/geonorge-base/assets/css/all.min.css"
             ));
 
             bundles.Add(new StyleBundle("~/shared-partials-styles").Include(
@@ -25,11 +25,11 @@ namespace Kartverket.Register
               
            ));
 
-            bundles.Add(new ScriptBundle("~/Content/bower_components/kartverket-felleskomponenter/assets/js/scripts").Include(
-               "~/Content/bower_components/kartverket-felleskomponenter/assets/js/vendor.min.js",
-               "~/Content/bower_components/kartverket-felleskomponenter/assets/js/main.min.js",
-                "~/Content/bower_components/vue/dist/vue.min.js",
-                "~/Content/bower_components/chart.js/dist/chart.min.js"
+            bundles.Add(new ScriptBundle("~/node_modules/geonorge-base/assets/js/scripts").Include(
+               "~/node_modules/geonorge-base/assets/js/vendor.min.js",
+               "~/node_modules/geonorge-base/assets/js/main.min.js",
+                "~/node_modules/vue/dist/vue.min.js",
+                "~/node_modules/chart.js/dist/chart.min.js"
            ));
 
 
@@ -45,7 +45,7 @@ namespace Kartverket.Register
                 "~/Scripts/leaflet.js",
                 "~/Scripts/L.TileLayer.Kartverket.min.js",
                 "~/Scripts/proj4-compressed.js",
-                "~/Content/bower_components/tablesorter/jquery.tablesorter.min.js",
+                "~/node_modules/tablesorter/dist/js/jquery.tablesorter.min.js",
                 "~/Scripts/geonorge-register.js",
                 "~/Scripts/proj4leaflet.js"));
 

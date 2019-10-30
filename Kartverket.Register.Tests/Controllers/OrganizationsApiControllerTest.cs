@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Kartverket.Register.Tests.Controllers
 {
-    class OrganizationsApiControllerTest
+    public class OrganizationsApiControllerTest
     {
         private const string OrganizationName = "dummy organization";
         private const string OrganizationNumber = "123456";

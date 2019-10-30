@@ -352,6 +352,25 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
+        public ActionResult DetailsRegisterItemFramework(int versionnumber, string registername, string codevalue)
+        {
+            Guid registerId = new Guid("5D0F584E-891E-4BBE-BC43-8AD6B1370E01");
+            if (registername == "krav")
+                registername = "rammeverksdokumentet-krav";
+            else if (registername == "anbefaling") { 
+                registername = "rammeverksdokumentet-anbefalinger";
+                registerId = new Guid("B61332EB-773B-4E32-AE4B-C92B2D24000E");
+            }
+
+            var register = _db.CodelistValues.Where(x => x.versionNumber == versionnumber && x.registerId == registerId && x.value == codevalue).FirstOrDefault();
+            if (register == null)
+            {
+                return HttpNotFound();
+            }
+
+            return DetailsRegisterItem("nasjonalt-rammeverk-for-geografisk-informasjon", registername, null, register.seoname, "", register.systemId.ToString());
+        }
+
 
         [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
         [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no")]

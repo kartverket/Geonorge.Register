@@ -127,7 +127,7 @@ namespace Kartverket.Register.Controllers
             string language = Culture.NorwegianCode;
 
             IEnumerable<string> headerValues;
-            if (request.Headers.TryGetValues("Accept-Language", out headerValues))
+            if (request != null && request.Headers.TryGetValues("Accept-Language", out headerValues))
             {
                 language = headerValues.FirstOrDefault();
                 if (CultureHelper.IsNorwegian(language))
@@ -137,7 +137,7 @@ namespace Kartverket.Register.Controllers
             }
             else
             {
-                CookieHeaderValue cookie = request.Headers.GetCookies("_culture").FirstOrDefault();
+                CookieHeaderValue cookie = request?.Headers?.GetCookies("_culture").FirstOrDefault();
                 if (cookie != null && !string.IsNullOrEmpty(cookie["_culture"].Value))
                 {
                     language = cookie["_culture"].Value;

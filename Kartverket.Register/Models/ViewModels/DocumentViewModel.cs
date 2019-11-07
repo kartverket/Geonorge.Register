@@ -18,6 +18,7 @@ namespace Kartverket.Register.Models.ViewModels
                 ApprovalDocument = document.approvalDocument;
                 ApprovalReference = document.approvalReference;
                 Accepted = GetAcceptedStatus(document.Accepted);
+                Thumbnail = document.thumbnail;
 
                 UpdateRegisterItem(document);
             }

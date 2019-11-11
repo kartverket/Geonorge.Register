@@ -345,7 +345,7 @@ namespace Kartverket.Register.Helpers
             return 0;
         }
 
-        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryType = null, string filterOrganization = null)
+        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryType = null, string filterOrganization = null, string category = null)
         {
 
             var sortingClass = "";
@@ -640,6 +640,11 @@ namespace Kartverket.Register.Helpers
             if (inspireRegisteryType != null)
             {
                 linkSort += "&inspireRegisteryType=" + inspireRegisteryType;
+            }
+
+            if (category != null)
+            {
+                linkSort += "&category=" + category;
             }
 
             if (text != null)

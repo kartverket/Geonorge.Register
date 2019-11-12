@@ -2123,6 +2123,11 @@
               Looks up a localized string similar to DOK i henhold til KMD-definisjon.
             </summary>
         </member>
+        <member name="P:Resources.GeodatalovDataSet.EcologicalBaseMap">
+            <summary>
+              Looks up a localized string similar to Økologisk grunnkart.
+            </summary>
+        </member>
         <member name="P:Resources.GeodatalovDataSet.Geodatalov">
             <summary>
               Looks up a localized string similar to Underlagt Geodataloven.

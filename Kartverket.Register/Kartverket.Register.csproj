@@ -1021,6 +1021,10 @@
     <Compile Include="Migrations\201904241010486_CoverageForDatasetIsOptional.Designer.cs">
       <DependentUpon>201904241010486_CoverageForDatasetIsOptional.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911121150072_AddGeodatalovDatasetKeywords.cs" />
+    <Compile Include="Migrations\201911121150072_AddGeodatalovDatasetKeywords.designer.cs">
+      <DependentUpon>201911121150072_AddGeodatalovDatasetKeywords.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2657,6 +2661,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904241010486_CoverageForDatasetIsOptional.resx">
       <DependentUpon>201904241010486_CoverageForDatasetIsOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911121150072_AddGeodatalovDatasetKeywords.resx">
+      <DependentUpon>201911121150072_AddGeodatalovDatasetKeywords.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -109,6 +109,10 @@ namespace Kartverket.Register.Services.Register
                                     registerItemsv2.Add(item);
                                 else if (geodata.Geodatalov && filter.GeodataType == "geodatalov")
                                     registerItemsv2.Add(item);
+                                else if (geodata.Mareano && filter.GeodataType == "mareano")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.EcologicalBaseMap && filter.GeodataType == "ecologicalBaseMap")
+                                    registerItemsv2.Add(item);
                             }
                         }
                         else

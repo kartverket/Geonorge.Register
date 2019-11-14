@@ -93,7 +93,7 @@
 @if (!Model.SelectedGeodatalovTabIsReport())
 {
     <div class="row search-result-navigation">
-        <div class="col-md-3">
+        <div class="col-md-4">
             @if (Model.ContainedItemClassIsRegister())
             {
                 @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
@@ -107,19 +107,21 @@
                 @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
             }
         </div>
-        <div class="col-md-5 pull-right">
+        <div class="col-md-4 pull-right">
             <form style="display: inline">
-                @{ var filter = Request.QueryString["GeodataType"]; }
-                <select name="GeodataType" onchange="this.form.submit();">
-                    <option value="">Alle typer</option>
-                    <option value="inspire" @(filter == "inspire" ? "selected" : "")>Inspire</option>
-                    <option value="dok" @(filter == "dok" ? "selected" : "")>Dok</option>
-                    <option value="norgedigitalt" @(filter == "norgedigitalt" ? "selected" : "")>Norge digitalt</option>
-                    <option value="arealplaner" @(filter == "arealplaner" ? "selected" : "")>Arealplaner</option>
-                    <option value="geodatalov" @(filter == "geodatalov" ? "selected" : "")>Geodatalov</option>
-                    <option value="mareano" @(filter == "mareano" ? "selected" : "")>Mareano</option>
-                    <option value="ecologicalBaseMap" @(filter == "ecologicalBaseMap" ? "selected" : "")>Økologiske grunnkart</option>
-                </select>
+                <div class="custom-select">
+                    @{ var filter = Request.QueryString["GeodataType"]; }
+                    <select name="GeodataType" class="form-control" onchange="this.form.submit();">
+                        <option value="">Alle typer</option>
+                        <option value="inspire" @(filter == "inspire" ? "selected" : "")>Inspire</option>
+                        <option value="dok" @(filter == "dok" ? "selected" : "")>Dok</option>
+                        <option value="norgedigitalt" @(filter == "norgedigitalt" ? "selected" : "")>Norge digitalt</option>
+                        <option value="arealplaner" @(filter == "arealplaner" ? "selected" : "")>Arealplaner</option>
+                        <option value="geodatalov" @(filter == "geodatalov" ? "selected" : "")>Geodatalov</option>
+                        <option value="mareano" @(filter == "mareano" ? "selected" : "")>Mareano</option>
+                        <option value="ecologicalBaseMap" @(filter == "ecologicalBaseMap" ? "selected" : "")>Økologiske grunnkart</option>
+                    </select>
+                </div>
             </form>
             @Html.Partial("_otherformats")
         </div>

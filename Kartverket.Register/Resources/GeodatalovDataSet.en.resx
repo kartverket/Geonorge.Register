@@ -123,6 +123,9 @@
   <data name="Dok" xml:space="preserve">
     <value>DOK according to KMD-definitions</value>
   </data>
+  <data name="EcologicalBaseMap" xml:space="preserve">
+    <value>Ecological Base Map</value>
+  </data>
   <data name="Geodatalov" xml:space="preserve">
     <value>In scope of the Geodata Act</value>
   </data>

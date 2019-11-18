@@ -45,7 +45,7 @@ namespace Kartverket.Register.Controllers
             var register = new Models.Register();
             register.parentRegister = _registerService.GetRegister(registerparant, registername);
 
-            if (_accessControlService.Access(register.parentRegister))
+            if (_accessControlService.HasAccessTo(register.parentRegister))
             {
                 register.AddMissingTranslations();
                 ViewBagSubregister(register);
@@ -67,7 +67,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(Models.Register subRegister, string registerName, string registerparant)
         {
             subRegister.parentRegister = _registerService.GetRegister(registerparant, registerName);
-            if (_registerService.RegisterNameIsValid(subRegister)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
+            if (!_registerService.RegisterNameIsValid(subRegister)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
 
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace Kartverket.Register.Controllers
             Viewbags(register);
             register.AddMissingTranslations();
 
-            return _accessControlService.Access(register) ? View(register) : throw new HttpException(401, "Access Denied");
+            return _accessControlService.HasAccessTo(register) ? View(register) : throw new HttpException(401, "Access Denied");
         }
 
         // POST: Subregister/Edit/5
@@ -101,7 +101,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(Models.Register register, string registername, string subregister)
         {
             var originalRegister = _registerService.GetRegister(registername, subregister);
-            if (_accessControlService.Access(originalRegister))
+            if (_accessControlService.HasAccessTo(originalRegister))
             {
                 ValidationName(register, registername);
 
@@ -165,7 +165,7 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
-            if (_accessControlService.Access(register))
+            if (_accessControlService.HasAccessTo(register))
             {
                 return View(register);
             }
@@ -182,7 +182,7 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegister(registername, subregister);
             if (register != null)
             {
-                if (!_accessControlService.Access(register))
+                if (!_accessControlService.HasAccessTo(register))
                 {
                     throw new HttpException(401, "Access Denied");
                 }
@@ -245,27 +245,6 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
             }
-        }
-
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
         }
 
         private void Viewbags(Models.Register register)

@@ -2,22 +2,16 @@
 @using System.Web.Http.Controllers
 @using System.Web.Http.Description
 @using System.Collections.ObjectModel
-@using Kartverket.Register.Helpers
 @using Kartverket.Register.Areas.HelpPage.Models
 @model Collection<ApiDescription>
 
 @{
-    ViewBag.Title = "Help Page";
+    ViewBag.Title = "ASP.NET Web API Help Page";
 
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
 }
-@section breadcrumb {
-    <li><a href="@Html.GeonorgeUrl()verktoy/">For utviklere</a></li>
-    <li><a href="@Html.GeonorgeUrl()verktoy/APIer-og-grensesnitt/">APIer og grensesnitt</a></li>
-    <li><a href="@Html.GeonorgeUrl()verktoy/APIer-og-grensesnitt/apier-for-registrene/">API-er for registrene</a></li>
-    <li class="active">API hjelp</li>
-}
+
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
 <header class="help-page">
     <div class="content-wrapper">
@@ -29,9 +23,9 @@
 <div id="body" class="help-page">
     <section class="featured">
         <div class="content-wrapper">
-            <h2>Description</h2>
+            <h2>Introduction</h2>
             <p>
-                Api for register integration
+                Provide a general description of your APIs here.
             </p>
         </div>
     </section>

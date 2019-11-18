@@ -10,6 +10,9 @@ using System.ComponentModel.DataAnnotations;
 using Resources;
 using ExpressiveAnnotations.Attributes;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Web.Mvc;
 using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Models
@@ -177,12 +180,50 @@ namespace Kartverket.Register.Models
             return Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3");
         }
 
-	}
+        public bool BelongsTo(string inputOrganizationName)
+        {
+            if (submitter == null)
+                return false;
+            if (submitter.name.ToLower() == inputOrganizationName.ToLower())
+                return true;
 
-    public static class OrganizationType
-    {
-        public static string Regular = "regular";
-        public static string Municipality = "municipality";
+            return false;
+        }
     }
 
+    public class OrganizationType
+    {
+
+        public static string National = "national";
+
+        public static string Municipality = "municipality";
+
+        public static string Regional = "regional";
+
+        public static IEnumerable OrganizationTypes()
+        {
+            return new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Value = "National",
+                    Text = Organizations.OrganizationTypeNational,
+                    Selected = false
+                },
+                new SelectListItem
+                {
+                    Value = "Municipality",
+                    Text = Organizations.OrganizationTypeMunicipality,
+                    Selected = false
+                },
+                new SelectListItem
+                {
+                    Value = "Regional",
+                    Text = Organizations.OrganizationTypeRegional,
+                    Selected = false
+                }
+            };
+            
+        }
+    }
 }

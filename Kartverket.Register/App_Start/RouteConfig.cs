@@ -42,6 +42,8 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteCodelistValuesub", "kodeliste/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
             routes.MapRoute("DeleteCodelistValue", "kodeliste/{registername}/{organization}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
 
+            routes.MapRoute("GetFramework", "rammeverk/{versionnumber}/{registername}/{codevalue}", new { controller = "Registers", action = "DetailsRegisterItemFramework" });
+
             // Datasett
             routes.MapRoute("CreateDatasetSub", "dataset/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "Datasets", action = "Create" });
             routes.MapRoute("CreateDataset", "dataset/{registername}/ny", new { controller = "Datasets", action = "Create" });
@@ -109,8 +111,8 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteSubRegistry", "subregister/{registername}/{owner}/{subregister}/slett", new { controller = "Subregister", action = "Delete" });
 
 
-            routes.MapRoute("SignIn", "AuthServices/SignIn", new { controller = "AuthServices", action = "SignIn" });
-            routes.MapRoute("LogOut", "AuthServices/LogOut", new { controller = "AuthServices", action = "LogOut" });
+            routes.MapRoute("SignIn", "SignIn", new { controller = "Home", action = "SignIn" });
+            routes.MapRoute("SignOut", "SignOut", new { controller = "Home", action = "SignOut" });
             routes.MapRoute("Acs", "AuthServices/Acs", new { controller = "AuthServices", action = "Acs" });
             routes.MapRoute("DokReport", "api/register/det-offentlige-kartgrunnlaget/rapport", new { controller = "ApiRoot", action = "GetDokStatusReport" });
             routes.MapRoute("Dataset", "datasett", new { controller = "DisplayDataset", action = "Index" });
@@ -121,6 +123,9 @@ namespace Kartverket.Register
 
             //Index
             routes.MapRoute("ReIndex", "Index/ReIndex", new { controller = "Index", action = "ReIndex" });
+            
+            // authentication - openid connect 
+            routes.MapRoute("OIDC-callback-signout", "signout-callback-oidc", new { controller = "Home", action = "SignOutCallback"});
 
             routes.MapMvcAttributeRoutes();
 

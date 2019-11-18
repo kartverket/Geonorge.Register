@@ -216,8 +216,8 @@
   <data name="OrganizationTypeMunicipality" xml:space="preserve">
     <value>Municipality</value>
   </data>
-  <data name="OrganizationTypeRegular" xml:space="preserve">
-    <value>Regular</value>
+  <data name="OrganizationTypeNational" xml:space="preserve">
+    <value>National</value>
   </data>
   <data name="South" xml:space="preserve">
     <value>South</value>
@@ -254,5 +254,11 @@
   </data>
   <data name="ImportFromCSVInfo" xml:space="preserve">
     <value>Select csv file in UTF-8 with the word, name, description, log file name. Logo must be manually uploaded to server</value>
+  </data>
+  <data name="OrganizationTypeRegional" xml:space="preserve">
+    <value>Regional</value>
+  </data>
+  <data name="FilterByOrganizationType" xml:space="preserve">
+    <value>Filter by organization type</value>
   </data>
 </root>

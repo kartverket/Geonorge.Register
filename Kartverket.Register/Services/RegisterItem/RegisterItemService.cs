@@ -1206,6 +1206,10 @@ namespace Kartverket.Register.Services.RegisterItem
 
                 var sortedList = registerItems.OrderBy(o => o.NameTranslated()).ToList();
 
+                if (registerItems != null && registerItems.Count > 0 
+                    && registerItems.First() is Alert && string.IsNullOrEmpty(sorting))
+                    sorting = "alertdate_desc";
+
                 // ***** RegisterItems
 
                 if (sorting == "name_desc")

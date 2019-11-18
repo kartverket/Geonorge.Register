@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Claims;
 using System.Linq;
+using System.Security.Claims;
 using SearchParameters = Kartverket.Register.Models.SearchParameters;
 using SearchResult = Kartverket.Register.Models.SearchResult;
 using Kartverket.Register.Models;
 using System.Web.Configuration;
+using Geonorge.AuthLib.Common;
 using Kartverket.Register.Helpers;
 using Resources;
 
@@ -21,8 +24,8 @@ namespace Kartverket.Register.Services.Search
 
         public Models.Register Search(Models.Register register, string text)
         {
-            string role = HtmlHelperExtensions.GetSecurityClaim("role");
-            string user = HtmlHelperExtensions.GetSecurityClaim("organization");
+            bool isAdmin = ClaimsPrincipal.Current.IsInRole(GeonorgeRoles.MetadataAdmin);
+            string userOrganizationName = ClaimsPrincipal.Current.GetOrganizationName();
 
             List<Models.RegisterItem> registerItems = new List<Models.RegisterItem>();
             List<Models.RegisterItemV2> registerItemsV2 = new List<Models.RegisterItemV2>();
@@ -396,7 +399,7 @@ namespace Kartverket.Register.Services.Search
                                 ||
                                 item.NameTranslated().Contains(text) || (!string.IsNullOrWhiteSpace(item.DescriptionTranslated()) && item.DescriptionTranslated().Contains(text)))
                             {
-                                if (item.register.containedItemClass == "Document" && (item.statusId != "Submitted") || item.submitter.seoname == user || role == "nd.metadata_admin")
+                                if (item.register.containedItemClass == "Document" && (item.statusId != "Submitted") || item.submitter.seoname == userOrganizationName || isAdmin)
                                 {
                                     sub.items.Add(item);
                                     itemSearchResult = true;
@@ -635,8 +638,9 @@ namespace Kartverket.Register.Services.Search
 
         public SearchResult Search(SearchParameters parameters)
         {
-            string role = HtmlHelperExtensions.GetSecurityClaim("role");
-            string user = HtmlHelperExtensions.GetSecurityClaim("organization");
+            bool isAdmin = ClaimsPrincipal.Current.IsInRole(GeonorgeRoles.MetadataAdmin);
+            string userOrganizationName = ClaimsPrincipal.Current.GetOrganizationName();
+
 
             var culture = CultureHelper.GetCurrentCulture();
             List<SearchResultItem> searchResultItem = new List<SearchResultItem>();
@@ -681,13 +685,14 @@ namespace Kartverket.Register.Services.Search
 
                                }).Union(
                                 (from d in _dbContext.CodelistValues
-                                 where d.register.name.Contains(parameters.Text)
+                                 where !string.IsNullOrEmpty(d.value) && (  
+                                 d.register.name.Contains(parameters.Text)
                                  || d.name.Contains(parameters.Text)
                                  || d.description.Contains(parameters.Text)
                                  || d.value.Contains(parameters.Text)
                                  || d.systemId.Equals(systemIDSearch)
                                  || d.Translations.Any(dd => dd.Name.Contains(parameters.Text))
-                                 || d.Translations.Any(dd => dd.Description.Contains(parameters.Text))
+                                 || d.Translations.Any(dd => dd.Description.Contains(parameters.Text)))
                                  select new SearchResultItem
                                  {
                                      ParentRegisterId = d.register.parentRegisterId,
@@ -1030,7 +1035,7 @@ namespace Kartverket.Register.Services.Search
                             };
             foreach (var doc in documents)
             {
-                if ((doc.RegisterItemStatus != "Submitted") || doc.DocumentOwner == user || role == "nd.metadata_admin")
+                if ((doc.RegisterItemStatus != "Submitted") || doc.DocumentOwner == userOrganizationName || isAdmin)
                 {
                     searchResultItem.Add(doc);
                 }
@@ -1133,7 +1138,7 @@ namespace Kartverket.Register.Services.Search
                     RegisterItemUpdated = register.RegisterItemUpdated,
                     RegisterItemStatus = register.RegisterItemStatus,
                     SubregisterUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "subregister/" + register.ParentRegisterSeoname + "/" + register.ParentregisterOwner + "/" + register.RegisterSeoname,
-                    RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.Submitter) + "/" + register.RegisterItemSeoname,
+                    RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + register.ParentRegisterSeoname + "/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.Submitter) + "/" + register.RegisterItemSeoname,
                     RegisteItemUrlDocument = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/versjoner/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.DocumentOwner) + "/" + register.RegisterItemSeoname,
                     RegisteItemUrlDataset = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.DatasetOwner) + "/" + register.RegisterItemSeoname,
                     subregisterItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "subregister/" + register.ParentRegisterSeoname + "/" + register.ParentregisterOwner + "/" + register.RegisterSeoname + "/" + register.Submitter + "/" + register.RegisterItemSeoname,

@@ -41,7 +41,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             var viewModel = _geodatalovDatasetService.NewGeodatalovDatasetViewModel(parentregister, registername);
-            if (_accessControlService.Access(viewModel.Register))
+            if (_accessControlService.HasAccessTo(viewModel.Register))
                 return View(viewModel);
             throw new HttpException(401, "Access Denied");
         }
@@ -56,7 +56,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(GeodatalovDatasetViewModel viewModel, string parentregister, string registername, string metadataUuid)
         {
             viewModel.Register = _registerService.GetRegisterBySystemId(viewModel.RegisterId);
-            if (!_accessControlService.Access(viewModel.Register)) throw new HttpException(401, "Access Denied");
+            if (!_accessControlService.HasAccessTo(viewModel.Register)) throw new HttpException(401, "Access Denied");
 
             if (viewModel.SearchString != null)
             {
@@ -93,7 +93,7 @@ namespace Kartverket.Register.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (_accessControlService.Access(geodatalovDataset))
+            if (_accessControlService.HasAccessTo(geodatalovDataset))
             {
                 geodatalovDataset = _geodatalovDatasetService.UpdateGeodatalovDatasetFromKartkatalogen(geodatalovDataset);
                 var viewModel = new GeodatalovDatasetViewModel(geodatalovDataset);
@@ -130,7 +130,7 @@ namespace Kartverket.Register.Controllers
             var geodatalovDataset = _geodatalovDatasetService.GetGeodatalovDatasetByName(registername, itemname);
             if (geodatalovDataset != null)
             {
-                if (_accessControlService.Access(geodatalovDataset))
+                if (_accessControlService.HasAccessTo(geodatalovDataset))
                 {
                     return View(geodatalovDataset);
                 }
@@ -150,7 +150,7 @@ namespace Kartverket.Register.Controllers
             if (geodatalovDataset != null)
             {
                 var registerUrl = geodatalovDataset.Register.GetObjectUrl();
-                if (_accessControlService.Access(geodatalovDataset))
+                if (_accessControlService.HasAccessTo(geodatalovDataset))
                 {
                     _geodatalovDatasetService.DeleteGeodatalovDataset(geodatalovDataset);
                     return Redirect(registerUrl);

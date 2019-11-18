@@ -12,6 +12,8 @@ namespace Kartverket.Register.Models
         public bool NationalDataset { get; set; }
         public bool Plan { get; set; }
         public bool Geodatalov { get; set; }
+        public bool Mareano { get; set; }
+        public bool EcologicalBaseMap { get; set; }
 
         //Geodatalov delivery statuses
 

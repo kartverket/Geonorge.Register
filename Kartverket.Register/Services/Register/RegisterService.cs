@@ -1,17 +1,22 @@
-﻿using Kartverket.Register.Helpers;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using Geonorge.AuthLib.Common;
+using Kartverket.Register.Models.Api;
 using Kartverket.Register.Models.ViewModels;
 using Resources;
 using Kartverket.Register.Models.Translations;
 using Newtonsoft.Json.Linq;
+using InspireDataset = Kartverket.Register.Models.InspireDataset;
+using Organization = Kartverket.Register.Models.Organization;
 
 namespace Kartverket.Register.Services.Register
 {
@@ -46,10 +51,25 @@ namespace Kartverket.Register.Services.Register
                 {
                     FilterDataset(register, filter, registerItems);
                 }
-                else if (register.ContainedItemClassIsAlert() && ! string.IsNullOrEmpty(filter.Category))
+                else if (register.ContainedItemClassIsAlert())
                 {
                     FilterAlert(register, filter, registerItems);
                 }
+                else if (register.ContainedItemClassIsOrganization())
+                {
+                    if (!string.IsNullOrEmpty(filter.SelectedOrganizationType))
+                    {
+                        registerItems = register.items.Cast<Organization>()
+                            .Where(i => i.OrganizationType == filter.SelectedOrganizationType.ToLower())
+                            .ToList<Models.RegisterItem>();
+              
+                    }
+                    else
+                    {
+                        registerItems = register.items.ToList();
+                    }
+                }
+
                 else
                 {
                     registerItems.AddRange(register.items);
@@ -72,6 +92,27 @@ namespace Kartverket.Register.Services.Register
                             if (FilterOrganization(filter.filterOrganization, item.Owner))
                             {
                                 registerItemsv2.Add(item);
+                            }
+                        }
+                        else if (!string.IsNullOrEmpty(filter.GeodataType))
+                        {
+                            var geodata = item as GeodatalovDataset;
+                            if(geodata!= null)
+                            { 
+                                if(geodata.InspireTheme && filter.GeodataType == "inspire")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.Dok && filter.GeodataType == "dok")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.NationalDataset && filter.GeodataType == "norgedigitalt")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.Plan && filter.GeodataType == "arealplaner")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.Geodatalov && filter.GeodataType == "geodatalov")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.Mareano && filter.GeodataType == "mareano")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.EcologicalBaseMap && filter.GeodataType == "ecologicalBaseMap")
+                                    registerItemsv2.Add(item);
                             }
                         }
                         else
@@ -102,7 +143,19 @@ namespace Kartverket.Register.Services.Register
         private void FilterAlert(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
         {
             var alerts = register.items.Cast<Alert>();
-            foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category))
+            if (!string.IsNullOrEmpty(filter.Category) && !string.IsNullOrEmpty(filter.filterOrganization))
+                foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category && a.Owner == filter.filterOrganization).OrderByDescending(o => o.AlertDate))
+                    registerItems.Add(item);
+            else if (!string.IsNullOrEmpty(filter.Category))
+                foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category).OrderByDescending(o => o.AlertDate))
+                    registerItems.Add(item);
+            else if (!string.IsNullOrEmpty(filter.filterOrganization))
+                foreach (Alert item in alerts.Where(a => a.Owner == filter.filterOrganization).OrderByDescending(o => o.AlertDate))
+                    registerItems.Add(item);
+            else if (filter.OrderBy.Equals("alertDate"))
+                registerItems.AddRange(alerts.OrderByDescending(a => a.AlertDate));
+            else
+                foreach (Alert item in alerts)
                     registerItems.Add(item);
         }
 
@@ -866,7 +919,7 @@ namespace Kartverket.Register.Services.Register
 
         private Organization GetOrganization()
         {
-            string organizationLogin = HtmlHelperExtensions.GetSecurityClaim("organization");
+            string organizationLogin = ClaimsPrincipal.Current.GetOrganizationName();
             var queryResults = from o in _dbContext.Organizations
                                where organizationLogin == o.name
                                select o;
@@ -1133,18 +1186,17 @@ namespace Kartverket.Register.Services.Register
             _dbContext.SaveChanges();
         }
 
+        /// <summary>
+        /// Returns true if the name is not in use in any registers.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public bool RegisterNameIsValid(object model)
         {
             if (model is Models.Register register)
             {
                 var registerNameSeo = RegisterUrls.MakeSeoFriendlyString(register.name);
-                var queryResults = from o in _dbContext.Registers
-                                   where (o.name == register.name || o.seoname == registerNameSeo) &&
-                                         o.systemId != register.systemId &&
-                                         o.parentRegisterId == register.parentRegister.systemId
-                                   select o.systemId;
-
-                return queryResults.ToList().Any();
+                return !_dbContext.Registers.Any(r => r.name == register.name || r.seoname == registerNameSeo);
             }
             return false;
         }

@@ -27,6 +27,7 @@ namespace Kartverket.Register.Models.Api
         /// Values to order by is: "name", "date_updated", "score". No search criteria is ordered by "name", else default is "score"
         /// </summary>
         public string orderby { get; set; }
+        public bool excludecodelistvalues { get; set; }
 
         public SearchParameters()
         {

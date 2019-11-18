@@ -18,6 +18,10 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "Geodatalov", ResourceType = typeof(GeodatalovDataSet))]
         public bool Geodatalov { get; set; }
 
+        public bool Mareano { get; set; }
+        [Display(Name = "EcologicalBaseMap", ResourceType = typeof(GeodatalovDataSet))]
+        public bool EcologicalBaseMap { get; set; }
+
         [Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
         public string MetadataStatusId { get; set; }
         public virtual DokDeliveryStatus MetadataStatus { get; set; }
@@ -84,6 +88,8 @@ namespace Kartverket.Register.Models.ViewModels
                 NationalDataset = geodatalovDataset.NationalDataset;
                 Plan = geodatalovDataset.Plan;
                 Geodatalov = geodatalovDataset.Geodatalov;
+                Mareano = geodatalovDataset.Mareano;
+                EcologicalBaseMap = geodatalovDataset.EcologicalBaseMap;
 
                 if (geodatalovDataset.MetadataStatus != null)
                 {

@@ -67,7 +67,8 @@ namespace Kartverket.Register.Controllers
                 Offset = parameters.offset,
                 Limit = parameters.limit,
                 OrderBy = parameters.orderby,
-                IncludeObjektkatalog = false
+                IncludeObjektkatalog = false,
+                excludecodelistvalues = parameters.excludecodelistvalues
             };
         }
 

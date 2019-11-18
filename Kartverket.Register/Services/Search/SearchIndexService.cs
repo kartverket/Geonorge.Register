@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Kartverket.Register.Models;
-using Microsoft.Practices.ServiceLocation;
 using SolrNet;
 using SolrNet.Commands.Parameters;
 using SearchParameters = Kartverket.Register.Models.SearchParameters;
@@ -10,6 +9,7 @@ using SearchResult = Kartverket.Register.Models.SearchResult;
 using System;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.Translations;
+using CommonServiceLocator;
 
 namespace Kartverket.Register.Services.Search
 {
@@ -55,11 +55,11 @@ namespace Kartverket.Register.Services.Search
                     FilterQueries = BuildFilterQueries(parameters),
                     OrderBy = order,
                     Rows = parameters.Limit,
-                    Start = parameters.Offset -1,
+                    Start = parameters.Offset == 10 ? 10 : parameters.Offset -1,
                     Facet = BuildFacetParameters(parameters),
 
                     Fields = new[] { "SystemID", "RegisterName", "RegisterDescription", "RegisterItemName", "RegisterItemName_en", "RegisterItemDescription", "RegisterID", "Discriminator", "RegisterItemUpdated", "type",
-                    "ParentRegisterUrl", "RegisteItemUrl",  "SubregisterUrl","subregisterItemUrl", "theme" , "organization" }
+                    "ParentRegisterUrl", "RegisteItemUrl",  "SubregisterUrl","subregisterItemUrl", "theme" , "organization" , "RegisterItemStatus" }
                     
 
                 });
@@ -248,7 +248,12 @@ namespace Kartverket.Register.Services.Search
                 }
             }
             else query = SolrQuery.All;
-            
+
+            if (parameters.excludecodelistvalues)
+                query = new SolrMultipleCriteriaQuery(new[]
+                    {query, new SolrQuery(" NOT CodelistValue:*")
+               });
+
             Log.Debug("Query: " + query.ToString());
             return query; 
         }

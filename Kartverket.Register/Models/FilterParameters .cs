@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,6 +21,7 @@ namespace Kartverket.Register.Models
 
         public int Offset { get; set; }
         public int Limit { get; set; }
+        public string OrderBy { get; set; } = string.Empty;
         public string text { get; set; }
         public string Category { get; set; }
         public bool filterVertikalt { get; set; }
@@ -34,9 +35,11 @@ namespace Kartverket.Register.Models
         public bool ShowCurrentInspireMonitoringReport { get; set; }
         public string SelectedInspireMonitoringReport { get; set; }
         public string SelectedComparableCandidate { get; set; }
+        public string SelectedOrganizationType { get; set; }
         public bool Compare { get; set; }
         public string DokSelectedTab { get; set; }
         public string GeodatalovSelectedTab { get; set; }
+        public string GeodataType { get; set; }
         public string SelectedReport { get; set; }
         public string StatusType { get; set; }
         public string InspireDatasetStatusType { get; set; }

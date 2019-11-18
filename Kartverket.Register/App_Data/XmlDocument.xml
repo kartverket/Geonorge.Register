@@ -601,6 +601,36 @@
             Add service alert
             </summary>
         </member>
+        <member name="T:Kartverket.Register.Controllers.BaseController">
+            <summary>
+            This class provides utility methods useful in most controllers. Controllers should inherit from this class.
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsAdmin">
+            <summary>
+            Check if current user is Admin
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsEditor">
+            <summary>
+            Check if user has metadata editor role.
+            this method had a (legacy?) check on role=nd.metadata before GeoID refactoring.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsDokAdmin">
+            <summary>
+            Check if user has DOK-admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.BaseController.IsDokEditor">
+            <summary>
+            Check if user has DOK-editor role.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Controllers.DocumentsController.NameIsValid(Kartverket.Register.Models.Document)">
             <summary>
             Validate item name. Item name must be unique in a register. 
@@ -757,6 +787,12 @@
             Make SEO friendly name
             </summary>
             <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.HomeController.SignOutCallback">
+            <summary>
+            This is the action responding to /signout-callback-oidc route after logout at the identity provider
+            </summary>
             <returns></returns>
         </member>
         <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationByName(System.String)">
@@ -957,6 +993,11 @@
             Register owner/responsible
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.Status">
+            <summary>
+            Register status
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.SearchParameters.text">
             <summary>
             The text to search for
@@ -1076,6 +1117,31 @@
             </summary>
             <returns>Url</returns>
         </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsAdmin">
+            <summary>
+            Check if current user is Admin
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsEditor">
+            <summary>
+            Check if user has metadata editor role.
+            this method had a (legacy?) check on role=nd.metadata before GeoID refactoring.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsDokAdmin">
+            <summary>
+            Check if user has DOK-admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsDokEditor">
+            <summary>
+            Check if user has DOK-editor role.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Services.IAccessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(System.String)">
             <summary>
             Checks if the user has access to create or edit DOK Municipal for selected municipality
@@ -1115,6 +1181,38 @@
             Item name must be unique in one registery
             </summary>
             <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.Register.RegisterService.RegisterNameIsValid(System.Object)">
+            <summary>
+            Returns true if the name is not in use in any registers.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsAdmin">
+            <summary>
+            Check if user has metadata admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsEditor">
+            <summary>
+            Check if user has metadata editor role.
+            this method had a (legacy?) check on role=nd.metadata before GeoID refactoring.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsDokAdmin">
+            <summary>
+            Check if user has DOK-admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsDokEditor">
+            <summary>
+            Check if user has DOK-editor role.
+            </summary>
             <returns></returns>
         </member>
         <member name="T:Eu.Europa.Ec.Jrc.Inspire.Time">
@@ -2023,6 +2121,11 @@
         <member name="P:Resources.GeodatalovDataSet.Dok">
             <summary>
               Looks up a localized string similar to DOK i henhold til KMD-definisjon.
+            </summary>
+        </member>
+        <member name="P:Resources.GeodatalovDataSet.EcologicalBaseMap">
+            <summary>
+              Looks up a localized string similar to Økologisk grunnkart.
             </summary>
         </member>
         <member name="P:Resources.GeodatalovDataSet.Geodatalov">
@@ -3586,6 +3689,11 @@
               Looks up a localized string similar to E-postadresse.
             </summary>
         </member>
+        <member name="P:Resources.Organizations.FilterByOrganizationType">
+            <summary>
+              Looks up a localized string similar to Filtrere etter organisasjonstype.
+            </summary>
+        </member>
         <member name="P:Resources.Organizations.GeographicCenterPoint">
             <summary>
               Looks up a localized string similar to Geografisk senterpunkt.
@@ -3696,9 +3804,14 @@
               Looks up a localized string similar to Kommune.
             </summary>
         </member>
-        <member name="P:Resources.Organizations.OrganizationTypeRegular">
+        <member name="P:Resources.Organizations.OrganizationTypeNational">
             <summary>
-              Looks up a localized string similar to Ordinær.
+              Looks up a localized string similar to Nasjonal.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.OrganizationTypeRegional">
+            <summary>
+              Looks up a localized string similar to Regional.
             </summary>
         </member>
         <member name="P:Resources.Organizations.PriceFormDocument">

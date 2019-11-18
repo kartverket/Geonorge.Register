@@ -7,6 +7,7 @@ using translation = Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -46,7 +47,7 @@ namespace Kartverket.Register.Helpers
 
         public static bool Access(object model)
         {
-            return AccessControl.Access(model);
+            return AccessControl.HasAccessTo(model);
         }
 
         public static bool IsAdmin()
@@ -56,7 +57,7 @@ namespace Kartverket.Register.Helpers
 
         public static bool AccessRegisterItem(RegisterItem item)
         {
-            return AccessControl.Access(item);
+            return AccessControl.HasAccessTo(item);
         }
 
         public static bool AccessEditDokMunicipalBySelectedMunicipality(string selectedMunicipalityCode)
@@ -114,27 +115,6 @@ namespace Kartverket.Register.Helpers
         {
             var registersList = RegisterService.GetCodelistRegisters();
             return registersList;
-        }
-
-        public static string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
         }
 
         public static string StatusBeskrivelse(Models.Register register)
@@ -365,7 +345,7 @@ namespace Kartverket.Register.Helpers
             return 0;
         }
 
-        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryType = null, string filterOrganization = null)
+        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryType = null, string filterOrganization = null, string category = null)
         {
 
             var sortingClass = "";
@@ -660,6 +640,11 @@ namespace Kartverket.Register.Helpers
             if (inspireRegisteryType != null)
             {
                 linkSort += "&inspireRegisteryType=" + inspireRegisteryType;
+            }
+
+            if (category != null)
+            {
+                linkSort += "&category=" + category;
             }
 
             if (text != null)

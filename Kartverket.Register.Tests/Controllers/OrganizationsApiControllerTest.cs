@@ -1,4 +1,6 @@
-﻿using System.Web.Http.Results;
+﻿using System.Globalization;
+using System.Threading;
+using System.Web.Http.Results;
 using FluentAssertions;
 using Kartverket.Register.Controllers;
 using Kartverket.Register.Models;
@@ -15,9 +17,16 @@ namespace Kartverket.Register.Tests.Controllers
         private const string OrganizationLogoFilename = "test.png";
         private const string OrganizationLogoLargeFilename = "testLarge.png";
         private const string OrganizationShortName = "IFSL";
+        private const string Lang = "no";
         //private string LocationUrl = System.Configuration.ConfigurationSettings.AppSettings["RegistryUrl"] + "data/";
 
         private readonly Organization _organization = new Organization { name = OrganizationName, number = OrganizationNumber, logoFilename = OrganizationLogoFilename, largeLogo = OrganizationLogoLargeFilename, shortname = OrganizationShortName };
+
+        public OrganizationsApiControllerTest()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Lang);
+        }
+
 
         [Fact]
         public void ShouldReturnHttpNotFoundWhenOrganizationIsNotFoundByName()
@@ -60,7 +69,7 @@ namespace Kartverket.Register.Tests.Controllers
         public void ShouldReturnOrganizationByNumber()
         {
             var service = new Mock<IOrganizationService>();
-            service.Setup(s => s.GetOrganizationByNumber(OrganizationNumber, "no")).Returns(_organization);
+            service.Setup(s => s.GetOrganizationByNumber(OrganizationNumber, Lang)).Returns(_organization);
             var controller = new OrganizationsApiController(service.Object);
             //controller.Url = CreateMockUrlHelper();
 

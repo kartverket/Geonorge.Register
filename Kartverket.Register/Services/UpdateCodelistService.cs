@@ -2,7 +2,11 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using Kartverket.Register.Models;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Controllers
 {
@@ -107,6 +111,61 @@ namespace Kartverket.Register.Controllers
         {
             db.Database.ExecuteSqlCommand("UPDATE [kartverket_register].[dbo].[RegisterItems] set statusId = 'Valid' where registerId = '11ec4661-acf4-4636-a960-68a8160642a0' and GETDATE() > ValidFromDate");
             db.Database.ExecuteSqlCommand("UPDATE [kartverket_register].[dbo].[RegisterItems] set statusId = 'Retired' where registerId = '11ec4661-acf4-4636-a960-68a8160642a0' and ValidToDate < GETDATE()");
+        }
+
+        internal void UpdateOrganizationsAll()
+        {
+            var path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Organisasjoner2020.xlsx");
+            var fileinfo = new FileInfo(path);
+            OfficeOpenXml.ExcelPackage excelPackage;
+            excelPackage = new OfficeOpenXml.ExcelPackage(fileinfo);
+            OfficeOpenXml.ExcelWorksheet workSheet;
+            workSheet = excelPackage.Workbook.Worksheets[1];
+
+            var start = workSheet.Dimension.Start;
+            var end = workSheet.Dimension.End;
+
+            for (int row = start.Row + 1; row <= end.Row; row++)
+            {
+                var kommune2019 = workSheet.Cells[row, 2].Text;
+                var kommune2020 = workSheet.Cells[row, 4].Text;
+
+                //System.Diagnostics.Debug.WriteLine("info: " + kommune2019 + " : " + kommune2020);
+
+                var kommune2019Kommunenr = kommune2019.Substring(0, 4);
+                var kommune2019KommuneNavn = kommune2019.Substring(5, kommune2019.Length - 5);
+                //System.Diagnostics.Debug.WriteLine("kommune2019: " + kommune2019Kommunenr + " : " + kommune2019KommuneNavn);
+
+                List<string> NewOrganizations = new List<string>();
+
+                var url = "https://data.brreg.no/enhetsregisteret/api/enheter?kommunenummer=" + kommune2019Kommunenr + "&organisasjonsform=KOMM";
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    try
+                    {
+                        var response = client.GetAsync(new Uri(url)).Result;
+
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var text = response.Content.ReadAsStringAsync().Result;
+                            dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
+                            var units = data._embedded.enheter.Count;
+                            if (units > 1)
+                                NewOrganizations.Add(kommune2019);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine(ex);
+                    }
+                }
+
+                foreach(var municipality in NewOrganizations)
+                {
+                    System.Diagnostics.Debug.WriteLine(municipality);
+                }
+            }
         }
     }
 }

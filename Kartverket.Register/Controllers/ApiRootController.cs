@@ -637,6 +637,14 @@ namespace Kartverket.Register.Controllers
             return Ok();
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/codelist/update/organizations")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult UpdateOrganizationsAll()
+        {
+            new UpdateCodelistService(db).UpdateOrganizationsAll();
+            return Ok();
+        }
 
 
         // **** HJELPEMETODER ****

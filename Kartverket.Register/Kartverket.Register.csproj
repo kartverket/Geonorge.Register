@@ -90,9 +90,8 @@
     <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="ExpressiveAnnotations, Version=2.7.0.0, Culture=neutral, PublicKeyToken=d3e372f3c1e83cec, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExpressiveAnnotations.2.9.1\lib\net45\ExpressiveAnnotations.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ExpressiveAnnotations, Version=2.7.4.0, Culture=neutral, PublicKeyToken=d3e372f3c1e83cec, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExpressiveAnnotations.2.9.6\lib\net45\ExpressiveAnnotations.dll</HintPath>
     </Reference>
     <Reference Include="ExpressiveAnnotations.MvcUnobtrusive, Version=2.5.4.0, Culture=neutral, PublicKeyToken=d3e372f3c1e83cec, processorArchitecture=MSIL">
       <HintPath>..\packages\ExpressiveAnnotations.2.9.6\lib\net45\ExpressiveAnnotations.MvcUnobtrusive.dll</HintPath>
@@ -206,8 +205,9 @@
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="SolrNet">
-      <HintPath>..\packages\SolrNet.0.4.0.4001\lib\SolrNet.dll</HintPath>
+    <Reference Include="PresentationCore" />
+    <Reference Include="SolrNet, Version=1.0.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SolrNet.Core.1.0.18\lib\net46\SolrNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -379,7 +379,6 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\AlertsController.cs" />
     <Compile Include="Controllers\SubregisterController.cs" />
-    <Compile Include="Services\UpdateCodelistService.cs" />
     <Compile Include="Formatter\CsvFormatter.cs" />
     <Compile Include="Formatter\XMLFormatter.cs" />
     <Compile Include="Formatter\GMLFormatter.cs" />
@@ -1330,6 +1329,7 @@
     <Compile Include="Services\SynchronizationService.cs" />
     <Compile Include="Services\Translation\ITranslationService.cs" />
     <Compile Include="Services\Translation\TranslationService.cs" />
+    <Compile Include="Services\UpdateCodelistService.cs" />
     <Compile Include="Services\UserAuthorization.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\Versioning\IVersioningService.cs" />
@@ -2014,6 +2014,21 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\package-lock.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\yarn.lock" />
+    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <None Include="Formatter\XSD\basictype.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -2861,7 +2876,8 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PostBuildEvent>
-PowerShell -NoProfile -ExecutionPolicy Bypass -Command "ls '$(SolutionDir)\packages\GhostScriptSharp.*\Tools\gsdll32.dll' | Sort -Descending | Select -First 1 | cp -Destination '$(TargetDir)'; exit 0"</PostBuildEvent>
+      PowerShell -NoProfile -ExecutionPolicy Bypass -Command "ls '$(SolutionDir)\packages\GhostScriptSharp.*\Tools\gsdll32.dll' | Sort -Descending | Select -First 1 | cp -Destination '$(TargetDir)'; exit 0"
+    </PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

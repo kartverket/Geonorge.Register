@@ -619,6 +619,24 @@ namespace Kartverket.Register.Controllers
             return Ok();
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/codelist/update/fylkesnummer-alle")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult UpdateCountiesAll()
+        {
+            new UpdateCodelistService(db).UpdateCountiesAll();
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/codelist/update/fylkesnummer-alle-status")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult UpdateCountiesAllStatus()
+        {
+            new UpdateCodelistService(db).UpdateCountiesAllStatus();
+            return Ok();
+        }
+
 
 
         // **** HJELPEMETODER ****

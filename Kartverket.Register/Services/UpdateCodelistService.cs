@@ -7,6 +7,7 @@ using System.Net.Http;
 using Kartverket.Register.Models;
 using System.Linq;
 using System.Collections.Generic;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Controllers
 {
@@ -125,9 +126,9 @@ namespace Kartverket.Register.Controllers
             var start = workSheet.Dimension.Start;
             var end = workSheet.Dimension.End;
 
-            List<string> NewOrganizations = new List<string>();
-            List<string> UpdatedOrganizations = new List<string>();
-            List<string> SupersededOrganizations = new List<string>();
+            List<Municipality> NewOrganizations = new List<Municipality>();
+            List<Municipality> UpdatedOrganizations = new List<Municipality>();
+            List<Municipality> SupersededOrganizations = new List<Municipality>();
 
             for (int row = start.Row + 1; row <= end.Row; row++)
             {
@@ -171,14 +172,17 @@ namespace Kartverket.Register.Controllers
 
                             var numberOfUnits = units.Count;
                             if (kommune2019KommuneNavn == kommune2020KommuneNavn && numberOfUnits == 1)
-                                UpdatedOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn + " ( kommunenr = " + kommune2019Kommunenr +  ")");
-                            else if (numberOfUnits > 1) { 
-                                NewOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn + ", orgnummer = " + orgnrNew);
-                                if(kommune2019KommuneNavn != kommune2020KommuneNavn || kommune2019Kommunenr != kommune2020Kommunenr)
-                                    SupersededOrganizations.Add(kommune2019Kommunenr + " " + kommune2019KommuneNavn);
+                                UpdatedOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, MunicipalityCodeOld = kommune2019Kommunenr });
+                            else if (numberOfUnits > 1) {
+
+                                //NewOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn + ", orgnummer = " + orgnrNew);
+                                NewOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, Number = orgnrNew, Name = kommune2020KommuneNavn });
+
+                                if (kommune2019KommuneNavn != kommune2020KommuneNavn || kommune2019Kommunenr != kommune2020Kommunenr)
+                                    SupersededOrganizations.Add(new Municipality { MunicipalityCodeOld = kommune2019Kommunenr });
                             }
                             else
-                                SupersededOrganizations.Add(kommune2019Kommunenr + " " + kommune2019KommuneNavn);
+                                SupersededOrganizations.Add(new Municipality { MunicipalityCodeOld = kommune2019Kommunenr });
                         }
                     }
                     catch (Exception ex)
@@ -188,26 +192,47 @@ namespace Kartverket.Register.Controllers
                 }
             }
                 
-            System.Diagnostics.Debug.WriteLine("Nye kommuner");
+            //System.Diagnostics.Debug.WriteLine("Nye kommuner");
             foreach (var municipality in NewOrganizations)
             {
-                System.Diagnostics.Debug.WriteLine(municipality);
-            }
-            System.Diagnostics.Debug.WriteLine("--------------------------");
+                Guid guid = Guid.NewGuid();
+                string name = municipality.Name.Substring(0, 1) + municipality.Name.Substring(1).ToLower() + " kommune";
+                string seoname = RegisterUrls.MakeSeoFriendlyString(municipality.Name);
 
-            System.Diagnostics.Debug.WriteLine("Kommuner med nytt kommunenummer");
+                var sqlV = "INSERT INTO Versions(systemId, Register_systemId, currentVersion, lastVersionNumber, containedItemClass)";
+                sqlV = sqlV + "VALUES('"+ guid + "',NULL,'" + guid + "',1,'Organization')";
+                System.Diagnostics.Debug.WriteLine(sqlV);
+
+                var sql = "INSERT INTO RegisterItems(systemId, name, dateSubmitted, modified, number, Discriminator, versioningId, statusId, registerId, submitterId, seoname, OrganizationType, MunicipalityCode)";
+                    sql = sql + "VALUES('"+ guid + "','"+ name + "',getDate(), getDate() ,'" + municipality .Number + "','Organization','" + guid + "','Valid','fcb0685d-24eb-4156-9ac8-25fa30759094','10087020-f17c-45e1-8542-02acbcf3d8a3','" + seoname + "','municipality','" + municipality.MunicipalityCode+"')";
+                System.Diagnostics.Debug.WriteLine(sql);
+            }
+            //System.Diagnostics.Debug.WriteLine("--------------------------");
+
+            //System.Diagnostics.Debug.WriteLine("Kommuner med nytt kommunenummer");
             foreach (var municipality in UpdatedOrganizations)
             {
-                System.Diagnostics.Debug.WriteLine(municipality);
+                //System.Diagnostics.Debug.WriteLine(municipality);
+                var sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='" + municipality.MunicipalityCode + "' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+                System.Diagnostics.Debug.WriteLine(sql);
             }
-            System.Diagnostics.Debug.WriteLine("--------------------------");
+            //System.Diagnostics.Debug.WriteLine("--------------------------");
 
-            System.Diagnostics.Debug.WriteLine("Utgåtte kommuner");
+            //System.Diagnostics.Debug.WriteLine("Utgåtte kommuner");
             foreach (var municipality in SupersededOrganizations)
             {
-                System.Diagnostics.Debug.WriteLine(municipality);
+                //System.Diagnostics.Debug.WriteLine(municipality);
+                var sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set statusId='Retired' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+                System.Diagnostics.Debug.WriteLine(sql);
             }
-            System.Diagnostics.Debug.WriteLine("--------------------------");
         }
+    }
+
+    class Municipality
+    {
+        public string MunicipalityCode { get; set; }
+        public string MunicipalityCodeOld { get; set; }
+        public string Name { get; set; }
+        public string Number { get; set; }
     }
 }

@@ -156,12 +156,25 @@ namespace Kartverket.Register.Controllers
                         {
                             var text = response.Content.ReadAsStringAsync().Result;
                             dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
-                            var units = data._embedded.enheter.Count;
-                            if (kommune2019KommuneNavn == kommune2020KommuneNavn && units == 1)
-                                UpdatedOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn);
-                            else if (units > 1) { 
-                                NewOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn);
-                                if(kommune2019KommuneNavn != kommune2020KommuneNavn)
+                            string orgnr = "";
+                            string orgnrNew = "";
+                            var units = data._embedded.enheter;
+
+                            foreach (var unit in units)
+                            {
+
+                                if (unit.navn.ToString().Contains("FORHÅNDSREGISTRERING") || unit.navn.ToString().StartsWith("NYE"))
+                                    orgnrNew = unit.organisasjonsnummer;
+                                else
+                                    orgnr = unit.organisasjonsnummer;
+                            }
+
+                            var numberOfUnits = units.Count;
+                            if (kommune2019KommuneNavn == kommune2020KommuneNavn && numberOfUnits == 1)
+                                UpdatedOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn + " ( kommunenr = " + kommune2019Kommunenr +  ")");
+                            else if (numberOfUnits > 1) { 
+                                NewOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn + ", orgnummer = " + orgnrNew);
+                                if(kommune2019KommuneNavn != kommune2020KommuneNavn || kommune2019Kommunenr != kommune2020Kommunenr)
                                     SupersededOrganizations.Add(kommune2019Kommunenr + " " + kommune2019KommuneNavn);
                             }
                             else
@@ -175,21 +188,21 @@ namespace Kartverket.Register.Controllers
                 }
             }
                 
-            System.Diagnostics.Debug.WriteLine("Nye organisasjoner");
+            System.Diagnostics.Debug.WriteLine("Nye kommuner");
             foreach (var municipality in NewOrganizations)
             {
                 System.Diagnostics.Debug.WriteLine(municipality);
             }
             System.Diagnostics.Debug.WriteLine("--------------------------");
 
-            System.Diagnostics.Debug.WriteLine("Oppdaterte organisasjoner");
+            System.Diagnostics.Debug.WriteLine("Kommuner med nytt kommunenummer");
             foreach (var municipality in UpdatedOrganizations)
             {
                 System.Diagnostics.Debug.WriteLine(municipality);
             }
             System.Diagnostics.Debug.WriteLine("--------------------------");
 
-            System.Diagnostics.Debug.WriteLine("Utgåtte organisasjoner");
+            System.Diagnostics.Debug.WriteLine("Utgåtte kommuner");
             foreach (var municipality in SupersededOrganizations)
             {
                 System.Diagnostics.Debug.WriteLine(municipality);

@@ -125,6 +125,10 @@ namespace Kartverket.Register.Controllers
             var start = workSheet.Dimension.Start;
             var end = workSheet.Dimension.End;
 
+            List<string> NewOrganizations = new List<string>();
+            List<string> UpdatedOrganizations = new List<string>();
+            List<string> SupersededOrganizations = new List<string>();
+
             for (int row = start.Row + 1; row <= end.Row; row++)
             {
                 var kommune2019 = workSheet.Cells[row, 2].Text;
@@ -136,7 +140,9 @@ namespace Kartverket.Register.Controllers
                 var kommune2019KommuneNavn = kommune2019.Substring(5, kommune2019.Length - 5);
                 //System.Diagnostics.Debug.WriteLine("kommune2019: " + kommune2019Kommunenr + " : " + kommune2019KommuneNavn);
 
-                List<string> NewOrganizations = new List<string>();
+                var kommune2020Kommunenr = kommune2020.Substring(0, 4);
+                var kommune2020KommuneNavn = kommune2020.Substring(5, kommune2020.Length - 5);
+                //System.Diagnostics.Debug.WriteLine("kommune2020: " + kommune2020Kommunenr + " : " + kommune2020KommuneNavn);
 
                 var url = "https://data.brreg.no/enhetsregisteret/api/enheter?kommunenummer=" + kommune2019Kommunenr + "&organisasjonsform=KOMM";
                 using (var client = new HttpClient())
@@ -151,8 +157,15 @@ namespace Kartverket.Register.Controllers
                             var text = response.Content.ReadAsStringAsync().Result;
                             dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
                             var units = data._embedded.enheter.Count;
-                            if (units > 1)
-                                NewOrganizations.Add(kommune2019);
+                            if (kommune2019KommuneNavn == kommune2020KommuneNavn && units == 1)
+                                UpdatedOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn);
+                            else if (units > 1) { 
+                                NewOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn);
+                                if(kommune2019KommuneNavn != kommune2020KommuneNavn)
+                                    SupersededOrganizations.Add(kommune2019Kommunenr + " " + kommune2019KommuneNavn);
+                            }
+                            else
+                                SupersededOrganizations.Add(kommune2019Kommunenr + " " + kommune2019KommuneNavn);
                         }
                     }
                     catch (Exception ex)
@@ -160,12 +173,28 @@ namespace Kartverket.Register.Controllers
                         System.Diagnostics.Debug.WriteLine(ex);
                     }
                 }
-
-                foreach(var municipality in NewOrganizations)
-                {
-                    System.Diagnostics.Debug.WriteLine(municipality);
-                }
             }
+                
+            System.Diagnostics.Debug.WriteLine("Nye organisasjoner");
+            foreach (var municipality in NewOrganizations)
+            {
+                System.Diagnostics.Debug.WriteLine(municipality);
+            }
+            System.Diagnostics.Debug.WriteLine("--------------------------");
+
+            System.Diagnostics.Debug.WriteLine("Oppdaterte organisasjoner");
+            foreach (var municipality in UpdatedOrganizations)
+            {
+                System.Diagnostics.Debug.WriteLine(municipality);
+            }
+            System.Diagnostics.Debug.WriteLine("--------------------------");
+
+            System.Diagnostics.Debug.WriteLine("Utgåtte organisasjoner");
+            foreach (var municipality in SupersededOrganizations)
+            {
+                System.Diagnostics.Debug.WriteLine(municipality);
+            }
+            System.Diagnostics.Debug.WriteLine("--------------------------");
         }
     }
 }

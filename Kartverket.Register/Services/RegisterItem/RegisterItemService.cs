@@ -1621,6 +1621,16 @@ namespace Kartverket.Register.Services.RegisterItem
             _dbContext.SaveChanges();
         }
 
+        public void MakeAllRegisterItemsRetired(Models.Register register)
+        {
+            foreach (var item in register.items)
+            {
+                item.statusId = "Retired";
+                _dbContext.Entry(item).State = EntityState.Modified;
+            }
+            _dbContext.SaveChanges();
+        }
+
         public string GetDistributionType(string codeValue)
         {
             var queryResults = from d in _dbContext.CodelistValues

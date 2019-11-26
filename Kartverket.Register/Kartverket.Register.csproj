@@ -1029,6 +1029,10 @@
     <Compile Include="Migrations\201911121150072_AddGeodatalovDatasetKeywords.designer.cs">
       <DependentUpon>201911121150072_AddGeodatalovDatasetKeywords.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911261406473_MakeAllItemsRetired.cs" />
+    <Compile Include="Migrations\201911261406473_MakeAllItemsRetired.designer.cs">
+      <DependentUpon>201911261406473_MakeAllItemsRetired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2672,6 +2676,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911121150072_AddGeodatalovDatasetKeywords.resx">
       <DependentUpon>201911121150072_AddGeodatalovDatasetKeywords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911261406473_MakeAllItemsRetired.resx">
+      <DependentUpon>201911261406473_MakeAllItemsRetired.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

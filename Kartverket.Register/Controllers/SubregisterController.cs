@@ -135,6 +135,9 @@ namespace Kartverket.Register.Controllers
                     originalRegister.MakeAllItemsValid = register.MakeAllItemsValid;
                     if (originalRegister.MakeAllItemsValid)
                         _registerItemService.MakeAllRegisterItemsValid(originalRegister);
+                    originalRegister.MakeAllItemsRetired = register.MakeAllItemsRetired;
+                    if (originalRegister.MakeAllItemsRetired)
+                        _registerItemService.MakeAllRegisterItemsRetired(originalRegister);
                     _translationService.UpdateTranslations(register, originalRegister);
                     _db.Entry(originalRegister).State = EntityState.Modified;
                     _db.SaveChanges();

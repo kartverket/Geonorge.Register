@@ -172,13 +172,16 @@ namespace Kartverket.Register.Controllers
 
                             var numberOfUnits = units.Count;
                             if (kommune2019KommuneNavn == kommune2020KommuneNavn && numberOfUnits == 1)
-                                UpdatedOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, MunicipalityCodeOld = kommune2019Kommunenr });
+                                UpdatedOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, MunicipalityCodeOld = kommune2019Kommunenr, Number = orgnr });
                             else if (numberOfUnits > 1) {
 
                                 //NewOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn + ", orgnummer = " + orgnrNew);
-                                NewOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, Number = orgnrNew, Name = kommune2020KommuneNavn });
+                                if (kommune2019KommuneNavn == kommune2020KommuneNavn)
+                                    UpdatedOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, MunicipalityCodeOld = kommune2019Kommunenr, Number = orgnrNew });
+                                else
+                                    NewOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, Number = orgnrNew, Name = kommune2020KommuneNavn });
 
-                                if (kommune2019KommuneNavn != kommune2020KommuneNavn || kommune2019Kommunenr != kommune2020Kommunenr)
+                                if (kommune2019KommuneNavn != kommune2020KommuneNavn)
                                     SupersededOrganizations.Add(new Municipality { MunicipalityCodeOld = kommune2019Kommunenr });
                             }
                             else
@@ -213,7 +216,7 @@ namespace Kartverket.Register.Controllers
             foreach (var municipality in UpdatedOrganizations)
             {
                 //System.Diagnostics.Debug.WriteLine(municipality);
-                var sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='" + municipality.MunicipalityCode + "' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+                var sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='" + municipality.MunicipalityCode + "', number='"+municipality.Number+"' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
                 System.Diagnostics.Debug.WriteLine(sql);
             }
             //System.Diagnostics.Debug.WriteLine("--------------------------");
@@ -222,7 +225,23 @@ namespace Kartverket.Register.Controllers
             foreach (var municipality in SupersededOrganizations)
             {
                 //System.Diagnostics.Debug.WriteLine(municipality);
-                var sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set statusId='Retired' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+                if(municipality.MunicipalityCodeOld == "0231")
+                {
+                    var sqlDataset = "DELETE FROM [RegisterItems] WHERE datasetownerId='7FF49DC1-5BD6-433E-BB93-932CE6BCA715'";
+                    System.Diagnostics.Debug.WriteLine(sqlDataset);
+
+                    var sqlCoverageRetry = "DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.MunicipalityCode = '" + municipality.MunicipalityCodeOld + "')";
+                    System.Diagnostics.Debug.WriteLine(sqlCoverageRetry);
+                    var sqlRetry = "DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+                    System.Diagnostics.Debug.WriteLine(sqlRetry);
+
+                    var sqlDatasetRetry = "DELETE FROM [RegisterItems] WHERE datasetownerId='7FF49DC1-5BD6-433E-BB93-932CE6BCA715'";
+                    System.Diagnostics.Debug.WriteLine(sqlDatasetRetry);
+                }
+
+                var sqlCoverage = "DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.MunicipalityCode = '"+ municipality.MunicipalityCodeOld + "')";
+                System.Diagnostics.Debug.WriteLine(sqlCoverage);
+                var sql = "DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
                 System.Diagnostics.Debug.WriteLine(sql);
             }
         }

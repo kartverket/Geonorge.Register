@@ -3439,7 +3439,7 @@
         </member>
         <member name="P:Resources.CodelistValues.ValidToDate">
             <summary>
-              Looks up a localized string similar to Gylig til.
+              Looks up a localized string similar to Gyldig til.
             </summary>
         </member>
         <member name="T:Resources.EPSGs">

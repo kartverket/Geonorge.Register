@@ -178,7 +178,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gylig til.
+        ///   Looks up a localized string similar to Gyldig til.
         /// </summary>
         public static string ValidToDate {
             get {

@@ -267,7 +267,7 @@ namespace Kartverket.Register.Services.Report
                 ReportResultDataValue reportResultDataValue = new ReportResultDataValue();
 
                 reportResultDataValue.Key = result.datasetName;
-                reportResultDataValue.Value = !result.Coverage.HasValue ? "Ukjent" : result.Coverage.HasValue ? "JA" : "NEI";
+                reportResultDataValue.Value = !result.Coverage.HasValue ? "Ukjent" : result.Coverage == true ? "JA" : "NEI";
 
                 reportResultDataValues.Add(reportResultDataValue);
 

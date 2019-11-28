@@ -82,6 +82,10 @@ namespace Kartverket.Register.Services
                 newCurrentVersion.modified = DateTime.Now;
                 newCurrentVersion.dateSuperseded = null;
             }
+
+            if (newCurrentVersion == null)
+                newCurrentVersion = originalDocument;
+
             _versioningService.UpdateCurrentVersionOfVersionGroup(newCurrentVersion.versioningId, newCurrentVersion.systemId);
 
             _dbContext.Entry(originalDocument.versioning).State = EntityState.Modified;

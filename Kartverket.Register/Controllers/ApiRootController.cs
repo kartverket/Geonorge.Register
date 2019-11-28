@@ -602,11 +602,11 @@ namespace Kartverket.Register.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        [System.Web.Http.Route("api/codelist/update/kommunenummer-alle")]
+        [System.Web.Http.Route("api/codelist/update/kommunenummer-alle-valid-date")]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult UpdateMunicipalitiesAll()
+        public IHttpActionResult UpdateMunicipalitiesAllValidDate()
         {
-            new UpdateCodelistService(db).UpdateMunicipalitiesAll();
+            new UpdateCodelistService(db).UpdateMunicipalitiesAllValidDate();
             return Ok();
         }
 
@@ -620,11 +620,11 @@ namespace Kartverket.Register.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        [System.Web.Http.Route("api/codelist/update/fylkesnummer-alle")]
+        [System.Web.Http.Route("api/codelist/update/fylkesnummer-alle-valid-date")]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult UpdateCountiesAll()
+        public IHttpActionResult UpdateCountiesAllValidDate()
         {
-            new UpdateCodelistService(db).UpdateCountiesAll();
+            new UpdateCodelistService(db).UpdateCountiesAllValidDate();
             return Ok();
         }
 

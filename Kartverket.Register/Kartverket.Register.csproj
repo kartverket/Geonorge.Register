@@ -87,6 +87,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="ExpressiveAnnotations, Version=2.7.4.0, Culture=neutral, PublicKeyToken=d3e372f3c1e83cec, processorArchitecture=MSIL">
       <HintPath>..\packages\ExpressiveAnnotations.2.9.6\lib\net45\ExpressiveAnnotations.dll</HintPath>
     </Reference>
@@ -202,6 +205,7 @@
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="SolrNet, Version=1.0.18.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SolrNet.Core.1.0.18\lib\net46\SolrNet.dll</HintPath>
     </Reference>
@@ -1329,6 +1333,7 @@
     <Compile Include="Services\SynchronizationService.cs" />
     <Compile Include="Services\Translation\ITranslationService.cs" />
     <Compile Include="Services\Translation\TranslationService.cs" />
+    <Compile Include="Services\UpdateCodelistService.cs" />
     <Compile Include="Services\UserAuthorization.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\Versioning\IVersioningService.cs" />
@@ -1336,6 +1341,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\organisasjoner2020.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\XmlDocument.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -2028,6 +2036,9 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
+    <Content Include="App_Data\Fylker2020.xlsx" />
+    <Content Include="App_Data\Kommuner2020.xlsx" />
+    <Content Include="App_Data\Organisasjoner2020.xlsx" />
     <None Include="Formatter\XSD\basictype.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -2878,7 +2889,8 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PostBuildEvent>
-PowerShell -NoProfile -ExecutionPolicy Bypass -Command "ls '$(SolutionDir)\packages\GhostScriptSharp.*\Tools\gsdll32.dll' | Sort -Descending | Select -First 1 | cp -Destination '$(TargetDir)'; exit 0"</PostBuildEvent>
+      PowerShell -NoProfile -ExecutionPolicy Bypass -Command "ls '$(SolutionDir)\packages\GhostScriptSharp.*\Tools\gsdll32.dll' | Sort -Descending | Select -First 1 | cp -Destination '$(TargetDir)'; exit 0"
+    </PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

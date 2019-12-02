@@ -184,10 +184,12 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    originalDocument = _documentService.UpdateDocument(originalDocument, document, documentfile,thumbnail, retired, sosi);
                     var url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                     document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber);
+                    if (document.register == null)
+                        document.register = originalDocument.register;
                     document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
+                    originalDocument = _documentService.UpdateDocument(originalDocument, document, documentfile,thumbnail, retired, sosi);
 
 
                     //document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
@@ -805,7 +807,7 @@ namespace Kartverket.Register.Controllers
                 document.thumbnail = GenerateThumbnail(document, documentfile, url);
             }
 
-            if (thumbnail != null && document.thumbnail.Contains(thumbnail.FileName))
+            if (thumbnail != null /*&& document.thumbnail.Contains(thumbnail.FileName)*/)
             {
                 document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, document.register.seoname, document.versionNumber);
             }

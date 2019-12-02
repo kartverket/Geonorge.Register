@@ -251,6 +251,14 @@ namespace Kartverket.Register.Controllers
             //        System.Diagnostics.Debug.WriteLine(sql);
             //    }
         }
+
+        internal void UpdateMunicipalities()
+        {
+            var path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/kommuner2020.sql");
+            var sql = System.IO.File.ReadAllText(path);
+            db.Configuration.EnsureTransactionsForFunctionsAndCommands = false;
+            db.Database.ExecuteSqlCommand(sql);
+        }
     }
 
     class Municipality

@@ -120,8 +120,8 @@ namespace Kartverket.Register.Controllers
             var sql = System.IO.File.ReadAllText(path);
             db.Configuration.EnsureTransactionsForFunctionsAndCommands = false;
             db.Database.ExecuteSqlCommand(sql);
-            
-            //This is how sql was created, uncomment to run again
+
+            ////This is how sql was created, uncomment to run again
             //var path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Organisasjoner2020.xlsx");
             //var fileinfo = new FileInfo(path);
             //OfficeOpenXml.ExcelPackage excelPackage;
@@ -135,6 +135,8 @@ namespace Kartverket.Register.Controllers
             //List<Municipality> NewOrganizations = new List<Municipality>();
             //List<Municipality> UpdatedOrganizations = new List<Municipality>();
             //List<Municipality> SupersededOrganizations = new List<Municipality>();
+
+            ////System.Diagnostics.Debug.WriteLine("kommunenr,navn,kommunenrGammelt,navnGammelt,organisasjonsnummer,status");
 
             //for (int row = start.Row + 1; row <= end.Row; row++)
             //{
@@ -178,20 +180,26 @@ namespace Kartverket.Register.Controllers
 
             //                var numberOfUnits = units.Count;
             //                if (kommune2019KommuneNavn == kommune2020KommuneNavn && numberOfUnits == 1)
-            //                    UpdatedOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, MunicipalityCodeOld = kommune2019Kommunenr, Number = orgnr });
-            //                else if (numberOfUnits > 1) {
+            //                    UpdatedOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, Name = kommune2020KommuneNavn, MunicipalityCodeOld = kommune2019Kommunenr, Number = orgnr, NameOld = kommune2019KommuneNavn });
+            //                else if (numberOfUnits > 1)
+            //                {
 
             //                    //NewOrganizations.Add(kommune2020Kommunenr + " " + kommune2020KommuneNavn + ", orgnummer = " + orgnrNew);
             //                    if (kommune2019KommuneNavn == kommune2020KommuneNavn)
-            //                        UpdatedOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, MunicipalityCodeOld = kommune2019Kommunenr, Number = orgnrNew });
+            //                        UpdatedOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, Name = kommune2020KommuneNavn, MunicipalityCodeOld = kommune2019Kommunenr, Number = orgnrNew, NameOld = kommune2019KommuneNavn });
             //                    else
-            //                        NewOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, Number = orgnrNew, Name = kommune2020KommuneNavn });
+            //                        NewOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, MunicipalityCodeOld = kommune2019Kommunenr, Number = orgnrNew, Name = kommune2020KommuneNavn, NameOld = kommune2019KommuneNavn });
 
             //                    if (kommune2019KommuneNavn != kommune2020KommuneNavn)
-            //                        SupersededOrganizations.Add(new Municipality { MunicipalityCodeOld = kommune2019Kommunenr });
+            //                        SupersededOrganizations.Add(new Municipality { MunicipalityCodeOld = kommune2019Kommunenr, MunicipalityCode = kommune2020Kommunenr, Name = kommune2020KommuneNavn, Number = orgnr, NameOld = kommune2019KommuneNavn });
             //                }
             //                else
-            //                    SupersededOrganizations.Add(new Municipality { MunicipalityCodeOld = kommune2019Kommunenr });
+            //                { 
+            //                    if (kommune2019KommuneNavn != kommune2020KommuneNavn && numberOfUnits == 1)
+            //                        UpdatedOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, Name= kommune2020KommuneNavn,  MunicipalityCodeOld = kommune2019Kommunenr, Number = orgnr, NameOld = kommune2019KommuneNavn });
+
+            //                    SupersededOrganizations.Add(new Municipality { MunicipalityCodeOld = kommune2019Kommunenr, MunicipalityCode = kommune2020Kommunenr, Name = kommune2020KommuneNavn, Number = orgnr, NameOld = kommune2019KommuneNavn });
+            //                }
             //            }
             //        }
             //        catch (Exception ex)
@@ -201,55 +209,66 @@ namespace Kartverket.Register.Controllers
             //    }
             //}
 
-            //    //System.Diagnostics.Debug.WriteLine("Nye kommuner");
-            //    foreach (var municipality in NewOrganizations)
+            ////System.Diagnostics.Debug.WriteLine("Nye kommuner");
+            //foreach (var municipality in NewOrganizations)
+            //{
+            //    Guid guid = Guid.NewGuid();
+            //    string name = municipality.Name.Substring(0, 1) + municipality.Name.Substring(1).ToLower() + " kommune";
+            //    string seoname = RegisterUrls.MakeSeoFriendlyString(municipality.Name);
+
+            //    var sqlV = "INSERT INTO Versions(systemId, Register_systemId, currentVersion, lastVersionNumber, containedItemClass)";
+            //    sqlV = sqlV + "VALUES('" + guid + "',NULL,'" + guid + "',1,'Organization')";
+            //    System.Diagnostics.Debug.WriteLine(sqlV);
+
+            //    var sql = "INSERT INTO RegisterItems(systemId, name, dateSubmitted, modified, number, Discriminator, versioningId, statusId, registerId, submitterId, seoname, OrganizationType, MunicipalityCode)";
+            //    sql = sql + "VALUES('" + guid + "','" + name + "',getDate(), getDate() ,'" + municipality.Number + "','Organization','" + guid + "','Valid','fcb0685d-24eb-4156-9ac8-25fa30759094','10087020-f17c-45e1-8542-02acbcf3d8a3','" + seoname + "','municipality','" + municipality.MunicipalityCode + "')";
+            //    System.Diagnostics.Debug.WriteLine(sql);
+            //    //System.Diagnostics.Debug.WriteLine(municipality.MunicipalityCode + "," + municipality.Name + "," + municipality.MunicipalityCodeOld + "," + municipality.NameOld + "," + municipality.Number + ",ny");
+
+            //}
+            ////System.Diagnostics.Debug.WriteLine("--------------------------");
+
+            ////System.Diagnostics.Debug.WriteLine("Kommuner med nytt kommunenummer");
+            //foreach (var municipality in UpdatedOrganizations)
+            //{
+            //    string name = municipality.Name.Substring(0, 1) + municipality.Name.Substring(1).ToLower() + " kommune";
+            //    string seoname = RegisterUrls.MakeSeoFriendlyString(municipality.Name);
+
+            //    //System.Diagnostics.Debug.WriteLine(municipality);
+            //    string sql;
+            //    if(municipality.Name != municipality.NameOld)
+            //        sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='" + municipality.MunicipalityCode + "', number='" + municipality.Number + "' , name = '" + name + "', seoname = '"+ seoname + "' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+            //    else
+            //        sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='" + municipality.MunicipalityCode + "', number='" + municipality.Number + "' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+            //    System.Diagnostics.Debug.WriteLine(sql);
+            //    //System.Diagnostics.Debug.WriteLine(municipality.MunicipalityCode + "," + municipality.Name + "," + municipality.MunicipalityCodeOld + "," + municipality.NameOld + "," + municipality.Number + ",oppdatert");
+            //}
+            ////System.Diagnostics.Debug.WriteLine("--------------------------");
+
+            ////System.Diagnostics.Debug.WriteLine("Utgåtte kommuner");
+            //foreach (var municipality in SupersededOrganizations)
+            //{
+            //    //System.Diagnostics.Debug.WriteLine(municipality);
+            //    if (municipality.MunicipalityCodeOld == "0231")
             //    {
-            //        Guid guid = Guid.NewGuid();
-            //        string name = municipality.Name.Substring(0, 1) + municipality.Name.Substring(1).ToLower() + " kommune";
-            //        string seoname = RegisterUrls.MakeSeoFriendlyString(municipality.Name);
+            //        var sqlDataset = "DELETE FROM [RegisterItems] WHERE datasetownerId='7FF49DC1-5BD6-433E-BB93-932CE6BCA715'";
+            //        System.Diagnostics.Debug.WriteLine(sqlDataset);
 
-            //        var sqlV = "INSERT INTO Versions(systemId, Register_systemId, currentVersion, lastVersionNumber, containedItemClass)";
-            //        sqlV = sqlV + "VALUES('"+ guid + "',NULL,'" + guid + "',1,'Organization')";
-            //        System.Diagnostics.Debug.WriteLine(sqlV);
+            //        var sqlCoverageRetry = "DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.MunicipalityCode = '" + municipality.MunicipalityCodeOld + "')";
+            //        System.Diagnostics.Debug.WriteLine(sqlCoverageRetry);
+            //        var sqlRetry = "DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+            //        System.Diagnostics.Debug.WriteLine(sqlRetry);
 
-            //        var sql = "INSERT INTO RegisterItems(systemId, name, dateSubmitted, modified, number, Discriminator, versioningId, statusId, registerId, submitterId, seoname, OrganizationType, MunicipalityCode)";
-            //            sql = sql + "VALUES('"+ guid + "','"+ name + "',getDate(), getDate() ,'" + municipality .Number + "','Organization','" + guid + "','Valid','fcb0685d-24eb-4156-9ac8-25fa30759094','10087020-f17c-45e1-8542-02acbcf3d8a3','" + seoname + "','municipality','" + municipality.MunicipalityCode+"')";
-            //        System.Diagnostics.Debug.WriteLine(sql);
+            //        var sqlDatasetRetry = "DELETE FROM [RegisterItems] WHERE datasetownerId='7FF49DC1-5BD6-433E-BB93-932CE6BCA715'";
+            //        System.Diagnostics.Debug.WriteLine(sqlDatasetRetry);
             //    }
-            //    //System.Diagnostics.Debug.WriteLine("--------------------------");
 
-            //    //System.Diagnostics.Debug.WriteLine("Kommuner med nytt kommunenummer");
-            //    foreach (var municipality in UpdatedOrganizations)
-            //    {
-            //        //System.Diagnostics.Debug.WriteLine(municipality);
-            //        var sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='" + municipality.MunicipalityCode + "', number='"+municipality.Number+"' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
-            //        System.Diagnostics.Debug.WriteLine(sql);
-            //    }
-            //    //System.Diagnostics.Debug.WriteLine("--------------------------");
-
-            //    //System.Diagnostics.Debug.WriteLine("Utgåtte kommuner");
-            //    foreach (var municipality in SupersededOrganizations)
-            //    {
-            //        //System.Diagnostics.Debug.WriteLine(municipality);
-            //        if(municipality.MunicipalityCodeOld == "0231")
-            //        {
-            //            var sqlDataset = "DELETE FROM [RegisterItems] WHERE datasetownerId='7FF49DC1-5BD6-433E-BB93-932CE6BCA715'";
-            //            System.Diagnostics.Debug.WriteLine(sqlDataset);
-
-            //            var sqlCoverageRetry = "DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.MunicipalityCode = '" + municipality.MunicipalityCodeOld + "')";
-            //            System.Diagnostics.Debug.WriteLine(sqlCoverageRetry);
-            //            var sqlRetry = "DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
-            //            System.Diagnostics.Debug.WriteLine(sqlRetry);
-
-            //            var sqlDatasetRetry = "DELETE FROM [RegisterItems] WHERE datasetownerId='7FF49DC1-5BD6-433E-BB93-932CE6BCA715'";
-            //            System.Diagnostics.Debug.WriteLine(sqlDatasetRetry);
-            //        }
-
-            //        var sqlCoverage = "DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.MunicipalityCode = '"+ municipality.MunicipalityCodeOld + "')";
-            //        System.Diagnostics.Debug.WriteLine(sqlCoverage);
-            //        var sql = "DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
-            //        System.Diagnostics.Debug.WriteLine(sql);
-            //    }
+            //    var sqlCoverage = "DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.MunicipalityCode = '" + municipality.MunicipalityCodeOld + "')";
+            //    System.Diagnostics.Debug.WriteLine(sqlCoverage);
+            //    var sql = "DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+            //    System.Diagnostics.Debug.WriteLine(sql);
+            //    //System.Diagnostics.Debug.WriteLine(municipality.MunicipalityCode + "," + municipality.Name + "," + municipality.MunicipalityCodeOld + "," + municipality.NameOld + "," + municipality.Number + ",utgått");
+            //}
         }
 
         internal void UpdateMunicipalities()
@@ -266,6 +285,7 @@ namespace Kartverket.Register.Controllers
         public string MunicipalityCode { get; set; }
         public string MunicipalityCodeOld { get; set; }
         public string Name { get; set; }
+        public string NameOld { get; set; }
         public string Number { get; set; }
     }
 }

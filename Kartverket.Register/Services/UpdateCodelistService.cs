@@ -8,6 +8,7 @@ using Kartverket.Register.Models;
 using System.Linq;
 using System.Collections.Generic;
 using Kartverket.Register.Helpers;
+using OfficeOpenXml;
 
 namespace Kartverket.Register.Controllers
 {
@@ -135,6 +136,7 @@ namespace Kartverket.Register.Controllers
             //List<Municipality> NewOrganizations = new List<Municipality>();
             //List<Municipality> UpdatedOrganizations = new List<Municipality>();
             //List<Municipality> SupersededOrganizations = new List<Municipality>();
+            //List<Municipality> NewNameOrganizations = new List<Municipality>();
 
             ////System.Diagnostics.Debug.WriteLine("kommunenr,navn,kommunenrGammelt,navnGammelt,organisasjonsnummer,status");
 
@@ -194,9 +196,12 @@ namespace Kartverket.Register.Controllers
             //                        SupersededOrganizations.Add(new Municipality { MunicipalityCodeOld = kommune2019Kommunenr, MunicipalityCode = kommune2020Kommunenr, Name = kommune2020KommuneNavn, Number = orgnr, NameOld = kommune2019KommuneNavn });
             //                }
             //                else
-            //                { 
-            //                    if (kommune2019KommuneNavn != kommune2020KommuneNavn && numberOfUnits == 1)
-            //                        UpdatedOrganizations.Add(new Municipality { MunicipalityCode = kommune2020Kommunenr, Name= kommune2020KommuneNavn,  MunicipalityCodeOld = kommune2019Kommunenr, Number = orgnr, NameOld = kommune2019KommuneNavn });
+            //                {
+            //                    if (kommune2019KommuneNavn != kommune2020KommuneNavn && numberOfUnits == 1 && !isCooperation(kommune2020Kommunenr, workSheet)) {
+            //                        var municipality = new Municipality { MunicipalityCode = kommune2020Kommunenr, Name = kommune2020KommuneNavn, MunicipalityCodeOld = kommune2019Kommunenr, Number = orgnr, NameOld = kommune2019KommuneNavn };
+            //                        NewNameOrganizations.Add(municipality);
+            //                        //System.Diagnostics.Debug.WriteLine(municipality.MunicipalityCode + "," + municipality.Name + "," + municipality.MunicipalityCodeOld + "," + municipality.NameOld + "," + municipality.Number);
+            //                    }
 
             //                    SupersededOrganizations.Add(new Municipality { MunicipalityCodeOld = kommune2019Kommunenr, MunicipalityCode = kommune2020Kommunenr, Name = kommune2020KommuneNavn, Number = orgnr, NameOld = kommune2019KommuneNavn });
             //                }
@@ -228,18 +233,25 @@ namespace Kartverket.Register.Controllers
             //}
             ////System.Diagnostics.Debug.WriteLine("--------------------------");
 
-            ////System.Diagnostics.Debug.WriteLine("Kommuner med nytt kommunenummer");
-            //foreach (var municipality in UpdatedOrganizations)
+            //foreach (var municipality in NewNameOrganizations)
             //{
             //    string name = municipality.Name.Substring(0, 1) + municipality.Name.Substring(1).ToLower() + " kommune";
             //    string seoname = RegisterUrls.MakeSeoFriendlyString(municipality.Name);
 
             //    //System.Diagnostics.Debug.WriteLine(municipality);
-            //    string sql;
-            //    if(municipality.Name != municipality.NameOld)
-            //        sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='" + municipality.MunicipalityCode + "', number='" + municipality.Number + "' , name = '" + name + "', seoname = '"+ seoname + "' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
-            //    else
-            //        sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='" + municipality.MunicipalityCode + "', number='" + municipality.Number + "' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+            //    //var activeOrg = db.CodelistValues.Where(c => c.registerId == new Guid("54DDDFA8-A9D3-4115-8541-4B0905779054") && c.statusId == "Valid" && c.value == municipality.MunicipalityCode).FirstOrDefault();
+            //    //if (activeOrg != null)
+            //    //{ 
+            //        var sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='" + municipality.MunicipalityCode + "', name = '" + name + "', seoname = '" + seoname + "' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
+            //        System.Diagnostics.Debug.WriteLine(sql);
+            //    //}
+            //}
+
+            ////System.Diagnostics.Debug.WriteLine("Kommuner med nytt kommunenummer");
+            //foreach (var municipality in UpdatedOrganizations)
+            //{
+            //    //System.Diagnostics.Debug.WriteLine(municipality);
+            //    var sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='" + municipality.MunicipalityCode + "', number='" + municipality.Number + "' WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
             //    System.Diagnostics.Debug.WriteLine(sql);
             //    //System.Diagnostics.Debug.WriteLine(municipality.MunicipalityCode + "," + municipality.Name + "," + municipality.MunicipalityCodeOld + "," + municipality.NameOld + "," + municipality.Number + ",oppdatert");
             //}
@@ -269,6 +281,28 @@ namespace Kartverket.Register.Controllers
             //    System.Diagnostics.Debug.WriteLine(sql);
             //    //System.Diagnostics.Debug.WriteLine(municipality.MunicipalityCode + "," + municipality.Name + "," + municipality.MunicipalityCodeOld + "," + municipality.NameOld + "," + municipality.Number + ",utgått");
             //}
+        }
+
+        private bool isCooperation(string kommunenr, ExcelWorksheet workSheet)
+        {
+            var start = workSheet.Dimension.Start;
+            var end = workSheet.Dimension.End;
+
+            int numberOfSimilarMunicipalities = 0;
+
+            for (int row = start.Row + 1; row <= end.Row; row++)
+            {
+                var kommune2020 = workSheet.Cells[row, 4].Text;
+                var kommune2020Kommunenr = kommune2020.Substring(0, 4);
+
+                if (kommune2020Kommunenr == kommunenr)
+                    numberOfSimilarMunicipalities = numberOfSimilarMunicipalities + 1;
+
+                if (numberOfSimilarMunicipalities > 1)
+                    return true;
+            }
+
+            return numberOfSimilarMunicipalities > 1;
         }
 
         internal void UpdateMunicipalities()

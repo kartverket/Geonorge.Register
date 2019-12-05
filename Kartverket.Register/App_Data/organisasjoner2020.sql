@@ -222,7 +222,7 @@ UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='1507', 
 UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='1577', number='939760946' WHERE MunicipalityCode='1519'
 UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='1806', number='959469059' WHERE MunicipalityCode='1805'
 UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='1875', number='970542507' WHERE MunicipalityCode='1849'
-UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='5412', number='959469237' WHERE MunicipalityCode='1852'
+UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='5412', number='959469326' WHERE MunicipalityCode='1852'
 UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='5401', number='940101808' WHERE MunicipalityCode='1902'
 UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='5402', number='972417971' WHERE MunicipalityCode='1903'
 UPDATE [kartverket_register].[dbo].[RegisterItems] set MunicipalityCode='5411', number='972417998' WHERE MunicipalityCode='1911'
@@ -464,3 +464,6 @@ DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='936401651'
 
 DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '964982686')
 DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964982686'
+
+DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '964967903')
+DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964967903'

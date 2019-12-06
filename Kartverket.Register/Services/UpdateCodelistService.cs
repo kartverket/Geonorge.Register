@@ -312,6 +312,37 @@ namespace Kartverket.Register.Controllers
             db.Configuration.EnsureTransactionsForFunctionsAndCommands = false;
             db.Database.ExecuteSqlCommand(sql);
         }
+
+        internal void UpdateCenterPoint()
+        {
+            var path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Kommunenummer2020_midtpunkt.sql");
+            var sql = System.IO.File.ReadAllText(path);
+            db.Configuration.EnsureTransactionsForFunctionsAndCommands = false;
+            db.Database.ExecuteSqlCommand(sql);
+
+            ////This is how sql was created, uncomment to run again
+            //var path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Kommunenummer2020_midtpunkt.xlsx");
+            //var fileinfo = new FileInfo(path);
+            //OfficeOpenXml.ExcelPackage excelPackage;
+            //excelPackage = new OfficeOpenXml.ExcelPackage(fileinfo);
+            //OfficeOpenXml.ExcelWorksheet workSheet;
+            //workSheet = excelPackage.Workbook.Worksheets[1];
+
+            //var start = workSheet.Dimension.Start;
+            //var end = workSheet.Dimension.End;
+
+            //List<Municipality> Organizations = new List<Municipality>();
+
+            //for (int row = start.Row + 1; row <= end.Row; row++)
+            //{
+            //    var kommunenr = workSheet.Cells[row, 1].Text;
+            //    var xcoord = workSheet.Cells[row, 2].Text;
+            //    var ycoord = workSheet.Cells[row, 3].Text;
+
+            //    var sql = "UPDATE [kartverket_register].[dbo].[RegisterItems] set GeographicCenterX='" + xcoord + "', GeographicCenterY = '"+ ycoord + "' WHERE MunicipalityCode='" + kommunenr + "'";
+            //    System.Diagnostics.Debug.WriteLine(sql);
+            //}
+        }
     }
 
     class Municipality

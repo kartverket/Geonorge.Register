@@ -39,7 +39,6 @@ namespace Kartverket.Register.Controllers
         {
             try
             {
-                SetLanguage(Request);
                 if (parameters == null)
                     parameters = new SearchParameters();
 
@@ -81,43 +80,6 @@ namespace Kartverket.Register.Controllers
                     Value = item.value
                 })
                 .ToList();
-        }
-
-        private void SetLanguage(HttpRequestMessage request)
-        {
-            string language = Culture.NorwegianCode;
-
-            var lang = Kartverket.Register.Helpers.HttpRequestMessageExtensions.GetQueryString(request, "lang");
-
-            CookieHeaderValue cookie = request.Headers.GetCookies("_culture").FirstOrDefault();
-
-            if (!string.IsNullOrEmpty(lang))
-            {
-                cookie = null;
-                language = lang;
-            }
-
-            if (cookie != null && !string.IsNullOrEmpty(cookie["_culture"].Value))
-            {
-                language = cookie["_culture"].Value;
-            }
-            else
-            {
-                IEnumerable<string> headerValues;
-                if (request.Headers.TryGetValues("Accept-Language", out headerValues))
-                {
-                    language = headerValues.FirstOrDefault();
-                    if (CultureHelper.IsNorwegian(language))
-                        language = Culture.NorwegianCode;
-                    else
-                        language = Culture.EnglishCode;
-                }
-            }
-
-            var culture = new CultureInfo(language);
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
-
         }
     }
 }

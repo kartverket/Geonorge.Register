@@ -28,6 +28,7 @@ namespace Kartverket.Register.Controllers
     public class ApiRootController : ApiController
     {
         private RegisterDbContext db;
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ISearchService _searchService;
         private readonly IRegisterService _registerService;
@@ -601,6 +602,29 @@ namespace Kartverket.Register.Controllers
             return Ok(DokCoverageWmsMapping.DatasetUuidToWmsLayerMapping);
         }
 
+        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/codelist/update/kommunereform-2020")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult UpdateMunicipalitiesAllValidDate()
+        {
+            try
+            {
+                new UpdateCodelistService(db).UpdateMunicipalitiesAllValidDate();
+                new UpdateCodelistService(db).UpdateMunicipalitiesAllStatus();
+                new UpdateCodelistService(db).UpdateCountiesAllValidDate();
+                new UpdateCodelistService(db).UpdateCountiesAllStatus();
+                new UpdateCodelistService(db).UpdateMunicipalities();
+                new UpdateCodelistService(db).UpdateOrganizationsAll();
+                new UpdateCodelistService(db).UpdateCenterPoint();
+                new UpdateCodelistService(db).UpdateBbox();
+            }
+            catch (Exception ex){
+                Log.Error(ex);
+            }
+
+            return Ok();
+        }
 
 
         // **** HJELPEMETODER ****

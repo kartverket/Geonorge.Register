@@ -106,6 +106,8 @@ namespace Kartverket.Register.Services
             }
             else if (register.RegisterAccessAdminMunicipalUserDokEditorAndDocAdmin())
             {
+                if (register.IsDokMunicipal())
+                    return false;
                 return IsMunicipalUser() || IsDokEditor() || IsDokAdmin();
             }
             return false;

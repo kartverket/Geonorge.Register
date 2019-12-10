@@ -312,4 +312,10 @@
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="MakeAllItemsRetired" xml:space="preserve">
+    <value>Set status "Retired" on all codelist values</value>
+  </data>
+  <data name="MakeAllItemsRetiredMessage" xml:space="preserve">
+    <value>Set status of all values in code list. Individual values can still be set</value>
+  </data>
 </root>

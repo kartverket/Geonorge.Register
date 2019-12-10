@@ -82,6 +82,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "MakeAllItemsValid", ResourceType = typeof(Registers))]
         public bool MakeAllItemsValid { get; set; }
 
+        [Display(Name = "MakeAllItemsRetired", ResourceType = typeof(Registers))]
+        public bool MakeAllItemsRetired { get; set; }
+
         public virtual TranslationCollection<RegisterTranslation> Translations { get; set; }
 
         public virtual ICollection<Synchronize> Synchronizes { get; set; }

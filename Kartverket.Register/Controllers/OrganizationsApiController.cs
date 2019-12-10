@@ -63,8 +63,6 @@ namespace Kartverket.Register.Controllers
         //[Route("api/organisasjon/orgnr/{number}")]
         public IHttpActionResult GetOrganizationByNumber(string number)
         {
-            SetLanguage(Request);
-
             Organization organization = _organizationService.GetOrganizationByNumber(number, CultureHelper.GetCurrentCulture());
 
             if (organization == null)
@@ -121,34 +119,5 @@ namespace Kartverket.Register.Controllers
 
             return Ok(apiModel);
         }
-
-        private void SetLanguage(HttpRequestMessage request)
-        {
-            string language = Culture.NorwegianCode;
-
-            IEnumerable<string> headerValues;
-            if (request != null && request.Headers.TryGetValues("Accept-Language", out headerValues))
-            {
-                language = headerValues.FirstOrDefault();
-                if (CultureHelper.IsNorwegian(language))
-                    language = Culture.NorwegianCode;
-                else
-                    language = Culture.EnglishCode;
-            }
-            else
-            {
-                CookieHeaderValue cookie = request?.Headers?.GetCookies("_culture").FirstOrDefault();
-                if (cookie != null && !string.IsNullOrEmpty(cookie["_culture"].Value))
-                {
-                    language = cookie["_culture"].Value;
-                }
-            }
-
-            var culture = new CultureInfo(language);
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
-
-        }
-
     }
 }

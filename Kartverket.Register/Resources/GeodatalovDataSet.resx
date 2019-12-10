@@ -123,6 +123,9 @@
   <data name="Dok" xml:space="preserve">
     <value>DOK i henhold til KMD-definisjon</value>
   </data>
+  <data name="EcologicalBaseMap" xml:space="preserve">
+    <value>Økologisk grunnkart</value>
+  </data>
   <data name="Geodatalov" xml:space="preserve">
     <value>Underlagt Geodataloven</value>
   </data>
@@ -134,8 +137,5 @@
   </data>
   <data name="Plan" xml:space="preserve">
     <value>Arealplaner underlagt Pbl</value>
-  </data>
-  <data name="Dok" xml:space="preserve">
-    <value>DOK i henhold til KMD-definisjon</value>
   </data>
 </root>

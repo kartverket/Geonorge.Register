@@ -27,129 +27,129 @@
 
 @using (Html.BeginForm("Edit", "Subregister", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.systemId)
-        @Html.HiddenFor(model => Model.containedItemClass)
-        @Html.HiddenFor(model => Model.parentRegisterId)
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.systemId)
+    @Html.HiddenFor(model => Model.containedItemClass)
+    @Html.HiddenFor(model => Model.parentRegisterId)
 
+    <div class="form-group">
+        @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessage("ErrorMessage")
+        </div>
+    </div>
+
+    @for (int t = 0; t < Model.Translations.Count; t++)
+    {
+        @Html.HiddenFor(m => Model.Translations[t].CultureName)
         <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => Model.Translations[t].Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessage("ErrorMessage")
+                @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.Translations[t].Name)
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @for (int t = 0; t < Model.Translations.Count; t++)
+    {
+        @Html.HiddenFor(m => Model.Translations[t].CultureName)
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Translations[t].Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.Translations[t].Description)
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.targetNamespace, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.targetNamespace, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.targetNamespace, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    @if (HtmlHelperExtensions.IsAdmin())
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.statusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @for (int t = 0; t < Model.Translations.Count; t++)
-        {
-            @Html.HiddenFor(m => Model.Translations[t].CultureName)
-            <div class="form-group">
-                @Html.LabelFor(m => Model.Translations[t].Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => Model.Translations[t].Name)
-                </div>
-            </div>
-        }
 
         <div class="form-group">
-            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.owner, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                @Html.DropDownList("ownerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @for (int t = 0; t < Model.Translations.Count; t++)
-        {
-            @Html.HiddenFor(m => Model.Translations[t].CultureName)
-            <div class="form-group">
-                @Html.LabelFor(m => Model.Translations[t].Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.parentRegister, "Parent register", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => Model.Translations[t].Description)
+                    @Html.DropDownList("parentRegisterId", null, Registers.None, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.parentRegisterId, "", new { @class = "text-danger" })
                 </div>
-            </div>
-        }
+            </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.targetNamespace, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2"></div>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.targetNamespace, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.targetNamespace, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.accessId, Registers.AccessLabel)
+                <br /><small>@Registers.AccessText </small> <br /><br />
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                @if (Model.accessId == 1)
+                {
+                    @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @checked = "checked", @class = "col-md-1", })
+                }
+                else
+                {
+                    @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @class = "col-md-1", })
+                }
+                <label class="col-md-4" for=" admin">Admin</label>
+
+                @if (Model.accessId == 2)
+                {
+                    @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @checked = "checked", @class = "col-md-1" })
+                }
+                else
+                {
+                    @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @class = "col-md-1" })
+                }
+                <label class="col-md-4" for="editor">Admin + Editor</label>
             </div>
         </div>
 
+    }
+    else
+    {
+        @Html.HiddenFor(model => model.accessId)
+        @Html.HiddenFor(model => model.parentRegisterId)
+        @Html.HiddenFor(model => model.ownerId)
+        @Html.HiddenFor(model => model.statusId)
+    }
 
-        @if (HtmlHelperExtensions.IsAdmin())
-        {
-            <div class="form-group">
-                @Html.LabelFor(model => model.statusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.owner, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("ownerId", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                @*<div class="form-group">
-                    @Html.LabelFor(model => model.parentRegister, "Parent register", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("parentRegisterId", null, Registers.None, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.parentRegisterId, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
-                <div class="form-group">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-10">
-                        @Html.LabelFor(model => model.accessId, Registers.AccessLabel)
-                        <br /><small>@Registers.AccessText </small> <br /><br />
-                    </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-5">
-                        @if (Model.accessId == 1)
-                        {
-                            @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @checked = "checked", @class = "col-md-1", })
-                        }
-                        else
-                        {
-                            @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @class = "col-md-1", })
-                        }
-                        <label class="col-md-4" for=" admin">Admin</label>
-
-                        @if (Model.accessId == 2)
-                        {
-                            @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @checked = "checked", @class = "col-md-1" })
-                        }
-                        else
-                        {
-                            @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @class = "col-md-1" })
-                        }
-                        <label class="col-md-4" for="editor">Admin + Editor</label>
-                    </div>
-                </div>
-            
-        }
-        else
-        {
-            @Html.HiddenFor(model => model.accessId)
-            @Html.HiddenFor(model => model.parentRegisterId)
-            @Html.HiddenFor(model => model.ownerId)
-            @Html.HiddenFor(model => model.statusId)
-        }
-        
-        @if (Model.ContainedItemClassIsCodelistValue())
-        {
+    @if (Model.ContainedItemClassIsCodelistValue())
+    {
         <div class="form-group">
             <div class="col-md-2"></div>
             <div class="col-md-10">
@@ -161,9 +161,20 @@
                 <small>@Registers.MakeAllItemsValidMessage.</small>
             </div>
         </div>
-        }
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                @Html.LabelFor(model => model.MakeAllItemsRetired)
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                @Html.CheckBoxFor(m => m.MakeAllItemsRetired, new { title = Registers.MakeAllItemsRetiredMessage, @class = "checkbox-inline" })
+                <small>@Registers.MakeAllItemsRetiredMessage.</small>
+            </div>
+        </div>
+    }
 
-    </div>
+</div>
     <div class="form-group">
         <hr />
         <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />

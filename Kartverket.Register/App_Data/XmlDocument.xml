@@ -2123,6 +2123,11 @@
               Looks up a localized string similar to DOK i henhold til KMD-definisjon.
             </summary>
         </member>
+        <member name="P:Resources.GeodatalovDataSet.EcologicalBaseMap">
+            <summary>
+              Looks up a localized string similar to Økologisk grunnkart.
+            </summary>
+        </member>
         <member name="P:Resources.GeodatalovDataSet.Geodatalov">
             <summary>
               Looks up a localized string similar to Underlagt Geodataloven.
@@ -3434,7 +3439,7 @@
         </member>
         <member name="P:Resources.CodelistValues.ValidToDate">
             <summary>
-              Looks up a localized string similar to Gylig til.
+              Looks up a localized string similar to Gyldig til.
             </summary>
         </member>
         <member name="T:Resources.EPSGs">
@@ -4033,6 +4038,16 @@
         <member name="P:Resources.Registers.LoadingMessage">
             <summary>
               Looks up a localized string similar to Henter register.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.MakeAllItemsRetired">
+            <summary>
+              Looks up a localized string similar to Sett status &quot;Utgått&quot; på alle kodeverdier.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.MakeAllItemsRetiredMessage">
+            <summary>
+              Looks up a localized string similar to Sett status for alle verdier i kodelista. Individuelle verdier kan fortsatt settes.
             </summary>
         </member>
         <member name="P:Resources.Registers.MakeAllItemsValid">

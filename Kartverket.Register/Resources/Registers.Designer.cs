@@ -403,6 +403,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sett status &quot;Utgått&quot; på alle kodeverdier.
+        /// </summary>
+        public static string MakeAllItemsRetired {
+            get {
+                return ResourceManager.GetString("MakeAllItemsRetired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sett status for alle verdier i kodelista. Individuelle verdier kan fortsatt settes.
+        /// </summary>
+        public static string MakeAllItemsRetiredMessage {
+            get {
+                return ResourceManager.GetString("MakeAllItemsRetiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sett status &quot;Gyldig&quot; på alle kodeverdier.
         /// </summary>
         public static string MakeAllItemsValid {

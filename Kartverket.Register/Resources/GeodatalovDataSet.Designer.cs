@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Økologisk grunnkart.
+        /// </summary>
+        public static string EcologicalBaseMap {
+            get {
+                return ResourceManager.GetString("EcologicalBaseMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Underlagt Geodataloven.
         /// </summary>
         public static string Geodatalov {

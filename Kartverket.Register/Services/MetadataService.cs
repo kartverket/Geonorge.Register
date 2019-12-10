@@ -389,6 +389,14 @@ namespace Kartverket.DOK.Service
                         {
                             geodatalovDataset.Plan = true;
                         }
+                        else if (keyword.KeywordValue == "Mareano")
+                        {
+                            geodatalovDataset.Mareano = true;
+                        }
+                        else if (keyword.KeywordValue == "Økologisk grunnkart")
+                        {
+                            geodatalovDataset.EcologicalBaseMap = true;
+                        }
                     }
 
                     if (geodatalovDataset.NationalDataset)

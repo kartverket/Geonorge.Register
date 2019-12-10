@@ -331,6 +331,8 @@ namespace Kartverket.Register.Services
             originalDataset.NationalDataset = geodatalovDatasetFromKartkatalogen.NationalDataset;
             originalDataset.Plan = geodatalovDatasetFromKartkatalogen.Plan;
             originalDataset.Geodatalov = geodatalovDatasetFromKartkatalogen.Geodatalov;
+            originalDataset.Mareano = geodatalovDatasetFromKartkatalogen.Mareano;
+            originalDataset.EcologicalBaseMap = geodatalovDatasetFromKartkatalogen.EcologicalBaseMap;
 
             if (originalDataset.MetadataStatus != null)
             {

@@ -94,6 +94,27 @@ namespace Kartverket.Register.Services.Register
                                 registerItemsv2.Add(item);
                             }
                         }
+                        else if (!string.IsNullOrEmpty(filter.GeodataType))
+                        {
+                            var geodata = item as GeodatalovDataset;
+                            if(geodata!= null)
+                            { 
+                                if(geodata.InspireTheme && filter.GeodataType == "inspire")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.Dok && filter.GeodataType == "dok")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.NationalDataset && filter.GeodataType == "norgedigitalt")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.Plan && filter.GeodataType == "arealplaner")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.Geodatalov && filter.GeodataType == "geodatalov")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.Mareano && filter.GeodataType == "mareano")
+                                    registerItemsv2.Add(item);
+                                else if (geodata.EcologicalBaseMap && filter.GeodataType == "ecologicalBaseMap")
+                                    registerItemsv2.Add(item);
+                            }
+                        }
                         else
                         {
                             registerItemsv2.Add(item);

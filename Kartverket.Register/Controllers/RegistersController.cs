@@ -354,12 +354,12 @@ namespace Kartverket.Register.Controllers
 
         public ActionResult DetailsRegisterItemFramework(int versionnumber, string registername, string codevalue)
         {
-            Guid registerId = new Guid("5D0F584E-891E-4BBE-BC43-8AD6B1370E01");
+            Guid registerId = new Guid("BF51645E-EFED-4FCE-B53F-404622003B50");
             if (registername == "krav")
                 registername = "rammeverksdokumentet-krav";
             else if (registername == "anbefaling") { 
                 registername = "rammeverksdokumentet-anbefalinger";
-                registerId = new Guid("B61332EB-773B-4E32-AE4B-C92B2D24000E");
+                registerId = new Guid("DE8C76C0-875A-4D10-A914-0A1317CE19BE");
             }
 
             var register = _db.CodelistValues.Where(x => x.versionNumber == versionnumber && x.registerId == registerId && x.value == codevalue).FirstOrDefault();

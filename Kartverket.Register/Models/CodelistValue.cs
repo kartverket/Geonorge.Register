@@ -113,7 +113,9 @@ namespace Kartverket.Register.Models
             statusId = codelistValue.statusId;
 	        dateAccepted = GetDateAccepted();
 	        register.MakeAllItemsValid = statusId != "Valid";
-	    }
+            register.MakeAllItemsRetired = statusId != "Retired";
+
+        }
 
 	    private DateTime? GetDateAccepted()
 	    {

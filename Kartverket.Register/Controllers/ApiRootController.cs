@@ -615,7 +615,15 @@ namespace Kartverket.Register.Controllers
                 new UpdateCodelistService(db).UpdateCountiesAllValidDate();
                 new UpdateCodelistService(db).UpdateCountiesAllStatus();
                 new UpdateCodelistService(db).UpdateMunicipalities();
-                new UpdateCodelistService(db).UpdateOrganizationsAll();
+                try
+                {
+                    new UpdateCodelistService(db).UpdateOrganizationsAll();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+
                 new UpdateCodelistService(db).UpdateCenterPoint();
                 new UpdateCodelistService(db).UpdateBbox();
             }

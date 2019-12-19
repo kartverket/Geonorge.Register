@@ -28,13 +28,6 @@ namespace Kartverket.Register
                "~/dist/vendor.js",
                "~/dist/main.js"
                 ));
-            //Todo fix for /inspire-statusregister?InspireRegisteryType=inspirereport and /inspire-statusregister?InspireRegisteryType=report
-            bundles.Add(new ScriptBundle("~/node_modules/geonorge-base/assets/js/scripts").Include(
-               "~/node_modules/geonorge-base/assets/js/vendor.min.js",
-               "~/node_modules/geonorge-base/assets/js/main.min.js",
-                "~/node_modules/vue/dist/vue.min.js",
-                "~/node_modules/chart.js/dist/chart.min.js"
-           ));
 
 
             bundles.Add(new StyleBundle("~/Content/local-styles").Include(

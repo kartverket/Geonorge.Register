@@ -40,7 +40,13 @@ namespace Kartverket.Register.Controllers
             {"01", new BoundingBoxViewModel("58.76096","10.536679","59.790586","11.946004")},
             {"50", new BoundingBoxViewModel("63.180687", "9.699817", "65.470175", "14.325986")},
             {"21", new BoundingBoxViewModel("74.335505", "10.452566", "80.829057", "33.515045")},
-            {"22", new BoundingBoxViewModel("70.82539", "-9.07757", "71.16069", "-7.92864")}
+            {"22", new BoundingBoxViewModel("70.82539", "-9.07757", "71.16069", "-7.92864")},
+            {"42", new BoundingBoxViewModel("57.759005", "6.149699", "59.672687", "9.668877")},
+            {"34", new BoundingBoxViewModel("59.840785", "7.34253", "62.696928", "12.870849")},
+            {"54", new BoundingBoxViewModel("68.356014", "15.592542", "71.384879", "31.761485")},
+            {"38", new BoundingBoxViewModel("58.603311", "7.096288", "60.188272", "10.67502")},
+            {"46", new BoundingBoxViewModel("59.475421", "4.184771", "62.382396", "8.322053")},
+            {"30", new BoundingBoxViewModel("58.76096", "7.438842", "61.09172", "11.946004")}
         };
 
         private readonly IRegisterService _registerService;

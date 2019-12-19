@@ -8,23 +8,27 @@ namespace Kartverket.Register
         {
 
 
-            bundles.Add(new StyleBundle("~/node_modules/geonorge-base/assets/css/styles").Include(
-                "~/node_modules/geonorge-base/assets/css/vendor.min.css",
-                "~/node_modules/geonorge-base/assets/css/vendorfonts.min.css",
-                "~/node_modules/geonorge-base/assets/css/all.min.css"
-            ));
+            bundles.Add(new StyleBundle("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles").Include(
+               "~/Content/bower_components/kartverket-felleskomponenter/assets/css/vendor.min.css",
+               "~/Content/bower_components/kartverket-felleskomponenter/assets/css/vendorfonts.min.css",
+               "~/Content/bower_components/kartverket-felleskomponenter/assets/css/main.min.css"
+               ));
 
             bundles.Add(new StyleBundle("~/shared-partials-styles").Include(
-           "~/dist/vendor.css",
-           "~/dist/main.css"
-           ));
+               "~/dist/vendor.css",
+               "~/dist/main.css"
+               ));
+
+            bundles.Add(new ScriptBundle("~/Content/bower_components/kartverket-felleskomponenter/assets/js/scripts").Include(
+               "~/Content/bower_components/kartverket-felleskomponenter/assets/js/vendor.min.js",
+               "~/Content/bower_components/kartverket-felleskomponenter/assets/js/main.min.js"
+               ));
 
             bundles.Add(new ScriptBundle("~/shared-partials-scripts").Include(
                "~/dist/vendor.js",
                "~/dist/main.js"
-              
-           ));
-
+                ));
+            //Todo fix for /inspire-statusregister?InspireRegisteryType=inspirereport and /inspire-statusregister?InspireRegisteryType=report
             bundles.Add(new ScriptBundle("~/node_modules/geonorge-base/assets/js/scripts").Include(
                "~/node_modules/geonorge-base/assets/js/vendor.min.js",
                "~/node_modules/geonorge-base/assets/js/main.min.js",

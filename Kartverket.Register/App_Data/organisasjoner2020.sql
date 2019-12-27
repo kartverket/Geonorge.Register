@@ -467,3 +467,27 @@ DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964982686'
 
 DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '964967903')
 DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964967903'
+
+DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '864951732')
+DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='864951732'
+
+DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '964952078')
+DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964952078'
+
+DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '964952167')
+DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964952167'
+
+DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '964952256')
+DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964952256'
+
+DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '964952345')
+DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964952345'
+
+DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '964952434')
+DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964952434'
+
+DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '944305483')
+DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='944305483'
+
+DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '944426124')
+DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='944426124'

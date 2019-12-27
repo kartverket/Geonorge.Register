@@ -486,5 +486,8 @@ DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964952345'
 DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '964952434')
 DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='964952434'
 
+DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.systemId = 'ACBE5E85-0570-4053-9E46-13D01A540A44')
+DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE systemId='ACBE5E85-0570-4053-9E46-13D01A540A44'
+
 DELETE FROM CoverageDatasets FROM CoverageDatasets INNER JOIN RegisterItems ON CoverageDatasets.MunicipalityId = RegisterItems.systemId WHERE(RegisterItems.number = '944426124')
 DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE number='944426124'

@@ -11,7 +11,19 @@
     @Html.Partial("_breadcrumb", Model.CurrentVersion)
     <li>@Model.CurrentVersion.Name</li>
 }
-
+<script>
+    function ToogleEditAndDelete(tab)
+    {
+        if (tab == "gjeldende") {
+            $('#edit-button').show();
+            $('#delete-button').show();
+        }
+        else {
+            $('#edit-button').hide();
+            $('#delete-button').hide();
+        }
+    }
+</script>
 <article>
     <div class="row">
         <div class="col-sm-12">
@@ -33,9 +45,9 @@
 <div class="col-sm-12">
     <div class="row">
         <ul class="nav nav-tabs nav-tabs-version">
-            <li class="active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">@Registers.Current</a></li>
-            <li class="pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">@Registers.Proposal</a></li>
-            <li class="pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">@Registers.Historical</a></li>
+            <li class="active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab" onclick="ToogleEditAndDelete('gjeldende');">@Registers.Current</a></li>
+            <li class="pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab" onclick="ToogleEditAndDelete('forslag');">@Registers.Proposal</a></li>
+            <li class="pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab" onclick="ToogleEditAndDelete('historiske');">@Registers.Historical</a></li>
         </ul>
     </div>
 
@@ -68,8 +80,8 @@
 
                 if (Model.CurrentVersion.AccessRegisterItem)
                 {
-                    <a href="@Model.CurrentVersion.EditVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" title="Rediger @Model.CurrentVersion.Name">@Shared.Edit</a>
-                    <a href="@Model.CurrentVersion.DeleteVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" title="Slett @Model.CurrentVersion.Name">@Shared.Delete</a>
+                    <a href="@Model.CurrentVersion.EditVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" id="edit-button" title="Rediger @Model.CurrentVersion.Name">@Shared.Edit</a>
+                    <a href="@Model.CurrentVersion.DeleteVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" id="delete-button"  title="Slett @Model.CurrentVersion.Name">@Shared.Delete</a>
                 }
             }
             <a href="@Model.CurrentVersion.Register.GetObjectUrl()">@Shared.Back</a>

@@ -65,19 +65,19 @@ where Registers.systemId = '46F8F5DB-9731-422F-A04A-542E891F4E2B'
 
 update Registers
 set Registers.name = 'Kommunenummer', seoname='kommunenummer', description = 'Nummer til kommuner i Norge gjeldene fra 01.01.2020. Merknad: Det presiseres at kommunenummer alltid skal ha 4 sifre, dvs. eventuelt med ledende null. Kommunenummer benyttes for kopling mot en rekke andre registre som også benytter 4 sifre.'
-where Registers.systemId = '46F8F5DB-9731-422F-A04A-542E891F4E2A'
+where Registers.systemId = '85D75E07-7CAA-4876-B0B1-27513CE57670'
 
 update Registers
 set Registers.name = 'Kommunenummer 2019', seoname='kommunenummer-2019', description = 'Kommunenummer 2019'
-where Registers.systemId = '85D75E07-7CAA-4876-B0B1-27513CE57670'
+where Registers.systemId = '46F8F5DB-9731-422F-A04A-542E891F4E2A'
 
 update RegisterItems
 set statusId = 'Retired'
-where registerId = '85D75E07-7CAA-4876-B0B1-27513CE57670'
+where registerId = '46F8F5DB-9731-422F-A04A-542E891F4E2A'
 
 update RegisterItems
 set statusId = 'Valid'
-where registerId = '46F8F5DB-9731-422F-A04A-542E891F4E2A'
+where registerId = '85D75E07-7CAA-4876-B0B1-27513CE57670'
 
 
 

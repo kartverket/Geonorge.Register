@@ -651,6 +651,23 @@ namespace Kartverket.Register.Controllers
         //    return Ok();
         //}
 
+        [System.Web.Http.Route("api/geolett")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetGeoLettRegister()
+        {
+            try
+            {
+                var geolettRegister = new GeoLettService().Get();
+                return Ok(geolettRegister);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+
+            return Ok();
+        }
+
 
         // **** HJELPEMETODER ****
 

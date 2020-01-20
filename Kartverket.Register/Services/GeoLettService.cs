@@ -27,6 +27,8 @@ namespace Kartverket.Register.Services
             {
                 GeoLett geoLett = new GeoLett();
                 geoLett.KontekstType = workSheet.Cells[row, 1].Text;
+                if (string.IsNullOrEmpty(geoLett.KontekstType))
+                    break;
                 geoLett.ID = workSheet.Cells[row, 2].Text;
                 geoLett.Tittel = workSheet.Cells[row, 3].Text;
                 geoLett.ForklarendeTekst = workSheet.Cells[row, 3].Text;
@@ -85,8 +87,6 @@ namespace Kartverket.Register.Services
                     geoLett.Tegn6 = workSheet.Cells[row, 31].Text;
 
                 geoLettList.Add(geoLett);
-                if (string.IsNullOrEmpty(geoLett.KontekstType))
-                    break;
             }
 
             return geoLettList;

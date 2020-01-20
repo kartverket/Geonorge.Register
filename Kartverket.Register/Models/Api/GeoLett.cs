@@ -15,6 +15,8 @@ namespace Kartverket.Register.Models.Api
         public Lenke Lenke2 { get; set; }
         public Lenke Lenke3 { get; set; }
         public string VarselTekst { get; set; }
+        public string MuligeTiltak { get; set; }
+        public string Veiledning { get; set; }
         public Datasett Datasett { get; set; }
         public Referanse Referanse { get; set; }
         public string TekniskKommentar { get; set; }

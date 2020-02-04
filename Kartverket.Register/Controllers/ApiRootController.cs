@@ -22,6 +22,8 @@ using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Formatter;
 using Kartverket.Register.App_Start;
 using StatusReport = Kartverket.Register.Models.StatusReport;
+using Swashbuckle.Examples;
+using System.Net;
 
 namespace Kartverket.Register.Controllers
 {
@@ -661,6 +663,7 @@ namespace Kartverket.Register.Controllers
         [ResponseType(typeof(GeoLett))]
         [System.Web.Http.Route("api/geolett")]
         [System.Web.Http.HttpGet]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(GeoLettModelExample))]
         public IHttpActionResult GetGeoLettRegister()
         {
             try
@@ -802,6 +805,18 @@ namespace Kartverket.Register.Controllers
             };
 
             return tmp;
+        }
+    }
+
+    public class GeoLettModelExample : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            var geolettRegister = new GeoLettService().Get();
+            List<GeoLett> geoLetts = new List<GeoLett>();
+            var hulEik = geolettRegister.Where(g => g.KontekstType == "Byggesak-buffer-biomangfold-utvalgtnaturtype-hul eik").FirstOrDefault();
+            geoLetts.Add(hulEik);
+            return geoLetts;
         }
     }
 }

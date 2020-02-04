@@ -651,6 +651,14 @@ namespace Kartverket.Register.Controllers
         //    return Ok();
         //}
 
+        /// <summary>
+        /// Get all Geolett
+        /// </summary>
+        /// <remarks>
+        /// Get a list of all Geolett items
+        /// </remarks>
+        /// <returns></returns>
+        [ResponseType(typeof(GeoLett))]
         [System.Web.Http.Route("api/geolett")]
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetGeoLettRegister()

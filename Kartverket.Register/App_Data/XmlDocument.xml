@@ -591,6 +591,15 @@
             DokCoverageMapping
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetGeoLettRegister">
+            <summary>
+            Get all Geolett
+            </summary>
+            <remarks>
+            Get a list of all Geolett items
+            </remarks>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiSearchController.Get(Kartverket.Register.Models.Api.SearchParameters)">
             <summary>
             Register search
@@ -917,6 +926,96 @@
             <param name="file"></param>
             <param name="filtype"></param>
             <param name="seofilename"></param>
+        </member>
+        <member name="T:Kartverket.Register.Models.Api.GeoLett">
+            <summary>
+            Geolett
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.KontekstType">
+            <summary>
+            kodeliste - åpen
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.ID">
+            <summary>
+            Identifikasjonsnummer for tekstene
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.Tittel">
+            <summary>
+            Overskrift
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.ForklarendeTekst">
+            <summary>
+            En begrunnelse for hvorfor søker gjøres oppmerksom på forholdet
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenke1">
+            <summary>
+            Mer utfyllende informasjon lenke
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenke2">
+            <summary>
+            Mer utfyllende informasjon lenke
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenke3">
+            <summary>
+            Mer utfyllende informasjon lenke
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.VarselTekst">
+            <summary>
+            En tekst som gjør søkeren oppmerksom på et forhold av betydning for søknader
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.MuligeTiltak">
+            <summary>
+            Denne teksten skal fungere som en hjelp til søkeren til å komme videre i prosessen
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.Veiledning">
+            <summary>
+            Veiledende tekst om ett eller flere av de mulige tiltakene
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.Referanse.Tek17">
+            <summary>
+            Byggesaksforskrifter, lenke
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.Datasett.Tittel">
+            <summary>
+            Hvilket datasett tekstene er knyttet til
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.Datasett.UrlMetadata">
+            <summary>
+            Url til metadata om datasettet
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.Datasett.TypeReferanse">
+            <summary>
+            Objekttype, attributt og datasett skal sammen med type tiltak...
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.ObjectType.Objekttype">
+            <summary>
+            Flomsone
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.ObjectType.Attributt">
+            <summary>
+            Sannsynlighet
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.ObjectType.Kodeverdi">
+            <summary>
+            200
+            </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.Facet.FacetField">
             <summary>

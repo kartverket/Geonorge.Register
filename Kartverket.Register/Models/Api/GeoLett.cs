@@ -5,17 +5,50 @@ using System.Web;
 
 namespace Kartverket.Register.Models.Api
 {
+    /// <summary>
+    /// Geolett
+    /// </summary>
     public class GeoLett
     {
-        public string KontekstType { get; set; }        
+        /// <summary>
+        /// kodeliste - åpen
+        /// </summary>
+        public string KontekstType { get; set; }
+        /// <summary>
+        /// Identifikasjonsnummer for tekstene
+        /// </summary>
         public string ID { get; set; }
+        /// <summary>
+        /// Overskrift
+        /// </summary>
         public string Tittel { get; set; }
+        /// <summary>
+        /// En begrunnelse for hvorfor søker gjøres oppmerksom på forholdet
+        /// </summary>
         public string ForklarendeTekst { get; set; }
+        /// <summary>
+        /// Mer utfyllende informasjon lenke
+        /// </summary>
         public Lenke Lenke1 { get; set; }
+        /// <summary>
+        /// Mer utfyllende informasjon lenke
+        /// </summary>
         public Lenke Lenke2 { get; set; }
+        /// <summary>
+        /// Mer utfyllende informasjon lenke
+        /// </summary>
         public Lenke Lenke3 { get; set; }
+        /// <summary>
+        /// En tekst som gjør søkeren oppmerksom på et forhold av betydning for søknader
+        /// </summary>
         public string VarselTekst { get; set; }
+        /// <summary>
+        /// Denne teksten skal fungere som en hjelp til søkeren til å komme videre i prosessen
+        /// </summary>
         public string MuligeTiltak { get; set; }
+        /// <summary>
+        /// Veiledende tekst om ett eller flere av de mulige tiltakene
+        /// </summary>
         public string Veiledning { get; set; }
         public Datasett Datasett { get; set; }
         public Referanse Referanse { get; set; }
@@ -33,6 +66,9 @@ namespace Kartverket.Register.Models.Api
     public class Referanse
     {
         public string Tittel { get; set; }
+        /// <summary>
+        /// Byggesaksforskrifter, lenke
+        /// </summary>
         public Lenke Tek17 { get; set; }
         public Lenke AnnenLov { get; set; }
         public Lenke RundskrivFraDep { get; set; }
@@ -40,14 +76,32 @@ namespace Kartverket.Register.Models.Api
 
     public class Datasett
     {
+        /// <summary>
+        /// Hvilket datasett tekstene er knyttet til
+        /// </summary>
         public string Tittel { get; set; }
+        /// <summary>
+        /// Url til metadata om datasettet
+        /// </summary>
         public string UrlMetadata { get; set; }
+        /// <summary>
+        /// Objekttype, attributt og datasett skal sammen med type tiltak...
+        /// </summary>
         public ObjectType TypeReferanse { get; set; }
     }
     public class ObjectType
     {
+        /// <summary>
+        /// Flomsone
+        /// </summary>
         public string Objekttype { get; set; }
+        /// <summary>
+        /// Sannsynlighet
+        /// </summary>
         public string Attributt { get; set; }
+        /// <summary>
+        /// 200
+        /// </summary>
         public string Kodeverdi { get; set; }
 
     }

@@ -27,15 +27,15 @@ namespace Kartverket.Register.Models.Api
         /// </summary>
         public string ForklarendeTekst { get; set; }
         /// <summary>
-        /// Mer utfyllende informasjon lenke
+        /// Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
         /// </summary>
         public Lenke Lenke1 { get; set; }
         /// <summary>
-        /// Mer utfyllende informasjon lenke
+        /// Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
         /// </summary>
         public Lenke Lenke2 { get; set; }
         /// <summary>
-        /// Mer utfyllende informasjon lenke
+        /// Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
         /// </summary>
         public Lenke Lenke3 { get; set; }
         /// <summary>
@@ -49,7 +49,7 @@ namespace Kartverket.Register.Models.Api
         /// <summary>
         /// Veiledende tekst om ett eller flere av de mulige tiltakene
         /// </summary>
-        public string Veiledning { get; set; }
+        public string Veiledning { get; set; }       
         public Datasett Datasett { get; set; }
         public Referanse Referanse { get; set; }
         public string TekniskKommentar { get; set; }

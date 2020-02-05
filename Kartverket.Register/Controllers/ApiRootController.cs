@@ -657,7 +657,7 @@ namespace Kartverket.Register.Controllers
         /// Get all Geolett
         /// </summary>
         /// <remarks>
-        /// Get a list of all Geolett items
+        /// Med GeoLett skal vi forbedre datagrunnlaget for plan- og byggesaksprosessen. Det gjør vi ved å fremme innovasjon av metodebruk og digitale verktøy, legge til rette for effektiv deling av informasjon og støtte kommuner og sektormyndigheter for å forbedre kvaliteten på grunndata.
         /// </remarks>
         /// <returns></returns>
         [ResponseType(typeof(GeoLett))]

@@ -27,8 +27,9 @@ namespace Kartverket.Register.Areas.HelpPage.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.DocumentationProvider = Configuration.Services.GetDocumentationProvider();
-            return View(Configuration.Services.GetApiExplorer().ApiDescriptions);
+            return RedirectPermanent("/swagger");
+            //ViewBag.DocumentationProvider = Configuration.Services.GetDocumentationProvider();
+            //return View(Configuration.Services.GetApiExplorer().ApiDescriptions);
         }
 
         public ActionResult Api(string apiId)

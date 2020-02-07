@@ -22,6 +22,8 @@ using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Formatter;
 using Kartverket.Register.App_Start;
 using StatusReport = Kartverket.Register.Models.StatusReport;
+using Swashbuckle.Examples;
+using System.Net;
 
 namespace Kartverket.Register.Controllers
 {
@@ -651,6 +653,32 @@ namespace Kartverket.Register.Controllers
         //    return Ok();
         //}
 
+        /// <summary>
+        /// Get all Geolett
+        /// </summary>
+        /// <remarks>
+        /// Med GeoLett skal vi forbedre datagrunnlaget for plan- og byggesaksprosessen. Det gjør vi ved å fremme innovasjon av metodebruk og digitale verktøy, legge til rette for effektiv deling av informasjon og støtte kommuner og sektormyndigheter for å forbedre kvaliteten på grunndata.
+        /// </remarks>
+        /// <returns></returns>
+        [ResponseType(typeof(GeoLett))]
+        [System.Web.Http.Route("api/geolett")]
+        [System.Web.Http.HttpGet]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(GeoLettModelExample))]
+        public IHttpActionResult GetGeoLettRegister()
+        {
+            try
+            {
+                var geolettRegister = new GeoLettService().Get();
+                return Ok(geolettRegister);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+
+            return Ok();
+        }
+
 
         // **** HJELPEMETODER ****
 
@@ -777,6 +805,18 @@ namespace Kartverket.Register.Controllers
             };
 
             return tmp;
+        }
+    }
+
+    public class GeoLettModelExample : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            var geolettRegister = new GeoLettService().Get();
+            List<GeoLett> geoLetts = new List<GeoLett>();
+            var hulEik = geolettRegister.Where(g => g.KontekstType == "Byggesak-buffer-biomangfold-utvalgtnaturtype-hul eik").FirstOrDefault();
+            geoLetts.Add(hulEik);
+            return geoLetts;
         }
     }
 }

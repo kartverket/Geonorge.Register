@@ -85,13 +85,16 @@
                     <li id="report-Tab" class="tab">
                         @Html.ActionLink(InspireDataSet.Reports, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "report"))
                     </li>
+                    <li id="suitability-Tab" class="tab">
+                        @Html.ActionLink(DataSet.DOK_SuitabilityRating, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "suitability"))
+                    </li>
                 </ul>
             </div>
         }
     </div>
 </section>
 
-@if (!Model.SelectedDokTabIsReport())
+@if (!Model.SelectedDokTabIsReport() && !Model.SelectedDokTabIsSuitability())
 {
     <div class="row search-result-navigation">
         <div class="col-md-4">
@@ -126,13 +129,17 @@
         @Html.Partial("_dokReport", (DokStatusReportViewModel)Model.StatusReport)
     }
 }
+else if (Model.SelectedDokTabIsSuitability())
+{
+     @Html.Partial("_suitability")
+}
 else
 {
     @Html.Partial("_dataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
 }
 
 
-@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport())
+@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport() && !Model.SelectedDokTabIsSuitability())
 {<div class="clearfix"></div>
     <div class="col-sm-12 row">
         @if (Model.ContainedItemClassIsRegister())
@@ -152,7 +159,7 @@ else
 
 <div class="clearfix"></div>
 <div class="hidden-print">
-    @if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport())
+    @if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport() && !Model.SelectedDokTabIsSuitability())
     {
         if (Model.AccessRegister.EditListOfRegisterItems)
         {

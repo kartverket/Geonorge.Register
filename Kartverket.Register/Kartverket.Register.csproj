@@ -2232,6 +2232,7 @@
     <Content Include="Views\Shared\_geodatalovReport.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\Shared\_suitability.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

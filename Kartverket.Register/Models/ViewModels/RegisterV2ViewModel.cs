@@ -328,6 +328,11 @@ namespace Kartverket.Register.Models.ViewModels
             return SelectedDokTab == "report";
         }
 
+        public bool SelectedDokTabIsSuitability()
+        {
+            return SelectedDokTab == "suitability";
+        }
+
         public bool SelectedInspireRegisteryTypeIsService()
         {
             return SelectedInspireRegisteryType == "service";

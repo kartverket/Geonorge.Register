@@ -131,54 +131,54 @@
 }
 else if (Model.SelectedDokTabIsSuitability())
 {
-     @Html.Partial("_suitability")
-}
-else
-{
-    @Html.Partial("_dataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-}
-
-
-@if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport() && !Model.SelectedDokTabIsSuitability())
-{<div class="clearfix"></div>
-    <div class="col-sm-12 row">
-        @if (Model.ContainedItemClassIsRegister())
-        {
-            @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
-        }
-        else if (Model.RegisterItemsV2.Any())
-        {
-            @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
-        }
-        else
-        {
-            @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-        }
-    </div>
-}
-
-<div class="clearfix"></div>
-<div class="hidden-print">
-    @if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport() && !Model.SelectedDokTabIsSuitability())
-    {
-        if (Model.AccessRegister.EditListOfRegisterItems)
-        {
-            <a href="@Model.GetEditListUrl()" class="btn btn-default btn-space pull-right">@Registers.EditList</a>
-        }
-        if (Model.AccessRegister.Add)
-        {
-            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
-        }
-        if (Model.AccessRegister.Edit)
-        {
-            <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">@Shared.Edit</a>
-        }
-        if (Model.AccessRegister.Delete)
-        {
-            <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteObjectUrl()">@Shared.Delete</a>
-        }
+    @Html.Partial("_suitability", Model.RegisterItems.OfType<Kartverket.Register.Models.Dataset>().ToList())
     }
-    <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    else
+    {
+    @Html.Partial("_dataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+    }
+
+
+    @if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport() && !Model.SelectedDokTabIsSuitability())
+    {<div class="clearfix"></div>
+        <div class="col-sm-12 row">
+            @if (Model.ContainedItemClassIsRegister())
+            {
+                @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
+            }
+            else if (Model.RegisterItemsV2.Any())
+            {
+                @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+            }
+            else
+            {
+                @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+            }
+        </div>
+    }
+
+    <div class="clearfix"></div>
+    <div class="hidden-print">
+        @if (!Model.SelectedInspireRegisteryTypeIsInspireReport() && !Model.SelectedInspireRegisteryTypeIsSynchronizations() && !Model.SelectedDokTabIsReport() && !Model.SelectedDokTabIsSuitability())
+        {
+            if (Model.AccessRegister.EditListOfRegisterItems)
+            {
+                <a href="@Model.GetEditListUrl()" class="btn btn-default btn-space pull-right">@Registers.EditList</a>
+            }
+            if (Model.AccessRegister.Add)
+            {
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
+            }
+            if (Model.AccessRegister.Edit)
+            {
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">@Shared.Edit</a>
+            }
+            if (Model.AccessRegister.Delete)
+            {
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteObjectUrl()">@Shared.Delete</a>
+            }
+        }
+        <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 

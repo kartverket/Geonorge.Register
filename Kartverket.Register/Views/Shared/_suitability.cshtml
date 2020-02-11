@@ -1,1 +1,89 @@
-﻿<div></div>
+﻿@using Kartverket.Register.Models
+@using Kartverket.Register.Helpers
+@model List<Kartverket.Register.Models.Dataset>
+
+<table id="myTable" class="tablesorter table-responsive table tableSuitability" style="width:100%">
+    <thead>
+        <tr>
+            <th><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Temagruppe">@DataSet.DOK_Temagruppe</a></th>
+            <th colspan="2"><a href="#" data-toggle="tooltip" title="@Shared.Title">@Shared.Title</a></th>
+            <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityRegionsplanleggingTitle">@DataSet.SuitabilityRegionsplanleggingText</a></th>
+            <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilitySamfunnTitle">@DataSet.SuitabilitySamfunnText</a></th>
+            <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityArealTitle">@DataSet.SuitabilityArealText</a></th>
+            <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityOmraadeTitle">@DataSet.SuitabilityOmraadeText</a></th>
+            <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityDetaljreguleringTitle">@DataSet.SuitabilityDetaljreguleringText</a></th>
+            <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityByggesakTitle">@DataSet.SuitabilityByggesakText</a></th>
+            <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityKUTitle">@DataSet.SuitabilityKUText</a></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr class="mother">
+                <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].name: @Model[i].theme">@Model[i].ThemeGroupId</td>
+                <td style="background-color:rgb(234, 234, 234)" title="Datasett: @Model[i].name">
+                    @Model[i].name
+                    @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].name, new { @readonly = "readonly" })
+                </td>
+                <td></td>
+                <td class="text-center">
+                    <span id="regionalPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].RegionalPlan.HasValue)</span>
+                    <span data-toggle="tooltip" data-placement="bottom" title="Regionplan" class="custom-checkbox custom-checkbox-@Model[i].RegionalPlan">
+                        @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].RegionalPlan" })
+                        <label for="dokMunicipalList[@i].RegionalPlan" class="checkbox-icon"><span style="position:relative;right: -11px;">@Model[i].RegionalPlan.Value</span></label>
+                    </span>
+                </td>
+                <td class="text-center">
+                    <span id="municipalSocialPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalSocialPlan.HasValue)</span>
+                    <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens samfunnsdel" class="custom-checkbox custom-checkbox-@Model[i].MunicipalSocialPlan">
+                        @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", Model[i].MunicipalSocialPlan.HasValue, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].MunicipalSocialPlan" })
+                        <label for="dokMunicipalList[@i].MunicipalSocialPlan" class="checkbox-icon"></label>
+                    </span>
+                </td>
+                <td class="text-center">
+                    <span id="municipalLandUseElementPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalLandUseElementPlan.HasValue)</span>
+                    <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens arealdel" class="custom-checkbox custom-checkbox-@Model[i].MunicipalLandUseElementPlan">
+                        @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalLandUseElementPlan", Model[i].MunicipalLandUseElementPlan.HasValue, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].MunicipalLandUseElementPlan" })
+                        <label for="dokMunicipalList[@i].MunicipalLandUseElementPlan" class="checkbox-icon"></label>
+                    </span>
+                </td>
+                <td class="text-center">
+                    <span id="zoningPlanArea-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlanArea.HasValue)</span>
+                    <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan område" class="custom-checkbox custom-checkbox-@Model[i].ZoningPlanArea">
+                        @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanArea", Model[i].ZoningPlanArea.HasValue, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].ZoningPlanArea" })
+                        <label for="dokMunicipalList[@i].ZoningPlanArea" class="checkbox-icon"></label>
+                    </span>
+                </td>
+                <td class="text-center">
+                    <span id="zoningPlanDetails-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlanDetails.HasValue)</span>
+                    <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan detalj" class="custom-checkbox custom-checkbox-@Model[i].ZoningPlanDetails">
+                        @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanDetails", Model[i].ZoningPlanDetails.HasValue, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].ZoningPlanDetails" })
+                        <label for="dokMunicipalList[@i].ZoningPlanDetails" class="checkbox-icon"></label>
+                    </span>
+                </td>
+                <td class="text-center">
+                    <span id="buildingMatter-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].BuildingMatter.HasValue)</span>
+                    <span data-toggle="tooltip" data-placement="bottom" title="Byggesak" class="custom-checkbox custom-checkbox-@Model[i].BuildingMatter">
+                        @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", Model[i].BuildingMatter.HasValue, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].BuildingMatter" })
+                        <label for="dokMunicipalList[@i].BuildingMatter" class="checkbox-icon"></label>
+                    </span>
+                </td>
+                <td class="text-center">
+                    <span id="environmentalImpactAssessment-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].EenvironmentalImpactAssessment.HasValue)</span>
+                    <span data-toggle="tooltip" data-placement="bottom" title="KU og ROS for pbl-planer" class="custom-checkbox custom-checkbox-@Model[i].EenvironmentalImpactAssessment">
+                        @Html.CheckBox("dokMunicipalList[" + i + "].EnvironmentalImpactAssessment", Model[i].EenvironmentalImpactAssessment.HasValue, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].EenvironmentalImpactAssessment" })
+                        <label for="dokMunicipalList[@i].EenvironmentalImpactAssessment" class="checkbox-icon"></label>
+                    </span>
+                </td>
+
+                <td>
+                    <span type="button" class="fa-pencil-square fa" title="@Shared.Edit" style="font-size:20px; cursor: pointer; color:#337ab7; vertical-align: middle" onclick="location.href='/dataset/det-offentlige-kartgrunnlaget/det-offentlige-kartgrunnlaget/@Model[i].seoname/rediger'"></span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

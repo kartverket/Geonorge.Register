@@ -3423,6 +3423,11 @@
               Looks up a localized string similar to Tekst om egnethet, tips til bruk eller andre kommentarer.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.SuitabitityHelp">
+            <summary>
+              Looks up a localized string similar to Høyere intensitet på bakgrunnsfarge indikerer bedre egnethet basert på overordnede nasjonale vurderinger. Ved å holde musepekeren over boksen for egnethet vil man kunne se mer tekst om egnethet, tips til bruk eller andre kommentarer dersom det er registrert..
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.SuitabitityHelpText">
              <summary>
                Looks up a localized string similar to &lt;b&gt;Kommunalt forslag til bruk ut fra egnethet&lt;/b&gt;&lt;br /&gt;

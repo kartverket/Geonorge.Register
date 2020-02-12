@@ -497,4 +497,7 @@ Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere
   <data name="Suitability" xml:space="preserve">
     <value>Egnethet</value>
   </data>
+  <data name="SuitabitityHelp" xml:space="preserve">
+    <value>Høyere intensitet på bakgrunnsfarge indikerer bedre egnethet basert på overordnede nasjonale vurderinger. Ved å holde musepekeren over boksen for egnethet vil man kunne se mer tekst om egnethet, tips til bruk eller andre kommentarer dersom det er registrert.</value>
+  </data>
 </root>

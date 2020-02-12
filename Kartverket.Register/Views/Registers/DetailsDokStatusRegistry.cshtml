@@ -17,7 +17,7 @@
 }
 
 @section Scripts {
-    @if (Model.StatusReport != null && !Model.StatusReport.ReportNotExists)
+    @if (Model.StatusReport != null && !Model.StatusReport.ReportNotExists & !Model.SelectedDokTabIsSuitability())
     {
         @Html.Partial("js/_dokReportCharts", (DokStatusReportViewModel)Model.StatusReport)
     }
@@ -181,4 +181,5 @@ else if (Model.SelectedDokTabIsSuitability())
         <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.min.js"></script>
 

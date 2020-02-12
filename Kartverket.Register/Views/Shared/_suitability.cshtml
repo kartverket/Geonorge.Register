@@ -53,49 +53,49 @@ else
                         @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].name, new { @readonly = "readonly" })
                     </td>
                     <td></td>
-                    <td class="text-center">
-                        <span id="regionalPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].RegionalPlan.HasValue)</span>
+                    <td class="text-center"><span class="hidden">@Model[i].RegionalPlan.Value</span>
+                        <span id="regionalPlan-@i" class="hidden" value="@Model[i].RegionalPlan.Value">@HtmlHelperExtensions.cbChecked(Model[i].RegionalPlan.HasValue)</span>
                         <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Regionplan",Model[i].RegionalPlanNote)" class="custom-checkbox custom-checkbox-@Model[i].RegionalPlan">
                             @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].RegionalPlan" })
                             <label for="dokMunicipalList[@i].RegionalPlan" class="checkbox-icon">@FormatSuitability(Model[i].RegionalPlan.Value)</label>
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center"><span class="hidden">@Model[i].MunicipalSocialPlan.Value</span>
                         <span id="municipalSocialPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalSocialPlan.HasValue)</span>
                         <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Kommuneplanens samfunnsdel", Model[i].MunicipalSocialPlanNote)" class="custom-checkbox custom-checkbox-@Model[i].MunicipalSocialPlan">
                             @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].MunicipalSocialPlan" })
                             <label for="dokMunicipalList[@i].MunicipalSocialPlan" class="checkbox-icon">@FormatSuitability(Model[i].MunicipalSocialPlan.Value)</label>
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center"><span class="hidden">@Model[i].MunicipalLandUseElementPlan.Value</span>
                         <span id="municipalLandUseElementPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalLandUseElementPlan.HasValue)</span>
                         <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Kommuneplanens arealdel", Model[i].MunicipalLandUseElementPlanNote)" class="custom-checkbox custom-checkbox-@Model[i].MunicipalLandUseElementPlan">
                             @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalLandUseElementPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].MunicipalLandUseElementPlan" })
                             <label for="dokMunicipalList[@i].MunicipalLandUseElementPlan" class="checkbox-icon">@FormatSuitability(Model[i].MunicipalLandUseElementPlan.Value)</label>
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center"><span class="hidden">@Model[i].ZoningPlanArea.Value</span>
                         <span id="zoningPlanArea-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlanArea.HasValue)</span>
                         <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Reguleringsplan område", Model[i].ZoningPlanAreaNote)" class="custom-checkbox custom-checkbox-@Model[i].ZoningPlanArea">
                             @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanArea", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].ZoningPlanArea" })
                             <label for="dokMunicipalList[@i].ZoningPlanArea" class="checkbox-icon">@FormatSuitability(Model[i].ZoningPlanArea.Value)</label>
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center"><span class="hidden">@Model[i].ZoningPlanDetails.Value</span>
                         <span id="zoningPlanDetails-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlanDetails.HasValue)</span>
                         <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Reguleringsplan detalj", Model[i].ZoningPlanDetailsNote)" class="custom-checkbox custom-checkbox-@Model[i].ZoningPlanDetails">
                             @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanDetails", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].ZoningPlanDetails" })
                             <label for="dokMunicipalList[@i].ZoningPlanDetails" class="checkbox-icon">@FormatSuitability(Model[i].ZoningPlanDetails.Value)</label>
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center"><span class="hidden">@Model[i].BuildingMatter.Value</span>
                         <span id="buildingMatter-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].BuildingMatter.HasValue)</span>
                         <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Byggesak",Model[i].BuildingMatterNote)" class="custom-checkbox custom-checkbox-@Model[i].BuildingMatter">
                             @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].BuildingMatter" })
                             <label for="dokMunicipalList[@i].BuildingMatter" class="checkbox-icon">@FormatSuitability(Model[i].BuildingMatter.Value)</label>
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center"><span class="hidden">@Model[i].EenvironmentalImpactAssessment.Value</span>
                         <span id="environmentalImpactAssessment-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].EenvironmentalImpactAssessment.HasValue)</span>
                         <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("KU og ROS for pbl-planer", Model[i].EenvironmentalImpactAssessmentNote)" class="custom-checkbox custom-checkbox-@Model[i].EenvironmentalImpactAssessment">
                             @Html.CheckBox("dokMunicipalList[" + i + "].EnvironmentalImpactAssessment", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].EenvironmentalImpactAssessment" })
@@ -114,5 +114,56 @@ else
         </tbody>
     </table>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.min.js"></script>
+<script>
+    $('tablesorter').tablesorter({ theme: 'blue' });
+    console.log('hei');
+
+
+    $('.tablesorter-childRow td').hide();
+    $(".tableSuitability")
+        .tablesorter({
+            theme: 'blue',
+            cssChildRow: "tablesorter-childRow"
+        })
+
+    $('.tablesorter').delegate('.toggle', 'click', function () {
+
+        $(this).closest('tr').nextUntil('tr:not(.tablesorter-childRow)').find('td').toggle();
+
+        return false;
+    });
+
+
+
+    function cbConfirmdChecked(id) {
+        var className = "cb" + id;
+        var element = document.getElementsByClassName(className);
+        var checked = element.item(0).checked;
+
+        if (checked) {
+            document.getElementById(id).innerHTML = '1';
+        } else {
+            document.getElementById(id).innerHTML = '0';
+        }
+    }
+
+    function cbChecked(type, id) {
+        var className = "cb-" + type + "-" + id;
+        var element = document.getElementsByClassName(className);
+        var checked = element.item(0).checked;
+
+        if (checked) {
+            document.getElementById(type + "-" + id).innerHTML = '1';
+        } else {
+            document.getElementById(type + "-" + id).innerHTML = '0';
+        }
+    }
+
+
+
+</script>
+
+
 
 

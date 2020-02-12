@@ -74,23 +74,24 @@
             <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span><br />
         </div>
 
-        @if (HtmlHelperExtensions.IsAdmin())
-        {
+
             <div class="col-sm-12 col-md-12 ">
                 <ul id="tabs" class="nav nav-tabs">
 
                     <li id="dataset-Tab" class="tab active">
                         @Html.ActionLink(DataSet.Dataset, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "dataset"))
                     </li>
-                    <li id="report-Tab" class="tab">
-                        @Html.ActionLink(InspireDataSet.Reports, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "report"))
-                    </li>
-                    <li id="suitability-Tab" class="tab">
-                        @Html.ActionLink(DataSet.DOK_SuitabilityRating, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "suitability"))
-                    </li>
-                </ul>
+                    @if (HtmlHelperExtensions.IsAdmin())
+                    {
+                        <li id="report-Tab" class="tab">
+                            @Html.ActionLink(InspireDataSet.Reports, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "report"))
+                        </li>
+                    }
+                        <li id="suitability-Tab" class="tab">
+                            @Html.ActionLink(DataSet.DOK_SuitabilityRating, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "suitability"))
+                        </li>
+                    </ul>
             </div>
-        }
     </div>
 </section>
 

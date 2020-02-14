@@ -565,6 +565,13 @@
             <param name="item">The search engine optimized name of the register item</param>
             <param name="id"></param>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterItemByName(System.String,System.String)">
+            <summary>
+            Gets sosi-codelist
+            </summary>
+            <param name="register">The search engine optimized name of the register</param>
+            <param name="item">The search engine optimized name of the register item</param>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.SearchByOrganizationName(System.String)">
             <summary>
             List items for specific organization 
@@ -596,7 +603,7 @@
             Get all Geolett
             </summary>
             <remarks>
-            Med GeoLett skal vi forbedre datagrunnlaget for plan- og byggesaksprosessen. Det gjør vi ved å fremme innovasjon av metodebruk og digitale verktøy, legge til rette for effektiv deling av informasjon og støtte kommuner og sektormyndigheter for å forbedre kvaliteten på grunndata.
+            Med GeoLett skal vi forbedre datagrunnlaget for plan- og byggesaksprosessen. Det gj�r vi ved � fremme innovasjon av metodebruk og digitale verkt�y, legge til rette for effektiv deling av informasjon og st�tte kommuner og sektormyndigheter for � forbedre kvaliteten p� grunndata.
             </remarks>
             <returns></returns>
         </member>

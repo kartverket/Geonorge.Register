@@ -39,7 +39,7 @@ namespace Kartverket.Register.Services
                 if (!string.IsNullOrEmpty(workSheet.Cells[row, 10].Text))
                     geoLett.Lenke3 = new Lenke { Tittel = workSheet.Cells[row, 9].Text, Href = workSheet.Cells[row, 10].Text };
 
-                geoLett.VarselTekst = workSheet.Cells[row, 11].Text;
+                geoLett.Dialogtekst = workSheet.Cells[row, 11].Text;
                 geoLett.MuligeTiltak = workSheet.Cells[row, 12].Text;
                 geoLett.Veiledning = workSheet.Cells[row, 13].Text;
 

@@ -41,7 +41,7 @@ namespace Kartverket.Register.Models.Api
         /// <summary>
         /// En tekst som gjør søkeren oppmerksom på et forhold av betydning for søknader
         /// </summary>
-        public string VarselTekst { get; set; }
+        public string Dialogtekst { get; set; }
         /// <summary>
         /// Denne teksten skal fungere som en hjelp til søkeren til å komme videre i prosessen
         /// </summary>

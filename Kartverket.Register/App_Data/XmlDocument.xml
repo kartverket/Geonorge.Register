@@ -974,7 +974,7 @@
             Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.GeoLett.VarselTekst">
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.Dialogtekst">
             <summary>
             En tekst som gjør søkeren oppmerksom på et forhold av betydning for søknader
             </summary>

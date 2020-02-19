@@ -433,6 +433,8 @@ namespace Kartverket.Register.Models.Api
                 label = GetNameLocale(c);
                 if (c.description != null) description = GetDescriptionLocale(c);
                 codevalue = c.value;
+                if (string.IsNullOrEmpty(codevalue))
+                    codevalue = label;
                 if (c.broaderItemId != null)
                     broader = baseUrl + c.broaderItem.GetObjectUrl();
                 foreach (var codelistvalue in c.narrowerItems)

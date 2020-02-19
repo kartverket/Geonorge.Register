@@ -1,4 +1,4 @@
-﻿using Kartverket.Register.Models;
+using Kartverket.Register.Models;
 using Kartverket.Register.Models.Api;
 using System;
 using System.Collections.Generic;
@@ -53,49 +53,72 @@ namespace Kartverket.Register.Formatter
 
         private void BuildSKOSFeed(object models, Stream stream, string contenttype)
             {
-                if (models is Models.Api.Register)
-                {
+            if (models is Models.Api.Register)
+            {
                 Models.Api.Register register = (Models.Api.Register)models;
 
-                    string targetNamespace = "";
-                    string nameSpace = "";
-                    if (register.targetNamespace != null)
+                string targetNamespace = "";
+                string nameSpace = "";
+                if (register.targetNamespace != null)
+                {
+                    nameSpace = register.targetNamespace;
+                    if (register.targetNamespace.EndsWith("/"))
                     {
-                        nameSpace = register.targetNamespace;
-                        if (register.targetNamespace.EndsWith("/"))
-                        {
-                            targetNamespace = register.targetNamespace + register.label;
-                        }
-                        else
-                        {
-                            targetNamespace = register.targetNamespace + "/" + register.label;
-                        }
+                        targetNamespace = register.targetNamespace + register.label;
                     }
-
-                    XNamespace ns = "http://www.opengis.net/gml/3.2";
-                    XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
-                    XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
-                    XElement xdoc =
-                        new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
-                            new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
-                            new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
-                            new XAttribute(gmlNs + "id", register.id),
-                            new XElement(gmlNs + "description"),
-                            new XElement(gmlNs + "identifier",
-                                new XAttribute("codeSpace", nameSpace), register.label),
-
-                            from k in register.containeditems
-                            select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.codevalue),
-                              new XElement(gmlNs + "description", k.description),
-                              new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.codevalue),
-                              new XElement(gmlNs + "name", k.label)
-                              )));
-
-                    using (XmlWriter writer = XmlWriter.Create(stream))
+                    else
                     {
-                        xdoc.WriteTo(writer);
+                        targetNamespace = register.targetNamespace + "/" + register.label;
                     }
                 }
+
+                XNamespace ns = "http://www.opengis.net/gml/3.2";
+                XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
+                XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
+                XElement xdoc =
+                    new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
+                        new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
+                        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
+                        new XAttribute(gmlNs + "id", register.id),
+                        new XElement(gmlNs + "description"),
+                        new XElement(gmlNs + "identifier",
+                            new XAttribute("codeSpace", nameSpace), register.label),
+
+                        from k in register.containeditems
+                        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.codevalue),
+                          new XElement(gmlNs + "description", k.description),
+                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.codevalue),
+                          new XElement(gmlNs + "name", k.label)
+                          )));
+
+                using (XmlWriter writer = XmlWriter.Create(stream))
+                {
+                    xdoc.WriteTo(writer);
+                }
+
+            }
+            else if (models is Models.Api.Registeritem)
+            {
+                Models.Api.Registeritem register = (Models.Api.Registeritem)models;
+
+                XNamespace ns = "http://www.opengis.net/gml/3.2";
+                XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
+                XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
+                XElement xdoc =
+                    new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
+                        new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
+                        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
+                        new XAttribute(gmlNs + "id", register.id),
+                        new XElement(gmlNs + "description", register.description),
+                        new XElement(gmlNs + "identifier", register.codevalue),
+                        new XElement(gmlNs + "name", register.label)
+                        );
+
+                using (XmlWriter writer = XmlWriter.Create(stream))
+                {
+                    xdoc.WriteTo(writer);
+                }
+            }
         }
     }
 }

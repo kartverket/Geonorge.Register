@@ -47,6 +47,10 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         [XmlIgnore]
         public ICollection<Registeritem> versions { get; set; }
+        public bool ShouldSerializeversions()
+        {
+            return versions != null && versions.Count() > 0;
+        }
         [DataMemberAttribute]
         public DateTime lastUpdated { get; set; }
         [DataMemberAttribute]
@@ -140,6 +144,10 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         [XmlIgnore]
         public ICollection<string> narrower { get; set; }
+        public bool ShouldSerializenarrower()
+        {
+            return narrower != null && narrower.Count() > 0;
+        }
 
         [DataMemberAttribute]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]

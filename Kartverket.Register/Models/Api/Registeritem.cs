@@ -319,6 +319,7 @@ namespace Kartverket.Register.Models.Api
                 lang = CultureHelper.GetCurrentCulture();
                 lastUpdated = registerItem.modified;
                 if (registerItem.submitter != null) owner = registerItem.submitter.name;
+                if (registerItem.register.owner != null) owner = registerItem.register.owner.name;
                 if (registerItem.status != null)
                 {
                     if (CultureHelper.IsNorwegian())

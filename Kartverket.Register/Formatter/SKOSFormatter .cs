@@ -21,6 +21,8 @@ namespace Kartverket.Register.Formatter
         private readonly XNamespace skosNs = "http://www.w3.org/2004/02/skos/core#";
         private readonly XNamespace rdfNs = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
         private readonly XNamespace dctermsNs = "http://purl.org/dc/terms/";
+        private readonly XNamespace admsNs = "http://www.w3.org/ns/adms#";
+        private readonly XNamespace dcatNs = "http://www.w3.org/ns/dcat#";
 
         public SKOSFormatter()
         {
@@ -82,6 +84,8 @@ namespace Kartverket.Register.Formatter
                 new XElement(rdfNs + "RDF", new XAttribute(XNamespace.Xmlns + "skos", skosNs),
                     new XAttribute(XNamespace.Xmlns + "rdf", rdfNs),
                     new XAttribute(XNamespace.Xmlns + "dcterms", dctermsNs),
+                    new XAttribute(XNamespace.Xmlns + "adms", admsNs),
+                    new XAttribute(XNamespace.Xmlns + "dcat", dcatNs),
                     new XAttribute(XNamespace.Xml + "base", baseXML),
                     new XElement(skosNs + "ConceptScheme", new XAttribute(rdfNs + "about", conceptSheme.id),
                         GetElementsForConceptScheme(conceptSheme)
@@ -124,7 +128,11 @@ namespace Kartverket.Register.Formatter
                 new XElement(skosNs + "inScheme", new XAttribute(rdfNs + "resource", conceptSheme.id)),
                 new XElement(skosNs + "topConceptOf", new XAttribute(rdfNs + "resource", conceptSheme.id)),
                 new XElement(skosNs + "prefLabel", c.name, new XAttribute(XNamespace.Xml + "lang", "no")),
-                new XElement(dctermsNs + "description", c.codevalue, new XAttribute(XNamespace.Xml + "lang", "no")),
+                new XElement(skosNs + "Definition", c.description),
+                new XElement(dctermsNs + "description", c.description, new XAttribute(XNamespace.Xml + "lang", "no")),
+                new XElement(dctermsNs + "identifier", c.codevalue),
+                new XElement(admsNs + "status", c.status),
+                GetTemporal(c),
                 new XElement(dctermsNs + "source", new XAttribute(rdfNs + "resource", c.id)),
             };
 
@@ -133,6 +141,29 @@ namespace Kartverket.Register.Formatter
                 elements.Add(new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", c.broader)));
             }
             return elements;
+        }
+
+        private object GetTemporal(Concept c)
+        {
+            XElement temporal = null;
+            XElement startDate = null;
+            XElement endDate = null;
+
+            if (c.ValidFromDate.HasValue || c.ValidToDate.HasValue)
+            {
+                if (c.ValidFromDate.HasValue)
+                    startDate = new XElement(dcatNs + "startDate", c.ValidFromDate);
+
+                if (c.ValidToDate.HasValue)
+                    endDate = new XElement(dcatNs + "endDate", c.ValidToDate);
+
+                temporal = new XElement(dctermsNs + "Temporal", 
+                    new XElement(dctermsNs + "PeriodeOfTime", startDate, endDate));
+
+               return temporal;
+            }
+
+            return null;
         }
     }
 }

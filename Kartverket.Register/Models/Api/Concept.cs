@@ -15,6 +15,7 @@ namespace Kartverket.Register.Models.Api
         public string description { get; set; }
         public string codevalue { get; set; }
         public string owner { get; set; }
+        public string status { get; set; }
         public string broader { get; set; }
 
         public DateTime? ValidFromDate { get; set; }
@@ -79,7 +80,7 @@ namespace Kartverket.Register.Models.Api
                 ValidFromDate = item.ValidFrom;
                 ValidToDate = item.ValidTo;
 
-
+                status = item.status;
             }
         }
     }

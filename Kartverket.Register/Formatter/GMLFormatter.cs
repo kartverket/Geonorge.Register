@@ -79,15 +79,15 @@ namespace Kartverket.Register.Formatter
                     new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
                         new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
                         new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
-                        new XAttribute(gmlNs + "id", register.id),
+                        new XAttribute(gmlNs + "id", GetGmlId(register)),
                         new XElement(gmlNs + "description"),
                         new XElement(gmlNs + "identifier",
-                            new XAttribute("codeSpace", nameSpace), register.label),
+                            new XAttribute("codeSpace", register.id), register.label),
 
                         from k in register.containeditems
-                        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.codevalue),
+                        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", GetGmlId(k)),
                           new XElement(gmlNs + "description", k.description),
-                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.codevalue),
+                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", register.id), k.codevalue),
                           new XElement(gmlNs + "name", k.label)
                           )));
 
@@ -108,9 +108,9 @@ namespace Kartverket.Register.Formatter
                     new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
                         new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
                         new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
-                        new XAttribute(gmlNs + "id", register.id),
+                        new XAttribute(gmlNs + "id", GetGmlId(register)),
                         new XElement(gmlNs + "description", register.description),
-                        new XElement(gmlNs + "identifier", register.codevalue),
+                        new XElement(gmlNs + "identifier", new XAttribute("codeSpace", GetCodespace(register)), register.codevalue),
                         new XElement(gmlNs + "name", register.label)
                         );
 
@@ -119,6 +119,33 @@ namespace Kartverket.Register.Formatter
                     xdoc.WriteTo(writer);
                 }
             }
+        }
+
+        private object GetCodespace(Registeritem register)
+        {
+            var idArray = register.id.Split('/');
+            string id = "";
+            for (int i = 0; i < idArray.Length - 2; i++) {
+                id = id + idArray[i];
+                    if(i < idArray.Length - 3)
+                        id = id + "/";
+            }
+
+            return id;
+        }
+
+        private string GetGmlId(Registeritem register)
+        {
+            var idArray = register.id.Split('/');
+            var parentId = idArray[4];
+
+            return parentId + "." + register.codevalue;
+        }
+        private string GetGmlId(Models.Api.Register register)
+        {
+            var idArray = register.id.Split('/');
+            return idArray[3] + "." + idArray[4];
+
         }
     }
 }

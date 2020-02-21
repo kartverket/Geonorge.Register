@@ -316,6 +316,7 @@ namespace Kartverket.Register.Models.Api
             {
                 id = baseUrl + registerItem.GetObjectUrl();
                 label = registerItem.name;
+                seoname = registerItem.seoname;
                 lang = CultureHelper.GetCurrentCulture();
                 lastUpdated = registerItem.modified;
                 if (registerItem.submitter != null) owner = registerItem.submitter.name;

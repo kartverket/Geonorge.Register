@@ -82,6 +82,44 @@ namespace Kartverket.Register.Models.Api
 
                 status = item.status;
             }
+            else if (models is ConceptSheme)
+            {
+                ConceptSheme item = (ConceptSheme)models;
+                id = item.id;
+                name = item.name;
+                seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(item.name);
+                owner = item.owner;
+                if (!string.IsNullOrWhiteSpace(item.description))
+                {
+                    description = item.description;
+                }
+                else
+                {
+                    description = "";
+                }
+
+                if (!string.IsNullOrWhiteSpace(item.codelistValue))
+                {
+                    codevalue = item.codelistValue;
+                }
+                else
+                {
+                    codevalue = "";
+                }
+                if (item.broader != null)
+                {
+                    broader = item.broader;
+                }
+                else
+                {
+                    broader = "";
+                }
+
+                ValidFromDate = item.ValidFromDate;
+                ValidToDate = item.ValidToDate;
+
+                status = item.status;
+            }
         }
     }
 }

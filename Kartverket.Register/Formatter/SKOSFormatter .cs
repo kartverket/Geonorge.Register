@@ -105,6 +105,11 @@ namespace Kartverket.Register.Formatter
 
         private List<object> GetElementsForConceptScheme(ConceptSheme conceptSheme)
         {
+            if (!conceptSheme.concepts.Any())
+            {
+                return GetElementsForConcept(conceptSheme, null);
+            }
+
             List<object> elements = new List<object> {
             new XElement(skosNs + "prefLabel", conceptSheme.name, new XAttribute(XNamespace.Xml + "lang", "no")),
             new XElement(dctermsNs + "description", conceptSheme.description, new XAttribute(XNamespace.Xml + "lang", "no")),
@@ -124,9 +129,19 @@ namespace Kartverket.Register.Formatter
 
         private List<object> GetElementsForConcept(ConceptSheme conceptSheme, Concept c)
         {
+            var inScheme = new XElement(skosNs + "inScheme", new XAttribute(rdfNs + "resource", conceptSheme.id));
+            var topConceptOf = new XElement(skosNs + "topConceptOf", new XAttribute(rdfNs + "resource", conceptSheme.id));
+
+            if (c== null)
+            {
+                inScheme = null;
+                topConceptOf = null;
+                c = GetConceptFromScheme(conceptSheme);
+            }
+
             List<object> elements = new List<object> {
-                new XElement(skosNs + "inScheme", new XAttribute(rdfNs + "resource", conceptSheme.id)),
-                new XElement(skosNs + "topConceptOf", new XAttribute(rdfNs + "resource", conceptSheme.id)),
+                inScheme,
+                topConceptOf,
                 new XElement(skosNs + "prefLabel", c.name, new XAttribute(XNamespace.Xml + "lang", "no")),
                 new XElement(skosNs + "Definition", c.description),
                 new XElement(dctermsNs + "description", c.description, new XAttribute(XNamespace.Xml + "lang", "no")),
@@ -141,6 +156,12 @@ namespace Kartverket.Register.Formatter
                 elements.Add(new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", c.broader)));
             }
             return elements;
+        }
+
+        private Concept GetConceptFromScheme(ConceptSheme conceptSheme)
+        {
+            Concept concept = new Concept(conceptSheme);
+            return concept;
         }
 
         private object GetTemporal(Concept c)

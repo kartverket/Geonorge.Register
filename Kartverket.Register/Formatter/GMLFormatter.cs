@@ -87,7 +87,7 @@ namespace Kartverket.Register.Formatter
                         from k in register.containeditems
                         select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", GetGmlId(k)),
                           new XElement(gmlNs + "description", k.description),
-                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", register.id), k.codevalue),
+                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", register.id), !string.IsNullOrEmpty(k.codevalue) ? k.codevalue : k.seoname),
                           new XElement(gmlNs + "name", k.label)
                           )));
 
@@ -137,15 +137,28 @@ namespace Kartverket.Register.Formatter
         private string GetGmlId(Registeritem register)
         {
             var idArray = register.id.Split('/');
-            var parentId = idArray[4];
+            if (idArray.Length > 4)
+            {
+                var gmlId = idArray[4];
+                if (!string.IsNullOrEmpty(register.codevalue))
+                    gmlId = gmlId + "." + register.codevalue;
 
-            return parentId + "." + register.codevalue;
+                return gmlId;
+            }
+            else if (!string.IsNullOrEmpty(register.codevalue))
+                return register.codevalue;
+
+            return register.id;
         }
         private string GetGmlId(Models.Api.Register register)
         {
             var idArray = register.id.Split('/');
-            return idArray[3] + "." + idArray[4];
-
+            if (idArray.Length > 4)
+                return idArray[3] + "." + idArray[4];
+            else if(idArray.Length == 4)
+                return idArray[3];
+            else
+                return register.id;
         }
     }
 }

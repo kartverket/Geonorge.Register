@@ -12,6 +12,7 @@ using Kartverket.Geonorge.Utilities.LogEntry;
 using System.Web.Configuration;
 using System.Security.Claims;
 using Kartverket.Register.Models.StatusReports;
+using Geonorge.AuthLib.Common;
 
 namespace Kartverket.Register.Models
 {
@@ -168,7 +169,7 @@ namespace Kartverket.Register.Models
                 else { result = Save(); }
 
                 if (!string.IsNullOrEmpty(uuid))
-                    Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = uuid, Operation = operation, User = GetSecurityClaim("username"), Description = description }));
+                    Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = uuid, Operation = operation, User = ClaimsPrincipal.Current.GetUsername(), Description = description }));
             }
 
             return result;
@@ -188,18 +189,6 @@ namespace Kartverket.Register.Models
         int Save()
         {
             return base.SaveChanges();
-        }
-
-        public string GetSecurityClaim(string type)
-        {
-            foreach (var claim in ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    return claim.Value;
-                }
-            }
-            return null;
         }
     }
 }

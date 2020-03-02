@@ -100,7 +100,7 @@ namespace Kartverket.Register.Services
             {
                 if (IsEditor())
                 {
-                    return !register.ContainedItemClassIsCodelistValue() ||
+                    return /*!register.ContainedItemClassIsCodelistValue() ||*/
                            IsRegisterOwner(register.owner.name, UserName());
                 }
             }
@@ -120,11 +120,11 @@ namespace Kartverket.Register.Services
             {
                 if (IsEditor())
                 {
-                    if (registerViewModel.ContainedItemClassIsCodelistValue())
-                    {
+                    //if (registerViewModel.ContainedItemClassIsCodelistValue())
+                    //{
                         return IsRegisterOwner(registerViewModel.Owner.name, UserName());
-                    }
-                    return true;
+                    //}
+                    //return true;
                 }
             }
             else if (registerViewModel.AccessId == 4)

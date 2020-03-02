@@ -120,11 +120,11 @@ namespace Kartverket.Register.Services
             {
                 if (IsEditor())
                 {
-                    if (registerViewModel.ContainedItemClassIsCodelistValue())
-                    {
+                    //if (registerViewModel.ContainedItemClassIsCodelistValue())
+                    //{
                         return IsRegisterOwner(registerViewModel.Owner.name, UserName());
-                    }
-                    return true;
+                    //}
+                    //return true;
                 }
             }
             else if (registerViewModel.AccessId == 4)

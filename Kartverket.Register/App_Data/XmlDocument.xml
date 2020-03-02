@@ -959,24 +959,9 @@
             En begrunnelse for hvorfor søker gjøres oppmerksom på forholdet
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenke1">
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenker">
             <summary>
-            Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenke2">
-            <summary>
-            Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenke3">
-            <summary>
-            Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.GeoLett.Dialogtekst">
-            <summary>
-            En tekst som gjør søkeren oppmerksom på et forhold av betydning for søknader
+            Lenker om det er ønskelig å lenke til mer utfyllende informasjon
             </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.GeoLett.MuligeTiltak">

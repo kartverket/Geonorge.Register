@@ -100,7 +100,7 @@ namespace Kartverket.Register.Services
             {
                 if (IsEditor())
                 {
-                    return !register.ContainedItemClassIsCodelistValue() ||
+                    return /*!register.ContainedItemClassIsCodelistValue() ||*/
                            IsRegisterOwner(register.owner.name, UserName());
                 }
             }

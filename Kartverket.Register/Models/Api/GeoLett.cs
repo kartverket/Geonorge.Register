@@ -74,6 +74,10 @@ namespace Kartverket.Register.Models.Api
         /// </summary>
         public string UrlMetadata { get; set; }
         /// <summary>
+        /// Buffer avstand i meter
+        /// </summary>
+        public string BufferAvstand { get; set; }
+        /// <summary>
         /// Objekttype, attributt og datasett skal sammen med type tiltak...
         /// </summary>
         public ObjectType TypeReferanse { get; set; }

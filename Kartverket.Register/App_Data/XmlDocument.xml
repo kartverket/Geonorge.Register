@@ -989,6 +989,11 @@
             Url til metadata om datasettet
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.Api.Datasett.BufferAvstand">
+            <summary>
+            Buffer avstand i meter
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.Datasett.TypeReferanse">
             <summary>
             Objekttype, attributt og datasett skal sammen med type tiltak...

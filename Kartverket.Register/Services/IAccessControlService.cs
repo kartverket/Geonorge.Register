@@ -22,5 +22,6 @@ namespace Kartverket.Register.Services
         bool IsItemOwner(string owner, string user);
         string GetOrganizationNumber();
         bool AccessCreateNewVersion(RegisterItemV2ViewModel registerItemViewModel);
+        bool AddToRegister(Models.Register register);
     }
 }

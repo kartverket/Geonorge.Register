@@ -38,7 +38,7 @@ namespace Kartverket.Register.Controllers
 
             if (alert.register != null)
             {
-                if (_accessControlService.HasAccessTo(alert.register))
+                if (_accessControlService.AddToRegister(alert.register))
                 {
                     return View(alert);
                 }
@@ -59,7 +59,7 @@ namespace Kartverket.Register.Controllers
             alert.register = _registerService.GetRegister(parentRegister, registerName);
             if (alert.register != null)
             {
-                if (_accessControlService.HasAccessTo(alert.register))
+                if (_accessControlService.AddToRegister(alert.register))
                 {
                     //if (!_registerItemService.ItemNameIsValid(alert))
                     //{

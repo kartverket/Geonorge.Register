@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Kartverket.Register.Services.Report;
 using Kartverket.ReportApi;
 
 namespace Kartverket.Register.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ReportController : ApiController
     {
         private readonly IDokReportService _dokReportService;

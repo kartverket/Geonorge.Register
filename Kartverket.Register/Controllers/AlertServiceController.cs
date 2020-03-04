@@ -34,6 +34,7 @@ namespace Kartverket.Register.Controllers
         /// </summary>
         [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         [ResponseType(typeof(AlertService))]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IHttpActionResult PostServiceAlert(AlertService alertService)
         {
             if (!ModelState.IsValid)

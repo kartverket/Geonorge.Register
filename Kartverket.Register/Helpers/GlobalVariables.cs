@@ -31,5 +31,19 @@ namespace Kartverket.Register.Helpers
         {
             get { return "0f428034-0b2d-4fb7-84ea-c547b872b418"; }
         }
+
+        public static string ProductSheetsId
+        {
+            get { return "A42BC2B3-2314-4B7E-8007-71D9B10F2C04"; }
+        }
+        public static string ProductSpecificationId
+        {
+            get { return "8E726684-F216-4497-91BE-6AB2496A84D3"; }
+        }
+        
+        public static string CartographyId
+        {
+            get { return "5EACB130-D61F-469D-8454-E96943491BA0"; }
+        }
     }
 }

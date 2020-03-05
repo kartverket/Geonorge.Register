@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Geonorge.AuthLib.Common;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
+using System;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Services
 {
@@ -347,12 +349,22 @@ namespace Kartverket.Register.Services
 
         public bool AllowAddToRegister(Models.Register register)
         {
-            return IsEditor() && (register.ContainedItemClassIsDocument() || register.ContainedItemClassIsAlert());
+            return AllowedRegisters(register.systemId);
+        }
+
+        private bool AllowedRegisters(Guid systemId)
+        {
+            return IsEditor() && (
+                systemId == Guid.Parse(GlobalVariables.AlertRegistryId) ||
+                systemId == Guid.Parse(GlobalVariables.ProductSheetsId) ||
+                systemId == Guid.Parse(GlobalVariables.ProductSpecificationId) ||
+                systemId == Guid.Parse(GlobalVariables.CartographyId)
+                );
         }
 
         public bool AllowAddToRegister(RegisterV2ViewModel register)
         {
-            return IsEditor() && (register.ContainedItemClassIsDocument() || register.ContainedItemClassIsAlert());
+            return AllowedRegisters(register.SystemId);
         }
     }
 }

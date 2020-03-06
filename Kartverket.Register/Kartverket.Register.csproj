@@ -399,6 +399,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CultureHelper.cs" />
+    <Compile Include="Helpers\CustomDocumentFilter.cs" />
     <Compile Include="Helpers\GlobalVariables.cs" />
     <Compile Include="Helpers\HttpRequestMessageExtensions.cs" />
     <Compile Include="Helpers\RegisterUrls.cs" />

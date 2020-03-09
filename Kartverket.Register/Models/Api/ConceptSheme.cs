@@ -16,6 +16,7 @@ namespace Kartverket.Register.Models.Api
         public List<Concept> concepts { get; set; }
         public string codelistValue { get; set; }
         public string owner { get; set; }
+        public string status { get; set; }
         public virtual string broader { get; set; }
         public List<string> narrower { get; set; }
 
@@ -33,6 +34,7 @@ namespace Kartverket.Register.Models.Api
                 id = item.id;
                 name = item.label;
                 owner = item.owner;
+                status = item.status;
                 if (!string.IsNullOrWhiteSpace(item.description))
                 {
                     description = item.description;

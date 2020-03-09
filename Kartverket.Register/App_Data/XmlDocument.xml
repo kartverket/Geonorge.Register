@@ -565,6 +565,13 @@
             <param name="item">The search engine optimized name of the register item</param>
             <param name="id"></param>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterItemByName(System.String,System.String)">
+            <summary>
+            Gets sosi-codelist
+            </summary>
+            <param name="register">The search engine optimized name of the register</param>
+            <param name="item">The search engine optimized name of the register item</param>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.SearchByOrganizationName(System.String)">
             <summary>
             List items for specific organization 
@@ -952,24 +959,9 @@
             En begrunnelse for hvorfor søker gjøres oppmerksom på forholdet
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenke1">
+        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenker">
             <summary>
-            Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenke2">
-            <summary>
-            Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.GeoLett.Lenke3">
-            <summary>
-            Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.GeoLett.VarselTekst">
-            <summary>
-            En tekst som gjør søkeren oppmerksom på et forhold av betydning for søknader
+            Lenker om det er ønskelig å lenke til mer utfyllende informasjon
             </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.GeoLett.MuligeTiltak">
@@ -995,6 +987,11 @@
         <member name="P:Kartverket.Register.Models.Api.Datasett.UrlMetadata">
             <summary>
             Url til metadata om datasettet
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.Datasett.BufferAvstand">
+            <summary>
+            Buffer avstand i meter
             </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.Datasett.TypeReferanse">
@@ -3421,6 +3418,11 @@
         <member name="P:Resources.DataSet.SuitabilityText">
             <summary>
               Looks up a localized string similar to Tekst om egnethet, tips til bruk eller andre kommentarer.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.SuitabitityHelp">
+            <summary>
+              Looks up a localized string similar to Høyere intensitet på bakgrunnsfarge indikerer bedre egnethet basert på overordnede nasjonale vurderinger. Ved å holde musepekeren over boksen for egnethet vil man kunne se mer tekst om egnethet, tips til bruk eller andre kommentarer dersom det er registrert..
             </summary>
         </member>
         <member name="P:Resources.DataSet.SuitabitityHelpText">

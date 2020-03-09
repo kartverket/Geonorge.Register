@@ -399,6 +399,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CultureHelper.cs" />
+    <Compile Include="Helpers\CustomDocumentFilter.cs" />
     <Compile Include="Helpers\GlobalVariables.cs" />
     <Compile Include="Helpers\HttpRequestMessageExtensions.cs" />
     <Compile Include="Helpers\RegisterUrls.cs" />
@@ -2232,6 +2233,7 @@
     <Content Include="Views\Shared\_geodatalovReport.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\Shared\_suitability.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

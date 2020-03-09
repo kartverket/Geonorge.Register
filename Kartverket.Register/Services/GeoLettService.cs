@@ -32,14 +32,19 @@ namespace Kartverket.Register.Services
                 geoLett.ID = workSheet.Cells[row, 2].Text;
                 geoLett.Tittel = workSheet.Cells[row, 3].Text;
                 geoLett.ForklarendeTekst = workSheet.Cells[row, 3].Text;
+                geoLett.Lenker = new List<Lenke>();
+                List<Lenke> lenker = new List<Lenke>();
                 if (!string.IsNullOrEmpty(workSheet.Cells[row, 6].Text))
-                    geoLett.Lenke1 = new Lenke { Tittel = workSheet.Cells[row, 5].Text, Href = workSheet.Cells[row, 6].Text };
+                    lenker.Add (new Lenke { Tittel = workSheet.Cells[row, 5].Text, Href = workSheet.Cells[row, 6].Text });
                 if (!string.IsNullOrEmpty(workSheet.Cells[row, 8].Text))
-                    geoLett.Lenke2 = new Lenke { Tittel = workSheet.Cells[row, 7].Text, Href = workSheet.Cells[row, 8].Text };
+                    lenker.Add(new Lenke { Tittel = workSheet.Cells[row, 7].Text, Href = workSheet.Cells[row, 8].Text });
                 if (!string.IsNullOrEmpty(workSheet.Cells[row, 10].Text))
-                    geoLett.Lenke3 = new Lenke { Tittel = workSheet.Cells[row, 9].Text, Href = workSheet.Cells[row, 10].Text };
+                    lenker.Add (new Lenke { Tittel = workSheet.Cells[row, 9].Text, Href = workSheet.Cells[row, 10].Text });
 
-                geoLett.VarselTekst = workSheet.Cells[row, 11].Text;
+                if (lenker.Count > 0)
+                    geoLett.Lenker = lenker;
+
+                geoLett.Dialogtekst = workSheet.Cells[row, 11].Text;
                 geoLett.MuligeTiltak = workSheet.Cells[row, 12].Text;
                 geoLett.Veiledning = workSheet.Cells[row, 13].Text;
 
@@ -47,7 +52,7 @@ namespace Kartverket.Register.Services
                     Kodeverdi = workSheet.Cells[row, 18].Text
                 };
 
-                var datasett = new Datasett { Tittel = workSheet.Cells[row, 14].Text, UrlMetadata = workSheet.Cells[row, 15].Text, TypeReferanse = objectType };
+                var datasett = new Datasett { Tittel = workSheet.Cells[row, 14].Text, UrlMetadata = workSheet.Cells[row, 15].Text, BufferAvstand = "", TypeReferanse = objectType };
                 geoLett.Datasett = datasett;
 
                 Referanse referanse = new Referanse();

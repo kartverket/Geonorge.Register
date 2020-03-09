@@ -487,4 +487,7 @@ As a dataset quality and coverage can vary considerably from site to area, the a
   <data name="DOK_Delivery_Status_NotSetShort" xml:space="preserve">
     <value>Not set</value>
   </data>
+  <data name="SuitabitityHelp" xml:space="preserve">
+    <value>Higher background color intensity indicates better suitability based on overall national ratings. By hovering your mouse over the box for suitability you will be able to see more text about suitability, tips for use or other comments if registered.</value>
+  </data>
 </root>

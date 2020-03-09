@@ -47,12 +47,20 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         [XmlIgnore]
         public ICollection<Registeritem> versions { get; set; }
+        public bool ShouldSerializeversions()
+        {
+            return versions != null && versions.Count() > 0;
+        }
         [DataMemberAttribute]
         public DateTime lastUpdated { get; set; }
         [DataMemberAttribute]
         public DateTime dateSubmitted { get; set; }
         [DataMemberAttribute]
         public DateTime dateAccepted { get; set; }
+        public bool ShouldSerializedateAccepted()
+        {
+            return dateAccepted != null && dateAccepted != DefaultDate;
+        }
         [DataMemberAttribute]
         public string ApplicationSchema { get; set; }
         [DataMemberAttribute]
@@ -75,8 +83,16 @@ namespace Kartverket.Register.Models.Api
         public string Email { get; set; }
         [DataMemberAttribute]
         public bool? NorgeDigitaltMember { get; set; }
+        public bool ShouldSerializeNorgeDigitaltMember()
+        {
+            return NorgeDigitaltMember.HasValue;
+        }
         [DataMemberAttribute]
         public int? AgreementYear { get; set; }
+        public bool ShouldSerializeAgreementYear()
+        {
+            return AgreementYear.HasValue;
+        }
         [DataMemberAttribute]
         public string AgreementDocumentUrl { get; set; }
         [DataMemberAttribute]
@@ -128,14 +144,26 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         [XmlIgnore]
         public ICollection<string> narrower { get; set; }
+        public bool ShouldSerializenarrower()
+        {
+            return narrower != null && narrower.Count() > 0;
+        }
 
         [DataMemberAttribute]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ValidFrom { get; set; }
+        public bool ShouldSerializeValidFrom()
+        {
+            return ValidFrom.HasValue;
+        }
 
         [DataMemberAttribute]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ValidTo { get; set; }
+        public bool ShouldSerializeValidTo()
+        {
+            return ValidTo.HasValue;
+        }
 
         //NameSpace
         [DataMemberAttribute]
@@ -148,8 +176,16 @@ namespace Kartverket.Register.Models.Api
         public string dokStatus { get; set; }
         [DataMemberAttribute]
         public DateTime? dokStatusDateAccepted { get; set; }
+        public bool ShouldSerializedokStatusDateAccepted()
+        {
+            return dokStatusDateAccepted.HasValue;
+        }
         [DataMemberAttribute]
         public DateTime? Kandidatdato { get; set; }
+        public bool ShouldSerializeKandidatdato()
+        {
+            return Kandidatdato.HasValue;
+        }
         [DataMemberAttribute]
         public string dokDeliveryMetadataStatus { get; set; }
         [DataMemberAttribute]
@@ -172,6 +208,10 @@ namespace Kartverket.Register.Models.Api
         public string dokDeliveryAtomFeedStatus { get; set; }
         [DataMemberAttribute]
         public bool? restricted { get; set; }
+        public bool ShouldSerializerestricted()
+        {
+            return restricted.HasValue;
+        }
         [DataMemberAttribute]
         public string DatasetType { get; set; }
         [DataMemberAttribute]
@@ -190,12 +230,20 @@ namespace Kartverket.Register.Models.Api
         public string MetadataUrl { get; set; }
         [DataMemberAttribute]
         public DateTime AlertDate { get; set; }
+        public bool ShouldSerializeAlertDate()
+        {
+            return AlertDate != null && AlertDate != DefaultDate;
+        }
         [DataMemberAttribute]
         public string AlertType { get; set; }
         [DataMemberAttribute]
         public string ServiceType { get; set; }
         [DataMemberAttribute]
         public DateTime EffectiveDate { get; set; }
+        public bool ShouldSerializeEffectiveDate()
+        {
+            return EffectiveDate != null && EffectiveDate != DefaultDate;
+        }
         [DataMemberAttribute]
         public string Note { get; set; }
         [DataMemberAttribute]
@@ -228,12 +276,23 @@ namespace Kartverket.Register.Models.Api
         public string InspireDataType { get; set; }
         public string MetadataInSearchServiceStatus { get; set; }
         public string ServiceStatus { get; set; }
-        public int Requests { get; set; }
+        public int? Requests { get; set; }
+        public bool ShouldSerializeRequests()
+        {
+            return Requests.HasValue;
+        }
         public string ServiceUrl { get; set; }
         public string InspireTheme { get; set; }
-        public bool NetworkService { get; set; }
-        public bool Sds { get; set; }
-
+        public bool? NetworkService { get; set; }
+        public bool ShouldSerializeNetworkService()
+        {
+            return NetworkService.HasValue;
+        }
+        public bool? Sds { get; set; }
+        public bool ShouldSerializeSds()
+        {
+            return Sds.HasValue;
+        }
         // GeodatalovDataset
         [DataMemberAttribute]
         public string CommonStatus { get; set; }
@@ -244,6 +303,10 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string ProductspesificationStatus { get; set; }
 
+        [IgnoreDataMember]
+        [XmlIgnore]
+        public DateTime DefaultDate { get; set; } = new DateTime(1, 1, 1, 0, 0, 0) ;
+
         public Registeritem(Object item, string baseUrl, FilterParameters filter = null)
         {
             this.versions = new HashSet<Registeritem>();
@@ -253,9 +316,11 @@ namespace Kartverket.Register.Models.Api
             {
                 id = baseUrl + registerItem.GetObjectUrl();
                 label = registerItem.name;
+                seoname = registerItem.seoname;
                 lang = CultureHelper.GetCurrentCulture();
                 lastUpdated = registerItem.modified;
                 if (registerItem.submitter != null) owner = registerItem.submitter.name;
+                if (registerItem.register.owner != null) owner = registerItem.register.owner.name;
                 if (registerItem.status != null)
                 {
                     if (CultureHelper.IsNorwegian())
@@ -433,6 +498,8 @@ namespace Kartverket.Register.Models.Api
                 label = GetNameLocale(c);
                 if (c.description != null) description = GetDescriptionLocale(c);
                 codevalue = c.value;
+                if (string.IsNullOrEmpty(codevalue))
+                    codevalue = label;
                 if (c.broaderItemId != null)
                     broader = baseUrl + c.broaderItem.GetObjectUrl();
                 foreach (var codelistvalue in c.narrowerItems)

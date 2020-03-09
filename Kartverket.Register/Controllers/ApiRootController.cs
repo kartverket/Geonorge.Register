@@ -437,6 +437,19 @@ namespace Kartverket.Register.Controllers
         }
 
         /// <summary>
+        /// Gets sosi-codelist
+        /// </summary>
+        /// <param name="register">The search engine optimized name of the register</param>
+        /// <param name="item">The search engine optimized name of the register item</param>
+        [System.Web.Http.Route("api/sosi-kodelister/{register}/{item}")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetSubregisterItemByName(string register, string item)
+        {
+            Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions("sosi-kodelister", register, item);
+            return Ok(currentVersion);
+        }
+
+        /// <summary>
         /// List items for specific organization 
         /// </summary>
         /// <param name="name">The name of the organization</param>
@@ -657,7 +670,7 @@ namespace Kartverket.Register.Controllers
         /// Get all Geolett
         /// </summary>
         /// <remarks>
-        /// Med GeoLett skal vi forbedre datagrunnlaget for plan- og byggesaksprosessen. Det gjør vi ved å fremme innovasjon av metodebruk og digitale verktøy, legge til rette for effektiv deling av informasjon og støtte kommuner og sektormyndigheter for å forbedre kvaliteten på grunndata.
+        /// Med GeoLett skal vi forbedre datagrunnlaget for plan- og byggesaksprosessen. Det gjÃ¸r vi ved Ã¥ fremme innovasjon av metodebruk og digitale verktÃ¸y, legge til rette for effektiv deling av informasjon og stÃ¸tte kommuner og sektormyndigheter for Ã¥ forbedre kvaliteten pÃ¥ grunndata.
         /// </remarks>
         /// <returns></returns>
         [ResponseType(typeof(GeoLett))]

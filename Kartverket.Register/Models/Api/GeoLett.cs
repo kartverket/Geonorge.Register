@@ -27,21 +27,10 @@ namespace Kartverket.Register.Models.Api
         /// </summary>
         public string ForklarendeTekst { get; set; }
         /// <summary>
-        /// Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
+        /// Lenker om det er ønskelig å lenke til mer utfyllende informasjon
         /// </summary>
-        public Lenke Lenke1 { get; set; }
-        /// <summary>
-        /// Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
-        /// </summary>
-        public Lenke Lenke2 { get; set; }
-        /// <summary>
-        /// Lenketekst om det er ønskelig å lenke til mer utfyllende informasjon
-        /// </summary>
-        public Lenke Lenke3 { get; set; }
-        /// <summary>
-        /// En tekst som gjør søkeren oppmerksom på et forhold av betydning for søknader
-        /// </summary>
-        public string VarselTekst { get; set; }
+        public List<Lenke> Lenker { get; set; }
+        public string Dialogtekst { get; set; }
         /// <summary>
         /// Denne teksten skal fungere som en hjelp til søkeren til å komme videre i prosessen
         /// </summary>
@@ -84,6 +73,10 @@ namespace Kartverket.Register.Models.Api
         /// Url til metadata om datasettet
         /// </summary>
         public string UrlMetadata { get; set; }
+        /// <summary>
+        /// Buffer avstand i meter
+        /// </summary>
+        public string BufferAvstand { get; set; }
         /// <summary>
         /// Objekttype, attributt og datasett skal sammen med type tiltak...
         /// </summary>

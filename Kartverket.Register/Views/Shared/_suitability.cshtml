@@ -1,0 +1,169 @@
+﻿@using Kartverket.Register.Models
+@using Kartverket.Register.Helpers
+@model List<Kartverket.Register.Models.Dataset>
+
+@helper FormatSuitability(int? value)
+{
+    string suitability = value.ToString();
+    if (suitability != "0")
+    {<span style="position:relative;right: -11px;">@suitability</span>}
+else
+{<span>&nbsp;&nbsp;</span>}
+}
+
+@functions
+{
+    string FormatTitle(string title, string note)
+    {
+        string titleText = title;
+        if (!string.IsNullOrEmpty(note))
+            titleText = titleText + ":" + Environment.NewLine + note;
+        return titleText;
+    }
+}
+<div class="tab-pane" style="margin-top:0px" id="suitability">
+    <div class="row">
+        <div class="col-md-12">
+            @DataSet.SuitabitityHelp
+        </div>
+    </div>
+
+    <table id="myTable" class="tablesorter table-responsive table tableSuitability" style="width:100%">
+        <thead>
+            <tr>
+                <th><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Temagruppe">@DataSet.DOK_Temagruppe</a></th>
+                <th colspan="2"><a href="#" data-toggle="tooltip" title="@Shared.Title">@Shared.Title</a></th>
+                <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityRegionsplanleggingTitle">@DataSet.SuitabilityRegionsplanleggingText</a></th>
+                <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilitySamfunnTitle">@DataSet.SuitabilitySamfunnText</a></th>
+                <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityArealTitle">@DataSet.SuitabilityArealText</a></th>
+                <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityOmraadeTitle">@DataSet.SuitabilityOmraadeText</a></th>
+                <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityDetaljreguleringTitle">@DataSet.SuitabilityDetaljreguleringText</a></th>
+                <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityByggesakTitle">@DataSet.SuitabilityByggesakText</a></th>
+                <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityKUTitle">@DataSet.SuitabilityKUText</a></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr class="mother">
+                    <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].name: @Model[i].theme">@Model[i].ThemeGroupId</td>
+                    <td style="background-color:rgb(234, 234, 234)" title="Datasett: @Model[i].name">
+                        @Model[i].name
+                        @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].name, new { @readonly = "readonly" })
+                    </td>
+                    <td></td>
+                    <td class="text-center"><span class="hidden">@Model[i].RegionalPlan.Value</span>
+                        <span id="regionalPlan-@i" class="hidden" value="@Model[i].RegionalPlan.Value">@HtmlHelperExtensions.cbChecked(Model[i].RegionalPlan.HasValue)</span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Regionplan",Model[i].RegionalPlanNote)" class="custom-checkbox custom-checkbox-@Model[i].RegionalPlan">
+                            @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].RegionalPlan" })
+                            <label for="dokMunicipalList[@i].RegionalPlan" class="checkbox-icon">@FormatSuitability(Model[i].RegionalPlan.Value)</label>
+                        </span>
+                    </td>
+                    <td class="text-center"><span class="hidden">@Model[i].MunicipalSocialPlan.Value</span>
+                        <span id="municipalSocialPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalSocialPlan.HasValue)</span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Kommuneplanens samfunnsdel", Model[i].MunicipalSocialPlanNote)" class="custom-checkbox custom-checkbox-@Model[i].MunicipalSocialPlan">
+                            @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].MunicipalSocialPlan" })
+                            <label for="dokMunicipalList[@i].MunicipalSocialPlan" class="checkbox-icon">@FormatSuitability(Model[i].MunicipalSocialPlan.Value)</label>
+                        </span>
+                    </td>
+                    <td class="text-center"><span class="hidden">@Model[i].MunicipalLandUseElementPlan.Value</span>
+                        <span id="municipalLandUseElementPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalLandUseElementPlan.HasValue)</span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Kommuneplanens arealdel", Model[i].MunicipalLandUseElementPlanNote)" class="custom-checkbox custom-checkbox-@Model[i].MunicipalLandUseElementPlan">
+                            @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalLandUseElementPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].MunicipalLandUseElementPlan" })
+                            <label for="dokMunicipalList[@i].MunicipalLandUseElementPlan" class="checkbox-icon">@FormatSuitability(Model[i].MunicipalLandUseElementPlan.Value)</label>
+                        </span>
+                    </td>
+                    <td class="text-center"><span class="hidden">@Model[i].ZoningPlanArea.Value</span>
+                        <span id="zoningPlanArea-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlanArea.HasValue)</span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Reguleringsplan område", Model[i].ZoningPlanAreaNote)" class="custom-checkbox custom-checkbox-@Model[i].ZoningPlanArea">
+                            @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanArea", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].ZoningPlanArea" })
+                            <label for="dokMunicipalList[@i].ZoningPlanArea" class="checkbox-icon">@FormatSuitability(Model[i].ZoningPlanArea.Value)</label>
+                        </span>
+                    </td>
+                    <td class="text-center"><span class="hidden">@Model[i].ZoningPlanDetails.Value</span>
+                        <span id="zoningPlanDetails-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlanDetails.HasValue)</span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Reguleringsplan detalj", Model[i].ZoningPlanDetailsNote)" class="custom-checkbox custom-checkbox-@Model[i].ZoningPlanDetails">
+                            @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanDetails", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].ZoningPlanDetails" })
+                            <label for="dokMunicipalList[@i].ZoningPlanDetails" class="checkbox-icon">@FormatSuitability(Model[i].ZoningPlanDetails.Value)</label>
+                        </span>
+                    </td>
+                    <td class="text-center"><span class="hidden">@Model[i].BuildingMatter.Value</span>
+                        <span id="buildingMatter-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].BuildingMatter.HasValue)</span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Byggesak",Model[i].BuildingMatterNote)" class="custom-checkbox custom-checkbox-@Model[i].BuildingMatter">
+                            @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].BuildingMatter" })
+                            <label for="dokMunicipalList[@i].BuildingMatter" class="checkbox-icon">@FormatSuitability(Model[i].BuildingMatter.Value)</label>
+                        </span>
+                    </td>
+                    <td class="text-center"><span class="hidden">@Model[i].EenvironmentalImpactAssessment.Value</span>
+                        <span id="environmentalImpactAssessment-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].EenvironmentalImpactAssessment.HasValue)</span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("KU og ROS for pbl-planer", Model[i].EenvironmentalImpactAssessmentNote)" class="custom-checkbox custom-checkbox-@Model[i].EenvironmentalImpactAssessment">
+                            @Html.CheckBox("dokMunicipalList[" + i + "].EnvironmentalImpactAssessment", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].EenvironmentalImpactAssessment" })
+                            <label for="dokMunicipalList[@i].EenvironmentalImpactAssessment" class="checkbox-icon">@FormatSuitability(Model[i].EenvironmentalImpactAssessment.Value)</label>
+                        </span>
+                    </td>
+
+                    <td>
+                        @if (HtmlHelperExtensions.IsAdmin())
+                        {
+                            <span type="button" class="fa-pencil-square fa" title="@Shared.Edit" style="font-size:20px; cursor: pointer; color:#337ab7; vertical-align: middle" onclick="location.href='/dataset/det-offentlige-kartgrunnlaget/det-offentlige-kartgrunnlaget/@Model[i].seoname/rediger'"></span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.min.js"></script>
+<script>
+    $('tablesorter').tablesorter({ theme: 'blue' });
+    console.log('hei');
+
+
+    $('.tablesorter-childRow td').hide();
+    $(".tableSuitability")
+        .tablesorter({
+            theme: 'blue',
+            cssChildRow: "tablesorter-childRow"
+        })
+
+    $('.tablesorter').delegate('.toggle', 'click', function () {
+
+        $(this).closest('tr').nextUntil('tr:not(.tablesorter-childRow)').find('td').toggle();
+
+        return false;
+    });
+
+
+
+    function cbConfirmdChecked(id) {
+        var className = "cb" + id;
+        var element = document.getElementsByClassName(className);
+        var checked = element.item(0).checked;
+
+        if (checked) {
+            document.getElementById(id).innerHTML = '1';
+        } else {
+            document.getElementById(id).innerHTML = '0';
+        }
+    }
+
+    function cbChecked(type, id) {
+        var className = "cb-" + type + "-" + id;
+        var element = document.getElementsByClassName(className);
+        var checked = element.item(0).checked;
+
+        if (checked) {
+            document.getElementById(type + "-" + id).innerHTML = '1';
+        } else {
+            document.getElementById(type + "-" + id).innerHTML = '0';
+        }
+    }
+
+
+
+</script>
+
+
+
+

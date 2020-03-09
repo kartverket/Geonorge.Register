@@ -15,6 +15,7 @@ namespace Kartverket.Register.Models.Api
         public string description { get; set; }
         public string codevalue { get; set; }
         public string owner { get; set; }
+        public string status { get; set; }
         public string broader { get; set; }
 
         public DateTime? ValidFromDate { get; set; }
@@ -79,7 +80,45 @@ namespace Kartverket.Register.Models.Api
                 ValidFromDate = item.ValidFrom;
                 ValidToDate = item.ValidTo;
 
+                status = item.status;
+            }
+            else if (models is ConceptSheme)
+            {
+                ConceptSheme item = (ConceptSheme)models;
+                id = item.id;
+                name = item.name;
+                seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(item.name);
+                owner = item.owner;
+                if (!string.IsNullOrWhiteSpace(item.description))
+                {
+                    description = item.description;
+                }
+                else
+                {
+                    description = "";
+                }
 
+                if (!string.IsNullOrWhiteSpace(item.codelistValue))
+                {
+                    codevalue = item.codelistValue;
+                }
+                else
+                {
+                    codevalue = "";
+                }
+                if (item.broader != null)
+                {
+                    broader = item.broader;
+                }
+                else
+                {
+                    broader = "";
+                }
+
+                ValidFromDate = item.ValidFromDate;
+                ValidToDate = item.ValidToDate;
+
+                status = item.status;
             }
         }
     }

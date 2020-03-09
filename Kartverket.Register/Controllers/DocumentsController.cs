@@ -60,7 +60,7 @@ namespace Kartverket.Register.Controllers
             document.register = _registerService.GetRegister(parentRegister, registername);
             if (document.register != null)
             {
-                if (_accessControlService.HasAccessTo(document.register))
+                if (_accessControlService.AddToRegister(document.register))
                 {
                     return View(document);
                 }
@@ -80,7 +80,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerowner)
         {
             document.register = _registerService.GetRegister(parentRegister, registername);
-            if (_accessControlService.HasAccessTo(document.register))
+            if (_accessControlService.AddToRegister(document.register))
             {
                 if (!NameIsValid(document))
                 {
@@ -105,7 +105,7 @@ namespace Kartverket.Register.Controllers
             Document document = (Document)_registerItemService.GetCurrentRegisterItem(parentRegister, registername, itemname);
             if (document != null)
             {
-                if (_accessControlService.HasAccessTo(document.register))
+                if (_accessControlService.AddToRegister(document.register))
                 {
                     Viewbags(document);
                     return View(document);
@@ -129,7 +129,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentRegisterOwner, string parentRegister, string registername, string itemname)
         {
             document.register = _registerService.GetSubregisterByName(parentRegister, registername);
-            if (_accessControlService.HasAccessTo(document.register))
+            if (_accessControlService.AddToRegister(document.register))
             {
                 if (!NameIsValid(document))
                 {

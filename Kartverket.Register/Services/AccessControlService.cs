@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Geonorge.AuthLib.Common;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
+using System;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Services
 {
@@ -75,6 +77,9 @@ namespace Kartverket.Register.Services
 
         public bool AddToRegister(RegisterV2ViewModel registerViewModel)
         {
+            if (AllowAddToRegister(registerViewModel))
+                return true;
+
             if (registerViewModel.IsDokMunicipal())
             {
                 return registerViewModel.Municipality != null && AccessRegister(registerViewModel);
@@ -100,7 +105,7 @@ namespace Kartverket.Register.Services
             {
                 if (IsEditor())
                 {
-                    return !register.ContainedItemClassIsCodelistValue() ||
+                    return /*!register.ContainedItemClassIsCodelistValue() ||*/
                            IsRegisterOwner(register.owner.name, UserName());
                 }
             }
@@ -120,11 +125,11 @@ namespace Kartverket.Register.Services
             {
                 if (IsEditor())
                 {
-                    if (registerViewModel.ContainedItemClassIsCodelistValue())
-                    {
+                    //if (registerViewModel.ContainedItemClassIsCodelistValue())
+                    //{
                         return IsRegisterOwner(registerViewModel.Owner.name, UserName());
-                    }
-                    return true;
+                    //}
+                    //return true;
                 }
             }
             else if (registerViewModel.AccessId == 4)
@@ -137,11 +142,11 @@ namespace Kartverket.Register.Services
         public bool AccessRegisterItem(Models.RegisterItem registerItem)
         {
             if (IsAdmin()) return true;
-            if (HasAccessToRegister(registerItem.register))
-            {
+            //if (HasAccessToRegister(registerItem.register))
+            //{
                 if (registerItem is Document document)
                 {
-                    return IsItemOwner(document.documentowner.name, UserName()) && VersionIsEditable(registerItem.statusId);
+                    return IsEditor() && IsItemOwner(document.documentowner.name, UserName()) && VersionIsEditable(registerItem.statusId);
                 }
                 if (registerItem is Dataset dataset)
                 {
@@ -154,7 +159,7 @@ namespace Kartverket.Register.Services
                 {
                     return IsItemOwner(registerItem.submitter.name, UserName()) || IsRegisterOwner(registerItem.register.owner.name, UserName());
                 }
-            }
+            //}
             return false;
         }
 
@@ -167,14 +172,18 @@ namespace Kartverket.Register.Services
         {
             if (!registerItemViewModel.Register.IsAlertRegister())
             {
-                if (HasAccessToRegister(registerItemViewModel.Register))
-                {
-                    if (registerItemViewModel is DocumentViewModel docuementViewModel)
+                if (IsAdmin()) return true;
+                if (IsEditor())
+                { 
+                //if (HasAccessToRegister(registerItemViewModel.Register))
+                //{
+                if (registerItemViewModel is DocumentViewModel docuementViewModel)
                     {
                         return IsItemOwner(registerItemViewModel.Owner.name, UserName()) && VersionIsEditable(docuementViewModel.StatusId);
                     }
 
                     return IsItemOwner(registerItemViewModel.Owner.name, UserName()) || IsRegisterOwner(registerItemViewModel.Register.owner.name, UserName());
+                    //}
                 }
             }
             return false;
@@ -182,7 +191,7 @@ namespace Kartverket.Register.Services
 
         public bool AccessCreateNewVersion(RegisterItemV2ViewModel registerItemViewModel)
         {
-            return HasAccessToRegister(registerItemViewModel.Register) && IsItemOwner(registerItemViewModel.Owner.name, UserName()) || IsAdmin();
+            return (IsDokEditor() && IsItemOwner(registerItemViewModel.Owner.name, UserName())) || IsAdmin();
         }
 
         /// <summary>
@@ -328,6 +337,34 @@ namespace Kartverket.Register.Services
         {
             var user = _registerService.GetOrganizationByUserName();
             return user?.name;
+        }
+
+        public bool AddToRegister(Models.Register register)
+        {
+            if (AllowAddToRegister(register))
+                return true;
+
+            return HasAccessToRegister(register);
+        }
+
+        public bool AllowAddToRegister(Models.Register register)
+        {
+            return AllowedRegisters(register.systemId);
+        }
+
+        private bool AllowedRegisters(Guid systemId)
+        {
+            return IsEditor() && (
+                systemId == Guid.Parse(GlobalVariables.AlertRegistryId) ||
+                systemId == Guid.Parse(GlobalVariables.ProductSheetsId) ||
+                systemId == Guid.Parse(GlobalVariables.ProductSpecificationId) ||
+                systemId == Guid.Parse(GlobalVariables.CartographyId)
+                );
+        }
+
+        public bool AllowAddToRegister(RegisterV2ViewModel register)
+        {
+            return AllowedRegisters(register.SystemId);
         }
     }
 }

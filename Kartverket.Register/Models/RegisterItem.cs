@@ -340,6 +340,9 @@ namespace Kartverket.Register.Models
                 case Document _:
                     var document = (Document)this;
                     return document.documentowner;
+                case CodelistValue _:
+                    var value = (CodelistValue)this;
+                    return value.register.owner;
             }
             return submitter;
         }

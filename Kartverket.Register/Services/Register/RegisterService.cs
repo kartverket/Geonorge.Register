@@ -1209,7 +1209,7 @@ namespace Kartverket.Register.Services.Register
             register.statusId = "Submitted";
             register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name);
             register.parentRegisterId = register.parentRegister?.systemId;
-            register.ownerId = _userService.GetUserOrganizationId();
+            register.ownerId = register.parentRegister != null ? register.parentRegister.ownerId : _userService.GetUserOrganizationId();
             register.managerId = _userService.GetUserOrganizationId();
 
             foreach (var translation in register.Translations)

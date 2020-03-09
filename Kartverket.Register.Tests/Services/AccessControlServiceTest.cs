@@ -128,10 +128,11 @@ namespace Kartverket.Register.Tests.Services
         [Fact]
         public void AccessRegisterIfContainedItemClassIsNotCodelistValue()
         {
-            SetClaims(Role, Editor);
+            SetClaims(Role, Editor, Org, "Kartverket");
 
             _register.accessId = 2;
             _register.containedItemClass = "Organization";
+            _register.owner = new Organization { name = "Kartverket" };
 
             _accessControlService.HasAccessToRegister(_register).Should().BeTrue();
         }
@@ -240,6 +241,7 @@ namespace Kartverket.Register.Tests.Services
         public void AccessRegisterItemIfUserIsItemOwner()
         {
             SetClaims(Role, Editor, Orgnr, "971040238", Org, "Kartverket");
+            _register.owner = new Organization { name = "Kartverket" };
             var registerItem = new CodelistValue {register = _register, submitter = _organization};
             _accessControlService.AccessRegisterItem(registerItem).Should().BeTrue();
         }
@@ -259,6 +261,7 @@ namespace Kartverket.Register.Tests.Services
         [Fact]
         public void AccessRegisterItemDocumentIfUserIsItemOwner()
         {
+            _register.owner = new Organization { name = "Kartverket" };
             SetClaims(Role, Editor, Orgnr, "971040238", Org, "Kartverket");
             _accessControlService.AccessRegisterItem(_document).Should().BeTrue();
         }
@@ -267,6 +270,7 @@ namespace Kartverket.Register.Tests.Services
         public void NotAccessRegisterItemDocumentIfUserIsNotItemOwner()
         {
             SetClaims(Role, Editor, Orgnr, "970188290", Org, "Norges geologiske undersøkelse");
+            _register.owner = new Organization { name = "Norges geologiske undersøkelse" };
             _accessControlService.AccessRegisterItem(_document).Should().BeFalse();
         }
 

@@ -52,7 +52,11 @@ namespace Kartverket.Register.Services
                     Kodeverdi = workSheet.Cells[row, 18].Text
                 };
 
-                var datasett = new Datasett { Tittel = workSheet.Cells[row, 14].Text, UrlMetadata = workSheet.Cells[row, 15].Text, BufferAvstand = "", TypeReferanse = objectType };
+                string bufferAvstand = "";
+                if (!string.IsNullOrEmpty(workSheet.Cells[row, 32].Text))
+                    bufferAvstand = workSheet.Cells[row, 32].Text;
+
+                var datasett = new Datasett { Tittel = workSheet.Cells[row, 14].Text, UrlMetadata = workSheet.Cells[row, 15].Text, BufferAvstand = bufferAvstand, TypeReferanse = objectType };
                 geoLett.Datasett = datasett;
 
                 Referanse referanse = new Referanse();

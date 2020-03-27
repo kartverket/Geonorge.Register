@@ -191,6 +191,7 @@ namespace Kartverket.Register.Services
                         var responseTime = (double)data.svartid;
                         var resposeGetCapabilities = false;
                         var supportCors = false;
+                        var supportCorsNotAll = false;
                         var epsgSupport = false;
                         var featuresSupport = false;
                         var hasLegend = false;
@@ -205,6 +206,9 @@ namespace Kartverket.Register.Services
 
                         if (data.cors.vurdering == "yes")
                             supportCors = true;
+
+                        if (data.cors.svar == "not all")
+                            supportCorsNotAll = true;
 
                         if (data.epsgSupported.vurdering == "yes")
                             epsgSupport = true; //Todo check epsg code
@@ -228,7 +232,7 @@ namespace Kartverket.Register.Services
                         //Støtter egenskapsspørringer
                         //Støtter tegnforklaring
                         //Oppgir dekningsområde
-                        else if ((resposeGetCapabilities && responseTime <= 4 && supportCors
+                        else if ((resposeGetCapabilities && responseTime <= 4 && (supportCors || supportCorsNotAll)
                             && epsgSupport && featuresSupport
                                   && hasLegend) || connectSoso)
                             status = Good;

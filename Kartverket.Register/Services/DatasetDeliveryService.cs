@@ -19,6 +19,7 @@ namespace Kartverket.Register.Services
         private const string Good = "good";
         public const string Notset = "notset";
         private const string Deficient = "deficient";
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
         public DatasetDeliveryService(RegisterDbContext dbContext)
@@ -259,7 +260,7 @@ namespace Kartverket.Register.Services
                         _synchronizationJob.FailCount++;
                         _synchronizationJob.FailLog.Add(new SyncLogEntry(serviceUuid, "GetServiceStatus - " + e.Message));
                     }
-                    // ignored
+                    Log.Error("GetServiceStatus for " + statusUrl + " failed with error: " + e);
                 }
             }
             return status;

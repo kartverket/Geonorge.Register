@@ -370,6 +370,25 @@ namespace Kartverket.Register.Migrations
             //    accessId = 2
             //};
 
+            Register styrendedokumenter = new Register
+            {
+                systemId = Guid.Parse("b2e5f822-994d-47f5-ac52-cd4153d55198"),
+                dateSubmitted = DateTime.Now,
+                modified = DateTime.Now,
+                ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                name = "Styrende dokumenter",
+                seoname = "styrendedokumenter",
+                containedItemClass = "Register",
+                accessId = 1
+            };
+
+            context.Registers.AddOrUpdate(
+                styrendedokumenter
+            );
+
+            //context.Database.ExecuteSqlCommand("UPDATE Registers SET parentRegisterId = 'b2e5f822-994d-47f5-ac52-cd4153d55198'  WHERE  systemid='3A95CA12-4BD4-40E2-9E23-3875B68E83CD'");
+
             context.Database.ExecuteSqlCommand("UPDATE Registers SET name = 'Varsler', description = 'Register over alle varsler registrert i Geonorge', seoname = 'varsler'  WHERE  systemid='0f428034-0b2d-4fb7-84ea-c547b872b418'");
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET AlertCategory = '" + Constants.AlertCategoryService+ "'  WHERE  [AlertCategory] is  null and Discriminator='Alert'");
 

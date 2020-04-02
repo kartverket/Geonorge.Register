@@ -239,7 +239,7 @@ namespace Kartverket.Register.Services
 
         public bool IsItemOwner(string owner, string user)
         {
-            return owner.ToLower() == user.ToLower();
+            return owner?.ToLower() == user?.ToLower();
         }
 
         public bool IsRegisterOwner(string registerOwner, string userName)

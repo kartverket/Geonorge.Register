@@ -19,6 +19,7 @@ namespace Kartverket.Register.Services
         private const string Good = "good";
         public const string Notset = "notset";
         private const string Deficient = "deficient";
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
         public DatasetDeliveryService(RegisterDbContext dbContext)
@@ -191,6 +192,7 @@ namespace Kartverket.Register.Services
                         var responseTime = (double)data.svartid;
                         var resposeGetCapabilities = false;
                         var supportCors = false;
+                        var supportCorsNotAll = false;
                         var epsgSupport = false;
                         var featuresSupport = false;
                         var hasLegend = false;
@@ -205,6 +207,9 @@ namespace Kartverket.Register.Services
 
                         if (data.cors.vurdering == "yes")
                             supportCors = true;
+
+                        if (data.cors.svar == "not all")
+                            supportCorsNotAll = true;
 
                         if (data.epsgSupported.vurdering == "yes")
                             epsgSupport = true; //Todo check epsg code
@@ -228,7 +233,7 @@ namespace Kartverket.Register.Services
                         //Støtter egenskapsspørringer
                         //Støtter tegnforklaring
                         //Oppgir dekningsområde
-                        else if ((resposeGetCapabilities && responseTime <= 4 && supportCors
+                        else if ((resposeGetCapabilities && responseTime <= 4 && (supportCors || supportCorsNotAll)
                             && epsgSupport && featuresSupport
                                   && hasLegend) || connectSoso)
                             status = Good;
@@ -255,7 +260,7 @@ namespace Kartverket.Register.Services
                         _synchronizationJob.FailCount++;
                         _synchronizationJob.FailLog.Add(new SyncLogEntry(serviceUuid, "GetServiceStatus - " + e.Message));
                     }
-                    // ignored
+                    Log.Error("GetServiceStatus for " + statusUrl + " failed with error: " + e);
                 }
             }
             return status;

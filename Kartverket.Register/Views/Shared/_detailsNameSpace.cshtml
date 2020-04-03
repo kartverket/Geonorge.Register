@@ -125,7 +125,7 @@
         methods: {
             getItems: function () {
                 var itemsPerRequest = 10;
-                var offsetParameter = this.numberOfVisibleItems ? "&offset=" + this.numberOfVisibleItems : "";
+                var offsetParameter = this.numberOfVisibleItems ? "&offset=" + (this.numberOfVisibleItems + 1) : "";
                 var namespaceNameParameter = '?namespace=' + this.$root.Namespace;
 
                 if (this.loadAllApiData && this.items) {

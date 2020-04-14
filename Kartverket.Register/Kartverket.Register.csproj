@@ -402,6 +402,7 @@
     <Compile Include="Helpers\CustomDocumentFilter.cs" />
     <Compile Include="Helpers\GlobalVariables.cs" />
     <Compile Include="Helpers\HttpRequestMessageExtensions.cs" />
+    <Compile Include="Helpers\Log4netExceptionFilter.cs" />
     <Compile Include="Helpers\RegisterUrls.cs" />
     <Compile Include="Helpers\HtmlHelperExtension.cs" />
     <Compile Include="Migrations\201410281525363_AddOrganization.cs" />

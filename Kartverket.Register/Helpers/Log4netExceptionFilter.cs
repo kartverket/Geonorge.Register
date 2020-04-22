@@ -13,6 +13,7 @@ namespace Kartverket.Register.Helpers
             Exception ex = context.Exception;
             if (!(ex is HttpException)) //ignore "file not found"
             {
+                Log.Info("Request url: " + HttpContext.Current?.Request?.RawUrl + ", " + HttpContext.Current?.Request?.UserAgent);
                 Log.Error("App_Error", ex);
             }
         }

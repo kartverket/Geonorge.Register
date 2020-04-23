@@ -78,6 +78,10 @@ namespace Kartverket.Register.Models.Api
         /// </summary>
         public int? BufferAvstand { get; set; }
         /// <summary>
+        /// Url til gml-skjema
+        /// </summary>
+        public string GmlSkjema { get; set; }
+        /// <summary>
         /// Objekttype, attributt og datasett skal sammen med type tiltak...
         /// </summary>
         public ObjectType TypeReferanse { get; set; }

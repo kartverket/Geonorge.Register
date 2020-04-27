@@ -13,6 +13,7 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using Kartverket.Register.Models.ViewModels;
 using Resources;
+using System.Runtime.Caching;
 
 namespace Kartverket.Register.Helpers
 {
@@ -103,11 +104,25 @@ namespace Kartverket.Register.Helpers
 
         public static List<Models.Register> Registers()
         {
+            MemoryCache memCacher = MemoryCache.Default;
+
+            var cache = memCacher.Get("Registers");
+            var registers = cache as List<Models.Register>;
+
+            if (registers != null)
+                return registers;
+
             var registersList = RegisterService.GetRegisters();
             if (registersList.Any())
             {
                 registersList.OrderBy(r => r.NameTranslated());
             }
+
+            CacheItemPolicy policy =
+            new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddYears(1)), Priority = CacheItemPriority.NotRemovable };
+            MemoryCache memoryCache = MemoryCache.Default;
+            memoryCache.Set("Registers", registersList, policy);
+
             return registersList;
         }
 

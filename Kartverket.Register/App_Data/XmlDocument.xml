@@ -994,6 +994,11 @@
             Buffer avstand i meter
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.Api.Datasett.GmlSkjema">
+            <summary>
+            Url til gml-skjema
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.Datasett.TypeReferanse">
             <summary>
             Objekttype, attributt og datasett skal sammen med type tiltak...

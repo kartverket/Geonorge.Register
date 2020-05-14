@@ -23,21 +23,33 @@ namespace Kartverket.Register.Models.ViewModels
         public bool RegionalPlan { get; set; }
         public bool MunicipalSocialPlan { get; set; }
         public bool MunicipalLandUseElementPlan { get; set; }
+        [Obsolete]
         public bool ZoningPlanArea { get; set; }
+        public bool ZoningPlan { get; set; }
+        [Obsolete]
         public bool ZoningPlanDetails { get; set; }
         public bool BuildingMatter { get; set; }
         public bool PartitionOff { get; set; }
+        [Obsolete]
         public bool EnvironmentalImpactAssessment { get; set; }
+        public bool ImpactAssessmentPlanningBuildingAct { get; set; }
+        public bool RiskVulnerabilityAnalysisPlanningBuildingAct { get; set; }
         public string SuitabilityAssessmentText { get; set; }
 
         public int NationalAssessmentRegionalPlan { get; set; }
         public int NationalAssessmentMunicipalSocialPlan { get; set; }
         public int NationalAssessmentMunicipalLandUseElementPlan { get; set; }
+        [Obsolete]
         public int NationalAssessmentZoningPlanArea { get; set; }
+        public int NationalAssessmentZoningPlan { get; set; }
+        [Obsolete]
         public int NationalAssessmentZoningPlanDetails { get; set; }
         public int NationalAssessmentBuildingMatter { get; set; }
         public int NationalAssessmentPartitionOff { get; set; }
+        [Obsolete]
         public int NationalAssessmentEnvironmentalImpactAssessment { get; set; }
+        public int NationalAssessmentImpactPlanningBuildingAct { get; set; }
+        public int NationalAssessmentRiskVulnerabilityAnalysisPlanningBuildingAct { get; set; }
 
         public DokMunicipalEdit(Dataset dataset, RegisterItem municipality)
         {

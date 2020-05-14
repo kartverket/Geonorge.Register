@@ -865,7 +865,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kommune-planens areal- del.
+        ///   Looks up a localized string similar to Kommune-planens arealdel.
         /// </summary>
         public static string SuitabilityArealText {
             get {
@@ -937,7 +937,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to KU og ROS for pbl- planer.
+        ///   Looks up a localized string similar to KU for pbl-planer.
         /// </summary>
         public static string SuitabilityKUText {
             get {
@@ -982,7 +982,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Region- plan.
+        ///   Looks up a localized string similar to Region-plan og KVU.
         /// </summary>
         public static string SuitabilityRegionsplanleggingText {
             get {
@@ -996,6 +996,24 @@ namespace Resources {
         public static string SuitabilityRegionsplanleggingTitle {
             get {
                 return ResourceManager.GetString("SuitabilityRegionsplanleggingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROS for pbl-planer.
+        /// </summary>
+        public static string SuitabilityROSText {
+            get {
+                return ResourceManager.GetString("SuitabilityROSText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROS - konsekvensutredninger i forbindelse med arealplaner.
+        /// </summary>
+        public static string SuitabilityROSTitle {
+            get {
+                return ResourceManager.GetString("SuitabilityROSTitle", resourceCulture);
             }
         }
         
@@ -1023,6 +1041,15 @@ namespace Resources {
         public static string SuitabilityText {
             get {
                 return ResourceManager.GetString("SuitabilityText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regulerings- planlegging.
+        /// </summary>
+        public static string SuitabilityZoningPlan {
+            get {
+                return ResourceManager.GetString("SuitabilityZoningPlan", resourceCulture);
             }
         }
         

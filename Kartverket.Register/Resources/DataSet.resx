@@ -355,7 +355,7 @@
     <value>sett status</value>
   </data>
   <data name="SuitabilityArealText" xml:space="preserve">
-    <value>Kommune-planens areal- del</value>
+    <value>Kommune-planens arealdel</value>
   </data>
   <data name="SuitabilityArealTitle" xml:space="preserve">
     <value>Prosesser knyttet til kommuneplanens arealdel</value>
@@ -379,7 +379,7 @@
     <value>Fradeling</value>
   </data>
   <data name="SuitabilityKUText" xml:space="preserve">
-    <value>KU og ROS for pbl- planer</value>
+    <value>KU for pbl-planer</value>
   </data>
   <data name="SuitabilityKUTitle" xml:space="preserve">
     <value>KU - konsekvensutredninger i forbindelse med arealplaner</value>
@@ -394,7 +394,7 @@
     <value>Reguleringsplanlegging – områderegulering</value>
   </data>
   <data name="SuitabilityRegionsplanleggingText" xml:space="preserve">
-    <value>Region- plan</value>
+    <value>Region-plan og KVU</value>
   </data>
   <data name="SuitabilityRegionsplanleggingTitle" xml:space="preserve">
     <value>Regionplanlegging</value>
@@ -414,14 +414,14 @@ Her kan du angi kommunens vurdering av egnethet for hvert av datasettene. Ulike 
 Det er lagt inn overordnede nasjonale forslag. Dette forslaget er kun ment som grovt veiledende ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
 Ettersom et datasetts kvalitet og dekning kan variere betydelig fra en kommune til en annen og en landsdel til en annen, må kommunene selv vurdere egnethet ut fra tilgjengelige data for sin kommune. Egnethetsvurderingen kan gjøres for bruk i disse prosessene:
                                     &lt;ul&gt;
-                                        &lt;li&gt;Regionplanlegging&lt;/li&gt;
-                                        &lt;li&gt;Prosesser knyttet til kommuneplanens samfunnsdel&lt;/li&gt;
-                                        &lt;li&gt;Prosesser knyttet til kommuneplanens arealdel&lt;/li&gt;
-                                        &lt;li&gt;Reguleringsplanlegging – områderegulering&lt;/li&gt;
-                                        &lt;li&gt;Reguleringsplanlegging - detaljregulering&lt;/li&gt;
-                                        &lt;li&gt;Byggesak&lt;/li&gt;
-                                        &lt;li&gt;Fradeling&lt;/li&gt;
-                                        &lt;li&gt;KU - konsekvensutredninger i forbindelse med arealplaner&lt;/li&gt;
+                        &lt;li&gt;REGION-PLAN OG KVU&lt;/li&gt;
+                        &lt;li&gt;KOMMUNE-PLANENS SAMFUNNS-DEL&lt;/li&gt;
+                        &lt;li&gt;KOMMUNE-PLANENS AREALDEL&lt;/li&gt;
+                        &lt;li&gt;REGULERINGS- PLANLEGGING&lt;/li&gt;
+                        &lt;li&gt;BYGGESAK&lt;/li&gt;
+                        &lt;li&gt;Fradeling&lt;/li&gt;
+                        &lt;li&gt;KU FOR PBL-PLANER&lt;/li&gt;
+                        &lt;li&gt;ROS FOR PBL-PLANER&lt;/li&gt;
                                     &lt;/ul&gt;
 Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere intensitet på bakgrunnsfarge i avkrysningsboksene indikerer bedre egnethet basert på overordnede nasjonale vurderinger.</value>
   </data>
@@ -449,14 +449,14 @@ Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere
                 &lt;p&gt;
                     &lt;u&gt;Egnethetsvurdering gjøres for disse prosessene:&lt;/u&gt;
                     &lt;ul&gt;
-                        &lt;li&gt;Regionplanlegging&lt;/li&gt;
-                        &lt;li&gt;Prosesser knyttet til kommuneplanens samfunnsdel&lt;/li&gt;
-                        &lt;li&gt;Prosesser knyttet til kommuneplanens arealdel&lt;/li&gt;
-                        &lt;li&gt;Reguleringsplanlegging – områderegulering&lt;/li&gt;
-                        &lt;li&gt;Reguleringsplanlegging - detaljregulering&lt;/li&gt;
-                        &lt;li&gt;Byggesak&lt;/li&gt;
+                        &lt;li&gt;REGION-PLAN OG KVU&lt;/li&gt;
+                        &lt;li&gt;KOMMUNE-PLANENS SAMFUNNS-DEL&lt;/li&gt;
+                        &lt;li&gt;KOMMUNE-PLANENS AREALDEL&lt;/li&gt;
+                        &lt;li&gt;REGULERINGS- PLANLEGGING&lt;/li&gt;
+                        &lt;li&gt;BYGGESAK&lt;/li&gt;
                         &lt;li&gt;Fradeling&lt;/li&gt;
-                        &lt;li&gt;KU - konsekvensutredninger i forbindelse med arealplaner&lt;/li&gt;
+                        &lt;li&gt;KU FOR PBL-PLANER&lt;/li&gt;
+                        &lt;li&gt;ROS FOR PBL-PLANER&lt;/li&gt;
                     &lt;/ul&gt;
                 &lt;/p&gt;
                 &lt;p&gt;
@@ -499,5 +499,14 @@ Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere
   </data>
   <data name="SuitabitityHelp" xml:space="preserve">
     <value>Høyere intensitet på bakgrunnsfarge indikerer bedre egnethet basert på overordnede nasjonale vurderinger. Ved å holde musepekeren over boksen for egnethet vil man kunne se mer tekst om egnethet, tips til bruk eller andre kommentarer dersom det er registrert.</value>
+  </data>
+  <data name="SuitabilityROSText" xml:space="preserve">
+    <value>ROS for pbl-planer</value>
+  </data>
+  <data name="SuitabilityROSTitle" xml:space="preserve">
+    <value>ROS - konsekvensutredninger i forbindelse med arealplaner</value>
+  </data>
+  <data name="SuitabilityZoningPlan" xml:space="preserve">
+    <value>Regulerings- planlegging</value>
   </data>
 </root>

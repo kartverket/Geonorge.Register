@@ -23,21 +23,33 @@ namespace Kartverket.Register.Models.ViewModels
         public bool RegionalPlan { get; set; }
         public bool MunicipalSocialPlan { get; set; }
         public bool MunicipalLandUseElementPlan { get; set; }
+        [Obsolete]
         public bool ZoningPlanArea { get; set; }
+        public bool ZoningPlan { get; set; }
+        [Obsolete]
         public bool ZoningPlanDetails { get; set; }
         public bool BuildingMatter { get; set; }
         public bool PartitionOff { get; set; }
+        [Obsolete]
         public bool EnvironmentalImpactAssessment { get; set; }
+        public bool ImpactAssessmentPlanningBuildingAct { get; set; }
+        public bool RiskVulnerabilityAnalysisPlanningBuildingAct { get; set; }
         public string SuitabilityAssessmentText { get; set; }
 
         public int NationalAssessmentRegionalPlan { get; set; }
         public int NationalAssessmentMunicipalSocialPlan { get; set; }
         public int NationalAssessmentMunicipalLandUseElementPlan { get; set; }
+        [Obsolete]
         public int NationalAssessmentZoningPlanArea { get; set; }
+        public int NationalAssessmentZoningPlan { get; set; }
+        [Obsolete]
         public int NationalAssessmentZoningPlanDetails { get; set; }
         public int NationalAssessmentBuildingMatter { get; set; }
         public int NationalAssessmentPartitionOff { get; set; }
+        [Obsolete]
         public int NationalAssessmentEnvironmentalImpactAssessment { get; set; }
+        public int NationalAssessmentImpactPlanningBuildingAct { get; set; }
+        public int NationalAssessmentRiskVulnerabilityAnalysisPlanningBuildingAct { get; set; }
 
         public DokMunicipalEdit(Dataset dataset, RegisterItem municipality)
         {
@@ -61,18 +73,24 @@ namespace Kartverket.Register.Models.ViewModels
             MunicipalLandUseElementPlan = dataset.GetCoverageMunicipalLandUseElementPlanByUser(municipality.systemId);
             ZoningPlanArea = dataset.GetCoverageZoningPlanAreaByUser(municipality.systemId);
             ZoningPlanDetails = dataset.GetCoverageZoningPlanDetailsByUser(municipality.systemId);
+            ZoningPlan = dataset.GetCoverageZoningPlanByUser(municipality.systemId);
             BuildingMatter = dataset.GetCoverageBuildingMatterByUser(municipality.systemId);
             PartitionOff = dataset.GetCoveragePartitionOffByUser(municipality.systemId);
             EnvironmentalImpactAssessment = dataset.GetCoverageEenvironmentalImpactAssessmentByUser(municipality.systemId);
+            ImpactAssessmentPlanningBuildingAct = dataset.GetCoverageImpactAssessmentPlanningBuildingActByUser(municipality.systemId);
+            RiskVulnerabilityAnalysisPlanningBuildingAct = dataset.GetCoverageRiskVulnerabilityAnalysisPlanningBuildingActByUser(municipality.systemId);
             SuitabilityAssessmentText = dataset.GetCoverageSuitabilityAssessmentTextByUser(municipality.systemId);
             NationalAssessmentRegionalPlan = dataset.RegionalPlan.GetValueOrDefault();
             NationalAssessmentMunicipalSocialPlan = dataset.MunicipalSocialPlan.GetValueOrDefault();
             NationalAssessmentMunicipalLandUseElementPlan = dataset.MunicipalLandUseElementPlan.GetValueOrDefault();
             NationalAssessmentZoningPlanArea = dataset.ZoningPlanArea.GetValueOrDefault();
             NationalAssessmentZoningPlanDetails = dataset.ZoningPlanDetails.GetValueOrDefault();
+            NationalAssessmentZoningPlan = dataset.ZoningPlan.GetValueOrDefault();
             NationalAssessmentBuildingMatter = dataset.BuildingMatter.GetValueOrDefault();
             NationalAssessmentPartitionOff = dataset.PartitionOff.GetValueOrDefault();
             NationalAssessmentEnvironmentalImpactAssessment = dataset.EenvironmentalImpactAssessment.GetValueOrDefault();
+            NationalAssessmentImpactPlanningBuildingAct = dataset.ImpactAssessmentPlanningBuildingAct.GetValueOrDefault();
+            NationalAssessmentRiskVulnerabilityAnalysisPlanningBuildingAct = dataset.RiskVulnerabilityAnalysisPlanningBuildingAct.GetValueOrDefault();
         }
 
         public DokMunicipalEdit() {

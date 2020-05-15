@@ -1045,6 +1045,14 @@
     <Compile Include="Migrations\201911261406473_MakeAllItemsRetired.designer.cs">
       <DependentUpon>201911261406473_MakeAllItemsRetired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005140842120_DOKSuitabilityRatingAdjustments.cs" />
+    <Compile Include="Migrations\202005140842120_DOKSuitabilityRatingAdjustments.designer.cs">
+      <DependentUpon>202005140842120_DOKSuitabilityRatingAdjustments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005150845270_CoverageDatasetSuitability.cs" />
+    <Compile Include="Migrations\202005150845270_CoverageDatasetSuitability.designer.cs">
+      <DependentUpon>202005150845270_CoverageDatasetSuitability.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2715,6 +2723,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911261406473_MakeAllItemsRetired.resx">
       <DependentUpon>201911261406473_MakeAllItemsRetired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005140842120_DOKSuitabilityRatingAdjustments.resx">
+      <DependentUpon>202005140842120_DOKSuitabilityRatingAdjustments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005150845270_CoverageDatasetSuitability.resx">
+      <DependentUpon>202005150845270_CoverageDatasetSuitability.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

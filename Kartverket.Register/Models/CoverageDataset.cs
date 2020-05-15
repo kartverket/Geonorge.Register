@@ -41,16 +41,27 @@ namespace Kartverket.Register.Models
         public bool MunicipalSocialPlan { get; set; }
         [Display(Name = "kommuneplanens arealdel")]
         public bool MunicipalLandUseElementPlan { get; set; }
+        [Obsolete]
         [Display(Name = "Reguleringsplan område")]
         public bool ZoningPlanArea { get; set; }
         [Display(Name = "Reguleringsplan detalj")]
+        [Obsolete]
         public bool ZoningPlanDetails { get; set; }
+        [Display(Name = "Reguleringsplan")]
+        public bool ZoningPlan { get; set; }
         [Display(Name = "Byggesak")]
         public bool BuildingMatter { get; set; }
         [Display(Name = "Fradeling")]
         public bool PartitionOff { get; set; }
+        [Obsolete]
         [Display(Name = "KU og ROS for pbl-planer")]
         public bool EenvironmentalImpactAssessment { get; set; }
+
+        [Display(Name = "KU for pbl-planer")]
+        public bool ImpactAssessmentPlanningBuildingAct { get; set; }
+
+        [Display(Name = "ROS for pbl-planer")]
+        public bool RiskVulnerabilityAnalysisPlanningBuildingAct { get; set; }
 
         public string suitabilityAssessmentText { get; set; }
 

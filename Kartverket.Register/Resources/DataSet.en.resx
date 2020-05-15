@@ -385,7 +385,7 @@
     <value>Deallocation</value>
   </data>
   <data name="SuitabilityKUText" xml:space="preserve">
-    <value>KU and ROS for pbl plans</value>
+    <value>KU for pbl plans</value>
   </data>
   <data name="SuitabilityKUTitle" xml:space="preserve">
     <value>KU impact assessments in connection with area plans</value>
@@ -489,5 +489,14 @@ As a dataset quality and coverage can vary considerably from site to area, the a
   </data>
   <data name="SuitabitityHelp" xml:space="preserve">
     <value>Higher background color intensity indicates better suitability based on overall national ratings. By hovering your mouse over the box for suitability you will be able to see more text about suitability, tips for use or other comments if registered.</value>
+  </data>
+  <data name="SuitabilityROSText" xml:space="preserve">
+    <value>ROS for pbl-plans</value>
+  </data>
+  <data name="SuitabilityROSTitle" xml:space="preserve">
+    <value>Risk analysis for area plans</value>
+  </data>
+  <data name="SuitabilityZoningPlan" xml:space="preserve">
+    <value>Zoning plan</value>
   </data>
 </root>

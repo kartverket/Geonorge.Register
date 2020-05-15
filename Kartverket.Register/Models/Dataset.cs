@@ -487,6 +487,7 @@ namespace Kartverket.Register.Models
             return false;
         }
 
+        [Obsolete]
         public bool GetCoverageZoningPlanAreaByUser(Guid municipalityId)
         {
             foreach (CoverageDataset coverage in Coverage)
@@ -506,6 +507,18 @@ namespace Kartverket.Register.Models
                 if (coverage.MunicipalityId == municipalityId)
                 {
                     return coverage.ZoningPlanDetails;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageZoningPlanByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.ZoningPlan;
                 }
             }
             return false;
@@ -534,7 +547,7 @@ namespace Kartverket.Register.Models
             }
             return false;
         }
-
+        [Obsolete]
         public bool GetCoverageEenvironmentalImpactAssessmentByUser(Guid municipalityId)
         {
             foreach (CoverageDataset coverage in Coverage)
@@ -542,6 +555,30 @@ namespace Kartverket.Register.Models
                 if (coverage.MunicipalityId == municipalityId)
                 {
                     return coverage.EenvironmentalImpactAssessment;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageImpactAssessmentPlanningBuildingActByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.ImpactAssessmentPlanningBuildingAct;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageRiskVulnerabilityAnalysisPlanningBuildingActByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.RiskVulnerabilityAnalysisPlanningBuildingAct;
                 }
             }
             return false;

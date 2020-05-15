@@ -73,18 +73,24 @@ namespace Kartverket.Register.Models.ViewModels
             MunicipalLandUseElementPlan = dataset.GetCoverageMunicipalLandUseElementPlanByUser(municipality.systemId);
             ZoningPlanArea = dataset.GetCoverageZoningPlanAreaByUser(municipality.systemId);
             ZoningPlanDetails = dataset.GetCoverageZoningPlanDetailsByUser(municipality.systemId);
+            ZoningPlan = dataset.GetCoverageZoningPlanByUser(municipality.systemId);
             BuildingMatter = dataset.GetCoverageBuildingMatterByUser(municipality.systemId);
             PartitionOff = dataset.GetCoveragePartitionOffByUser(municipality.systemId);
             EnvironmentalImpactAssessment = dataset.GetCoverageEenvironmentalImpactAssessmentByUser(municipality.systemId);
+            ImpactAssessmentPlanningBuildingAct = dataset.GetCoverageImpactAssessmentPlanningBuildingActByUser(municipality.systemId);
+            RiskVulnerabilityAnalysisPlanningBuildingAct = dataset.GetCoverageRiskVulnerabilityAnalysisPlanningBuildingActByUser(municipality.systemId);
             SuitabilityAssessmentText = dataset.GetCoverageSuitabilityAssessmentTextByUser(municipality.systemId);
             NationalAssessmentRegionalPlan = dataset.RegionalPlan.GetValueOrDefault();
             NationalAssessmentMunicipalSocialPlan = dataset.MunicipalSocialPlan.GetValueOrDefault();
             NationalAssessmentMunicipalLandUseElementPlan = dataset.MunicipalLandUseElementPlan.GetValueOrDefault();
             NationalAssessmentZoningPlanArea = dataset.ZoningPlanArea.GetValueOrDefault();
             NationalAssessmentZoningPlanDetails = dataset.ZoningPlanDetails.GetValueOrDefault();
+            NationalAssessmentZoningPlan = dataset.ZoningPlan.GetValueOrDefault();
             NationalAssessmentBuildingMatter = dataset.BuildingMatter.GetValueOrDefault();
             NationalAssessmentPartitionOff = dataset.PartitionOff.GetValueOrDefault();
             NationalAssessmentEnvironmentalImpactAssessment = dataset.EenvironmentalImpactAssessment.GetValueOrDefault();
+            NationalAssessmentImpactPlanningBuildingAct = dataset.ImpactAssessmentPlanningBuildingAct.GetValueOrDefault();
+            NationalAssessmentRiskVulnerabilityAnalysisPlanningBuildingAct = dataset.RiskVulnerabilityAnalysisPlanningBuildingAct.GetValueOrDefault();
         }
 
         public DokMunicipalEdit() {

@@ -3150,6 +3150,27 @@ input[type="checkbox"]:checked.custom-checkbox {
       width: 16px;
       height: 19px;
       vertical-align: middle; }
+    .custom-checkbox input[type="checkbox"] + .checkbox-icon.large:after,
+    .custom-checkbox input[type="checkbox"] + input[type="hidden"] + .checkbox-icon.large:after,
+    .custom-checkbox input[type="checkbox"]:checked + .checkbox-icon.large:after,
+    .custom-checkbox input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon.large:after,
+    input[type="checkbox"].custom-checkbox + .checkbox-icon.large:after,
+    input[type="checkbox"].custom-checkbox + input[type="hidden"] + .checkbox-icon.large:after,
+    input[type="checkbox"]:checked.custom-checkbox + .checkbox-icon.large:after,
+    input[type="checkbox"]:checked.custom-checkbox + input[type="hidden"] + .checkbox-icon.large:after {
+      width: 24px;
+      height: 22px; }
+    .custom-checkbox input[type="checkbox"] + .checkbox-icon.large .checkbox-character,
+    .custom-checkbox input[type="checkbox"] + input[type="hidden"] + .checkbox-icon.large .checkbox-character,
+    .custom-checkbox input[type="checkbox"]:checked + .checkbox-icon.large .checkbox-character,
+    .custom-checkbox input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon.large .checkbox-character,
+    input[type="checkbox"].custom-checkbox + .checkbox-icon.large .checkbox-character,
+    input[type="checkbox"].custom-checkbox + input[type="hidden"] + .checkbox-icon.large .checkbox-character,
+    input[type="checkbox"]:checked.custom-checkbox + .checkbox-icon.large .checkbox-character,
+    input[type="checkbox"]:checked.custom-checkbox + input[type="hidden"] + .checkbox-icon.large .checkbox-character {
+      position: relative;
+      right: -15px;
+      top: 1px; }
 
 .custom-radio input[type="radio"],
 .custom-radio input[type="radio"]:checked,

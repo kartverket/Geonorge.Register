@@ -994,6 +994,11 @@
             Buffer avstand i meter
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.Api.Datasett.BufferText">
+             <summary>
+            Generell tekst som sier at en må ta spesielle hensyn siden en er i nærheten av et område som krever særskilte hensyn
+             </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.Datasett.GmlSkjema">
             <summary>
             Url til gml-skjema

@@ -175,7 +175,7 @@ namespace Kartverket.Register.Services
 
         public string GetServiceStatus(string serviceUuid, string status, bool hasServiceUrl = true)
         {
-            var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
+            var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"];
             statusUrl = statusUrl + serviceUuid;
             using (var client = new HttpClient())
             {
@@ -269,7 +269,7 @@ namespace Kartverket.Register.Services
         public string GetInspireWfsServiceStatus(string serviceUuid, string status)
         {
             // TODO - flere tester kommer... 
-            var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
+            var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"];
             statusUrl = statusUrl + serviceUuid;
             using (var client = new HttpClient())
             {
@@ -317,7 +317,7 @@ namespace Kartverket.Register.Services
         public string GetInspireServiceStatus(string serviceUuid, string status)
         {
             // TODO - flere tester kommer... 
-            var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
+            var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"];
             statusUrl = statusUrl + serviceUuid;
             using (var client = new HttpClient())
             {

@@ -827,7 +827,7 @@ namespace Kartverket.Register.Controllers
         {
             var geolettRegister = new GeoLettService().Get();
             List<GeoLett> geoLetts = new List<GeoLett>();
-            var hulEik = geolettRegister.Where(g => g.KontekstType == "Byggesak-buffer-biomangfold-utvalgtnaturtype-hul eik").FirstOrDefault();
+            var hulEik = geolettRegister.Where(g => g.KontekstType == "Byggesak-treff-biomangfold-utvalgtnaturtype-hul eik").FirstOrDefault();
             geoLetts.Add(hulEik);
             return geoLetts;
         }

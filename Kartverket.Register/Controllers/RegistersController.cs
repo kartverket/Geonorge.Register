@@ -611,8 +611,8 @@ namespace Kartverket.Register.Controllers
                                 "INSERT INTO CoverageDatasets (ConfirmedDok, Coverage, Note," +
                                 "RegionalPlan, MunicipalSocialPlan, MunicipalLandUseElementPlan, ZoningPlanArea, ZoningPlanDetails, " +
                                 "BuildingMatter, PartitionOff, EenvironmentalImpactAssessment, SuitabilityAssessmentText, " +
-                                "CoverageId, MunicipalityId, DatasetId, CoverageDOKStatusId  ) " +
-                                " VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15 " +
+                                "CoverageId, MunicipalityId, DatasetId, CoverageDOKStatusId, ZoningPlan,ImpactAssessmentPlanningBuildingAct,RiskVulnerabilityAnalysisPlanningBuildingAct  ) " +
+                                " VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18 " +
                                 ")",
                                 coverageNew.ConfirmedDok,
                                 coverageFound,
@@ -629,7 +629,11 @@ namespace Kartverket.Register.Controllers
                                 coverageNew.CoverageId,
                                 coverageNew.MunicipalityId,
                                 originalDataset.systemId,
-                                coverageNew.CoverageDOKStatusId);
+                                coverageNew.CoverageDOKStatusId,
+                                item.ZoningPlan,
+                                item.ImpactAssessmentPlanningBuildingAct,
+                                item.RiskVulnerabilityAnalysisPlanningBuildingAct
+                                );
                         }
                         else
                         {
@@ -645,8 +649,11 @@ namespace Kartverket.Register.Controllers
                                 "BuildingMatter = @p8, " +
                                 "PartitionOff = @p9, " +
                                 "EenvironmentalImpactAssessment = @p10, " +
-                                "SuitabilityAssessmentText = @p11 " +
-                                "WHERE CoverageId = @p12",
+                                "SuitabilityAssessmentText = @p11, " +
+                                "ZoningPlan = @p12, " +
+                                "ImpactAssessmentPlanningBuildingAct = @p13, " +
+                                "RiskVulnerabilityAnalysisPlanningBuildingAct = @p14 " +
+                                "WHERE CoverageId = @p15",
                                 item.Confirmed,
                                 coverageFound,
                                 item.Note,
@@ -659,6 +666,9 @@ namespace Kartverket.Register.Controllers
                                 item.PartitionOff,
                                 item.EnvironmentalImpactAssessment,
                                 item.SuitabilityAssessmentText,
+                                item.ZoningPlan,
+                                item.ImpactAssessmentPlanningBuildingAct,
+                                item.RiskVulnerabilityAnalysisPlanningBuildingAct,
                                 originalCoverage.CoverageId);
                         }
                     }

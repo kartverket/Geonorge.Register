@@ -173,25 +173,33 @@ namespace Kartverket.Register.Models
 
         // DOK Suitability Rating
 
-        [Display(Name = "Regionplan")]
+        [Display(Name = "Region-plan og KVU")]
         public int? RegionalPlan { get; set; }
         public string RegionalPlanNote { get; set; }
 
-        [Display(Name = "kommuneplanens samfunnsdel")]
+        [Display(Name = "kommune-planens samfunns-del")]
         public int? MunicipalSocialPlan { get; set; }
         public string MunicipalSocialPlanNote { get; set; }
 
-        [Display(Name = "kommuneplanens arealdel")]
+        [Display(Name = "kommune-planens arealdel")]
         public int? MunicipalLandUseElementPlan { get; set; }
         public string MunicipalLandUseElementPlanNote { get; set; }
 
+        [Obsolete("This method will soon be deprecated. Use ZoningPlan instead.")]
         [Display(Name = "Reguleringsplan område")]
         public int? ZoningPlanArea { get; set; }
+        [Obsolete("This method will soon be deprecated. Use ZoningPlanNote instead.")]
         public string ZoningPlanAreaNote { get; set; }
 
+        [Obsolete("This method will soon be deprecated. Use ZoningPlan instead.")]
         [Display(Name = "Reguleringsplan detalj")]
         public int? ZoningPlanDetails { get; set; }
+        [Obsolete("This method will soon be deprecated. Use ZoningPlanNote instead.")]
         public string ZoningPlanDetailsNote { get; set; }
+
+        [Display(Name = "Regulerings- planlegging")]
+        public int? ZoningPlan { get; set; }
+        public string ZoningPlanNote { get; set; }
 
         [Display(Name = "Byggesak")]
         public int? BuildingMatter { get; set; }
@@ -202,8 +210,18 @@ namespace Kartverket.Register.Models
         public string PartitionOffNote { get; set; }
 
         [Display(Name = "KU og ROS for pbl-planer")]
+        [Obsolete("This method will soon be deprecated")]
         public int? EenvironmentalImpactAssessment { get; set; }
+        [Obsolete("This method will soon be deprecated")]
         public string EenvironmentalImpactAssessmentNote { get; set; }
+
+        [Display(Name = "KU for pbl-planer")]
+        public int? ImpactAssessmentPlanningBuildingAct { get; set; }
+        public string ImpactAssessmentPlanningBuildingActNote { get; set; }
+
+        [Display(Name = "ROS for pbl-planer")]
+        public int? RiskVulnerabilityAnalysisPlanningBuildingAct { get; set; }
+        public string RiskVulnerabilityAnalysisPlanningBuildingActNote { get; set; }
 
         public void SetAtomAndGmlIsEitherOrRequirement(Dataset dataset)
         {
@@ -469,6 +487,7 @@ namespace Kartverket.Register.Models
             return false;
         }
 
+        [Obsolete]
         public bool GetCoverageZoningPlanAreaByUser(Guid municipalityId)
         {
             foreach (CoverageDataset coverage in Coverage)
@@ -480,7 +499,7 @@ namespace Kartverket.Register.Models
             }
             return false;
         }
-
+        [Obsolete]
         public bool GetCoverageZoningPlanDetailsByUser(Guid municipalityId)
         {
             foreach (CoverageDataset coverage in Coverage)
@@ -488,6 +507,18 @@ namespace Kartverket.Register.Models
                 if (coverage.MunicipalityId == municipalityId)
                 {
                     return coverage.ZoningPlanDetails;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageZoningPlanByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.ZoningPlan;
                 }
             }
             return false;
@@ -516,7 +547,7 @@ namespace Kartverket.Register.Models
             }
             return false;
         }
-
+        [Obsolete]
         public bool GetCoverageEenvironmentalImpactAssessmentByUser(Guid municipalityId)
         {
             foreach (CoverageDataset coverage in Coverage)
@@ -524,6 +555,30 @@ namespace Kartverket.Register.Models
                 if (coverage.MunicipalityId == municipalityId)
                 {
                     return coverage.EenvironmentalImpactAssessment;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageImpactAssessmentPlanningBuildingActByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.ImpactAssessmentPlanningBuildingAct;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageRiskVulnerabilityAnalysisPlanningBuildingActByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.RiskVulnerabilityAnalysisPlanningBuildingAct;
                 }
             }
             return false;

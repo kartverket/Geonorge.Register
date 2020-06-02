@@ -78,6 +78,10 @@ namespace Kartverket.Register.Models.Api
         /// </summary>
         public int? BufferAvstand { get; set; }
         /// <summary>
+        ///Generell tekst som sier at en må ta spesielle hensyn siden en er i nærheten av et område som krever særskilte hensyn
+        /// </summary>
+        public string BufferText { get; set; }
+        /// <summary>
         /// Url til gml-skjema
         /// </summary>
         public string GmlSkjema { get; set; }

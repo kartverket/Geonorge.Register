@@ -434,11 +434,11 @@ namespace Kartverket.Register.Controllers
             ViewBag.RegionalPlan = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.RegionalPlan);
             ViewBag.MunicipalSocialPlan = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.MunicipalSocialPlan);
             ViewBag.MunicipalLandUseElementPlan = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.MunicipalLandUseElementPlan);
-            ViewBag.ZoningPlanArea = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.ZoningPlanArea);
-            ViewBag.ZoningPlanDetails = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.ZoningPlanDetails);
+            ViewBag.ZoningPlan = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.ZoningPlan);
             ViewBag.BuildingMatter = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.BuildingMatter);
             ViewBag.PartitionOff = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.PartitionOff);
-            ViewBag.EenvironmentalImpactAssessment = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.EenvironmentalImpactAssessment);
+            ViewBag.ImpactAssessmentPlanningBuildingAct = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.ImpactAssessmentPlanningBuildingAct);
+            ViewBag.RiskVulnerabilityAnalysisPlanningBuildingAct = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.RiskVulnerabilityAnalysisPlanningBuildingAct);
         }
 
         private ActionResult EditDataset(Dataset dataset, Dataset originalDataset, CoverageDataset coverage = null)

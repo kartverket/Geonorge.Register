@@ -393,7 +393,7 @@ namespace Kartverket.DOK.Service
                         {
                             geodatalovDataset.Mareano = true;
                         }
-                        else if (keyword.KeywordValue == "Økologisk grunnkart")
+                        else if (keyword.KeywordValue == "ØkologiskGrunnkart" || keyword.KeywordValue == "Økologisk grunnkart")
                         {
                             geodatalovDataset.EcologicalBaseMap = true;
                         }

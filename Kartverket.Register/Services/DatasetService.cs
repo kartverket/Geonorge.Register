@@ -120,16 +120,16 @@ namespace Kartverket.Register.Services
             dataset.MunicipalSocialPlanNote = inputDataset.MunicipalSocialPlanNote;
             dataset.MunicipalLandUseElementPlan = inputDataset.MunicipalLandUseElementPlan;
             dataset.MunicipalLandUseElementPlanNote = inputDataset.MunicipalLandUseElementPlanNote;
-            dataset.ZoningPlanArea = inputDataset.ZoningPlanArea;
-            dataset.ZoningPlanAreaNote = inputDataset.ZoningPlanAreaNote;
-            dataset.ZoningPlanDetails = inputDataset.ZoningPlanDetails;
-            dataset.ZoningPlanDetailsNote = inputDataset.ZoningPlanDetailsNote;
+            dataset.ZoningPlan = inputDataset.ZoningPlan;
+            dataset.ZoningPlanNote = inputDataset.ZoningPlanNote;
             dataset.BuildingMatter = inputDataset.BuildingMatter;
             dataset.BuildingMatterNote = inputDataset.BuildingMatterNote;
             dataset.PartitionOff = inputDataset.PartitionOff;
             dataset.PartitionOffNote = inputDataset.PartitionOffNote;
-            dataset.EenvironmentalImpactAssessment = inputDataset.EenvironmentalImpactAssessment;
-            dataset.EenvironmentalImpactAssessmentNote = inputDataset.EenvironmentalImpactAssessmentNote;
+            dataset.ImpactAssessmentPlanningBuildingAct = inputDataset.ImpactAssessmentPlanningBuildingAct;
+            dataset.ImpactAssessmentPlanningBuildingActNote = inputDataset.ImpactAssessmentPlanningBuildingActNote;
+            dataset.RiskVulnerabilityAnalysisPlanningBuildingAct = inputDataset.RiskVulnerabilityAnalysisPlanningBuildingAct;
+            dataset.RiskVulnerabilityAnalysisPlanningBuildingActNote = inputDataset.RiskVulnerabilityAnalysisPlanningBuildingActNote;
 
             dataset.SetAtomAndGmlIsEitherOrRequirement(dataset);
 

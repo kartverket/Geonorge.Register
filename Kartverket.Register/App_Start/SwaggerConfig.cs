@@ -5,6 +5,7 @@ using Swashbuckle.Application;
 using System.Linq;
 using Swashbuckle.Examples;
 using Kartverket.Register.Helpers;
+using System;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -23,13 +24,13 @@ namespace Kartverket.Register
                         // However, there may be situations (e.g. proxy and load-balanced environments) where this does not
                         // resolve correctly. You can workaround this by providing your own code to determine the root URL.
                         //
-                        //c.RootUrl(req => GetRootUrlFromAppConfig());
+                        c.RootUrl(req => GetRootUrlFromAppConfig());
 
                         // If schemes are not explicitly provided in a Swagger 2.0 document, then the scheme used to access
                         // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
                         // about them, you can use the "Schemes" option as shown below.
                         //
-                        //c.Schemes(new[] { "http", "https" });
+                        c.Schemes(new[] { "http", "https" });
 
                         // Use "SingleApiVersion" to describe a single version API. Swagger 2.0 includes an "Info" object to
                         // hold additional metadata for an API. Version and title are required but you can also provide
@@ -253,6 +254,11 @@ namespace Kartverket.Register
                         //
                         //c.EnableApiKeySupport("apiKey", "header");
                     });
+        }
+
+        private static string GetRootUrlFromAppConfig()
+        {
+            return System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];
         }
     }
 }

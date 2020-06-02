@@ -461,7 +461,7 @@
                             <label>@DataSet.SuitabilityRegionsplanleggingText</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            @Html.DropDownList("RegionalPlan",null, htmlAttributes: new { @class = "form-control"})
+                            @Html.DropDownList("RegionalPlan", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
                             @Html.TextAreaFor(model => model.RegionalPlanNote, new { @style = "min-height:0px" })
@@ -475,7 +475,7 @@
                             <label>@DataSet.SuitabilitySamfunnText</label>
                         </div>
                         <div class="col-md-1 text-center">
-                           @Html.DropDownList("MunicipalSocialPlan", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("MunicipalSocialPlan", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
                             @Html.TextAreaFor(model => model.MunicipalSocialPlanNote, new { @style = "min-height:0px" })
@@ -488,7 +488,7 @@
                             <label>@DataSet.SuitabilityArealText</label>
                         </div>
                         <div class="col-md-1 text-center">
-                           @Html.DropDownList("MunicipalLandUseElementPlan", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("MunicipalLandUseElementPlan", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
                             @Html.TextAreaFor(model => model.MunicipalLandUseElementPlanNote, 2, 10, new { @style = "min-height:0px" })
@@ -499,31 +499,16 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>@DataSet.SuitabilityOmraadeText</label>
+                            <label>@DataSet.SuitabilityZoningPlan</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            @Html.DropDownList("ZoningPlanArea", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("ZoningPlan", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.ZoningPlanAreaNote, new { @style = "min-height:0px" })
+                            @Html.TextAreaFor(model => model.ZoningPlanNote, new { @style = "min-height:0px" })
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-3 control-label">
-                            <label>@DataSet.SuitabilityDetaljreguleringText</label>
-                        </div>
-                        <div class="col-md-1 text-center">
-                            @Html.DropDownList("ZoningPlanDetails", null, htmlAttributes: new { @class = "form-control" })
-                        </div>
-                        <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.ZoningPlanDetailsNote, new { @style = "min-height:0px" })
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
@@ -557,10 +542,23 @@
                             <label>@DataSet.SuitabilityKUText</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            @Html.DropDownList("EenvironmentalImpactAssessment", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("ImpactAssessmentPlanningBuildingAct", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.EenvironmentalImpactAssessmentNote, 2, 10, new { @style = "min-height:0px" })
+                            @Html.TextAreaFor(model => model.ImpactAssessmentPlanningBuildingActNote, 2, 10, new { @style = "min-height:0px" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-3 control-label">
+                            <label>@DataSet.SuitabilityROSText</label>
+                        </div>
+                        <div class="col-md-1 text-center">
+                            @Html.DropDownList("RiskVulnerabilityAnalysisPlanningBuildingAct", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.RiskVulnerabilityAnalysisPlanningBuildingActNote, 2, 10, new { @style = "min-height:0px" })
                         </div>
                     </div>
                 </div>

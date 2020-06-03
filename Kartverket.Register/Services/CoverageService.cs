@@ -103,7 +103,7 @@ namespace Kartverket.Register.Services
             foreach(var org in orgList)
             {
                 try {
-                    var sql = "INSERT INTO CoverageDatasets SELECT NEWID() AS CoverageId, '" + org.systemId + "' AS MunicipalityId, 0 AS ConfirmedDok, systemId AS datasetId, NULL AS Note, dokStatusId AS CoverageDOKStatusId, systemId AS Dataset_systemId, NULL AS coverage, RegionalPlan = 0, MunicipalSocialPlan = 0, MunicipalLandUseElementPlan = 0, ZoningPlanArea = 0, ZoningPlanDetails = 0, BuildingMatter = 0, PartitionOff = 0, EenvironmentalImpactAssessment = 0, suitabilityAssessmentText = ''  FROM RegisterItems WHERE(Discriminator = 'Dataset') AND(DatasetType <> 'Kommunalt') AND(systemId NOT IN(SELECT  DatasetId FROM CoverageDatasets AS CoverageDatasets_1 WHERE(MunicipalityId = '" + org.systemId + "')))";
+                    var sql = "INSERT INTO CoverageDatasets SELECT NEWID() AS CoverageId, '" + org.systemId + "' AS MunicipalityId, 0 AS ConfirmedDok, systemId AS datasetId, NULL AS Note, dokStatusId AS CoverageDOKStatusId, systemId AS Dataset_systemId, NULL AS coverage, RegionalPlan = 0, MunicipalSocialPlan = 0, MunicipalLandUseElementPlan = 0, ZoningPlanArea = 0, ZoningPlanDetails = 0, BuildingMatter = 0, PartitionOff = 0, EenvironmentalImpactAssessment = 0, suitabilityAssessmentText = '', ZoningPlan = 0, ImpactAssessmentPlanningBuildingAct = 0, RiskVulnerabilityAnalysisPlanningBuildingAct = 0  FROM RegisterItems WHERE(Discriminator = 'Dataset') AND(DatasetType <> 'Kommunalt') AND(systemId NOT IN(SELECT  DatasetId FROM CoverageDatasets AS CoverageDatasets_1 WHERE(MunicipalityId = '" + org.systemId + "')))";
                     _context.Database.ExecuteSqlCommand(sql);
                 }
                 catch (Exception ex) {

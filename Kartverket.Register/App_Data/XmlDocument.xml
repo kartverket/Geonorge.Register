@@ -3446,9 +3446,10 @@
             </summary>
         </member>
         <member name="P:Resources.DataSet.SuitabitityHelp">
-            <summary>
-              Looks up a localized string similar to Høyere intensitet på bakgrunnsfarge indikerer bedre egnethet basert på overordnede nasjonale vurderinger. Ved å holde musepekeren over boksen for egnethet vil man kunne se mer tekst om egnethet, tips til bruk eller andre kommentarer dersom det er registrert..
-            </summary>
+             <summary>
+               Looks up a localized string similar to &lt;p&gt;
+            Tabellen viser egnethet til data for ulike oppgaver etter plan- og bygningsloven. Det er viktig å få fram at datasett er egnet til noen oppgaver, og ikke til andre oppgaver. Situasjonen vil være ulik i ulike deler av lander, mellom by og land, og det vil ofte være en annen egnethetsvurdering i områder der det finnes godt og oppdatert plangrunnlag. Oversikten representerer ikke en fasit, men gir et nasjonalt gjennomsnittsbilde. Verdiene representerer ikke situasjonen i noen kommune – lokale forhold og e [rest of string was truncated]&quot;;.
+             </summary>
         </member>
         <member name="P:Resources.DataSet.SuitabitityHelpText">
              <summary>

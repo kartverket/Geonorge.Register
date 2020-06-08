@@ -751,7 +751,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "Organization")
             {
-                text = $"{item.label};{item.number};{item.MunicipalityCode};{item.GeographicCenterX};{item.GeographicCenterY};{item.BoundingBoxNorth};{item.BoundingBoxWest};{item.BoundingBoxSouth};{item.BoundingBoxEast}";
+                text = $"{item.label};{item.number};{item.MunicipalityCode};{item.GeographicCenterX};{item.GeographicCenterY};{item.BoundingBoxNorth};{item.BoundingBoxWest};{item.BoundingBoxSouth};{item.BoundingBoxEast};{HtmlHelperExtensions.TranslateBool(item.NorgeDigitaltMember)}";
             }
             else if (item.itemclass == "NameSpace")
             {
@@ -914,7 +914,7 @@ namespace Kartverket.Register.Formatter
             }
             if (containedItemClass == "Organization")
             {
-                return Organizations.Organization_Name + ";" + Organizations.Organization_Number + ";" + Organizations.MunicipalityCode + ";" + Organizations.GeographicCenterX + ";" + Organizations.GeographicCenterY + ";" + Organizations.BoundingBoxNorth + ";" + Organizations.BoundingBoxSouth + ";" + Organizations.BoundingBoxWest + ";" + Organizations.BoundingBoxEast;
+                return Organizations.Organization_Name + ";" + Organizations.Organization_Number + ";" + Organizations.MunicipalityCode + ";" + Organizations.GeographicCenterX + ";" + Organizations.GeographicCenterY + ";" + Organizations.BoundingBoxNorth + ";" + Organizations.BoundingBoxSouth + ";" + Organizations.BoundingBoxWest + ";" + Organizations.BoundingBoxEast + ";" + Organizations.Member;
             }
             if (containedItemClass == "NameSpace")
             {

@@ -586,6 +586,7 @@ namespace Kartverket.Register.Models.Api
                 BoundingBoxSouth = organization.BoundingBoxSouth;
                 BoundingBoxWest = organization.BoundingBoxWest;
                 ShortName = organization.shortname;
+                NorgeDigitaltMember = organization.member;
             }
             else if (item is Alert)
             {

@@ -780,9 +780,12 @@ namespace Kartverket.Register.Helpers
             return RegisteritemService.GetDistributionType(codeValue);
         }
 
-        public static string TranslateBool(bool value)
+        public static string TranslateBool(bool? value)
         {
-            return value ? Shared.Yes : Shared.No;
+            if (!value.HasValue)
+                return "";
+
+            return value.Value ? Shared.Yes : Shared.No;
         }
 
         public static string GetThumbnail(string thumbnailSrc)

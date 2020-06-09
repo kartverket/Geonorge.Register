@@ -308,7 +308,7 @@ namespace Kartverket.DOK.Service
         {
             var queryResultsRegisterItem = from o in _dbContext.CodelistValues
                                            where o.register.name == "Inspiretema" &&
-                                           o.value == code
+                                           (o.value == code || o.name == code)
                                            select o;
 
 

@@ -498,7 +498,15 @@ Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere
     <value>Egnethet</value>
   </data>
   <data name="SuitabitityHelp" xml:space="preserve">
-    <value>Høyere intensitet på bakgrunnsfarge indikerer bedre egnethet basert på overordnede nasjonale vurderinger. Ved å holde musepekeren over boksen for egnethet vil man kunne se mer tekst om egnethet, tips til bruk eller andre kommentarer dersom det er registrert.</value>
+    <value>&lt;p&gt;
+Tabellen viser egnethet til data for ulike oppgaver etter plan- og bygningsloven. Det er viktig å få fram at datasett er egnet til noen oppgaver, og ikke til andre oppgaver. Situasjonen vil være ulik i ulike deler av lander, mellom by og land, og det vil ofte være en annen egnethetsvurdering i områder der det finnes godt og oppdatert plangrunnlag. Oversikten representerer ikke en fasit, men gir et nasjonalt gjennomsnittsbilde. Verdiene representerer ikke situasjonen i noen kommune – lokale forhold og egne kategoriseringer må derfor gjøres hvis utvalg av data skal inn i saksverktøy eller DOK-områdeanalyser. Verdiene i denne tabellen bør derfor kun brukes som prosess-grunnlag for egne vurderinger.
+&lt;/p&gt;
+&lt;p&gt;
+Følgende kategorier er gitt – det er glidende overganger mellom kategoriene: 0 ikke egnet, 1 dårlig egnet, 2 noe egnet, 3 egnet, 4 godt egnet, 5 svært godt egnet.
+&lt;/p&gt;
+&lt;p&gt;
+Metode baserer seg på intervjuer av planleggere og GIS-folk fra kommuner, fylkesetater mv. Noe vurdering er også foretatt av konsulenter. Ulike personer som jobber faglig med problemstillinger knyttet til byggesak, kommuneplanlegging, regionplanarbeid mv er konsultert. Metode er dokumentert i rapport fra 2017, se nasjonal DOK-side. Det er gjort mindre justeringer og tillegg i forkant av publisering. Revisjon vil skje fortløpende, i forbindelse med forbedring av dekning, datakvalitet og kunnskap om bruk.
+&lt;/p&gt;</value>
   </data>
   <data name="SuitabilityROSText" xml:space="preserve">
     <value>ROS for pbl-planer</value>

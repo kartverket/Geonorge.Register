@@ -488,7 +488,15 @@ As a dataset quality and coverage can vary considerably from site to area, the a
     <value>Not set</value>
   </data>
   <data name="SuitabitityHelp" xml:space="preserve">
-    <value>Higher background color intensity indicates better suitability based on overall national ratings. By hovering your mouse over the box for suitability you will be able to see more text about suitability, tips for use or other comments if registered.</value>
+    <value>&lt;p&gt;
+The table shows the suitability of data for various tasks under the Planning and Building Act. It is important to note that datasets are suitable for some tasks and not for other tasks. The situation will be different in different parts of countries, between cities and countries, and there will often be another suitability assessment in areas where there is good and up-to-date planning basis. The overview does not represent a facet but gives a national average picture. The values ​​do not represent the situation in any municipality - local conditions and their own categorizations must therefore be done if a selection of data is to be included in case tools or DOK area analyzes. The values ​​in this table should therefore only be used as a process basis for own assessments.
+&lt;/p&gt;
+&lt;p&gt;
+The following categories are given - there are sliding transitions between the categories: 0 not suitable, 1 poorly suited, 2 somewhat suitable, 3 suitable, 4 well-suited, 5 very suitable.
+&lt;/p&gt;
+&lt;p&gt;
+Method is based on interviews of planners and GIS people from municipalities, county agencies, etc. Some assessments have also been made by consultants. Various people who work professionally with issues related to construction matters, municipal planning, regional planning work, etc. are consulted. Method is documented in report from 2017, see national DOK page. Minor adjustments and additions have been made prior to publication. Audits will be ongoing, in conjunction with improvement of coverage, data quality and knowledge of use.
+&lt;/p&gt;</value>
   </data>
   <data name="SuitabilityROSText" xml:space="preserve">
     <value>ROS for pbl-plans</value>

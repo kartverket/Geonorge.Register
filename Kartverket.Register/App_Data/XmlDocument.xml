@@ -1004,6 +1004,11 @@
             Url til gml-skjema
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.Api.Datasett.Navnerom">
+            <summary>
+            Navnerom for datasett (target namespace)
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.Datasett.TypeReferanse">
             <summary>
             Objekttype, attributt og datasett skal sammen med type tiltak...

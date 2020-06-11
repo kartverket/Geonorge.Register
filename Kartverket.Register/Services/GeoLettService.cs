@@ -64,7 +64,11 @@ namespace Kartverket.Register.Services
                 if (!string.IsNullOrEmpty(workSheet.Cells[row, 33].Text))
                     gmlschema = workSheet.Cells[row, 33].Text;
 
-                var datasett = new Datasett { Tittel = workSheet.Cells[row, 14].Text, UrlMetadata = workSheet.Cells[row, 15].Text, BufferAvstand = bufferAvstand, BufferText = bufferText, TypeReferanse = objectType, GmlSkjema = gmlschema };
+                string navnerom = null;
+                if (!string.IsNullOrEmpty(workSheet.Cells[row, 35].Text))
+                    navnerom = workSheet.Cells[row, 35].Text;
+
+                var datasett = new Datasett { Tittel = workSheet.Cells[row, 14].Text, UrlMetadata = workSheet.Cells[row, 15].Text, BufferAvstand = bufferAvstand, BufferText = bufferText, TypeReferanse = objectType, GmlSkjema = gmlschema, Navnerom = navnerom };
                 geoLett.Datasett = datasett;
 
                 Referanse referanse = new Referanse();

@@ -86,6 +86,10 @@ namespace Kartverket.Register.Models.Api
         /// </summary>
         public string GmlSkjema { get; set; }
         /// <summary>
+        /// Navnerom for datasett (target namespace)
+        /// </summary>
+        public string Navnerom { get; set; }
+        /// <summary>
         /// Objekttype, attributt og datasett skal sammen med type tiltak...
         /// </summary>
         public ObjectType TypeReferanse { get; set; }

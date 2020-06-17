@@ -81,10 +81,10 @@ namespace Kartverket.Register.Services
             {
 
                 var reports = queryResults.OrderByDescending(o => o.Date).Take(numberOfReports);
-                return reports.OrderBy(o => o.Date).ToList();
+                return reports.ToList();
             }
 
-            return queryResults.OrderBy(o => o.Date).ToList();
+            return queryResults.OrderByDescending(o => o.Date).ToList();
         }
 
         public StatusReport GetStatusReportById(string statusReportId)

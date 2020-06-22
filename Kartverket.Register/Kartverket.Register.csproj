@@ -102,8 +102,8 @@
     <Reference Include="Geonorge.AuthLib.NetFull, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Geonorge.AuthLib.NetFull.1.0.42\lib\net461\Geonorge.AuthLib.NetFull.dll</HintPath>
     </Reference>
-    <Reference Include="GeoNorgeAPI, Version=3.2.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GeoNorgeAPI.3.2.4\lib\net461\GeoNorgeAPI.dll</HintPath>
+    <Reference Include="GeoNorgeAPI, Version=3.2.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoNorgeAPI.3.2.5\lib\net461\GeoNorgeAPI.dll</HintPath>
     </Reference>
     <Reference Include="GhostscriptSharp, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

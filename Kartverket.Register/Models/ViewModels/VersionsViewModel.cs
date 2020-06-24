@@ -19,28 +19,33 @@ namespace Kartverket.Register.Models.ViewModels
             HistoricalVersions = new List<RegisterItemV2ViewModel>();
             SuggestedVersions = new List<RegisterItemV2ViewModel>();
 
-            if (versionsItem.currentVersion is Document document)
-            {
-                CurrentVersion = new DocumentViewModel(document);
-                foreach (Document historicalversion in versionsItem.historical)
-                {
-                    HistoricalVersions.Add(new DocumentViewModel(historicalversion));
-                }
-                foreach (Document suggestedVersion in versionsItem.suggestions)
-                {
-                    SuggestedVersions.Add(new DocumentViewModel(suggestedVersion));
-                }
-            }
+            if (versionsItem == null)
+                CurrentVersion = new RegisterItemV2ViewModel();
             else
-            {
-                CurrentVersion = new RegisterItemV2ViewModel(versionsItem.currentVersion);
-                foreach (var historicalversion in versionsItem.historical)
+            { 
+                if (versionsItem.currentVersion is Document document)
                 {
-                    HistoricalVersions.Add(new RegisterItemV2ViewModel(historicalversion));
+                    CurrentVersion = new DocumentViewModel(document);
+                    foreach (Document historicalversion in versionsItem.historical)
+                    {
+                        HistoricalVersions.Add(new DocumentViewModel(historicalversion));
+                    }
+                    foreach (Document suggestedVersion in versionsItem.suggestions)
+                    {
+                        SuggestedVersions.Add(new DocumentViewModel(suggestedVersion));
+                    }
                 }
-                foreach (var suggestedVersion in versionsItem.suggestions)
+                else
                 {
-                    SuggestedVersions.Add(new RegisterItemV2ViewModel(suggestedVersion));
+                    CurrentVersion = new RegisterItemV2ViewModel(versionsItem.currentVersion);
+                    foreach (var historicalversion in versionsItem.historical)
+                    {
+                        HistoricalVersions.Add(new RegisterItemV2ViewModel(historicalversion));
+                    }
+                    foreach (var suggestedVersion in versionsItem.suggestions)
+                    {
+                        SuggestedVersions.Add(new RegisterItemV2ViewModel(suggestedVersion));
+                    }
                 }
             }
         }

@@ -170,6 +170,9 @@ namespace Kartverket.Register.Services
 
         private bool AccessRegisterItem(RegisterItemV2ViewModel registerItemViewModel)
         {
+            if (registerItemViewModel.Register == null)
+                return false;
+
             if (!registerItemViewModel.Register.IsAlertRegister())
             {
                 if (IsAdmin()) return true;

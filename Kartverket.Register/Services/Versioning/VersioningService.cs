@@ -127,6 +127,10 @@ namespace Kartverket.Register.Services.Versioning
 
                 versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
             }
+
+            if (versjonsGruppe == null)
+                return null;
+
             Guid? versjonsGruppeId = versjonsGruppe.systemId;
 
             Guid currentVersionId = versjonsGruppe.currentVersion;

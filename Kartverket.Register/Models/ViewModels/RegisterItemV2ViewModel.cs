@@ -141,24 +141,28 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string DetailPageUrl()
         {
-            var path = Register.GetObjectUrl() + "/" + Seoname + "/";
-            switch (this)
-            {
-                case InspireDatasetViewModel inspireDatasetViewModel:
-                    path += inspireDatasetViewModel.Uuid;
-                    break;
-                case InspireDataServiceViewModel inspireDataServiceViewModel:
-                    path += inspireDataServiceViewModel.Uuid;
-                    break;
-                case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
-                    path += geodatalovDatasetViewModel.Uuid;
-                    break;
-                case DokDatasetViewModel dokDatasetViewModel:
-                    path += dokDatasetViewModel.Uuid;
-                    break;
-                default:
-                    path += SystemId;
-                    break;
+            var path = "/";
+            if(Register != null)
+            { 
+                path = Register.GetObjectUrl() + "/" + Seoname + "/";
+                switch (this)
+                {
+                    case InspireDatasetViewModel inspireDatasetViewModel:
+                        path += inspireDatasetViewModel.Uuid;
+                        break;
+                    case InspireDataServiceViewModel inspireDataServiceViewModel:
+                        path += inspireDataServiceViewModel.Uuid;
+                        break;
+                    case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
+                        path += geodatalovDatasetViewModel.Uuid;
+                        break;
+                    case DokDatasetViewModel dokDatasetViewModel:
+                        path += dokDatasetViewModel.Uuid;
+                        break;
+                    default:
+                        path += SystemId;
+                        break;
+                }
             }
 
             return path;

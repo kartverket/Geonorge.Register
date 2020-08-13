@@ -1887,11 +1887,14 @@
     <Content Include="dist\images\search_icon-01.svg" />
     <Content Include="dist\main.css" />
     <Content Include="dist\main.js" />
+    <Content Include="dist\main.min.js" />
     <Content Include="dist\partials\Footer.html" />
     <Content Include="dist\partials\Header.html" />
     <Content Include="dist\partials\_autoCompleteRow.html" />
+    <Content Include="dist\styles.min.css" />
     <Content Include="dist\vendor.css" />
     <Content Include="dist\vendor.js" />
+    <Content Include="dist\vendor.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="gulpfile.js" />
     <Content Include="lib\gsdll32.dll">

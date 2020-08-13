@@ -1,4 +1,17 @@
-﻿#autocomplete {
+﻿@font-face {
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.eot");
+    src: url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.woff2") format("woff2"), url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.woff") format("woff"), url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.ttf") format("truetype"), url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.svg#fontawesome") format("svg");
+}
+
+.fa {
+    font-family: FontAwesome;
+}
+
+#autocomplete {
     background: none;
 }
 

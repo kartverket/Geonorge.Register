@@ -406,6 +406,10 @@ namespace Kartverket.Register.Controllers
             model.CurrentVersion.AccessRegisterItem = _accessControlService.HasAccessTo(model.CurrentVersion);
 
             ViewBag.registerItemOwner = registerItemOwner;
+
+            if (model.CurrentVersion?.Name == null)
+                return HttpNotFound();
+
             return View(model);
         }
 

@@ -109,6 +109,7 @@
         </div>
         <div class="col-md-4 pull-right">
             <form style="display: inline">
+                <input type="hidden" name="text" value="@Request.QueryString["text"]" />
                 <div class="custom-select">
                     @{ var filter = Request.QueryString["GeodataType"]; }
                     <select name="GeodataType" class="form-control" onchange="this.form.submit();">

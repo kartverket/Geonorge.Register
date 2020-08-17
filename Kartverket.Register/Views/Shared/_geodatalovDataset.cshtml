@@ -3,26 +3,26 @@
 @using Kartverket.Register.Helpers
 
 <div class="table-heading col-md-12">
-    <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
-    <div class="col-md-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
-    <div class="col-md-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "theme") </div>
+    <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, null, null, Request.QueryString["GeodataType"])</div>
+    <div class="col-md-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, null, null, Request.QueryString["GeodataType"])</div>
+    <div class="col-md-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "theme", null, null, null, null, Request.QueryString["GeodataType"]) </div>
     <div class="col-md-5 col-sm-12 status-icons">
 
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dok")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "nationalt_dataset")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "plan")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dok", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "nationalt_dataset", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "plan", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov", null, null, null, null, Request.QueryString["GeodataType"])
 
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_metadata_status")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_productspecification_status")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_sosi_status")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_gml_status")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wms_status")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wfs_status")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_atom_status")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_common_status")
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_productspecification_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_sosi_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_gml_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wms_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wfs_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_atom_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_common_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus", null, null, null, null, Request.QueryString["GeodataType"])
     </div>
 </div>
 

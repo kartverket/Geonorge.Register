@@ -859,7 +859,11 @@ namespace Kartverket.Register.Services.Register
         public string ContentNegotiation(ControllerContext context)
         {
             HttpResponseBase response = context.HttpContext.Response;
-            HttpRequestBase request = context.HttpContext.Request;
+            HttpRequestBase request = context?.HttpContext?.Request;
+            if (request == null)
+                return null;
+            if (request.AcceptTypes == null)
+                return null;
 
             if (request.AcceptTypes.Contains("application/json"))
             {

@@ -5,8 +5,5 @@
 }
 
 <h1 class="text-danger"><p>@Shared.ErrorInfo</p></h1>
-@if (HttpContext.Current.IsCustomErrorEnabled)
-{
-    <p>@Shared.Error: @Model.Exception.Message</p>
-}
+
 @Html.Raw(Shared.ErrorReport)

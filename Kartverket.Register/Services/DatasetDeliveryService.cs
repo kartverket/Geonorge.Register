@@ -86,7 +86,7 @@ namespace Kartverket.Register.Services
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
                 if (metadata != null)
                 {
-                    if (metadata.DistributionDetails != null && metadata.DistributionDetails.Length > 0 &&
+                    if (metadata.DistributionDetails != null &&
                         metadata.DistributionDetails.Protocol.Value != "GEONORGE:OFFLINE" && distributionUrl != null)
                     {
                         status = Good;

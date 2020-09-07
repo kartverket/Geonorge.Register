@@ -1697,7 +1697,7 @@ namespace Kartverket.Register.Services.RegisterItem
             return queryResult.Any() ? queryResult.FirstOrDefault() : Organization.GetDefaultOrganizationId();
         }
 
-        public Models.Register GetInspireStatusRegisterItems(Models.Register register)
+        public Models.Register GetInspireStatusRegisterItems(Models.Register register, FilterParameters filter)
         {
             if (register.RegisterItems.Any())
             {
@@ -1706,16 +1706,36 @@ namespace Kartverket.Register.Services.RegisterItem
                 {
                     if (item is InspireDataset inspireDataset)
                     {
-                        registerItems.Add(inspireDataset);
+                        if(!ExcludeFilter(inspireDataset, filter))
+                            registerItems.Add(inspireDataset);
                     }
                     else if (item is InspireDataService inspireDataService)
                     {
-                        registerItems.Add(inspireDataService);
+                        if (!ExcludeFilter(inspireDataService, filter))
+                            registerItems.Add(inspireDataService);
                     }
                 }
                 register.RegisterItems = registerItems;
             }
             return register;
+        }
+
+        private bool ExcludeFilter(object inspire, FilterParameters filter)
+        {
+            if(filter != null && !string.IsNullOrEmpty(filter.filterOrganization))
+            {
+                var inspireData = inspire as InspireDataset;
+                if (inspireData != null && inspireData.Owner.seoname == filter.filterOrganization)
+                    return false;
+
+                var inspireDataService = inspire as InspireDataService;
+                if (inspireDataService != null && inspireDataService.Owner.seoname == filter.filterOrganization)
+                    return false;
+
+                return true;
+            }
+
+            return false;
         }
 
         public Dataset GetDatasetById(Guid id, Guid reigsterId)

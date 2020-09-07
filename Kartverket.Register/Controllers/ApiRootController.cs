@@ -312,7 +312,7 @@ namespace Kartverket.Register.Controllers
             if (Search(filter)) register = _searchService.Search(register, filter.text);
             if (register.IsInspireStatusRegister())
             {
-                register = _registerItemService.GetInspireStatusRegisterItems(register);
+                register = _registerItemService.GetInspireStatusRegisterItems(register, filter);
             }
             else
             {

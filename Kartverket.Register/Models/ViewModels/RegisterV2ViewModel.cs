@@ -99,7 +99,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Seoname = register.seoname;
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
-                RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
+                RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems, filter);
                 SynchronizationJobs = new SynchronizationViewModel(register.Synchronizes, page);
                 StatusReport = GetStatsReport(statusReport, statusReports, filter);
 
@@ -140,7 +140,7 @@ namespace Kartverket.Register.Models.ViewModels
         }
 
 
-        private ICollection<RegisterItemV2ViewModel> GetRegisterItems(string containedItemClass, ICollection<RegisterItemV2> registerItems)
+        private ICollection<RegisterItemV2ViewModel> GetRegisterItems(string containedItemClass, ICollection<RegisterItemV2> registerItems, FilterParameters filter)
         {
             var registerItemsViewModel = new Collection<RegisterItemV2ViewModel>();
             switch (containedItemClass)
@@ -149,14 +149,18 @@ namespace Kartverket.Register.Models.ViewModels
                     
                     foreach (var inspireRegisterItem in registerItems)
                     {
-                        switch (inspireRegisterItem)
-                        {
-                            case InspireDataset inspireDataset:
-                                registerItemsViewModel.Add(new InspireDatasetViewModel(inspireDataset));
-                                break;
-                            case InspireDataService inspireDataService:
-                                registerItemsViewModel.Add(new InspireDataServiceViewModel(inspireDataService));
-                                break;
+                        if(!ExcludedInFilter(inspireRegisterItem, filter))
+                        { 
+
+                            switch (inspireRegisterItem)
+                            {
+                                case InspireDataset inspireDataset:
+                                    registerItemsViewModel.Add(new InspireDatasetViewModel(inspireDataset));
+                                    break;
+                                case InspireDataService inspireDataService:
+                                    registerItemsViewModel.Add(new InspireDataServiceViewModel(inspireDataService));
+                                    break;
+                            }
                         }
                     }
                     break;
@@ -168,6 +172,36 @@ namespace Kartverket.Register.Models.ViewModels
                     break;
             }
             return registerItemsViewModel;
+        }
+
+        private bool ExcludedInFilter(RegisterItemV2 inspireRegisterItem, FilterParameters filter)
+        {
+            var dataset = inspireRegisterItem as InspireDataset;
+            if (dataset != null)
+            {
+                if (filter.InspireAnnex == Inspire.AnnexI)
+                    return Inspire.DatasetHaveThemeOfTypeAnnexI(dataset.InspireThemes);
+                else if (filter.InspireAnnex == Inspire.AnnexII)
+                    return Inspire.DatasetHaveThemeOfTypeAnnexII(dataset.InspireThemes);
+                else if (filter.InspireAnnex == Inspire.AnnexIII)
+                    return Inspire.DatasetHaveThemeOfTypeAnnexIII(dataset.InspireThemes);
+            }
+            else
+            {
+                var service = inspireRegisterItem as InspireDataService;
+
+                if(service != null)
+                {
+                    if (filter.InspireAnnex == Inspire.AnnexI)
+                        return Inspire.DatasetHaveThemeOfTypeAnnexI(service.InspireThemes);
+                    else if (filter.InspireAnnex == Inspire.AnnexII)
+                        return Inspire.DatasetHaveThemeOfTypeAnnexII(service.InspireThemes);
+                    else if (filter.InspireAnnex == Inspire.AnnexIII)
+                        return Inspire.DatasetHaveThemeOfTypeAnnexIII(service.InspireThemes);
+                }
+            }
+
+            return false;
         }
 
         private ICollection<RegisterItemV2ViewModel> GetInspireDataService(string containedItemClass, ICollection<RegisterItemV2> registerItems)

@@ -91,6 +91,10 @@ namespace Kartverket.Register.Services
                     {
                         status = Good;
                     }
+                    else if (HasWfs(metadataUuid))
+                    {
+                        status = Good;
+                    }
                     else
                     {
                         status = Deficient;
@@ -109,6 +113,33 @@ namespace Kartverket.Register.Services
             }
 
             return status;
+        }
+
+        private bool HasWfs(string metadataUuid)
+        {
+
+            var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distribution-lists/" + metadataUuid;
+            var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
+
+            var json = c.DownloadString(metadataUrl);
+
+            dynamic metadata = Newtonsoft.Json.Linq.JObject.Parse(json);
+
+            dynamic distributions = metadata.RelatedDownloadServices;
+
+            if (distributions != null)
+            {
+                for (int j =0; j< distributions.Count; j++)
+                {
+                    var protocol = distributions[j].Protocol;
+                    if (!string.IsNullOrEmpty(protocol?.ToString()))
+                    {
+                        if (protocol.ToString().ToLower().Contains("wfs"))
+                            return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public string GetDokDeliveryServiceStatus(string metadataUuid, bool autoupdate, string currentStatus, string serviceUuid)

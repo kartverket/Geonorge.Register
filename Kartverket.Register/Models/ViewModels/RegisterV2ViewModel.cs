@@ -149,9 +149,8 @@ namespace Kartverket.Register.Models.ViewModels
                     
                     foreach (var inspireRegisterItem in registerItems)
                     {
-                        if(!ExcludedInFilter(inspireRegisterItem, filter))
+                        if(IncludeInFilter(inspireRegisterItem, filter))
                         { 
-
                             switch (inspireRegisterItem)
                             {
                                 case InspireDataset inspireDataset:
@@ -174,17 +173,20 @@ namespace Kartverket.Register.Models.ViewModels
             return registerItemsViewModel;
         }
 
-        private bool ExcludedInFilter(RegisterItemV2 inspireRegisterItem, FilterParameters filter)
+        private bool IncludeInFilter(RegisterItemV2 inspireRegisterItem, FilterParameters filter)
         {
+            if (string.IsNullOrEmpty(filter.InspireAnnex))
+                return true;
+
             var dataset = inspireRegisterItem as InspireDataset;
             if (dataset != null)
             {
                 if (filter.InspireAnnex == Inspire.AnnexI)
-                    return Inspire.DatasetHaveThemeOfTypeAnnexI(dataset.InspireThemes);
+                    return Inspire.HaveThemeOfTypeAnnexI(dataset.InspireThemes);
                 else if (filter.InspireAnnex == Inspire.AnnexII)
-                    return Inspire.DatasetHaveThemeOfTypeAnnexII(dataset.InspireThemes);
+                    return Inspire.HaveThemeOfTypeAnnexII(dataset.InspireThemes);
                 else if (filter.InspireAnnex == Inspire.AnnexIII)
-                    return Inspire.DatasetHaveThemeOfTypeAnnexIII(dataset.InspireThemes);
+                    return Inspire.HaveThemeOfTypeAnnexIII(dataset.InspireThemes);
             }
             else
             {
@@ -193,11 +195,11 @@ namespace Kartverket.Register.Models.ViewModels
                 if(service != null)
                 {
                     if (filter.InspireAnnex == Inspire.AnnexI)
-                        return Inspire.DatasetHaveThemeOfTypeAnnexI(service.InspireThemes);
+                        return Inspire.HaveThemeOfTypeAnnexI(service.InspireThemes);
                     else if (filter.InspireAnnex == Inspire.AnnexII)
-                        return Inspire.DatasetHaveThemeOfTypeAnnexII(service.InspireThemes);
+                        return Inspire.HaveThemeOfTypeAnnexII(service.InspireThemes);
                     else if (filter.InspireAnnex == Inspire.AnnexIII)
-                        return Inspire.DatasetHaveThemeOfTypeAnnexIII(service.InspireThemes);
+                        return Inspire.HaveThemeOfTypeAnnexIII(service.InspireThemes);
                 }
             }
 

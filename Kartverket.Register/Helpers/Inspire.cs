@@ -13,7 +13,7 @@ namespace Kartverket.Register.Helpers
         public const string AnnexII = "AnnexII";
         public const string AnnexIII = "AnnexIII";
 
-        public static bool DatasetHaveThemeOfTypeAnnexI(ICollection<CodelistValue> inspireThems)
+        public static bool HaveThemeOfTypeAnnexI(ICollection<CodelistValue> inspireThems)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Kartverket.Register.Helpers
             return inspireThemeCamelCase;
         }
 
-        public static bool DatasetHaveThemeOfTypeAnnexII(ICollection<CodelistValue> inspireThemes)
+        public static bool HaveThemeOfTypeAnnexII(ICollection<CodelistValue> inspireThemes)
         {
             foreach (var inspireTheme in inspireThemes)
             {
@@ -77,7 +77,7 @@ namespace Kartverket.Register.Helpers
             return false;
         }
 
-        internal static bool DatasetHaveThemeOfTypeAnnexIII(ICollection<CodelistValue> inspireThemes)
+        internal static bool HaveThemeOfTypeAnnexIII(ICollection<CodelistValue> inspireThemes)
         {
             foreach (var inspireTheme in inspireThemes)
             {

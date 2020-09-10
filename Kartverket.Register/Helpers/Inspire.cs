@@ -98,5 +98,67 @@ namespace Kartverket.Register.Helpers
             }
             return false;
         }
+
+        public static bool IncludeInFilter(dynamic inspireRegisterItem, FilterParameters filter)
+        {
+            dynamic item = GetInspireData(inspireRegisterItem);
+
+            if (!string.IsNullOrEmpty(filter.InspireRegisteryType))
+            {
+                if (item is InspireDataset && filter.InspireRegisteryType == "service")
+                    return false;
+                else if(item is InspireDataService && filter.InspireRegisteryType == "dataset")
+                    return false;
+            }
+
+            if (!string.IsNullOrEmpty(filter.filterOrganization) && !string.IsNullOrEmpty(filter.InspireAnnex))
+            {
+                if (filter.filterOrganization == inspireRegisterItem.Owner.seoname && filter.InspireAnnex == Inspire.AnnexI)
+                    return Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes);
+                else if (filter.filterOrganization == inspireRegisterItem.Owner.seoname && filter.InspireAnnex == Inspire.AnnexII)
+                    return Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes);
+                else if (filter.filterOrganization == inspireRegisterItem.Owner.seoname && filter.InspireAnnex == Inspire.AnnexIII)
+                    return Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes);
+                else
+                    return false;
+
+            }
+            else if (!string.IsNullOrEmpty(filter.filterOrganization) && string.IsNullOrEmpty(filter.InspireAnnex))
+            {
+                return filter.filterOrganization == inspireRegisterItem.Owner.seoname;
+            }
+            else if (!string.IsNullOrEmpty(filter.InspireAnnex) && string.IsNullOrEmpty(filter.filterOrganization))
+            {
+                if (filter.InspireAnnex == Inspire.AnnexI)
+                    return Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes);
+                else if (filter.InspireAnnex == Inspire.AnnexII)
+                    return Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes);
+                else if (filter.InspireAnnex == Inspire.AnnexIII)
+                    return Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes);
+                else
+                    return false;
+
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private static object GetInspireData(dynamic inspireRegisterItem)
+        {
+            var dataset = inspireRegisterItem as InspireDataset;
+            if (dataset != null)
+                return dataset;
+            else
+            {
+                var service = inspireRegisterItem as InspireDataService;
+                if (service != null)
+                    return service;
+            }
+
+            return inspireRegisterItem;
+        }
+
     }
 }

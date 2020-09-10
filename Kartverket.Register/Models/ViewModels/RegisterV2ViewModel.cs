@@ -149,7 +149,7 @@ namespace Kartverket.Register.Models.ViewModels
                     
                     foreach (var inspireRegisterItem in registerItems)
                     {
-                        if(IncludeInFilter(inspireRegisterItem, filter))
+                        if(Inspire.IncludeInFilter(inspireRegisterItem, filter))
                         { 
                             switch (inspireRegisterItem)
                             {
@@ -175,35 +175,55 @@ namespace Kartverket.Register.Models.ViewModels
 
         private bool IncludeInFilter(RegisterItemV2 inspireRegisterItem, FilterParameters filter)
         {
-            if (string.IsNullOrEmpty(filter.InspireAnnex))
-                return true;
+            dynamic item = GetInspireData(inspireRegisterItem);
 
-            var dataset = inspireRegisterItem as InspireDataset;
-            if (dataset != null)
+            if (!string.IsNullOrEmpty(filter.filterOrganization) && !string.IsNullOrEmpty(filter.InspireAnnex))
+            {
+                if (filter.filterOrganization == inspireRegisterItem.Owner.seoname && filter.InspireAnnex == Inspire.AnnexI)
+                    return Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes);
+                else if (filter.filterOrganization == inspireRegisterItem.Owner.seoname && filter.InspireAnnex == Inspire.AnnexII)
+                    return Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes);
+                else if (filter.filterOrganization == inspireRegisterItem.Owner.seoname && filter.InspireAnnex == Inspire.AnnexIII)
+                    return Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes);
+                else
+                    return true;
+
+            }
+            else if (!string.IsNullOrEmpty(filter.filterOrganization) && string.IsNullOrEmpty(filter.InspireAnnex))
+            {
+                return filter.filterOrganization == inspireRegisterItem.Owner.seoname;
+            }
+            else if (!string.IsNullOrEmpty(filter.InspireAnnex) && string.IsNullOrEmpty(filter.filterOrganization))
             {
                 if (filter.InspireAnnex == Inspire.AnnexI)
-                    return Inspire.HaveThemeOfTypeAnnexI(dataset.InspireThemes);
+                    return Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes);
                 else if (filter.InspireAnnex == Inspire.AnnexII)
-                    return Inspire.HaveThemeOfTypeAnnexII(dataset.InspireThemes);
+                    return Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes);
                 else if (filter.InspireAnnex == Inspire.AnnexIII)
-                    return Inspire.HaveThemeOfTypeAnnexIII(dataset.InspireThemes);
+                    return Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes);
+                else
+                    return true;
+
             }
             else
             {
-                var service = inspireRegisterItem as InspireDataService;
+                return true;
+            }
+        }
 
-                if(service != null)
-                {
-                    if (filter.InspireAnnex == Inspire.AnnexI)
-                        return Inspire.HaveThemeOfTypeAnnexI(service.InspireThemes);
-                    else if (filter.InspireAnnex == Inspire.AnnexII)
-                        return Inspire.HaveThemeOfTypeAnnexII(service.InspireThemes);
-                    else if (filter.InspireAnnex == Inspire.AnnexIII)
-                        return Inspire.HaveThemeOfTypeAnnexIII(service.InspireThemes);
-                }
+        private object GetInspireData(RegisterItemV2 inspireRegisterItem)
+        {
+            var dataset = inspireRegisterItem as InspireDataset;
+            if (dataset != null)
+                return dataset;
+            else
+            {
+                var service = inspireRegisterItem as InspireDataService;
+                if (service != null)
+                    return service;
             }
 
-            return false;
+            return inspireRegisterItem;
         }
 
         private ICollection<RegisterItemV2ViewModel> GetInspireDataService(string containedItemClass, ICollection<RegisterItemV2> registerItems)

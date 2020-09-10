@@ -1704,15 +1704,9 @@ namespace Kartverket.Register.Services.RegisterItem
                 var registerItems = new List<Models.RegisterItemV2>();
                 foreach (var item in register.RegisterItems)
                 {
-                    if (item is InspireDataset inspireDataset)
+                    if (Inspire.IncludeInFilter(item, filter))
                     {
-                        if(!ExcludeFilter(inspireDataset, filter))
-                            registerItems.Add(inspireDataset);
-                    }
-                    else if (item is InspireDataService inspireDataService)
-                    {
-                        if (!ExcludeFilter(inspireDataService, filter))
-                            registerItems.Add(inspireDataService);
+                        registerItems.Add(item);
                     }
                 }
                 register.RegisterItems = registerItems;

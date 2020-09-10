@@ -1725,11 +1725,11 @@ namespace Kartverket.Register.Services.RegisterItem
             if(filter != null && !string.IsNullOrEmpty(filter.filterOrganization))
             {
                 var inspireData = inspire as InspireDataset;
-                if (inspireData != null && inspireData.Owner.seoname == filter.filterOrganization)
+                if (inspireData != null && inspireData.Owner.seoname.ToLower() == filter.filterOrganization.ToLower())
                     return false;
 
                 var inspireDataService = inspire as InspireDataService;
-                if (inspireDataService != null && inspireDataService.Owner.seoname == filter.filterOrganization)
+                if (inspireDataService != null && inspireDataService.Owner.seoname.ToLower() == filter.filterOrganization.ToLower())
                     return false;
 
                 return true;

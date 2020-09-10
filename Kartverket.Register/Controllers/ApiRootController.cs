@@ -126,6 +126,8 @@ namespace Kartverket.Register.Controllers
 
                 var result = ConvertRegisterAndNextLevel(register, filter);
                 result.ContainedItemsResult.Total = totalNumberOfItems;
+                result.ContainedItemsResult.Limit = filter.Limit;
+                result.ContainedItemsResult.Offset = filter.Offset;
 
                 return Ok(result);
             }
@@ -136,6 +138,15 @@ namespace Kartverket.Register.Controllers
         private int GetTotalNumberOfCurrentItemsByOrganization(FilterParameters filter, Models.Register register)
         {
             var totalNumberOfItems = 0;
+
+            if (register.IsInspireStatusRegister())
+            { 
+                if (!string.IsNullOrEmpty(filter.filterOrganization))
+                  return register.RegisterItems.Where(o => o.Owner.seoname.ToLower() == filter.filterOrganization.ToLower()).Count();
+                else
+                    return register.RegisterItems.Count;
+            }
+
             if (filter?.filterOrganization != null)
             {
                 Models.Organization organization = _registerItemService.GetOrganizationByFilterOrganizationParameter(filter.filterOrganization);
@@ -781,6 +792,11 @@ namespace Kartverket.Register.Controllers
                     }
                 }
             }
+
+            if (filter.Offset > 0)
+                tmp.containeditems = tmp.containeditems.Skip(filter.Offset).ToList();
+            if (filter.Limit > 0)
+                tmp.containeditems = tmp.containeditems.Take(filter.Limit).ToList();
 
             tmp.ContainedItemsResult = new Result(filter, tmp.containeditems.Count);
 

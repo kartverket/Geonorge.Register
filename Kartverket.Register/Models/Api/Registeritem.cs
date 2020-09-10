@@ -282,6 +282,7 @@ namespace Kartverket.Register.Models.Api
             return Requests.HasValue;
         }
         public string ServiceUrl { get; set; }
+        [DataMemberAttribute]
         public string InspireTheme { get; set; }
         public bool? NetworkService { get; set; }
         public bool ShouldSerializeNetworkService()
@@ -293,7 +294,7 @@ namespace Kartverket.Register.Models.Api
         {
             return Sds.HasValue;
         }
-
+        [DataMemberAttribute]
         public string InspireStatus { get; set; }
 
         // GeodatalovDataset

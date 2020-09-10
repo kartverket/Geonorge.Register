@@ -172,60 +172,7 @@ namespace Kartverket.Register.Models.ViewModels
             }
             return registerItemsViewModel;
         }
-
-        private bool IncludeInFilter(RegisterItemV2 inspireRegisterItem, FilterParameters filter)
-        {
-            dynamic item = GetInspireData(inspireRegisterItem);
-
-            if (!string.IsNullOrEmpty(filter.filterOrganization) && !string.IsNullOrEmpty(filter.InspireAnnex))
-            {
-                if (filter.filterOrganization == inspireRegisterItem.Owner.seoname && filter.InspireAnnex == Inspire.AnnexI)
-                    return Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes);
-                else if (filter.filterOrganization == inspireRegisterItem.Owner.seoname && filter.InspireAnnex == Inspire.AnnexII)
-                    return Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes);
-                else if (filter.filterOrganization == inspireRegisterItem.Owner.seoname && filter.InspireAnnex == Inspire.AnnexIII)
-                    return Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes);
-                else
-                    return true;
-
-            }
-            else if (!string.IsNullOrEmpty(filter.filterOrganization) && string.IsNullOrEmpty(filter.InspireAnnex))
-            {
-                return filter.filterOrganization == inspireRegisterItem.Owner.seoname;
-            }
-            else if (!string.IsNullOrEmpty(filter.InspireAnnex) && string.IsNullOrEmpty(filter.filterOrganization))
-            {
-                if (filter.InspireAnnex == Inspire.AnnexI)
-                    return Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes);
-                else if (filter.InspireAnnex == Inspire.AnnexII)
-                    return Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes);
-                else if (filter.InspireAnnex == Inspire.AnnexIII)
-                    return Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes);
-                else
-                    return true;
-
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private object GetInspireData(RegisterItemV2 inspireRegisterItem)
-        {
-            var dataset = inspireRegisterItem as InspireDataset;
-            if (dataset != null)
-                return dataset;
-            else
-            {
-                var service = inspireRegisterItem as InspireDataService;
-                if (service != null)
-                    return service;
-            }
-
-            return inspireRegisterItem;
-        }
-
+ 
         private ICollection<RegisterItemV2ViewModel> GetInspireDataService(string containedItemClass, ICollection<RegisterItemV2> registerItems)
         {
             var registerItemsViewModel = new Collection<RegisterItemV2ViewModel>();

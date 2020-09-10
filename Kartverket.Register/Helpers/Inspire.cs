@@ -42,7 +42,7 @@ namespace Kartverket.Register.Helpers
             return false;
         }
 
-        private static string CreateCamelCase(string inspireTheme)
+        public static string CreateCamelCase(string inspireTheme)
         {
             System.Globalization.TextInfo textInfo = new System.Globalization.CultureInfo("en-US", false).TextInfo;
 

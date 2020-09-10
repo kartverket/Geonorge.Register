@@ -126,8 +126,12 @@ namespace Kartverket.Register.Controllers
 
                 var result = ConvertRegisterAndNextLevel(register, filter);
                 result.ContainedItemsResult.Total = totalNumberOfItems;
-                result.ContainedItemsResult.Limit = filter.Limit;
-                result.ContainedItemsResult.Offset = filter.Offset;
+
+                if(filter != null)
+                { 
+                    result.ContainedItemsResult.Limit = filter.Limit;
+                    result.ContainedItemsResult.Offset = filter.Offset;
+                }
 
                 return Ok(result);
             }
@@ -793,9 +797,9 @@ namespace Kartverket.Register.Controllers
                 }
             }
 
-            if (filter.Offset > 0)
+            if (filter != null && filter.Offset > 0)
                 tmp.containeditems = tmp.containeditems.Skip(filter.Offset).ToList();
-            if (filter.Limit > 0)
+            if (filter != null && filter.Limit > 0)
                 tmp.containeditems = tmp.containeditems.Take(filter.Limit).ToList();
 
             tmp.ContainedItemsResult = new Result(filter, tmp.containeditems.Count);

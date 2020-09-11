@@ -101,6 +101,9 @@ namespace Kartverket.Register.Helpers
 
         public static bool IncludeInFilter(dynamic inspireRegisterItem, FilterParameters filter)
         {
+            if (!string.IsNullOrEmpty(filter.filterOrganization))
+                filter.filterOrganization = filter.filterOrganization.ToLower();
+
             dynamic item = GetInspireData(inspireRegisterItem);
 
             if (!string.IsNullOrEmpty(filter.InspireRegisteryType))

@@ -125,7 +125,7 @@ namespace Kartverket.Register.Controllers
                 }
 
                 var result = ConvertRegisterAndNextLevel(register, filter);
-                if(!string.IsNullOrEmpty(filter.filterOrganization) && register.IsDokStatusRegister())
+                if(filter != null && !string.IsNullOrEmpty(filter.filterOrganization) && register.IsDokStatusRegister())
                     result.ContainedItemsResult.Total = register.items.Where(o => o.register.owner.seoname.ToLower() == filter.filterOrganization.ToLower()).Count();
                 else
                     result.ContainedItemsResult.Total = totalNumberOfItems;

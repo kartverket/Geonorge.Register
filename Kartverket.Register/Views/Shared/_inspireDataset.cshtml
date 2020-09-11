@@ -1,25 +1,24 @@
 ﻿@model PagedList.IPagedList<RegisterItemV2ViewModel>
 @using Kartverket.Register.Models.ViewModels
 @using Kartverket.Register.Helpers
-
-
+@Html.Partial("_inspireFilter", Model)
 <div class="table-view">
     <div class="search-results-table-heading row">
-        <div class="col-md-4 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, "dataset")</p></div>
-        <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, "dataset")</p></div>
-        <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "inspiretheme", null, "dataset")</p></div>
+        <div class="col-md-4 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])</p></div>
+        <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])</p></div>
+        <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "inspiretheme", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])</p></div>
         <div class="col-md-4 col-sm-12 status-icons">
             <p style="right: 15px;">
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_metadata_status", null, "dataset")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_metadataservice_status", null, "dataset")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_distribution_status", null, "dataset")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_wms_status", null, "dataset")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_wfs_status", null, "dataset")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_atom_status", null, "dataset")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_wfsoratom_status", null, "dataset")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_harmonizeddata_status", null, "dataset")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_spatialdataservice_status", null, "dataset")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus", null, "dataset")
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_metadata_status", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_metadataservice_status", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_distribution_status", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_wms_status", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_wfs_status", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_atom_status", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_wfsoratom_status", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_harmonizeddata_status", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_spatialdataservice_status", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus", null, "dataset", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
             </p>
         </div>
     </div>

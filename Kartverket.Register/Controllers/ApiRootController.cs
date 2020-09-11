@@ -117,7 +117,7 @@ namespace Kartverket.Register.Controllers
 
             if (register != null)
             {
-                if (!string.IsNullOrEmpty(filter.filterOrganization))
+                if (filter != null && !string.IsNullOrEmpty(filter.filterOrganization))
                     filter.filterOrganization = RegisterUrls.MakeSeoFriendlyString(filter.filterOrganization);
 
                 int totalNumberOfItems = GetTotalNumberOfCurrentItemsByOrganization(filter, register);

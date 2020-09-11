@@ -125,7 +125,10 @@ namespace Kartverket.Register.Controllers
                 }
 
                 var result = ConvertRegisterAndNextLevel(register, filter);
-                result.ContainedItemsResult.Total = totalNumberOfItems;
+                if(!string.IsNullOrEmpty(filter.filterOrganization) && register.IsDokStatusRegister())
+                    result.ContainedItemsResult.Total = register.items.Where(o => o.register.owner.seoname.ToLower() == filter.filterOrganization.ToLower()).Count();
+                else
+                    result.ContainedItemsResult.Total = totalNumberOfItems;
 
                 if(filter != null)
                 { 
@@ -154,7 +157,7 @@ namespace Kartverket.Register.Controllers
             if (filter?.filterOrganization != null)
             {
                 Models.Organization organization = _registerItemService.GetOrganizationByFilterOrganizationParameter(filter.filterOrganization);
-                totalNumberOfItems = register.NumberOfCurrentVersions(organization);
+                    totalNumberOfItems = register.NumberOfCurrentVersions(organization);
             }
             else
             {
@@ -796,11 +799,6 @@ namespace Kartverket.Register.Controllers
                     }
                 }
             }
-
-            if (filter != null && filter.Offset > 0)
-                tmp.containeditems = tmp.containeditems.Skip(filter.Offset).ToList();
-            if (filter != null && filter.Limit > 0)
-                tmp.containeditems = tmp.containeditems.Take(filter.Limit).ToList();
 
             tmp.ContainedItemsResult = new Result(filter, tmp.containeditems.Count);
 

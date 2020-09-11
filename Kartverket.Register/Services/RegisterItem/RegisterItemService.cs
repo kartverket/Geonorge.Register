@@ -1710,6 +1710,12 @@ namespace Kartverket.Register.Services.RegisterItem
                     }
                 }
                 register.RegisterItems = registerItems;
+
+                if (filter != null && filter.Offset > 0)
+                    register.RegisterItems = register.RegisterItems.Skip(filter.Offset).ToList();
+                if (filter != null && filter.Limit > 0)
+                    register.RegisterItems = register.RegisterItems.Take(filter.Limit).ToList();
+
             }
             return register;
         }

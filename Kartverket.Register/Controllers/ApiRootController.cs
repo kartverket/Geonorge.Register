@@ -119,18 +119,18 @@ namespace Kartverket.Register.Controllers
             {
                 int totalNumberOfItems = GetTotalNumberOfCurrentItemsByOrganization(filter, register);
 
+                if (filter != null && !string.IsNullOrEmpty(filter.filterOrganization) && register.IsDokStatusRegister())
+                    totalNumberOfItems = register.items.OfType<Dataset>().Where(o => o.datasetowner.seoname.ToLower() == filter.filterOrganization.ToLower()).Count();
+
                 if (filter != null || register.IsDokMunicipal())
                 {
                     register = RegisterItems(register, filter);
                 }
 
                 var result = ConvertRegisterAndNextLevel(register, filter);
-                if(filter != null && !string.IsNullOrEmpty(filter.filterOrganization) && register.IsDokStatusRegister())
-                    result.ContainedItemsResult.Total = register.items.Where(o => o.register.owner.seoname.ToLower() == filter.filterOrganization.ToLower()).Count();
-                else
-                    result.ContainedItemsResult.Total = totalNumberOfItems;
+                result.ContainedItemsResult.Total = totalNumberOfItems;
 
-                if(filter != null)
+                if (filter != null)
                 { 
                     result.ContainedItemsResult.Limit = filter.Limit;
                     result.ContainedItemsResult.Offset = filter.Offset;

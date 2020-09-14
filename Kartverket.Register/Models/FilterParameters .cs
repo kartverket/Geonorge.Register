@@ -45,6 +45,7 @@ namespace Kartverket.Register.Models
         public string InspireDatasetStatusType { get; set; }
         public string InspireDataServiceStatusType { get; set; }
         public string InspireAnnex { get; set; }
+        public string filterTheme { get; set; }
 
         public bool InspireRegistertTypeIsDataset()
         {

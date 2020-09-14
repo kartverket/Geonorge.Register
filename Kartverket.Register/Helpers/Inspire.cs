@@ -110,8 +110,14 @@ namespace Kartverket.Register.Helpers
             {
                 if (item is InspireDataset && filter.InspireRegisteryType == "service")
                     return false;
-                else if(item is InspireDataService && filter.InspireRegisteryType == "dataset")
+                else if (item is InspireDataService && filter.InspireRegisteryType == "dataset")
                     return false;
+            }
+
+            if (!string.IsNullOrEmpty(filter.filterTheme))
+            {
+                var themes = item.InspireThemes as ICollection<CodelistValue>;
+                return themes.Where(t => t.seoname == filter.filterTheme).Any();
             }
 
             if (!string.IsNullOrEmpty(filter.filterOrganization) && !string.IsNullOrEmpty(filter.InspireAnnex))

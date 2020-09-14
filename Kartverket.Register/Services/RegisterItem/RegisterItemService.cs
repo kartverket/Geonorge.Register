@@ -1072,6 +1072,10 @@ namespace Kartverket.Register.Services.RegisterItem
                             var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Geodatalov).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
+                    default:
+                        {
+                            return registerItems.OrderBy(o => o.Name).ToList();
+                        }
                 }
             }
             return registerItems;

@@ -41,7 +41,7 @@ namespace Kartverket.Register.Services.Report
                                        number = grouped.Key.number,
                                        DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
                                        MunicipalityCode = grouped.Key.MunicipalityCode,
-                                       Status = grouped.Key.StatusConfirmationMunicipalDOK
+                                       DOKStatus = grouped.Key.StatusConfirmationMunicipalDOK
                                    }).OrderByDescending(x => x.Count).ToList();
 
             var resultsSelectedAdditional = (from c in _dbContext.CoverageDatasets
@@ -55,7 +55,7 @@ namespace Kartverket.Register.Services.Report
                                                  number = grouped.Key.number,
                                                  DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
                                                  MunicipalityCode = grouped.Key.MunicipalityCode,
-                                                 Status = grouped.Key.StatusConfirmationMunicipalDOK
+                                                 DOKStatus = grouped.Key.StatusConfirmationMunicipalDOK
                                              }).ToList();
 
 
@@ -70,7 +70,7 @@ namespace Kartverket.Register.Services.Report
                                        number = grouped.Key.number,
                                        DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
                                        MunicipalityCode = grouped.Key.MunicipalityCode,
-                                       Status = grouped.Key.StatusConfirmationMunicipalDOK
+                                       DOKStatus = grouped.Key.StatusConfirmationMunicipalDOK
                                    })
                                    .OrderByDescending(x => x.Count)
                                    .ToList();
@@ -90,7 +90,7 @@ namespace Kartverket.Register.Services.Report
 
                     var resultsNr = (from res in results
                                      join munici in _dbContext.Organizations on res.number equals munici.number
-                                     select new { res.name, res.Count, res.number, munici.MunicipalityCode, munici.DateConfirmedMunicipalDOK, res.Status }).ToList();
+                                     select new { res.name, res.Count, res.number, munici.MunicipalityCode, munici.DateConfirmedMunicipalDOK, res.DOKStatus }).ToList();
 
                     results = (from r in resultsNr
                                where (from c in areas
@@ -100,7 +100,7 @@ namespace Kartverket.Register.Services.Report
                                      select c)
                                           .Contains(r.MunicipalityCode.Substring(0, 2))
 
-                               select new { r.name, r.Count, r.number, r.DateConfirmedMunicipalDOK, r.MunicipalityCode, r.Status }).ToList();
+                               select new { r.name, r.Count, r.number, r.DateConfirmedMunicipalDOK, r.MunicipalityCode, r.DOKStatus }).ToList();
                 }
             }
 
@@ -148,8 +148,8 @@ namespace Kartverket.Register.Services.Report
 
                 //additional Status start
                 reportResultDataValue = new ReportResultDataValue();
-                reportResultDataValue.Key = "Status";
-                reportResultDataValue.Value = GetDOKMunicipalStatus(result.DateConfirmedMunicipalDOK, result.Status);
+                reportResultDataValue.Key = "DOKStatus";
+                reportResultDataValue.Value = result.DOKStatus;
                 reportResultDataValues.Add(reportResultDataValue);
                 //additional Status end
 
@@ -297,22 +297,6 @@ namespace Kartverket.Register.Services.Report
             }
 
             return reportResult;
-        }
-
-        private static string GetDOKMunicipalStatus(DateTime? dateConfirmed, string status)
-        {
-            if (dateConfirmed == null) 
-                return null;
-
-            return !LastDateConfirmedIsNotFromThisYear(dateConfirmed) ? status : null;
-        }
-
-        private static bool LastDateConfirmedIsNotFromThisYear(DateTime? dateConfirmed)
-        {
-            if (dateConfirmed != null)
-                return dateConfirmed.Value.Year != DateTime.Now.Year;
-
-            return false;
         }
     }
 }

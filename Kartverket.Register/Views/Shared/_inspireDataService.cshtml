@@ -1,22 +1,22 @@
 ﻿@model PagedList.IPagedList<RegisterItemV2ViewModel>
 @using Kartverket.Register.Models.ViewModels
 @using Kartverket.Register.Helpers
-
+@Html.Partial("_inspireFilter", Model)
 <div class="table-view">
     <div class="search-results-table-heading row">
-        <div class="col-md-3 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, "service")</p></div>
-        <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, "service")</p></div>
-        <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "inspire_theme_status", null, "service")</p></div>
-        <div class="col-md-1 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Type", "inspire_serviceType", null, "service")</p></div>
-        <div class="col-md-1 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Request", "request", null, "service")</p></div>
+        <div class="col-md-3 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, "service", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])</p></div>
+        <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, "service", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])</p></div>
+        <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "inspire_theme_status", null, "service", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])</p></div>
+        <div class="col-md-1 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Type", "inspire_serviceType", null, "service", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])</p></div>
+        <div class="col-md-1 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Request", "request", null, "service", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])</p></div>
         <div class="col-md-1 col-sm-12"><p>Url</p></div>
         <div class="col-md-2 col-sm-12 status-icons">
             <p style="right: 15px;">
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "sds", null, "service")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "networkService", null, "service")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspireService_metadata_status", null, "service")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_metadataSearchService_status", null, "service")
-                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_service_status", null, "service")
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "sds", null, "service", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "networkService", null, "service", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspireService_metadata_status", null, "service", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_metadataSearchService_status", null, "service", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
+                @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_service_status", null, "service", Request.QueryString["filterOrganization"], null, null, Request.QueryString["InspireAnnex"])
             </p>
         </div>
     </div>
@@ -26,22 +26,22 @@
 
 @foreach (InspireDataServiceViewModel item in Model)
 {
-<div class="resultItemRow">
-    <div class="row">
-        <div class="col-md-3 col-sm-12"><a href="@item.DetailPageUrl()?InspireRegisteryType=service" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
-        <div class="col-md-2 col-sm-12"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.NameTranslated()</a></div>
-        <div class="col-md-2 col-sm-12">@item.InspireThemsAsString()</div>
-        <div class="col-md-1 col-sm-12">@item.InspireDataType</div>
-        <div class="col-md-1 col-sm-12 text-center">@item.Requests</div>
-        <div class="col-md-1 col-sm-12"><a href="@item.Url"><span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Url til tjeneste"><span class="custom-icon-sm custom-icon-eksternlink"></span></span></a></div>
+    <div class="resultItemRow">
+        <div class="row">
+            <div class="col-md-3 col-sm-12"><a href="@item.DetailPageUrl()?InspireRegisteryType=service" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
+            <div class="col-md-2 col-sm-12"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.NameTranslated()</a></div>
+            <div class="col-md-2 col-sm-12">@Html.Raw(item.InspireThemsAsLink())</div>
+            <div class="col-md-1 col-sm-12">@item.InspireDataType</div>
+            <div class="col-md-1 col-sm-12 text-center">@item.Requests</div>
+            <div class="col-md-1 col-sm-12"><a href="@item.Url"><span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Url til tjeneste"><span class="custom-icon-sm custom-icon-eksternlink"></span></span></a></div>
 
-        <div class="col-md-2 col-sm-5 status-icons pull-right">
-            @HtmlHelperExtensions.Checked(item.Sds, "Sds")
-            @HtmlHelperExtensions.Checked(item.NetworkService, "Nettverkstjeneste")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, "Metadata")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataInSearchServiceStatusId, false, "Metadata i søketjeneste")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ServiceStatusId, false, "Tjenestestatus")
+            <div class="col-md-2 col-sm-5 status-icons pull-right">
+                @HtmlHelperExtensions.Checked(item.Sds, "Sds")
+                @HtmlHelperExtensions.Checked(item.NetworkService, "Nettverkstjeneste")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, "Metadata")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataInSearchServiceStatusId, false, "Metadata i søketjeneste")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ServiceStatusId, false, "Tjenestestatus")
+            </div>
         </div>
     </div>
-</div>
 }

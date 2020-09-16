@@ -1072,6 +1072,10 @@ namespace Kartverket.Register.Services.RegisterItem
                             var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Geodatalov).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
+                    default:
+                        {
+                            return registerItems.OrderBy(o => o.Name).ToList();
+                        }
                 }
             }
             return registerItems;
@@ -1697,25 +1701,45 @@ namespace Kartverket.Register.Services.RegisterItem
             return queryResult.Any() ? queryResult.FirstOrDefault() : Organization.GetDefaultOrganizationId();
         }
 
-        public Models.Register GetInspireStatusRegisterItems(Models.Register register)
+        public Models.Register GetInspireStatusRegisterItems(Models.Register register, FilterParameters filter)
         {
             if (register.RegisterItems.Any())
             {
                 var registerItems = new List<Models.RegisterItemV2>();
                 foreach (var item in register.RegisterItems)
                 {
-                    if (item is InspireDataset inspireDataset)
+                    if (Inspire.IncludeInFilter(item, filter))
                     {
-                        registerItems.Add(inspireDataset);
-                    }
-                    else if (item is InspireDataService inspireDataService)
-                    {
-                        registerItems.Add(inspireDataService);
+                        registerItems.Add(item);
                     }
                 }
                 register.RegisterItems = registerItems;
+
+                if (filter != null && filter.Offset > 0)
+                    register.RegisterItems = register.RegisterItems.Skip(filter.Offset).ToList();
+                if (filter != null && filter.Limit > 0)
+                    register.RegisterItems = register.RegisterItems.Take(filter.Limit).ToList();
+
             }
             return register;
+        }
+
+        private bool ExcludeFilter(object inspire, FilterParameters filter)
+        {
+            if(filter != null && !string.IsNullOrEmpty(filter.filterOrganization))
+            {
+                var inspireData = inspire as InspireDataset;
+                if (inspireData != null && inspireData.Owner.seoname.ToLower() == filter.filterOrganization.ToLower())
+                    return false;
+
+                var inspireDataService = inspire as InspireDataService;
+                if (inspireDataService != null && inspireDataService.Owner.seoname.ToLower() == filter.filterOrganization.ToLower())
+                    return false;
+
+                return true;
+            }
+
+            return false;
         }
 
         public Dataset GetDatasetById(Guid id, Guid reigsterId)

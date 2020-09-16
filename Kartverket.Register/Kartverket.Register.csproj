@@ -402,6 +402,7 @@
     <Compile Include="Helpers\CustomDocumentFilter.cs" />
     <Compile Include="Helpers\GlobalVariables.cs" />
     <Compile Include="Helpers\HttpRequestMessageExtensions.cs" />
+    <Compile Include="Helpers\Inspire.cs" />
     <Compile Include="Helpers\Log4netExceptionFilter.cs" />
     <Compile Include="Helpers\RegisterUrls.cs" />
     <Compile Include="Helpers\HtmlHelperExtension.cs" />
@@ -2302,6 +2303,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Shared\_suitability.cshtml" />
+    <Content Include="Views\Shared\_inspireFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

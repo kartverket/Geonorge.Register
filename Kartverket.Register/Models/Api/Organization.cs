@@ -23,6 +23,8 @@ namespace Kartverket.Register.Models.Api
 
         public Contact ContactInformation { get; set; }
 
+        public bool? Member { get; set; }
+
 
         public void Convert(Models.Organization input)
         {
@@ -33,6 +35,7 @@ namespace Kartverket.Register.Models.Api
             Name = input.name;
             Status = input.statusId;
             ContactInformation = new Contact(input.contact, input.epost);
+            Member = input.member.HasValue && input.member.Value == true ? true : false;
         }
     }
 

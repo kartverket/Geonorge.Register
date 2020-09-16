@@ -67,7 +67,7 @@ namespace Kartverket.Register.Services.RegisterItem
         /// <param name="organizationName"></param>
         /// <returns></returns>
         Guid GetOrganizationByName(string organizationName);
-        Models.Register GetInspireStatusRegisterItems(Models.Register register);
+        Models.Register GetInspireStatusRegisterItems(Models.Register register, FilterParameters filter);
         Dataset GetDatasetById(Guid parse, Guid registerId);
         Organization GetOrganizationByFilterOrganizationParameter(string filterFilterOrganization);
         void MakeAllRegisterItemsRetired(Models.Register originalRegister);

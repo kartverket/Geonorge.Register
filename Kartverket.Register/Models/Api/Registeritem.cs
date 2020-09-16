@@ -282,6 +282,7 @@ namespace Kartverket.Register.Models.Api
             return Requests.HasValue;
         }
         public string ServiceUrl { get; set; }
+        [DataMemberAttribute]
         public string InspireTheme { get; set; }
         public bool? NetworkService { get; set; }
         public bool ShouldSerializeNetworkService()
@@ -293,6 +294,9 @@ namespace Kartverket.Register.Models.Api
         {
             return Sds.HasValue;
         }
+        [DataMemberAttribute]
+        public string InspireStatus { get; set; }
+
         // GeodatalovDataset
         [DataMemberAttribute]
         public string CommonStatus { get; set; }
@@ -407,6 +411,8 @@ namespace Kartverket.Register.Models.Api
                 }
 
                 InspireTheme = inspireDataset.InspireThemsAsString();
+
+                InspireStatus = "Mangler";
             }
             if (item is InspireDataService inspireDataService)
             {
@@ -422,6 +428,7 @@ namespace Kartverket.Register.Models.Api
                 UuidMetadata = inspireDataService.Uuid;
                 itemclass = "InspireDataService";
                 MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + UuidMetadata;
+                InspireStatus = "Mangler";
             }
             if (item is GeodatalovDataset geodatalovDataset)
             {

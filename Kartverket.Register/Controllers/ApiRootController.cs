@@ -117,7 +117,13 @@ namespace Kartverket.Register.Controllers
 
             if (register != null)
             {
+                if (filter != null && !string.IsNullOrEmpty(filter.filterOrganization))
+                    filter.filterOrganization = RegisterUrls.MakeSeoFriendlyString(filter.filterOrganization);
+
                 int totalNumberOfItems = GetTotalNumberOfCurrentItemsByOrganization(filter, register);
+
+                if (filter != null && !string.IsNullOrEmpty(filter.filterOrganization) && register.IsDokStatusRegister())
+                    totalNumberOfItems = register.items.OfType<Dataset>().Where(o => o.datasetowner.seoname.ToLower() == filter.filterOrganization.ToLower()).Count();
 
                 if (filter != null || register.IsDokMunicipal())
                 {
@@ -126,6 +132,12 @@ namespace Kartverket.Register.Controllers
 
                 var result = ConvertRegisterAndNextLevel(register, filter);
                 result.ContainedItemsResult.Total = totalNumberOfItems;
+
+                if (filter != null)
+                { 
+                    result.ContainedItemsResult.Limit = filter.Limit;
+                    result.ContainedItemsResult.Offset = filter.Offset;
+                }
 
                 return Ok(result);
             }
@@ -136,10 +148,19 @@ namespace Kartverket.Register.Controllers
         private int GetTotalNumberOfCurrentItemsByOrganization(FilterParameters filter, Models.Register register)
         {
             var totalNumberOfItems = 0;
+
+            if (register.IsInspireStatusRegister())
+            { 
+                if (!string.IsNullOrEmpty(filter.filterOrganization))
+                  return register.RegisterItems.Where(o => o.Owner.seoname.ToLower() == filter.filterOrganization.ToLower()).Count();
+                else
+                    return register.RegisterItems.Count;
+            }
+
             if (filter?.filterOrganization != null)
             {
                 Models.Organization organization = _registerItemService.GetOrganizationByFilterOrganizationParameter(filter.filterOrganization);
-                totalNumberOfItems = register.NumberOfCurrentVersions(organization);
+                    totalNumberOfItems = register.NumberOfCurrentVersions(organization);
             }
             else
             {
@@ -312,7 +333,7 @@ namespace Kartverket.Register.Controllers
             if (Search(filter)) register = _searchService.Search(register, filter.text);
             if (register.IsInspireStatusRegister())
             {
-                register = _registerItemService.GetInspireStatusRegisterItems(register);
+                register = _registerItemService.GetInspireStatusRegisterItems(register, filter);
             }
             else
             {

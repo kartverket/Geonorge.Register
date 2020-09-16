@@ -140,6 +140,22 @@ namespace Kartverket.Register.Models.ViewModels
             return inspireTeamsString;
         }
 
+        public string InspireThemsAsLink()
+        {
+            string inspireThemes = null;
+            if (InspireThemes != null)
+            {
+                foreach (var item in InspireThemes)
+                {
+                    if (inspireThemes == null)
+                        inspireThemes += $"<a href=?InspireRegisteryType=service&filterTheme={item.seoname}>{item.NameTranslated()}</a>";
+                    else
+                        inspireThemes += $", <a href=?InspireRegisteryType=service&filterTheme={item.seoname}>{item.NameTranslated()}</a>";
+                }
+            }
+            return inspireThemes;
+        }
+
         public string GetInspireDataServiceDeleteUrl()
         {
             if (Register.parentRegister == null)

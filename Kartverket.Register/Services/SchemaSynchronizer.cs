@@ -12,8 +12,10 @@ namespace Kartverket.Register.Services
     public class SchemaSynchronizer
     {
         string UncPath = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaUNCpath"];
+        string UncPathTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaUNCpathTest"];
         static string TargetNamespace = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/";
         string SchemaRemoteUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteUrl"];
+        string SchemaRemoteUrlTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
 
         public string Synchronize(HttpPostedFileBase file, string filename)
         {
@@ -34,6 +36,24 @@ namespace Kartverket.Register.Services
             return syncFile;
         }
 
+        public string Synchronize(string url)
+        {
+            var uri = new Uri(url);
+            var filename = uri.Segments.Last();
+
+            var document = new XmlDocument();
+            document.Load(url);
+            var attributes = document.DocumentElement.Attributes;
+            var targetNamespace = attributes.GetNamedItem("targetNamespace");
+            if (ValidTargetNamespace(targetNamespace))
+            {
+                string path = GetFilePath(targetNamespace.Value);
+                url = UploadFileProd(path, filename);
+            }
+
+            return url;
+        }
+
         private string GetFilePath(string path)
         {
             path = path.Replace(TargetNamespace, "");
@@ -47,14 +67,23 @@ namespace Kartverket.Register.Services
 
         string UploadFile(HttpPostedFileBase file, string path, string filename)
         {
-            MakeDir(path);
+            MakeDir(path,UncPathTest);
 
-            file.SaveAs(UncPath + "\\" + path + "\\" + filename);
+            file.SaveAs(UncPathTest + "\\" + path + "\\" + filename);
             
+            return SchemaRemoteUrlTest + path + "/" + filename;
+        }
+
+        string UploadFileProd(string path, string filename)
+        {
+            MakeDir(path, UncPath);
+
+            System.IO.File.Copy(UncPathTest + "\\" + path + "\\" + filename, UncPath + "\\" + path + "\\" + filename);
+
             return SchemaRemoteUrl + path + "/" + filename;
         }
 
-        public void MakeDir(string path)
+        public void MakeDir(string path, string UncPath)
         {
             string[] subDirs = path.Split('/');
 

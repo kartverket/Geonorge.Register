@@ -22,8 +22,8 @@
 
 
 </article>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/Scripts/vue.js"></script>
+<script src="/Scripts/axios.js"></script>
 <div id="app">
     <div class="container">
         <div class="section data-search-filter-container">
@@ -188,7 +188,6 @@
                 },
                 getActiveLanguage: function () {
                     return Cookies.get('_culture') ? Cookies.get('_culture') : 'no';
-
                 },
                 getSearchInputPlaceholder: function () {
                     return this.searchInputPlaceholder[this.activeLanguage];

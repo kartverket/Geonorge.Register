@@ -117,7 +117,13 @@
     @RenderSection("scripts", false)
     <script>
         $(function () {
-            $(".jqueryui-marker-datepicker").datepicker({
+            var $datepickerElement = $(".jqueryui-marker-datepicker");
+
+            if (!$datepickerElement.length) {
+                return;
+            }
+
+            $datepickerElement.datepicker({
                     dateFormat: "dd/mm/yy",
                     changeYear: true,
                     showOn: "button"

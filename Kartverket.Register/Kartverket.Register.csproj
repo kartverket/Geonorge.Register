@@ -1752,9 +1752,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\wfs.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\unlock.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.js" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.min.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.js" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.min.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.min.cshtml" />
@@ -1925,6 +1923,8 @@
     <Content Include=".bowerrc" />
     <Content Include="lib\PDFLibNet.dll" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\axios.js" />
+    <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\easyXDM.js" />
     <Content Include="Scripts\expressive.annotations.validate.js" />
@@ -2164,6 +2164,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.tablesorter.min.js" />
     <Content Include="Scripts\jquery.validate.date.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -2180,6 +2181,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\tabs.js" />
+    <Content Include="Scripts\vue.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

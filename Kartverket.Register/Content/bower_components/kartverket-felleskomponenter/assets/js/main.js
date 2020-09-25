@@ -128,24 +128,30 @@ $(document).ready(function() {
 });
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    var options = {
-        disable_search_threshold: 10,
-        search_contains: true
-    };
-    $(".chosen-select").chosen(options);
-    $("[data-toggle='tooltip']").tooltip({
-        trigger: 'hover'
-    });
-    $("li.has-error[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+30" });
-    $("li[data-toggle='tooltip']").mouseleave(function() {
-        $(".ui-helper-hidden-accessible").remove();
-    });
+    if ($().chosen) {
+        var options = {
+            disable_search_threshold: 10,
+            search_contains: true
+        };
 
-    $(".ui-tooltip-element[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+25" });
-    $(".ui-tooltip-element[data-toggle='tooltip']").mouseleave(function() {
-        $(".ui-helper-hidden-accessible").remove();
-    });
+        $(".chosen-select").chosen(options);
+    }
 
+    if ($().tooltip) {
+        $("[data-toggle='tooltip']").tooltip({
+            trigger: 'hover'
+        });
+        $("li.has-error[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+30" });
+        $("li[data-toggle='tooltip']").mouseleave(function () {
+            $(".ui-helper-hidden-accessible").remove();
+        });
+
+        $(".ui-tooltip-element[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+25" });
+        $(".ui-tooltip-element[data-toggle='tooltip']").mouseleave(function () {
+            $(".ui-helper-hidden-accessible").remove();
+        });
+    }
+    
     // Get useragent
     var doc = document.documentElement;
     doc.setAttribute('data-useragent', navigator.userAgent);
@@ -221,7 +227,12 @@ $(document).ready(function () {
 
     $("<p>te</p>").appendTo($(liUl).find("ul"));
 });
+
 function addShoppingCartTooltip(elementsCount) {
+    if (!$().tooltip) {
+        return;
+    }
+
     var element = $('#shopping-cart-url');
     var elementsCountText = elementsCount !== 0 ? elementsCount : 'ingen';
     var text = elementsCount == 1 ? 'Du har ' + elementsCountText + ' nedlasting i kurven din' : 'Du har ' + elementsCountText + ' nedlastinger i kurven din';

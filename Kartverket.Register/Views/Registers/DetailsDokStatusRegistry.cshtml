@@ -74,24 +74,23 @@
             <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span><br />
         </div>
 
+        <div class="col-sm-12 col-md-12 ">
+            <ul id="tabs" class="nav nav-tabs">
 
-            <div class="col-sm-12 col-md-12 ">
-                <ul id="tabs" class="nav nav-tabs">
-
-                    <li id="dataset-Tab" class="tab active">
-                        @Html.ActionLink(DataSet.Dataset, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "dataset"))
+                <li id="dataset-Tab" class="tab active">
+                    @Html.ActionLink(DataSet.Dataset, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "dataset"))
+                </li>
+                @if (HtmlHelperExtensions.IsAdmin())
+                {
+                    <li id="report-Tab" class="tab">
+                        @Html.ActionLink(InspireDataSet.Reports, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "report"))
                     </li>
-                    @if (HtmlHelperExtensions.IsAdmin())
-                    {
-                        <li id="report-Tab" class="tab">
-                            @Html.ActionLink(InspireDataSet.Reports, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "report"))
-                        </li>
-                    }
-                        <li id="suitability-Tab" class="tab">
-                            @Html.ActionLink(DataSet.DOK_SuitabilityRating, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "suitability"))
-                        </li>
-                    </ul>
-            </div>
+                }
+                <li id="suitability-Tab" class="tab">
+                    @Html.ActionLink(DataSet.DOK_SuitabilityRating, "DetailsDokStatusRegistry", Request.QueryString.ToRouteValueDictionary("DokSelectedTab", "suitability"))
+                </li>
+            </ul>
+        </div>
     </div>
 </section>
 
@@ -181,4 +180,5 @@ else
     }
     <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<script src="/Scripts/chart.js"></script>

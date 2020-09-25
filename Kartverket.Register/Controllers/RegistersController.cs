@@ -86,6 +86,7 @@ namespace Kartverket.Register.Controllers
             {
                 cookie.Value = culture;   // update cookie value
                 cookie.Expires = DateTime.Now.AddYears(1);
+                cookie.SameSite = SameSiteMode.Lax;
                 if (!Request.IsLocal)
                     cookie.Domain = ".geonorge.no";
             }
@@ -94,6 +95,8 @@ namespace Kartverket.Register.Controllers
                 cookie = new HttpCookie("_culture");
                 cookie.Value = culture;
                 cookie.Expires = DateTime.Now.AddYears(1);
+                cookie.SameSite = SameSiteMode.Lax;
+
                 if (!Request.IsLocal)
                     cookie.Domain = ".geonorge.no";
             }

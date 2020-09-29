@@ -1,4 +1,4 @@
-﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models.ViewModels
 @using Resources
 @model List<DokMunicipalEdit>
@@ -177,7 +177,7 @@
 
                                         <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
                                             <span id="@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].Confirmed)</span>
-                                            <span class="custom-checkbox custom-checkbox-0">
+                                            <span class="custom-checkbox custom-checkbox">
                                                 @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbConfirmdChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte", @id = "dokMunicipalList[" + i + "].Confirmed" })
                                                 <label for="dokMunicipalList[@i].Confirmed" class="checkbox-icon"></label>
                                             </span>

@@ -37,6 +37,7 @@
 <form action="@kontroller" class="col-md-offset-2 col-md-8 hidden-print">
 
     <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @register)" />
+    <input type="hidden" name="municipality" value="@(Request.QueryString["municipality"] != null ? Request.QueryString["municipality"].ToString() : "")" />
 
     <h3 class="h-md" id="register-heading">@Shared.Search_Heading</h3>
     <div class="input-group input-group-split-on-xs edgesRegistre">

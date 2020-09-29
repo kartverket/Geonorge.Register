@@ -49,7 +49,7 @@ namespace Kartverket.Register.Services.Register
                 }
                 else if (register.ContainedItemClassIsDataset())
                 {
-                    FilterDataset(register, filter, registerItems);
+                    FilterDataset(register, filter, ref registerItems);
                 }
                 else if (register.ContainedItemClassIsAlert())
                 {
@@ -240,7 +240,7 @@ namespace Kartverket.Register.Services.Register
             return false;
         }
 
-        private void FilterDataset(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
+        private void FilterDataset(Models.Register register, FilterParameters filter, ref List<Models.RegisterItem> registerItems)
         {
             AccessControlService access = new AccessControlService(_dbContext);
             if (register.IsDokMunicipal())
@@ -260,6 +260,11 @@ namespace Kartverket.Register.Services.Register
                     GetNationalDatasets(registerItems);
                     GetMunicipalDatasetsByUser(register, registerItems);
                     filter.municipality = GetOrganizationByUserName().MunicipalityCode;
+                }
+
+                if (!string.IsNullOrEmpty(filter.text))
+                {
+                    registerItems = registerItems.Where(f => f.name.Contains(filter.text)).ToList();
                 }
 
                 register.items.Clear();

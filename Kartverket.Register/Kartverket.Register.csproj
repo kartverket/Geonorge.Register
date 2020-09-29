@@ -1830,12 +1830,14 @@
     <Content Include="Content\custom.css" />
     <Content Include="Content\img\arrow-down.svg" />
     <Content Include="Content\img\arrow-up.svg" />
+    <Content Include="Content\img\checked-black.svg" />
     <Content Include="Content\img\chosen-sprite.png" />
     <Content Include="Content\img\leaflet\layers-2x.png" />
     <Content Include="Content\img\leaflet\layers.png" />
     <Content Include="Content\img\leaflet\marker-icon-2x.png" />
     <Content Include="Content\img\leaflet\marker-icon.png" />
     <Content Include="Content\img\leaflet\marker-shadow.png" />
+    <Content Include="Content\img\loader.gif" />
     <Content Include="Content\img\rss.png" />
     <Content Include="Content\leaflet.css" />
     <Content Include="Content\print.css" />

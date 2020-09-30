@@ -15,8 +15,16 @@
     @section Scripts {
         <script>
             $(document).ready(function () {
+                $("#cbBackgroundColor").click(function () {
+                    if (document.getElementById("cbBackgroundColor").checked) {
+                        $("table .custom-checkbox").removeClass("superImportantCheckbox");
+                    }
+                    else {
+                        $("table .custom-checkbox").addClass("superImportantCheckbox");
+                    }
+                });
 
-                $('.tablesorter-childRow td').hide();
+                 $('.tablesorter-childRow td').hide();
                 $(".tableSuitability")
                     .tablesorter({
                         theme: 'blue',
@@ -34,16 +42,6 @@
                     $(this).closest('tr').nextUntil('tr:not(.tablesorter-childRow)').find('td').toggle();
 
                     return false;
-                });
-
-
-                $("#cbBackgroundColor").click(function () {
-                    if (document.getElementById("cbBackgroundColor").checked) {
-                        $("table .custom-checkbox").removeClass("superImportantCheckbox");
-                    }
-                    else {
-                        $("table .custom-checkbox").addClass("superImportantCheckbox");
-                    }
                 });
 
             });

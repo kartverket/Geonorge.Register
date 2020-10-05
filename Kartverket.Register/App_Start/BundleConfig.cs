@@ -40,7 +40,7 @@ namespace Kartverket.Register
                 "~/Scripts/leaflet.js",
                 "~/Scripts/L.TileLayer.Kartverket.min.js",
                 "~/Scripts/proj4-compressed.js",
-                "~/node_modules/tablesorter/dist/js/jquery.tablesorter.min.js",
+                "~/Content/bower_components/tablesorter/dist/js/jquery.tablesorter.min.js",
                 "~/Scripts/geonorge-register.js",
                 "~/Scripts/proj4leaflet.js"));
 

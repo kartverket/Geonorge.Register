@@ -87,12 +87,17 @@ namespace Kartverket.Register
 
                 cultureName = CultureHelper.GetImplementedCulture(cultureName);
                 if (CultureHelper.IsNorwegian(cultureName))
-                    cookie = new HttpCookie("_culture", Culture.NorwegianCode);
+                {
+                    cookie = new HttpCookie("_culture", Culture.NorwegianCode) {SameSite = SameSiteMode.Lax};
+                }
                 else
-                    cookie = new HttpCookie("_culture", Culture.EnglishCode);
+                {
+                    cookie = new HttpCookie("_culture", Culture.EnglishCode) {SameSite = SameSiteMode.Lax};
+                }
 
                 if (!Request.IsLocal)
                     cookie.Domain = ".geonorge.no";
+
                 cookie.Expires = DateTime.Now.AddYears(1);
                 HttpContext.Current.Response.Cookies.Add(cookie);
             }

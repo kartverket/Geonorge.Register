@@ -1,0 +1,20 @@
+﻿@using Kartverket.Register.Helpers
+<form action="" method="get">
+    <input type="hidden" name="InspireRegisteryType" value="@(string.IsNullOrEmpty(Request.QueryString["InspireRegisteryType"]) ? "dataset" : Request.QueryString["InspireRegisteryType"])" />
+    <input type="hidden" name="sorting" value="@Request.QueryString["sorting"]" />
+    <input type="hidden" name="filterOrganization" value="@Request.QueryString["filterOrganization"]" />
+    <div class="row">
+        <div class="col-md-2">
+            <label for="SelectedOrganizationType">Filtrer Annex</label>
+            <div class="form-group custom-select">
+                <select name="InspireAnnex" class="form-control" onchange="form.submit();">
+                    <option value="">Annex-type</option>
+                    <option value="@Inspire.AnnexI" @(Request.QueryString["InspireAnnex"] == Inspire.AnnexI ? "selected" : "" )>@Inspire.AnnexI</option>
+                    <option value="@Inspire.AnnexII" @(Request.QueryString["InspireAnnex"] == Inspire.AnnexII ? "selected" : "" )>@Inspire.AnnexII</option>
+                    <option value="@Inspire.AnnexIII" @(Request.QueryString["InspireAnnex"] == Inspire.AnnexIII ? "selected" : "" )>@Inspire.AnnexIII</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-10"></div>
+    </div>
+</form>

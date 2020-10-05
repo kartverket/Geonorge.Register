@@ -2,6 +2,8 @@
 using Kartverket.ReportApi;
 using System.Linq;
 using System.Collections.Generic;
+using Eu.Europa.Ec.Jrc.Inspire;
+using DateTime = System.DateTime;
 
 namespace Kartverket.Register.Services.Report
 {
@@ -31,41 +33,44 @@ namespace Kartverket.Register.Services.Report
             var resultsSelected = (from c in _dbContext.CoverageDatasets
                                    join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
                                    where c.ConfirmedDok == true && ds.DatasetType != "Kommunalt"
-                                   group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode } into grouped
+                                   group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode, c.Municipality.StatusConfirmationMunicipalDOK } into grouped
                                    select new
                                    {
                                        name = grouped.Key.name,
                                        Count = grouped.Distinct().Count(),
                                        number = grouped.Key.number,
                                        DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
-                                       MunicipalityCode = grouped.Key.MunicipalityCode
+                                       MunicipalityCode = grouped.Key.MunicipalityCode,
+                                       DOKStatus = grouped.Key.StatusConfirmationMunicipalDOK
                                    }).OrderByDescending(x => x.Count).ToList();
 
             var resultsSelectedAdditional = (from c in _dbContext.CoverageDatasets
                                              join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
                                              where ds.DatasetType == "Kommunalt"
-                                             group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode } into grouped
+                                             group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode, c.Municipality.StatusConfirmationMunicipalDOK } into grouped
                                              select new
                                              {
                                                  name = grouped.Key.name,
                                                  Count = grouped.Count(),
                                                  number = grouped.Key.number,
                                                  DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
-                                                 MunicipalityCode = grouped.Key.MunicipalityCode
+                                                 MunicipalityCode = grouped.Key.MunicipalityCode,
+                                                 DOKStatus = grouped.Key.StatusConfirmationMunicipalDOK
                                              }).ToList();
 
 
             var resultsNotSelected = (from c in _dbContext.CoverageDatasets
                                    join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
                                    where c.ConfirmedDok == false && ds.DatasetType != "Kommunalt"
-                                   group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode } into grouped
+                                   group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode, c.Municipality.StatusConfirmationMunicipalDOK } into grouped
                                    select new
                                    {
                                        name = grouped.Key.name,
                                        Count = 0,
                                        number = grouped.Key.number,
                                        DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
-                                       MunicipalityCode = grouped.Key.MunicipalityCode
+                                       MunicipalityCode = grouped.Key.MunicipalityCode,
+                                       DOKStatus = grouped.Key.StatusConfirmationMunicipalDOK
                                    })
                                    .OrderByDescending(x => x.Count)
                                    .ToList();
@@ -85,7 +90,7 @@ namespace Kartverket.Register.Services.Report
 
                     var resultsNr = (from res in results
                                      join munici in _dbContext.Organizations on res.number equals munici.number
-                                     select new { res.name, res.Count, res.number, munici.MunicipalityCode, munici.DateConfirmedMunicipalDOK }).ToList();
+                                     select new { res.name, res.Count, res.number, munici.MunicipalityCode, munici.DateConfirmedMunicipalDOK, res.DOKStatus }).ToList();
 
                     results = (from r in resultsNr
                                where (from c in areas
@@ -95,9 +100,7 @@ namespace Kartverket.Register.Services.Report
                                      select c)
                                           .Contains(r.MunicipalityCode.Substring(0, 2))
 
-                               select new { r.name, r.Count, r.number, r.DateConfirmedMunicipalDOK, r.MunicipalityCode }).ToList();
-
-
+                               select new { r.name, r.Count, r.number, r.DateConfirmedMunicipalDOK, r.MunicipalityCode, r.DOKStatus }).ToList();
                 }
             }
 
@@ -143,6 +146,12 @@ namespace Kartverket.Register.Services.Report
                 reportResultDataValues.Add(reportResultDataValue);
                 //additional Number end
 
+                //additional Status start
+                reportResultDataValue = new ReportResultDataValue();
+                reportResultDataValue.Key = "DOKStatus";
+                reportResultDataValue.Value = result.DOKStatus;
+                reportResultDataValues.Add(reportResultDataValue);
+                //additional Status end
 
                 reportResultData.Values = reportResultDataValues;
 
@@ -249,8 +258,6 @@ namespace Kartverket.Register.Services.Report
                                           .Contains(r.MunicipalityCode.Substring(0, 2))
 
                                select new { r.name, r.datasetName, r.Coverage, r.ConfirmedDok, r.number, r.MunicipalityCode }).ToList();
-
-
                 }
             }
 
@@ -291,6 +298,5 @@ namespace Kartverket.Register.Services.Report
 
             return reportResult;
         }
-
     }
 }

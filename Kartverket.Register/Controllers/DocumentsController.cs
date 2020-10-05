@@ -185,7 +185,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     var url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-                    document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber);
+                    document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString());
                     if (document.register == null)
                         document.register = originalDocument.register;
                     document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
@@ -467,7 +467,7 @@ namespace Kartverket.Register.Controllers
             document.registerId = GetRegisterId(inputDocument, document);
             document.Accepted = inputDocument.Accepted;
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-            document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber);
+            document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber, document?.status?.value, originalDocument?.status?.value);
             document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
             document.documentownerId = GetDocumentOwnerId(inputDocument.documentownerId);
             document.submitterId = GetSubmitterId(inputDocument.submitterId);
@@ -910,7 +910,7 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private string documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr)
+        private string documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr, string status, string previousStatus)
         {
             if (documentfile != null)
             {
@@ -919,14 +919,24 @@ namespace Kartverket.Register.Controllers
                 if (System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true)
                 {
                     string syncUrl = new SchemaSynchronizer().Synchronize(documentfile, fileName);
+
                     if (!string.IsNullOrEmpty(syncUrl))
-                        url = syncUrl;
+                        return syncUrl;
                 }
                 string documentUrl = url + fileName;
                 return documentUrl;
             }
             else if (documenturl != null)
             {
+                if (System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true)
+                {
+                    if(previousStatus != status)
+                    { 
+                        if (status == "True")
+                            documenturl =  new SchemaSynchronizer().Synchronize(documenturl);
+                    }
+                }
+
                 return documenturl;
             }
             else

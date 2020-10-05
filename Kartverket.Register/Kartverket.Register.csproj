@@ -402,6 +402,7 @@
     <Compile Include="Helpers\CustomDocumentFilter.cs" />
     <Compile Include="Helpers\GlobalVariables.cs" />
     <Compile Include="Helpers\HttpRequestMessageExtensions.cs" />
+    <Compile Include="Helpers\Inspire.cs" />
     <Compile Include="Helpers\Log4netExceptionFilter.cs" />
     <Compile Include="Helpers\RegisterUrls.cs" />
     <Compile Include="Helpers\HtmlHelperExtension.cs" />
@@ -1751,9 +1752,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\wfs.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\unlock.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.js" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.min.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.js" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.min.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.min.cshtml" />
@@ -1831,12 +1830,14 @@
     <Content Include="Content\custom.css" />
     <Content Include="Content\img\arrow-down.svg" />
     <Content Include="Content\img\arrow-up.svg" />
+    <Content Include="Content\img\checked-black.svg" />
     <Content Include="Content\img\chosen-sprite.png" />
     <Content Include="Content\img\leaflet\layers-2x.png" />
     <Content Include="Content\img\leaflet\layers.png" />
     <Content Include="Content\img\leaflet\marker-icon-2x.png" />
     <Content Include="Content\img\leaflet\marker-icon.png" />
     <Content Include="Content\img\leaflet\marker-shadow.png" />
+    <Content Include="Content\img\loader.gif" />
     <Content Include="Content\img\rss.png" />
     <Content Include="Content\leaflet.css" />
     <Content Include="Content\print.css" />
@@ -1924,6 +1925,8 @@
     <Content Include=".bowerrc" />
     <Content Include="lib\PDFLibNet.dll" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\axios.js" />
+    <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\easyXDM.js" />
     <Content Include="Scripts\expressive.annotations.validate.js" />
@@ -2163,6 +2166,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.tablesorter.min.js" />
     <Content Include="Scripts\jquery.validate.date.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -2179,6 +2183,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\tabs.js" />
+    <Content Include="Scripts\vue.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -2302,6 +2307,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Shared\_suitability.cshtml" />
+    <Content Include="Views\Shared\_inspireFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

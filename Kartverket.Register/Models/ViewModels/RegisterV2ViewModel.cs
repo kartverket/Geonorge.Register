@@ -99,7 +99,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Seoname = register.seoname;
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
-                RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
+                RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems, filter);
                 SynchronizationJobs = new SynchronizationViewModel(register.Synchronizes, page);
                 StatusReport = GetStatsReport(statusReport, statusReports, filter);
 
@@ -140,7 +140,7 @@ namespace Kartverket.Register.Models.ViewModels
         }
 
 
-        private ICollection<RegisterItemV2ViewModel> GetRegisterItems(string containedItemClass, ICollection<RegisterItemV2> registerItems)
+        private ICollection<RegisterItemV2ViewModel> GetRegisterItems(string containedItemClass, ICollection<RegisterItemV2> registerItems, FilterParameters filter)
         {
             var registerItemsViewModel = new Collection<RegisterItemV2ViewModel>();
             switch (containedItemClass)
@@ -149,14 +149,17 @@ namespace Kartverket.Register.Models.ViewModels
                     
                     foreach (var inspireRegisterItem in registerItems)
                     {
-                        switch (inspireRegisterItem)
-                        {
-                            case InspireDataset inspireDataset:
-                                registerItemsViewModel.Add(new InspireDatasetViewModel(inspireDataset));
-                                break;
-                            case InspireDataService inspireDataService:
-                                registerItemsViewModel.Add(new InspireDataServiceViewModel(inspireDataService));
-                                break;
+                        if(Inspire.IncludeInFilter(inspireRegisterItem, filter))
+                        { 
+                            switch (inspireRegisterItem)
+                            {
+                                case InspireDataset inspireDataset:
+                                    registerItemsViewModel.Add(new InspireDatasetViewModel(inspireDataset));
+                                    break;
+                                case InspireDataService inspireDataService:
+                                    registerItemsViewModel.Add(new InspireDataServiceViewModel(inspireDataService));
+                                    break;
+                            }
                         }
                     }
                     break;
@@ -169,7 +172,7 @@ namespace Kartverket.Register.Models.ViewModels
             }
             return registerItemsViewModel;
         }
-
+ 
         private ICollection<RegisterItemV2ViewModel> GetInspireDataService(string containedItemClass, ICollection<RegisterItemV2> registerItems)
         {
             var registerItemsViewModel = new Collection<RegisterItemV2ViewModel>();

@@ -1,4 +1,5 @@
 ﻿using Eu.Europa.Ec.Jrc.Inspire;
+using Kartverket.Register.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -409,9 +410,9 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes) ||
-                    InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes) ||
-                    InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes) ||
+                    Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes) ||
+                    Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes))
                 {
                     number++;
                 }
@@ -428,7 +429,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes))
                 {
                     number++;
                 }
@@ -441,7 +442,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes))
                 {
                     number++;
                 }
@@ -454,7 +455,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes))
                 {
                     number++;
                 }
@@ -469,7 +470,7 @@ namespace Kartverket.Register.Models
 
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes))
                 {
                     if (item.MetadataIsSet())
                     {
@@ -486,7 +487,7 @@ namespace Kartverket.Register.Models
 
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes))
                 {
                     if (item.MetadataIsSet())
                     {
@@ -503,7 +504,7 @@ namespace Kartverket.Register.Models
 
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes))
                 {
                     if (item.MetadataIsSet())
                     {
@@ -521,7 +522,7 @@ namespace Kartverket.Register.Models
 
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes))
                 {
                     if (item.MetadataIsGood())
                     {
@@ -538,7 +539,7 @@ namespace Kartverket.Register.Models
 
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes))
                 {
                     if (item.MetadataIsGood())
                     {
@@ -555,7 +556,7 @@ namespace Kartverket.Register.Models
 
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes))
                 {
                     if (item.MetadataIsGood())
                     {
@@ -741,7 +742,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes))
                 {
                     if (item.HarmonizedDataAndConformedmetadata())
                     {
@@ -757,7 +758,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes))
                 {
                     if (item.HarmonizedDataAndConformedmetadata())
                     {
@@ -773,7 +774,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes))
                 {
                     if (item.HarmonizedDataAndConformedmetadata())
                     {
@@ -790,7 +791,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes))
                 {
                     number += item.Area;
                 }
@@ -803,7 +804,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes))
                 {
                     number += item.Area;
                 }
@@ -816,7 +817,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes))
                 {
                     number += item.Area;
                 }
@@ -830,7 +831,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexI(item.InspireThemes))
                 {
                     number += item.RelevantArea;
                 }
@@ -843,7 +844,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexII(item.InspireThemes))
                 {
                     number += item.RelevantArea;
                 }
@@ -856,7 +857,7 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
+                if (Inspire.HaveThemeOfTypeAnnexIII(item.InspireThemes))
                 {
                     number += item.RelevantArea;
                 }
@@ -898,90 +899,9 @@ namespace Kartverket.Register.Models
             return inspireDatasets;
         }
 
-        private bool InspireDatasetHaveInspireThemeOfTypeAnnexI(ICollection<CodelistValue> inspireThems)
-        {
-            try
-            {
-                foreach (var inspireTheme in inspireThems)
-                {
-                    if (IsAnnexI(inspireTheme))
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
-        }
-
-        private bool InspireDatasetHaveInspireThemeOfTypeAnnexII(ICollection<CodelistValue> inspireThems)
-        {
-            foreach (var inspireTheme in inspireThems)
-            {
-                if (IsAnnexII(inspireTheme))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private bool InspireDatasetHaveInspireThemeOfTypeAnnexIII(ICollection<CodelistValue> inspireThems)
-        {
-            foreach (var inspireTheme in inspireThems)
-            {
-                if (IsAnnexIII(inspireTheme))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private static bool IsAnnexI(CodelistValue inspireTheme)
-        {
-            if (inspireTheme != null)
-            {
-                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
-                return Enum.IsDefined(typeof(AnnexI), inspireThemeValueCamelCase);
-            }
-            return false;
-        }
-
-        private static bool IsAnnexII(CodelistValue inspireTheme)
-        {
-            if (inspireTheme != null)
-            {
-                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
-                return Enum.IsDefined(typeof(AnnexII), inspireThemeValueCamelCase);
-            }
-            return false;
-        }
-
-        private static bool IsAnnexIII(CodelistValue inspireTheme)
-        {
-            if (inspireTheme != null)
-            {
-                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
-                return Enum.IsDefined(typeof(AnnexIII), inspireThemeValueCamelCase);
-            }
-            return false;
-        }
-
         private static string CreateCamelCase(string inspireTheme)
         {
-            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-
-            var inspireThemeCamelCase = textInfo.ToTitleCase(inspireTheme);
-            inspireThemeCamelCase = Char.ToLowerInvariant(inspireThemeCamelCase[0]) + inspireThemeCamelCase.Substring(1);
-            inspireThemeCamelCase = inspireThemeCamelCase.Replace("/", " ");
-            inspireThemeCamelCase = inspireThemeCamelCase.Replace(" ", "");
-            inspireThemeCamelCase = inspireThemeCamelCase.Replace("-", "");
-
-            return inspireThemeCamelCase;
+            return Inspire.CreateCamelCase(inspireTheme);
         }
 
         private double Divide(int x, int y)

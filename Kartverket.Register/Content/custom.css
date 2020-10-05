@@ -340,20 +340,6 @@ a.link-unstyled {
 }
 
 
-/**/
-.superImportantCheckbox .checkbox-icon::after{
-    content: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-default.svg) !important;
-
-}
-
-.superImportantCheckbox input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon::after{
-    content: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-default.svg) !important;
-}
-
-
-
-/*inn i felleskomponenter*/
-
 .resultItemRow {
     padding: 8px 0;
     border-bottom: 1px solid #ccc;
@@ -453,4 +439,32 @@ a.link-unstyled {
 .custom-checkbox.custom-checkbox-5 input[type=checkbox] + .checkbox-icon:after,
 .custom-checkbox.custom-checkbox-5 input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
     background-color: rgb(99,190,123);
+}
+
+.custom-checkbox.custom-checkbox-5 input[type=checkbox] + .checkbox-icon:after,
+.custom-checkbox.custom-checkbox-5 input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
+    background-color: rgb(99,190,123);
+}
+
+.custom-checkbox.superImportantCheckbox input[type=checkbox] + .checkbox-icon:after,
+.custom-checkbox.superImportantCheckbox input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
+    background-color: white;
+}
+
+.custom-checkbox input[type=checkbox]:checked + .checkbox-icon .checkbox-character .checkmark,
+.custom-checkbox input[type=checkbox]:checked + input[type=hidden] + .checkbox-icon .checkbox-character .checkmark {
+    display: inline-block;
+    content: url(/Content/img/checked-black.svg);
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    left: -12px;
+    top: 0;
+}
+
+
+.tableSuitability .custom-checkbox input[type=checkbox]:checked + input[type=hidden] + .checkbox-icon.large:after {
+    content: "";
+    width: 24px;
+    height: 24px;
 }

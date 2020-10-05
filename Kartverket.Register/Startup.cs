@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Autofac;
 using Geonorge.AuthLib.NetFull;
 using Microsoft.Owin;
@@ -9,15 +12,32 @@ namespace Kartverket.Register
 {
     public class Startup
     {
-        public void Configuration(IAppBuilder app)
+        private static readonly Regex _staticFileRegex = new Regex(@"^(\/content\/|\/scripts\/|\/dist\/|\/fonts\/)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        public void Configuration(IAppBuilder application)
         {
-            // Use Autofac as an Owin middleware
             var container = DependencyConfig.Configure(new ContainerBuilder());
-            app.UseAutofacMiddleware(container);
-            app.UseAutofacMvc();  // requires Autofac.Mvc5.Owin nuget package installed
-            
-            app.UseGeonorgeAuthentication();
+
+            application.UseAutofacMiddleware(container);
+            application.UseAutofacMvc();
+            application.UseGeonorgeAuthentication();
+
+            application.Use(async (context, next) =>
+            {
+                if (!IsStaticFile(context.Request.Path.ToString()))
+                {
+                    context.Response.Headers.Append("Cache-Control", "no-cache, no-store, must-revalidate");
+                    context.Response.Headers.Append("Pragma", "no-cache");
+                }
+
+                await next();
+            });
+
         }
-       
+
+        private static bool IsStaticFile(string path)
+        {
+            return _staticFileRegex.IsMatch(path);
+        }
     }
 }

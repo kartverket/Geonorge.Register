@@ -264,7 +264,7 @@ namespace Kartverket.Register.Services.Register
 
                 if (!string.IsNullOrEmpty(filter.text))
                 {
-                    registerItems = registerItems.Where(f => f.name.Contains(filter.text)).ToList();
+                    registerItems = registerItems.Where(f => f.name.ToLower().Contains(filter.text.ToLower())).Distinct().ToList();
                 }
 
                 register.items.Clear();

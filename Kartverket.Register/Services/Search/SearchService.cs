@@ -230,8 +230,8 @@ namespace Kartverket.Register.Services.Search
             if (register.ContainedItemClassIsDataset())
             {
                 var queryResults = (from d in _dbContext.Datasets
-                                    where (d.register.name.Contains(register.name) || d.register.seoname.Contains(register.seoname))
-                                    && (d.name.Contains(text)
+                                    where
+                                    (d.name.ToLower().Contains(text.ToLower())
                                     || d.description.Contains(text)
                                     || d.datasetowner.name.Contains(text))
                                     || d.Translations.Any(dd => dd.Name.Contains(text))

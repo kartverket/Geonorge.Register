@@ -17,7 +17,7 @@ namespace Kartverket.Register.Services
         string SchemaRemoteUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteUrl"];
         string SchemaRemoteUrlTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
 
-        public string Synchronize(HttpPostedFileBase file, string filename)
+        public string Synchronize(HttpPostedFileBase file)
         {
             string syncFile = "";
             if (file != null && file.ContentLength > 0 && (file.ContentType == "text/xml" || file.ContentType == "application/xml"))
@@ -29,7 +29,7 @@ namespace Kartverket.Register.Services
                 if (ValidTargetNamespace(targetNamespace))
                 {
                     string path = GetFilePath(targetNamespace.Value);
-                    syncFile = UploadFile(file, path, filename);
+                    syncFile = UploadFile(file, path);
                 }
             }
 
@@ -65,13 +65,13 @@ namespace Kartverket.Register.Services
             return node != null && node.Value.Contains(TargetNamespace);
         }
 
-        string UploadFile(HttpPostedFileBase file, string path, string filename)
+        string UploadFile(HttpPostedFileBase file, string path)
         {
             MakeDir(path,UncPathTest);
 
-            file.SaveAs(UncPathTest + "\\" + path + "\\" + filename);
+            file.SaveAs(UncPathTest + "\\" + path + "\\" + file.FileName);
             
-            return SchemaRemoteUrlTest + path + "/" + filename;
+            return SchemaRemoteUrlTest + path + "/" + file.FileName;
         }
 
         string UploadFileProd(string path, string filename)

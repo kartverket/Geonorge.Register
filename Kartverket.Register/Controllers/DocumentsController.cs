@@ -918,7 +918,7 @@ namespace Kartverket.Register.Controllers
 
                 if (System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true)
                 {
-                    string syncUrl = new SchemaSynchronizer().Synchronize(documentfile, fileName);
+                    string syncUrl = new SchemaSynchronizer().Synchronize(documentfile);
 
                     if (!string.IsNullOrEmpty(syncUrl))
                         return syncUrl;

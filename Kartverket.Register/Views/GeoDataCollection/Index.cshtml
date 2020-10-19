@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Kartverket.Register.Models.GeoDataCollection>
+
+@{
+    ViewBag.Title = "Mottaksordninger for innsamling av Geodata";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (User.Identity.IsAuthenticated)
+{
+<p>
+    @Html.ActionLink(Shared.Add, "Create")
+</p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Link)
+        </th>
+        <th> @Html.DisplayNameFor(model => model.Organization)</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <a href="mottaksordning-innsamling-geodata/details?id=@item.systemId">@item.Title</a>
+        </td>
+        <td>
+            <a href="@item.Link">@item.Link</a>
+        </td>
+        <td>@item.Organization.name</td>
+    </tr>
+}
+
+</table>

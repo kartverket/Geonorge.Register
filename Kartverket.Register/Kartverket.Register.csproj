@@ -376,6 +376,7 @@
     <Compile Include="Controllers\DokCoverageController.cs" />
     <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\GeoDataCollectionController.cs" />
     <Compile Include="Controllers\GeodatalovDatasetsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -1054,6 +1055,10 @@
     <Compile Include="Migrations\202005150845270_CoverageDatasetSuitability.designer.cs">
       <DependentUpon>202005150845270_CoverageDatasetSuitability.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010191013189_AddGeoDataCollection.cs" />
+    <Compile Include="Migrations\202010191013189_AddGeoDataCollection.designer.cs">
+      <DependentUpon>202010191013189_AddGeoDataCollection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1083,6 +1088,7 @@
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\GeoDataCollection.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
     <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
@@ -2377,6 +2383,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Shared\_suitability.cshtml" />
     <Content Include="Views\Shared\_inspireFilter.cshtml" />
+    <Content Include="Views\GeoDataCollection\Index.cshtml" />
+    <Content Include="Views\GeoDataCollection\Create.cshtml" />
+    <Content Include="Views\GeoDataCollection\Edit.cshtml" />
+    <Content Include="Views\GeoDataCollection\Delete.cshtml" />
+    <Content Include="Views\GeoDataCollection\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -2863,6 +2874,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005150845270_CoverageDatasetSuitability.resx">
       <DependentUpon>202005150845270_CoverageDatasetSuitability.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010191013189_AddGeoDataCollection.resx">
+      <DependentUpon>202010191013189_AddGeoDataCollection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

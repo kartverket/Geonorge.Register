@@ -1,0 +1,35 @@
+﻿@model Kartverket.Register.Models.GeoDataCollection
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Link)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink(Shared.Edit, "Edit", new { id = Model.systemId }) <span>|</span>
+        @Html.ActionLink(Shared.Delete, "Delete", new { id = Model.systemId })
+    }
+</p>

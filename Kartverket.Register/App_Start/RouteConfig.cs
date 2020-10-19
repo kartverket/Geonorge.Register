@@ -121,6 +121,12 @@ namespace Kartverket.Register
             routes.MapRoute("InspireDatasetMonitoring", "api/register/{registerName}/{itemowner}/{item}/monitoring-report", new { controller = "ApiRoot", action = "InspireDatasetMonitoring" });
             //routes.MapRoute("NewEPSGParent", "epsg/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "EPSGs", action = "Create" });
 
+            //GeoDataCollection
+            routes.MapRoute("GeoDataCollection", "mottaksordning-innsamling-geodata", new { controller = "GeoDataCollection", action = "Index" });
+            routes.MapRoute("GeoDataCollectionCreate", "mottaksordning-innsamling-geodata/create", new { controller = "GeoDataCollection", action = "Create" });
+            routes.MapRoute("GeoDataCollectionEdit", "mottaksordning-innsamling-geodata/edit", new { controller = "GeoDataCollection", action = "Edit" });
+            routes.MapRoute("GeoDataCollectionDelete", "mottaksordning-innsamling-geodata/delete", new { controller = "GeoDataCollection", action = "Delete" });
+            routes.MapRoute("GeoDataCollectionDetails", "mottaksordning-innsamling-geodata/details", new { controller = "GeoDataCollection", action = "Details" });
             //Index
             routes.MapRoute("ReIndex", "Index/ReIndex", new { controller = "Index", action = "ReIndex" });
             

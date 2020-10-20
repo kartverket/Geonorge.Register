@@ -17,6 +17,7 @@ using Kartverket.Register.Models.Translations;
 using Newtonsoft.Json.Linq;
 using InspireDataset = Kartverket.Register.Models.InspireDataset;
 using Organization = Kartverket.Register.Models.Organization;
+using Kartverket.Register.Resources;
 
 namespace Kartverket.Register.Services.Register
 {
@@ -1274,7 +1275,7 @@ namespace Kartverket.Register.Services.Register
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("3D9114F6-FAAB-4521-BDF8-19EF6211E7D2"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("9A9BEF28-285B-477E-85F1-504F8227FF45"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("0F428034-0B2D-4FB7-84EA-C547B872B418"))));
-            registers.Add(new RegisterView { name = "Mottaksordninger for innsamling av Geodata", ExternalUrl = "mottaksordning-innsamling-geodata" });
+            registers.Add(new RegisterView { name = GeodataCollection.RegisterName, description = GeodataCollection.RegisterDescription, ExternalUrl = "mottaksordning-innsamling-geodata" });
 
             register.Items.Add(new Group
             {

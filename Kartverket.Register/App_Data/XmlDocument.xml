@@ -1228,6 +1228,47 @@
             </summary>
             <returns>Url</returns>
         </member>
+        <member name="T:Kartverket.Register.Resources.GeodataCollection">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Link">
+            <summary>
+              Looks up a localized string similar to Lenke.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Organization">
+            <summary>
+              Looks up a localized string similar to Organisasjon.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.RegisterDescription">
+            <summary>
+              Looks up a localized string similar to Inneholder informasjon og lenke til mottaksordninger for innsamling av Geodata.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.RegisterName">
+            <summary>
+              Looks up a localized string similar to Mottaksordninger for innsamling av Geodata.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Title">
+            <summary>
+              Looks up a localized string similar to Tittel.
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Services.AccessControlService.IsAdmin">
             <summary>
             Check if current user is Admin

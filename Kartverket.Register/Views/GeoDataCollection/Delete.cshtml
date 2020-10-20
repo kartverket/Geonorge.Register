@@ -1,39 +1,26 @@
 ﻿@model Kartverket.Register.Models.GeoDataCollection
+@using Kartverket.Register.Resources;
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = Shared.Delete;
 }
+@section breadcrumb {
+    <li><a href="/@GeodataCollection.RegisterSeoName">@GeodataCollection.RegisterName</a></li>
+    <li><a href="/@GeodataCollection.RegisterSeoName/details?id=@Model.systemId">@Model.Title</a></li>
+    <li>@Shared.Delete</li>
+}
+<h2>@ViewBag.Title</h2>
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>@Registers.DeleteConfirm @Model.Title ?</h3>
 <div>
-    <h4>GeoDataCollection</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Link)
-        </dt>
+    @using (Html.BeginForm())
+    {
 
-        <dd>
-            @Html.DisplayFor(model => model.Link)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-group">
+            <input type="submit" value="@Shared.Delete" class="btn btn-default pull-right" />
+            <a href="/@GeodataCollection.RegisterSeoName/details?id=@Model.systemId">@Shared.Back</a>
         </div>
     }
 </div>

@@ -1264,6 +1264,11 @@
               Looks up a localized string similar to Mottaksordninger for innsamling av Geodata.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.RegisterSeoName">
+            <summary>
+              Looks up a localized string similar to mottaksordning-innsamling-geodata.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Title">
             <summary>
               Looks up a localized string similar to Tittel.

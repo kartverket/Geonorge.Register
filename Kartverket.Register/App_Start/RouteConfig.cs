@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using Kartverket.Register.Resources;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Kartverket.Register
@@ -122,11 +123,12 @@ namespace Kartverket.Register
             //routes.MapRoute("NewEPSGParent", "epsg/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "EPSGs", action = "Create" });
 
             //GeoDataCollection
-            routes.MapRoute("GeoDataCollection", "mottaksordning-innsamling-geodata", new { controller = "GeoDataCollection", action = "Index" });
-            routes.MapRoute("GeoDataCollectionCreate", "mottaksordning-innsamling-geodata/create", new { controller = "GeoDataCollection", action = "Create" });
-            routes.MapRoute("GeoDataCollectionEdit", "mottaksordning-innsamling-geodata/edit", new { controller = "GeoDataCollection", action = "Edit" });
-            routes.MapRoute("GeoDataCollectionDelete", "mottaksordning-innsamling-geodata/delete", new { controller = "GeoDataCollection", action = "Delete" });
-            routes.MapRoute("GeoDataCollectionDetails", "mottaksordning-innsamling-geodata/details", new { controller = "GeoDataCollection", action = "Details" });
+            routes.MapRoute("GeoDataCollection", GeodataCollection.RegisterSeoName, new { controller = "GeoDataCollection", action = "Index" });
+            routes.MapRoute("GeoDataCollectionCreate", GeodataCollection.RegisterSeoName + "/create", new { controller = "GeoDataCollection", action = "Create" });
+            routes.MapRoute("GeoDataCollectionEdit", GeodataCollection.RegisterSeoName + "/edit", new { controller = "GeoDataCollection", action = "Edit" });
+            routes.MapRoute("GeoDataCollectionDelete", GeodataCollection.RegisterSeoName + "/delete", new { controller = "GeoDataCollection", action = "Delete" });
+            routes.MapRoute("GeoDataCollectionDetails", GeodataCollection.RegisterSeoName + "/details", new { controller = "GeoDataCollection", action = "Details" });
+            
             //Index
             routes.MapRoute("ReIndex", "Index/ReIndex", new { controller = "Index", action = "ReIndex" });
             

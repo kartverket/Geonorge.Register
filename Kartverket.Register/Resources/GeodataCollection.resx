@@ -129,6 +129,9 @@
   <data name="RegisterName" xml:space="preserve">
     <value>Mottaksordninger for innsamling av Geodata</value>
   </data>
+  <data name="RegisterSeoName" xml:space="preserve">
+    <value>mottaksordning-innsamling-geodata</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Tittel</value>
   </data>

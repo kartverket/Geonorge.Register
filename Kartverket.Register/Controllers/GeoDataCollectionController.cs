@@ -1,4 +1,5 @@
-﻿using Kartverket.Register.Models;
+﻿using Geonorge.AuthLib.Common;
+using Kartverket.Register.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -26,7 +27,7 @@ namespace Kartverket.Register.Controllers
         // GET: GeoDataCollection/Details/5
         public ActionResult Details(string id)
         {
-            return View(_dbContext.GeoDataCollections.Where(o => o.systemId.ToString() == id).FirstOrDefault());
+            return View(_dbContext.GeoDataCollections.Include("Organization").Where(o => o.systemId.ToString() == id).FirstOrDefault());
         }
 
         // GET: GeoDataCollection/Create
@@ -37,6 +38,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // POST: GeoDataCollection/Create
+        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
         [HttpPost]
         public ActionResult Create(GeoDataCollection collection, string ownerId)
         {
@@ -50,7 +52,7 @@ namespace Kartverket.Register.Controllers
 
                 _dbContext.SaveChanges();
 
-                return RedirectToAction("Index");
+                return Redirect("Edit?id=" + collection.systemId);
             }
             catch
             {
@@ -59,6 +61,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: GeoDataCollection/Edit/5
+        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
         public ActionResult Edit(string id)
         {
             var collection = _dbContext.GeoDataCollections.Where(o => o.systemId.ToString() == id).FirstOrDefault();
@@ -67,6 +70,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // POST: GeoDataCollection/Edit/5
+        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
         [HttpPost]
         public ActionResult Edit(string systemId, string ownerId, GeoDataCollection collection)
         {
@@ -93,12 +97,14 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: GeoDataCollection/Delete/5
+        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
         public ActionResult Delete(string id)
         {
             return View(_dbContext.GeoDataCollections.Where(o => o.systemId.ToString() == id).FirstOrDefault());
         }
 
         // POST: GeoDataCollection/Delete/5
+        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
         [HttpPost]
         public ActionResult Delete(string id, GeoDataCollection collection)
         {

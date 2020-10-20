@@ -97,6 +97,15 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mottaksordning-innsamling-geodata.
+        /// </summary>
+        public static string RegisterSeoName {
+            get {
+                return ResourceManager.GetString("RegisterSeoName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tittel.
         /// </summary>
         public static string Title {

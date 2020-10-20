@@ -123,6 +123,9 @@
   <data name="Organization" xml:space="preserve">
     <value>Organisasjon</value>
   </data>
+  <data name="Purpose" xml:space="preserve">
+    <value>Formål</value>
+  </data>
   <data name="RegisterDescription" xml:space="preserve">
     <value>Inneholder informasjon og lenke til mottaksordninger for innsamling av Geodata</value>
   </data>

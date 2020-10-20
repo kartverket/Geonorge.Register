@@ -79,6 +79,7 @@ namespace Kartverket.Register.Controllers
                 var geodataCollection = _dbContext.GeoDataCollections.Where(g => g.systemId.ToString() == systemId).FirstOrDefault();
                 geodataCollection.Title = collection.Title;
                 geodataCollection.Link = collection.Link;
+                geodataCollection.Purpose = collection.Purpose;
 
                 var org = _dbContext.Organizations.Where(o => o.systemId.ToString() == ownerId).FirstOrDefault();
                 geodataCollection.Organization = org;

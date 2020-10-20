@@ -1059,6 +1059,10 @@
     <Compile Include="Migrations\202010191013189_AddGeoDataCollection.designer.cs">
       <DependentUpon>202010191013189_AddGeoDataCollection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010201107443_AddGeodataCollectionPurpose.cs" />
+    <Compile Include="Migrations\202010201107443_AddGeodataCollectionPurpose.designer.cs">
+      <DependentUpon>202010201107443_AddGeodataCollectionPurpose.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1195,6 +1199,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeodataCollection.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\GeodataCollection.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeodataCollection.en.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\GeodatalovDataSet.en.Designer.cs">
       <DependentUpon>GeodatalovDataSet.en.resx</DependentUpon>
@@ -2883,7 +2892,14 @@
     <EmbeddedResource Include="Migrations\202010191013189_AddGeoDataCollection.resx">
       <DependentUpon>202010191013189_AddGeoDataCollection.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\GeodataCollection.en.resx" />
+    <EmbeddedResource Include="Migrations\202010201107443_AddGeodataCollectionPurpose.resx">
+      <DependentUpon>202010201107443_AddGeodataCollectionPurpose.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeodataCollection.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodataCollection.Designer.cs</LastGenOutput>

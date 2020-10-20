@@ -1254,6 +1254,11 @@
               Looks up a localized string similar to Organisasjon.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Purpose">
+            <summary>
+              Looks up a localized string similar to Formål.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.RegisterDescription">
             <summary>
               Looks up a localized string similar to Inneholder informasjon og lenke til mottaksordninger for innsamling av Geodata.

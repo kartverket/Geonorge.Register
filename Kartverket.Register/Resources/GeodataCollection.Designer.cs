@@ -79,6 +79,15 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Formål.
+        /// </summary>
+        public static string Purpose {
+            get {
+                return ResourceManager.GetString("Purpose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inneholder informasjon og lenke til mottaksordninger for innsamling av Geodata.
         /// </summary>
         public static string RegisterDescription {

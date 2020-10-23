@@ -91,6 +91,19 @@ namespace Kartverket.Register.Controllers
                 geodataCollection.Link = collection.Link;
                 geodataCollection.Purpose = collection.Purpose;
 
+                geodataCollection.DatasetTitle = collection.DatasetTitle;
+                geodataCollection.DatasetLink = collection.DatasetLink;
+                geodataCollection.Mapper = collection.Mapper;
+                geodataCollection.DataOwner = collection.DataOwner;
+                geodataCollection.Distributor = collection.Distributor;
+                geodataCollection.Methodology = collection.Methodology;
+                geodataCollection.ProcessHistory = collection.ProcessHistory;
+                geodataCollection.RegistrationRequirements = collection.RegistrationRequirements;
+                geodataCollection.MappingRequirements = collection.MappingRequirements;
+                geodataCollection.MethodologyDocumentLink = collection.MethodologyDocumentLink;
+                geodataCollection.MethodologyLinkWebPage = collection.MethodologyLinkWebPage;
+                geodataCollection.SupportSchemes = collection.SupportSchemes;
+
                 var org = _dbContext.Organizations.Where(o => o.systemId.ToString() == ownerId).FirstOrDefault();
                 geodataCollection.Organization = org;
 

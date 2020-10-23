@@ -117,11 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DataOwner" xml:space="preserve">
+    <value>Dataeier</value>
+  </data>
+  <data name="DatasetLink" xml:space="preserve">
+    <value>Datasett lenke</value>
+  </data>
+  <data name="DatasetTitle" xml:space="preserve">
+    <value>Datasett tittel</value>
+  </data>
+  <data name="Distributor" xml:space="preserve">
+    <value>Distributør</value>
+  </data>
   <data name="Link" xml:space="preserve">
     <value>Lenke</value>
   </data>
+  <data name="Mapper" xml:space="preserve">
+    <value>Kartlegger</value>
+  </data>
+  <data name="MappingRequirements" xml:space="preserve">
+    <value>Kartleggingskrav</value>
+  </data>
+  <data name="Methodology" xml:space="preserve">
+    <value>Metodikk</value>
+  </data>
+  <data name="MethodologyDocumentLink" xml:space="preserve">
+    <value>Lenke til metodikk-dokument</value>
+  </data>
+  <data name="MethodologyLinkWebPage" xml:space="preserve">
+    <value>Lenke til metodikk på web</value>
+  </data>
   <data name="Organization" xml:space="preserve">
     <value>Organisasjon</value>
+  </data>
+  <data name="ProcessHistory" xml:space="preserve">
+    <value>Prosesshistorie</value>
   </data>
   <data name="Purpose" xml:space="preserve">
     <value>Formål</value>
@@ -134,6 +164,12 @@
   </data>
   <data name="RegisterSeoName" xml:space="preserve">
     <value>mottaksordning-innsamling-geodata</value>
+  </data>
+  <data name="RegistrationRequirements" xml:space="preserve">
+    <value>Registreringskrav</value>
+  </data>
+  <data name="SupportSchemes" xml:space="preserve">
+    <value>Støtteordninger</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Tittel</value>

@@ -183,16 +183,72 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RegistrationRequirements, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RegistrationRequirements, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(model => model.RegistrationRequirements)
                 @Html.ValidationMessageFor(model => model.RegistrationRequirements, "", new { @class = "text-danger" })
+                <div id="editorRegistrationRequirements"></div>
+                <script>
+
+                    let hiddenBodyMarkdownRegistrationRequirements = document.querySelector("#RegistrationRequirements");
+                    let onEditorUpdateRegistrationRequirements = () => {
+                        hiddenBodyMarkdownRegistrationRequirements.value = editorRegistrationRequirements.getMarkdown();
+                                }
+
+                    var contentRegistrationRequirements = [
+                                @{
+                                    commentLines = new string[] { };
+                                    if (Model.RegistrationRequirements != null) {
+                                        commentLines = Model.RegistrationRequirements.Split('\n');
+                                    }
+                                    foreach (var comment in commentLines)
+                                    {
+                                        @:'@comment',
+                                    }
+                                }
+                                ].join('\n');
+                    const editorRegistrationRequirements = new toastui.Editor({
+                        el: document.querySelector('#editorRegistrationRequirements'),
+                                    height: '150px',
+                        events: { "change": onEditorUpdateRegistrationRequirements },
+                        initialValue: contentRegistrationRequirements,
+                                    initialEditType: 'wysiwyg'
+                                });
+                </script>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.MappingRequirements, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MappingRequirements, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(model => model.MappingRequirements)
                 @Html.ValidationMessageFor(model => model.MappingRequirements, "", new { @class = "text-danger" })
+                <div id="editorMappingRequirements"></div>
+                <script>
+
+                    let hiddenBodyMarkdownMappingRequirements = document.querySelector("#MappingRequirements");
+                    let onEditorUpdateMappingRequirements = () => {
+                        hiddenBodyMarkdownMappingRequirements.value = editorMappingRequirements.getMarkdown();
+                                }
+
+                    var contentMappingRequirements = [
+                                @{
+                                    commentLines = new string[] { };
+                                    if (Model.MappingRequirements != null) {
+                                        commentLines = Model.MappingRequirements.Split('\n');
+                                    }
+                                    foreach (var comment in commentLines)
+                                    {
+                                        @:'@comment',
+                                    }
+                                }
+                                ].join('\n');
+                    const editorMappingRequirements = new toastui.Editor({
+                        el: document.querySelector('#editorMappingRequirements'),
+                                    height: '150px',
+                        events: { "change": onEditorUpdateMappingRequirements },
+                        initialValue: contentMappingRequirements,
+                                    initialEditType: 'wysiwyg'
+                                });
+                </script>
             </div>
         </div>
 
@@ -215,8 +271,36 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SupportSchemes, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SupportSchemes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(model => model.SupportSchemes)
                 @Html.ValidationMessageFor(model => model.SupportSchemes, "", new { @class = "text-danger" })
+                <div id="editorSupportSchemes"></div>
+                <script>
+
+                    let hiddenBodyMarkdownSupportSchemes = document.querySelector("#SupportSchemes");
+                    let onEditorUpdateSupportSchemes = () => {
+                        hiddenBodyMarkdownSupportSchemes.value = editorSupportSchemes.getMarkdown();
+                                }
+
+                    var contentSupportSchemes = [
+                                @{
+                                    commentLines = new string[] { };
+                                    if (Model.SupportSchemes != null) {
+                                        commentLines = Model.SupportSchemes.Split('\n');
+                                    }
+                                    foreach (var comment in commentLines)
+                                    {
+                                        @:'@comment',
+                                    }
+                                }
+                                ].join('\n');
+                    const editorSupportSchemes = new toastui.Editor({
+                        el: document.querySelector('#editorSupportSchemes'),
+                                    height: '150px',
+                        events: { "change": onEditorUpdateSupportSchemes },
+                        initialValue: contentSupportSchemes,
+                                    initialEditType: 'wysiwyg'
+                                });
+                </script>
             </div>
         </div>
 

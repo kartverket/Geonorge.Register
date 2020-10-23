@@ -20,13 +20,97 @@
         <div class="col-sm-12">
             <strong>@GeodataCollection.Link: </strong><a href="@Model.Link" target="_blank">@Model.Link</a>
         </div>
+        @if (!string.IsNullOrEmpty(Model.DatasetTitle))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.DatasetLink))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.DatasetLink: </strong><a href="@Model.DatasetLink" target="_blank">@Model.DatasetLink</a>
+            </div>
+        }
         <div class="col-sm-12">
             <strong>@GeodataCollection.Organization: </strong>@Model.Organization.name
         </div>
-        @if (!string.IsNullOrEmpty(Model.Methodology)) { 
+
+        @if (!string.IsNullOrEmpty(Model.Mapper))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.Mapper: </strong>@Model.Mapper
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.DataOwner))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.DataOwner: </strong>@Model.DataOwner
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.Distributor))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.Distributor: </strong>@Model.Distributor
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.Purpose))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.Purpose: </strong><p>@Model.Purpose</p>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.Methodology))
+        {
             <div class="col-sm-12">
                 <strong>@GeodataCollection.Methodology: </strong>@Html.Raw(Markdown.ToHtml(Model.Methodology))
-        </div>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.ProcessHistory))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.ProcessHistory: </strong>@Html.Raw(Markdown.ToHtml(Model.ProcessHistory))
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.RegistrationRequirements))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.RegistrationRequirements: </strong>@Html.Raw(Markdown.ToHtml(Model.RegistrationRequirements))
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.MappingRequirements))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.MappingRequirements: </strong>@Html.Raw(Markdown.ToHtml(Model.MappingRequirements))
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.MethodologyDocumentLink))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.MethodologyDocumentLink: </strong><a href="@Model.MethodologyDocumentLink" target="_blank">@Model.MethodologyDocumentLink</a>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.MethodologyLinkWebPage))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.MethodologyLinkWebPage: </strong><a href="@Model.MethodologyLinkWebPage" target="_blank">@Model.MethodologyLinkWebPage</a>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.SupportSchemes))
+        {
+            <div class="col-sm-12">
+                <strong>@GeodataCollection.SupportSchemes: </strong>@Html.Raw(Markdown.ToHtml(Model.SupportSchemes))
+            </div>
         }
     </article>
 </section>

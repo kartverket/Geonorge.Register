@@ -32,7 +32,7 @@
     {
         <div class="resultItemRow col-md-12 ">
             <div class="col-md-6 col-sm-12 col">
-                <a href="@GeodataCollection.RegisterSeoName/@item.SeoName">@item.Title</a>
+                <a href="/@GeodataCollection.RegisterSeoName/@item.SeoName">@item.Title</a>
             </div>
             <div class="col-md-5 col-sm-12 col">
                 @item.Organization.name
@@ -46,7 +46,7 @@
     <div class="row col-md-12">
         @if (User.Identity.IsAuthenticated && User.IsInRole(GeonorgeRoles.MetadataAdmin))
         {
-            <a href="@GeodataCollection.RegisterSeoName/create" class="btn btn-default pull-right">@Shared.Add</a>
+            <a href="/@GeodataCollection.RegisterSeoName/create" class="btn btn-default pull-right">@Shared.Add</a>
         }
         <a href="/">@Shared.Back</a>
     </div>

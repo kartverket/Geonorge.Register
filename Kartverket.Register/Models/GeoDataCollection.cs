@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Kartverket.Register.Resources;
@@ -13,6 +14,8 @@ namespace Kartverket.Register.Models
         public Guid systemId { get; set; }
         [Display(Name = "Title", ResourceType = typeof(GeodataCollection))]
         public string Title { get; set; }
+        [Index("SeoName", IsUnique = true), StringLength(255)]
+        public string SeoName { get; set; }
         [Display(Name = "Link", ResourceType = typeof(GeodataCollection))]
         public string Link { get; set; }
         [Display(Name = "Purpose", ResourceType = typeof(GeodataCollection))]

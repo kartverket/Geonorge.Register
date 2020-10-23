@@ -1,4 +1,5 @@
 ﻿using Geonorge.AuthLib.Common;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,9 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: GeoDataCollection/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string itemname)
         {
-            return View(_dbContext.GeoDataCollections.Include("Organization").Where(o => o.systemId.ToString() == id).FirstOrDefault());
+            return View(_dbContext.GeoDataCollections.Include("Organization").Where(o => o.SeoName == itemname).FirstOrDefault());
         }
 
         // GET: GeoDataCollection/Create
@@ -47,6 +48,7 @@ namespace Kartverket.Register.Controllers
                 var org = _dbContext.Organizations.Where(o => o.systemId.ToString() == ownerId).FirstOrDefault();
                 collection.systemId = Guid.NewGuid();
                 collection.Organization = org;
+                collection.SeoName = RegisterUrls.MakeSeoFriendlyString(collection.Title);
 
                 _dbContext.GeoDataCollections.Add(collection);
 
@@ -78,6 +80,7 @@ namespace Kartverket.Register.Controllers
             {
                 var geodataCollection = _dbContext.GeoDataCollections.Where(g => g.systemId.ToString() == systemId).FirstOrDefault();
                 geodataCollection.Title = collection.Title;
+                geodataCollection.SeoName = RegisterUrls.MakeSeoFriendlyString(collection.Title);
                 geodataCollection.Link = collection.Link;
                 geodataCollection.Purpose = collection.Purpose;
 

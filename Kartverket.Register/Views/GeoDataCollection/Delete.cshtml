@@ -6,7 +6,7 @@
 }
 @section breadcrumb {
     <li><a href="/@GeodataCollection.RegisterSeoName">@GeodataCollection.RegisterName</a></li>
-    <li><a href="/@GeodataCollection.RegisterSeoName/details?id=@Model.systemId">@Model.Title</a></li>
+    <li><a href="/@GeodataCollection.RegisterSeoName/@Model.SeoName">@Model.Title</a></li>
     <li>@Shared.Delete</li>
 }
 <h2>@ViewBag.Title</h2>
@@ -20,7 +20,7 @@
 
         <div class="form-group">
             <input type="submit" value="@Shared.Delete" class="btn btn-default pull-right" />
-            <a href="/@GeodataCollection.RegisterSeoName/details?id=@Model.systemId">@Shared.Back</a>
+            <a href="/@GeodataCollection.RegisterSeoName/@Model.SeoName">@Shared.Back</a>
         </div>
     }
 </div>

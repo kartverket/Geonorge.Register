@@ -1063,6 +1063,10 @@
     <Compile Include="Migrations\202010201107443_AddGeodataCollectionPurpose.designer.cs">
       <DependentUpon>202010201107443_AddGeodataCollectionPurpose.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010230724421_AddSeoNameGeoDataCollection.cs" />
+    <Compile Include="Migrations\202010230724421_AddSeoNameGeoDataCollection.designer.cs">
+      <DependentUpon>202010230724421_AddSeoNameGeoDataCollection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2894,6 +2898,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010201107443_AddGeodataCollectionPurpose.resx">
       <DependentUpon>202010201107443_AddGeodataCollectionPurpose.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010230724421_AddSeoNameGeoDataCollection.resx">
+      <DependentUpon>202010230724421_AddSeoNameGeoDataCollection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

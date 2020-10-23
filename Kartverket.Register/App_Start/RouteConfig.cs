@@ -127,7 +127,7 @@ namespace Kartverket.Register
             routes.MapRoute("GeoDataCollectionCreate", GeodataCollection.RegisterSeoName + "/create", new { controller = "GeoDataCollection", action = "Create" });
             routes.MapRoute("GeoDataCollectionEdit", GeodataCollection.RegisterSeoName + "/edit", new { controller = "GeoDataCollection", action = "Edit" });
             routes.MapRoute("GeoDataCollectionDelete", GeodataCollection.RegisterSeoName + "/delete", new { controller = "GeoDataCollection", action = "Delete" });
-            routes.MapRoute("GeoDataCollectionDetails", GeodataCollection.RegisterSeoName + "/details", new { controller = "GeoDataCollection", action = "Details" });
+            routes.MapRoute("GeoDataCollectionDetails", GeodataCollection.RegisterSeoName + "/{itemname}", new { controller = "GeoDataCollection", action = "Details" });
             
             //Index
             routes.MapRoute("ReIndex", "Index/ReIndex", new { controller = "Index", action = "ReIndex" });

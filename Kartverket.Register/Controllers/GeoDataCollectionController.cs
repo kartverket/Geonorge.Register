@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kartverket.Register.Resources;
 
 namespace Kartverket.Register.Controllers
 {
@@ -20,8 +21,14 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: GeoDataCollection
-        public ActionResult Index()
+        public ActionResult Index(string text = null)
         {
+            ViewBag.register = GeodataCollection.RegisterName;
+            ViewBag.registerSEO = GeodataCollection.RegisterSeoName;
+
+            if (!string.IsNullOrEmpty(text))
+                return View(_dbContext.GeoDataCollections.Where(g=> g.Title.Contains(text) || g.Purpose.Contains(text)).Include("Organization").OrderBy(o => o.Title));
+            else
             return View(_dbContext.GeoDataCollections.Include("Organization").OrderBy(o => o.Title));
         }
 

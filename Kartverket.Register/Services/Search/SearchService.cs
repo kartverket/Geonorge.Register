@@ -10,6 +10,7 @@ using System.Web.Configuration;
 using Geonorge.AuthLib.Common;
 using Kartverket.Register.Helpers;
 using Resources;
+using Kartverket.Register.Resources;
 
 namespace Kartverket.Register.Services.Search
 {
@@ -1039,6 +1040,26 @@ namespace Kartverket.Register.Services.Search
                 {
                     searchResultItem.Add(doc);
                 }
+            }
+
+            var geodatcollections = from g in _dbContext.GeoDataCollections
+                                    where g.Title.Contains(parameters.Text) || g.Purpose.Contains(parameters.Text)
+                                    select new SearchResultItem
+                                    {
+                                        RegisterName = GeodataCollection.RegisterName,
+                                        RegisterDescription = GeodataCollection.RegisterDescription,
+                                        RegisterItemName = g.Title,
+                                        RegisteItemUrl = "/" + GeodataCollection.RegisterSeoName + "/" + g.SeoName,
+                                        RegisterItemSeoname = g.SeoName,
+                                        ParentRegisterUrl = "/" + GeodataCollection.RegisterSeoName,
+                                        RegisterItemDescription = g.Purpose,
+                                        RegisterSeoname = GeodataCollection.RegisterSeoName
+
+                                    };
+
+            foreach (var coll in geodatcollections)
+            {              
+                    searchResultItem.Add(coll);
             }
 
             IQueryable<SearchResultItem> queryResultsListObjektKat = null;

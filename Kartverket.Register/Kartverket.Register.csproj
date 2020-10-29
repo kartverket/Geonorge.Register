@@ -2022,8 +2022,6 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="PostDeploy.ps1" />
-    <Content Include="bower.json" />
-    <Content Include=".bowerrc" />
     <Content Include="lib\PDFLibNet.dll" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\axios.js" />

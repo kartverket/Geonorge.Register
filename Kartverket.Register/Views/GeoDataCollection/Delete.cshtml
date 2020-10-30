@@ -1,0 +1,26 @@
+﻿@model Kartverket.Register.Models.GeoDataCollection
+@using Kartverket.Register.Resources;
+
+@{
+    ViewBag.Title = Shared.Delete;
+}
+@section breadcrumb {
+    <li><a href="/@GeodataCollection.RegisterSeoName">@GeodataCollection.RegisterName</a></li>
+    <li><a href="/@GeodataCollection.RegisterSeoName/@Model.SeoName">@Model.Title</a></li>
+    <li>@Shared.Delete</li>
+}
+<h2>@ViewBag.Title</h2>
+
+<h3>@Registers.DeleteConfirm @Model.Title ?</h3>
+<div>
+
+
+    @using (Html.BeginForm())
+    {
+
+        <div class="form-group">
+            <input type="submit" value="@Shared.Delete" class="btn btn-default pull-right" />
+            <a href="/@GeodataCollection.RegisterSeoName/@Model.SeoName">@Shared.Back</a>
+        </div>
+    }
+</div>

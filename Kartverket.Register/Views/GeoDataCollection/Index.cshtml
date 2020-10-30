@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Kartverket.Register.Models.GeoDataCollection>
+@using Kartverket.Register.Resources;
+@using Geonorge.AuthLib.Common;
+
+@{
+    ViewBag.Title = GeodataCollection.RegisterName;
+}
+@section breadcrumb {
+    <li>@GeodataCollection.RegisterName</li>
+}
+
+@Html.Partial("_SearchBarPartial")
+
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                @GeodataCollection.RegisterName
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+<p>@GeodataCollection.RegisterDescription</p>
+
+<div class="table-view">
+    <div class="table-heading search-results-table-heading col-md-12">
+        <div class="col-md-6 col-sm-6 col">@GeodataCollection.Title</div>
+        <div class="col-md-5 col-sm-6 col">@GeodataCollection.Organization</div>
+        <div class="col-md-1 col-sm-6 col">@GeodataCollection.Link</div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="resultItemRow col-md-12 ">
+            <div class="col-md-6 col-sm-12 col">
+                <a href="/@GeodataCollection.RegisterSeoName/@item.SeoName">@item.Title</a>
+            </div>
+            <div class="col-md-5 col-sm-12 col">
+                @item.Organization.name
+            </div>
+            <div class="col-md-1 col-sm-12 col">
+                <a href="@item.Link" target="_blank"><i class="custom-icon-sm custom-icon-eksternlink"></i></a>
+            </div>
+        </div>
+    }
+    <p>&nbsp;</p>
+    <div class="row col-md-12">
+        @if (User.Identity.IsAuthenticated && User.IsInRole(GeonorgeRoles.MetadataAdmin))
+        {
+            <a href="/@GeodataCollection.RegisterSeoName/create" class="btn btn-default pull-right">@Shared.Add</a>
+        }
+        <a href="/">@Shared.Back</a>
+    </div>
+</div>
+

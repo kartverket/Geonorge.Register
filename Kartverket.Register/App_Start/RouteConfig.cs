@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using Kartverket.Register.Resources;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Kartverket.Register
@@ -121,6 +122,13 @@ namespace Kartverket.Register
             routes.MapRoute("InspireDatasetMonitoring", "api/register/{registerName}/{itemowner}/{item}/monitoring-report", new { controller = "ApiRoot", action = "InspireDatasetMonitoring" });
             //routes.MapRoute("NewEPSGParent", "epsg/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "EPSGs", action = "Create" });
 
+            //GeoDataCollection
+            routes.MapRoute("GeoDataCollection", GeodataCollection.RegisterSeoName, new { controller = "GeoDataCollection", action = "Index" });
+            routes.MapRoute("GeoDataCollectionCreate", GeodataCollection.RegisterSeoName + "/create", new { controller = "GeoDataCollection", action = "Create" });
+            routes.MapRoute("GeoDataCollectionEdit", GeodataCollection.RegisterSeoName + "/edit", new { controller = "GeoDataCollection", action = "Edit" });
+            routes.MapRoute("GeoDataCollectionDelete", GeodataCollection.RegisterSeoName + "/delete", new { controller = "GeoDataCollection", action = "Delete" });
+            routes.MapRoute("GeoDataCollectionDetails", GeodataCollection.RegisterSeoName + "/{itemname}", new { controller = "GeoDataCollection", action = "Details" });
+            
             //Index
             routes.MapRoute("ReIndex", "Index/ReIndex", new { controller = "Index", action = "ReIndex" });
             

@@ -1,4 +1,5 @@
 ﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Resources;
 <script>
     function registerName(reg) {
         document.getElementById("register").value = reg;
@@ -12,24 +13,25 @@
 
     if (ViewBag.registerSEO != null)
     {
-        kontroller = Request.Url.LocalPath; // "/register/" + ViewBag.registerSEO + "/";    
+        kontroller = Request.Url.LocalPath; // "/register/" + ViewBag.registerSEO + "/";
     }
-    
+
     var searchRegister = ViewBag.searchRegister;
     var register = ViewBag.register;
 
     if (searchRegister != null)
     {
-        register = ViewBag.searchRegister;  
+        register = ViewBag.searchRegister;
     }
-    else { 
+    else
+    {
         if (register == null)
-        { 
+        {
             register = Shared.Search_AllRegisters;
-        } 
+        }
     }
 
-    
+
 }
 
 
@@ -53,6 +55,7 @@
                 <li tabindex="0" onclick="registerName('Objektregisteret')" class="left-edge-registre"><a href="@Html.ObjektkatalogUrl()">@Registers.Objektregisteret</a></li>
                 <li tabindex="0" onclick="registerName('Kartografi')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/kartografi">@Registers.Kartografi</a></li>
                 <li tabindex="0" onclick="registerName('Symbol')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/symbol">Symbol</a></li>
+                <li tabindex="0" onclick="registerName('@GeodataCollection.RegisterName')" class="left-edge-registre"><a href="@Html.RegistryUrl()@GeodataCollection.RegisterSeoName">@GeodataCollection.RegisterName</a></li>
 
                 @foreach (var item in HtmlHelperExtensions.Registers())
                 {

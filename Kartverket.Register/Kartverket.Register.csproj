@@ -1104,6 +1104,7 @@
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
+    <Compile Include="Models\MareanoDataset.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
     <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />

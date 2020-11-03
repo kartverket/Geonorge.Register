@@ -101,6 +101,12 @@ namespace Kartverket.Register.Models
                 m.ToTable("GeodatalovDatasets");
             });
 
+            modelBuilder.Entity<MareanoDataset>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("MareanoDatasets");
+            });
+
             modelBuilder.Entity<InspireDataService>().Map(m =>
             {
                 m.MapInheritedProperties();

@@ -1,5 +1,6 @@
 namespace Kartverket.Register.Migrations
 {
+    using Kartverket.Register.Helpers;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -182,19 +183,19 @@ namespace Kartverket.Register.Migrations
             );
 
             context.Registers.AddOrUpdate(
-                //new Register
-                //{
-                //    systemId = Guid.Parse("9a9bef28-285b-477e-85f1-504f8227ff45"),
-                //    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
-                //    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
-                //    name = "Inspire statusregister",
-                //    seoname = "inspire-statusregister",
-                //    statusId = "Valid",
-                //    dateSubmitted = DateTime.Now,
-                //    modified = DateTime.Now,
-                //    containedItemClass = "InspireDataset",
-                //    accessId = 1
-                //},
+            //new Register
+            //{
+            //    systemId = Guid.Parse("9a9bef28-285b-477e-85f1-504f8227ff45"),
+            //    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+            //    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+            //    name = "Inspire statusregister",
+            //    seoname = "inspire-statusregister",
+            //    statusId = "Valid",
+            //    dateSubmitted = DateTime.Now,
+            //    modified = DateTime.Now,
+            //    containedItemClass = "InspireDataset",
+            //    accessId = 1
+            //},
 
             //new Register
             //    {
@@ -209,6 +210,19 @@ namespace Kartverket.Register.Migrations
             //        containedItemClass = "GeodatalovDataset",
             //        accessId = 1
             //    }
+            new Register
+            {
+                systemId = Guid.Parse(GlobalVariables.MareanoRegistryId),
+                ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                name = "Mareano statusregister",
+                seoname = "mareano-statusregister",
+                statusId = "Valid",
+                dateSubmitted = DateTime.Now,
+                modified = DateTime.Now,
+                containedItemClass = "MareanoDataset",
+                accessId = 1
+                }
             );
 
 

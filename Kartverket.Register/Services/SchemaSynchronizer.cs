@@ -115,6 +115,10 @@ namespace Kartverket.Register.Services
 
                 source.Connect();
 
+                MemoryStream stream = new MemoryStream();
+
+                source.Download(stream, path + "/" + filename);
+
 
                 uri = new Uri(SchemaFtpSite);
                 FtpClient target = new FtpClient(uri.Scheme + Uri.SchemeDelimiter + uri.Host);
@@ -124,7 +128,7 @@ namespace Kartverket.Register.Services
 
                 target.Connect();
 
-                FtpStatus status = source.TransferFile(path + "/" + filename, target, path + "/" + filename, true, FtpRemoteExists.Overwrite);
+                FtpStatus status = target.Upload(stream, path + "/" + filename, FtpRemoteExists.Overwrite, true);
 
                 if (status == FtpStatus.Failed)
                 {

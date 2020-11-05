@@ -136,8 +136,9 @@ namespace Kartverket.Register.Services
                     throw new Exception("Kopiering mellom til ftp servere feilet");
                 }
 
+                stream.Close();
                 source.Disconnect();
-                //target.Disconnect();
+                target.Disconnect();
             }
             catch (Exception ex)
             {

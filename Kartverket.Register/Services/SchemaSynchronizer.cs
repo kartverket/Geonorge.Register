@@ -14,19 +14,18 @@ namespace Kartverket.Register.Services
     {
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        string UncPath = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaUNCpath"];
-        string UncPathTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaUNCpathTest"];
         static string TargetNamespace = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/";
         string SchemaRemoteUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteUrl"];
         string SchemaRemoteUrlTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
 
         string SchemaFtpSite = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpSite"];
-        string SchemaUsername = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaUsername"];
-        string SchemaPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaPassword"];
+        string SchemaUsername = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpUsername"];
+        string SchemaPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpPassword"];
+        string SchemaFtpWorkingDirectory = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectory"]; 
 
         string SchemaFtpSiteTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpSiteTest"];
-        string SchemaUsernameTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaUsernameTest"];
-        string SchemaPasswordTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaPasswordTest"];
+        string SchemaUsernameTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpUsernameTest"];
+        string SchemaPasswordTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpPasswordTest"];
 
         public string Synchronize(HttpPostedFileBase file)
         {
@@ -127,6 +126,9 @@ namespace Kartverket.Register.Services
                 target.Credentials = new NetworkCredential(SchemaUsername, SchemaPassword);
 
                 target.Connect();
+
+                if(!string.IsNullOrEmpty(SchemaFtpWorkingDirectory))
+                    target.SetWorkingDirectory(SchemaFtpWorkingDirectory);
 
                 FtpStatus status = target.Upload(stream, path + "/" + filename, FtpRemoteExists.Overwrite, true);
 

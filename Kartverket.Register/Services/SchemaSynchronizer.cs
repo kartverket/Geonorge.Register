@@ -38,8 +38,8 @@ namespace Kartverket.Register.Services
         string SchemaRemoteUrlTest = WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
 
         string SchemaFtpSite = WebConfigurationManager.AppSettings["SchemaFtpSite"];
-        string SchemaUsername = WebConfigurationManager.AppSettings["SchemaFtpUsername"];
-        string SchemaPassword = WebConfigurationManager.AppSettings["SchemaFtpPassword"];
+        string SchemaUsernames = WebConfigurationManager.AppSettings["SchemaFtpUsernames"];
+        string SchemaPasswords = WebConfigurationManager.AppSettings["SchemaFtpPasswords"];
         string SchemaFtpWorkingDirectory = WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectory"]; 
 
         string SchemaFtpSiteTest = WebConfigurationManager.AppSettings["SchemaFtpSiteTest"];
@@ -65,17 +65,36 @@ namespace Kartverket.Register.Services
             return syncFile;
         }
 
+        private bool UserHasAccess()
+        {
+            var user = ClaimsPrincipal.Current.GetUsername();
+            string[] users = SchemaUsernames.Split(','); 
+
+            if (users.ToList().Contains(user))
+            {
+                return true;
+            }
+            else
+            {
+                Log.Warn("User " + user + " does not have ftp rights");
+                return false;
+            }
+        }
+
         public string Synchronize(string url)
         {
-            var uri = new Uri(url);
-            var filename = uri.Segments.Last();
-            string mainPath = "/SOSI/produktspesifikasjon/";
-            int ix = url.IndexOf(mainPath);
+            if (UserHasAccess())
+            { 
+                var uri = new Uri(url);
+                var filename = uri.Segments.Last();
+                string mainPath = "/SOSI/produktspesifikasjon/";
+                int ix = url.IndexOf(mainPath);
 
-            if (ix != -1)
-            {
-                string path = url.Substring(ix + mainPath.Length, url.Length - 1 - (ix + mainPath.Length + filename.Length));
-                url = UploadFileProd(path, filename);
+                if (ix != -1)
+                {
+                    string path = url.Substring(ix + mainPath.Length, url.Length - 1 - (ix + mainPath.Length + filename.Length));
+                    url = UploadFileProd(path, filename);
+                }
             }
 
             return url;
@@ -127,6 +146,8 @@ namespace Kartverket.Register.Services
         {
             try
             {
+                User user = GetUser();
+
                 Uri uri = new Uri(SchemaFtpSiteTest);
                 FtpClient source = new FtpClient(uri.Scheme + Uri.SchemeDelimiter + uri.Host);
                 source.OnLogEvent = OnFTPLogEvent;
@@ -144,7 +165,7 @@ namespace Kartverket.Register.Services
                 FtpClient target = new FtpClient(uri.Scheme + Uri.SchemeDelimiter + uri.Host);
                 target.OnLogEvent = OnFTPLogEvent;
                 target.Port = uri.Port;
-                target.Credentials = new NetworkCredential(SchemaUsername, SchemaPassword);
+                target.Credentials = new NetworkCredential(user.Username, user.Password);
 
                 target.Connect();
 
@@ -174,6 +195,25 @@ namespace Kartverket.Register.Services
             return SchemaRemoteUrl + path + "/" + filename;
         }
 
+        private User GetUser()
+        {
+            var user = ClaimsPrincipal.Current.GetUsername();
+            string[] users = SchemaUsernames.Split(',');
+            string[] passwords = SchemaPasswords.Split(',');
+
+            for (int u = 0; u < users.Length; u++)
+            {
+                if(users[u] == user)
+                {
+                    return new User { Username = users[u], Password = passwords[u] };
+                }
+            }
+          
+            Log.Error("User " + user + " does not have ftp rights");
+            throw new Exception("Permission denied");
+
+        }
+
         private static void OnFTPLogEvent(FtpTraceLevel ftpTraceLevel, string logMessage)
         {
             switch (ftpTraceLevel)
@@ -194,5 +234,11 @@ namespace Kartverket.Register.Services
             }
         }
 
+    }
+
+    class User
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -121,25 +121,25 @@
     <value>Data owner</value>
   </data>
   <data name="DatasetLink" xml:space="preserve">
-    <value>Dataset link</value>
+    <value>Dataset link (metadata)</value>
   </data>
   <data name="DatasetTitle" xml:space="preserve">
-    <value>Dataset title</value>
+    <value>Which dataset applies to it</value>
   </data>
   <data name="Distributor" xml:space="preserve">
     <value>Distributor</value>
   </data>
   <data name="Link" xml:space="preserve">
-    <value>Link</value>
+    <value>Link to methodology for mapping</value>
   </data>
   <data name="Mapper" xml:space="preserve">
-    <value>Kartlegger</value>
+    <value>Mapper</value>
   </data>
   <data name="MappingRequirements" xml:space="preserve">
-    <value>Mapping requirements</value>
+    <value>Requirements for mapping</value>
   </data>
   <data name="Methodology" xml:space="preserve">
-    <value>Metodikk</value>
+    <value>Systems for collecting - description</value>
   </data>
   <data name="MethodologyDocumentLink" xml:space="preserve">
     <value>Link methodology document</value>
@@ -148,10 +148,10 @@
     <value>Link methodology web</value>
   </data>
   <data name="Organization" xml:space="preserve">
-    <value>Organization</value>
+    <value>Responsible organization</value>
   </data>
   <data name="ProcessHistory" xml:space="preserve">
-    <value>Prosesshistorie</value>
+    <value>Link to methodology for submission</value>
   </data>
   <data name="RegisterDescription" xml:space="preserve">
     <value>Contains info and links to systems for collecting Geodata</value>
@@ -160,12 +160,12 @@
     <value>Systems for collecting Geodata</value>
   </data>
   <data name="RegistrationRequirements" xml:space="preserve">
-    <value>Registration requirements</value>
+    <value>Requirements for delivery</value>
   </data>
   <data name="SupportSchemes" xml:space="preserve">
-    <value>Støtteordninger</value>
+    <value>Support schemes</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Title for system collecting</value>
   </data>
 </root>

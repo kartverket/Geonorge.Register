@@ -70,7 +70,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett lenke.
+        ///   Looks up a localized string similar to Lenke til datasett (metadata).
         /// </summary>
         public static string DatasetLink {
             get {
@@ -79,7 +79,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett tittel.
+        ///   Looks up a localized string similar to Hvilket datasett gjelder det.
         /// </summary>
         public static string DatasetTitle {
             get {
@@ -97,7 +97,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lenke.
+        ///   Looks up a localized string similar to Lenke til metodikk for kartlegging.
         /// </summary>
         public static string Link {
             get {
@@ -115,7 +115,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kartleggingskrav.
+        ///   Looks up a localized string similar to Krav til kartlegging.
         /// </summary>
         public static string MappingRequirements {
             get {
@@ -124,7 +124,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metodikk.
+        ///   Looks up a localized string similar to Mottaksordning - beskrivelse.
         /// </summary>
         public static string Methodology {
             get {
@@ -151,7 +151,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Organisasjon.
+        ///   Looks up a localized string similar to Ansvarlig etat.
         /// </summary>
         public static string Organization {
             get {
@@ -160,7 +160,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prosesshistorie.
+        ///   Looks up a localized string similar to Lenke til metodikk for avlevering.
         /// </summary>
         public static string ProcessHistory {
             get {
@@ -205,7 +205,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registreringskrav.
+        ///   Looks up a localized string similar to Krav til avlevering.
         /// </summary>
         public static string RegistrationRequirements {
             get {
@@ -223,7 +223,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tittel.
+        ///   Looks up a localized string similar to Tittel på mottaksordning.
         /// </summary>
         public static string Title {
             get {

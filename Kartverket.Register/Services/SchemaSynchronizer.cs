@@ -7,25 +7,44 @@ using System.Net;
 using System.IO;
 using System.Xml;
 using FluentFTP;
+using System.Threading.Tasks;
+using Kartverket.Geonorge.Utilities.LogEntry;
+using System.Security.Claims;
+using Geonorge.AuthLib.Common;
+using System.Web.Configuration;
 
 namespace Kartverket.Register.Services
 {
     public class SchemaSynchronizer
     {
+        private ILogEntryService _logEntryService;
+
+        public ILogEntryService LogEntryService
+        {
+            get
+            {
+                if (_logEntryService == null)
+                    _logEntryService = new LogEntryService(WebConfigurationManager.AppSettings["LogApi"], WebConfigurationManager.AppSettings["LogApiKey"], new Kartverket.Geonorge.Utilities.Organization.HttpClientFactory());
+
+                return _logEntryService;
+            }
+            set { _logEntryService = value; }
+        }
+
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         static string TargetNamespace = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/";
-        string SchemaRemoteUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteUrl"];
-        string SchemaRemoteUrlTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
+        string SchemaRemoteUrl = WebConfigurationManager.AppSettings["SchemaRemoteUrl"];
+        string SchemaRemoteUrlTest = WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
 
-        string SchemaFtpSite = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpSite"];
-        string SchemaUsername = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpUsername"];
-        string SchemaPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpPassword"];
-        string SchemaFtpWorkingDirectory = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectory"]; 
+        string SchemaFtpSite = WebConfigurationManager.AppSettings["SchemaFtpSite"];
+        string SchemaUsername = WebConfigurationManager.AppSettings["SchemaFtpUsername"];
+        string SchemaPassword = WebConfigurationManager.AppSettings["SchemaFtpPassword"];
+        string SchemaFtpWorkingDirectory = WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectory"]; 
 
-        string SchemaFtpSiteTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpSiteTest"];
-        string SchemaUsernameTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpUsernameTest"];
-        string SchemaPasswordTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaFtpPasswordTest"];
+        string SchemaFtpSiteTest = WebConfigurationManager.AppSettings["SchemaFtpSiteTest"];
+        string SchemaUsernameTest = WebConfigurationManager.AppSettings["SchemaFtpUsernameTest"];
+        string SchemaPasswordTest = WebConfigurationManager.AppSettings["SchemaFtpPasswordTest"];
 
         public string Synchronize(HttpPostedFileBase file)
         {
@@ -99,6 +118,8 @@ namespace Kartverket.Register.Services
                 throw new Exception("Ftp skjema feilet");
             }
 
+            Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = path + "/" + file.FileName, Operation = Operation.Added, User = ClaimsPrincipal.Current.GetUsername(), Description = "Ftp gml-skjema til test" }));
+
             return SchemaRemoteUrlTest + path + "/" + file.FileName;
         }
 
@@ -148,6 +169,7 @@ namespace Kartverket.Register.Services
                 throw new Exception("Ftp skjema feilet");
             }
 
+            Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = path + "/" + filename, Operation = Operation.Added, User = ClaimsPrincipal.Current.GetUsername(), Description = "Ftp gml-skjema til prod" }));
 
             return SchemaRemoteUrl + path + "/" + filename;
         }

@@ -6,16 +6,45 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Xml;
+using FluentFTP;
+using System.Threading.Tasks;
+using Kartverket.Geonorge.Utilities.LogEntry;
+using System.Security.Claims;
+using Geonorge.AuthLib.Common;
+using System.Web.Configuration;
 
 namespace Kartverket.Register.Services
 {
     public class SchemaSynchronizer
     {
-        string UncPath = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaUNCpath"];
-        string UncPathTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaUNCpathTest"];
+        private ILogEntryService _logEntryService;
+
+        public ILogEntryService LogEntryService
+        {
+            get
+            {
+                if (_logEntryService == null)
+                    _logEntryService = new LogEntryService(WebConfigurationManager.AppSettings["LogApi"], WebConfigurationManager.AppSettings["LogApiKey"], new Kartverket.Geonorge.Utilities.Organization.HttpClientFactory());
+
+                return _logEntryService;
+            }
+            set { _logEntryService = value; }
+        }
+
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         static string TargetNamespace = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/";
-        string SchemaRemoteUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteUrl"];
-        string SchemaRemoteUrlTest = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
+        string SchemaRemoteUrl = WebConfigurationManager.AppSettings["SchemaRemoteUrl"];
+        string SchemaRemoteUrlTest = WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
+
+        string SchemaFtpSite = WebConfigurationManager.AppSettings["SchemaFtpSite"];
+        string SchemaUsernames = WebConfigurationManager.AppSettings["SchemaFtpUsernames"];
+        string SchemaPasswords = WebConfigurationManager.AppSettings["SchemaFtpPasswords"];
+        string SchemaFtpWorkingDirectory = WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectory"]; 
+
+        string SchemaFtpSiteTest = WebConfigurationManager.AppSettings["SchemaFtpSiteTest"];
+        string SchemaUsernameTest = WebConfigurationManager.AppSettings["SchemaFtpUsernameTest"];
+        string SchemaPasswordTest = WebConfigurationManager.AppSettings["SchemaFtpPasswordTest"];
 
         public string Synchronize(HttpPostedFileBase file)
         {
@@ -36,19 +65,36 @@ namespace Kartverket.Register.Services
             return syncFile;
         }
 
+        private bool UserHasAccess()
+        {
+            var user = ClaimsPrincipal.Current.GetUsername();
+            string[] users = SchemaUsernames.Split(','); 
+
+            if (users.ToList().Contains(user))
+            {
+                return true;
+            }
+            else
+            {
+                Log.Warn("User " + user + " does not have ftp rights");
+                return false;
+            }
+        }
+
         public string Synchronize(string url)
         {
-            var uri = new Uri(url);
-            var filename = uri.Segments.Last();
+            if (UserHasAccess())
+            { 
+                var uri = new Uri(url);
+                var filename = uri.Segments.Last();
+                string mainPath = "/SOSI/produktspesifikasjon/";
+                int ix = url.IndexOf(mainPath);
 
-            var document = new XmlDocument();
-            document.Load(url);
-            var attributes = document.DocumentElement.Attributes;
-            var targetNamespace = attributes.GetNamedItem("targetNamespace");
-            if (ValidTargetNamespace(targetNamespace))
-            {
-                string path = GetFilePath(targetNamespace.Value);
-                url = UploadFileProd(path, filename);
+                if (ix != -1)
+                {
+                    string path = url.Substring(ix + mainPath.Length, url.Length - 1 - (ix + mainPath.Length + filename.Length));
+                    url = UploadFileProd(path, filename);
+                }
             }
 
             return url;
@@ -67,41 +113,132 @@ namespace Kartverket.Register.Services
 
         string UploadFile(HttpPostedFileBase file, string path)
         {
-            MakeDir(path,UncPathTest);
+            try
+            {
+                Uri uri = new Uri(SchemaFtpSiteTest);
+                FtpClient client = new FtpClient(uri.Scheme + Uri.SchemeDelimiter + uri.Host);
+                client.OnLogEvent = OnFTPLogEvent;
+                client.Port = uri.Port;
+                client.Credentials = new NetworkCredential(SchemaUsernameTest, SchemaPasswordTest);
 
-            file.SaveAs(UncPathTest + "\\" + path + "\\" + file.FileName);
-            
+                client.Connect();
+
+                FtpStatus status = client.Upload(file.InputStream, path + "/" + file.FileName, FtpRemoteExists.Overwrite, true);
+
+                if (status == FtpStatus.Failed) {
+                    Log.Error("Opplasting av fil " + path + "/" + file.FileName + " feilet");
+                    throw new Exception("Opplasting til ftp server feilet");
+                }
+
+                client.Disconnect();
+            }
+            catch (Exception ex) {
+                Log.Error(ex);
+                throw new Exception("Ftp skjema feilet");
+            }
+
+            Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = path + "/" + file.FileName, Operation = Operation.Added, User = ClaimsPrincipal.Current.GetUsername(), Description = "Ftp gml-skjema til test" }));
+
             return SchemaRemoteUrlTest + path + "/" + file.FileName;
         }
 
-        string UploadFileProd(string path, string filename)
+        private string UploadFileProd(string path, string filename)
         {
-            MakeDir(path, UncPath);
+            try
+            {
+                User user = GetUser();
 
-            System.IO.File.Copy(UncPathTest + "\\" + path + "\\" + filename, UncPath + "\\" + path + "\\" + filename);
+                Uri uri = new Uri(SchemaFtpSiteTest);
+                FtpClient source = new FtpClient(uri.Scheme + Uri.SchemeDelimiter + uri.Host);
+                source.OnLogEvent = OnFTPLogEvent;
+                source.Port = uri.Port;
+                source.Credentials = new NetworkCredential(SchemaUsernameTest, SchemaPasswordTest);
+
+                source.Connect();
+
+                MemoryStream stream = new MemoryStream();
+
+                source.Download(stream, path + "/" + filename);
+
+
+                uri = new Uri(SchemaFtpSite);
+                FtpClient target = new FtpClient(uri.Scheme + Uri.SchemeDelimiter + uri.Host);
+                target.OnLogEvent = OnFTPLogEvent;
+                target.Port = uri.Port;
+                target.Credentials = new NetworkCredential(user.Username, user.Password);
+
+                target.Connect();
+
+                if(!string.IsNullOrEmpty(SchemaFtpWorkingDirectory))
+                    target.SetWorkingDirectory(SchemaFtpWorkingDirectory);
+
+                FtpStatus status = target.Upload(stream, path + "/" + filename, FtpRemoteExists.Overwrite, true);
+
+                if (status == FtpStatus.Failed)
+                {
+                    Log.Error("Kopiering av fil " + path + "/" + filename + " feilet");
+                    throw new Exception("Kopiering mellom til ftp servere feilet");
+                }
+
+                stream.Close();
+                source.Disconnect();
+                target.Disconnect();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                throw new Exception("Ftp skjema feilet");
+            }
+
+            Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = path + "/" + filename, Operation = Operation.Added, User = ClaimsPrincipal.Current.GetUsername(), Description = "Ftp gml-skjema til prod" }));
 
             return SchemaRemoteUrl + path + "/" + filename;
         }
 
-        public void MakeDir(string path, string UncPath)
+        private User GetUser()
         {
-            string[] subDirs = path.Split('/');
+            var user = ClaimsPrincipal.Current.GetUsername();
+            string[] users = SchemaUsernames.Split(',');
+            string[] passwords = SchemaPasswords.Split(',');
 
-
-            string currentDir = UncPath;
-
-            foreach (string subDir in subDirs)
+            for (int u = 0; u < users.Length; u++)
             {
-                try
+                if(users[u] == user)
                 {
-                    currentDir = currentDir + "\\" + subDir;
-                    Directory.CreateDirectory(currentDir);
+                    return new User { Username = users[u], Password = passwords[u] };
                 }
-                catch (Exception)
-                {
-                }
+            }
+          
+            Log.Error("User " + user + " does not have ftp rights");
+            throw new Exception("Permission denied");
+
+        }
+
+        private static void OnFTPLogEvent(FtpTraceLevel ftpTraceLevel, string logMessage)
+        {
+            switch (ftpTraceLevel)
+            {
+                case FtpTraceLevel.Error:
+                    Log.Error(logMessage);
+                    break;
+                case FtpTraceLevel.Verbose:
+                    Log.Debug(logMessage);
+                    break;
+                case FtpTraceLevel.Warn:
+                    Log.Warn(logMessage);
+                    break;
+                case FtpTraceLevel.Info:
+                default:
+                    Log.Info(logMessage);
+                    break;
             }
         }
 
+    }
+
+    class User
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

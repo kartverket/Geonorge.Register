@@ -96,6 +96,9 @@
     <Reference Include="ExpressiveAnnotations.MvcUnobtrusive, Version=2.5.4.0, Culture=neutral, PublicKeyToken=d3e372f3c1e83cec, processorArchitecture=MSIL">
       <HintPath>..\packages\ExpressiveAnnotations.2.9.6\lib\net45\ExpressiveAnnotations.MvcUnobtrusive.dll</HintPath>
     </Reference>
+    <Reference Include="FluentFTP, Version=33.0.2.0, Culture=neutral, PublicKeyToken=f4af092b1d8df44f, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentFTP.33.0.2\lib\net45\FluentFTP.dll</HintPath>
+    </Reference>
     <Reference Include="Geonorge.AuthLib.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Geonorge.AuthLib.Common.1.0.45\lib\netstandard2.0\Geonorge.AuthLib.Common.dll</HintPath>
     </Reference>
@@ -2375,7 +2378,9 @@
     <Content Include="Views\InspireDatasets\Delete.cshtml" />
     <Content Include="Views\InspireDatasets\Edit.cshtml" />
     <Content Include="Views\Shared\_nationalDataset.cshtml" />
-    <Content Include="settings.config" />
+    <Content Include="settings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\_Resources.cshtml" />
     <Content Include="Views\Shared\_detailsInspireDataset.cshtml" />
     <Content Include="Views\Shared\_pagedListPagerRegisterItemViewModel.cshtml" />

@@ -147,36 +147,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ProcessHistory, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.HiddenFor(model => model.ProcessHistory)
+                @Html.EditorFor(model => model.ProcessHistory, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ProcessHistory, "", new { @class = "text-danger" })
-                <div id="editorProcessHistory"></div>
-                <script>
-
-                    let hiddenBodyMarkdownProcessHistory = document.querySelector("#ProcessHistory");
-                    let onEditorUpdateProcessHistory = () => {
-                        hiddenBodyMarkdownProcessHistory.value = editorProcessHistory.getMarkdown();
-                                }
-
-                                var contentProcessHistory = [
-                                @{
-                                    commentLines = new string[] { };
-                                    if (Model.ProcessHistory != null) {
-                                        commentLines = Model.ProcessHistory.Split('\n');
-                                    }
-                                    foreach (var comment in commentLines)
-                                    {
-                                        @:'@comment',
-                                    }
-                                }
-                                ].join('\n');
-                    const editorProcessHistory = new toastui.Editor({
-                        el: document.querySelector('#editorProcessHistory'),
-                                    height: '150px',
-                        events: { "change": onEditorUpdateProcessHistory },
-                        initialValue: contentProcessHistory,
-                                    initialEditType: 'wysiwyg'
-                                });
-                </script>
             </div>
         </div>
 

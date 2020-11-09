@@ -255,6 +255,7 @@ namespace Kartverket.Register.Controllers
             StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : mareanoStatusReports.FirstOrDefault();
 
             var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, mareanoStatusReports);
+            viewModel.SelectedMareanoTab = filter.MareanoSelectedTab;
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
 
             ItemsOrderBy(sorting, viewModel);

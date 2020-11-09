@@ -59,6 +59,11 @@ namespace Kartverket.Register.Models
             return StatusRegisterItems.FirstOrDefault() is GeodatalovDatasetStatusReport;
         }
 
+        public bool IsMareanoDatasetReport()
+        {
+            return StatusRegisterItems.FirstOrDefault() is MareanoDatasetStatusReport;
+        }
+
         public bool IsInspireDataserviceReport()
         {
             return StatusRegisterItems.FirstOrDefault() is InspireDataserviceStatusReport;

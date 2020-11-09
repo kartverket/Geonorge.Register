@@ -77,6 +77,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string SelectedInspireRegisteryType { get; set; }
         public string SelectedDokTab { get; set; }
         public string SelectedGeodatalovTab { get; set; }
+        public string SelectedMareanoTab { get; set; }
 
         public RegisterV2ViewModel(Register register, FilterParameters filter, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null)
         {
@@ -354,12 +355,12 @@ namespace Kartverket.Register.Models.ViewModels
 
         public bool SelectedGeodatalovTabIsReport()
         {
-            return SelectedGeodatalovTab == "report";
+            return SelectedMareanoTab == "report";
         }
 
         public bool SelectedMareanoTabIsReport()
         {
-            return SelectedGeodatalovTab == "report";
+            return SelectedMareanoTab == "report";
         }
     }
 }

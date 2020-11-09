@@ -165,6 +165,29 @@ namespace Kartverket.Register.Services
             return geodatalovStatusReports;
         }
 
+        public List<StatusReport> GetMareanoStatusReports(int numberOfReports = 0)
+        {
+            List<StatusReport> statusReports = GetStatusReports();
+            List<StatusReport> mareanoStatusReports = new List<StatusReport>();
+
+            foreach (var report in statusReports)
+            {
+                if (report.IsMareanoDatasetReport())
+                {
+                    mareanoStatusReports.Add(report);
+                    if (numberOfReports != 0)
+                    {
+                        if (mareanoStatusReports.Count > numberOfReports)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return mareanoStatusReports;
+        }
+
         public List<StatusReport> GetStatusReportsByRegister(Models.Register register, int numberOfReports = 0)
         {
             if (register.IsDokStatusRegister())
@@ -180,6 +203,11 @@ namespace Kartverket.Register.Services
             if (register.IsGeodatalovStatusRegister())
             {
                 return GetGeodatalovStatusReports(numberOfReports);
+            }
+
+            if (register.IsMareanoStatusRegister())
+            {
+                return GetMareanoStatusReports(numberOfReports);
             }
 
             return new List<StatusReport>();

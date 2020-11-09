@@ -355,7 +355,7 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
-        public ActionResult DetailsRegisterItemFramework(int versionnumber, string registername, string codevalue)
+        public ActionResult DetailsRegisterItemFramework(string versionnumber, string registername, string codevalue)
         {
             Guid registerId = new Guid("BF51645E-EFED-4FCE-B53F-404622003B50");
             if (registername == "krav")
@@ -365,7 +365,7 @@ namespace Kartverket.Register.Controllers
                 registerId = new Guid("DE8C76C0-875A-4D10-A914-0A1317CE19BE");
             }
 
-            var register = _db.CodelistValues.Where(x => x.versionNumber == versionnumber && x.registerId == registerId && x.value == codevalue).FirstOrDefault();
+            var register = _db.CodelistValues.Where(x => x.registerId == registerId && x.value == codevalue).FirstOrDefault();
             if (register == null)
             {
                 return HttpNotFound();

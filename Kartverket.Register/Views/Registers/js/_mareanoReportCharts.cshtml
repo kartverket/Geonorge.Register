@@ -168,7 +168,7 @@
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
                 },
                 {
-                    label: "@GeodatalovDataSet.Common",
+                    label: "@MareanoDataSet.Common",
                     backgroundColor: "rgb(0, 26, 0)",
                     fill: false,
                     borderColor: 'rgb(0, 26, 0)',
@@ -509,7 +509,7 @@
                 legend: legendPie,
                 title: {
                     display: true,
-                    text: '@GeodatalovDataSet.Common',
+                    text: '@MareanoDataSet.Common',
                     fontSize: 20
                 }
             }
@@ -535,12 +535,7 @@
                 '@DataSet.DOK_Delivery_Wms',
                 '@DataSet.DOK_Delivery_Wfs',
                 '@DataSet.DOK_Delivery_AtomFeed',
-                '@GeodatalovDataSet.Common',
-                '@GeodatalovDataSet.InspireTheme',
-                '@GeodatalovDataSet.Dok',
-                '@GeodatalovDataSet.NationalDataset',
-                '@GeodatalovDataSet.Plan',
-                '@GeodatalovDataSet.Geodatalov'
+                '@MareanoDataSet.Common'
             ],
             datasets: [
                 {

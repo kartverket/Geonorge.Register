@@ -1172,6 +1172,15 @@ namespace Kartverket.Register.Services.Register
             return queryResults.FirstOrDefault();
         }
 
+        public Guid GetMareanoStatusRegisterId()
+        {
+            var queryResults = from o in _dbContext.Registers
+                               where o.name == "Mareano statusregister"
+                               select o.systemId;
+
+            return queryResults.FirstOrDefault();
+        }
+
         public List<Models.Register> GetCodelistRegisters()
         {
             var queryResults = from o in _dbContext.Registers

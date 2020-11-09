@@ -422,6 +422,71 @@ namespace Kartverket.DOK.Service
             return geodatalovDataset;
         }
 
+        public MareanoDataset FetchMareanoDatasetFromKartkatalogen(string uuid)
+        {
+            var mareanoDataset = new MareanoDataset();
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    mareanoDataset.Name = data.Title;
+                    mareanoDataset.Description = data.Abstract;
+                    mareanoDataset.PresentationRulesUrl = data.LegendDescriptionUrl;
+                    mareanoDataset.ProductSheetUrl = data.ProductSheetUrl;
+                    mareanoDataset.ProductSpecificationUrl = data.ProductSpecificationUrl;
+                    mareanoDataset.SpecificUsage = data.SpecificUsage;
+                    mareanoDataset.Uuid = data.Uuid;
+                    mareanoDataset.MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + mareanoDataset.Uuid;
+                    var thumbnails = data.Thumbnails;
+                    if (thumbnails != null && thumbnails.Count > 0)
+                    {
+                        mareanoDataset.DatasetThumbnail = thumbnails[0].URL.Value;
+                    }
+
+                    mareanoDataset.OwnerId = mapOrganizationNameToId(
+                        data.ContactOwner != null && data.ContactOwner.Organization != null
+                            ? data.ContactOwner.Organization.Value
+                            : "Kartverket");
+                    mareanoDataset.ThemeGroupId =
+                        AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0
+                            ? data.KeywordsNationalTheme[0].KeywordValue.Value
+                            : "Annen");
+
+                    if (data.ServiceUuid != null) mareanoDataset.UuidService = data.ServiceUuid;
+                    if (data.ServiceDistributionUrlForDataset != null)
+                        mareanoDataset.WmsUrl = data.ServiceDistributionUrlForDataset;
+
+                    if (data.DistributionDetails != null)
+                        mareanoDataset.DistributionUrl = data.DistributionDetails.URL;
+
+                    if (data.UnitsOfDistribution != null)
+                        mareanoDataset.DistributionArea = data.UnitsOfDistribution.Value;
+
+                    var distributionFormat = data.DistributionFormat;
+                    if (distributionFormat != null)
+                    {
+                        if (distributionFormat.Name != null)
+                            mareanoDataset.DistributionFormat = distributionFormat.Name.Value;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
+
+            return mareanoDataset;
+        }
+
+
         public SearchResultsType SearchMetadata(string searchString)
         {
             GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);

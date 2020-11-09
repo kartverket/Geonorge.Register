@@ -13,7 +13,7 @@ namespace Kartverket.Register.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202011031014355_AddMareanoStatusRegistry"; }
+            get { return "202011090609156_AddMareanoStatusRegistry"; }
         }
         
         string IMigrationMetadata.Source

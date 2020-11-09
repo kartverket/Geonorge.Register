@@ -6,14 +6,6 @@ namespace Kartverket.Register.Models
 {
     public class MareanoDataset : DatasetV2
     {
-        public bool InspireTheme { get; set; }
-        public bool Dok { get; set; }
-        public bool NationalDataset { get; set; }
-        public bool Plan { get; set; }
-        public bool Geodatalov { get; set; }
-        public bool Mareano { get; set; }
-        public bool EcologicalBaseMap { get; set; }
-
         //Todo FAIR delivery status
 
         //Mareano delivery statuses

@@ -42,6 +42,7 @@ namespace Kartverket.Register.Services.Register
         Guid GetInspireStatusRegisterId();
         Models.Register GetInspireStatusRegister();
         Guid GetGeodatalovStatusRegisterId();
+        Guid GetMareanoStatusRegisterId();
         List<Models.Register> GetCodelistRegisters();
         void DeleteRegister(Models.Register register);
         bool RegisterNameIsValid(Object register);

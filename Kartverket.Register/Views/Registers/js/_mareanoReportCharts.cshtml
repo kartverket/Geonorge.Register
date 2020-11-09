@@ -291,7 +291,7 @@
         ]
     };
 
-    
+
     var dataProductSpecification = {
             labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
             datasets: [
@@ -390,8 +390,6 @@
             }
         ]
     };
-
-
 
     var ctx = document.getElementById("metadataChart").getContext('2d');
     var metadataChart = new Chart(ctx, {
@@ -511,13 +509,12 @@
                 legend: legendPie,
                 title: {
                     display: true,
-                    text: '@MareanoDataSet.Common',
+                    text: '@GeodatalovDataSet.Common',
                     fontSize: 20
                 }
             }
     });
 
- 
 
 
 
@@ -538,7 +535,12 @@
                 '@DataSet.DOK_Delivery_Wms',
                 '@DataSet.DOK_Delivery_Wfs',
                 '@DataSet.DOK_Delivery_AtomFeed',
-                '@GeodatalovDataSet.Common'
+                '@GeodatalovDataSet.Common',
+                '@GeodatalovDataSet.InspireTheme',
+                '@GeodatalovDataSet.Dok',
+                '@GeodatalovDataSet.NationalDataset',
+                '@GeodatalovDataSet.Plan',
+                '@GeodatalovDataSet.Geodatalov'
             ],
             datasets: [
                 {
@@ -611,7 +613,12 @@
                         0,
                         0,
                         0,
-                        0
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
                     ],
                     backgroundColor: '#36c545',
                 },
@@ -625,7 +632,12 @@
                         0,
                         0,
                         0,
-                        0
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
 
                     ],
                     backgroundColor: '#ee432a',

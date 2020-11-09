@@ -47,6 +47,12 @@ namespace Kartverket.Register.Services
                     var geodatalovDatasetStatuses = new GeodatalovDatasetStatusReport(geodatalovDataset);
                     statusReport.StatusRegisterItems.Add(geodatalovDatasetStatuses);
                 }
+
+                if (item is MareanoDataset mareanoDataset)
+                {
+                    var mareanoDatasetStatuses = new MareanoDatasetStatusReport(mareanoDataset);
+                    statusReport.StatusRegisterItems.Add(mareanoDatasetStatuses);
+                }
             }
 
             _dbContext.StatusReports.Add(statusReport);

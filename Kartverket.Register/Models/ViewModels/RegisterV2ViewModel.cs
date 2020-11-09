@@ -136,6 +136,11 @@ namespace Kartverket.Register.Models.ViewModels
                 {
                     return new GeodatalovDatasetStatusReportViewModel(statusReport, statusReports, filter.StatusType);
                 }
+
+                if (statusReport.IsMareanoDatasetReport())
+                {
+                    return new MareanoDatasetStatusReportViewModel(statusReport, statusReports, filter.StatusType);
+                }
             }
             return null;
         }
@@ -355,7 +360,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public bool SelectedGeodatalovTabIsReport()
         {
-            return SelectedMareanoTab == "report";
+            return SelectedGeodatalovTab == "report";
         }
 
         public bool SelectedMareanoTabIsReport()

@@ -1129,6 +1129,16 @@ namespace Kartverket.Register.Services.Register
             return queryResult.FirstOrDefault();
         }
 
+        public Models.Register GetMareanoDatasetRegister()
+        {
+            var mareanoRegisterId = Guid.Parse(GlobalVariables.MareanoRegistryId);
+
+            var queryResult = from r in _dbContext.Registers
+                              where r.systemId == mareanoRegisterId
+                              select r;
+            return queryResult.FirstOrDefault();
+        }
+
 
         public Guid GetOrganizationIdByUserName()
         {

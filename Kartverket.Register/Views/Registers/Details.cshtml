@@ -25,27 +25,27 @@
         }
         );
 
-        //$(function () {
+            //$(function () {
 
-        //    document.querySelectorAll('.tab').forEach(function (tabElement) {
-        //        tabElement.className = "tab";
-        //    });
+            //    document.querySelectorAll('.tab').forEach(function (tabElement) {
+            //        tabElement.className = "tab";
+            //    });
 
-        //    var selectedTabParameter = getParameterByName("inspireregisterytype");
-        //    var selectedTab = document.getElementById('dataset-Tab');
-        //    console.log(selectedTabParameter);
-        //    if (selectedTabParameter != "") {
-        //        selectedTab = document.getElementById(selectedTabParameter + '-Tab');
-        //        if (selectedTab == null) {
-        //            console.log(null);
-        //            selectedTab = document.getElementById('dataset-Tab');
-        //        }
-        //    }
+            //    var selectedTabParameter = getParameterByName("inspireregisterytype");
+            //    var selectedTab = document.getElementById('dataset-Tab');
+            //    console.log(selectedTabParameter);
+            //    if (selectedTabParameter != "") {
+            //        selectedTab = document.getElementById(selectedTabParameter + '-Tab');
+            //        if (selectedTab == null) {
+            //            console.log(null);
+            //            selectedTab = document.getElementById('dataset-Tab');
+            //        }
+            //    }
 
-        //    selectedTab.className = "active";
+            //    selectedTab.className = "active";
 
-        //}
-        //);
+            //}
+            //);
     </script>
 }
 
@@ -205,6 +205,10 @@
     @if (Model.ContainedItemClassIsGeodatalovDataset())
     {
         @Html.Partial("_geodatalovDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+    }
+    @if (Model.ContainedItemClassIsMareanoDataset())
+    {
+        @Html.Partial("_mareanoDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
     }
 
 

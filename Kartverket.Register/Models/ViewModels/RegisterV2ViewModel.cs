@@ -169,6 +169,12 @@ namespace Kartverket.Register.Models.ViewModels
                         registerItemsViewModel.Add(new GeodatalovDatasetViewModel(geodatalovDataset));
                     }
                     break;
+                case "MareanoDataset":
+                    foreach (MareanoDataset mareanoDataset in registerItems)
+                    {
+                        registerItemsViewModel.Add(new MareanoDatasetViewModel(mareanoDataset));
+                    }
+                    break;
             }
             return registerItemsViewModel;
         }
@@ -263,6 +269,11 @@ namespace Kartverket.Register.Models.ViewModels
             return ContainedItemClass == "GeodatalovDataset";
         }
 
+        public bool ContainedItemClassIsMareanoDataset()
+        {
+            return ContainedItemClass == "MareanoDataset";
+        }
+
         public string GetObjectCreateUrl()
         {
             var url = ParentRegister == null
@@ -342,6 +353,11 @@ namespace Kartverket.Register.Models.ViewModels
         }
 
         public bool SelectedGeodatalovTabIsReport()
+        {
+            return SelectedGeodatalovTab == "report";
+        }
+
+        public bool SelectedMareanoTabIsReport()
         {
             return SelectedGeodatalovTab == "report";
         }

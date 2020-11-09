@@ -64,7 +64,10 @@ namespace Kartverket.Register.Models
             return StatusRegisterItems.FirstOrDefault() is InspireDataserviceStatusReport;
         }
 
-
+        public bool IsMareanoDataserviceReport()
+        {
+            return StatusRegisterItems.FirstOrDefault() is MareanoDatasetStatusReport;
+        }
 
         public int NumberOfItemsWithMetadata(string status)
         {
@@ -123,6 +126,22 @@ namespace Kartverket.Register.Models
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
                     if (geodatalovDatasetStatusReport.MetadataGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithMetadata(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.MetadataMareanoDataset == status)
                     {
                         number++;
                     }
@@ -195,6 +214,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfMareanoDatasetsWithProductSpecification(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.ProductSpesificationMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithWms(string status)
         {
             int number = 0;
@@ -235,6 +270,22 @@ namespace Kartverket.Register.Models
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
                     if (geodatalovDatasetStatusReport.WmsGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithWms(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.WmsMareanoDataset == status)
                     {
                         number++;
                     }
@@ -307,6 +358,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfMareanoDatasetsWithWfs(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.WfsMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithSosiRequirements(string status)
         {
             int number = 0;
@@ -339,6 +406,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfMareanoDatasetsWithSosiRequirements(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.SosiDataMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithGmlRequirements(string status)
         {
             int number = 0;
@@ -363,6 +446,22 @@ namespace Kartverket.Register.Models
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
                     if (geodatalovDatasetStatusReport.GmlDataGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithGmlRequirements(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.GmlDataMareanoDataset == status)
                     {
                         number++;
                     }
@@ -411,6 +510,22 @@ namespace Kartverket.Register.Models
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
                     if (geodatalovDatasetStatusReport.AtomFeedGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithAtomFeed(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.AtomFeedMareanoDataset == status)
                     {
                         number++;
                     }

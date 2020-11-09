@@ -234,6 +234,34 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
+        [Route("mareano-statusregister")]
+        [Route("register/mareano-statusregister")]
+        public ActionResult DetailsMareanoStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
+        {
+            RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
+            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+
+            var register = _registerService.GetMareanoDatasetRegister();
+            if (register == null) return HttpNotFound();
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
+
+            register = FilterRegisterItems(register, filter);
+
+            List<StatusReport> mareanoStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : mareanoStatusReports.FirstOrDefault();
+
+            var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, mareanoStatusReports);
+            viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+
+            ItemsOrderBy(sorting, viewModel);
+            ViewbagsRegisterDetails(sorting, page, filter, viewModel);
+            return View(viewModel);
+        }
+
 
         private void StartSynchronizationDataset()
         {

@@ -1081,6 +1081,10 @@
     <Compile Include="Migrations\202011090609156_AddMareanoStatusRegistry.designer.cs">
       <DependentUpon>202011090609156_AddMareanoStatusRegistry.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011091002164_AddMareanoStatusReport.cs" />
+    <Compile Include="Migrations\202011091002164_AddMareanoStatusReport.designer.cs">
+      <DependentUpon>202011091002164_AddMareanoStatusReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1112,10 +1116,13 @@
     <Compile Include="Models\DatasetDelivery.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
     <Compile Include="Models\MareanoDataset.cs" />
+    <Compile Include="Models\StatusReports\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
     <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
     <Compile Include="Models\ViewModels\MareanoDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoDatasetStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\GeodatalovDatasetStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\GeodatalovLineChart.cs" />
@@ -2434,6 +2441,9 @@
     <Content Include="Views\GeoDataCollection\Edit.cshtml" />
     <Content Include="Views\GeoDataCollection\Delete.cshtml" />
     <Content Include="Views\GeoDataCollection\Details.cshtml" />
+    <Content Include="Views\Shared\_mareanoDataset.cshtml" />
+    <Content Include="Views\Registers\DetailsMareanoStatusRegistry.cshtml" />
+    <Content Include="Views\Registers\js\_mareanoReportCharts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -2935,6 +2945,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011090609156_AddMareanoStatusRegistry.resx">
       <DependentUpon>202011090609156_AddMareanoStatusRegistry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011091002164_AddMareanoStatusReport.resx">
+      <DependentUpon>202011091002164_AddMareanoStatusReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

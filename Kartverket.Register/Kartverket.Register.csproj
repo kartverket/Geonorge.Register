@@ -2445,6 +2445,7 @@
     <Content Include="Views\Registers\DetailsMareanoStatusRegistry.cshtml" />
     <Content Include="Views\Registers\js\_mareanoReportCharts.cshtml" />
     <Content Include="Views\Shared\_mareanoReport.cshtml" />
+    <Content Include="Views\Shared\_detailsMareanoDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

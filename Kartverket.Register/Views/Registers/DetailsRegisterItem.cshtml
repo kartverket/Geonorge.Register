@@ -87,6 +87,10 @@
     {
         @Html.Partial("_detailsGeodatalovDataset")
     }
+    else if (Model is MareanoDatasetViewModel)
+    {
+        @Html.Partial("_detailsMareanoDataset")
+    }
     else if (Model is DokDatasetViewModel)
     {
         @Html.Partial("_detailsDataset")

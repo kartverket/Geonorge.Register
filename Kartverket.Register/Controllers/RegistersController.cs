@@ -36,10 +36,11 @@ namespace Kartverket.Register.Controllers
         private readonly IInspireMonitoringService _inspireMonitoringService;
         private readonly ISynchronizationService _synchronizationService;
         private readonly IStatusReportService _statusReportService;
+        private readonly IMareanoDatasetService _mareanoDatasetService;
 
         public RegistersController(ITranslationService translationService,
             RegisterDbContext dbContext, IRegisterItemService registerItemService, ISearchService searchService, IVersioningService versioningService,
-            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService, ISynchronizationService synchronizationService, IStatusReportService statusReportService)
+            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService, ISynchronizationService synchronizationService, IStatusReportService statusReportService, IMareanoDatasetService mareanoDatasetService)
         {
             _db = dbContext;
             _registerItemService = registerItemService;
@@ -53,6 +54,7 @@ namespace Kartverket.Register.Controllers
             _inspireMonitoringService = inspireMonitoringService;
             _synchronizationService = synchronizationService;
             _statusReportService = statusReportService;
+            _mareanoDatasetService = mareanoDatasetService;
         }
 
         // GET: Registers
@@ -933,6 +935,10 @@ namespace Kartverket.Register.Controllers
             if (register.IsGeodatalovStatusRegister())
             {
                 return new GeodatalovDatasetViewModel(_geodatalovDatasetService.GetGeodatalovDatasetById(systemId));
+            }
+            if (register.IsMareanoStatusRegister())
+            {
+                return new MareanoDatasetViewModel(_mareanoDatasetService.GetMareanoDatasetById(systemId));
             }
             if (register.IsDokMunicipal())
             {

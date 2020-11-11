@@ -7,15 +7,14 @@
 }
 @helper DisplayText(string s, bool replaceParagraph = false)
 {
-s = Markdown.ToHtml(s);
+var pipeline = new MarkdownPipelineBuilder()
+                  .UseSoftlineBreakAsHardlineBreak()
+                  .Build();
+s = Markdown.ToHtml(s, pipeline);
 if (replaceParagraph)
 {
     s = s.Replace("<p>", String.Empty).Replace("</p>", String.Empty);
 }
-if (!string.IsNullOrEmpty(s)) {
-    s = s.Replace("\n", "<br />");
-}
-
 @(new HtmlString(s))
 
 }

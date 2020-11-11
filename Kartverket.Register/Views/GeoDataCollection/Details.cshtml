@@ -7,12 +7,17 @@
 }
 @helper DisplayText(string s, bool replaceParagraph = false)
 {
-    s = Markdown.ToHtml(s);
-    if (replaceParagraph)
-    {
-        s = s.Replace("<p>", String.Empty).Replace("</p>", String.Empty);
-    }
-    @(new HtmlString(s))
+s = Markdown.ToHtml(s);
+if (replaceParagraph)
+{
+    s = s.Replace("<p>", String.Empty).Replace("</p>", String.Empty);
+}
+if (!string.IsNullOrEmpty(s)) {
+    s = s.Replace("\n", "<br />");
+}
+
+@(new HtmlString(s))
+
 }
 @section breadcrumb {
     <li><a href="/@GeodataCollection.RegisterSeoName">@GeodataCollection.RegisterName</a></li>

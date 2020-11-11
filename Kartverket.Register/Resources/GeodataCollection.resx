@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ContactEmail" xml:space="preserve">
+    <value>Kontaktperson epost</value>
+  </data>
   <data name="DataOwner" xml:space="preserve">
     <value>Dataeier</value>
   </data>
@@ -132,11 +135,29 @@
   <data name="Link" xml:space="preserve">
     <value>Lenke til metodikk for kartlegging</value>
   </data>
+  <data name="LinkInfoPage" xml:space="preserve">
+    <value>Lenke informasjonsside</value>
+  </data>
+  <data name="LinkOtherInfo" xml:space="preserve">
+    <value>Lenke annen info</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Lenker</value>
+  </data>
+  <data name="LinkToMapSolution" xml:space="preserve">
+    <value>Lenke til kartløsning</value>
+  </data>
+  <data name="LinkToRequirementsForDelivery" xml:space="preserve">
+    <value>Lenke til krav avlevering</value>
+  </data>
   <data name="Mapper" xml:space="preserve">
     <value>Kartlegger</value>
   </data>
   <data name="MappingRequirements" xml:space="preserve">
     <value>Krav til kartlegging</value>
+  </data>
+  <data name="MethodForMappingShort" xml:space="preserve">
+    <value>Metode for kartlegging -kort</value>
   </data>
   <data name="Methodology" xml:space="preserve">
     <value>Mottaksordning - beskrivelse</value>
@@ -150,11 +171,20 @@
   <data name="Organization" xml:space="preserve">
     <value>Ansvarlig etat</value>
   </data>
+  <data name="OrganizationInfo" xml:space="preserve">
+    <value>Etatsinfo</value>
+  </data>
+  <data name="OtherOrganizationsInvolved" xml:space="preserve">
+    <value>Andre involverte etater</value>
+  </data>
+  <data name="OtherWebInfoAboutMappingMethodology" xml:space="preserve">
+    <value>Annen webinfo om kartleggingsmetodikk</value>
+  </data>
   <data name="ProcessHistory" xml:space="preserve">
     <value>Lenke til metodikk for avlevering</value>
   </data>
   <data name="Purpose" xml:space="preserve">
-    <value>Formål</value>
+    <value>Mottaksordning formål</value>
   </data>
   <data name="RegisterDescription" xml:space="preserve">
     <value>Inneholder informasjon og lenke til mottaksordninger for innsamling av Geodata</value>
@@ -171,7 +201,22 @@
   <data name="SupportSchemes" xml:space="preserve">
     <value>Støtteordninger</value>
   </data>
+  <data name="SystemCollecting" xml:space="preserve">
+    <value>Mottaksordning</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Tittel på mottaksordning</value>
+  </data>
+  <data name="ContactInformation" xml:space="preserve">
+    <value>Kontaktinformasjon</value>
+  </data>
+  <data name="DeliverySolution" xml:space="preserve">
+    <value>Leveranseløsning</value>
+  </data>
+  <data name="MappingMethodology" xml:space="preserve">
+    <value>Kartleggingsmetodikk</value>
+  </data>
+  <data name="Requirements" xml:space="preserve">
+    <value>Krav</value>
   </data>
 </root>

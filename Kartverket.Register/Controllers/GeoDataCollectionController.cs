@@ -104,6 +104,16 @@ namespace Kartverket.Register.Controllers
                 geodataCollection.MethodologyLinkWebPage = collection.MethodologyLinkWebPage;
                 geodataCollection.SupportSchemes = collection.SupportSchemes;
 
+                geodataCollection.OtherOrganizationsInvolved = collection.OtherOrganizationsInvolved;
+                geodataCollection.LinkToMapSolution = collection.LinkToMapSolution;
+                geodataCollection.LinkInfoPage = collection.LinkInfoPage;
+                geodataCollection.LinkOtherInfo = collection.LinkOtherInfo;
+                geodataCollection.MethodForMappingShort = collection.MethodForMappingShort;
+                geodataCollection.OtherWebInfoAboutMappingMethodology = collection.OtherWebInfoAboutMappingMethodology;
+                geodataCollection.LinkToRequirementsForDelivery = collection.LinkToMapSolution;
+                geodataCollection.OrganizationInfo = collection.OrganizationInfo;
+                geodataCollection.ContactEmail = collection.ContactEmail;
+
                 var org = _dbContext.Organizations.Where(o => o.systemId.ToString() == ownerId).FirstOrDefault();
                 geodataCollection.Organization = org;
 

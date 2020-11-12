@@ -1077,6 +1077,10 @@
     <Compile Include="Migrations\202010230917426_AddGeoDataCollectionProperties.designer.cs">
       <DependentUpon>202010230917426_AddGeoDataCollectionProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011101205261_AddGeoDataCollectionFields.cs" />
+    <Compile Include="Migrations\202011101205261_AddGeoDataCollectionFields.designer.cs">
+      <DependentUpon>202011101205261_AddGeoDataCollectionFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2370,7 +2374,9 @@
     <Content Include="Views\Alerts\Create.cshtml" />
     <Content Include="Views\Shared\_alert.cshtml" />
     <Content Include="Views\Shared\_detailsAlert.cshtml" />
-    <Content Include="settings.default.config" />
+    <Content Include="settings.default.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Organizations\_Fields.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
     <Content Include="Views\InspireDatasets\Create.cshtml" />
@@ -2915,6 +2921,9 @@
     <EmbeddedResource Include="Migrations\202010230917426_AddGeoDataCollectionProperties.resx">
       <DependentUpon>202010230917426_AddGeoDataCollectionProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011101205261_AddGeoDataCollectionFields.resx">
+      <DependentUpon>202011101205261_AddGeoDataCollectionFields.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodataCollection.en.Designer.cs</LastGenOutput>
@@ -2923,6 +2932,7 @@
     <EmbeddedResource Include="Resources\GeodataCollection.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodataCollection.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

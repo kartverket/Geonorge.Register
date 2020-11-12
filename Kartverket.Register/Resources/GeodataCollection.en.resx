@@ -117,29 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ContactEmail" xml:space="preserve">
+    <value>Contact email</value>
+  </data>
   <data name="DataOwner" xml:space="preserve">
     <value>Data owner</value>
   </data>
   <data name="DatasetLink" xml:space="preserve">
-    <value>Dataset link</value>
+    <value>Dataset link (metadata)</value>
   </data>
   <data name="DatasetTitle" xml:space="preserve">
-    <value>Dataset title</value>
+    <value>Which dataset applies to it</value>
   </data>
   <data name="Distributor" xml:space="preserve">
     <value>Distributor</value>
   </data>
   <data name="Link" xml:space="preserve">
-    <value>Link</value>
+    <value>Link to methodology for mapping</value>
+  </data>
+  <data name="LinkInfoPage" xml:space="preserve">
+    <value>Link infopage</value>
+  </data>
+  <data name="LinkOtherInfo" xml:space="preserve">
+    <value>Link other info</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Lenker</value>
+  </data>
+  <data name="LinkToMapSolution" xml:space="preserve">
+    <value>Link to map solution</value>
+  </data>
+  <data name="LinkToRequirementsForDelivery" xml:space="preserve">
+    <value>Link to requirements for delivery</value>
   </data>
   <data name="Mapper" xml:space="preserve">
-    <value>Kartlegger</value>
+    <value>Mapper</value>
   </data>
   <data name="MappingRequirements" xml:space="preserve">
-    <value>Mapping requirements</value>
+    <value>Requirements for mapping</value>
+  </data>
+  <data name="MethodForMappingShort" xml:space="preserve">
+    <value>Method for mapping - short</value>
   </data>
   <data name="Methodology" xml:space="preserve">
-    <value>Metodikk</value>
+    <value>Systems for collecting - description</value>
   </data>
   <data name="MethodologyDocumentLink" xml:space="preserve">
     <value>Link methodology document</value>
@@ -148,10 +169,19 @@
     <value>Link methodology web</value>
   </data>
   <data name="Organization" xml:space="preserve">
-    <value>Organization</value>
+    <value>Responsible organization</value>
+  </data>
+  <data name="OrganizationInfo" xml:space="preserve">
+    <value>Organization info</value>
+  </data>
+  <data name="OtherOrganizationsInvolved" xml:space="preserve">
+    <value>Other organizations involved</value>
+  </data>
+  <data name="OtherWebInfoAboutMappingMethodology" xml:space="preserve">
+    <value>Other web info about mapping methodology</value>
   </data>
   <data name="ProcessHistory" xml:space="preserve">
-    <value>Prosesshistorie</value>
+    <value>Link to methodology for submission</value>
   </data>
   <data name="RegisterDescription" xml:space="preserve">
     <value>Contains info and links to systems for collecting Geodata</value>
@@ -160,12 +190,30 @@
     <value>Systems for collecting Geodata</value>
   </data>
   <data name="RegistrationRequirements" xml:space="preserve">
-    <value>Registration requirements</value>
+    <value>Requirements for delivery</value>
   </data>
   <data name="SupportSchemes" xml:space="preserve">
-    <value>Støtteordninger</value>
+    <value>Support schemes</value>
+  </data>
+  <data name="SystemCollecting" xml:space="preserve">
+    <value>System collecting</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Title for system collecting</value>
+  </data>
+  <data name="ContactInformation" xml:space="preserve">
+    <value>Contact information</value>
+  </data>
+  <data name="DeliverySolution" xml:space="preserve">
+    <value>Delivery solution</value>
+  </data>
+  <data name="MappingMethodology" xml:space="preserve">
+    <value>Mapping methodology</value>
+  </data>
+  <data name="Purpose" xml:space="preserve">
+    <value>System collecting purpose</value>
+  </data>
+  <data name="Requirements" xml:space="preserve">
+    <value>Requirements</value>
   </data>
 </root>

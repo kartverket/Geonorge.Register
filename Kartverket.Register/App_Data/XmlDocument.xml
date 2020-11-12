@@ -1244,6 +1244,16 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.ContactEmail">
+            <summary>
+              Looks up a localized string similar to Kontaktperson epost.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.ContactInformation">
+            <summary>
+              Looks up a localized string similar to Kontaktinformasjon.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.DataOwner">
             <summary>
               Looks up a localized string similar to Dataeier.
@@ -1251,12 +1261,17 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.DatasetLink">
             <summary>
-              Looks up a localized string similar to Datasett lenke.
+              Looks up a localized string similar to Lenke til datasett (metadata).
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.DatasetTitle">
             <summary>
-              Looks up a localized string similar to Datasett tittel.
+              Looks up a localized string similar to Hvilket datasett gjelder det.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.DeliverySolution">
+            <summary>
+              Looks up a localized string similar to Leveranseløsning.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Distributor">
@@ -1266,7 +1281,32 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Link">
             <summary>
-              Looks up a localized string similar to Lenke.
+              Looks up a localized string similar to Lenke til metodikk for kartlegging.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkInfoPage">
+            <summary>
+              Looks up a localized string similar to Lenke informasjonsside.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkOtherInfo">
+            <summary>
+              Looks up a localized string similar to Lenke annen info.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Links">
+            <summary>
+              Looks up a localized string similar to Lenker.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkToMapSolution">
+            <summary>
+              Looks up a localized string similar to Lenke til kartløsning.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkToRequirementsForDelivery">
+            <summary>
+              Looks up a localized string similar to Lenke til krav avlevering.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Mapper">
@@ -1274,14 +1314,24 @@
               Looks up a localized string similar to Kartlegger.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.MappingMethodology">
+            <summary>
+              Looks up a localized string similar to Kartleggingsmetodikk.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MappingRequirements">
             <summary>
-              Looks up a localized string similar to Kartleggingskrav.
+              Looks up a localized string similar to Krav til kartlegging.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.MethodForMappingShort">
+            <summary>
+              Looks up a localized string similar to Metode for kartlegging -kort.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Methodology">
             <summary>
-              Looks up a localized string similar to Metodikk.
+              Looks up a localized string similar to Mottaksordning - beskrivelse.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MethodologyDocumentLink">
@@ -1296,17 +1346,32 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Organization">
             <summary>
-              Looks up a localized string similar to Organisasjon.
+              Looks up a localized string similar to Ansvarlig etat.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.OrganizationInfo">
+            <summary>
+              Looks up a localized string similar to Etatsinfo.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.OtherOrganizationsInvolved">
+            <summary>
+              Looks up a localized string similar to Andre involverte etater.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.OtherWebInfoAboutMappingMethodology">
+            <summary>
+              Looks up a localized string similar to Annen webinfo om kartleggingsmetodikk.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.ProcessHistory">
             <summary>
-              Looks up a localized string similar to Prosesshistorie.
+              Looks up a localized string similar to Lenke til metodikk for avlevering.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Purpose">
             <summary>
-              Looks up a localized string similar to Formål.
+              Looks up a localized string similar to Mottaksordning formål.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.RegisterDescription">
@@ -1326,7 +1391,12 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.RegistrationRequirements">
             <summary>
-              Looks up a localized string similar to Registreringskrav.
+              Looks up a localized string similar to Krav til avlevering.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Requirements">
+            <summary>
+              Looks up a localized string similar to Krav.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.SupportSchemes">
@@ -1334,9 +1404,14 @@
               Looks up a localized string similar to Støtteordninger.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.SystemCollecting">
+            <summary>
+              Looks up a localized string similar to Mottaksordning.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Title">
             <summary>
-              Looks up a localized string similar to Tittel.
+              Looks up a localized string similar to Tittel på mottaksordning.
             </summary>
         </member>
         <member name="M:Kartverket.Register.Services.AccessControlService.IsAdmin">

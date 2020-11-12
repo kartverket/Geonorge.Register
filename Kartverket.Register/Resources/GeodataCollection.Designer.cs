@@ -61,6 +61,24 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kontaktperson epost.
+        /// </summary>
+        public static string ContactEmail {
+            get {
+                return ResourceManager.GetString("ContactEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontaktinformasjon.
+        /// </summary>
+        public static string ContactInformation {
+            get {
+                return ResourceManager.GetString("ContactInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dataeier.
         /// </summary>
         public static string DataOwner {
@@ -70,7 +88,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett lenke.
+        ///   Looks up a localized string similar to Lenke til datasett (metadata).
         /// </summary>
         public static string DatasetLink {
             get {
@@ -79,11 +97,20 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett tittel.
+        ///   Looks up a localized string similar to Hvilket datasett gjelder det.
         /// </summary>
         public static string DatasetTitle {
             get {
                 return ResourceManager.GetString("DatasetTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leveranseløsning.
+        /// </summary>
+        public static string DeliverySolution {
+            get {
+                return ResourceManager.GetString("DeliverySolution", resourceCulture);
             }
         }
         
@@ -97,11 +124,56 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lenke.
+        ///   Looks up a localized string similar to Lenke til metodikk for kartlegging.
         /// </summary>
         public static string Link {
             get {
                 return ResourceManager.GetString("Link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lenke informasjonsside.
+        /// </summary>
+        public static string LinkInfoPage {
+            get {
+                return ResourceManager.GetString("LinkInfoPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lenke annen info.
+        /// </summary>
+        public static string LinkOtherInfo {
+            get {
+                return ResourceManager.GetString("LinkOtherInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lenker.
+        /// </summary>
+        public static string Links {
+            get {
+                return ResourceManager.GetString("Links", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lenke til kartløsning.
+        /// </summary>
+        public static string LinkToMapSolution {
+            get {
+                return ResourceManager.GetString("LinkToMapSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lenke til krav avlevering.
+        /// </summary>
+        public static string LinkToRequirementsForDelivery {
+            get {
+                return ResourceManager.GetString("LinkToRequirementsForDelivery", resourceCulture);
             }
         }
         
@@ -115,7 +187,16 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kartleggingskrav.
+        ///   Looks up a localized string similar to Kartleggingsmetodikk.
+        /// </summary>
+        public static string MappingMethodology {
+            get {
+                return ResourceManager.GetString("MappingMethodology", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Krav til kartlegging.
         /// </summary>
         public static string MappingRequirements {
             get {
@@ -124,7 +205,16 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metodikk.
+        ///   Looks up a localized string similar to Metode for kartlegging -kort.
+        /// </summary>
+        public static string MethodForMappingShort {
+            get {
+                return ResourceManager.GetString("MethodForMappingShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mottaksordning - beskrivelse.
         /// </summary>
         public static string Methodology {
             get {
@@ -151,7 +241,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Organisasjon.
+        ///   Looks up a localized string similar to Ansvarlig etat.
         /// </summary>
         public static string Organization {
             get {
@@ -160,7 +250,34 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prosesshistorie.
+        ///   Looks up a localized string similar to Etatsinfo.
+        /// </summary>
+        public static string OrganizationInfo {
+            get {
+                return ResourceManager.GetString("OrganizationInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Andre involverte etater.
+        /// </summary>
+        public static string OtherOrganizationsInvolved {
+            get {
+                return ResourceManager.GetString("OtherOrganizationsInvolved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annen webinfo om kartleggingsmetodikk.
+        /// </summary>
+        public static string OtherWebInfoAboutMappingMethodology {
+            get {
+                return ResourceManager.GetString("OtherWebInfoAboutMappingMethodology", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lenke til metodikk for avlevering.
         /// </summary>
         public static string ProcessHistory {
             get {
@@ -169,7 +286,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Formål.
+        ///   Looks up a localized string similar to Mottaksordning formål.
         /// </summary>
         public static string Purpose {
             get {
@@ -205,11 +322,20 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registreringskrav.
+        ///   Looks up a localized string similar to Krav til avlevering.
         /// </summary>
         public static string RegistrationRequirements {
             get {
                 return ResourceManager.GetString("RegistrationRequirements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Krav.
+        /// </summary>
+        public static string Requirements {
+            get {
+                return ResourceManager.GetString("Requirements", resourceCulture);
             }
         }
         
@@ -223,7 +349,16 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tittel.
+        ///   Looks up a localized string similar to Mottaksordning.
+        /// </summary>
+        public static string SystemCollecting {
+            get {
+                return ResourceManager.GetString("SystemCollecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tittel på mottaksordning.
         /// </summary>
         public static string Title {
             get {

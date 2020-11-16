@@ -1085,6 +1085,10 @@
     <Compile Include="Migrations\202011091002164_AddMareanoStatusReport.designer.cs">
       <DependentUpon>202011091002164_AddMareanoStatusReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011101205261_AddGeoDataCollectionFields.cs" />
+    <Compile Include="Migrations\202011101205261_AddGeoDataCollectionFields.Designer.cs">
+      <DependentUpon>202011101205261_AddGeoDataCollectionFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2952,6 +2956,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011091002164_AddMareanoStatusReport.resx">
       <DependentUpon>202011091002164_AddMareanoStatusReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011101205261_AddGeoDataCollectionFields.resx">
+      <DependentUpon>202011101205261_AddGeoDataCollectionFields.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

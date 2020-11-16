@@ -2394,6 +2394,27 @@
         <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdAccessibility.viewDownload">
             <remarks/>
         </member>
+        <member name="T:Resources.MareanoDataSet">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.Common">
+            <summary>
+              Looks up a localized string similar to Nedlastingskrav status.
+            </summary>
+        </member>
         <member name="T:Resources.GeodatalovDataSet">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

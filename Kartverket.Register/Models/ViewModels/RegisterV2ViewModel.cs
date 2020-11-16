@@ -77,6 +77,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string SelectedInspireRegisteryType { get; set; }
         public string SelectedDokTab { get; set; }
         public string SelectedGeodatalovTab { get; set; }
+        public string SelectedMareanoTab { get; set; }
 
         public RegisterV2ViewModel(Register register, FilterParameters filter, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null)
         {
@@ -135,6 +136,11 @@ namespace Kartverket.Register.Models.ViewModels
                 {
                     return new GeodatalovDatasetStatusReportViewModel(statusReport, statusReports, filter.StatusType);
                 }
+
+                if (statusReport.IsMareanoDatasetReport())
+                {
+                    return new MareanoDatasetStatusReportViewModel(statusReport, statusReports, filter.StatusType);
+                }
             }
             return null;
         }
@@ -167,6 +173,12 @@ namespace Kartverket.Register.Models.ViewModels
                     foreach (GeodatalovDataset geodatalovDataset in registerItems)
                     {
                         registerItemsViewModel.Add(new GeodatalovDatasetViewModel(geodatalovDataset));
+                    }
+                    break;
+                case "MareanoDataset":
+                    foreach (MareanoDataset mareanoDataset in registerItems)
+                    {
+                        registerItemsViewModel.Add(new MareanoDatasetViewModel(mareanoDataset));
                     }
                     break;
             }
@@ -263,6 +275,11 @@ namespace Kartverket.Register.Models.ViewModels
             return ContainedItemClass == "GeodatalovDataset";
         }
 
+        public bool ContainedItemClassIsMareanoDataset()
+        {
+            return ContainedItemClass == "MareanoDataset";
+        }
+
         public string GetObjectCreateUrl()
         {
             var url = ParentRegister == null
@@ -344,6 +361,11 @@ namespace Kartverket.Register.Models.ViewModels
         public bool SelectedGeodatalovTabIsReport()
         {
             return SelectedGeodatalovTab == "report";
+        }
+
+        public bool SelectedMareanoTabIsReport()
+        {
+            return SelectedMareanoTab == "report";
         }
     }
 }

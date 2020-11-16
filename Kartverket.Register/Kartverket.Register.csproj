@@ -1077,9 +1077,13 @@
     <Compile Include="Migrations\202010230917426_AddGeoDataCollectionProperties.designer.cs">
       <DependentUpon>202010230917426_AddGeoDataCollectionProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202011101205261_AddGeoDataCollectionFields.cs" />
-    <Compile Include="Migrations\202011101205261_AddGeoDataCollectionFields.designer.cs">
-      <DependentUpon>202011101205261_AddGeoDataCollectionFields.cs</DependentUpon>
+    <Compile Include="Migrations\202011090609156_AddMareanoStatusRegistry.cs" />
+    <Compile Include="Migrations\202011090609156_AddMareanoStatusRegistry.designer.cs">
+      <DependentUpon>202011090609156_AddMareanoStatusRegistry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011091002164_AddMareanoStatusReport.cs" />
+    <Compile Include="Migrations\202011091002164_AddMareanoStatusReport.designer.cs">
+      <DependentUpon>202011091002164_AddMareanoStatusReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -1111,9 +1115,14 @@
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
+    <Compile Include="Models\MareanoDataset.cs" />
+    <Compile Include="Models\StatusReports\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
     <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
+    <Compile Include="Models\ViewModels\MareanoDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoDatasetStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\GeodatalovDatasetStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\GeodatalovLineChart.cs" />
@@ -1222,6 +1231,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeodataCollection.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MareanoDataSet.en.Designer.cs">
+      <DependentUpon>MareanoDataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\MareanoDataSet.Designer.cs">
+      <DependentUpon>MareanoDataSet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\GeodatalovDataSet.en.Designer.cs">
       <DependentUpon>GeodatalovDataSet.en.resx</DependentUpon>
@@ -1353,6 +1372,7 @@
     <Compile Include="Services\IDatasetDeliveryService.cs" />
     <Compile Include="Services\IGeodatalovDatasetService.cs" />
     <Compile Include="Services\IInspireMonitoringService.cs" />
+    <Compile Include="Services\IMareanoDatasetService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
@@ -1365,6 +1385,7 @@
     <Compile Include="Services\ISynchronizationService.cs" />
     <Compile Include="Services\IStatusReportService.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\MareanoDatasetService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
     <Compile Include="Services\Notify\IEmailService.cs" />
@@ -2422,6 +2443,11 @@
     <Content Include="Views\GeoDataCollection\Edit.cshtml" />
     <Content Include="Views\GeoDataCollection\Delete.cshtml" />
     <Content Include="Views\GeoDataCollection\Details.cshtml" />
+    <Content Include="Views\Shared\_mareanoDataset.cshtml" />
+    <Content Include="Views\Registers\DetailsMareanoStatusRegistry.cshtml" />
+    <Content Include="Views\Registers\js\_mareanoReportCharts.cshtml" />
+    <Content Include="Views\Shared\_mareanoReport.cshtml" />
+    <Content Include="Views\Shared\_detailsMareanoDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -2921,8 +2947,11 @@
     <EmbeddedResource Include="Migrations\202010230917426_AddGeoDataCollectionProperties.resx">
       <DependentUpon>202010230917426_AddGeoDataCollectionProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202011101205261_AddGeoDataCollectionFields.resx">
-      <DependentUpon>202011101205261_AddGeoDataCollectionFields.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202011090609156_AddMareanoStatusRegistry.resx">
+      <DependentUpon>202011090609156_AddMareanoStatusRegistry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011091002164_AddMareanoStatusReport.resx">
+      <DependentUpon>202011091002164_AddMareanoStatusReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -2932,6 +2961,18 @@
     <EmbeddedResource Include="Resources\GeodataCollection.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodataCollection.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MareanoDataSet.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MareanoDataSet.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MareanoDataSet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MareanoDataSet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">

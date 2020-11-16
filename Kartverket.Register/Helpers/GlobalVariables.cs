@@ -22,6 +22,11 @@ namespace Kartverket.Register.Helpers
             get { return "3D9114F6-FAAB-4521-BDF8-19EF6211E7D2"; }
         }
 
+        public static string MareanoRegistryId
+        {
+            get { return "3D9114F6-FAAB-4521-BDF8-19EF6211E7D3"; }
+        }
+
         public static string DokMunicipalRegistryId
         {
             get { return "E807439B-2BFC-4DA5-87C0-B40E7B0CDFB8"; }

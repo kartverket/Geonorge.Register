@@ -39,6 +39,7 @@ namespace Kartverket.Register.Models
         public bool Compare { get; set; }
         public string DokSelectedTab { get; set; }
         public string GeodatalovSelectedTab { get; set; }
+        public string MareanoSelectedTab { get; set; }
         public string GeodataType { get; set; }
         public string SelectedReport { get; set; }
         public string StatusType { get; set; }

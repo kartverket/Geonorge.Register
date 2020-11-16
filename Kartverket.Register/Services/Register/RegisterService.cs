@@ -1129,6 +1129,16 @@ namespace Kartverket.Register.Services.Register
             return queryResult.FirstOrDefault();
         }
 
+        public Models.Register GetMareanoDatasetRegister()
+        {
+            var mareanoRegisterId = Guid.Parse(GlobalVariables.MareanoRegistryId);
+
+            var queryResult = from r in _dbContext.Registers
+                              where r.systemId == mareanoRegisterId
+                              select r;
+            return queryResult.FirstOrDefault();
+        }
+
 
         public Guid GetOrganizationIdByUserName()
         {
@@ -1167,6 +1177,15 @@ namespace Kartverket.Register.Services.Register
         {
             var queryResults = from o in _dbContext.Registers
                                where o.name == "Geodatalov statusregister"
+                               select o.systemId;
+
+            return queryResults.FirstOrDefault();
+        }
+
+        public Guid GetMareanoStatusRegisterId()
+        {
+            var queryResults = from o in _dbContext.Registers
+                               where o.name == "Mareano statusregister"
                                select o.systemId;
 
             return queryResults.FirstOrDefault();
@@ -1273,6 +1292,7 @@ namespace Kartverket.Register.Services.Register
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("E807439B-2BFC-4DA5-87C0-B40E7B0CDFB8"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("3D9114F6-FAAB-4521-BDF8-19EF6211E7D2"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse(GlobalVariables.MareanoRegistryId))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("9A9BEF28-285B-477E-85F1-504F8227FF45"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("0F428034-0B2D-4FB7-84EA-C547B872B418"))));
             registers.Add(new RegisterView { name = GeodataCollection.RegisterName, description = GeodataCollection.RegisterDescription, ExternalUrl = GeodataCollection.RegisterSeoName });

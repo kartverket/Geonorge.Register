@@ -68,6 +68,7 @@ namespace Kartverket.Register
             builder.RegisterType<TranslationService>().As<ITranslationService>();
             builder.RegisterType<DatasetDeliveryService>().As<IDatasetDeliveryService>();
             builder.RegisterType<GeodatalovDatasetService>().As<IGeodatalovDatasetService>();
+            builder.RegisterType<MareanoDatasetService>().As<IMareanoDatasetService>();
             builder.RegisterType<DocumentService>().As<IDocumentService>();
             builder.RegisterType<InspireMonitoringService>().As<IInspireMonitoringService>();
             builder.RegisterType<InspireMonitoring>().As<IInspireMonitoring>();

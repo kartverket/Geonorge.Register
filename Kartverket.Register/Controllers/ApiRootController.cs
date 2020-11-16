@@ -628,6 +628,15 @@ namespace Kartverket.Register.Controllers
             return Ok();
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/metadata/synchronize/mareano-statusregister")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult SynchronizeMareanoStatusregister()
+        {
+            new MareanoDatasetService(db).SynchronizeMareanoDatasets();
+            return Ok();
+        }
+
         /// <summary>
         /// DokCoverageMapping
         /// </summary>

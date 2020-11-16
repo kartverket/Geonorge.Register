@@ -1,0 +1,229 @@
+﻿@model Kartverket.Register.Models.ViewModels.MareanoDatasetStatusReportViewModel
+@using Kartverket.Register.Helpers
+
+@if (Model.ReportNotExists)
+{
+    <p>Ingen rapporter enda...</p>
+}
+else
+{
+    <div class="row margin-top-10">
+        <div class="col-md-4 col-sm-12">
+            @using (Html.BeginForm("DetailsMareanoStatusRegistry", "Registers", FormMethod.Get))
+            {
+
+                @Html.Hidden("MareanoSelectedTab", "report")
+                @Html.DropDownList("SelectedReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
+            }
+        </div>
+        <div id="reportViewButtons" class="col-md-4 col-sm-12">
+            <button class="btn" id="tabelButton" onclick="reportView('tabel', event)"><i class="fa fa-table"></i></button>
+            <button class="btn" id="pieChartButton" onclick="reportView('pieChart', event)"><i class="fa fa-chart-pie"></i></button>
+            <button class="btn" id="barChartButton" onclick="reportView('barChart', event)"><i class="fa fa-chart-bar"></i></button>
+            <button class="btn" id="lineChartButton" onclick="reportView('lineChart', event)"><i class="fa fa-chart-line"></i></button>
+        </div>
+        <div class="pull-right col-md-4">
+            <div id="ExportAll" style="display:none;" class="pull-right">
+                <a id="ExportAllJson" href="@RegisterUrls.ApiReportUrlFormat(Request, "json", null)" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
+                <a id="ExportAllCsv" href="@RegisterUrls.ApiReportUrlFormat(Request, "csv", null)" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
+            </div>
+
+            <div id="ExportSelected" style="display:inline-block" class="pull-right">
+                <a id="ExportSelectedJson" href="@RegisterUrls.ApiReportUrlFormat(Request, "json", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til json">JSON</a>
+                <a id="ExportSelectedCsv" href="@RegisterUrls.ApiReportUrlFormat(Request, "csv", Model.Id.ToString())" class="btn btn-default btn-space pull-right" title="Exporter til csv">CSV</a>
+            </div>
+
+            <div class="text-center pull-right btn-space" style="display: inline-block; vertical-align: top">
+                <label>Alle rapporter</label>
+                <input type="checkbox" id="cbExportReport" onclick="ToggleExportReport(this)">
+            </div>
+        </div>
+    </div>
+
+
+    <div id="tabel" class="reportViewContent">
+
+        <div class="datasetChart">
+            <h3>@InspireDataSet.DatasetHarmonizedData</h3>
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>@DataSet.DOK_Delivery_Status_Good</th>
+                        <th>@DataSet.DOK_Delivery_Status_Useable</th>
+                        <th>@DataSet.DOK_Delivery_Status_Deficient</th>
+                        <th>@DataSet.DOK_Delivery_Status_NotSet</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithMetadata)</td>
+                        <td>@Model.NumberOfItemsWithMetadata.Good</td>
+                        <td>@Model.NumberOfItemsWithMetadata.Useable</td>
+                        <td>@Model.NumberOfItemsWithMetadata.Deficient</td>
+                        <td>@Model.NumberOfItemsWithMetadata.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithProductSpecification)</td>
+                        <td>@Model.NumberOfItemsWithProductSpecification.Good</td>
+                        <td>@Model.NumberOfItemsWithProductSpecification.Useable</td>
+                        <td>@Model.NumberOfItemsWithProductSpecification.Deficient</td>
+                        <td>@Model.NumberOfItemsWithProductSpecification.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithSosiRequirements)</td>
+                        <td>@Model.NumberOfItemsWithSosiRequirements.Good</td>
+                        <td>@Model.NumberOfItemsWithSosiRequirements.Useable</td>
+                        <td>@Model.NumberOfItemsWithSosiRequirements.Deficient</td>
+                        <td>@Model.NumberOfItemsWithSosiRequirements.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithGmlRequirements)</td>
+                        <td>@Model.NumberOfItemsWithGmlRequirements.Good</td>
+                        <td>@Model.NumberOfItemsWithGmlRequirements.Useable</td>
+                        <td>@Model.NumberOfItemsWithGmlRequirements.Deficient</td>
+                        <td>@Model.NumberOfItemsWithGmlRequirements.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithWms)</td>
+                        <td>@Model.NumberOfItemsWithWms.Good</td>
+                        <td>@Model.NumberOfItemsWithWms.Useable</td>
+                        <td>@Model.NumberOfItemsWithWms.Deficient</td>
+                        <td>@Model.NumberOfItemsWithWms.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithWfs)</td>
+                        <td>@Model.NumberOfItemsWithWfs.Good</td>
+                        <td>@Model.NumberOfItemsWithWfs.Useable</td>
+                        <td>@Model.NumberOfItemsWithWfs.Deficient</td>
+                        <td>@Model.NumberOfItemsWithWfs.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithAtomFeed)</td>
+                        <td>@Model.NumberOfItemsWithAtomFeed.Good</td>
+                        <td>@Model.NumberOfItemsWithAtomFeed.Useable</td>
+                        <td>@Model.NumberOfItemsWithAtomFeed.Deficient</td>
+                        <td>@Model.NumberOfItemsWithAtomFeed.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithCommon)</td>
+                        <td>@Model.NumberOfItemsWithCommon.Good</td>
+                        <td>@Model.NumberOfItemsWithCommon.Useable</td>
+                        <td>@Model.NumberOfItemsWithCommon.Deficient</td>
+                        <td>@Model.NumberOfItemsWithCommon.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <th></th>
+                        <th>@Shared.Yes</th>
+                        <th>@Shared.No</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+    <div id="pieChart" style="display:none" class="reportViewContent">
+        <div class="col-md-12 row grid">
+
+            <div class="datasetChart">
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="metadataChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="productSpecificationChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="sosiRequirementsChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="gmlRequirementsChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="wmsChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="wfsChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="atomFeedChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="commonChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="inspireThemeChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="dokChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="nationalDatasetChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="PlanChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="GeodatalovChart"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="barChart" style="display: none" class="reportViewContent">
+        <div class="row col-md-12 datasetChart">
+            <canvas id="statusBarChart"></canvas>
+        </div>
+    </div>
+
+    <div id="lineChart" style="display: none" class="reportViewContent">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 form-group">
+                @using (Html.BeginForm("DetailsMareanoStatusRegistry", "Registers", FormMethod.Get))
+                {
+
+                    @Html.Hidden("MareanoSelectedTab", "report")
+                    @Html.DropDownList("StatusType", Model.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
+                }
+            </div>
+
+            <div id="lineChartStatus">
+                <div class="col-md-12">
+                    <canvas id="LineChart" height="200" chart-colors="colors"></canvas>
+                </div>
+            </div>
+
+            <div id="lineChartAll">
+                <div class="col-md-12">
+                    <canvas id="myChart" height="200" style="background-color: #ffffff"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+}

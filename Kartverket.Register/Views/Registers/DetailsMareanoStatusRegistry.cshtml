@@ -19,7 +19,7 @@
 @section Scripts {
     @if (Model.StatusReport != null && !Model.StatusReport.ReportNotExists)
     {
-        @Html.Partial("js/_GeodatalovReportCharts", (GeodatalovDatasetStatusReportViewModel)Model.StatusReport)
+        @Html.Partial("js/_MareanoReportCharts", (MareanoDatasetStatusReportViewModel)Model.StatusReport)
     }
 
     <script>
@@ -34,7 +34,7 @@
             }
         });
 
-        var selectedTabParameter = getParameterByName("geodatalovselectedtab");
+        var selectedTabParameter = getParameterByName("mareanoselectedtab");
         var selectedTab = document.getElementById('dataset-Tab');
         console.log(selectedTabParameter);
         if (selectedTabParameter != "") {
@@ -79,10 +79,10 @@
                 <ul id="tabs" class="nav nav-tabs">
 
                     <li id="dataset-Tab" class="tab active">
-                        @Html.ActionLink(DataSet.Dataset, "DetailsGeodatalovStatusRegistry", Request.QueryString.ToRouteValueDictionary("GeodatalovSelectedTab", "dataset"))
+                        @Html.ActionLink(DataSet.Dataset, "DetailsMareanoStatusRegistry", Request.QueryString.ToRouteValueDictionary("MareanoSelectedTab", "dataset"))
                     </li>
                     <li id="report-Tab" class="tab">
-                        @Html.ActionLink(InspireDataSet.Reports, "DetailsGeodatalovStatusRegistry", Request.QueryString.ToRouteValueDictionary("GeodatalovSelectedTab", "report"))
+                        @Html.ActionLink(InspireDataSet.Reports, "DetailsMareanoStatusRegistry", Request.QueryString.ToRouteValueDictionary("MareanoSelectedTab", "report"))
                     </li>
                 </ul>
             </div>
@@ -90,7 +90,7 @@
     </div>
 </section>
 
-@if (!Model.SelectedGeodatalovTabIsReport())
+@if (!Model.SelectedMareanoTabIsReport())
 {
     <div class="row search-result-navigation">
         <div class="col-md-4">
@@ -108,22 +108,6 @@
             }
         </div>
         <div class="col-md-4 pull-right">
-            <form style="display: inline">
-                <input type="hidden" name="text" value="@Request.QueryString["text"]" />
-                <div class="custom-select">
-                    @{ var filter = Request.QueryString["GeodataType"]; }
-                    <select name="GeodataType" class="form-control" onchange="this.form.submit();">
-                        <option value="">Alle typer</option>
-                        <option value="inspire" @(filter == "inspire" ? "selected" : "")>Inspire</option>
-                        <option value="dok" @(filter == "dok" ? "selected" : "")>Dok</option>
-                        <option value="norgedigitalt" @(filter == "norgedigitalt" ? "selected" : "")>Norge digitalt</option>
-                        <option value="arealplaner" @(filter == "arealplaner" ? "selected" : "")>Arealplaner</option>
-                        <option value="geodatalov" @(filter == "geodatalov" ? "selected" : "")>Geodatalov</option>
-                        <option value="mareano" @(filter == "mareano" ? "selected" : "")>Mareano</option>
-                        <option value="ecologicalBaseMap" @(filter == "ecologicalBaseMap" ? "selected" : "")>Økologiske grunnkart</option>
-                    </select>
-                </div>
-            </form>
             @Html.Partial("_otherformats")
         </div>
     </div>
@@ -134,20 +118,20 @@
 }
 
 
-@if (Model.SelectedGeodatalovTabIsReport())
+@if (Model.SelectedMareanoTabIsReport())
 {
-    if (Model.StatusReport is GeodatalovDatasetStatusReportViewModel)
+    if (Model.StatusReport is MareanoDatasetStatusReportViewModel)
     {
-        @Html.Partial("_geodatalovReport", (GeodatalovDatasetStatusReportViewModel)Model.StatusReport)
+        @Html.Partial("_mareanoReport", (MareanoDatasetStatusReportViewModel)Model.StatusReport)
     }
 }
 else
 {
-    @Html.Partial("_geodatalovDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+    @Html.Partial("_mareanoDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
 }
 
 
-@if (!Model.SelectedGeodatalovTabIsReport())
+@if (!Model.SelectedMareanoTabIsReport())
 {<div class="clearfix"></div>
     <div class="col-sm-12 row">
         @if (Model.ContainedItemClassIsRegister())
@@ -167,7 +151,7 @@ else
 
 <div class="clearfix"></div>
 <div class="hidden-print">
-    @if (!Model.SelectedGeodatalovTabIsReport())
+    @if (!Model.SelectedMareanoTabIsReport())
     {
         if (Model.AccessRegister.EditListOfRegisterItems)
         {
@@ -190,3 +174,4 @@ else
 </div>
 <script src="/Scripts/vue.js"></script>
 <script src="/Scripts/chart.js"></script>
+

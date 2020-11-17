@@ -6,12 +6,14 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Xml;
-using FluentFTP;
 using System.Threading.Tasks;
 using Kartverket.Geonorge.Utilities.LogEntry;
 using System.Security.Claims;
 using Geonorge.AuthLib.Common;
 using System.Web.Configuration;
+using Renci.SshNet;
+using Renci.SshNet.Sftp;
+using Renci.SshNet.Common;
 
 namespace Kartverket.Register.Services
 {
@@ -115,26 +117,35 @@ namespace Kartverket.Register.Services
         {
             try
             {
-                Uri uri = new Uri(SchemaFtpSiteTest);
-                FtpClient client = new FtpClient(uri.Scheme + Uri.SchemeDelimiter + uri.Host);
-                client.OnLogEvent = OnFTPLogEvent;
-                client.Port = uri.Port;
-                client.Credentials = new NetworkCredential(SchemaUsernameTest, SchemaPasswordTest);
 
-                client.Connect();
+            
+                using (var sftp = new SftpClient(SchemaFtpSiteTest, SchemaUsernameTest, SchemaPasswordTest))
+                {
+                    sftp.Connect();
 
-                FtpStatus status = client.Upload(file.InputStream, path + "/" + file.FileName, FtpRemoteExists.Overwrite, true);
+                    string[] subDirs = path.Split('/');
 
-                if (status == FtpStatus.Failed) {
-                    Log.Error("Opplasting av fil " + path + "/" + file.FileName + " feilet");
-                    throw new Exception("Opplasting til ftp server feilet");
+                    string currentDir = "";
+
+                    foreach (string subDir in subDirs)
+                    {
+                        currentDir = currentDir + "/" + subDir;
+                        try { 
+                        SftpFile folder = sftp.Get(currentDir);
+                        }
+                        catch(SftpPathNotFoundException ex)
+                        {
+                            sftp.CreateDirectory(currentDir);
+                        }
+
+                    }
+                    sftp.UploadFile(file.InputStream, path + "/" + file.FileName, true);
+                    sftp.Disconnect();
                 }
-
-                client.Disconnect();
             }
             catch (Exception ex) {
-                Log.Error(ex);
-                throw new Exception("Ftp skjema feilet");
+                Log.Error("Sftp opplasting til skjema test feilet.", ex);
+                throw new Exception("Sftp skjema test feilet");
             }
 
             Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = path + "/" + file.FileName, Operation = Operation.Added, User = ClaimsPrincipal.Current.GetUsername(), Description = "Ftp gml-skjema til test" }));
@@ -148,46 +159,49 @@ namespace Kartverket.Register.Services
             {
                 User user = GetUser();
 
-                Uri uri = new Uri(SchemaFtpSiteTest);
-                FtpClient source = new FtpClient(uri.Scheme + Uri.SchemeDelimiter + uri.Host);
-                source.OnLogEvent = OnFTPLogEvent;
-                source.Port = uri.Port;
-                source.Credentials = new NetworkCredential(SchemaUsernameTest, SchemaPasswordTest);
-
-                source.Connect();
-
                 MemoryStream stream = new MemoryStream();
 
-                source.Download(stream, path + "/" + filename);
-
-
-                uri = new Uri(SchemaFtpSite);
-                FtpClient target = new FtpClient(uri.Scheme + Uri.SchemeDelimiter + uri.Host);
-                target.OnLogEvent = OnFTPLogEvent;
-                target.Port = uri.Port;
-                target.Credentials = new NetworkCredential(user.Username, user.Password);
-
-                target.Connect();
-
-                if(!string.IsNullOrEmpty(SchemaFtpWorkingDirectory))
-                    target.SetWorkingDirectory(SchemaFtpWorkingDirectory);
-
-                FtpStatus status = target.Upload(stream, path + "/" + filename, FtpRemoteExists.Overwrite, true);
-
-                if (status == FtpStatus.Failed)
+                using (var sftp = new SftpClient(SchemaFtpSiteTest, SchemaUsernameTest, SchemaPasswordTest))
                 {
-                    Log.Error("Kopiering av fil " + path + "/" + filename + " feilet");
-                    throw new Exception("Kopiering mellom til ftp servere feilet");
+                    sftp.Connect();
+
+                    sftp.DownloadFile(path + "/" + filename, stream);
+                    sftp.Disconnect();
                 }
 
-                stream.Close();
-                source.Disconnect();
-                target.Disconnect();
+                string prodFolder = "";
+                if (WebConfigurationManager.AppSettings["EnvironmentName"] != "")
+                    prodFolder = "prod/";
+
+                    using (var sftp = new SftpClient(SchemaFtpSite, user.Username, user.Password))
+                {
+                    sftp.Connect();
+
+                    string[] subDirs = path.Split('/');
+
+                    string currentDir = prodFolder;
+
+                    foreach (string subDir in subDirs)
+                    {
+                        currentDir = currentDir + "/" + subDir;
+                        try
+                        {
+                            SftpFile folder = sftp.Get(currentDir);
+                        }
+                        catch (SftpPathNotFoundException ex)
+                        {
+                            sftp.CreateDirectory(currentDir);
+                        }
+                    }
+                    var filePath = prodFolder + path + "/" + filename;
+                    sftp.UploadFile(stream, filePath, true);
+                    sftp.Disconnect();
+                }
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                throw new Exception("Ftp skjema feilet");
+                throw new Exception("Sftp skjema feilet");
             }
 
             Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = path + "/" + filename, Operation = Operation.Added, User = ClaimsPrincipal.Current.GetUsername(), Description = "Ftp gml-skjema til prod" }));
@@ -205,7 +219,10 @@ namespace Kartverket.Register.Services
             {
                 if(users[u] == user)
                 {
-                    return new User { Username = users[u], Password = passwords[u] };
+                    if(WebConfigurationManager.AppSettings["EnvironmentName"] != "")
+                        return new User { Username = SchemaUsernameTest, Password = SchemaPasswordTest };
+                    else
+                        return new User { Username = users[u], Password = passwords[u] };
                 }
             }
           
@@ -214,25 +231,25 @@ namespace Kartverket.Register.Services
 
         }
 
-        private static void OnFTPLogEvent(FtpTraceLevel ftpTraceLevel, string logMessage)
-        {
-            switch (ftpTraceLevel)
-            {
-                case FtpTraceLevel.Error:
-                    Log.Error(logMessage);
-                    break;
-                case FtpTraceLevel.Verbose:
-                    Log.Debug(logMessage);
-                    break;
-                case FtpTraceLevel.Warn:
-                    Log.Warn(logMessage);
-                    break;
-                case FtpTraceLevel.Info:
-                default:
-                    Log.Info(logMessage);
-                    break;
-            }
-        }
+        //private static void OnFTPLogEvent(FtpTraceLevel ftpTraceLevel, string logMessage)
+        //{
+        //    switch (ftpTraceLevel)
+        //    {
+        //        case FtpTraceLevel.Error:
+        //            Log.Error(logMessage);
+        //            break;
+        //        case FtpTraceLevel.Verbose:
+        //            Log.Debug(logMessage);
+        //            break;
+        //        case FtpTraceLevel.Warn:
+        //            Log.Warn(logMessage);
+        //            break;
+        //        case FtpTraceLevel.Info:
+        //        default:
+        //            Log.Info(logMessage);
+        //            break;
+        //    }
+        //}
 
     }
 

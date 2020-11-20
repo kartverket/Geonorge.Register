@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -47,6 +47,7 @@ namespace Kartverket.Register.Services
         string SchemaFtpSiteTest = WebConfigurationManager.AppSettings["SchemaFtpSiteTest"];
         string SchemaUsernameTest = WebConfigurationManager.AppSettings["SchemaFtpUsernameTest"];
         string SchemaPasswordTest = WebConfigurationManager.AppSettings["SchemaFtpPasswordTest"];
+        string SchemaFtpWorkingDirectoryTest = WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectoryTest"];
 
         public string Synchronize(HttpPostedFileBase file)
         {
@@ -125,7 +126,7 @@ namespace Kartverket.Register.Services
 
                     string[] subDirs = path.Split('/');
 
-                    string currentDir = "";
+                    string currentDir = SchemaFtpWorkingDirectoryTest;
 
                     foreach (string subDir in subDirs)
                     {
@@ -139,7 +140,12 @@ namespace Kartverket.Register.Services
                         }
 
                     }
-                    sftp.UploadFile(file.InputStream, path + "/" + file.FileName, true);
+
+                    var filePath = currentDir + "/" + file.FileName;
+                    var fileStream = file.InputStream;
+                    fileStream.Position = 0;
+
+                    sftp.UploadFile(fileStream, filePath, true);
                     sftp.Disconnect();
                 }
             }
@@ -165,21 +171,17 @@ namespace Kartverket.Register.Services
                 {
                     sftp.Connect();
 
-                    sftp.DownloadFile(path + "/" + filename, stream);
+                    sftp.DownloadFile(SchemaFtpWorkingDirectoryTest + "/" + path + "/" + filename, stream);
                     sftp.Disconnect();
                 }
 
-                string prodFolder = "";
-                if (WebConfigurationManager.AppSettings["EnvironmentName"] != "")
-                    prodFolder = "prod/";
-
-                    using (var sftp = new SftpClient(SchemaFtpSite, user.Username, user.Password))
+                using (var sftp = new SftpClient(SchemaFtpSite, user.Username, user.Password))
                 {
                     sftp.Connect();
 
                     string[] subDirs = path.Split('/');
 
-                    string currentDir = prodFolder;
+                    string currentDir = SchemaFtpWorkingDirectory;
 
                     foreach (string subDir in subDirs)
                     {
@@ -193,7 +195,10 @@ namespace Kartverket.Register.Services
                             sftp.CreateDirectory(currentDir);
                         }
                     }
-                    var filePath = prodFolder + path + "/" + filename;
+
+                    stream.Position = 0;
+
+                    var filePath = currentDir + "/" + filename;
                     sftp.UploadFile(stream, filePath, true);
                     sftp.Disconnect();
                 }
@@ -219,37 +224,14 @@ namespace Kartverket.Register.Services
             {
                 if(users[u] == user)
                 {
-                    if(WebConfigurationManager.AppSettings["EnvironmentName"] != "")
-                        return new User { Username = SchemaUsernameTest, Password = SchemaPasswordTest };
-                    else
-                        return new User { Username = users[u], Password = passwords[u] };
+                    return new User { Username = users[u], Password = passwords[u] };
                 }
             }
           
-            Log.Error("User " + user + " does not have ftp rights");
+            Log.Error("User " + user + " does not have sftp rights");
             throw new Exception("Permission denied");
 
         }
-
-        //private static void OnFTPLogEvent(FtpTraceLevel ftpTraceLevel, string logMessage)
-        //{
-        //    switch (ftpTraceLevel)
-        //    {
-        //        case FtpTraceLevel.Error:
-        //            Log.Error(logMessage);
-        //            break;
-        //        case FtpTraceLevel.Verbose:
-        //            Log.Debug(logMessage);
-        //            break;
-        //        case FtpTraceLevel.Warn:
-        //            Log.Warn(logMessage);
-        //            break;
-        //        case FtpTraceLevel.Info:
-        //        default:
-        //            Log.Info(logMessage);
-        //            break;
-        //    }
-        //}
 
     }
 

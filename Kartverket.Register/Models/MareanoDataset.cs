@@ -1,12 +1,45 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Kartverket.Register.Models.FAIR;
 
 namespace Kartverket.Register.Models
 {
     public class MareanoDataset : DatasetV2
     {
-        //Todo FAIR delivery status
+        //FAIR delivery status
+
+        //Findable
+        [ForeignKey("FindableStatus"), Required, Display(Name = "Findable-status:")]
+        public Guid FindableStatusId { get; set; }
+        public double FindableStatusPerCent { get; set; }
+        public virtual FAIRDelivery FindableStatus { get; set; }
+
+        //Accesible 
+        [ForeignKey("AccesibleStatus"), Required, Display(Name = "Accesible-status:")]
+        public Guid AccesibleStatusId { get; set; }
+        public double AccesibleStatusPerCent { get; set; }
+        public virtual FAIRDelivery AccesibleStatus { get; set; }
+
+        //Interoperable 
+        [ForeignKey("InteroperableStatus"), Required, Display(Name = "Interoperable-status:")]
+        public Guid InteroperableStatusId { get; set; }
+        public double InteroperableStatusPerCent { get; set; }
+        public virtual FAIRDelivery InteroperableStatus { get; set; }
+
+        //ReUseable 
+        [ForeignKey("ReUseableStatus"), Required, Display(Name = "Re-useable-status:")]
+        public Guid ReUseableStatusId { get; set; }
+        public double ReUseableStatusPerCent { get; set; }
+        public virtual FAIRDelivery ReUseableStatus { get; set; }
+
+        //Total FAIR 
+        [ForeignKey("FAIRStatus"), Required, Display(Name = "FAIR-status:")]
+        public Guid FAIRStatusId { get; set; }
+        public double FAIRStatusPerCent { get; set; }
+        public virtual FAIRDelivery FAIRStatus { get; set; }
+
+        public virtual FAIRCriteria Criterias { get; set; }
 
         //Mareano delivery statuses
 

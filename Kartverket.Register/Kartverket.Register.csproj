@@ -1122,6 +1122,10 @@
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\FAIR\FAIRConstants.cs" />
+    <Compile Include="Models\FAIR\FAIRCriteria.cs" />
+    <Compile Include="Models\FAIR\FAIRDelivery.cs" />
+    <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
     <Compile Include="Models\MareanoDataset.cs" />
     <Compile Include="Models\StatusReports\MareanoDatasetStatusReport.cs" />

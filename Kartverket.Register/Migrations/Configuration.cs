@@ -120,6 +120,14 @@ namespace Kartverket.Register.Migrations
                 new Models.DokDeliveryStatus { value = "notset", description = "Ikke angitt" }
             );
 
+            context.FAIRDeliveryStatuses.AddOrUpdate(
+                new Models.FAIRDeliveryStatus { value = "deficient", description = "Ikke levert" },
+                new Models.FAIRDeliveryStatus { value = "satisfactory", description = "Tilfredsstillende" },
+                new Models.FAIRDeliveryStatus { value = "useable", description = "Brukbar" },
+                new Models.FAIRDeliveryStatus { value = "good", description = "God" },
+                new Models.FAIRDeliveryStatus { value = "notset", description = "Ikke angitt" }
+            );
+
             context.AccessTypes.AddOrUpdate(
                 new accessType { accessLevel = 1, description = "Only admin kan create, edit or delete" },
                 new accessType { accessLevel = 2, description = "Editor can create, edit or delete their owne items" },

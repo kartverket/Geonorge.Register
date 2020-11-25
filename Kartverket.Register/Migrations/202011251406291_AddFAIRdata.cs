@@ -29,15 +29,15 @@
                     })
                 .PrimaryKey(t => t.value);
             
-            AddColumn("dbo.MareanoDatasets", "FindableStatusId", c => c.Guid(nullable: true));
+            AddColumn("dbo.MareanoDatasets", "FindableStatusId", c => c.Guid(nullable: false));
             AddColumn("dbo.MareanoDatasets", "FindableStatusPerCent", c => c.Double(nullable: false));
-            AddColumn("dbo.MareanoDatasets", "AccesibleStatusId", c => c.Guid(nullable: true));
+            AddColumn("dbo.MareanoDatasets", "AccesibleStatusId", c => c.Guid(nullable: false));
             AddColumn("dbo.MareanoDatasets", "AccesibleStatusPerCent", c => c.Double(nullable: false));
-            AddColumn("dbo.MareanoDatasets", "InteroperableStatusId", c => c.Guid(nullable: true));
+            AddColumn("dbo.MareanoDatasets", "InteroperableStatusId", c => c.Guid(nullable: false));
             AddColumn("dbo.MareanoDatasets", "InteroperableStatusPerCent", c => c.Double(nullable: false));
-            AddColumn("dbo.MareanoDatasets", "ReUseableStatusId", c => c.Guid(nullable: true));
+            AddColumn("dbo.MareanoDatasets", "ReUseableStatusId", c => c.Guid(nullable: false));
             AddColumn("dbo.MareanoDatasets", "ReUseableStatusPerCent", c => c.Double(nullable: false));
-            AddColumn("dbo.MareanoDatasets", "FAIRStatusId", c => c.Guid(nullable: true));
+            AddColumn("dbo.MareanoDatasets", "FAIRStatusId", c => c.Guid(nullable: false));
             AddColumn("dbo.MareanoDatasets", "FAIRStatusPerCent", c => c.Double(nullable: false));
             AddColumn("dbo.MareanoDatasets", "F1_a_Criteria", c => c.Boolean(nullable: false));
             AddColumn("dbo.MareanoDatasets", "F2_a_Criteria", c => c.Boolean(nullable: false));

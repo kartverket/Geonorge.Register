@@ -2410,9 +2410,19 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.MareanoDataSet.Accesible_Label">
+            <summary>
+              Looks up a localized string similar to Accesible.
+            </summary>
+        </member>
         <member name="P:Resources.MareanoDataSet.Common">
             <summary>
               Looks up a localized string similar to Nedlastingskrav status.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.Delivery_Status_Satisfactory">
+            <summary>
+              Looks up a localized string similar to Tilfredsstillende.
             </summary>
         </member>
         <member name="P:Resources.MareanoDataSet.F1_a_Criteria">
@@ -2468,6 +2478,16 @@
         <member name="P:Resources.MareanoDataSet.Findable_Label">
             <summary>
               Looks up a localized string similar to Findable.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.Interoperable_Label">
+            <summary>
+              Looks up a localized string similar to Interoperable.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.ReUseable_Label">
+            <summary>
+              Looks up a localized string similar to Re-useable.
             </summary>
         </member>
         <member name="T:Resources.GeodatalovDataSet">

@@ -61,11 +61,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accesible.
+        /// </summary>
+        public static string Accesible_Label {
+            get {
+                return ResourceManager.GetString("Accesible_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nedlastingskrav status.
         /// </summary>
         public static string Common {
             get {
                 return ResourceManager.GetString("Common", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tilfredsstillende.
+        /// </summary>
+        public static string Delivery_Status_Satisfactory {
+            get {
+                return ResourceManager.GetString("Delivery_Status_Satisfactory", resourceCulture);
             }
         }
         
@@ -165,6 +183,24 @@ namespace Resources {
         public static string Findable_Label {
             get {
                 return ResourceManager.GetString("Findable_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interoperable.
+        /// </summary>
+        public static string Interoperable_Label {
+            get {
+                return ResourceManager.GetString("Interoperable_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-useable.
+        /// </summary>
+        public static string ReUseable_Label {
+            get {
+                return ResourceManager.GetString("ReUseable_Label", resourceCulture);
             }
         }
     }

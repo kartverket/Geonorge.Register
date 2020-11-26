@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Accesible_Label" xml:space="preserve">
+    <value>Accesible</value>
+  </data>
   <data name="Common" xml:space="preserve">
     <value>Nedlastingskrav status</value>
+  </data>
+  <data name="Delivery_Status_Satisfactory" xml:space="preserve">
+    <value>Tilfredsstillende</value>
   </data>
   <data name="F1_a_Criteria" xml:space="preserve">
     <value>Sjekker at metadata har uuid (gmd:fileIdentifier)</value>
@@ -152,5 +158,11 @@
   </data>
   <data name="Findable_Label" xml:space="preserve">
     <value>Findable</value>
+  </data>
+  <data name="Interoperable_Label" xml:space="preserve">
+    <value>Interoperable</value>
+  </data>
+  <data name="ReUseable_Label" xml:space="preserve">
+    <value>Re-useable</value>
   </data>
 </root>

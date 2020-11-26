@@ -7,6 +7,31 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class MareanoDatasetViewModel : DatasetViewModel
     {
+        [Display(Name = "Findable_Label", ResourceType = typeof(MareanoDataSet))]
+        public string FindableStatusId { get; set; }
+        public virtual FAIRDeliveryStatus FindableStatus { get; set; }
+        public string FindableNote { get; set; }
+        public bool FindableAutoUpdate { get; set; }
+
+        [Display(Name = "Accesible_Label", ResourceType = typeof(MareanoDataSet))]
+        public string AccesibleStatusId { get; set; }
+        public virtual FAIRDeliveryStatus AccesibleStatus { get; set; }
+        public string AccesibleNote { get; set; }
+        public bool AccesibleAutoUpdate { get; set; }
+
+        [Display(Name = "Interoperable_Label", ResourceType = typeof(MareanoDataSet))]
+        public string InteroperableStatusId { get; set; }
+        public virtual FAIRDeliveryStatus InteroperableStatus { get; set; }
+        public string InteroperableNote { get; set; }
+        public bool InteroperableAutoUpdate { get; set; }
+
+        [Display(Name = "ReUseable_Label", ResourceType = typeof(MareanoDataSet))]
+        public string ReUseableStatusId { get; set; }
+        public virtual FAIRDeliveryStatus ReUseableStatus { get; set; }
+        public string ReUseableNote { get; set; }
+        public bool ReUseableAutoUpdate { get; set; }
+
+
         [Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
         public string MetadataStatusId { get; set; }
         public virtual DokDeliveryStatus MetadataStatus { get; set; }
@@ -68,6 +93,34 @@ namespace Kartverket.Register.Models.ViewModels
         {
             if (mareanoDataset != null)
             {
+                if (mareanoDataset.FindableStatus != null)
+                {
+                    FindableStatusId = mareanoDataset.FindableStatus.StatusId;
+                    FindableStatus = mareanoDataset.FindableStatus.Status;
+                    FindableNote = mareanoDataset.FindableStatus.Note;
+                    FindableAutoUpdate = mareanoDataset.FindableStatus.AutoUpdate;
+                }
+                if (mareanoDataset.AccesibleStatus != null)
+                {
+                    AccesibleStatusId = mareanoDataset.AccesibleStatus.StatusId;
+                    AccesibleStatus = mareanoDataset.AccesibleStatus.Status;
+                    AccesibleNote = mareanoDataset.AccesibleStatus.Note;
+                    AccesibleAutoUpdate = mareanoDataset.AccesibleStatus.AutoUpdate;
+                }
+                if (mareanoDataset.InteroperableStatus != null)
+                {
+                    InteroperableStatusId = mareanoDataset.InteroperableStatus.StatusId;
+                    InteroperableStatus = mareanoDataset.InteroperableStatus.Status;
+                    InteroperableNote = mareanoDataset.InteroperableStatus.Note;
+                    InteroperableAutoUpdate = mareanoDataset.InteroperableStatus.AutoUpdate;
+                }
+                if (mareanoDataset.ReUseableStatus != null)
+                {
+                    ReUseableStatusId = mareanoDataset.ReUseableStatus.StatusId;
+                    ReUseableStatus = mareanoDataset.ReUseableStatus.Status;
+                    ReUseableNote = mareanoDataset.ReUseableStatus.Note;
+                    ReUseableAutoUpdate = mareanoDataset.ReUseableStatus.AutoUpdate;
+                }
                 if (mareanoDataset.MetadataStatus != null)
                 {
                     MetadataStatusId = mareanoDataset.MetadataStatus.StatusId;

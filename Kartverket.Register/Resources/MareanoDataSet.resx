@@ -120,4 +120,37 @@
   <data name="Common" xml:space="preserve">
     <value>Nedlastingskrav status</value>
   </data>
+  <data name="F1_a_Criteria" xml:space="preserve">
+    <value>Sjekker at metadata har uuid (gmd:fileIdentifier)</value>
+  </data>
+  <data name="F1_Label" xml:space="preserve">
+    <value>F1: Metadata har uuid</value>
+  </data>
+  <data name="F2_a_Criteria" xml:space="preserve">
+    <value>Minst tre tematiske nøkkelord skal være lagt inn</value>
+  </data>
+  <data name="F2_b_Criteria" xml:space="preserve">
+    <value>Tittel er på maks 100 tegn</value>
+  </data>
+  <data name="F2_c_Criteria" xml:space="preserve">
+    <value>Beskrivelse skal være på minst 200 tegn og maks 600 tegn</value>
+  </data>
+  <data name="F2_Label" xml:space="preserve">
+    <value>F2: Det finnes rike søkemetadata</value>
+  </data>
+  <data name="F3_a_Criteria" xml:space="preserve">
+    <value>Sjekker at metadata har utfylt dataset-id (MD_Identifier - Code og Namespace)</value>
+  </data>
+  <data name="F3_Label" xml:space="preserve">
+    <value>F3: Metadata har datasett-id</value>
+  </data>
+  <data name="F4_a_Criteria" xml:space="preserve">
+    <value>Metadata skal være søkbare gjennom åpne protokoller og apier</value>
+  </data>
+  <data name="F4_Label" xml:space="preserve">
+    <value>F4: Søkbare</value>
+  </data>
+  <data name="Findable_Label" xml:space="preserve">
+    <value>Findable</value>
+  </data>
 </root>

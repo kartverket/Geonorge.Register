@@ -13,6 +13,7 @@ using System.Web.Configuration;
 using System.Security.Claims;
 using Kartverket.Register.Models.StatusReports;
 using Geonorge.AuthLib.Common;
+using Kartverket.Register.Models.FAIR;
 
 namespace Kartverket.Register.Models
 {
@@ -52,6 +53,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
         public virtual DbSet<GeodatalovDataset> GeodatalovDatasets { get; set; }
         public virtual DbSet<MareanoDataset> MareanoDatasets { get; set; }
+        public virtual DbSet<FAIRDelivery> FAIRDeliveries { get; set; }
         public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
         public virtual DbSet<InspireDataService> InspireDataServices { get; set; }
         public virtual DbSet<InspireMonitoring> InspireMonitorings { get; set; }

@@ -2415,6 +2415,61 @@
               Looks up a localized string similar to Nedlastingskrav status.
             </summary>
         </member>
+        <member name="P:Resources.MareanoDataSet.F1_a_Criteria">
+            <summary>
+              Looks up a localized string similar to Sjekker at metadata har uuid (gmd:fileIdentifier).
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.F1_Label">
+            <summary>
+              Looks up a localized string similar to F1: Metadata har uuid.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.F2_a_Criteria">
+            <summary>
+              Looks up a localized string similar to Minst tre tematiske nøkkelord skal være lagt inn.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.F2_b_Criteria">
+            <summary>
+              Looks up a localized string similar to Tittel er på maks 100 tegn.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.F2_c_Criteria">
+            <summary>
+              Looks up a localized string similar to Beskrivelse skal være på minst 200 tegn og maks 600 tegn.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.F2_Label">
+            <summary>
+              Looks up a localized string similar to F2: Det finnes rike søkemetadata.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.F3_a_Criteria">
+            <summary>
+              Looks up a localized string similar to Sjekker at metadata har utfylt dataset-id (MD_Identifier - Code og Namespace).
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.F3_Label">
+            <summary>
+              Looks up a localized string similar to F3: Metadata har datasett-id.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.F4_a_Criteria">
+            <summary>
+              Looks up a localized string similar to Metadata skal være søkbare gjennom åpne protokoller og apier.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.F4_Label">
+            <summary>
+              Looks up a localized string similar to F4: Søkbare.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.Findable_Label">
+            <summary>
+              Looks up a localized string similar to Findable.
+            </summary>
+        </member>
         <member name="T:Resources.GeodatalovDataSet">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

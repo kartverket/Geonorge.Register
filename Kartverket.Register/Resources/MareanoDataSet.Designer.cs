@@ -68,5 +68,104 @@ namespace Resources {
                 return ResourceManager.GetString("Common", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sjekker at metadata har uuid (gmd:fileIdentifier).
+        /// </summary>
+        public static string F1_a_Criteria {
+            get {
+                return ResourceManager.GetString("F1_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F1: Metadata har uuid.
+        /// </summary>
+        public static string F1_Label {
+            get {
+                return ResourceManager.GetString("F1_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minst tre tematiske nøkkelord skal være lagt inn.
+        /// </summary>
+        public static string F2_a_Criteria {
+            get {
+                return ResourceManager.GetString("F2_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tittel er på maks 100 tegn.
+        /// </summary>
+        public static string F2_b_Criteria {
+            get {
+                return ResourceManager.GetString("F2_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beskrivelse skal være på minst 200 tegn og maks 600 tegn.
+        /// </summary>
+        public static string F2_c_Criteria {
+            get {
+                return ResourceManager.GetString("F2_c_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F2: Det finnes rike søkemetadata.
+        /// </summary>
+        public static string F2_Label {
+            get {
+                return ResourceManager.GetString("F2_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sjekker at metadata har utfylt dataset-id (MD_Identifier - Code og Namespace).
+        /// </summary>
+        public static string F3_a_Criteria {
+            get {
+                return ResourceManager.GetString("F3_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F3: Metadata har datasett-id.
+        /// </summary>
+        public static string F3_Label {
+            get {
+                return ResourceManager.GetString("F3_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata skal være søkbare gjennom åpne protokoller og apier.
+        /// </summary>
+        public static string F4_a_Criteria {
+            get {
+                return ResourceManager.GetString("F4_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F4: Søkbare.
+        /// </summary>
+        public static string F4_Label {
+            get {
+                return ResourceManager.GetString("F4_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Findable.
+        /// </summary>
+        public static string Findable_Label {
+            get {
+                return ResourceManager.GetString("Findable_Label", resourceCulture);
+            }
+        }
     }
 }

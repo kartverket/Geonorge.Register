@@ -9,6 +9,8 @@ using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
+using GeoNorgeAPI;
+using Kartverket.Register.Models.FAIR;
 
 namespace Kartverket.Register.Services
 {
@@ -19,6 +21,7 @@ namespace Kartverket.Register.Services
         private readonly IDatasetDeliveryService _datasetDeliveryService;
         private readonly IRegisterItemService _registerItemService;
         private readonly MetadataService _metadataService;
+        MetadataModel _metadata;
 
         public MareanoDatasetService(RegisterDbContext dbContext)
         {
@@ -248,6 +251,8 @@ namespace Kartverket.Register.Services
             //Update register
             foreach (var MareanoDataset in MareanoDatasetsFromKartkatalogen)
             {
+                _metadata = GetMetadata(MareanoDataset);
+
                 var originalMareanoDataset = GetMareanoDatasetByUuid(MareanoDataset.Uuid);
                 if (originalMareanoDataset != null)
                 {
@@ -258,6 +263,13 @@ namespace Kartverket.Register.Services
                     NewMareanoDatasetFromKartkatalogen(MareanoDataset);
                 }
             }
+        }
+
+        private MetadataModel GetMetadata(MareanoDataset mareanoDataset)
+        {
+            MetadataModel metadata = new MetadataModel();
+            metadata.SimpleMetadata = MetadataService.FetchMetadata(mareanoDataset.Uuid);
+            return metadata;
         }
 
         private void NewMareanoDatasetFromKartkatalogen(MareanoDataset MareanoDataset)
@@ -274,7 +286,6 @@ namespace Kartverket.Register.Services
             MareanoDataset.StatusId = "Submitted";
             MareanoDataset.DokStatusId = "Proposal";
 
-            //GetDeliveryStatuses(inspireDatasetViewModel, inspireDataset);
             var metadataStatusId = _datasetDeliveryService.GetMetadataStatus(MareanoDataset.Uuid);
             var productSpesificationStatusId = _registerService.GetDOKStatus(MareanoDataset.ProductSpecificationUrl, true, "deficient");
             var sosiDataStatusId = _registerService.GetSosiRequirements(MareanoDataset.Uuid, "", true, "deficient");
@@ -284,6 +295,8 @@ namespace Kartverket.Register.Services
             var atomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(MareanoDataset.Uuid);
             var commonStatusId = _datasetDeliveryService.GetDownloadRequirementsStatus(wfsStatusId, atomFeedStatusId);
 
+
+
             MareanoDataset.MetadataStatusId = _datasetDeliveryService.CreateDatasetDelivery(metadataStatusId);
             MareanoDataset.ProductSpesificationStatusId = _datasetDeliveryService.CreateDatasetDelivery(productSpesificationStatusId);
             MareanoDataset.SosiDataStatusId = _datasetDeliveryService.CreateDatasetDelivery(sosiDataStatusId);
@@ -292,10 +305,72 @@ namespace Kartverket.Register.Services
             MareanoDataset.WfsStatusId = _datasetDeliveryService.CreateDatasetDelivery(wfsStatusId);
             MareanoDataset.AtomFeedStatusId = _datasetDeliveryService.CreateDatasetDelivery(atomFeedStatusId);
             MareanoDataset.CommonStatusId = _datasetDeliveryService.CreateDatasetDelivery(commonStatusId);
-            _dbContext.MareanoDatasets.Add(MareanoDataset);
+
+            SetFAIR(ref MareanoDataset);
 
             _dbContext.MareanoDatasets.Add(MareanoDataset);
             _dbContext.SaveChanges();
+        }
+
+        private void SetFAIR(ref MareanoDataset mareanoDataset)
+        {
+            mareanoDataset.F2_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.TYPE_THEME, null).ToList().Count() >= 3;
+            mareanoDataset.F2_b_Criteria = _metadata.SimpleMetadata.Title.Count() <= 100;
+            mareanoDataset.F2_c_Criteria = _metadata.SimpleMetadata.Abstract?.Count() >= 200 && _metadata.SimpleMetadata.Abstract?.Count() <= 600;
+            mareanoDataset.F3_a_Criteria = _metadata.SimpleMetadata.ResourceReference.Code != null && _metadata.SimpleMetadata.ResourceReference.Codespace != null;
+
+            int findableWeight = 0;
+
+            if (mareanoDataset.F1_a_Criteria) findableWeight += 25;
+            if (mareanoDataset.F2_a_Criteria) findableWeight += 10;
+            if (mareanoDataset.F2_b_Criteria) findableWeight += 5;
+            if (mareanoDataset.F2_b_Criteria) findableWeight += 10;
+            if (mareanoDataset.F3_a_Criteria) findableWeight += 25;
+            if (mareanoDataset.F4_a_Criteria) findableWeight += 25;
+
+            mareanoDataset.FindableStatusPerCent = findableWeight;
+            mareanoDataset.FindableStatusId = CreateFairDelivery(findableWeight);
+
+
+            int accesibleWeight = 0;
+            //Todo criterias
+            mareanoDataset.AccesibleStatusPerCent = accesibleWeight;
+            mareanoDataset.AccesibleStatusId = CreateFairDelivery(accesibleWeight);
+
+            int interoperableWeight = 0;
+            //Todo criterias
+            mareanoDataset.InteroperableStatusPerCent = interoperableWeight;
+            mareanoDataset.InteroperableStatusId = CreateFairDelivery(interoperableWeight);
+
+            int reusableWeight = 0;
+            //Todo criterias
+            mareanoDataset.ReUseableStatusPerCent = reusableWeight;
+            mareanoDataset.ReUseableStatusId = CreateFairDelivery(reusableWeight);
+
+            int fairWeight = (findableWeight + accesibleWeight + interoperableWeight + reusableWeight) / 4;
+            mareanoDataset.FAIRStatusPerCent = fairWeight;
+            mareanoDataset.FAIRStatusId = CreateFairDelivery(fairWeight);
+
+        }
+
+        public Guid CreateFairDelivery(int weight, string fairStatusId = null, string note = "", bool autoupdate = true)
+        {
+            if (string.IsNullOrEmpty(fairStatusId))
+            {
+                if (weight >= 80)
+                    fairStatusId = FAIRDelivery.Good;
+                else if (weight < 80 && weight >= 50)
+                    fairStatusId = FAIRDelivery.Satisfactory;
+                else if (weight < 50 && weight >= 25)
+                    fairStatusId = FAIRDelivery.Useable;
+                else
+                    fairStatusId = FAIRDelivery.Deficient;
+            }
+
+            var fairDelivery = new FAIRDelivery(fairStatusId, note, autoupdate);
+            _dbContext.FAIRDeliveries.Add(fairDelivery);
+            _dbContext.SaveChanges();
+            return fairDelivery.FAIRDeliveryId;
         }
 
         private MareanoDataset UpdateMareanoDataset(MareanoDataset originalDataset, MareanoDataset MareanoDatasetFromKartkatalogen)
@@ -359,6 +434,8 @@ namespace Kartverket.Register.Services
                 originalDataset.CommonStatus.StatusId = _datasetDeliveryService.GetDownloadRequirementsStatus(originalDataset.WfsStatus?.StatusId, originalDataset.AtomFeedStatus?.StatusId);
             }
 
+            SetFAIR(ref originalDataset);
+
             _dbContext.Entry(originalDataset).State = EntityState.Modified;
             _dbContext.SaveChanges();
 
@@ -412,7 +489,7 @@ namespace Kartverket.Register.Services
         {
             var MareanoDatasetsFromKartkatalogen = new List<MareanoDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&Offset=1&limit=6000&mediatype=json";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=1&mediatype=json";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {
@@ -440,5 +517,10 @@ namespace Kartverket.Register.Services
                 return null;
             }
         }
+    }
+
+    internal class MetadataModel
+    {
+        public GeoNorgeAPI.SimpleMetadata SimpleMetadata { get; set; }
     }
 }

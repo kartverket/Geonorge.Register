@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Kartverket.Register.Models.FAIR;
+using Resources;
 
 namespace Kartverket.Register.Models
 {
@@ -41,50 +42,24 @@ namespace Kartverket.Register.Models
 
 
         #region Findable
-        [NotMapped]
-        public const string Findable_Label = "Findable";
 
-        [NotMapped]
-        public const string F1_Label = "F1: Metadata har uuid";
-
-        [Display(Name = "Sjekker at metadata har uuid (gmd:fileIdentifier)")]
+        [Display(Name = "F1_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool F1_a_Criteria { get; set; } = true;
-        [NotMapped]
-        public const int F1_a_Weight = 25;
 
-        [NotMapped]
-        public const string F2_Label = "F2: Det finnes rike søkemetadata";
-
-        [Display(Name = "Minst tre tematiske nøkkelord skal være lagt inn")]
+        [Display(Name = "F2_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool F2_a_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int F2_a_Weight = 10;
 
-        [Display(Name = "Tittel er på maks 100 tegn")]
+        [Display(Name = "F2_b_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool F2_b_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int F2_b_Weight = 5;
 
-        [Display(Name = "Beskrivelse skal være på minst 200 tegn og maks 600 tegn")]
+        [Display(Name = "F2_c_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool F2_c_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int F2_c_Weight = 10;
 
-        [NotMapped]
-        public const string F3_Label = "F3: Metadata har datasett-id";
-
-        [Display(Name = "Sjekker at metadata har utfylt dataset-id (MD_Identifier - Code og Namespace)")]
+        [Display(Name = "F3_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool F3_a_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int F3_a_Weight = 25;
 
-        [NotMapped]
-        public const string F4_Label = "F4: Søkbare";
-
-        [Display(Name = "Metadata skal være søkbare gjennom åpne protokoller og apier")]
+        [Display(Name = "F4_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool F4_a_Criteria { get; set; } = true;
-        [NotMapped]
-        public const int F4_a_Weight = 25;
 
         #endregion
 

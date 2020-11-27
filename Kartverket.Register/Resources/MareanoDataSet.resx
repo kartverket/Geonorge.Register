@@ -192,4 +192,70 @@
   <data name="A2_Label" xml:space="preserve">
     <value>A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig</value>
   </data>
+  <data name="I1_a_Criteria" xml:space="preserve">
+    <value>Metadata i Geonorge baseres på ISO19115 og distibueres som OGC:CSW og DCAT-AP-NO og metadata i Geonorge tilfredsstiller dette kravet</value>
+  </data>
+  <data name="I1_b_Criteria" xml:space="preserve">
+    <value>Datasett er distribuert på internasjonalt kjente og dokumenterte åpne formater. Sjekk om datasett distribueres som GML</value>
+  </data>
+  <data name="I1_c_Criteria" xml:space="preserve">
+    <value>Datasett på GML-format validerer i henhold til UML-modell</value>
+  </data>
+  <data name="I1_Label" xml:space="preserve">
+    <value>I1: Metadata er basert på internasjonale, godt dokumenterte og tilgjengelige standarder</value>
+  </data>
+  <data name="I2_a_Criteria" xml:space="preserve">
+    <value>Tematisk hovedkategori må være utfylt</value>
+  </data>
+  <data name="I2_b_Criteria" xml:space="preserve">
+    <value>Nasjonal temakategori er utfylt</value>
+  </data>
+  <data name="I2_Label" xml:space="preserve">
+    <value>I2: Begreper, terminologier, ontologier og kodeverk -  godt forvaltet og tilgjengelig</value>
+  </data>
+  <data name="I3_a_Criteria" xml:space="preserve">
+    <value>Metadata skal refererer til begreper i objektkatalogens UML-modell (Minst ett nøkkelord hvor Thesaurus må være "SOSI produktspesifikasjon")</value>
+  </data>
+  <data name="I3_b_Criteria" xml:space="preserve">
+    <value>Metadata skal referere til UML-modell i Objektkatalogen (MD_ApplicationSchemaInformation)</value>
+  </data>
+  <data name="I3_Label" xml:space="preserve">
+    <value>I3: Relasjoner mellom variabler er beskrevet – forståelig og presis tversgående sammenheng</value>
+  </data>
+  <data name="R1_a_Criteria" xml:space="preserve">
+    <value>Lisens er oppgitt</value>
+  </data>
+  <data name="R1_Label" xml:space="preserve">
+    <value>R1: Lisens er oppgitt</value>
+  </data>
+  <data name="R2_a_Criteria" xml:space="preserve">
+    <value>Prosesshistorie er oppgitt  og har mer enn 200 tegn</value>
+  </data>
+  <data name="R2_b_Criteria" xml:space="preserve">
+    <value>Status er fylt ut med verdi  (gmd:maintenanceAndUpdateFrequency)</value>
+  </data>
+  <data name="R2_c_Criteria" xml:space="preserve">
+    <value>Lenke til produktspesifikasjon</value>
+  </data>
+  <data name="R2_d_Criteria" xml:space="preserve">
+    <value>Målestokksområde er oppgitt</value>
+  </data>
+  <data name="R2_e_Criteria" xml:space="preserve">
+    <value>Dekningskart er oppgitt (kommunevis eller rutenett)</value>
+  </data>
+  <data name="R2_f_Criteria" xml:space="preserve">
+    <value>Formål er utfylt</value>
+  </data>
+  <data name="R2_Label" xml:space="preserve">
+    <value>R2: Metadata om kvalitet, dekning, bearbeiding, avledning, beregninger</value>
+  </data>
+  <data name="R3_a_Criteria" xml:space="preserve">
+    <value>Metadata følger ISO19115 og distribueres også i henhold til DCAT-profilen</value>
+  </data>
+  <data name="R3_b_Criteria" xml:space="preserve">
+    <value>Datasett leveres på internasjonale åpne formater = GML</value>
+  </data>
+  <data name="R3_Label" xml:space="preserve">
+    <value>R3: Metadata og datasett følger internasjonale standarder</value>
+  </data>
 </root>

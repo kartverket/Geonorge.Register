@@ -89,104 +89,58 @@ namespace Kartverket.Register.Models
         #endregion
 
         #region Interoperable
-        public const string Interoperable_Label = "Interoperable";
 
-        public const string I1_Label = "I1: Metadata er basert på internasjonale, godt dokumenterte og tilgjengelige standarder";
-
-        [Display(Name = "Metadata i Geonorge baseres på ISO19115 og distibueres som OGC:CSW og DCAT-AP-NO og metadata i Geonorge tilfredsstiller dette kravet")]
+        [Display(Name = "I1_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool I1_a_Criteria { get; set; } = true;
-        [NotMapped]
-        public const int I1_a_Weight = 20;
 
-        [Display(Name = "Datasett er distribuert på internasjonalt kjente og dokumenterte åpne formater. Sjekk om datasett distribueres som GML")]
+        [Display(Name = "I1_b_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool I1_b_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int I1_b_Weight = 10;
 
-        [Display(Name = "Datasett på GML-format validerer i henhold til UML-modell")]
+        [Display(Name = "I1_c_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool I1_c_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int I1_c_Weight = 20;
 
-        public const string I2_Label = "I2: Begreper, terminologier, ontologier og kodeverk -  godt forvaltet og tilgjengelig";
-
-        [Display(Name = "Tematisk hovedkategori må være utfylt")]
+        [Display(Name = "I2_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool I2_a_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int I2_a_Weight = 10;
 
-        [Display(Name = "Nasjonal temakategori er utfylt")]
+        [Display(Name = "I2_b_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool I2_b_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int I2_b_Weight = 10;
 
-        public const string I3_Label = "I3: Relasjoner mellom variabler er beskrevet – forståelig og presis tversgående sammenheng";
-
-        [Display(Name = "Metadata skal refererer til begreper i objektkatalogens UML-modell (Minst ett nøkkelord hvor Thesaurus må være \"SOSI produktspesifikasjon\")")]
+        [Display(Name = "I3_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool I3_a_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int I3_a_Weight = 10;
 
-        [Display(Name = "Metadata skal referere til UML-modell i Objektkatalogen (MD_ApplicationSchemaInformation) ")]
+        [Display(Name = "I3_b_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool I3_b_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int I3_b_Weight = 20;
 
         #endregion
 
         #region Re-useable
-        public const string ReUseable_Label = "Re-useable";
 
-        public const string R1_Label = "R1: Lisens er oppgitt";
-
-        [Display(Name = "Lisens er oppgitt")]
+        [Display(Name = "R1_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R1_a_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int R1_a_Weight = 40;
 
-        public const string R2_Label = "R2: Metadata om kvalitet, dekning, bearbeiding, avledning, beregninger";
-
-        [Display(Name = "Prosesshistorie er oppgitt  og har mer enn 200 tegn")]
+        [Display(Name = "R2_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R2_a_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int R2_a_Weight = 10;
 
-        [Display(Name = "Status er fylt ut med verdi  (gmd:maintenanceAndUpdateFrequency)")]
+        [Display(Name = "R2_b_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R2_b_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int R2_b_Weight = 5;
 
-        [Display(Name = "Lenke til produktspesifikasjon")]
+        [Display(Name = "R2_c_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R2_c_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int R2_c_Weight = 10;
 
-        [Display(Name = "Målestokksområde er oppgitt")]
+        [Display(Name = "R2_d_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R2_d_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int R2_d_Weight = 5;
 
-        [Display(Name = "Dekningskart er oppgitt (kommunevis eller rutenett)")]
+        [Display(Name = "R2_e_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R2_e_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int R2_e_Weight = 5;
 
-        [Display(Name = "Formål er utfylt")]
+        [Display(Name = "R2_f_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R2_f_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int R2_f_Weight = 5;
 
-        public const string R3_Label = "R3: Metadata og datasett følger internasjonale standarder";
-
-        [Display(Name = "Metadata følger ISO19115 og distribueres også i henhold til DCAT-profilen")]
+        [Display(Name = "R3_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R3_a_Criteria { get; set; } = true;
-        [NotMapped]
-        public const int R3_a_Weight = 15;
 
-        [Display(Name = "Datasett leveres på internasjonale åpne formater = GML")]
+        [Display(Name = "R3_b_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R3_b_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int R3_b_Weight = 15;
 
         #endregion
 

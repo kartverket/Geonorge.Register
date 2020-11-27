@@ -351,7 +351,14 @@ namespace Kartverket.Register.Services
             mareanoDataset.AccesibleStatusId = CreateFairDelivery(accesibleWeight);
 
             int interoperableWeight = 0;
-            //Todo criterias
+
+            mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
+            mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Responsible == "uml-gml" && r.Result.HasValue && r.Result.Value == true).Any();
+
+            if (mareanoDataset.I1_a_Criteria) interoperableWeight += 20;
+            if (mareanoDataset.I1_b_Criteria) interoperableWeight += 10;
+            if (mareanoDataset.I1_c_Criteria) interoperableWeight += 20;
+
             mareanoDataset.InteroperableStatusPerCent = interoperableWeight;
             mareanoDataset.InteroperableStatusId = CreateFairDelivery(interoperableWeight);
 

@@ -319,7 +319,7 @@ namespace Kartverket.Register.Services
             mareanoDataset.F2_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.TYPE_THEME, null).ToList().Count() >= 3;
             mareanoDataset.F2_b_Criteria = _metadata.SimpleMetadata.Title.Count() <= 100;
             mareanoDataset.F2_c_Criteria = _metadata.SimpleMetadata.Abstract?.Count() >= 200 && _metadata.SimpleMetadata.Abstract?.Count() <= 600;
-            mareanoDataset.F3_a_Criteria = _metadata.SimpleMetadata.ResourceReference.Code != null && _metadata.SimpleMetadata.ResourceReference.Codespace != null;
+            mareanoDataset.F3_a_Criteria = _metadata.SimpleMetadata.ResourceReference != null ?_metadata.SimpleMetadata.ResourceReference?.Code != null && _metadata.SimpleMetadata.ResourceReference?.Codespace != null : false;
 
             if (mareanoDataset.F1_a_Criteria) findableWeight += 25;
             if (mareanoDataset.F2_a_Criteria) findableWeight += 10;
@@ -333,11 +333,11 @@ namespace Kartverket.Register.Services
 
             int accesibleWeight = 0;
 
-            mareanoDataset.A1_a_Criteria = mareanoDataset.WfsStatus.IsGood();
-            mareanoDataset.A1_b_Criteria = mareanoDataset.WmsStatus.IsGood();
-            mareanoDataset.A1_c_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.Protocol.Contains("GEONORGE:DOWNLOAD")).Any();
-            mareanoDataset.A1_d_Criteria = mareanoDataset.AtomFeedStatus.IsGood();
-            mareanoDataset.A1_e_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(f => f.Protocol.Contains("GEONORGE:DOWNLOAD") || f.Protocol.Contains("WWW:DOWNLOAD") || f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")).Any();
+            mareanoDataset.A1_a_Criteria = mareanoDataset.WfsStatus != null ? mareanoDataset.WfsStatus.IsGood() : false;
+            mareanoDataset.A1_b_Criteria = mareanoDataset.WmsStatus != null ? mareanoDataset.WmsStatus.IsGood() : false;
+            mareanoDataset.A1_c_Criteria = _metadata.SimpleMetadata?.DistributionsFormats != null ? _metadata.SimpleMetadata.DistributionsFormats.Where(p => !string.IsNullOrEmpty(p.Protocol) && p.Protocol.Contains("GEONORGE:DOWNLOAD")).Any() : false;
+            mareanoDataset.A1_d_Criteria = mareanoDataset.AtomFeedStatus != null ? mareanoDataset.AtomFeedStatus.IsGood() : false;
+            mareanoDataset.A1_e_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")).Any();
 
             if (mareanoDataset.A1_a_Criteria) accesibleWeight += 15;
             if (mareanoDataset.A1_b_Criteria) accesibleWeight += 15;
@@ -353,7 +353,8 @@ namespace Kartverket.Register.Services
             int interoperableWeight = 0;
 
             mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
-            mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Responsible == "uml-gml" && r.Result.HasValue && r.Result.Value == true).Any();
+            mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null 
+                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Responsible == "uml-gml" && r.Result.HasValue && r.Result.Value == true).Any() : false;
             mareanoDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
             mareanoDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.THESAURUS_NATIONAL_THEME, null).ToList().Count() >= 1;
             mareanoDataset.I3_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.THESAURUS_CONCEPT, null).ToList().Count() >= 1;
@@ -539,7 +540,7 @@ namespace Kartverket.Register.Services
         {
             var MareanoDatasetsFromKartkatalogen = new List<MareanoDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=1&mediatype=json";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=6000&mediatype=json";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

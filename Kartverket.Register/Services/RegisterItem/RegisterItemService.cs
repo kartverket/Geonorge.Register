@@ -962,6 +962,47 @@ namespace Kartverket.Register.Services.RegisterItem
                             var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.ServiceStatus).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
+                    //FAIR
+                    case "findable_metadata_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.FindableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "findable_metadata_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.FindableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "accesible_metadata_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.AccesibleStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "accesible_metadata_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.AccesibleStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "interoperable_metadata_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.InteroperableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "interoperable_metadata_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.InteroperableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "reusable_metadata_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.ReUseableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "reusable_metadata_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.ReUseableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
 
                     // GeodatalovDataset
                     case "geodatalov_metadata_status":

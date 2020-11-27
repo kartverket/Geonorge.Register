@@ -354,16 +354,46 @@ namespace Kartverket.Register.Services
 
             mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
             mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Responsible == "uml-gml" && r.Result.HasValue && r.Result.Value == true).Any();
+            mareanoDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
+            mareanoDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.THESAURUS_NATIONAL_THEME, null).ToList().Count() >= 1;
+            mareanoDataset.I3_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.THESAURUS_CONCEPT, null).ToList().Count() >= 1;
+            mareanoDataset.I3_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
 
             if (mareanoDataset.I1_a_Criteria) interoperableWeight += 20;
             if (mareanoDataset.I1_b_Criteria) interoperableWeight += 10;
             if (mareanoDataset.I1_c_Criteria) interoperableWeight += 20;
+            if (mareanoDataset.I2_a_Criteria) interoperableWeight += 10;
+            if (mareanoDataset.I2_b_Criteria) interoperableWeight += 10;
+            if (mareanoDataset.I3_a_Criteria) interoperableWeight += 10;
+            if (mareanoDataset.I3_b_Criteria) interoperableWeight += 20;
 
             mareanoDataset.InteroperableStatusPerCent = interoperableWeight;
             mareanoDataset.InteroperableStatusId = CreateFairDelivery(interoperableWeight);
 
             int reusableWeight = 0;
-            //Todo criterias
+
+            mareanoDataset.R1_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.Constraints?.UseConstraintsLicenseLink);
+            mareanoDataset.R2_a_Criteria = _metadata.SimpleMetadata?.ProcessHistory.Count() > 200;
+            mareanoDataset.R2_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.MaintenanceFrequency);
+            mareanoDataset.R2_c_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ProductSpecificationUrl);
+            mareanoDataset.R2_d_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ResolutionScale);
+            mareanoDataset.R2_e_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageUrl) 
+                                           || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageGridUrl) 
+                                           || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageCellUrl);
+
+            mareanoDataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.Purpose);
+            mareanoDataset.R3_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
+
+            if (mareanoDataset.R1_a_Criteria) reusableWeight += 40;
+            if (mareanoDataset.R2_a_Criteria) reusableWeight += 10;
+            if (mareanoDataset.R2_b_Criteria) reusableWeight += 5;
+            if (mareanoDataset.R2_c_Criteria) reusableWeight += 10;
+            if (mareanoDataset.R2_d_Criteria) reusableWeight += 5;
+            if (mareanoDataset.R2_e_Criteria) reusableWeight += 5;
+            if (mareanoDataset.R2_f_Criteria) reusableWeight += 5;
+            if (mareanoDataset.R3_a_Criteria) reusableWeight += 10;
+            if (mareanoDataset.R3_b_Criteria) reusableWeight += 10;
+
             mareanoDataset.ReUseableStatusPerCent = reusableWeight;
             mareanoDataset.ReUseableStatusId = CreateFairDelivery(reusableWeight);
 

@@ -609,6 +609,26 @@ namespace Kartverket.Register.Helpers
                 sortTitle = DataSet.DOK_Delivery_Metadata;
                 statusIcon += "custom-icon-info";
             }
+            else if (sortingParam == "findable_metadata_status" || sortingParam == "findable_metadata_status_desc")
+            {
+                sortTitle = MareanoDataSet.Findable_Label;
+                statusIcon += "custom-icon-info"; //todo create icon
+            }
+            else if (sortingParam == "accesible_metadata_status" || sortingParam == "accesible_metadata_status_desc")
+            {
+                sortTitle = MareanoDataSet.Accesible_Label;
+                statusIcon += "custom-icon-info"; //todo create icon
+            }
+            else if (sortingParam == "interoperable_metadata_status" || sortingParam == "interoperable_metadata_status_desc")
+            {
+                sortTitle = MareanoDataSet.Interoperable_Label;
+                statusIcon += "custom-icon-info"; //todo create icon
+            }
+            else if (sortingParam == "reusable_metadata_status" || sortingParam == "reusable_metadata_status_desc")
+            {
+                sortTitle = MareanoDataSet.ReUseable_Label;
+                statusIcon += "custom-icon-info"; //todo create icon
+            }
             else if (sortingParam == "geodatalov_productspecification_status" || sortingParam == "geodatalov_productspecification_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_ProductSpesification;
@@ -690,6 +710,7 @@ namespace Kartverket.Register.Helpers
             var symbolUseable = "custom-icon custom-icon-smile-yellow";
             var symbolGood = "custom-icon custom-icon-smile-green";
             var symbolNotSet = "custom-icon custom-icon-status-not-set";
+            var symbolSatisfactory = "custom-icon custom-icon-smile-yellow"; //Todo happier yellow
 
             var statusSymbol = symbolUseable;
             var title = "";
@@ -718,6 +739,10 @@ namespace Kartverket.Register.Helpers
                     case "good":
                         statusSymbol = symbolGood;
                         title = DataSet.DOK_Delivery_Status_Good;
+                        break;
+                    case "satisfactory":
+                        statusSymbol = symbolSatisfactory;
+                        title = MareanoDataSet.Delivery_Status_Satisfactory;
                         break;
                 }
             }

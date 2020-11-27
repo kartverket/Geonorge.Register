@@ -61,11 +61,425 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig som WFS/WCS.
+        /// </summary>
+        public static string A1_a_Criteria {
+            get {
+                return ResourceManager.GetString("A1_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig som WMS.
+        /// </summary>
+        public static string A1_b_Criteria {
+            get {
+                return ResourceManager.GetString("A1_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig gjennom Geonorge-api.
+        /// </summary>
+        public static string A1_c_Criteria {
+            get {
+                return ResourceManager.GetString("A1_c_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig som Atom Feed.
+        /// </summary>
+        public static string A1_d_Criteria {
+            get {
+                return ResourceManager.GetString("A1_d_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Protokollene som støttes for tilgang til datasett er åpne, tilgjengelige og lesbare med standard IT-verktøy (Metadata som har nedlastnings-URL støtter dette kravet).
+        /// </summary>
+        public static string A1_e_Criteria {
+            get {
+                return ResourceManager.GetString("A1_e_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Protokoller støtter autentisering og autorisasjon.
+        /// </summary>
+        public static string A1_f_Criteria {
+            get {
+                return ResourceManager.GetString("A1_f_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A1: Metadata og datasett er tilgjengelig gjennom standard web-protokoller.
+        /// </summary>
+        public static string A1_Label {
+            get {
+                return ResourceManager.GetString("A1_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant).
+        /// </summary>
+        public static string A2_a_Criteria {
+            get {
+                return ResourceManager.GetString("A2_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig.
+        /// </summary>
+        public static string A2_Label {
+            get {
+                return ResourceManager.GetString("A2_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accesible.
+        /// </summary>
+        public static string Accesible_Label {
+            get {
+                return ResourceManager.GetString("Accesible_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nedlastingskrav status.
         /// </summary>
         public static string Common {
             get {
                 return ResourceManager.GetString("Common", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tilfredsstillende.
+        /// </summary>
+        public static string Delivery_Status_Satisfactory {
+            get {
+                return ResourceManager.GetString("Delivery_Status_Satisfactory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sjekker at metadata har uuid (gmd:fileIdentifier).
+        /// </summary>
+        public static string F1_a_Criteria {
+            get {
+                return ResourceManager.GetString("F1_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F1: Metadata har uuid.
+        /// </summary>
+        public static string F1_Label {
+            get {
+                return ResourceManager.GetString("F1_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minst tre tematiske nøkkelord skal være lagt inn.
+        /// </summary>
+        public static string F2_a_Criteria {
+            get {
+                return ResourceManager.GetString("F2_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tittel er på maks 100 tegn.
+        /// </summary>
+        public static string F2_b_Criteria {
+            get {
+                return ResourceManager.GetString("F2_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beskrivelse skal være på minst 200 tegn og maks 600 tegn.
+        /// </summary>
+        public static string F2_c_Criteria {
+            get {
+                return ResourceManager.GetString("F2_c_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F2: Det finnes rike søkemetadata.
+        /// </summary>
+        public static string F2_Label {
+            get {
+                return ResourceManager.GetString("F2_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sjekker at metadata har utfylt dataset-id (MD_Identifier - Code og Namespace).
+        /// </summary>
+        public static string F3_a_Criteria {
+            get {
+                return ResourceManager.GetString("F3_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F3: Metadata har datasett-id.
+        /// </summary>
+        public static string F3_Label {
+            get {
+                return ResourceManager.GetString("F3_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata skal være søkbare gjennom åpne protokoller og apier.
+        /// </summary>
+        public static string F4_a_Criteria {
+            get {
+                return ResourceManager.GetString("F4_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F4: Søkbare.
+        /// </summary>
+        public static string F4_Label {
+            get {
+                return ResourceManager.GetString("F4_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Findable.
+        /// </summary>
+        public static string Findable_Label {
+            get {
+                return ResourceManager.GetString("Findable_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata i Geonorge baseres på ISO19115 og distibueres som OGC:CSW og DCAT-AP-NO og metadata i Geonorge tilfredsstiller dette kravet.
+        /// </summary>
+        public static string I1_a_Criteria {
+            get {
+                return ResourceManager.GetString("I1_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasett er distribuert på internasjonalt kjente og dokumenterte åpne formater. Sjekk om datasett distribueres som GML.
+        /// </summary>
+        public static string I1_b_Criteria {
+            get {
+                return ResourceManager.GetString("I1_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasett på GML-format validerer i henhold til UML-modell.
+        /// </summary>
+        public static string I1_c_Criteria {
+            get {
+                return ResourceManager.GetString("I1_c_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I1: Metadata er basert på internasjonale, godt dokumenterte og tilgjengelige standarder.
+        /// </summary>
+        public static string I1_Label {
+            get {
+                return ResourceManager.GetString("I1_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tematisk hovedkategori må være utfylt.
+        /// </summary>
+        public static string I2_a_Criteria {
+            get {
+                return ResourceManager.GetString("I2_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nasjonal temakategori er utfylt.
+        /// </summary>
+        public static string I2_b_Criteria {
+            get {
+                return ResourceManager.GetString("I2_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I2: Begreper, terminologier, ontologier og kodeverk -  godt forvaltet og tilgjengelig.
+        /// </summary>
+        public static string I2_Label {
+            get {
+                return ResourceManager.GetString("I2_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata skal refererer til begreper i objektkatalogens UML-modell (Minst ett nøkkelord hvor Thesaurus må være &quot;SOSI produktspesifikasjon&quot;).
+        /// </summary>
+        public static string I3_a_Criteria {
+            get {
+                return ResourceManager.GetString("I3_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata skal referere til UML-modell i Objektkatalogen (MD_ApplicationSchemaInformation).
+        /// </summary>
+        public static string I3_b_Criteria {
+            get {
+                return ResourceManager.GetString("I3_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I3: Relasjoner mellom variabler er beskrevet – forståelig og presis tversgående sammenheng.
+        /// </summary>
+        public static string I3_Label {
+            get {
+                return ResourceManager.GetString("I3_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interoperable.
+        /// </summary>
+        public static string Interoperable_Label {
+            get {
+                return ResourceManager.GetString("Interoperable_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lisens er oppgitt.
+        /// </summary>
+        public static string R1_a_Criteria {
+            get {
+                return ResourceManager.GetString("R1_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to R1: Lisens er oppgitt.
+        /// </summary>
+        public static string R1_Label {
+            get {
+                return ResourceManager.GetString("R1_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prosesshistorie er oppgitt  og har mer enn 200 tegn.
+        /// </summary>
+        public static string R2_a_Criteria {
+            get {
+                return ResourceManager.GetString("R2_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status er fylt ut med verdi  (gmd:maintenanceAndUpdateFrequency).
+        /// </summary>
+        public static string R2_b_Criteria {
+            get {
+                return ResourceManager.GetString("R2_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lenke til produktspesifikasjon.
+        /// </summary>
+        public static string R2_c_Criteria {
+            get {
+                return ResourceManager.GetString("R2_c_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Målestokksområde er oppgitt.
+        /// </summary>
+        public static string R2_d_Criteria {
+            get {
+                return ResourceManager.GetString("R2_d_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dekningskart er oppgitt (kommunevis eller rutenett).
+        /// </summary>
+        public static string R2_e_Criteria {
+            get {
+                return ResourceManager.GetString("R2_e_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formål er utfylt.
+        /// </summary>
+        public static string R2_f_Criteria {
+            get {
+                return ResourceManager.GetString("R2_f_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to R2: Metadata om kvalitet, dekning, bearbeiding, avledning, beregninger.
+        /// </summary>
+        public static string R2_Label {
+            get {
+                return ResourceManager.GetString("R2_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata følger ISO19115 og distribueres også i henhold til DCAT-profilen.
+        /// </summary>
+        public static string R3_a_Criteria {
+            get {
+                return ResourceManager.GetString("R3_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasett leveres på internasjonale åpne formater = GML.
+        /// </summary>
+        public static string R3_b_Criteria {
+            get {
+                return ResourceManager.GetString("R3_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to R3: Metadata og datasett følger internasjonale standarder.
+        /// </summary>
+        public static string R3_Label {
+            get {
+                return ResourceManager.GetString("R3_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-useable.
+        /// </summary>
+        public static string ReUseable_Label {
+            get {
+                return ResourceManager.GetString("ReUseable_Label", resourceCulture);
             }
         }
     }

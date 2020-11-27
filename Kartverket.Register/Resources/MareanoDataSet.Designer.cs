@@ -61,6 +61,87 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig som WFS/WCS.
+        /// </summary>
+        public static string A1_a_Criteria {
+            get {
+                return ResourceManager.GetString("A1_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig som WMS.
+        /// </summary>
+        public static string A1_b_Criteria {
+            get {
+                return ResourceManager.GetString("A1_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig gjennom Geonorge-api.
+        /// </summary>
+        public static string A1_c_Criteria {
+            get {
+                return ResourceManager.GetString("A1_c_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig som Atom Feed.
+        /// </summary>
+        public static string A1_d_Criteria {
+            get {
+                return ResourceManager.GetString("A1_d_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Protokollene som støttes for tilgang til datasett er åpne, tilgjengelige og lesbare med standard IT-verktøy (Metadata som har nedlastnings-URL støtter dette kravet).
+        /// </summary>
+        public static string A1_e_Criteria {
+            get {
+                return ResourceManager.GetString("A1_e_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Protokoller støtter autentisering og autorisasjon.
+        /// </summary>
+        public static string A1_f_Criteria {
+            get {
+                return ResourceManager.GetString("A1_f_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A1: Metadata og datasett er tilgjengelig gjennom standard web-protokoller.
+        /// </summary>
+        public static string A1_Label {
+            get {
+                return ResourceManager.GetString("A1_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant).
+        /// </summary>
+        public static string A2_a_Criteria {
+            get {
+                return ResourceManager.GetString("A2_a_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig.
+        /// </summary>
+        public static string A2_Label {
+            get {
+                return ResourceManager.GetString("A2_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accesible.
         /// </summary>
         public static string Accesible_Label {

@@ -64,47 +64,27 @@ namespace Kartverket.Register.Models
         #endregion
 
         #region Accesible
-        [NotMapped]
-        public const string Accesible_Label = "Accesible";
 
-        public const string A1_Label = "A1: Metadata og datasett er tilgjengelig gjennom standard web-protokoller";
-
-        [Display(Name = "Datasettet er tilgjengelig som WFS/WCS")]
+        [Display(Name = "A1_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool A1_a_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int A1_a_Weight = 15;
 
-        [Display(Name = "Datasettet er tilgjengelig som WMS")]
+        [Display(Name = "A1_b_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool A1_b_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int A1_b_Weight = 15;
 
-        [Display(Name = "Datasettet er tilgjengelig gjennom Geonorge-api")]
+        [Display(Name = "A1_c_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool A1_c_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int A1_c_Weight = 15;
 
-        [Display(Name = "Datasettet er tilgjengelig somAtom Feed")]
+        [Display(Name = "A1_d_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool A1_d_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int A1_d_Weight = 5;
 
-        [Display(Name = "Protokollene som støttes for tilgang til datasett er åpne, tilgjengelige og lesbare med standard IT-verktøy (Metadata som har nedlastnings-URL støtter dette kravet)")]
+        [Display(Name = "A1_e_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool A1_e_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int A1_e_Weight = 40;
 
-        [Display(Name = "Protokoller støtter autentisering og autorisasjon")]
+        [Display(Name = "A1_f_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool A1_f_Criteria { get; set; } = true;
-        [NotMapped]
-        public const int A1_f_Weight = 10;
 
-        public const string A2_Label = "A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig";
-
-        [Display(Name = "Ikke relevant")]
+        [Display(Name = "A2_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool A2_a_Criteria { get; set; } = false;
-        [NotMapped]
-        public const int A2_a_Weight = 0;
 
         #endregion
 

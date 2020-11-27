@@ -314,12 +314,12 @@ namespace Kartverket.Register.Services
 
         private void SetFAIR(ref MareanoDataset mareanoDataset)
         {
+            int findableWeight = 0;
+
             mareanoDataset.F2_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.TYPE_THEME, null).ToList().Count() >= 3;
             mareanoDataset.F2_b_Criteria = _metadata.SimpleMetadata.Title.Count() <= 100;
             mareanoDataset.F2_c_Criteria = _metadata.SimpleMetadata.Abstract?.Count() >= 200 && _metadata.SimpleMetadata.Abstract?.Count() <= 600;
             mareanoDataset.F3_a_Criteria = _metadata.SimpleMetadata.ResourceReference.Code != null && _metadata.SimpleMetadata.ResourceReference.Codespace != null;
-
-            int findableWeight = 0;
 
             if (mareanoDataset.F1_a_Criteria) findableWeight += 25;
             if (mareanoDataset.F2_a_Criteria) findableWeight += 10;
@@ -331,9 +331,22 @@ namespace Kartverket.Register.Services
             mareanoDataset.FindableStatusPerCent = findableWeight;
             mareanoDataset.FindableStatusId = CreateFairDelivery(findableWeight);
 
-
             int accesibleWeight = 0;
-            //Todo criterias
+
+            mareanoDataset.A1_a_Criteria = mareanoDataset.WfsStatus.IsGood();
+            mareanoDataset.A1_b_Criteria = mareanoDataset.WmsStatus.IsGood();
+            mareanoDataset.A1_c_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.Protocol.Contains("GEONORGE:DOWNLOAD")).Any();
+            mareanoDataset.A1_d_Criteria = mareanoDataset.AtomFeedStatus.IsGood();
+            mareanoDataset.A1_e_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(f => f.Protocol.Contains("GEONORGE:DOWNLOAD") || f.Protocol.Contains("WWW:DOWNLOAD") || f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")).Any();
+
+            if (mareanoDataset.A1_a_Criteria) accesibleWeight += 15;
+            if (mareanoDataset.A1_b_Criteria) accesibleWeight += 15;
+            if (mareanoDataset.A1_c_Criteria) accesibleWeight += 15;
+            if (mareanoDataset.A1_d_Criteria) accesibleWeight += 5;
+            if (mareanoDataset.A1_e_Criteria) accesibleWeight += 40;
+            if (mareanoDataset.A1_f_Criteria) accesibleWeight += 10;
+            if (mareanoDataset.A2_a_Criteria) accesibleWeight += 0;
+
             mareanoDataset.AccesibleStatusPerCent = accesibleWeight;
             mareanoDataset.AccesibleStatusId = CreateFairDelivery(accesibleWeight);
 

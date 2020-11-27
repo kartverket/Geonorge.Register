@@ -2410,6 +2410,51 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.MareanoDataSet.A1_a_Criteria">
+            <summary>
+              Looks up a localized string similar to Datasettet er tilgjengelig som WFS/WCS.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.A1_b_Criteria">
+            <summary>
+              Looks up a localized string similar to Datasettet er tilgjengelig som WMS.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.A1_c_Criteria">
+            <summary>
+              Looks up a localized string similar to Datasettet er tilgjengelig gjennom Geonorge-api.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.A1_d_Criteria">
+            <summary>
+              Looks up a localized string similar to Datasettet er tilgjengelig som Atom Feed.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.A1_e_Criteria">
+            <summary>
+              Looks up a localized string similar to Protokollene som støttes for tilgang til datasett er åpne, tilgjengelige og lesbare med standard IT-verktøy (Metadata som har nedlastnings-URL støtter dette kravet).
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.A1_f_Criteria">
+            <summary>
+              Looks up a localized string similar to Protokoller støtter autentisering og autorisasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.A1_Label">
+            <summary>
+              Looks up a localized string similar to A1: Metadata og datasett er tilgjengelig gjennom standard web-protokoller.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.A2_a_Criteria">
+            <summary>
+              Looks up a localized string similar to Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant).
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.A2_Label">
+            <summary>
+              Looks up a localized string similar to A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig.
+            </summary>
+        </member>
         <member name="P:Resources.MareanoDataSet.Accesible_Label">
             <summary>
               Looks up a localized string similar to Accesible.

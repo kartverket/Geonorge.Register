@@ -1097,6 +1097,10 @@
     <Compile Include="Migrations\202011251406291_AddFAIRdata.designer.cs">
       <DependentUpon>202011251406291_AddFAIRdata.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011301319007_AddMareanoFair.cs" />
+    <Compile Include="Migrations\202011301319007_AddMareanoFair.designer.cs">
+      <DependentUpon>202011301319007_AddMareanoFair.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2975,6 +2979,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011251406291_AddFAIRdata.resx">
       <DependentUpon>202011251406291_AddFAIRdata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011301319007_AddMareanoFair.resx">
+      <DependentUpon>202011301319007_AddMareanoFair.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

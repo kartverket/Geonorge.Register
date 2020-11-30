@@ -9,7 +9,11 @@ namespace Kartverket.Register.Models.StatusReports
     {
 
         public string UuidMareanoDataset { get; set; }
+        public string FindableMareanoDataset { get; set; }
+        public string AccesibleMareanoDataset { get; set; }
+        public string InteroperableMareanoDataset { get; set; }
         public string MetadataMareanoDataset { get; set; }
+        public string ReUsableMareanoDataset { get; set; }
         public string ProductSpesificationMareanoDataset { get; set; }
         public string SosiDataMareanoDataset { get; set; }
         public string GmlDataMareanoDataset { get; set; }
@@ -29,6 +33,14 @@ namespace Kartverket.Register.Models.StatusReports
             {
                 UuidMareanoDataset = MareanoDataset.Uuid;
 
+                if (MareanoDataset.FindableStatus != null)
+                    FindableMareanoDataset = MareanoDataset.FindableStatus.StatusId;
+                if (MareanoDataset.AccesibleStatus != null)
+                    AccesibleMareanoDataset = MareanoDataset.AccesibleStatus.StatusId;
+                if (MareanoDataset.InteroperableStatus != null)
+                    InteroperableMareanoDataset = MareanoDataset.InteroperableStatus.StatusId;
+                if (MareanoDataset.ReUseableStatus != null)
+                    ReUsableMareanoDataset = MareanoDataset.ReUseableStatus.StatusId;
                 if (MareanoDataset.MetadataStatus != null)
                     MetadataMareanoDataset = MareanoDataset.MetadataStatus.StatusId;
                 if (MareanoDataset.ProductSpesificationStatus != null)

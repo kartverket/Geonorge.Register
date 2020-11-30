@@ -50,6 +50,7 @@ else
                     <tr>
                         <th></th>
                         <th>@DataSet.DOK_Delivery_Status_Good</th>
+                        <th>@MareanoDataSet.Delivery_Status_Satisfactory</th>
                         <th>@DataSet.DOK_Delivery_Status_Useable</th>
                         <th>@DataSet.DOK_Delivery_Status_Deficient</th>
                         <th>@DataSet.DOK_Delivery_Status_NotSet</th>
@@ -58,8 +59,44 @@ else
 
                 <tbody>
                     <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithFindable)</td>
+                        <td>@Model.NumberOfItemsWithFindable.Good</td>
+                        <td>@Model.NumberOfItemsWithFindable.Satisfactory</td>
+                        <td>@Model.NumberOfItemsWithFindable.Useable</td>
+                        <td>@Model.NumberOfItemsWithFindable.Deficient</td>
+                        <td>@Model.NumberOfItemsWithFindable.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithAccesible)</td>
+                        <td>@Model.NumberOfItemsWithAccesible.Good</td>
+                        <td>@Model.NumberOfItemsWithAccesible.Satisfactory</td>
+                        <td>@Model.NumberOfItemsWithAccesible.Useable</td>
+                        <td>@Model.NumberOfItemsWithAccesible.Deficient</td>
+                        <td>@Model.NumberOfItemsWithAccesible.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithInteroperable)</td>
+                        <td>@Model.NumberOfItemsWithInteroperable.Good</td>
+                        <td>@Model.NumberOfItemsWithInteroperable.Satisfactory</td>
+                        <td>@Model.NumberOfItemsWithInteroperable.Useable</td>
+                        <td>@Model.NumberOfItemsWithInteroperable.Deficient</td>
+                        <td>@Model.NumberOfItemsWithInteroperable.Notset</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithReUseable)</td>
+                        <td>@Model.NumberOfItemsWithReUseable.Good</td>
+                        <td>@Model.NumberOfItemsWithReUseable.Satisfactory</td>
+                        <td>@Model.NumberOfItemsWithReUseable.Useable</td>
+                        <td>@Model.NumberOfItemsWithReUseable.Deficient</td>
+                        <td>@Model.NumberOfItemsWithReUseable.Notset</td>
+                    </tr>
+
+                    <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithMetadata)</td>
                         <td>@Model.NumberOfItemsWithMetadata.Good</td>
+                        <td></td>
                         <td>@Model.NumberOfItemsWithMetadata.Useable</td>
                         <td>@Model.NumberOfItemsWithMetadata.Deficient</td>
                         <td>@Model.NumberOfItemsWithMetadata.Notset</td>
@@ -68,6 +105,7 @@ else
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithProductSpecification)</td>
                         <td>@Model.NumberOfItemsWithProductSpecification.Good</td>
+                        <td></td>
                         <td>@Model.NumberOfItemsWithProductSpecification.Useable</td>
                         <td>@Model.NumberOfItemsWithProductSpecification.Deficient</td>
                         <td>@Model.NumberOfItemsWithProductSpecification.Notset</td>
@@ -76,6 +114,7 @@ else
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithSosiRequirements)</td>
                         <td>@Model.NumberOfItemsWithSosiRequirements.Good</td>
+                        <td></td>
                         <td>@Model.NumberOfItemsWithSosiRequirements.Useable</td>
                         <td>@Model.NumberOfItemsWithSosiRequirements.Deficient</td>
                         <td>@Model.NumberOfItemsWithSosiRequirements.Notset</td>
@@ -84,6 +123,7 @@ else
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithGmlRequirements)</td>
                         <td>@Model.NumberOfItemsWithGmlRequirements.Good</td>
+                        <td></td>
                         <td>@Model.NumberOfItemsWithGmlRequirements.Useable</td>
                         <td>@Model.NumberOfItemsWithGmlRequirements.Deficient</td>
                         <td>@Model.NumberOfItemsWithGmlRequirements.Notset</td>
@@ -92,6 +132,7 @@ else
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithWms)</td>
                         <td>@Model.NumberOfItemsWithWms.Good</td>
+                        <td></td>
                         <td>@Model.NumberOfItemsWithWms.Useable</td>
                         <td>@Model.NumberOfItemsWithWms.Deficient</td>
                         <td>@Model.NumberOfItemsWithWms.Notset</td>
@@ -100,6 +141,7 @@ else
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithWfs)</td>
                         <td>@Model.NumberOfItemsWithWfs.Good</td>
+                        <td></td>
                         <td>@Model.NumberOfItemsWithWfs.Useable</td>
                         <td>@Model.NumberOfItemsWithWfs.Deficient</td>
                         <td>@Model.NumberOfItemsWithWfs.Notset</td>
@@ -108,6 +150,7 @@ else
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithAtomFeed)</td>
                         <td>@Model.NumberOfItemsWithAtomFeed.Good</td>
+                        <td></td>
                         <td>@Model.NumberOfItemsWithAtomFeed.Useable</td>
                         <td>@Model.NumberOfItemsWithAtomFeed.Deficient</td>
                         <td>@Model.NumberOfItemsWithAtomFeed.Notset</td>
@@ -116,6 +159,7 @@ else
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithCommon)</td>
                         <td>@Model.NumberOfItemsWithCommon.Good</td>
+                        <td></td>
                         <td>@Model.NumberOfItemsWithCommon.Useable</td>
                         <td>@Model.NumberOfItemsWithCommon.Deficient</td>
                         <td>@Model.NumberOfItemsWithCommon.Notset</td>

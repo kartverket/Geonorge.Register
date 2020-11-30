@@ -17,9 +17,26 @@ namespace Kartverket.Register.Models.ViewModels
         private const string Deficient = "deficient";
         private const string Notset = "notset";
         private const string Useable = "useable";
+        private const string Satisfactory = "satisfactory";
 
         public MareanoLineChart MareanoLineChart { get; set; }
         public StatusLineChart StatusChart { get; set; }
+
+        // Findable
+        [Display(Name = "Findable_Label", ResourceType = typeof(MareanoDataSet))]
+        public NumberOfStatuses NumberOfItemsWithFindable { get; set; }
+
+        // Accesible
+        [Display(Name = "Accesible_Label", ResourceType = typeof(MareanoDataSet))]
+        public NumberOfStatuses NumberOfItemsWithAccesible { get; set; }
+
+        // Interoperable
+        [Display(Name = "Interoperable_Label", ResourceType = typeof(MareanoDataSet))]
+        public NumberOfStatuses NumberOfItemsWithInteroperable { get; set; }
+
+        // ReUsable
+        [Display(Name = "ReUseable_Label", ResourceType = typeof(MareanoDataSet))]
+        public NumberOfStatuses NumberOfItemsWithReUseable { get; set; }
 
         // Metadata
         [Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
@@ -74,6 +91,11 @@ namespace Kartverket.Register.Models.ViewModels
                 Id = statusReport.Id;
                 Date = statusReport.Date;
                 NumberOfItems = statusReport.NumberOfIems();
+
+                NumberOfItemsWithFindable = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithFindable(Good), statusReport.NumberOfMareanoDatasetsWithFindable(Useable), statusReport.NumberOfMareanoDatasetsWithFindable(Deficient), statusReport.NumberOfMareanoDatasetsWithFindable(Notset), statusReport.NumberOfMareanoDatasetsWithFindable(Satisfactory));
+                NumberOfItemsWithAccesible = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithAccesible(Good), statusReport.NumberOfMareanoDatasetsWithAccesible(Useable), statusReport.NumberOfMareanoDatasetsWithAccesible(Deficient), statusReport.NumberOfMareanoDatasetsWithAccesible(Notset), statusReport.NumberOfMareanoDatasetsWithAccesible(Satisfactory));
+                NumberOfItemsWithInteroperable = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithInteroperable(Good), statusReport.NumberOfMareanoDatasetsWithInteroperable(Useable), statusReport.NumberOfMareanoDatasetsWithInteroperable(Deficient), statusReport.NumberOfMareanoDatasetsWithInteroperable(Notset), statusReport.NumberOfMareanoDatasetsWithInteroperable(Satisfactory));
+                NumberOfItemsWithReUseable = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithReUsable(Good), statusReport.NumberOfMareanoDatasetsWithReUsable(Useable), statusReport.NumberOfMareanoDatasetsWithReUsable(Deficient), statusReport.NumberOfMareanoDatasetsWithReUsable(Notset), statusReport.NumberOfMareanoDatasetsWithReUsable(Satisfactory));
 
                 NumberOfItemsWithMetadata = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithMetadata(Good), statusReport.NumberOfMareanoDatasetsWithMetadata(Useable), statusReport.NumberOfMareanoDatasetsWithMetadata(Deficient), statusReport.NumberOfMareanoDatasetsWithMetadata(Notset));
                 NumberOfItemsWithProductSpecification = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithProductSpecification(Good), statusReport.NumberOfMareanoDatasetsWithProductSpecification(Useable), statusReport.NumberOfMareanoDatasetsWithProductSpecification(Deficient), statusReport.NumberOfMareanoDatasetsWithProductSpecification(Notset));

@@ -133,7 +133,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig.
+        ///   Looks up a localized string similar to A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant).
         /// </summary>
         public static string A2_Label {
             get {
@@ -376,7 +376,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to R1: Lisens er oppgitt.
+        ///   Looks up a localized string similar to R1.
         /// </summary>
         public static string R1_Label {
             get {

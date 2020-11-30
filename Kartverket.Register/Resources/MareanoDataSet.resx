@@ -190,7 +190,7 @@
     <value>Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant)</value>
   </data>
   <data name="A2_Label" xml:space="preserve">
-    <value>A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig</value>
+    <value>A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant)</value>
   </data>
   <data name="I1_a_Criteria" xml:space="preserve">
     <value>Metadata i Geonorge baseres på ISO19115 og distibueres som OGC:CSW og DCAT-AP-NO og metadata i Geonorge tilfredsstiller dette kravet</value>
@@ -226,7 +226,7 @@
     <value>Lisens er oppgitt</value>
   </data>
   <data name="R1_Label" xml:space="preserve">
-    <value>R1: Lisens er oppgitt</value>
+    <value>R1</value>
   </data>
   <data name="R2_a_Criteria" xml:space="preserve">
     <value>Prosesshistorie er oppgitt  og har mer enn 200 tegn</value>

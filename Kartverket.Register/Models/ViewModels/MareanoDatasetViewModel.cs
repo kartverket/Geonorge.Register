@@ -16,26 +16,58 @@ namespace Kartverket.Register.Models.ViewModels
         public virtual FAIRDeliveryStatus FindableStatus { get; set; }
         public string FindableNote { get; set; }
         public bool FindableAutoUpdate { get; set; }
+        public double FindableStatusPerCent { get; set; }
 
         [Display(Name = "Accesible_Label", ResourceType = typeof(MareanoDataSet))]
         public string AccesibleStatusId { get; set; }
         public virtual FAIRDeliveryStatus AccesibleStatus { get; set; }
         public string AccesibleNote { get; set; }
         public bool AccesibleAutoUpdate { get; set; }
+        public double AccesibleStatusPerCent { get; set; }
 
         [Display(Name = "Interoperable_Label", ResourceType = typeof(MareanoDataSet))]
         public string InteroperableStatusId { get; set; }
         public virtual FAIRDeliveryStatus InteroperableStatus { get; set; }
         public string InteroperableNote { get; set; }
         public bool InteroperableAutoUpdate { get; set; }
+        public double InteroperableStatusPerCent { get; set; }
 
         [Display(Name = "ReUseable_Label", ResourceType = typeof(MareanoDataSet))]
         public string ReUseableStatusId { get; set; }
         public virtual FAIRDeliveryStatus ReUseableStatus { get; set; }
         public string ReUseableNote { get; set; }
         public bool ReUseableAutoUpdate { get; set; }
+        public double ReUseableStatusPerCent { get; set; }
 
         public bool F1_a_Criteria { get; set; }
+        public bool F2_a_Criteria { get; set; }
+        public bool F2_b_Criteria { get; set; }
+        public bool F2_c_Criteria { get; set; }
+        public bool F3_a_Criteria { get; set; }
+        public bool F4_a_Criteria { get; set; }
+        public bool A1_a_Criteria { get; set; }
+        public bool A1_b_Criteria { get; set; }
+        public bool A1_c_Criteria { get; set; }
+        public bool A1_d_Criteria { get; set; }
+        public bool A1_e_Criteria { get; set; }
+        public bool A1_f_Criteria { get; set; }
+        public bool A2_a_Criteria { get; set; }
+        public bool I1_a_Criteria { get; set; }
+        public bool I1_b_Criteria { get; set; }
+        public bool I1_c_Criteria { get; set; }
+        public bool I2_a_Criteria { get; set; }
+        public bool I2_b_Criteria { get; set; }
+        public bool I3_a_Criteria { get; set; }
+        public bool I3_b_Criteria { get; set; }
+        public bool R1_a_Criteria { get; set; }
+        public bool R2_a_Criteria { get; set; }
+        public bool R2_b_Criteria { get; set; }
+        public bool R2_c_Criteria { get; set; }
+        public bool R2_d_Criteria { get; set; }
+        public bool R2_e_Criteria { get; set; }
+        public bool R2_f_Criteria { get; set; }
+        public bool R3_a_Criteria { get; set; }
+        public bool R3_b_Criteria { get; set; }
 
 
         [Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
@@ -100,6 +132,35 @@ namespace Kartverket.Register.Models.ViewModels
             if (mareanoDataset != null)
             {
                 F1_a_Criteria = mareanoDataset.F1_a_Criteria;
+                F2_a_Criteria = mareanoDataset.F2_a_Criteria;
+                F2_b_Criteria = mareanoDataset.F2_b_Criteria;
+                F2_c_Criteria = mareanoDataset.F2_c_Criteria;
+                F3_a_Criteria = mareanoDataset.F3_a_Criteria;
+                F4_a_Criteria = mareanoDataset.F4_a_Criteria;
+                A1_a_Criteria = mareanoDataset.A1_a_Criteria;
+                A1_b_Criteria = mareanoDataset.A1_b_Criteria;
+                A1_c_Criteria = mareanoDataset.A1_c_Criteria;
+                A1_d_Criteria = mareanoDataset.A1_d_Criteria;
+                A1_e_Criteria = mareanoDataset.A1_e_Criteria;
+                A1_f_Criteria = mareanoDataset.A1_f_Criteria;
+                A2_a_Criteria = mareanoDataset.A2_a_Criteria;
+                I1_a_Criteria = mareanoDataset.I1_a_Criteria;
+                I1_b_Criteria = mareanoDataset.I1_b_Criteria;
+                I1_c_Criteria = mareanoDataset.I1_c_Criteria;
+                I2_a_Criteria = mareanoDataset.I2_a_Criteria;
+                I2_b_Criteria = mareanoDataset.I2_b_Criteria;
+                I3_a_Criteria = mareanoDataset.I3_a_Criteria;
+                I3_b_Criteria = mareanoDataset.I3_b_Criteria;
+                R1_a_Criteria = mareanoDataset.R1_a_Criteria;
+                R2_a_Criteria = mareanoDataset.R2_a_Criteria;
+                R2_b_Criteria = mareanoDataset.R2_b_Criteria;
+                R2_c_Criteria = mareanoDataset.R2_c_Criteria;
+                R2_d_Criteria = mareanoDataset.R2_d_Criteria;
+                R2_e_Criteria = mareanoDataset.R2_e_Criteria;
+                R2_f_Criteria = mareanoDataset.R2_f_Criteria;
+                R3_a_Criteria = mareanoDataset.R3_a_Criteria;
+                R3_b_Criteria = mareanoDataset.R3_b_Criteria;
+
 
                 if (mareanoDataset.FAIRStatus != null)
                 {
@@ -114,6 +175,7 @@ namespace Kartverket.Register.Models.ViewModels
                     FindableStatus = mareanoDataset.FindableStatus.Status;
                     FindableNote = mareanoDataset.FindableStatus.Note;
                     FindableAutoUpdate = mareanoDataset.FindableStatus.AutoUpdate;
+                    FindableStatusPerCent = mareanoDataset.FindableStatusPerCent;
                 }
                 if (mareanoDataset.AccesibleStatus != null)
                 {
@@ -121,6 +183,7 @@ namespace Kartverket.Register.Models.ViewModels
                     AccesibleStatus = mareanoDataset.AccesibleStatus.Status;
                     AccesibleNote = mareanoDataset.AccesibleStatus.Note;
                     AccesibleAutoUpdate = mareanoDataset.AccesibleStatus.AutoUpdate;
+                    AccesibleStatusPerCent = mareanoDataset.AccesibleStatusPerCent;
                 }
                 if (mareanoDataset.InteroperableStatus != null)
                 {
@@ -128,6 +191,7 @@ namespace Kartverket.Register.Models.ViewModels
                     InteroperableStatus = mareanoDataset.InteroperableStatus.Status;
                     InteroperableNote = mareanoDataset.InteroperableStatus.Note;
                     InteroperableAutoUpdate = mareanoDataset.InteroperableStatus.AutoUpdate;
+                    InteroperableStatusPerCent = mareanoDataset.InteroperableStatusPerCent;
                 }
                 if (mareanoDataset.ReUseableStatus != null)
                 {
@@ -135,6 +199,7 @@ namespace Kartverket.Register.Models.ViewModels
                     ReUseableStatus = mareanoDataset.ReUseableStatus.Status;
                     ReUseableNote = mareanoDataset.ReUseableStatus.Note;
                     ReUseableAutoUpdate = mareanoDataset.ReUseableStatus.AutoUpdate;
+                    ReUseableStatusPerCent = mareanoDataset.ReUseableStatusPerCent;
                 }
                 if (mareanoDataset.MetadataStatus != null)
                 {

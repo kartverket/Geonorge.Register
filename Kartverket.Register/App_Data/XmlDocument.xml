@@ -2452,7 +2452,7 @@
         </member>
         <member name="P:Resources.MareanoDataSet.A2_Label">
             <summary>
-              Looks up a localized string similar to A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig.
+              Looks up a localized string similar to A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant).
             </summary>
         </member>
         <member name="P:Resources.MareanoDataSet.Accesible_Label">
@@ -2587,7 +2587,7 @@
         </member>
         <member name="P:Resources.MareanoDataSet.R1_Label">
             <summary>
-              Looks up a localized string similar to R1: Lisens er oppgitt.
+              Looks up a localized string similar to R1.
             </summary>
         </member>
         <member name="P:Resources.MareanoDataSet.R2_a_Criteria">

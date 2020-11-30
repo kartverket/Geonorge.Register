@@ -385,15 +385,15 @@ namespace Kartverket.Register.Services
             mareanoDataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.Purpose);
             mareanoDataset.R3_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
 
-            if (mareanoDataset.R1_a_Criteria) reusableWeight += 40;
+            if (mareanoDataset.R1_a_Criteria) reusableWeight += 30;
             if (mareanoDataset.R2_a_Criteria) reusableWeight += 10;
             if (mareanoDataset.R2_b_Criteria) reusableWeight += 5;
             if (mareanoDataset.R2_c_Criteria) reusableWeight += 10;
             if (mareanoDataset.R2_d_Criteria) reusableWeight += 5;
             if (mareanoDataset.R2_e_Criteria) reusableWeight += 5;
             if (mareanoDataset.R2_f_Criteria) reusableWeight += 5;
-            if (mareanoDataset.R3_a_Criteria) reusableWeight += 10;
-            if (mareanoDataset.R3_b_Criteria) reusableWeight += 10;
+            if (mareanoDataset.R3_a_Criteria) reusableWeight += 15;
+            if (mareanoDataset.R3_b_Criteria) reusableWeight += 15;
 
             mareanoDataset.ReUseableStatusPerCent = reusableWeight;
             mareanoDataset.ReUseableStatusId = CreateFairDelivery(reusableWeight);

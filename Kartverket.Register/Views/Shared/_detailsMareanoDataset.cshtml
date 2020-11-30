@@ -1,6 +1,17 @@
 ﻿@using Kartverket.Register.Helpers
 @model Kartverket.Register.Models.ViewModels.MareanoDatasetViewModel
 
+@helper Status(bool criteria)
+{
+    if (criteria)
+    {
+       <i class="fa fa-check"></i>
+    }
+    else
+    {
+       <i class="fa fa-times"></i>
+    }
+}
 
 @if (!string.IsNullOrEmpty(Model.SpecificUsage))
 {
@@ -18,7 +29,146 @@
 </article>
 
 <article class="col-md-12">
-    <h3>Geodatalov status</h3>
+    <h3>FAIR status: @Model.FAIRStatus.DescriptionTranslated() (@Model.FAIRStatusPerCent<span>%</span>)</h3>
+    <div class="row">
+        <div class="col-md-12"><p>@MareanoDataSet.Findable_Label</p></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.F1_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@Status(Model.F1_a_Criteria)@MareanoDataSet.F1_a_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.F2_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.F2_a_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.F2_b_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.F2_c_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.F3_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.F3_a_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.F4_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.F4_a_Criteria</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><p>@MareanoDataSet.Accesible_Label</p></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.A1_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.A1_a_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.A1_b_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.A1_c_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.A1_d_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.A1_e_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.A1_f_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.A2_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.A2_a_Criteria</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><p>@MareanoDataSet.Interoperable_Label</p></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.I1_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.I1_a_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.I1_b_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.I1_c_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.I2_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.I2_a_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.I2_b_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.I3_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.I3_a_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.I3_b_Criteria</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><p>@MareanoDataSet.ReUseable_Label</p></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.R1_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.R1_a_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.R2_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.R2_a_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.R2_b_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.R2_c_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.R2_d_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.R2_e_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.R2_f_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-11">@MareanoDataSet.R3_Label</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.R3_a_Criteria</div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">@MareanoDataSet.R3_b_Criteria</div>
+    </div>
+</article>
+
+<article class="col-md-12">
+    <h3>Mareano status</h3>
     <div class="row">
         <div class="col-md-12"><p><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">@DataSet.DOK_EvaluationCriteria</a></p></div>
     </div>

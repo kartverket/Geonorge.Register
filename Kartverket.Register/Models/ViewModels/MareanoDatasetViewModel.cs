@@ -7,6 +7,10 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class MareanoDatasetViewModel : DatasetViewModel
     {
+        public string FAIRStatusId { get; set; }
+        public virtual FAIRDeliveryStatus FAIRStatus { get; set; }
+        public double FAIRStatusPerCent { get; set; }
+
         [Display(Name = "Findable_Label", ResourceType = typeof(MareanoDataSet))]
         public string FindableStatusId { get; set; }
         public virtual FAIRDeliveryStatus FindableStatus { get; set; }
@@ -30,6 +34,8 @@ namespace Kartverket.Register.Models.ViewModels
         public virtual FAIRDeliveryStatus ReUseableStatus { get; set; }
         public string ReUseableNote { get; set; }
         public bool ReUseableAutoUpdate { get; set; }
+
+        public bool F1_a_Criteria { get; set; }
 
 
         [Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
@@ -93,6 +99,15 @@ namespace Kartverket.Register.Models.ViewModels
         {
             if (mareanoDataset != null)
             {
+                F1_a_Criteria = mareanoDataset.F1_a_Criteria;
+
+                if (mareanoDataset.FAIRStatus != null)
+                {
+                    FAIRStatusId = mareanoDataset.FAIRStatus.StatusId;
+                    FAIRStatus = mareanoDataset.FAIRStatus.Status;
+                    FAIRStatusPerCent = mareanoDataset.FAIRStatusPerCent;
+                }
+
                 if (mareanoDataset.FindableStatus != null)
                 {
                     FindableStatusId = mareanoDataset.FindableStatus.StatusId;

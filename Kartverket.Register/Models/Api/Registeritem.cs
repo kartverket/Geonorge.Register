@@ -307,6 +307,16 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string ProductspesificationStatus { get; set; }
 
+        //Mareano
+        [DataMemberAttribute]
+        public string FindableStatus { get; set; }
+        [DataMemberAttribute]
+        public string AccesibleStatus { get; set; }
+        [DataMemberAttribute]
+        public string InteroperableStatus { get; set; }
+        [DataMemberAttribute]
+        public string ReUsableStatus { get; set; }
+
         [IgnoreDataMember]
         [XmlIgnore]
         public DateTime DefaultDate { get; set; } = new DateTime(1, 1, 1, 0, 0, 0) ;
@@ -463,6 +473,57 @@ namespace Kartverket.Register.Models.Api
                 if (geodatalovDataset.CommonStatus?.Status != null)
                 {
                     CommonStatus = geodatalovDataset.CommonStatus.Status.value;
+                }
+            }
+            if (item is MareanoDataset mareanoDataset)
+            {
+                if (mareanoDataset.FindableStatus?.Status != null)
+                {
+                    FindableStatus = mareanoDataset.FindableStatus.Status.value;
+                }
+                if (mareanoDataset.AccesibleStatus?.Status != null)
+                {
+                    AccesibleStatus = mareanoDataset.AccesibleStatus.Status.value;
+                }
+                if (mareanoDataset.InteroperableStatus?.Status != null)
+                {
+                    InteroperableStatus = mareanoDataset.InteroperableStatus.Status.value;
+                }
+                if (mareanoDataset.ReUseableStatus?.Status != null)
+                {
+                    ReUsableStatus = mareanoDataset.ReUseableStatus.Status.value;
+                }
+                if (mareanoDataset.MetadataStatus?.Status != null)
+                {
+                    MetadataStatus = mareanoDataset.MetadataStatus.Status.value;
+                }
+                if (mareanoDataset.ProductSpesificationStatus?.Status != null)
+                {
+                    ProductspesificationStatus = mareanoDataset.ProductSpesificationStatus.Status.value;
+                }
+                if (mareanoDataset.SosiDataStatus?.Status != null)
+                {
+                    SosiStatus = mareanoDataset.SosiDataStatus.Status.value;
+                }
+                if (mareanoDataset.GmlDataStatus?.Status != null)
+                {
+                    GmlStatus = mareanoDataset.GmlDataStatus.Status.value;
+                }
+                if (mareanoDataset.WmsStatus?.Status != null)
+                {
+                    WmsStatus = mareanoDataset.WmsStatus.Status.value;
+                }
+                if (mareanoDataset.WfsStatus?.Status != null)
+                {
+                    WfsStatus = mareanoDataset.WfsStatus.Status.value;
+                }
+                if (mareanoDataset.AtomFeedStatus?.Status != null)
+                {
+                    AtomFeedStatus = mareanoDataset.AtomFeedStatus.Status.value;
+                }
+                if (mareanoDataset.CommonStatus?.Status != null)
+                {
+                    CommonStatus = mareanoDataset.CommonStatus.Status.value;
                 }
             }
             if (item is EPSG epsg)

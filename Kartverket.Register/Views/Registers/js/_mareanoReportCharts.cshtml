@@ -660,6 +660,9 @@
         data: {
             labels: [
                 '@MareanoDataSet.Findable_Label',
+                '@MareanoDataSet.Accesible_Label',
+                '@MareanoDataSet.Interoperable_Label',
+                '@MareanoDataSet.ReUseable_Label',
                 '@DataSet.DOK_Delivery_Metadata',
                 '@DataSet.DOK_Delivery_ProductSpesification',
                 '@DataSet.DOK_Delivery_SosiRequirements',
@@ -674,6 +677,9 @@
                     label: '@DataSet.DOK_Delivery_Status_Good',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Good)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Good)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Good)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Good)))),
@@ -682,7 +688,7 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Good)))),
-                        0,0,0,0,0
+                        0,0
                     ],
                     backgroundColor: '#36c545',
                 },
@@ -690,6 +696,9 @@
                     label: '@MareanoDataSet.Delivery_Status_Satisfactory',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Satisfactory)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Satisfactory)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Satisfactory)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Satisfactory)))),
@@ -698,7 +707,7 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Satisfactory)))),
-                        0,0,0,0,0
+                        0,0
                     ],
                     backgroundColor: '#abeb34',
                 },
@@ -706,6 +715,9 @@
                     label: '@DataSet.DOK_Delivery_Status_Useable',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Useable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Useable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Useable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Useable)))),
@@ -714,7 +726,7 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Useable)))),
-                        0, 0, 0, 0, 0
+                        0, 0
                     ],
                     backgroundColor: '#fed633',
                 },
@@ -722,6 +734,9 @@
                     label: '@DataSet.DOK_Delivery_Status_Deficient',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Deficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Deficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Deficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Deficient)))),
@@ -730,7 +745,7 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Deficient)))),
-                        0, 0, 0, 0, 0
+                        0, 0
                     ],
                     backgroundColor: '#ee432a',
                 },
@@ -738,7 +753,9 @@
                     label: '@DataSet.DOK_Delivery_Status_NotSet',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Notset)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Notset)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Notset)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirements.Notset)))),

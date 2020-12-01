@@ -139,7 +139,7 @@
                 <div class="col-md-10">
                     <div class="custom-select">
                         <select name="broader" data-placeholder="@CodelistValues.SelectCodeValue" class="form-control chosen-select dropdown" data-toggle="dropdown">
-                            <option selected="selected"></option>
+                            <option selected="selected" value="">ingen</option>
                             @foreach (var register in HtmlHelperExtensions.CodelistRegister())
                             {
                                 <optgroup label="@register.name">

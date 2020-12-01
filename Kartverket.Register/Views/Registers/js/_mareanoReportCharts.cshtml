@@ -673,7 +673,7 @@
                 {
                     label: '@DataSet.DOK_Delivery_Status_Good',
                     data: [
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Good)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Good)))),

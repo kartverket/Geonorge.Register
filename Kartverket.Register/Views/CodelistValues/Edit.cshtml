@@ -128,7 +128,7 @@
         </div>
 
 
-        @if (HtmlHelperExtensions.IsAdmin())
+        @if (HtmlHelperExtensions.AccessRegisterItem(Model))
         {
             <hr />
             <h4>@CodelistValues.HierarchicalCodelists</h4>

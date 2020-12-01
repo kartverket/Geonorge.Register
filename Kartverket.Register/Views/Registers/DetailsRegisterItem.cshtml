@@ -124,7 +124,7 @@
 
 <div class="clearfix"></div>
 <div class="hidden-print navbar-bottom">
-    @if (!(Model.RegisterItem is Alert) && Request.IsAuthenticated && Model.AccessRegisterItem)
+    @if (!(Model.RegisterItem is Alert) && !(Model is MareanoDatasetViewModel) && Request.IsAuthenticated && Model.AccessRegisterItem)
     {
         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>

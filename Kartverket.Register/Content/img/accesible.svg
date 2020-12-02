@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 22 22" style="enable-background:new 0 0 22 22;" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css">
+	.st0{fill:#3867C8;stroke:#3867C8;stroke-miterlimit:10;}
+	.st1{fill:#FFFFFF;}
+</style>
+  </defs>
+  <circle class="st0" cx="11" cy="11" r="10.5"/>
+  <path d="M 17.416 10.659 L 16.116 6.089 L 9.906 6.089 L 8.626 10.659 L 6.786 10.659 L 12.536 -8.951 L 13.466 -8.951 L 19.226 10.659 L 17.416 10.659 Z M 12.956 -4.631 L 10.386 4.409 L 15.646 4.409 L 13.066 -4.631 L 13.006 -5.351 L 12.956 -4.631 Z" transform="matrix(0.6362509727478027, 0, 0, 0.6691950559616089, 2.7216148376464844, 10.571163177490234)" style="fill: rgb(255, 255, 255); white-space: pre;"/>
+</svg>

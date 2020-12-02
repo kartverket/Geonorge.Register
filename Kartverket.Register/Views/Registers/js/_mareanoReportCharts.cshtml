@@ -111,7 +111,8 @@
                     backgroundColor: "rgb(255, 0, 0)",
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    fill: false
+                    fill: false,
+                    lineTension: 0
                 },
                 {
                     label: "@DataSet.DOK_Delivery_ProductSpesification",
@@ -121,6 +122,7 @@
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.ProductSpecification))),
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
                 },
                 {
                     label: "@DataSet.DOK_Delivery_SosiRequirements",
@@ -130,6 +132,7 @@
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.SosiRequirements))),
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
                 },
                 {
                     label: "@DataSet.DOK_Delivery_GmlRequirements",
@@ -139,6 +142,7 @@
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.GmlRequirements))),
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Wms",
@@ -148,6 +152,7 @@
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Wms))),
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Wfs",
@@ -157,6 +162,7 @@
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Wfs))),
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
                 },
                 {
                     label: "@DataSet.DOK_Delivery_AtomFeed",
@@ -166,6 +172,7 @@
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.AtomFeed))),
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
                 },
                 {
                     label: "@MareanoDataSet.Common",
@@ -175,6 +182,7 @@
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Common))),
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
                 }
             ]
         },
@@ -202,7 +210,8 @@
                     backgroundColor: "#36c545",
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
-                    fill: false
+                    fill: false,
+                    lineTension: 0
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Status_Useable",
@@ -212,6 +221,7 @@
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Useable))),
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    lineTension: 0
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Status_Deficient",
@@ -221,6 +231,7 @@
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Deficient))),
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    lineTension: 0
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Status_NotSet",
@@ -230,6 +241,7 @@
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Notset))),
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    lineTension: 0
                 }
             ]
         }

@@ -170,7 +170,134 @@ namespace Kartverket.Register.Formatter
                 }
             }
 
+            if (models is List<MareanoDatasetStatusReport> mareanoDatasetStatusReports)
+            {
+                streamWriter.WriteLine(MareanoStatusReportHeading());
+                streamWriter.WriteLine(StatusReportHeadingStatusValuesMareano());
+
+                foreach (var report in mareanoDatasetStatusReports)
+                {
+                    streamWriter.WriteLine(WriteMareanoStatusReport(report));
+                }
+            }
+
             streamWriter.Close();
+        }
+
+        private string StatusReportHeadingStatusValuesMareano()
+        {
+            return ";" +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano() +
+               HeadingStatusesMareano();
+        }
+
+        private string HeadingStatusesMareano()
+        {
+            return DataSet.DOK_Delivery_Status_Good + ";" + DataSet.DOK_Delivery_Status_Useable + ";" + DataSet.DOK_Delivery_Status_Deficient + ";" + DataSet.DOK_Delivery_Status_NotSet + ";" + MareanoDataSet.Delivery_Status_Satisfactory + ";";
+        }
+
+        private string WriteMareanoStatusReport(MareanoDatasetStatusReport report)
+        {
+            return report.Date + ";" +
+                   report.NumberOfItemsWithMetadata.Good + ";" +
+                   report.NumberOfItemsWithMetadata.Useable + ";" +
+                   report.NumberOfItemsWithMetadata.Deficient + ";" +
+                   report.NumberOfItemsWithMetadata.Notset + ";" +
+                   report.NumberOfItemsWithMetadata.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithProductSpecification.Good + ";" +
+                   report.NumberOfItemsWithProductSpecification.Useable + ";" +
+                   report.NumberOfItemsWithProductSpecification.Deficient + ";" +
+                   report.NumberOfItemsWithProductSpecification.Notset + ";" +
+                   report.NumberOfItemsWithProductSpecification.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithSosiRequirements.Good + ";" +
+                   report.NumberOfItemsWithSosiRequirements.Useable + ";" +
+                   report.NumberOfItemsWithSosiRequirements.Deficient + ";" +
+                   report.NumberOfItemsWithSosiRequirements.Notset + ";" +
+                   report.NumberOfItemsWithSosiRequirements.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithGmlRequirements.Good + ";" +
+                   report.NumberOfItemsWithGmlRequirements.Useable + ";" +
+                   report.NumberOfItemsWithGmlRequirements.Deficient + ";" +
+                   report.NumberOfItemsWithGmlRequirements.Notset + ";" +
+                   report.NumberOfItemsWithGmlRequirements.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithWms.Good + ";" +
+                   report.NumberOfItemsWithWms.Useable + ";" +
+                   report.NumberOfItemsWithWms.Deficient + ";" +
+                   report.NumberOfItemsWithWms.Notset + ";" +
+                   report.NumberOfItemsWithWms.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithWfs.Good + ";" +
+                   report.NumberOfItemsWithWfs.Useable + ";" +
+                   report.NumberOfItemsWithWfs.Deficient + ";" +
+                   report.NumberOfItemsWithWfs.Notset + ";" +
+                   report.NumberOfItemsWithWfs.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithAtomFeed.Good + ";" +
+                   report.NumberOfItemsWithAtomFeed.Useable + ";" +
+                   report.NumberOfItemsWithAtomFeed.Deficient + ";" +
+                   report.NumberOfItemsWithAtomFeed.Notset + ";" +
+                   report.NumberOfItemsWithAtomFeed.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithCommon.Good + ";" +
+                   report.NumberOfItemsWithCommon.Useable + ";" +
+                   report.NumberOfItemsWithCommon.Deficient + ";" +
+                   report.NumberOfItemsWithCommon.Notset + ";" +
+                   report.NumberOfItemsWithCommon.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithFindable.Good + ";" +
+                   report.NumberOfItemsWithFindable.Useable + ";" +
+                   report.NumberOfItemsWithFindable.Deficient + ";" +
+                   report.NumberOfItemsWithFindable.Notset + ";" +
+                   report.NumberOfItemsWithFindable.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithAccesible.Good + ";" +
+                   report.NumberOfItemsWithAccesible.Useable + ";" +
+                   report.NumberOfItemsWithAccesible.Deficient + ";" +
+                   report.NumberOfItemsWithAccesible.Notset + ";" +
+                   report.NumberOfItemsWithAccesible.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithInteroperable.Good + ";" +
+                   report.NumberOfItemsWithInteroperable.Useable + ";" +
+                   report.NumberOfItemsWithInteroperable.Deficient + ";" +
+                   report.NumberOfItemsWithInteroperable.Notset + ";" +
+                   report.NumberOfItemsWithInteroperable.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithReUseable.Good + ";" +
+                   report.NumberOfItemsWithReUseable.Useable + ";" +
+                   report.NumberOfItemsWithInteroperable.Deficient + ";" +
+                   report.NumberOfItemsWithInteroperable.Notset + ";" +
+                   report.NumberOfItemsWithInteroperable.Satisfactory + ";";
+
+        }
+
+        private string MareanoStatusReportHeading()
+        {
+            return Registers.Date + ";" +
+               DataSet.DOK_Delivery_Metadata + ";" + ";" + ";" + ";" + ";" +
+               DataSet.DOK_Delivery_ProductSpesification + ";" + ";" + ";" + ";" + ";" +
+               DataSet.DOK_Delivery_SosiRequirements + ";" + ";" + ";" + ";" + ";" +
+               DataSet.DOK_Delivery_GmlRequirements + ";" + ";" + ";" + ";" + ";" +
+               DataSet.DOK_Delivery_Wms + ";" + ";" + ";" + ";" + ";" +
+               DataSet.DOK_Delivery_Wfs + ";" + ";" + ";" + ";" + ";" +
+               DataSet.DOK_Delivery_AtomFeed + ";" + ";" + ";" + ";" + ";" +
+               GeodatalovDataSet.Common + ";" + ";" + ";" + ";" + ";" +
+               MareanoDataSet.Findable_Label + ";" + ";" + ";" + ";" + ";" +
+               MareanoDataSet.Accesible_Label + ";" + ";" + ";" + ";" + ";" +
+               MareanoDataSet.Interoperable_Label + ";" + ";" + ";" + ";" +";" +
+               MareanoDataSet.ReUseable_Label + ";" + ";" + ";" + ";" + ";";
         }
 
         private void WriteMareanoStatusesInTable(StreamWriter streamWriter, MareanoDatasetStatusReport mareanoDatasetStatusReport)

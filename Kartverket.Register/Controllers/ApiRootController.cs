@@ -302,7 +302,19 @@ namespace Kartverket.Register.Controllers
                     geodatalovDatasetStatusReportApi.Add(new GeodatalovDatasetStatusReport(report));
                 }
                 return Ok(geodatalovDatasetStatusReportApi);
-            }   
+            }
+
+            else if (register.IsMareanoStatusRegister())
+            {
+                List<MareanoDatasetStatusReport> mareanoDatasetStatusReportApi = new List<MareanoDatasetStatusReport>();
+                statusReports = _statusReportService.GetMareanoStatusReports();
+
+                foreach (var report in statusReports)
+                {
+                    mareanoDatasetStatusReportApi.Add(new MareanoDatasetStatusReport(report));
+                }
+                return Ok(mareanoDatasetStatusReportApi);
+            }
 
             return Ok();
         }

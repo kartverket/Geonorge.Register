@@ -1117,6 +1117,7 @@
     <Compile Include="Models\Api\FacetInput.cs" />
     <Compile Include="Models\Api\FieldValueModelBinder.cs" />
     <Compile Include="Models\Api\InspireDataset.cs" />
+    <Compile Include="Models\Api\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\Api\OrganizationV2.cs" />
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\RegisterData.cs" />

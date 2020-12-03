@@ -249,6 +249,11 @@ namespace Kartverket.Register.Controllers
                 return Ok(new GeodatalovDatasetStatusReport(statusReport));
             }
 
+            if (statusReport.IsMareanoDatasetReport())
+            {
+                return Ok(new MareanoDatasetStatusReport(statusReport));
+            }
+
             return Ok();
 
 

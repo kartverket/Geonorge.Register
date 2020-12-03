@@ -277,9 +277,9 @@ namespace Kartverket.Register.Formatter
 
                    report.NumberOfItemsWithReUseable.Good + ";" +
                    report.NumberOfItemsWithReUseable.Useable + ";" +
-                   report.NumberOfItemsWithInteroperable.Deficient + ";" +
-                   report.NumberOfItemsWithInteroperable.Notset + ";" +
-                   report.NumberOfItemsWithInteroperable.Satisfactory + ";";
+                   report.NumberOfItemsWithReUseable.Deficient + ";" +
+                   report.NumberOfItemsWithReUseable.Notset + ";" +
+                   report.NumberOfItemsWithReUseable.Satisfactory + ";";
 
         }
 

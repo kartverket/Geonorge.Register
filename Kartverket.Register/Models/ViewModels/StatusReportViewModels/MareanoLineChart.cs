@@ -18,7 +18,12 @@ namespace Kartverket.Register.Models.ViewModels.StatusReportViewModels
         public List<int> Wfs { get; set; }
         public List<int> AtomFeed { get; set; }
         public List<int> Common { get; set; }
-        
+
+        public List<int> Findable { get; set; }
+        public List<int> Accesible { get; set; }
+        public List<int> Interoperable { get; set; }
+        public List<int> ReUsable { get; set; }
+
 
         public List<int> PointSize { get; set; }
 
@@ -34,6 +39,10 @@ namespace Kartverket.Register.Models.ViewModels.StatusReportViewModels
             Common = new List<int>();
             Labels = new List<string>();
             PointSize = new List<int>();
+            Findable = new List<int>();
+            Accesible = new List<int>();
+            Interoperable = new List<int>();
+            ReUsable = new List<int>();
 
             if (statusReports != null)
             {
@@ -53,6 +62,10 @@ namespace Kartverket.Register.Models.ViewModels.StatusReportViewModels
                     Wfs.Add(statusReport.NumberOfMareanoDatasetsWithWfs("good"));
                     AtomFeed.Add(statusReport.NumberOfMareanoDatasetsWithAtomFeed("good"));
                     Common.Add(statusReport.NumberOfItemsWithCommon("good"));
+                    Findable.Add(statusReport.NumberOfMareanoDatasetsWithFindable("good"));
+                    Accesible.Add(statusReport.NumberOfMareanoDatasetsWithAccesible("good"));
+                    Interoperable.Add(statusReport.NumberOfMareanoDatasetsWithInteroperable("good"));
+                    ReUsable.Add(statusReport.NumberOfMareanoDatasetsWithReUsable("good"));
                 }
             }
         }

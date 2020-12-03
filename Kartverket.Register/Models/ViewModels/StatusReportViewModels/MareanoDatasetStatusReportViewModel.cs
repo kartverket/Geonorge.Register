@@ -119,6 +119,10 @@ namespace Kartverket.Register.Models.ViewModels
             List<SelectListItem> items = new List<SelectListItem>();
 
             items.Add(new SelectListItem() { Text = Shared.ShowAll, Value = "all" });
+            items.Add(new SelectListItem() { Text = MareanoDataSet.Findable_Label, Value = "Findable" });
+            items.Add(new SelectListItem() { Text = MareanoDataSet.Accesible_Label, Value = "Accesible" });
+            items.Add(new SelectListItem() { Text = MareanoDataSet.Interoperable_Label, Value = "Interoperable" });
+            items.Add(new SelectListItem() { Text = MareanoDataSet.ReUseable_Label, Value = "ReUseable" });
             items.Add(new SelectListItem() { Text = InspireDataSet.Metadata, Value = "Metadata" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_ProductSpecificationStatus, Value = "ProductSpecification" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_SosiRequirements, Value = "SosiRequirements" });

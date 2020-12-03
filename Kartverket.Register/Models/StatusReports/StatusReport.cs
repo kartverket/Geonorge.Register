@@ -741,6 +741,14 @@ namespace Kartverket.Register.Models
 
             switch (statusType)
             {
+                case "Findable":
+                    return NumberOfMareanoDatasetsWithFindable(status);
+                case "Accesible":
+                    return NumberOfMareanoDatasetsWithAccesible(status);
+                case "Interoperable":
+                    return NumberOfMareanoDatasetsWithInteroperable(status);
+                case "ReUseable":
+                    return NumberOfMareanoDatasetsWithReUsable(status);
                 case "Metadata":
                     return NumberOfItemsWithMetadata(status);
                 case "ProductSheet":

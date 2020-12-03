@@ -104,6 +104,46 @@
         data: {
             labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Labels))),
             datasets: [
+               {
+                    label: "@MareanoDataSet.Findable_Label",
+                    borderColor: 'rgb(171, 235, 52)',
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Findable))),
+                    backgroundColor: "rgb(171, 235, 52)",
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    fill: false,
+                    lineTension: 0
+                },
+                {
+                    label: "@MareanoDataSet.Accesible_Label",
+                    borderColor: 'rgb(229, 52, 235)',
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Accesible))),
+                    backgroundColor: "rgb(229, 52, 235)",
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    fill: false,
+                    lineTension: 0
+                },
+                {
+                    label: "@MareanoDataSet.Interoperable_Label",
+                    borderColor: 'rgb(161, 109, 67)',
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Interoperable))),
+                    backgroundColor: "rgb(161, 109, 67)",
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    fill: false,
+                    lineTension: 0
+                },
+                {
+                    label: "@MareanoDataSet.ReUseable_Label",
+                    borderColor: 'rgb(250, 114, 5)',
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.ReUsable))),
+                    backgroundColor: "rgb(250, 114, 5)",
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    fill: false,
+                    lineTension: 0
+                },
                 {
                     label: "@InspireDataSet.Metadata",
                     borderColor: 'rgb(255, 0, 0)',
@@ -211,6 +251,16 @@
                     pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                     fill: false,
+                    lineTension: 0
+                },
+                {
+                    label: "@MareanoDataSet.Delivery_Status_Satisfactory",
+                    fill: false,
+                    backgroundColor: '#abeb34',
+                    borderColor: '#abeb34',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Satisfactory))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                     lineTension: 0
                 },
                 {

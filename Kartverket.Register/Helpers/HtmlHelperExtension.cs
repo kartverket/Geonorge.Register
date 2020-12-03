@@ -612,22 +612,22 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "findable_metadata_status" || sortingParam == "findable_metadata_status_desc")
             {
                 sortTitle = MareanoDataSet.Findable_Label;
-                statusIcon += "custom-icon-info"; //todo create icon
+                statusIcon += "custom-icon-findable";
             }
             else if (sortingParam == "accesible_metadata_status" || sortingParam == "accesible_metadata_status_desc")
             {
                 sortTitle = MareanoDataSet.Accesible_Label;
-                statusIcon += "custom-icon-info"; //todo create icon
+                statusIcon += "custom-icon-accesible";
             }
             else if (sortingParam == "interoperable_metadata_status" || sortingParam == "interoperable_metadata_status_desc")
             {
                 sortTitle = MareanoDataSet.Interoperable_Label;
-                statusIcon += "custom-icon-info"; //todo create icon
+                statusIcon += "custom-icon-interoperable";
             }
             else if (sortingParam == "reusable_metadata_status" || sortingParam == "reusable_metadata_status_desc")
             {
                 sortTitle = MareanoDataSet.ReUseable_Label;
-                statusIcon += "custom-icon-info"; //todo create icon
+                statusIcon += "custom-icon-re-useable";
             }
             else if (sortingParam == "geodatalov_productspecification_status" || sortingParam == "geodatalov_productspecification_status_desc")
             {
@@ -710,7 +710,7 @@ namespace Kartverket.Register.Helpers
             var symbolUseable = "custom-icon custom-icon-smile-yellow";
             var symbolGood = "custom-icon custom-icon-smile-green";
             var symbolNotSet = "custom-icon custom-icon-status-not-set";
-            var symbolSatisfactory = "custom-icon custom-icon-smile-yellow"; //Todo happier yellow
+            var symbolSatisfactory = "custom-icon custom-icon-smile-yellow-satisfactory";
 
             var statusSymbol = symbolUseable;
             var title = "";

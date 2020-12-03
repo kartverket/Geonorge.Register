@@ -468,3 +468,24 @@ a.link-unstyled {
     width: 24px;
     height: 24px;
 }
+
+.custom-icon.custom-icon-findable {
+    background-image: url("/Content/img/findable.svg");
+}
+
+.custom-icon.custom-icon-accesible {
+    background-image: url("/Content/img/accesible.svg");
+}
+
+.custom-icon.custom-icon-interoperable {
+    background-image: url("/Content/img/interoperable.svg");
+}
+
+.custom-icon.custom-icon-re-useable {
+    background-image: url("/Content/img/re-useable.svg");
+}
+
+.custom-icon.custom-icon-smile-yellow-satisfactory {
+    background-image: url("/Content/img/satisfactory.svg");
+}
+

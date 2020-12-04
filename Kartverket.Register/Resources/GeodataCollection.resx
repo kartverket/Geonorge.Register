@@ -219,4 +219,7 @@
   <data name="Requirements" xml:space="preserve">
     <value>Krav</value>
   </data>
+  <data name="Image" xml:space="preserve">
+    <value>Bilde</value>
+  </data>
 </root>

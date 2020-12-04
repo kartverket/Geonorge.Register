@@ -66,6 +66,8 @@ namespace Kartverket.Register.Models
         public string OrganizationInfo { get; set; }
         [Display(Name = "ContactEmail", ResourceType = typeof(GeodataCollection))]
         public string ContactEmail { get; set; }
-
+        [Display(Name = "Image", ResourceType = typeof(GeodataCollection))]
+        public string ImageFileName { get; set; }
+        public string ThumbnailFileName { get; set; }
     }
 }

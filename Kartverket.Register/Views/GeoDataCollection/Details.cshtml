@@ -35,6 +35,11 @@ if (replaceParagraph)
 <div class="row">
     <article class="col-md-12">
         <h3>@GeodataCollection.SystemCollecting</h3>
+            @if (!string.IsNullOrEmpty(Model.ThumbnailFileName))
+            {<p style="float: right">
+                <a href="/data/img/@Model.ImageFileName" target="_blank"><img src="/data/img/@Model.ThumbnailFileName" /></a>
+             </p>    
+        }
         <p><strong>@GeodataCollection.Title: </strong>@Model.Title</p>
         <p><strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle</p>
         <p><strong>@GeodataCollection.Organization: </strong>@Model.Organization.NameTranslated()</p>

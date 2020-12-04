@@ -1279,6 +1279,11 @@
               Looks up a localized string similar to Distributør.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Image">
+            <summary>
+              Looks up a localized string similar to Bilde.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Link">
             <summary>
               Looks up a localized string similar to Lenke til metodikk for kartlegging.

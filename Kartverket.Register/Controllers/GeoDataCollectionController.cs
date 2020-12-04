@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Resources;
+using System.IO;
 
 namespace Kartverket.Register.Controllers
 {
@@ -81,7 +82,7 @@ namespace Kartverket.Register.Controllers
         // POST: GeoDataCollection/Edit/5
         [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
         [HttpPost]
-        public ActionResult Edit(string systemId, string ownerId, GeoDataCollection collection)
+        public ActionResult Edit(string systemId, string ownerId, GeoDataCollection collection, HttpPostedFileBase imagefile)
         {
             try
             {
@@ -116,6 +117,14 @@ namespace Kartverket.Register.Controllers
 
                 var org = _dbContext.Organizations.Where(o => o.systemId.ToString() == ownerId).FirstOrDefault();
                 geodataCollection.Organization = org;
+
+                if (imagefile != null && imagefile.ContentLength > 0)
+                {
+                    geodataCollection.ThumbnailFileName = SaveImageOptimizedToDisk(imagefile, geodataCollection.SeoName);
+
+                    geodataCollection.ImageFileName = SaveImageToDisk(imagefile, geodataCollection.SeoName);
+                }
+
 
                 _dbContext.Entry(geodataCollection).State = EntityState.Modified;
                 _dbContext.SaveChanges();
@@ -155,5 +164,28 @@ namespace Kartverket.Register.Controllers
                 return View();
             }
         }
+
+        private string SaveImageToDisk(HttpPostedFileBase file, string seo)
+        {
+            string filename = seo + "_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + "img/"), filename);
+            file.SaveAs(path);
+            return filename;
+        }
+
+        private string SaveImageOptimizedToDisk(HttpPostedFileBase file, string seo)
+        {
+            string filename = seo + "_thumb_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + "img/"), filename);
+
+            ImageResizer.ImageJob newImage =
+               new ImageResizer.ImageJob(file, path,
+               new ImageResizer.Instructions("maxwidth=300;maxheight=1000;quality=75"));
+
+            newImage.Build();
+
+            return filename;
+        }
+
     }
 }

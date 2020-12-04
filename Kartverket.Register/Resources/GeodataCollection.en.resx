@@ -216,4 +216,7 @@
   <data name="Requirements" xml:space="preserve">
     <value>Requirements</value>
   </data>
+  <data name="Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
 </root>

@@ -489,3 +489,39 @@ a.link-unstyled {
     background-image: url("/Content/img/satisfactory.svg");
 }
 
+.arrow-icon {
+    background-image: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-right.svg);
+    width: 11px;
+    height: 12px;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+    display: inline-block;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+    .arrow-icon.active,
+    .active > .arrow-icon {
+        background-image: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg);
+    }
+
+.criteria-list {
+    display: none;
+}
+
+    .criteria-list .title-field {
+        padding-left: 24px;
+    }
+
+.criteria-list .official-field {
+    text-align: center;
+}
+
+.dataset-list {
+    line-height: 24pt;
+}
+    .dataset-list.active .criteria-list {
+        display: block;
+    }

@@ -766,9 +766,18 @@ namespace Kartverket.Register.Formatter
 
         private string SingelStatusReportHeading(string label = "", string type ="")
         {
-            string heading = label + ";" + DataSet.DOK_Delivery_Status_Good + ";" +
-                   DataSet.DOK_Delivery_Status_Useable + ";" +
-                   DataSet.DOK_Delivery_Status_Deficient + ";" +
+            var delivery_Status_Useable = DataSet.DOK_Delivery_Status_Useable;
+            var delivery_Status_Deficient = DataSet.DOK_Delivery_Status_Deficient;
+
+            if (type == "mareano")
+            {
+                delivery_Status_Useable = MareanoDataSet.Delivery_Status_Useable;
+                delivery_Status_Deficient = MareanoDataSet.Delivery_Status_Deficient;
+            }
+
+                string heading = label + ";" + DataSet.DOK_Delivery_Status_Good + ";" +
+                   delivery_Status_Useable + ";" +
+                   delivery_Status_Deficient + ";" +
                    DataSet.DOK_Delivery_Status_NotSet;
 
             if(type == "mareano")

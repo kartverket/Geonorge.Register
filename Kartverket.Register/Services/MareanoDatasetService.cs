@@ -408,11 +408,11 @@ namespace Kartverket.Register.Services
         {
             if (string.IsNullOrEmpty(fairStatusId))
             {
-                if (weight >= 80)
+                if (weight > 90)
                     fairStatusId = FAIRDelivery.Good;
-                else if (weight < 80 && weight >= 50)
+                else if (weight >= 75 && weight <= 90)
                     fairStatusId = FAIRDelivery.Satisfactory;
-                else if (weight < 50 && weight >= 25)
+                else if (weight < 75 && weight >= 50)
                     fairStatusId = FAIRDelivery.Useable;
                 else
                     fairStatusId = FAIRDelivery.Deficient;

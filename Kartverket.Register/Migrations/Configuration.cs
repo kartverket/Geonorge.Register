@@ -121,9 +121,9 @@ namespace Kartverket.Register.Migrations
             );
 
             context.FAIRDeliveryStatuses.AddOrUpdate(
-                new Models.FAIRDeliveryStatus { value = "deficient", description = "Ikke levert" },
+                new Models.FAIRDeliveryStatus { value = "deficient", description = "Dårlig" },
                 new Models.FAIRDeliveryStatus { value = "satisfactory", description = "Tilfredsstillende" },
-                new Models.FAIRDeliveryStatus { value = "useable", description = "Brukbar" },
+                new Models.FAIRDeliveryStatus { value = "useable", description = "Bør forbedres" },
                 new Models.FAIRDeliveryStatus { value = "good", description = "God" },
                 new Models.FAIRDeliveryStatus { value = "notset", description = "Ikke angitt" }
             );

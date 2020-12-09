@@ -120,4 +120,10 @@
   <data name="Common" xml:space="preserve">
     <value>Nedlastingskrav status</value>
   </data>
+  <data name="Delivery_Status_Deficient" xml:space="preserve">
+    <value>Bad</value>
+  </data>
+  <data name="Delivery_Status_Useable" xml:space="preserve">
+    <value>Useable</value>
+  </data>
 </root>

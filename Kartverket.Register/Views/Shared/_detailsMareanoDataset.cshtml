@@ -42,10 +42,10 @@
 </article>
 
 <article class="col-md-12">
-    <h3>FAIR status: @Model.FAIRStatus.DescriptionTranslated() (@Model.FAIRStatusPerCent<span>%</span>)</h3>
+    <h3>FAIR status: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FAIRStatus.value , null, Model.FAIRStatusPerCent + "%","fair")</h3>
     <div class="dataset-list metadata" onclick="ToogleContent(this)">
         <div class="row">
-            <div class="col-md-12"><p><span class="arrow-icon toggle-content-button"></span>@MareanoDataSet.Findable_Label: @Model.FindableStatus.DescriptionTranslated() (@Model.FindableStatusPerCent<span>%</span>)</p></div>
+            <div class="col-md-12"><p><span class="arrow-icon toggle-content-button"></span>@MareanoDataSet.Findable_Label: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FindableStatus.value, null, Model.FindableStatusPerCent + "%", "fair")</p></div>
         </div>
         <div class="criteria-list">
             <div class="col-md-12">
@@ -82,7 +82,7 @@
     </div>
     <div class="dataset-list metadata" onclick="ToogleContent(this)">
         <div class="row">
-            <div class="col-md-12"><p><span class="arrow-icon toggle-content-button"></span>@MareanoDataSet.Accesible_Label: @Model.AccesibleStatus.DescriptionTranslated() (@Model.AccesibleStatusPerCent<span>%</span>)</p></div>
+            <div class="col-md-12"><p><span class="arrow-icon toggle-content-button"></span>@MareanoDataSet.Accesible_Label: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.AccesibleStatus.value, null, Model.AccesibleStatusPerCent + "%", "fair")</p></div>
         </div>
         <div class="criteria-list">
             <div class="col-md-12">
@@ -113,7 +113,7 @@
     </div>
     <div class="dataset-list metadata" onclick="ToogleContent(this)">
         <div class="row">
-            <div class="col-md-12"><p><span class="arrow-icon toggle-content-button"></span>@MareanoDataSet.Interoperable_Label: @Model.InteroperableStatus.DescriptionTranslated() (@Model.InteroperableStatusPerCent<span>%</span>)</p></div>
+            <div class="col-md-12"><p><span class="arrow-icon toggle-content-button"></span>@MareanoDataSet.Interoperable_Label: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.InteroperableStatus.value, null, Model.InteroperableStatusPerCent + "%", "fair")</p></div>
         </div>
         <div class="criteria-list">
             <div class="col-md-12">
@@ -150,7 +150,7 @@
     </div>
     <div class="dataset-list metadata" onclick="ToogleContent(this)">
         <div class="row">
-            <div class="col-md-12"><p><span class="arrow-icon toggle-content-button"></span>@MareanoDataSet.ReUseable_Label: @Model.ReUseableStatus.DescriptionTranslated() (@Model.ReUseableStatusPerCent<span>%</span>)</p></div>
+            <div class="col-md-12"><p><span class="arrow-icon toggle-content-button"></span>@MareanoDataSet.ReUseable_Label: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.ReUseableStatus.value, null, Model.ReUseableStatusPerCent + "%", "fair")</p></div>
         </div>
         <div class="criteria-list">
             <div class="col-md-12">

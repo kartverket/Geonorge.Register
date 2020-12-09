@@ -203,7 +203,7 @@ namespace Kartverket.Register.Formatter
 
         private string HeadingStatusesMareano()
         {
-            return DataSet.DOK_Delivery_Status_Good + ";" + DataSet.DOK_Delivery_Status_Useable + ";" + DataSet.DOK_Delivery_Status_Deficient + ";" + DataSet.DOK_Delivery_Status_NotSet + ";" + MareanoDataSet.Delivery_Status_Satisfactory + ";";
+            return DataSet.DOK_Delivery_Status_Good + ";" + MareanoDataSet.Delivery_Status_Useable + ";" + MareanoDataSet.Delivery_Status_Deficient + ";" + DataSet.DOK_Delivery_Status_NotSet + ";" + MareanoDataSet.Delivery_Status_Satisfactory + ";";
         }
 
         private string WriteMareanoStatusReport(MareanoDatasetStatusReport report)

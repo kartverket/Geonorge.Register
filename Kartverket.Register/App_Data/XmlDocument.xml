@@ -2470,9 +2470,19 @@
               Looks up a localized string similar to Nedlastingskrav status.
             </summary>
         </member>
+        <member name="P:Resources.MareanoDataSet.Delivery_Status_Deficient">
+            <summary>
+              Looks up a localized string similar to Dårlig.
+            </summary>
+        </member>
         <member name="P:Resources.MareanoDataSet.Delivery_Status_Satisfactory">
             <summary>
               Looks up a localized string similar to Tilfredsstillende.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.Delivery_Status_Useable">
+            <summary>
+              Looks up a localized string similar to Bør forbedres.
             </summary>
         </member>
         <member name="P:Resources.MareanoDataSet.F1_a_Criteria">

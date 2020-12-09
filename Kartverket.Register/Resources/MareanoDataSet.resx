@@ -258,4 +258,10 @@
   <data name="R3_Label" xml:space="preserve">
     <value>R3: Metadata og datasett følger internasjonale standarder</value>
   </data>
+  <data name="Delivery_Status_Useable" xml:space="preserve">
+    <value>Bør forbedres</value>
+  </data>
+  <data name="Delivery_Status_Deficient" xml:space="preserve">
+    <value>Dårlig</value>
+  </data>
 </root>

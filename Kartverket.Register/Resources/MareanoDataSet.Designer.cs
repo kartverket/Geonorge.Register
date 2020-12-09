@@ -160,11 +160,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dårlig.
+        /// </summary>
+        public static string Delivery_Status_Deficient {
+            get {
+                return ResourceManager.GetString("Delivery_Status_Deficient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tilfredsstillende.
         /// </summary>
         public static string Delivery_Status_Satisfactory {
             get {
                 return ResourceManager.GetString("Delivery_Status_Satisfactory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bør forbedres.
+        /// </summary>
+        public static string Delivery_Status_Useable {
+            get {
+                return ResourceManager.GetString("Delivery_Status_Useable", resourceCulture);
             }
         }
         

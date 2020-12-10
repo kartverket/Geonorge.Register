@@ -35,13 +35,6 @@
 }
 
 <article class="col-md-12">
-    <h3>DOK-status</h3>
-    <p title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><strong>DOK-status: </strong>@Model.DokStatus.DescriptionTranslated() <i class="statusIcon-@Model.DokStatusId"></i></p>
-    <p><strong>@Html.DisplayNameFor(model => Model.DokStatusDateAccepted): </strong>@Html.DisplayFor(modelItem => Model.DokStatusDateAccepted)</p>
-    <p><strong>@Registers.Updated: </strong>@Html.DisplayFor(model => model.Modified)</p>
-</article>
-
-<article class="col-md-12">
     <h3>FAIR status: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FAIRStatus.value , null, Model.FAIRStatusPerCent + "%","fair")</h3>
     <div class="dataset-list metadata" onclick="ToogleContent(this)">
         <div class="row">

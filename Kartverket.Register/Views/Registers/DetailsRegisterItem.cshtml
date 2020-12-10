@@ -34,20 +34,21 @@
 
             @if (Model.Register.containedItemClass != "NameSpace")
             {<p> @Model.Description</p>}
-            @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
+            @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset" && Model.Register.containedItemClass != "MareanoDataset")
             {<p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>}
 
             @if (Model.Register.containedItemClass == "NameSpace")
             {<p><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</p>}
-        else
+        else if (Model.Register.containedItemClass != "MareanoDataset")
         {<p><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</p>}
 
             @if (Model.Owner != null)
             {<p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>}
-
+            @if (Model.Register.containedItemClass != "MareanoDataset") { 
             <p><strong>@Html.DisplayNameFor(m => m.VersionNumber)</strong> @Model.VersionNumber</p>
-            @if (Model.VersionName != null)
+            if (Model.VersionName != null)
             {<p><strong>@Html.DisplayNameFor(model => model.VersionName):</strong> @Model.VersionName</p>}
+            }
         </div>
         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
             <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span>

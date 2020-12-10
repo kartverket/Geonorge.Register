@@ -175,7 +175,7 @@ namespace Kartverket.Register.Services
 
         public string GetInspireWmsStatus(string metadataUuid, bool autoupdate, string currentStatus, string serviceUuid)
         {
-            // Todo, skal etterhvert sjekkes mot tjenestestatus api..
+            string statusValue = Deficient;
 
             if (!autoupdate) return currentStatus;
             try
@@ -186,8 +186,11 @@ namespace Kartverket.Register.Services
                 {
                     foreach (var service in metadata)
                     {
-                        if (service.Protocol == "WMS-tjeneste" || service.Protocol == "OGC:WMS"
-                        ) return Useable;
+                        if (service.Protocol == "WMS-tjeneste" || service.Protocol == "OGC:WMS")
+                        {
+                            string uuid = service.Uuid;
+                            statusValue = GetInspireWmsServiceStatus(uuid, Useable);
+                        } 
                     }
                 }
             }
@@ -198,10 +201,10 @@ namespace Kartverket.Register.Services
                     _synchronizationJob.FailCount++;
                     _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av WMS status"));
                 }
-                return currentStatus;
+                return statusValue;
             }
 
-            return Deficient;
+            return statusValue;
         }
 
         public string GetServiceStatus(string serviceUuid, string status, bool hasServiceUrl = true)
@@ -315,6 +318,42 @@ namespace Kartverket.Register.Services
                         dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
 
                         if (data.inspire_metadataurl.svar == "yes")
+                            status = Good;
+
+                    }
+                }
+                catch (Exception)
+                {
+                    if (_synchronizationJob != null)
+                    {
+                        _synchronizationJob.FailCount++;
+                        _synchronizationJob.FailLog.Add(new SyncLogEntry(serviceUuid, "Feil ved henting av status for WFS"));
+                    }
+                    return status;
+                }
+            }
+            return status;
+        }
+
+        public string GetInspireWmsServiceStatus(string serviceUuid, string status)
+        {
+            // TODO - flere tester kommer... 
+            var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"];
+            statusUrl = statusUrl + serviceUuid;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                try
+                {
+                    var response = client.GetAsync(new Uri(statusUrl)).Result;
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        var text = response.Content.ReadAsStringAsync().Result;
+                        dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
+
+                        if (data.external_metadata_reference.svar == "OK" && data.dataset_reference.svar == "OK"
+                            && data.inspire_extended.svar == "OK")
                             status = Good;
 
                     }

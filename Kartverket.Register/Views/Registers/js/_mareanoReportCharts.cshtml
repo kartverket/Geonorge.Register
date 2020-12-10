@@ -777,7 +777,7 @@
                     backgroundColor: '#abeb34',
                 },
                 {
-                    label: '@MareanoDataSet.Delivery_Status_Useable',
+                    label: '@RawText(MareanoDataSet.Delivery_Status_Useable)',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Useable)))),
@@ -796,7 +796,7 @@
                     backgroundColor: '#fed633',
                 },
                 {
-                    label: '@MareanoDataSet.Delivery_Status_Deficient',
+                    label: '@RawText(MareanoDataSet.Delivery_Status_Deficient)',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Deficient)))),

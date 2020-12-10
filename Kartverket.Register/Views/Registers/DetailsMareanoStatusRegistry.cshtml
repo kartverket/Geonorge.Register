@@ -72,9 +72,6 @@
         <div class="col-sm-12 col-md-2 text-right">
             <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span><br />
         </div>
-
-        @if (HtmlHelperExtensions.IsAdmin())
-        {
             <div class="col-sm-12 col-md-12 ">
                 <ul id="tabs" class="nav nav-tabs">
 
@@ -86,7 +83,6 @@
                     </li>
                 </ul>
             </div>
-        }
     </div>
 </section>
 

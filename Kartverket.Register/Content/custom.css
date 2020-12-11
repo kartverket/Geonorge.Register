@@ -531,9 +531,13 @@ a.link-unstyled {
 .fair ul li:before {
     content: none;
 }
-.fair ul li {
+.nested ul li {
     font-weight: 600;
+    font-style: normal;
 }
-.fair ul li ul li {
+.nested ul li ul li {
     font-weight: normal;
+}
+.nested ul li:before {
+    content: none;
 }

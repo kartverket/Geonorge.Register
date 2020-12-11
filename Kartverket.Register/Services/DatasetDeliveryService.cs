@@ -336,8 +336,7 @@ namespace Kartverket.Register.Services
         }
 
         public string GetInspireWmsServiceStatus(string serviceUuid, string status)
-        {
-            // TODO - flere tester kommer... 
+        { 
             var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"];
             statusUrl = statusUrl + serviceUuid;
             using (var client = new HttpClient())
@@ -353,7 +352,7 @@ namespace Kartverket.Register.Services
                         dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
 
                         if (data.external_metadata_reference.svar == "OK" && data.dataset_reference.svar == "OK"
-                            && data.inspire_extended.svar == "OK")
+                            && data.inspire_extended.svar == "OK" && data.connect.vurdering == "yes")
                             status = Good;
 
                     }

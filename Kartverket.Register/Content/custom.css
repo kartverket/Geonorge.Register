@@ -503,7 +503,8 @@ a.link-unstyled {
 }
 
     .arrow-icon.active,
-    .active > .arrow-icon {
+    .active > .arrow-icon,
+    .dataset-list.active > div > div > p .arrow-icon {
         background-image: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg);
     }
 
@@ -524,4 +525,15 @@ a.link-unstyled {
 }
     .dataset-list.active .criteria-list {
         display: block;
-    }
+    }    
+.first-four > span:nth-child(4) {margin-right: 20px;}
+.first-four > a:nth-child(4) {margin-right: 20px}
+.fair ul li:before {
+    content: none;
+}
+.fair ul li {
+    font-weight: 600;
+}
+.fair ul li ul li {
+    font-weight: normal;
+}

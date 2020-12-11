@@ -146,7 +146,7 @@ else
 }
 
 <div class="clearfix"></div>
-<div class="hidden-print">
+<div class="hidden-print navbar-bottom">
     @if (!Model.SelectedMareanoTabIsReport())
     {
         if (Model.AccessRegister.EditListOfRegisterItems)
@@ -166,7 +166,8 @@ else
             <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteObjectUrl()">@Shared.Delete</a>
         }
     }
-    <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
+    
+   <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
 </div>
 <script src="/Scripts/vue.js"></script>
 <script src="/Scripts/chart.js"></script>

@@ -34,7 +34,7 @@
     </article>
 }
 
-<article class="col-md-12 fair">
+<article class="col-md-12 nested">
     <h3>FAIR status: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FAIRStatus.value , null, Model.FAIRStatusPerCent + "%","fair")</h3>
     <div class="dataset-list metadata" onclick="ToogleContent(this)">
         <div class="row">
@@ -158,8 +158,6 @@
                     </ul>
                 </li>
             </ul>
-            
-              
             <ul>
                 <li>@MareanoDataSet.R3_Label
                     <ul>
@@ -169,8 +167,6 @@
                     </ul>
                 </li>
             </ul>
-           
-            </div>
         </div>
     </div>
 </article>

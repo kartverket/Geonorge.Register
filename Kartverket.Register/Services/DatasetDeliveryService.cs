@@ -302,7 +302,6 @@ namespace Kartverket.Register.Services
 
         public string GetInspireWfsServiceStatus(string serviceUuid, string status)
         {
-            // TODO - flere tester kommer... 
             var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"];
             statusUrl = statusUrl + serviceUuid;
             using (var client = new HttpClient())
@@ -317,7 +316,8 @@ namespace Kartverket.Register.Services
                         var text = response.Content.ReadAsStringAsync().Result;
                         dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
 
-                        if (data.inspire_metadataurl.svar == "yes")
+                        if (data.inspire_datasett_id.svar == "OK" && data.inspire_dataurl.svar == "OK"
+                            && data.inspire_metadataurl.svar == "OK" && data.connect.vurdering == "yes")
                             status = Good;
 
                     }

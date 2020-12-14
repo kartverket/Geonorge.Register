@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Accesible_Label" xml:space="preserve">
-    <value>Accesible</value>
+    <value>Tilgjengelighet (Accessible)</value>
+  </data>
+  <data name="Accesible_Description" xml:space="preserve">
+    <value>Datsett skal være tilgjengelige gjennom standardiserte og åpne grensesnitt.</value>
   </data>
   <data name="Common" xml:space="preserve">
     <value>Nedlastingskrav status</value>
@@ -157,13 +160,22 @@
     <value>F4: Søkbare</value>
   </data>
   <data name="Findable_Label" xml:space="preserve">
-    <value>Findable</value>
+    <value>Søkbarhet (Findable)</value>
+  </data>
+  <data name="Findable_Description" xml:space="preserve">
+    <value>Beskrivelser av datasett (metadata) og datasett skal være enkle å finne for både mennesker og datamaskiner. Maskinlesbare metadata er avgjørende for automatisk oppdagelse av datasett og tjenester</value>
   </data>
   <data name="Interoperable_Label" xml:space="preserve">
-    <value>Interoperable</value>
+    <value>Interoperabilitet (Interoperabel)</value>
+  </data>
+  <data name="Interoperable_Description" xml:space="preserve">
+    <value>Dataene må ha samvirkningsevne og kunne integreres i ulike løsninger.</value>
   </data>
   <data name="ReUseable_Label" xml:space="preserve">
-    <value>Re-useable</value>
+    <value>Gjenbrukbar (Reusable)</value>
+  </data>
+  <data name="ReUseable_Description" xml:space="preserve">
+    <value> For å optimalisere gjenbruk av data bør datasett beskrives godt slik at de kan tas i bruk i andre brukerløsninger.</value>
   </data>
   <data name="A1_a_Criteria" xml:space="preserve">
     <value>Datasettet er tilgjengelig som WFS/WCS</value>

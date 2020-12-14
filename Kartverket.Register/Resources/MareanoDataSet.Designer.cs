@@ -149,7 +149,15 @@ namespace Resources {
                 return ResourceManager.GetString("Accesible_Label", resourceCulture);
             }
         }
-        
+
+        public static string Accesible_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("Accesible_Description", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Nedlastingskrav status.
         /// </summary>
@@ -284,7 +292,15 @@ namespace Resources {
                 return ResourceManager.GetString("Findable_Label", resourceCulture);
             }
         }
-        
+        public static string Findable_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("Findable_Description", resourceCulture);
+            }
+        }
+
+
         /// <summary>
         ///   Looks up a localized string similar to Metadata i Geonorge baseres på ISO19115 og distibueres som OGC:CSW og DCAT-AP-NO og metadata i Geonorge tilfredsstiller dette kravet.
         /// </summary>
@@ -383,7 +399,15 @@ namespace Resources {
                 return ResourceManager.GetString("Interoperable_Label", resourceCulture);
             }
         }
-        
+
+        public static string Interoperable_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("Interoperable_Description", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Lisens er oppgitt.
         /// </summary>
@@ -498,6 +522,14 @@ namespace Resources {
         public static string ReUseable_Label {
             get {
                 return ResourceManager.GetString("ReUseable_Label", resourceCulture);
+            }
+        }
+
+        public static string ReUseable_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("ReUseable_Description", resourceCulture);
             }
         }
     }

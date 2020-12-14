@@ -507,9 +507,22 @@ a.link-unstyled {
     .dataset-list.active > div > div > p .arrow-icon {
         background-image: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg);
     }
-
+.toggle-content-button {
+    text-decoration: underline;
+    margin-top: -10px;
+    color: #3867c8;
+}
 .criteria-list {
     display: none;
+    margin-left: 10%;
+}
+.metadata .icon {
+    text-align: center;
+    font-size: 1.2em;
+}
+.metadata .custom-icon {
+    width: 35px;
+    height: 35px;
 }
 
     .criteria-list .title-field {

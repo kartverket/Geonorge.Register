@@ -512,14 +512,20 @@ a.link-unstyled {
     margin-top: -10px;
     color: #3867c8;
 }
+.toggle-contnet-button:hover {
+    cursor: pointer;
+}
 .criteria-list {
     display: none;
     margin-left: 10%;
 }
 .metadata .icon {
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.2em;    
 }
+.metadata .icon:hover {
+        cursor: pointer;
+    }
 .metadata .custom-icon {
     width: 35px;
     height: 35px;

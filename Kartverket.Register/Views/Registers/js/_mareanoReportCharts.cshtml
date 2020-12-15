@@ -108,7 +108,7 @@
             labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Labels))),
             datasets: [
                {
-                    label: "@MareanoDataSet.Findable_Label",
+                    label: "@RawText(MareanoDataSet.Findable_Label)",
                     borderColor: 'rgb(171, 235, 52)',
                     data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Findable))),
                     backgroundColor: "rgb(171, 235, 52)",
@@ -529,7 +529,7 @@
             ,
             title: {
                 display: true,
-                text: '@MareanoDataSet.Findable_Label',
+                text: '@RawText(MareanoDataSet.Findable_Label)',
                 fontSize: 20
             },
 
@@ -724,7 +724,7 @@
         type: 'horizontalBar',
         data: {
             labels: [
-                '@MareanoDataSet.Findable_Label',
+                '@RawText(MareanoDataSet.Findable_Label)',
                 '@MareanoDataSet.Accesible_Label',
                 '@MareanoDataSet.Interoperable_Label',
                 '@MareanoDataSet.ReUseable_Label',

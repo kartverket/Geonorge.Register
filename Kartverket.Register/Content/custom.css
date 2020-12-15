@@ -560,3 +560,10 @@ a.link-unstyled {
 .nested ul li:before {
     content: none;
 }
+.status-list ul {
+    display: flex;
+    flex-direction: column;
+}
+.status-list ul li {
+    margin: 10px 0;
+}

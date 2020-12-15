@@ -35,7 +35,7 @@
 }
 
 <article class="col-md-12 nested">
-    <h3>FAIR status: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FAIRStatus.value , null, Model.FAIRStatusPerCent + "%","fair")</h3>
+    <h3>FAIR status: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FAIRStatus.value , null, Model.FAIRStatusPerCent + "%","fair") @Model.FAIRStatusPerCent%</h3>
     <div class="dataset-list metadata" onclick="ToogleContent(this)">
         <div class="row">
             <div class="col-md-1 icon">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FindableStatus.value, null, Model.FindableStatusPerCent + "%", "fair") @Model.FindableStatusPerCent%</div>
@@ -183,56 +183,71 @@
     </div>
 </article>
 
-<article class="col-md-12">
+<article class="col-md-12 nested">
+
     <h3>Mareano status</h3>
-    <div class="row">
-        <div class="col-md-12"><p><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">@DataSet.DOK_EvaluationCriteria</a></p></div>
+    <div class="metadata">
+        <div class="row">
+            <div class="col-md-12"><p><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">@DataSet.DOK_EvaluationCriteria</a></p></div>
+        </div>
+        <div class="status-list">
+            <ul>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.MetadataStatus.value, null, null, "metadata")</div>
+                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.MetadataStatusId)</div>
+                    <div class="col-md-2">@Model.MetadataStatus.DescriptionTranslated()</div>
+                    <div class="col-md-6">@Html.DisplayFor(model => Model.MetadataNote)</div>
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.ProductSpesificationStatus.value, null, null, "metadata")</div>
+                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.ProductSpesificationStatusId)</div>
+                    <div class="col-md-2">@Model.ProductSpesificationStatus.DescriptionTranslated()</div>
+                    <div class="col-md-6">@Html.DisplayFor(model => Model.ProduktspesifikasjonNote)</div>
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.SosiDataStatus.value, null, null, "metadata")</div>
+                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.SosiDataStatusId)</div>
+                    <div class="col-md-2">@Model.SosiDataStatus.DescriptionTranslated()</div>
+                    <div class="col-md-6">@Html.DisplayFor(model => Model.SosiDataNote)</div>
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.GmlDataStatus.value, null, null, "metadata")</div>
+                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.GmlDataStatusId)</div>
+                    <div class="col-md-2">@Model.GmlDataStatus.DescriptionTranslated()</div>
+                    <div class="col-md-6">@Html.DisplayFor(model => Model.GmlDataNote)</div>
+                </li>
+                <li>
+                    <div class="col-md-1"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.WmsStatus.value, null, null, "metadata")</div>
+                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.WmsStatusId)</div>
+                    <div class="col-md-2">@Model.WmsStatus.DescriptionTranslated()</div>
+                    <div class="col-md-6">@Html.DisplayFor(model => Model.WmsNote)</div>
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.WfsStatus.value, null, null, "metadata")</div>
+                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.WfsStatusId)</div>
+                    <div class="col-md-2">@Model.WfsStatus.DescriptionTranslated()</div>
+                    <div class="col-md-6">@Html.DisplayFor(model => Model.WfsNote)</div>
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.AtomFeedStatus.value, null, null, "metadata")</div>
+                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.AtomFeedStatusId)</div>
+                    <div class="col-md-2">@Model.AtomFeedStatus.DescriptionTranslated()</div>
+                    <div class="col-md-6">@Html.DisplayFor(model => Model.AtomFeedNote)</div>
+                </li>
+                <li>
+                    <div class="col-md-1"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.CommonStatus.value, null, null, "metadata")</div>
+                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.CommonStatusId)</div>
+                    <div class="col-md-2">@Model.CommonStatus.DescriptionTranslated()</div>
+                    <div class="col-md-6">@Html.DisplayFor(model => Model.CommonNote)</div>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="table-heading col-md-12">
-        <div class="col-md-3 col">@DataSet.DOK_AssessmentPoint.ToUpper()</div>
-        <div class="col-md-2 col">@DataSet.DOK_StatusValueHeader.ToUpper()</div>
-        <div class="col-md-7 col">@DataSet.Comment.ToUpper()</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.MetadataStatusId)</div>
-        <div class="col-md-2 col"> @Model.MetadataStatus.DescriptionTranslated()</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.MetadataNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.ProductSpesificationStatusId)</div>
-        <div class="col-md-2 col">@Model.ProductSpesificationStatus.DescriptionTranslated()</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.ProduktspesifikasjonNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.SosiDataStatusId)</div>
-        <div class="col-md-2 col">@Model.SosiDataStatus.DescriptionTranslated()</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.SosiDataNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.GmlDataStatusId)</div>
-        <div class="col-md-2 col">@Model.GmlDataStatus.DescriptionTranslated()</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.GmlDataNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.WmsStatusId)</div>
-        <div class="col-md-2 col">@Model.WmsStatus.DescriptionTranslated()</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.WmsNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.WfsStatusId)</div>
-        <div class="col-md-2 col">@Model.WfsStatus.DescriptionTranslated()</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.WfsNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.AtomFeedStatusId)</div>
-        <div class="col-md-2 col">@Model.AtomFeedStatus.DescriptionTranslated()</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.AtomFeedNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.CommonStatusId)</div>
-        <div class="col-md-2 col">@Model.CommonStatus.DescriptionTranslated()</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.CommonNote)</div>
-    </div>
+
+
+
+
+
 </article>
 
 

@@ -276,4 +276,13 @@
   <data name="Delivery_Status_Deficient" xml:space="preserve">
     <value>Dårlig</value>
   </data>
+  <data name="Smiley-Green-Description" xml:space="preserve">
+    <value>grønn</value>
+  </data>
+  <data name="Smiley-Yellow-Description" xml:space="preserve">
+    <value>gul</value>
+  </data>
+  <data name="Smiley-Red-Description" xml:space="preserve">
+    <value>rød</value>
+  </data>
 </root>

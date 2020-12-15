@@ -532,5 +532,29 @@ namespace Resources {
                 return ResourceManager.GetString("ReUseable_Description", resourceCulture);
             }
         }
+
+        public static string Smiley_Green_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("Smiley_Green_Description", resourceCulture);
+            }
+        }
+
+        public static string Smiley_Yellow_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("Smiley_Yellow_Description", resourceCulture);
+            }
+        }
+
+        public static string Smiley_Red_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("Smiley_Red_Description", resourceCulture);
+            }
+        }
     }
 }

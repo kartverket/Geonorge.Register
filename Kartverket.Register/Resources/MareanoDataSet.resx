@@ -130,34 +130,34 @@
     <value>Tilfredsstillende</value>
   </data>
   <data name="F1_a_Criteria" xml:space="preserve">
-    <value>Sjekker at metadata har uuid (gmd:fileIdentifier)</value>
+    <value>Det sjekkes at det finnes metadata i Geonorge. Alle metadata i Geonorge har stabile og unike identifikatorer som er oppslagbare og returnerer metadata på standardisert form. ( vekt 25 )</value>
   </data>
   <data name="F1_Label" xml:space="preserve">
-    <value>F1: Metadata har uuid</value>
+    <value>F1: Metadata skal ha unik og stabil identifikator</value>
   </data>
   <data name="F2_a_Criteria" xml:space="preserve">
-    <value>Minst tre tematiske nøkkelord skal være lagt inn</value>
+    <value>Minst tre tematiske søkeord skal legges inn i metadata (vekt 10)</value>
   </data>
   <data name="F2_b_Criteria" xml:space="preserve">
-    <value>Tittel er på maks 100 tegn</value>
+    <value>Tittel bør maksimalt være på 100 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5)</value>
   </data>
   <data name="F2_c_Criteria" xml:space="preserve">
-    <value>Beskrivelse skal være på minst 200 tegn og maks 600 tegn</value>
+    <value>Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet og ikke lengre enn 600 tegn, da det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produkstspesifikasjoner, produktark m.m. (vekt 10)</value>
   </data>
   <data name="F2_Label" xml:space="preserve">
-    <value>F2: Det finnes rike søkemetadata</value>
+    <value>F2: Det skal finnes gode søkemetadata</value>
   </data>
   <data name="F3_a_Criteria" xml:space="preserve">
-    <value>Sjekker at metadata har utfylt dataset-id (MD_Identifier - Code og Namespace)</value>
+    <value>Metadata skal ha en unik referanse til datasettet. Datasett skal ikke bare refereres til ved navn, men også ved en unik identifikator. Denne skal legges inn i metadata sammen med et navnerom. Datasett er definert med unike id-er i Geonorges navneromsregister hvis de har fått lagt inn datasett-id i metadata (vekt 25)</value>
   </data>
   <data name="F3_Label" xml:space="preserve">
     <value>F3: Metadata har datasett-id</value>
   </data>
   <data name="F4_a_Criteria" xml:space="preserve">
-    <value>Metadata skal være søkbare gjennom åpne protokoller og apier</value>
+    <value>Metadata som ligger i Geonorge er søkbare gjenom CSW-api (OGC) og DCAT-api (W3C). Dette gjør metadata søkbare gjennom standardiserte api-er både for geodatabransjen, forskningsmiljøer og "open data"-miljøer både nasjonalt og internasjonalt. (vekt 25)</value>
   </data>
   <data name="F4_Label" xml:space="preserve">
-    <value>F4: Søkbare</value>
+    <value>F4: Metadata skal være søkbare gjennom åpne og standardiserte api-er</value>
   </data>
   <data name="Findable_Label" xml:space="preserve">
     <value>Søkbarhet (Findable)</value>
@@ -178,94 +178,94 @@
     <value> For å optimalisere gjenbruk av data bør datasett beskrives godt slik at de kan tas i bruk i andre brukerløsninger.</value>
   </data>
   <data name="A1_a_Criteria" xml:space="preserve">
-    <value>Datasettet er tilgjengelig som WFS/WCS</value>
+    <value>Det sjekkes om datsettet har en "direkte" nedlastningstjeneste (WFS eller WCS) (vekt 15)</value>
   </data>
   <data name="A1_Label" xml:space="preserve">
-    <value>A1: Metadata og datasett er tilgjengelig gjennom standard web-protokoller</value>
+    <value>A1: Datasett er tilgjengelige gjennom standard web-protokoller</value>
   </data>
   <data name="A1_b_Criteria" xml:space="preserve">
-    <value>Datasettet er tilgjengelig som WMS</value>
+    <value>Det sjekkes om datsettet har en visningstjenste (WMS eller WMTS) (vekt 15)</value>
   </data>
   <data name="A1_c_Criteria" xml:space="preserve">
-    <value>Datasettet er tilgjengelig gjennom Geonorge-api</value>
+    <value>Det sjekkes om datasettet er tilgjengelig gjennom "Geonorge nedlastnings-api" (vekt 15)</value>
   </data>
   <data name="A1_d_Criteria" xml:space="preserve">
-    <value>Datasettet er tilgjengelig som Atom Feed</value>
+    <value>Det sjekkes om datsett er tilgjengelig som en nedlastningstjeneste for forhåndsdefinerte geografiske områder (Atom Feed) (vekt 5)</value>
   </data>
   <data name="A1_e_Criteria" xml:space="preserve">
-    <value>Protokollene som støttes for tilgang til datasett er åpne, tilgjengelige og lesbare med standard IT-verktøy (Metadata som har nedlastnings-URL støtter dette kravet)</value>
+    <value>Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons (vekt 40)</value>
   </data>
   <data name="A1_f_Criteria" xml:space="preserve">
-    <value>Protokoller støtter autentisering og autorisasjon</value>
+    <value>Protokoller skal støtte autentisering og autorisasjon (vekt 10)</value>
   </data>
   <data name="A2_a_Criteria" xml:space="preserve">
-    <value>Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant)</value>
+    <value>Det sjekkes ikke på dette punktet da Mareano-data skal være tilgjengelige for nedlastning (vekt 0)</value>
   </data>
   <data name="A2_Label" xml:space="preserve">
-    <value>A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant)</value>
+    <value>A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig</value>
   </data>
   <data name="I1_a_Criteria" xml:space="preserve">
-    <value>Metadata i Geonorge baseres på ISO19115 og distibueres som OGC:CSW og DCAT-AP-NO og metadata i Geonorge tilfredsstiller dette kravet</value>
+    <value>Metadata for geodata skal etableres i henhold til metadatastandarden ISO19115. Metadata i Geonorge er basert på den nevnte strandarden. (vekt 20)</value>
   </data>
   <data name="I1_b_Criteria" xml:space="preserve">
-    <value>Datasett er distribuert på internasjonalt kjente og dokumenterte åpne formater. Sjekk om datasett distribueres som GML</value>
+    <value>Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata (vekt 10)</value>
   </data>
   <data name="I1_c_Criteria" xml:space="preserve">
-    <value>Datasett på GML-format validerer i henhold til UML-modell</value>
+    <value>Hvis datasettet tilbys som GML skal datasettet validere i henhold til produktspesifikasjonens UML-modell (vekt 20)</value>
   </data>
   <data name="I1_Label" xml:space="preserve">
-    <value>I1: Metadata er basert på internasjonale, godt dokumenterte og tilgjengelige standarder</value>
+    <value>I1: Metadata og datasett er representert gjennom internasjonale, godt dokumenterte og tilgjengelige standarder.</value>
   </data>
   <data name="I2_a_Criteria" xml:space="preserve">
-    <value>Tematisk hovedkategori må være utfylt</value>
+    <value>Tematisk hovedkategori må være utfylt i metadata for å kategorisere datsettet i en internasjonal kontekst (vekt 10)</value>
   </data>
   <data name="I2_b_Criteria" xml:space="preserve">
-    <value>Nasjonal temakategori er utfylt</value>
+    <value>Nasjonal temakategori må være utfylt  i metadata for å kategorisere datasettet i en nasjonal kontekst (vekt 10)</value>
   </data>
   <data name="I2_Label" xml:space="preserve">
-    <value>I2: Begreper, terminologier, ontologier og kodeverk -  godt forvaltet og tilgjengelig</value>
+    <value>I2: Metadata og datasett skal benytte vokabularer, kodeverk og referere til oppslagsbare ressurser på nett som forvaltes med unike identifikatorer</value>
   </data>
   <data name="I3_a_Criteria" xml:space="preserve">
-    <value>Metadata skal refererer til begreper i objektkatalogens UML-modell (Minst ett nøkkelord hvor Thesaurus må være "SOSI produktspesifikasjon")</value>
+    <value>Metadata skal referere til begreper som er beskrevet/definert i datasettes UML-modell i Geonorges objektkatalog (vekt 10)</value>
   </data>
   <data name="I3_b_Criteria" xml:space="preserve">
-    <value>Metadata skal referere til UML-modell i Objektkatalogen (MD_ApplicationSchemaInformation)</value>
+    <value>Datasettet skal modelleres i UML og metadataene skal referere til UML-modellen i Geonorges objektkatalog (vekt 20)</value>
   </data>
   <data name="I3_Label" xml:space="preserve">
-    <value>I3: Relasjoner mellom variabler er beskrevet – forståelig og presis tversgående sammenheng</value>
+    <value>I3: Relasjoner mellom (meta)data er beskrevet</value>
   </data>
   <data name="R1_a_Criteria" xml:space="preserve">
-    <value>Lisens er oppgitt</value>
+    <value>Lisenser som ligger i Geonorge-registeret tilfredsstiller dette kravet (vekt 30)</value>
   </data>
   <data name="R1_Label" xml:space="preserve">
-    <value>R1</value>
+    <value>Lisens skal være oppgitt og oppslagbar.</value>
   </data>
   <data name="R2_a_Criteria" xml:space="preserve">
-    <value>Prosesshistorie er oppgitt  og har mer enn 200 tegn</value>
+    <value>Prosesshistorie (produksjonshistorie) skal være utfylt med mer enn 200 tegn (vekt 10)</value>
   </data>
   <data name="R2_b_Criteria" xml:space="preserve">
-    <value>Status er fylt ut med verdi  (gmd:maintenanceAndUpdateFrequency)</value>
+    <value>Status for oppdateringsfrekvens skal være oppgitt i metadata (vekt 5)</value>
   </data>
   <data name="R2_c_Criteria" xml:space="preserve">
-    <value>Lenke til produktspesifikasjon</value>
+    <value>Lenke til produktspesifikasjon (vekt 10)</value>
   </data>
   <data name="R2_d_Criteria" xml:space="preserve">
-    <value>Målestokksområde er oppgitt</value>
+    <value>Målestokkområde skal være oppgitt (vekt 5)</value>
   </data>
   <data name="R2_e_Criteria" xml:space="preserve">
-    <value>Dekningskart er oppgitt (kommunevis eller rutenett)</value>
+    <value>Dekningskart skal være oppgitt (kommunevis eller rutenett) (vekt 5)</value>
   </data>
   <data name="R2_f_Criteria" xml:space="preserve">
-    <value>Formål er utfylt</value>
+    <value>Formål skal være utfylt (vekt 5)</value>
   </data>
   <data name="R2_Label" xml:space="preserve">
-    <value>R2: Metadata om kvalitet, dekning, bearbeiding, avledning, beregninger</value>
+    <value>R2: Metadata om kvalitet, dekning, bearbeiding, beregninger etc. skal være oppgitt.</value>
   </data>
   <data name="R3_a_Criteria" xml:space="preserve">
-    <value>Metadata følger ISO19115 og distribueres også i henhold til DCAT-profilen</value>
+    <value>Metadata skal følge standardene: ISO19115 og DCAT-AP-NO (vekt 15)</value>
   </data>
   <data name="R3_b_Criteria" xml:space="preserve">
-    <value>Datasett leveres på internasjonale åpne formater = GML</value>
+    <value>Datasett leveres på internasjonale åpne formater som GML (vekt 15)</value>
   </data>
   <data name="R3_Label" xml:space="preserve">
     <value>R3: Metadata og datasett følger internasjonale standarder</value>

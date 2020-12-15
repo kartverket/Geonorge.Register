@@ -11,6 +11,7 @@ using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using GeoNorgeAPI;
 using Kartverket.Register.Models.FAIR;
+using System.Net;
 
 namespace Kartverket.Register.Services
 {
@@ -333,11 +334,12 @@ namespace Kartverket.Register.Services
 
             int accesibleWeight = 0;
 
-            mareanoDataset.A1_a_Criteria = mareanoDataset.WfsStatus != null ? mareanoDataset.WfsStatus.IsGood() : false;
-            mareanoDataset.A1_b_Criteria = mareanoDataset.WmsStatus != null ? mareanoDataset.WmsStatus.IsGood() : false;
+            mareanoDataset.A1_a_Criteria = CheckWfs(mareanoDataset.Uuid, mareanoDataset.WfsStatus);
+            mareanoDataset.A1_b_Criteria = CheckWms(mareanoDataset.Uuid, mareanoDataset.WmsStatus);
             mareanoDataset.A1_c_Criteria = _metadata.SimpleMetadata?.DistributionsFormats != null ? _metadata.SimpleMetadata.DistributionsFormats.Where(p => !string.IsNullOrEmpty(p.Protocol) && p.Protocol.Contains("GEONORGE:DOWNLOAD")).Any() : false;
             mareanoDataset.A1_d_Criteria = mareanoDataset.AtomFeedStatus != null ? mareanoDataset.AtomFeedStatus.IsGood() : false;
             mareanoDataset.A1_e_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")).Any();
+            mareanoDataset.A1_f_Criteria = CheckDistributionUrl(mareanoDataset.Uuid, _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")));
 
             if (mareanoDataset.A1_a_Criteria) accesibleWeight += 15;
             if (mareanoDataset.A1_b_Criteria) accesibleWeight += 15;
@@ -402,6 +404,97 @@ namespace Kartverket.Register.Services
             mareanoDataset.FAIRStatusPerCent = fairWeight;
             mareanoDataset.FAIRStatusId = CreateFairDelivery(fairWeight);
 
+        }
+
+        private bool CheckWms(string uuid, DatasetDelivery datasetDelivery)
+        {
+            if (datasetDelivery != null)
+            {
+                bool hasWms = datasetDelivery.IsGood();
+                bool hasWMTS = false;
+                var distros = GetDistributions(uuid);
+                if (distros != null)
+                {
+                    foreach (var distro in distros)
+                    {
+                        string protocol = distro.Protocol.ToString();
+                        if (protocol.ToString().Contains("WMTS"))
+                            hasWMTS = true;
+                    }
+
+                    if (hasWms || hasWMTS)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool CheckWfs(string uuid, DatasetDelivery datasetDelivery)
+        {
+            if(datasetDelivery != null)
+            {
+                bool hasWfs = datasetDelivery.IsGood();
+                bool hasWcs = false;
+                var distros = GetDistributions(uuid);
+                if(distros != null)
+                {
+                    foreach(var distro in distros)
+                    {
+                        string protocol = distro.Protocol.ToString();
+                        if (protocol.Contains("WCS"))
+                            hasWcs = true;
+                    }
+
+                    if (hasWfs || hasWcs)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static dynamic GetDistributions(string metadataUuid)
+        {
+            try
+            {
+                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distributions/" + metadataUuid;
+                var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
+
+                var json = c.DownloadString(metadataUrl);
+
+                dynamic metadata = Newtonsoft.Json.Linq.JArray.Parse(json);
+                return metadata;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private bool CheckDistributionUrl(string uuid, IEnumerable<SimpleDistribution> distributions)
+        {
+            if(distributions != null && distributions.Count() > 0)
+            {
+                var url = distributions.FirstOrDefault().URL;
+                var protocol = distributions.FirstOrDefault().Protocol;
+
+                if (!string.IsNullOrEmpty(url) && (url.StartsWith("http://")))
+                {
+                    try {
+                        var downloadServiceUrl = url;
+                        if (!string.IsNullOrEmpty(protocol) && url.Contains("nedlasting.geonorge.no/api/capabilities"))
+                            url = url + uuid;
+                        var c = new System.Net.WebClient();
+
+                        var file = c.DownloadString(downloadServiceUrl);
+                        return true;
+                        }
+                    catch (Exception ex) { }
+                }
+            }
+
+            return false;
         }
 
         public Guid CreateFairDelivery(int weight, string fairStatusId = null, string note = "", bool autoupdate = true)

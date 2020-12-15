@@ -238,7 +238,7 @@
     <value>Lisenser som ligger i Geonorge-registeret tilfredsstiller dette kravet (vekt 30)</value>
   </data>
   <data name="R1_Label" xml:space="preserve">
-    <value>Lisens skal være oppgitt og oppslagbar.</value>
+    <value>R1: Lisens skal være oppgitt og oppslagbar.</value>
   </data>
   <data name="R2_a_Criteria" xml:space="preserve">
     <value>Prosesshistorie (produksjonshistorie) skal være utfylt med mer enn 200 tegn (vekt 10)</value>

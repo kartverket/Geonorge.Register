@@ -520,6 +520,60 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dårlig (under 50%): Datasettet har store mangler i forhold til å oppfylle FAIR-prinsippene og må forbedres på mange områder..
+        /// </summary>
+        public static string RatingBad {
+            get {
+                return ResourceManager.GetString("RatingBad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vi har laget ulike tester for å vurdere datasett i forholdtaeiere slik at de kan vurdere metadata mot ulike indikatorer. For mer informasjon om hvilke beregninger vi benytter for hver indikator, se på detaljene for metadatakvalitet for en spesifikk datasettbeskrivelse..
+        /// </summary>
+        public static string RatingDescription {
+            get {
+                return ResourceManager.GetString("RatingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Må forbedres (50-75%): Datasettet oppfyller et fåtall av FAIR-prinsippene på en god måte ,og må forbedres på flere områder..
+        /// </summary>
+        public static string RatingEmoprovements {
+            get {
+                return ResourceManager.GetString("RatingEmoprovements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to God (over 90%): Datasettet ivaretar FAIR-prinsippene på en god måte. Du må selv gjøre kvalitative undersøkelser for å vurdere eventuelle tiltak for at forhold rundt gjenbruk skal bli ytterliggere forbedret..
+        /// </summary>
+        public static string RatingGood {
+            get {
+                return ResourceManager.GetString("RatingGood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forklaring til vurdering av FAIR-prinsipper:.
+        /// </summary>
+        public static string RatingLabel {
+            get {
+                return ResourceManager.GetString("RatingLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tilfredsstillende (75-90%): Datasettet oppfyller mange av FAIR-prinsippene, men bør forbedres på flere områder for å sikre gjenbruk..
+        /// </summary>
+        public static string RatingSatisfactory {
+            get {
+                return ResourceManager.GetString("RatingSatisfactory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må datasettet være tilgjengelig gjennom en atom feed-tjeneste som er registrert i Geonorge. Ellers blir status &lt;b&gt;ikke levert&lt;/&gt;.&lt;/p&gt;.
         /// </summary>
         public static string RequirementsAtom {

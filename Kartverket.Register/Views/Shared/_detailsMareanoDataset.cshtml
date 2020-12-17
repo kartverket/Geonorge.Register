@@ -37,7 +37,28 @@
         <p> @Model.SpecificUsage</p>
     </article>
 }
-
+<article class="col-md-12 nested">
+    <h3>@MareanoDataSet.RatingLabel</h3>
+    <p>@MareanoDataSet.RatingDescription</p>
+    <div class="dataset-list metadata">
+        <div class="row">
+            <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="100%"><span class="custom-icon custom-icon-smile-green"></span></span></div>
+            <div class="col-md-11"><p>@MareanoDataSet.RatingGood</p></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="80%"><span class="custom-icon custom-icon-smile-yellow-satisfactory"></span></span></div>
+            <div class="col-md-11"><p>@MareanoDataSet.RatingSatisfactory</p></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="65%"><span class="custom-icon custom-icon-smile-yellow"></span></span></div>
+            <div class="col-md-11"><p>@MareanoDataSet.RatingEmoprovements</p></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="30%"><span class="custom-icon custom-icon-smile-red"></span></span></div>
+            <div class="col-md-11"><p>@MareanoDataSet.RatingBad</p></div>
+        </div>
+    </div>
+</article>
 <article class="col-md-12 nested">
     <h3>FAIR status: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FAIRStatus.value , null, Model.FAIRStatusPerCent + "%","fair") @Model.FAIRStatusPerCent%</h3>
     <div class="dataset-list metadata" onclick="ToogleContent(this)">

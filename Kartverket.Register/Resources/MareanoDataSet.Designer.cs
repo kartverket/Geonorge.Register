@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class MareanoDataSet {
@@ -520,11 +520,74 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må datasettet være tilgjengelig gjennom en atom feed-tjeneste som er registrert i Geonorge. Ellers blir status &lt;b&gt;ikke levert&lt;/&gt;.&lt;/p&gt;.
+        /// </summary>
+        public static string RequirementsAtom {
+            get {
+                return ResourceManager.GetString("RequirementsAtom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Hvis datasettet er levert som atom feed eller WFS-krav er godt oppfylt vil dette kvalifisere til god oppfyllelse av krav. Hvis datasettet kun er tilgjengelig som WFS med brukbar oppfyllelse av krav, kvalifiserer dette til karakteren &lt;b&gt;brukbar&lt;/b&gt;. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+        /// </summary>
+        public static string RequirementsDownload {
+            get {
+                return ResourceManager.GetString("RequirementsDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må nedlastbare GML-filer validere mot UML-modell i produktspesifikasjonen. Det vil gå fram av metadata om GML-filer er konforme med produktspesifikasjonen. Hvis det finnes nedlastbare GML-filer, så vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+        /// </summary>
+        public static string RequirementsGml {
+            get {
+                return ResourceManager.GetString("RequirementsGml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;p&gt;For at metadatakvaliteten skal bli &lt;b&gt;god&lt;/b&gt;, må metadata validere i Geonorge sin metadataeditor. Det vil si at alle påkrevde felt skal være utfylt. Ellers blir metadata vurdert til &lt;b&gt;brukbar&lt;/b&gt; hvis de finnes. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
         /// </summary>
         public static string RequirementsMetadata {
             get {
                 return ResourceManager.GetString("RequirementsMetadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må det refereres til godkjent SOSI produktspesifikasjon i metadata. Annen referert produktspesifikasjon vil kunne gi &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+        /// </summary>
+        public static string RequirementsProductSpesifications {
+            get {
+                return ResourceManager.GetString("RequirementsProductSpesifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må nedlastbare SOSI-filer validere mot UML-modell i produktspesifikasjonen. Det vil gå fram av metadata om SOSI-filer er konforme med produktspesifikasjonen. Hvis det finnes nedlastbare SOSI-filer, så vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+        /// </summary>
+        public static string RequirementsSosi {
+            get {
+                return ResourceManager.GetString("RequirementsSosi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må tjenesten innfri de viktigste krav i Geonorges applikasjon over &lt;a href=&apos;https://status.geonorge.no/wfs/&apos;&gt;tjenestestatus&lt;/a&gt;. Hvis det finnes en WFS-tjeneste, vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Metadata må i begge tilfeller koples mot metadata til datasettet. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+        /// </summary>
+        public static string RequirementsWfs {
+            get {
+                return ResourceManager.GetString("RequirementsWfs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må tjenesten innfri de viktigste krav i Geonorges applikasjon over &lt;a href=&apos;https://status.geonorge.no/wms/&apos;&gt;tjenestestatus&lt;/a&gt;. Hvis det finnes en WMS-tjeneste, vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Metadata må i begge tilfeller koples mot metadata til datasettet. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+        /// </summary>
+        public static string RequirementsWms {
+            get {
+                return ResourceManager.GetString("RequirementsWms", resourceCulture);
             }
         }
         

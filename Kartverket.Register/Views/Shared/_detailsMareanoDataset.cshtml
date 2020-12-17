@@ -197,52 +197,51 @@
         <div class="status-list">
             <ul>
                 <li>
-                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.MetadataStatus.value, null, null, "metadata")</div>
-                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.MetadataStatusId)</div>
-                    <div class="col-md-2">@Model.MetadataStatus.DescriptionTranslated()</div>
-                    <div class="col-md-6">@RawText(MareanoDataSet.RequirementsMetadata)</div>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.MetadataStatus.value, null, null, "metadata") <span>@Model.MetadataStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.MetadataStatusId)
+                        @RawText(MareanoDataSet.RequirementsMetadata)
+                    </div>
+                    
+                    
                 </li>
                 <li>
-                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.ProductSpesificationStatus.value, null, null, "metadata")</div>
-                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.ProductSpesificationStatusId)</div>
-                    <div class="col-md-2">@Model.ProductSpesificationStatus.DescriptionTranslated()</div>
-                    <div class="col-md-6">@Html.DisplayFor(model => Model.ProduktspesifikasjonNote)</div>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.ProductSpesificationStatus.value, null, null, "metadata")<span> @Model.ProductSpesificationStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.ProductSpesificationStatusId) @RawText(MareanoDataSet.RequirementsProductSpesifications)
+                    </div>                    
                 </li>
                 <li>
-                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.SosiDataStatus.value, null, null, "metadata")</div>
-                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.SosiDataStatusId)</div>
-                    <div class="col-md-2">@Model.SosiDataStatus.DescriptionTranslated()</div>
-                    <div class="col-md-6">@Html.DisplayFor(model => Model.SosiDataNote)</div>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.SosiDataStatus.value, null, null, "metadata")<span> @Model.SosiDataStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.SosiDataStatusId) @RawText(MareanoDataSet.RequirementsSosi)
+                    </div>
+                   
                 </li>
                 <li>
-                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.GmlDataStatus.value, null, null, "metadata")</div>
-                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.GmlDataStatusId)</div>
-                    <div class="col-md-2">@Model.GmlDataStatus.DescriptionTranslated()</div>
-                    <div class="col-md-6">@Html.DisplayFor(model => Model.GmlDataNote)</div>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.GmlDataStatus.value, null, null, "metadata")<span> @Model.GmlDataStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.GmlDataStatusId) @RawText(MareanoDataSet.RequirementsGml)</div>
+                   
                 </li>
                 <li>
-                    <div class="col-md-1"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.WmsStatus.value, null, null, "metadata")</div>
-                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.WmsStatusId)</div>
-                    <div class="col-md-2">@Model.WmsStatus.DescriptionTranslated()</div>
-                    <div class="col-md-6">@Html.DisplayFor(model => Model.WmsNote)</div>
+                    <div class="col-md-1"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.WmsStatus.value, null, null, "metadata")<span> @Model.WmsStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.WmsStatusId) @RawText(MareanoDataSet.RequirementsWms)</div>
+                   
                 </li>
                 <li>
-                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.WfsStatus.value, null, null, "metadata")</div>
-                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.WfsStatusId)</div>
-                    <div class="col-md-2">@Model.WfsStatus.DescriptionTranslated()</div>
-                    <div class="col-md-6">@Html.DisplayFor(model => Model.WfsNote)</div>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.WfsStatus.value, null, null, "metadata")<span> @Model.WfsStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.WfsStatusId) @RawText(MareanoDataSet.RequirementsWfs)</div>
+                    
                 </li>
                 <li>
-                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.AtomFeedStatus.value, null, null, "metadata")</div>
-                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.AtomFeedStatusId)</div>
-                    <div class="col-md-2">@Model.AtomFeedStatus.DescriptionTranslated()</div>
-                    <div class="col-md-6">@Html.DisplayFor(model => Model.AtomFeedNote)</div>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.AtomFeedStatus.value, null, null, "metadata")<span> @Model.AtomFeedStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.AtomFeedStatusId) @RawText(MareanoDataSet.RequirementsAtom)</div>
+                    
                 </li>
                 <li>
-                    <div class="col-md-1"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.CommonStatus.value, null, null, "metadata")</div>
-                    <div class="col-md-3">@Html.DisplayNameFor(model => Model.CommonStatusId)</div>
-                    <div class="col-md-2">@Model.CommonStatus.DescriptionTranslated()</div>
-                    <div class="col-md-6">@Html.DisplayFor(model => Model.CommonNote)</div>
+                    <div class="col-md-1"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.CommonStatus.value, null, null, "metadata") <span>@Model.CommonStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.CommonStatusId) @RawText(MareanoDataSet.RequirementsDownload)</div>
+                    
                 </li>
             </ul>
         </div>

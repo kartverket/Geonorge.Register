@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasettet er tilgjengelig som WFS/WCS.
+        ///   Looks up a localized string similar to Det sjekkes om datsettet har en &quot;direkte&quot; nedlastningstjeneste (WFS eller WCS) (vekt 15).
         /// </summary>
         public static string A1_a_Criteria {
             get {
@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasettet er tilgjengelig som WMS.
+        ///   Looks up a localized string similar to Det sjekkes om datsettet har en visningstjenste (WMS eller WMTS) (vekt 15).
         /// </summary>
         public static string A1_b_Criteria {
             get {
@@ -79,7 +79,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasettet er tilgjengelig gjennom Geonorge-api.
+        ///   Looks up a localized string similar to Det sjekkes om datasettet er tilgjengelig gjennom &quot;Geonorge nedlastnings-api&quot; (vekt 15).
         /// </summary>
         public static string A1_c_Criteria {
             get {
@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasettet er tilgjengelig som Atom Feed.
+        ///   Looks up a localized string similar to Det sjekkes om datsett er tilgjengelig som en nedlastningstjeneste for forhåndsdefinerte geografiske områder (Atom Feed) (vekt 5).
         /// </summary>
         public static string A1_d_Criteria {
             get {
@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Protokollene som støttes for tilgang til datasett er åpne, tilgjengelige og lesbare med standard IT-verktøy (Metadata som har nedlastnings-URL støtter dette kravet).
+        ///   Looks up a localized string similar to Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons (vekt 40).
         /// </summary>
         public static string A1_e_Criteria {
             get {
@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Protokoller støtter autentisering og autorisasjon.
+        ///   Looks up a localized string similar to Protokoller skal støtte autentisering og autorisasjon (vekt 10).
         /// </summary>
         public static string A1_f_Criteria {
             get {
@@ -115,7 +115,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A1: Metadata og datasett er tilgjengelig gjennom standard web-protokoller.
+        ///   Looks up a localized string similar to A1: Datasett er tilgjengelige gjennom standard web-protokoller.
         /// </summary>
         public static string A1_Label {
             get {
@@ -124,7 +124,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant).
+        ///   Looks up a localized string similar to Det sjekkes ikke på dette punktet da Mareano-data skal være tilgjengelige for nedlastning (vekt 0).
         /// </summary>
         public static string A2_a_Criteria {
             get {
@@ -133,7 +133,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A2: Metadata er tilgjengelig selv om data ikke lenger er tilgjengelig (ikke relevant).
+        ///   Looks up a localized string similar to A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig.
         /// </summary>
         public static string A2_Label {
             get {
@@ -142,22 +142,23 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Accesible.
+        ///   Looks up a localized string similar to Datsett skal være tilgjengelige gjennom standardiserte og åpne grensesnitt..
+        /// </summary>
+        public static string Accesible_Description {
+            get {
+                return ResourceManager.GetString("Accesible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tilgjengelighet (Accessible).
         /// </summary>
         public static string Accesible_Label {
             get {
                 return ResourceManager.GetString("Accesible_Label", resourceCulture);
             }
         }
-
-        public static string Accesible_Description
-        {
-            get
-            {
-                return ResourceManager.GetString("Accesible_Description", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Nedlastingskrav status.
         /// </summary>
@@ -195,7 +196,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sjekker at metadata har uuid (gmd:fileIdentifier).
+        ///   Looks up a localized string similar to Det sjekkes at det finnes metadata i Geonorge. Alle metadata i Geonorge har stabile og unike identifikatorer som er oppslagbare og returnerer metadata på standardisert form. ( vekt 25 ).
         /// </summary>
         public static string F1_a_Criteria {
             get {
@@ -204,7 +205,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to F1: Metadata har uuid.
+        ///   Looks up a localized string similar to F1: Metadata skal ha unik og stabil identifikator.
         /// </summary>
         public static string F1_Label {
             get {
@@ -213,7 +214,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minst tre tematiske nøkkelord skal være lagt inn.
+        ///   Looks up a localized string similar to Minst tre tematiske søkeord skal legges inn i metadata (vekt 10).
         /// </summary>
         public static string F2_a_Criteria {
             get {
@@ -222,7 +223,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tittel er på maks 100 tegn.
+        ///   Looks up a localized string similar to Tittel bør maksimalt være på 100 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5).
         /// </summary>
         public static string F2_b_Criteria {
             get {
@@ -231,7 +232,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beskrivelse skal være på minst 200 tegn og maks 600 tegn.
+        ///   Looks up a localized string similar to Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet og ikke lengre enn 600 tegn, da det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produkstspesifikasjoner, produktark m.m. (vekt 10).
         /// </summary>
         public static string F2_c_Criteria {
             get {
@@ -240,7 +241,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to F2: Det finnes rike søkemetadata.
+        ///   Looks up a localized string similar to F2: Det skal finnes gode søkemetadata.
         /// </summary>
         public static string F2_Label {
             get {
@@ -249,7 +250,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sjekker at metadata har utfylt dataset-id (MD_Identifier - Code og Namespace).
+        ///   Looks up a localized string similar to Metadata skal ha en unik referanse til datasettet. Datasett skal ikke bare refereres til ved navn, men også ved en unik identifikator. Denne skal legges inn i metadata sammen med et navnerom. Datasett er definert med unike id-er i Geonorges navneromsregister hvis de har fått lagt inn datasett-id i metadata (vekt 25).
         /// </summary>
         public static string F3_a_Criteria {
             get {
@@ -267,7 +268,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata skal være søkbare gjennom åpne protokoller og apier.
+        ///   Looks up a localized string similar to Metadata som ligger i Geonorge er søkbare gjenom CSW-api (OGC) og DCAT-api (W3C). Dette gjør metadata søkbare gjennom standardiserte api-er både for geodatabransjen, forskningsmiljøer og &quot;open data&quot;-miljøer både nasjonalt og internasjonalt. (vekt 25).
         /// </summary>
         public static string F4_a_Criteria {
             get {
@@ -276,7 +277,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to F4: Søkbare.
+        ///   Looks up a localized string similar to F4: Metadata skal være søkbare gjennom åpne og standardiserte api-er.
         /// </summary>
         public static string F4_Label {
             get {
@@ -285,24 +286,25 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Findable.
+        ///   Looks up a localized string similar to Beskrivelser av datasett (metadata) og datasett skal være enkle å finne for både mennesker og datamaskiner. Maskinlesbare metadata er avgjørende for automatisk oppdagelse av datasett og tjenester.
+        /// </summary>
+        public static string Findable_Description {
+            get {
+                return ResourceManager.GetString("Findable_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Søkbarhet (Findable).
         /// </summary>
         public static string Findable_Label {
             get {
                 return ResourceManager.GetString("Findable_Label", resourceCulture);
             }
         }
-        public static string Findable_Description
-        {
-            get
-            {
-                return ResourceManager.GetString("Findable_Description", resourceCulture);
-            }
-        }
-
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Metadata i Geonorge baseres på ISO19115 og distibueres som OGC:CSW og DCAT-AP-NO og metadata i Geonorge tilfredsstiller dette kravet.
+        ///   Looks up a localized string similar to Metadata for geodata skal etableres i henhold til metadatastandarden ISO19115. Metadata i Geonorge er basert på den nevnte strandarden. (vekt 20).
         /// </summary>
         public static string I1_a_Criteria {
             get {
@@ -311,7 +313,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett er distribuert på internasjonalt kjente og dokumenterte åpne formater. Sjekk om datasett distribueres som GML.
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata (vekt 10).
         /// </summary>
         public static string I1_b_Criteria {
             get {
@@ -320,7 +322,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett på GML-format validerer i henhold til UML-modell.
+        ///   Looks up a localized string similar to Hvis datasettet tilbys som GML skal datasettet validere i henhold til produktspesifikasjonens UML-modell (vekt 20).
         /// </summary>
         public static string I1_c_Criteria {
             get {
@@ -329,7 +331,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I1: Metadata er basert på internasjonale, godt dokumenterte og tilgjengelige standarder.
+        ///   Looks up a localized string similar to I1: Metadata og datasett er representert gjennom internasjonale, godt dokumenterte og tilgjengelige standarder..
         /// </summary>
         public static string I1_Label {
             get {
@@ -338,7 +340,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tematisk hovedkategori må være utfylt.
+        ///   Looks up a localized string similar to Tematisk hovedkategori må være utfylt i metadata for å kategorisere datsettet i en internasjonal kontekst (vekt 10).
         /// </summary>
         public static string I2_a_Criteria {
             get {
@@ -347,7 +349,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nasjonal temakategori er utfylt.
+        ///   Looks up a localized string similar to Nasjonal temakategori må være utfylt  i metadata for å kategorisere datasettet i en nasjonal kontekst (vekt 10).
         /// </summary>
         public static string I2_b_Criteria {
             get {
@@ -356,7 +358,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I2: Begreper, terminologier, ontologier og kodeverk -  godt forvaltet og tilgjengelig.
+        ///   Looks up a localized string similar to I2: Metadata og datasett skal benytte vokabularer, kodeverk og referere til oppslagsbare ressurser på nett som forvaltes med unike identifikatorer.
         /// </summary>
         public static string I2_Label {
             get {
@@ -365,7 +367,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata skal refererer til begreper i objektkatalogens UML-modell (Minst ett nøkkelord hvor Thesaurus må være &quot;SOSI produktspesifikasjon&quot;).
+        ///   Looks up a localized string similar to Metadata skal referere til begreper som er beskrevet/definert i datasettes UML-modell i Geonorges objektkatalog (vekt 10).
         /// </summary>
         public static string I3_a_Criteria {
             get {
@@ -374,7 +376,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata skal referere til UML-modell i Objektkatalogen (MD_ApplicationSchemaInformation).
+        ///   Looks up a localized string similar to Datasettet skal modelleres i UML og metadataene skal referere til UML-modellen i Geonorges objektkatalog (vekt 20).
         /// </summary>
         public static string I3_b_Criteria {
             get {
@@ -383,7 +385,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I3: Relasjoner mellom variabler er beskrevet – forståelig og presis tversgående sammenheng.
+        ///   Looks up a localized string similar to I3: Relasjoner mellom (meta)data er beskrevet.
         /// </summary>
         public static string I3_Label {
             get {
@@ -392,24 +394,25 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Interoperable.
+        ///   Looks up a localized string similar to Dataene må ha samvirkningsevne og kunne integreres i ulike løsninger..
+        /// </summary>
+        public static string Interoperable_Description {
+            get {
+                return ResourceManager.GetString("Interoperable_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interoperabilitet (Interoperabel).
         /// </summary>
         public static string Interoperable_Label {
             get {
                 return ResourceManager.GetString("Interoperable_Label", resourceCulture);
             }
         }
-
-        public static string Interoperable_Description
-        {
-            get
-            {
-                return ResourceManager.GetString("Interoperable_Description", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Lisens er oppgitt.
+        ///   Looks up a localized string similar to Lisenser som ligger i Geonorge-registeret tilfredsstiller dette kravet (vekt 30).
         /// </summary>
         public static string R1_a_Criteria {
             get {
@@ -418,7 +421,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to R1.
+        ///   Looks up a localized string similar to R1: Lisens skal være oppgitt og oppslagbar..
         /// </summary>
         public static string R1_Label {
             get {
@@ -427,7 +430,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prosesshistorie er oppgitt  og har mer enn 200 tegn.
+        ///   Looks up a localized string similar to Prosesshistorie (produksjonshistorie) skal være utfylt med mer enn 200 tegn (vekt 10).
         /// </summary>
         public static string R2_a_Criteria {
             get {
@@ -436,7 +439,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status er fylt ut med verdi  (gmd:maintenanceAndUpdateFrequency).
+        ///   Looks up a localized string similar to Status for oppdateringsfrekvens skal være oppgitt i metadata (vekt 5).
         /// </summary>
         public static string R2_b_Criteria {
             get {
@@ -445,7 +448,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lenke til produktspesifikasjon.
+        ///   Looks up a localized string similar to Lenke til produktspesifikasjon (vekt 10).
         /// </summary>
         public static string R2_c_Criteria {
             get {
@@ -454,7 +457,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Målestokksområde er oppgitt.
+        ///   Looks up a localized string similar to Målestokkområde skal være oppgitt (vekt 5).
         /// </summary>
         public static string R2_d_Criteria {
             get {
@@ -463,7 +466,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dekningskart er oppgitt (kommunevis eller rutenett).
+        ///   Looks up a localized string similar to Dekningskart skal være oppgitt (kommunevis eller rutenett) (vekt 5).
         /// </summary>
         public static string R2_e_Criteria {
             get {
@@ -472,7 +475,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Formål er utfylt.
+        ///   Looks up a localized string similar to Formål skal være utfylt (vekt 5).
         /// </summary>
         public static string R2_f_Criteria {
             get {
@@ -481,7 +484,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to R2: Metadata om kvalitet, dekning, bearbeiding, avledning, beregninger.
+        ///   Looks up a localized string similar to R2: Metadata om kvalitet, dekning, bearbeiding, beregninger etc. skal være oppgitt..
         /// </summary>
         public static string R2_Label {
             get {
@@ -490,7 +493,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata følger ISO19115 og distribueres også i henhold til DCAT-profilen.
+        ///   Looks up a localized string similar to Metadata skal følge standardene: ISO19115 og DCAT-AP-NO (vekt 15).
         /// </summary>
         public static string R3_a_Criteria {
             get {
@@ -499,7 +502,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett leveres på internasjonale åpne formater = GML.
+        ///   Looks up a localized string similar to Datasett leveres på internasjonale åpne formater som GML (vekt 15).
         /// </summary>
         public static string R3_b_Criteria {
             get {
@@ -517,43 +520,56 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Re-useable.
+        ///   Looks up a localized string similar to &lt;p&gt;For at metadatakvaliteten skal bli &lt;b&gt;god&lt;/b&gt;, må metadata validere i Geonorge sin metadataeditor. Det vil si at alle påkrevde felt skal være utfylt. Ellers blir metadata vurdert til &lt;b&gt;brukbar&lt;/b&gt; hvis de finnes. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+        /// </summary>
+        public static string RequirementsMetadata {
+            get {
+                return ResourceManager.GetString("RequirementsMetadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  For å optimalisere gjenbruk av data bør datasett beskrives godt slik at de kan tas i bruk i andre brukerløsninger..
+        /// </summary>
+        public static string ReUseable_Description {
+            get {
+                return ResourceManager.GetString("ReUseable_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gjenbrukbar (Reusable).
         /// </summary>
         public static string ReUseable_Label {
             get {
                 return ResourceManager.GetString("ReUseable_Label", resourceCulture);
             }
         }
-
-        public static string ReUseable_Description
-        {
-            get
-            {
-                return ResourceManager.GetString("ReUseable_Description", resourceCulture);
+        
+        /// <summary>
+        ///   Looks up a localized string similar to grønn.
+        /// </summary>
+        public static string Smiley_Green_Description {
+            get {
+                return ResourceManager.GetString("Smiley-Green-Description", resourceCulture);
             }
         }
-
-        public static string Smiley_Green_Description
-        {
-            get
-            {
-                return ResourceManager.GetString("Smiley_Green_Description", resourceCulture);
+        
+        /// <summary>
+        ///   Looks up a localized string similar to rød.
+        /// </summary>
+        public static string Smiley_Red_Description {
+            get {
+                return ResourceManager.GetString("Smiley-Red-Description", resourceCulture);
             }
         }
-
-        public static string Smiley_Yellow_Description
-        {
-            get
-            {
-                return ResourceManager.GetString("Smiley_Yellow_Description", resourceCulture);
-            }
-        }
-
-        public static string Smiley_Red_Description
-        {
-            get
-            {
-                return ResourceManager.GetString("Smiley_Red_Description", resourceCulture);
+        
+        /// <summary>
+        ///   Looks up a localized string similar to gul.
+        /// </summary>
+        public static string Smiley_Yellow_Description {
+            get {
+                return ResourceManager.GetString("Smiley-Yellow-Description", resourceCulture);
             }
         }
     }

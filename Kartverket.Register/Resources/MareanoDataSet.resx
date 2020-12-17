@@ -285,4 +285,7 @@
   <data name="Smiley-Red-Description" xml:space="preserve">
     <value>rød</value>
   </data>
+  <data name="RequirementsMetadata" xml:space="preserve">
+    <value>&lt;p&gt;For at metadatakvaliteten skal bli &lt;b&gt;god&lt;/b&gt;, må metadata validere i Geonorge sin metadataeditor. Det vil si at alle påkrevde felt skal være utfylt. Ellers blir metadata vurdert til &lt;b&gt;brukbar&lt;/b&gt; hvis de finnes. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
 </root>

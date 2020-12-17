@@ -279,6 +279,24 @@
   <data name="R3_Label" xml:space="preserve">
     <value>R1.3 (Meta)data meet domain-relevant community standards</value>
   </data>
+  <data name="RatingBad" xml:space="preserve">
+    <value>Poor (less than 50%): The dataset has major shortcomings in terms of meeting FAIR principles and needs to be improved in many areas</value>
+  </data>
+  <data name="RatingDescription" xml:space="preserve">
+    <value>There have made various tests to evaluate data sets in relation to the FAIR criteria. These are our interpretations, which then assess the criteria in relation to standards and protocols used for spatial data in Norway and Europe. For more information on which calculations we use for each indicator, look at the details of FAIR assessments for each specific data set.</value>
+  </data>
+  <data name="RatingEmoprovements" xml:space="preserve">
+    <value>Needs improvement (50-75%): The dataset meets a few of the FAIR principles in a good way, and needs to be improved in several areas.</value>
+  </data>
+  <data name="RatingGood" xml:space="preserve">
+    <value>Good (over 90%): The dataset adheres to the FAIR principles in a good way. You must do qualitative research yourself to assess any measures to further improve conditions regarding re-use.</value>
+  </data>
+  <data name="RatingLabel" xml:space="preserve">
+    <value>Explanation of assessment of FAIR principles:</value>
+  </data>
+  <data name="RatingSatisfactory" xml:space="preserve">
+    <value>Satisfactory (75-90%): The dataset meets many of the FAIR principles, but should be improved in several areas to ensure reuse.</value>
+  </data>
   <data name="RequirementsAtom" xml:space="preserve">
     <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, the dataset must be available through an atomic feed service registered in Geonorge. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
   </data>

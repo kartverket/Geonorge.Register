@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using Kartverket.Register.Models;
@@ -417,8 +417,8 @@ namespace Kartverket.Register.Services
                 {
                     foreach (var distro in distros)
                     {
-                        string protocol = distro.Protocol.ToString();
-                        if (protocol.ToString().Contains("WMTS"))
+                        string protocol = distro?.Protocol;
+                        if (!string.IsNullOrEmpty(protocol) && protocol.Contains("WMTS"))
                             hasWMTS = true;
                     }
 
@@ -441,8 +441,8 @@ namespace Kartverket.Register.Services
                 {
                     foreach(var distro in distros)
                     {
-                        string protocol = distro.Protocol.ToString();
-                        if (protocol.Contains("WCS"))
+                        string protocol = distro?.Protocol;
+                        if (!string.IsNullOrEmpty(protocol) && protocol.Contains("WCS"))
                             hasWcs = true;
                     }
 

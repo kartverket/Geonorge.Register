@@ -209,6 +209,8 @@ namespace Kartverket.Register.Services
 
         public string GetServiceStatus(string serviceUuid, string status, bool hasServiceUrl = true)
         {
+            if(hasServiceUrl)
+                status = Useable;
             var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"];
             statusUrl = statusUrl + serviceUuid;
             using (var client = new HttpClient())
@@ -418,7 +420,7 @@ namespace Kartverket.Register.Services
             return status;
         }
 
-        public string GetWfsStatus(string metadataUuid, bool autoupdate, string currentStatus)
+        public string GetWfsStatus(string metadataUuid, bool autoupdate, string currentStatus, string serviceUuid)
         {
             var statusValue = Deficient;
 
@@ -431,8 +433,10 @@ namespace Kartverket.Register.Services
                 {
                     foreach (var service in metadata)
                     {
-                        if (service.Protocol == "WFS-tjeneste" || service.Protocol == "OGC:WFS"
-                        ) return Useable;
+                        if (service.Protocol == "WFS-tjeneste" || service.Protocol == "OGC:WFS")
+                        { statusValue = Useable;
+                            serviceUuid = service.Uuid;
+                        }
                     }
                 }
                 else
@@ -450,6 +454,9 @@ namespace Kartverket.Register.Services
                 }
                 return Notset;
             }
+
+            if(!string.IsNullOrEmpty(serviceUuid))
+                return GetServiceStatus(serviceUuid, statusValue, statusValue == Useable);
 
             return statusValue;
         }

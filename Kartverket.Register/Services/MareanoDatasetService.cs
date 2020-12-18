@@ -358,7 +358,7 @@ namespace Kartverket.Register.Services
             mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null 
                                             ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Responsible == "uml-gml" && r.Result.HasValue && r.Result.Value == true).Any() : false;
             mareanoDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
-            mareanoDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.THESAURUS_NATIONAL_THEME, null).ToList().Count() >= 1;
+            mareanoDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
             mareanoDataset.I3_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.THESAURUS_CONCEPT, null).ToList().Count() >= 1;
             mareanoDataset.I3_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
 
@@ -565,7 +565,7 @@ namespace Kartverket.Register.Services
 
             if (originalDataset.WfsStatus != null)
             {
-                originalDataset.WfsStatus.StatusId = _datasetDeliveryService.GetWfsStatus(MareanoDatasetFromKartkatalogen.Uuid, true, originalDataset.WfsStatus.StatusId);
+                originalDataset.WfsStatus.StatusId = _datasetDeliveryService.GetWfsStatus(MareanoDatasetFromKartkatalogen.Uuid, true, originalDataset.WfsStatus.StatusId, MareanoDatasetFromKartkatalogen.UuidService);
             }
 
             if (originalDataset.AtomFeedStatus != null)

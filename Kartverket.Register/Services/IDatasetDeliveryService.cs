@@ -12,7 +12,7 @@ namespace Kartverket.Register.Services
         string GetDeliveryDistributionStatus(string metadataUuid, string distributionUrl, bool autoUpdate = true, string currentStatus = "deficient");
         string GetDokDeliveryServiceStatus(string metadataUuid, bool autoUpdate, string currentStatus, string serviceUuid);
         string GetInspireWmsStatus(string metadataUuid, bool autoUpdate, string currentStatus, string serviceUuid);
-        string GetWfsStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");
+        string GetWfsStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient", string serviceUuid = "");
         string GetInspireWfsStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");
         string GetAtomFeedStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");
         string GetHarmonizedStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");

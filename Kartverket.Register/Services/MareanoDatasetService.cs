@@ -23,6 +23,7 @@ namespace Kartverket.Register.Services
         private readonly IRegisterItemService _registerItemService;
         private readonly MetadataService _metadataService;
         MetadataModel _metadata;
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public MareanoDatasetService(RegisterDbContext dbContext)
         {
@@ -481,15 +482,17 @@ namespace Kartverket.Register.Services
 
                 if (!string.IsNullOrEmpty(url) && (url.StartsWith("https://")))
                 {
+                    var downloadServiceUrl = url;
                     try {
-                        var downloadServiceUrl = url;
                         downloadServiceUrl = downloadServiceUrl + uuid;
                         var c = new System.Net.WebClient();
 
                         var file = c.DownloadString(downloadServiceUrl);
                         return true;
                         }
-                    catch (Exception ex) { }
+                    catch (Exception ex) {
+                        Log.Error("Error downloading " + downloadServiceUrl + " , error: " + ex.Message);
+                    }
                 }
             }
 

@@ -635,7 +635,7 @@ namespace Kartverket.Register.Services
         {
             var MareanoDatasetsFromKartkatalogen = new List<MareanoDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&text=2751aacf-5472-4850-a208-3532a51c529a&limit=6000&mediatype=json";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=6000&mediatype=json";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

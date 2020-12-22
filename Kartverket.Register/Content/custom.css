@@ -512,9 +512,9 @@ a.link-unstyled {
     margin-top: -10px;
     color: #3867c8;
 }
-.toggle-contnet-button:hover {
-    cursor: pointer;
-}
+    .toggle-content-button:hover {
+        cursor: pointer;
+    }
 .criteria-list {
     display: none;
     margin-left: 10%;
@@ -531,20 +531,23 @@ a.link-unstyled {
     height: 35px;
 }
 
-    .criteria-list .title-field {
-        padding-left: 24px;
-    }
+.criteria-list .title-field {
+    padding-left: 24px;
+}
 
 .criteria-list .official-field {
     text-align: center;
+}
+.criteria-list.no-indent {
+    margin: 0;
 }
 
 .dataset-list {
     line-height: 24pt;
 }
-    .dataset-list.active .criteria-list {
-        display: block;
-    }    
+.dataset-list.active .criteria-list {
+    display: block;
+}    
 .first-four > span:nth-child(4) {margin-right: 20px;}
 .first-four > a:nth-child(4) {margin-right: 20px}
 .fair ul li:before {

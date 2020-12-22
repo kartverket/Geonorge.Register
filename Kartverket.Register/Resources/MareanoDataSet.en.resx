@@ -243,6 +243,9 @@
   <data name="Interoperable_Label" xml:space="preserve">
     <value>Interoperabel</value>
   </data>
+  <data name="lesmer" xml:space="preserve">
+    <value>Read more</value>
+  </data>
   <data name="R1_a_Criteria" xml:space="preserve">
     <value>Licenses in the Geonorge register meet this requirement (weight 30)</value>
   </data>
@@ -326,6 +329,9 @@
   </data>
   <data name="ReUseable_Label" xml:space="preserve">
     <value>Reusable</value>
+  </data>
+  <data name="sedetaljer" xml:space="preserve">
+    <value>Details</value>
   </data>
   <data name="Smiley-Green-Description" xml:space="preserve">
     <value>green</value>

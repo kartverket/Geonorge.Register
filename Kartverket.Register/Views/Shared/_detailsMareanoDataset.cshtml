@@ -6,9 +6,9 @@
         if ($(element).hasClass("active")) {
             $(element).removeClass("active");
             $(element).closest(".dataset-list").removeClass("active");
-            $(element).closest(".toggle-content-button").removeClass("active");
+            $(element).closest(".toggle-content-button").removeClass("active");            
         } else {
-            $(element).addClass("active");
+            $(element).addClass("active");           
             $(element).closest(".dataset-list").addClass("active");
             $(element).closest(".toggle-content-button").addClass("active");
         }
@@ -38,33 +38,37 @@
     </article>
 }
 <article class="col-md-12 nested">
-    <h3>@MareanoDataSet.RatingLabel</h3>
+    <h3 onclick="ToogleContent(this)">@MareanoDataSet.RatingLabel</h3>  
     <p>@MareanoDataSet.RatingDescription</p>
     <div class="dataset-list metadata">
-        <div class="row">
-            <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="100%"><span class="custom-icon custom-icon-smile-green"></span></span></div>
-            <div class="col-md-11"><p>@MareanoDataSet.RatingGood</p></div>
-        </div>
-        <div class="row">
-            <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="80%"><span class="custom-icon custom-icon-smile-yellow-satisfactory"></span></span></div>
-            <div class="col-md-11"><p>@MareanoDataSet.RatingSatisfactory</p></div>
-        </div>
-        <div class="row">
-            <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="65%"><span class="custom-icon custom-icon-smile-yellow"></span></span></div>
-            <div class="col-md-11"><p>@MareanoDataSet.RatingEmoprovements</p></div>
-        </div>
-        <div class="row">
-            <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="30%"><span class="custom-icon custom-icon-smile-red"></span></span></div>
-            <div class="col-md-11"><p>@MareanoDataSet.RatingBad</p></div>
+        <p class="toggle-content-button" onclick="ToogleContent(this)">@MareanoDataSet.lesmer</p>
+
+        <div class="criteria-list no-indent">
+            <div class="row">
+                <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="100%"><span class="custom-icon custom-icon-smile-green"></span></span></div>
+                <div class="col-md-11"><p>@MareanoDataSet.RatingGood</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="80%"><span class="custom-icon custom-icon-smile-yellow-satisfactory"></span></span></div>
+                <div class="col-md-11"><p>@MareanoDataSet.RatingSatisfactory</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="65%"><span class="custom-icon custom-icon-smile-yellow"></span></span></div>
+                <div class="col-md-11"><p>@MareanoDataSet.RatingEmoprovements</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="30%"><span class="custom-icon custom-icon-smile-red"></span></span></div>
+                <div class="col-md-11"><p>@MareanoDataSet.RatingBad</p></div>
+            </div>
         </div>
     </div>
 </article>
 <article class="col-md-12 nested">
     <h3>FAIR status: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FAIRStatus.value , null, Model.FAIRStatusPerCent + "%","fair") @Model.FAIRStatusPerCent%</h3>
-    <div class="dataset-list metadata" onclick="ToogleContent(this)">
+    <div class="dataset-list metadata">
         <div class="row">
             <div class="col-md-1 icon">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FindableStatus.value, null, Model.FindableStatusPerCent + "%", "fair") @Model.FindableStatusPerCent%</div>
-            <div class="col-md-11"><p><strong>@MareanoDataSet.Findable_Label: </strong>@MareanoDataSet.Findable_Description</p> <p class="toggle-content-button">Se detaljer</p></div>
+            <div class="col-md-11"><p><strong>@MareanoDataSet.Findable_Label: </strong>@MareanoDataSet.Findable_Description</p> <p class="toggle-content-button" onclick="ToogleContent(this)">@MareanoDataSet.sedetaljer</p></div>
 
         </div>
         <div class="criteria-list col-md-push-2">
@@ -105,10 +109,10 @@
 
 </div>
 </div>
-<div class="dataset-list metadata" onclick="ToogleContent(this)">
+<div class="dataset-list metadata">
     <div class="row">
         <div class="col-md-1 icon">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.AccesibleStatus.value, null, Model.AccesibleStatusPerCent + "%", "fair") @Model.AccesibleStatusPerCent%</div>
-        <div class="col-md-11"><p><strong>@MareanoDataSet.Accesible_Label:</strong> @MareanoDataSet.Accesible_Description </p><p class="toggle-content-button">Se detaljer</p></div>
+        <div class="col-md-11"><p><strong>@MareanoDataSet.Accesible_Label:</strong> @MareanoDataSet.Accesible_Description </p><p onclick="ToogleContent(this)" class="toggle-content-button">@MareanoDataSet.sedetaljer</p></div>
 
     </div>
     <div class="criteria-list">
@@ -130,10 +134,10 @@
     </ul>
 </div>
 </div>
-<div class="dataset-list metadata" onclick="ToogleContent(this)">
+<div class="dataset-list metadata">
     <div class="row">
         <div class="col-md-1 icon">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.InteroperableStatus.value, null, Model.InteroperableStatusPerCent + "%", "fair") @Model.InteroperableStatusPerCent%</div>
-        <div class="col-md-11"><p><strong>@MareanoDataSet.Interoperable_Label:</strong> @MareanoDataSet.Interoperable_Description</p><p class="toggle-content-button">Se detaljer </p></div>
+        <div class="col-md-11"><p><strong>@MareanoDataSet.Interoperable_Label:</strong> @MareanoDataSet.Interoperable_Description</p><p onclick="ToogleContent(this)" class="toggle-content-button">@MareanoDataSet.sedetaljer </ponclick="ToogleContent(this)"></div>
 
     </div>
     <div class="criteria-list">
@@ -169,11 +173,11 @@
 
 </div>
 </div>
-<div class="dataset-list metadata" onclick="ToogleContent(this)">
+<div class="dataset-list metadata">
     <div class="row">
 
         <div class="col-md-1 icon"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.ReUseableStatus.value, null, Model.ReUseableStatusPerCent + "%", "fair") @Model.ReUseableStatusPerCent%</div>
-        <div class="col-md-11"><p><strong>@MareanoDataSet.ReUseable_Label:</strong> @MareanoDataSet.ReUseable_Description</p><p class="toggle-content-button">Se detaljer</p></div>
+        <div class="col-md-11"><p><strong>@MareanoDataSet.ReUseable_Label:</strong> @MareanoDataSet.ReUseable_Description</p><p onclick="ToogleContent(this)" class="toggle-content-button">@MareanoDataSet.sedetaljer</p></div>
     </div>
     <div class="criteria-list">
         <ul>

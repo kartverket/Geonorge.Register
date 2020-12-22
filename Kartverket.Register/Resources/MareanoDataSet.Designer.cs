@@ -412,6 +412,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Les mer.
+        /// </summary>
+        public static string lesmer {
+            get {
+                return ResourceManager.GetString("lesmer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lisenser som ligger i Geonorge-registeret tilfredsstiller dette kravet (vekt 30).
         /// </summary>
         public static string R1_a_Criteria {
@@ -660,6 +669,15 @@ namespace Resources {
         public static string ReUseable_Label {
             get {
                 return ResourceManager.GetString("ReUseable_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se detaljer.
+        /// </summary>
+        public static string sedetaljer {
+            get {
+                return ResourceManager.GetString("sedetaljer", resourceCulture);
             }
         }
         

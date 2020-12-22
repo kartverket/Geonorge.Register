@@ -327,4 +327,10 @@
   <data name="RatingSatisfactory" xml:space="preserve">
     <value>Tilfredsstillende (75-90%): Datasettet oppfyller mange av FAIR-prinsippene, men bør forbedres på flere områder for å sikre gjenbruk.</value>
   </data>
+  <data name="lesmer" xml:space="preserve">
+    <value>Les mer</value>
+  </data>
+  <data name="sedetaljer" xml:space="preserve">
+    <value>Se detaljer</value>
+  </data>
 </root>

@@ -410,7 +410,7 @@ namespace Kartverket.Register.Services
         {
             if (datasetDelivery != null)
             {
-                bool hasWms = datasetDelivery.IsGood();
+                bool hasWms = datasetDelivery.IsGoodOrUseable();
                 bool hasWMTS = false;
                 var distros = GetDistributions(uuid);
                 if (distros != null)
@@ -434,7 +434,7 @@ namespace Kartverket.Register.Services
         {
             if(datasetDelivery != null)
             {
-                bool hasWfs = datasetDelivery.IsGood();
+                bool hasWfs = datasetDelivery.IsGoodOrUseable();
                 bool hasWcs = false;
                 var distros = GetDistributions(uuid);
                 if(distros != null)
@@ -479,12 +479,11 @@ namespace Kartverket.Register.Services
                 var url = distributions.FirstOrDefault().URL;
                 var protocol = distributions.FirstOrDefault().Protocol;
 
-                if (!string.IsNullOrEmpty(url) && (url.StartsWith("http://")))
+                if (!string.IsNullOrEmpty(url) && (url.StartsWith("https://")))
                 {
                     try {
                         var downloadServiceUrl = url;
-                        if (!string.IsNullOrEmpty(protocol) && url.Contains("nedlasting.geonorge.no/api/capabilities"))
-                            url = url + uuid;
+                        downloadServiceUrl = downloadServiceUrl + uuid;
                         var c = new System.Net.WebClient();
 
                         var file = c.DownloadString(downloadServiceUrl);
@@ -633,7 +632,7 @@ namespace Kartverket.Register.Services
         {
             var MareanoDatasetsFromKartkatalogen = new List<MareanoDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=6000&mediatype=json";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&text=2751aacf-5472-4850-a208-3532a51c529a&limit=6000&mediatype=json";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

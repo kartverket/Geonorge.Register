@@ -338,8 +338,7 @@ namespace Kartverket.Register.Services
             mareanoDataset.A1_b_Criteria = CheckWms(mareanoDataset.Uuid, mareanoDataset.WmsStatus);
             mareanoDataset.A1_c_Criteria = _metadata.SimpleMetadata?.DistributionsFormats != null ? _metadata.SimpleMetadata.DistributionsFormats.Where(p => !string.IsNullOrEmpty(p.Protocol) && p.Protocol.Contains("GEONORGE:DOWNLOAD")).Any() : false;
             mareanoDataset.A1_d_Criteria = mareanoDataset.AtomFeedStatus != null ? mareanoDataset.AtomFeedStatus.IsGood() : false;
-            mareanoDataset.A1_e_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")).Any();
-            mareanoDataset.A1_f_Criteria = CheckDistributionUrl(mareanoDataset.Uuid, _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")));
+            mareanoDataset.A1_e_Criteria = CheckDistributionUrl(mareanoDataset.Uuid, _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")));
 
             if (mareanoDataset.A1_a_Criteria) accesibleWeight += 15;
             if (mareanoDataset.A1_b_Criteria) accesibleWeight += 15;

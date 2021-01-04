@@ -330,6 +330,9 @@
   <data name="lesmer" xml:space="preserve">
     <value>Les mer</value>
   </data>
+  <data name="lesmindre" xml:space="preserve">
+    <value>Lukk</value>
+  </data>
   <data name="sedetaljer" xml:space="preserve">
     <value>Se detaljer</value>
   </data>

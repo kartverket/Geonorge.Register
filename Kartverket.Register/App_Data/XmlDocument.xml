@@ -2615,6 +2615,11 @@
               Looks up a localized string similar to Les mer.
             </summary>
         </member>
+        <member name="P:Resources.MareanoDataSet.lesmindre">
+            <summary>
+              Looks up a localized string similar to Lukk.
+            </summary>
+        </member>
         <member name="P:Resources.MareanoDataSet.R1_a_Criteria">
             <summary>
               Looks up a localized string similar to Lisenser som ligger i Geonorge-registeret tilfredsstiller dette kravet (vekt 30).

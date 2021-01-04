@@ -246,6 +246,9 @@
   <data name="lesmer" xml:space="preserve">
     <value>Read more</value>
   </data>
+  <data name="lesmindre" xml:space="preserve">
+    <value>Read less</value>
+  </data>
   <data name="R1_a_Criteria" xml:space="preserve">
     <value>Licenses in the Geonorge register meet this requirement (weight 30)</value>
   </data>

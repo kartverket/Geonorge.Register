@@ -545,6 +545,15 @@ a.link-unstyled {
 .dataset-list {
     line-height: 24pt;
 }
+.dataset-list.active .showmore, 
+.dataset-list .showless {
+        display: none;
+}
+
+.dataset-list .showmore,
+.dataset-list.active .showless {
+        display: inline-block
+    }
 .dataset-list.active .criteria-list {
     display: block;
 }    

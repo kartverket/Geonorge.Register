@@ -1,16 +1,19 @@
 @using Kartverket.Register.Helpers
 @model Kartverket.Register.Models.ViewModels.MareanoDatasetViewModel
 <script>
-
+    var show = true;
     function ToogleContent(element) {
-        if ($(element).hasClass("active")) {
-            $(element).removeClass("active");
+        
+        if ($(element).hasClass("active")) {     
+            $(element).removeClass("active");          
             $(element).closest(".dataset-list").removeClass("active");
-            $(element).closest(".toggle-content-button").removeClass("active");            
+            $(element).closest(".toggle-content-button").removeClass("active");       
+            show = true;
         } else {
-            $(element).addClass("active");           
+            $(element).addClass("active");         
             $(element).closest(".dataset-list").addClass("active");
             $(element).closest(".toggle-content-button").addClass("active");
+            show = false;
         }
     }
 </script>
@@ -30,6 +33,7 @@
     }
 }
 
+
 @if (!string.IsNullOrEmpty(Model.SpecificUsage))
 {
     <article class="col-md-12">
@@ -41,7 +45,11 @@
     <h3 onclick="ToogleContent(this)">@MareanoDataSet.RatingLabel</h3>  
     <p>@MareanoDataSet.RatingDescription</p>
     <div class="dataset-list metadata">
-        <p class="toggle-content-button" onclick="ToogleContent(this)">@MareanoDataSet.lesmer</p>
+        <p class="toggle-content-button" onclick="ToogleContent(this)">
+            <span class="showmore">@MareanoDataSet.lesmer</span> 
+            <span class="showless">@MareanoDataSet.lesmindre</span>
+       
+        </p>
 
         <div class="criteria-list no-indent">
             <div class="row">
@@ -68,7 +76,11 @@
     <div class="dataset-list metadata">
         <div class="row">
             <div class="col-md-1 icon">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FindableStatus.value, null, Model.FindableStatusPerCent + "%", "fair") @Model.FindableStatusPerCent%</div>
-            <div class="col-md-11"><p><strong>@MareanoDataSet.Findable_Label: </strong>@MareanoDataSet.Findable_Description</p> <p class="toggle-content-button" onclick="ToogleContent(this)">@MareanoDataSet.sedetaljer</p></div>
+            <div class="col-md-11"><p><strong>@MareanoDataSet.Findable_Label: </strong>@MareanoDataSet.Findable_Description</p> 
+            <p class="toggle-content-button" onclick="ToogleContent(this)">
+                                                                                                                                   
+                <span class="showmore">@MareanoDataSet.sedetaljer</span>
+                <span class="showless">@MareanoDataSet.lesmindre</span></p></div>
 
         </div>
         <div class="criteria-list col-md-push-2">
@@ -112,7 +124,11 @@
 <div class="dataset-list metadata">
     <div class="row">
         <div class="col-md-1 icon">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.AccesibleStatus.value, null, Model.AccesibleStatusPerCent + "%", "fair") @Model.AccesibleStatusPerCent%</div>
-        <div class="col-md-11"><p><strong>@MareanoDataSet.Accesible_Label:</strong> @MareanoDataSet.Accesible_Description </p><p onclick="ToogleContent(this)" class="toggle-content-button">@MareanoDataSet.sedetaljer</p></div>
+        <div class="col-md-11"><p><strong>@MareanoDataSet.Accesible_Label:</strong> @MareanoDataSet.Accesible_Description </p>
+                               <p onclick="ToogleContent(this)" class="toggle-content-button">
+                                   <span class="showmore">@MareanoDataSet.sedetaljer</span>
+                                   <span class="showless">@MareanoDataSet.lesmindre</span>
+                               </p></div>
 
     </div>
     <div class="criteria-list">
@@ -137,7 +153,11 @@
 <div class="dataset-list metadata">
     <div class="row">
         <div class="col-md-1 icon">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.InteroperableStatus.value, null, Model.InteroperableStatusPerCent + "%", "fair") @Model.InteroperableStatusPerCent%</div>
-        <div class="col-md-11"><p><strong>@MareanoDataSet.Interoperable_Label:</strong> @MareanoDataSet.Interoperable_Description</p><p onclick="ToogleContent(this)" class="toggle-content-button">@MareanoDataSet.sedetaljer </ponclick="ToogleContent(this)"></div>
+        <div class="col-md-11"><p><strong>@MareanoDataSet.Interoperable_Label:</strong> @MareanoDataSet.Interoperable_Description</p>
+                               <p onclick="ToogleContent(this)" class="toggle-content-button">
+                                   <span class="showmore">@MareanoDataSet.sedetaljer</span>
+                                   <span class="showless">@MareanoDataSet.lesmindre</span> </p>
+</div>
 
     </div>
     <div class="criteria-list">
@@ -177,7 +197,11 @@
     <div class="row">
 
         <div class="col-md-1 icon"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.ReUseableStatus.value, null, Model.ReUseableStatusPerCent + "%", "fair") @Model.ReUseableStatusPerCent%</div>
-        <div class="col-md-11"><p><strong>@MareanoDataSet.ReUseable_Label:</strong> @MareanoDataSet.ReUseable_Description</p><p onclick="ToogleContent(this)" class="toggle-content-button">@MareanoDataSet.sedetaljer</p></div>
+        <div class="col-md-11"><p><strong>@MareanoDataSet.ReUseable_Label:</strong> @MareanoDataSet.ReUseable_Description</p>
+                               <p onclick="ToogleContent(this)" class="toggle-content-button">
+                                   <span class="showmore">@MareanoDataSet.sedetaljer</span>
+                                   <span class="showless">@MareanoDataSet.lesmindre</span>
+                               </p></div>
     </div>
     <div class="criteria-list">
         <ul>

@@ -421,6 +421,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lukk.
+        /// </summary>
+        public static string lesmindre {
+            get {
+                return ResourceManager.GetString("lesmindre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lisenser som ligger i Geonorge-registeret tilfredsstiller dette kravet (vekt 30).
         /// </summary>
         public static string R1_a_Criteria {

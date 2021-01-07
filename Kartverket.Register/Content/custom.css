@@ -583,4 +583,12 @@ a.link-unstyled {
         font-size: 0.8em;
         white-space: nowrap
     }
-   
+.criteria-list i.fa-check {
+    color: #36C545;
+}
+.criteria-list i.fa-times {
+    color: #EE432A;
+}
+.criteria-list i.fa {
+    margin-left: -23px;
+}

@@ -1,0 +1,309 @@
+@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.ViewModels.MareanoDatasetViewModel
+<script>
+    var show = true;
+    function ToogleContent(element) {
+        
+        if ($(element).hasClass("active")) {     
+            $(element).removeClass("active");          
+            $(element).closest(".dataset-list").removeClass("active");
+            $(element).closest(".toggle-content-button").removeClass("active");       
+            show = true;
+        } else {
+            $(element).addClass("active");         
+            $(element).closest(".dataset-list").addClass("active");
+            $(element).closest(".toggle-content-button").addClass("active");
+            show = false;
+        }
+    }
+</script>
+@helper RawText(string s)
+{
+    @(new HtmlString(s))
+}
+@helper Status(bool criteria)
+{
+    if (criteria)
+    {
+        <i class="fa fa-check"></i>
+    }
+    else
+    {
+        <i class="fa fa-times"></i>
+    }
+}
+
+
+@if (!string.IsNullOrEmpty(Model.SpecificUsage))
+{
+    <article class="col-md-12">
+        <h3>@Html.DisplayNameFor(model => Model.SpecificUsage)</h3>
+        <p> @Model.SpecificUsage</p>
+    </article>
+}
+<article class="col-md-12 nested">
+    <h3 onclick="ToogleContent(this)">@MareanoDataSet.RatingLabel</h3>  
+    <p>@MareanoDataSet.RatingDescription</p>
+    <div class="dataset-list metadata">
+        <p class="toggle-content-button" onclick="ToogleContent(this)">
+            <span class="showmore">@MareanoDataSet.lesmer</span> 
+            <span class="showless">@MareanoDataSet.lesmindre</span>
+       
+        </p>
+
+        <div class="criteria-list no-indent">
+            <div class="row">
+                <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="100%"><span class="custom-icon custom-icon-smile-green"></span></span></div>
+                <div class="col-md-11"><p>@MareanoDataSet.RatingGood</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="80%"><span class="custom-icon custom-icon-smile-yellow-satisfactory"></span></span></div>
+                <div class="col-md-11"><p>@MareanoDataSet.RatingSatisfactory</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="65%"><span class="custom-icon custom-icon-smile-yellow"></span></span></div>
+                <div class="col-md-11"><p>@MareanoDataSet.RatingEmoprovements</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 icon"><span data-toggle="tooltip" data-placement="bottom" title="30%"><span class="custom-icon custom-icon-smile-red"></span></span></div>
+                <div class="col-md-11"><p>@MareanoDataSet.RatingBad</p></div>
+            </div>
+        </div>
+    </div>
+</article>
+<article class="col-md-12 nested">
+    <h3>FAIR status: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FAIRStatus.value , null, Model.FAIRStatusPerCent + "%","fair") @Model.FAIRStatusPerCent%</h3>
+    <div class="dataset-list metadata">
+        <div class="row">
+            <div class="col-md-1 icon">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FindableStatus.value, null, Model.FindableStatusPerCent + "%", "fair") @Model.FindableStatusPerCent%</div>
+            <div class="col-md-11"><p><strong>@MareanoDataSet.Findable_Label: </strong>@MareanoDataSet.Findable_Description</p> 
+            <p class="toggle-content-button" onclick="ToogleContent(this)">
+                                                                                                                                   
+                <span class="showmore">@MareanoDataSet.sedetaljer</span>
+                <span class="showless">@MareanoDataSet.lesmindre</span></p></div>
+
+        </div>
+        <div class="criteria-list col-md-push-2">
+            <ul>
+                <li>@MareanoDataSet.F1_Label            
+                <ul>
+                    <li>@Status(Model.F1_a_Criteria)@MareanoDataSet.F1_a_Criteria</li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+                <li>@MareanoDataSet.F2_Label
+            <ul>
+                <li>@Status(Model.F2_a_Criteria)@MareanoDataSet.F2_a_Criteria</li>
+
+                <li>@Status(Model.F2_b_Criteria)@MareanoDataSet.F2_b_Criteria</li>
+
+                <li>@Status(Model.F2_c_Criteria)@MareanoDataSet.F2_c_Criteria</li>
+            </ul>
+        <li>
+    </ul>
+
+    <ul>
+                <li>@MareanoDataSet.F3_Label
+        <ul>
+            <li>@Status(Model.F3_a_Criteria)@MareanoDataSet.F3_a_Criteria</li>
+        </ul>
+    </li>
+</ul>
+
+<ul>
+                <li>@MareanoDataSet.F4_Label
+    <ul>
+        <li>@Status(Model.F4_a_Criteria)@MareanoDataSet.F4_a_Criteria</li>
+    </ul>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="dataset-list metadata">
+    <div class="row">
+        <div class="col-md-1 icon">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.AccesibleStatus.value, null, Model.AccesibleStatusPerCent + "%", "fair") @Model.AccesibleStatusPerCent%</div>
+        <div class="col-md-11"><p><strong>@MareanoDataSet.Accesible_Label:</strong> @MareanoDataSet.Accesible_Description </p>
+                               <p onclick="ToogleContent(this)" class="toggle-content-button">
+                                   <span class="showmore">@MareanoDataSet.sedetaljer</span>
+                                   <span class="showless">@MareanoDataSet.lesmindre</span>
+                               </p></div>
+
+    </div>
+    <div class="criteria-list">
+        <ul>
+                <li>@MareanoDataSet.A1_Label
+            <ul>
+                <li>@Status(Model.A1_a_Criteria)@MareanoDataSet.A1_a_Criteria</li>
+                <li>@Status(Model.A1_b_Criteria)@MareanoDataSet.A1_b_Criteria</li>
+                <li>@Status(Model.A1_c_Criteria)@MareanoDataSet.A1_c_Criteria</li>
+                <li>@Status(Model.A1_d_Criteria)@MareanoDataSet.A1_d_Criteria</li>
+                <li>@Status(Model.A1_e_Criteria)@MareanoDataSet.A1_e_Criteria</li>
+                <li>@Status(Model.A1_f_Criteria)@MareanoDataSet.A1_f_Criteria</li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul>
+        <li>@MareanoDataSet.A2_Label</li>
+    </ul>
+</div>
+</div>
+<div class="dataset-list metadata">
+    <div class="row">
+        <div class="col-md-1 icon">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.InteroperableStatus.value, null, Model.InteroperableStatusPerCent + "%", "fair") @Model.InteroperableStatusPerCent%</div>
+        <div class="col-md-11"><p><strong>@MareanoDataSet.Interoperable_Label:</strong> @MareanoDataSet.Interoperable_Description</p>
+                               <p onclick="ToogleContent(this)" class="toggle-content-button">
+                                   <span class="showmore">@MareanoDataSet.sedetaljer</span>
+                                   <span class="showless">@MareanoDataSet.lesmindre</span> </p>
+</div>
+
+    </div>
+    <div class="criteria-list">
+        <ul>
+                <li>@MareanoDataSet.I1_Label
+            <ul>
+                <li>@Status(Model.I1_a_Criteria)@MareanoDataSet.I1_a_Criteria</li>
+
+                <li>@Status(Model.I1_b_Criteria)@MareanoDataSet.I1_b_Criteria</li>
+
+                <li>@Status(Model.I1_c_Criteria)@MareanoDataSet.I1_c_Criteria</li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul>
+                <li>@MareanoDataSet.I2_Label
+        <ul>
+            <li>@Status(Model.I2_a_Criteria)@MareanoDataSet.I2_a_Criteria</li>
+            <li>@Status(Model.I2_b_Criteria)@MareanoDataSet.I2_b_Criteria</li>
+        </ul>
+    </li>
+</ul>
+
+<ul>
+                <li>@MareanoDataSet.I3_Label
+    <ul>
+        <li>@Status(Model.I3_a_Criteria)@MareanoDataSet.I3_a_Criteria</li>
+        <li>@Status(Model.I3_b_Criteria)@MareanoDataSet.I3_b_Criteria</li>
+    </ul>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="dataset-list metadata">
+    <div class="row">
+
+        <div class="col-md-1 icon"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.ReUseableStatus.value, null, Model.ReUseableStatusPerCent + "%", "fair") @Model.ReUseableStatusPerCent%</div>
+        <div class="col-md-11"><p><strong>@MareanoDataSet.ReUseable_Label:</strong> @MareanoDataSet.ReUseable_Description</p>
+                               <p onclick="ToogleContent(this)" class="toggle-content-button">
+                                   <span class="showmore">@MareanoDataSet.sedetaljer</span>
+                                   <span class="showless">@MareanoDataSet.lesmindre</span>
+                               </p></div>
+    </div>
+    <div class="criteria-list">
+        <ul>
+                <li>@MareanoDataSet.R1_Label
+            <ul>
+                <li>@Status(Model.R1_a_Criteria)@MareanoDataSet.R1_a_Criteria</li>
+            </ul>
+        </li>
+    </ul>
+    <ul>
+                <li>@MareanoDataSet.R2_Label
+        <ul>
+            <li>@Status(Model.R2_a_Criteria)@MareanoDataSet.R2_a_Criteria</li>
+            <li>@Status(Model.R2_b_Criteria)@MareanoDataSet.R2_b_Criteria</li>
+            <li>@Status(Model.R2_c_Criteria)@MareanoDataSet.R2_c_Criteria</li>
+            <li>@Status(Model.R2_d_Criteria)@MareanoDataSet.R2_d_Criteria</li>
+            <li>@Status(Model.R2_e_Criteria)@MareanoDataSet.R2_e_Criteria</li>
+            <li>@Status(Model.R2_f_Criteria)@MareanoDataSet.R2_f_Criteria</li>
+        </ul>
+    </li>
+</ul>
+<ul>
+                <li>@MareanoDataSet.R3_Label
+    <ul>
+        <li>@Status(Model.R3_a_Criteria)@MareanoDataSet.R3_a_Criteria</li>
+
+        <li>@Status(Model.R3_b_Criteria)@MareanoDataSet.R3_b_Criteria</li>
+    </ul>
+</li>
+</ul>
+</div>
+</div>
+</article>
+
+<article class="col-md-12 nested">
+
+    <h3>Mareano status</h3>
+    <div class="metadata">
+        <div class="status-list">
+            <ul>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.MetadataStatus.value, null, null, "metadata") <span>@Model.MetadataStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.MetadataStatusId)
+                        @RawText(MareanoDataSet.RequirementsMetadata)
+                    </div>
+                    
+                    
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.ProductSpesificationStatus.value, null, null, "metadata")<span> @Model.ProductSpesificationStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.ProductSpesificationStatusId) @RawText(MareanoDataSet.RequirementsProductSpesifications)
+                    </div>                    
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.SosiDataStatus.value, null, null, "metadata")<span> @Model.SosiDataStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.SosiDataStatusId) @RawText(MareanoDataSet.RequirementsSosi)
+                    </div>
+                   
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.GmlDataStatus.value, null, null, "metadata")<span> @Model.GmlDataStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.GmlDataStatusId) @RawText(MareanoDataSet.RequirementsGml)</div>
+                   
+                </li>
+                <li>
+                    <div class="col-md-1"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.WmsStatus.value, null, null, "metadata")<span> @Model.WmsStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.WmsStatusId) @RawText(MareanoDataSet.RequirementsWms)</div>
+                   
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.WfsStatus.value, null, null, "metadata")<span> @Model.WfsStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.WfsStatusId) @RawText(MareanoDataSet.RequirementsWfs)</div>
+                    
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.AtomFeedStatus.value, null, null, "metadata")<span> @Model.AtomFeedStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.AtomFeedStatusId) @RawText(MareanoDataSet.RequirementsAtom)</div>
+                    
+                </li>
+                <li>
+                    <div class="col-md-1"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.CommonStatus.value, null, null, "metadata") <span>@Model.CommonStatus.DescriptionTranslated()</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.CommonStatusId) @RawText(MareanoDataSet.RequirementsDownload)</div>
+                    
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+</article>
+
+
+@if (!string.IsNullOrWhiteSpace(Model.MetadataUrl))
+{
+    <article class="col-md-12">
+        <h3>@DataSet.ProductInformation</h3>
+        <p><a href="@Model.MetadataUrl" class="btn btn-fresh-green"><span class="glyphicon glyphicon-globe"></span> @DataSet.DisplayKartkatalogen</a></p>
+    </article>
+}

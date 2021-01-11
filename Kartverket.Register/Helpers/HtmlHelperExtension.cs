@@ -609,6 +609,26 @@ namespace Kartverket.Register.Helpers
                 sortTitle = DataSet.DOK_Delivery_Metadata;
                 statusIcon += "custom-icon-info";
             }
+            else if (sortingParam == "findable_metadata_status" || sortingParam == "findable_metadata_status_desc")
+            {
+                sortTitle = MareanoDataSet.Findable_Label;
+                statusIcon += "custom-icon-findable";
+            }
+            else if (sortingParam == "accesible_metadata_status" || sortingParam == "accesible_metadata_status_desc")
+            {
+                sortTitle = MareanoDataSet.Accesible_Label;
+                statusIcon += "custom-icon-accesible";
+            }
+            else if (sortingParam == "interoperable_metadata_status" || sortingParam == "interoperable_metadata_status_desc")
+            {
+                sortTitle = MareanoDataSet.Interoperable_Label;
+                statusIcon += "custom-icon-interoperable";
+            }
+            else if (sortingParam == "reusable_metadata_status" || sortingParam == "reusable_metadata_status_desc")
+            {
+                sortTitle = MareanoDataSet.ReUseable_Label;
+                statusIcon += "custom-icon-re-useable";
+            }
             else if (sortingParam == "geodatalov_productspecification_status" || sortingParam == "geodatalov_productspecification_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_ProductSpesification;
@@ -685,11 +705,20 @@ namespace Kartverket.Register.Helpers
 
         public static IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string label, string type = null)
         {
+            var delivery_Status_Useable = DataSet.DOK_Delivery_Status_Useable;
+            var delivery_Status_Deficient = DataSet.DOK_Delivery_Status_Deficient;
+
+            if (IsFair(label, type))
+            {
+                delivery_Status_Useable = MareanoDataSet.Delivery_Status_Useable;
+                delivery_Status_Deficient = MareanoDataSet.Delivery_Status_Deficient;
+            }
 
             var symbolDeficient = "custom-icon custom-icon-smile-red";
             var symbolUseable = "custom-icon custom-icon-smile-yellow";
             var symbolGood = "custom-icon custom-icon-smile-green";
             var symbolNotSet = "custom-icon custom-icon-status-not-set";
+            var symbolSatisfactory = "custom-icon custom-icon-smile-yellow-satisfactory";
 
             var statusSymbol = symbolUseable;
             var title = "";
@@ -709,20 +738,26 @@ namespace Kartverket.Register.Helpers
                         break;
                     case "deficient":
                         statusSymbol = symbolDeficient;
-                        title = DataSet.DOK_Delivery_Status_Deficient;
+                        title = delivery_Status_Deficient;
                         break;
                     case "useable":
                         statusSymbol = symbolUseable;
-                        title = DataSet.DOK_Delivery_Status_Useable;
+                        title = delivery_Status_Useable;
                         break;
                     case "good":
                         statusSymbol = symbolGood;
                         title = DataSet.DOK_Delivery_Status_Good;
                         break;
+                    case "satisfactory":
+                        statusSymbol = symbolSatisfactory;
+                        title = MareanoDataSet.Delivery_Status_Satisfactory;
+                        break;
                 }
             }
 
-            if (!string.IsNullOrEmpty(label))
+            if (type == "fair")
+                title = label;
+            else if (!string.IsNullOrEmpty(label))
                 title = label + ": " + title;
 
             var html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></span>";
@@ -730,7 +765,17 @@ namespace Kartverket.Register.Helpers
             return new HtmlString(html);
         }
 
-        
+        private static bool IsFair(string label, string type)
+        {
+            if (!string.IsNullOrEmpty(label))
+            {
+                if (type == "fair")
+                    return true;
+
+                return label.Contains("findable") || label.Contains("accesible") || label.Contains("interoperable") || label.Contains("reusable") || label.Contains("fair");
+            }
+            return false;
+        }
 
         public static IEnumerable<Models.Register> ParentRegisters(Object model)
         {

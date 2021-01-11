@@ -48,6 +48,26 @@ namespace Kartverket.Register.Models
         [Display(Name = "SupportSchemes", ResourceType = typeof(GeodataCollection))]
         public string SupportSchemes { get; set; }
 
-
+        [Display(Name = "OtherOrganizationsInvolved", ResourceType = typeof(GeodataCollection))]
+        public string OtherOrganizationsInvolved { get; set; }
+        [Display(Name = "LinkToMapSolution", ResourceType = typeof(GeodataCollection))]
+        public string LinkToMapSolution { get; set; }
+        [Display(Name = "LinkInfoPage", ResourceType = typeof(GeodataCollection))]
+        public string LinkInfoPage { get; set; }
+        [Display(Name = "LinkOtherInfo", ResourceType = typeof(GeodataCollection))]
+        public string LinkOtherInfo { get; set; }
+        [Display(Name = "MethodForMappingShort", ResourceType = typeof(GeodataCollection))]
+        public string MethodForMappingShort { get; set; }
+        [Display(Name = "OtherWebInfoAboutMappingMethodology", ResourceType = typeof(GeodataCollection))]
+        public string OtherWebInfoAboutMappingMethodology { get; set; }
+        [Display(Name = "LinkToRequirementsForDelivery", ResourceType = typeof(GeodataCollection))]
+        public string LinkToRequirementsForDelivery { get; set; }
+        [Display(Name = "OrganizationInfo", ResourceType = typeof(GeodataCollection))]
+        public string OrganizationInfo { get; set; }
+        [Display(Name = "ContactEmail", ResourceType = typeof(GeodataCollection))]
+        public string ContactEmail { get; set; }
+        [Display(Name = "Image", ResourceType = typeof(GeodataCollection))]
+        public string ImageFileName { get; set; }
+        public string ThumbnailFileName { get; set; }
     }
 }

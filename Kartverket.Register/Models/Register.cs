@@ -163,6 +163,11 @@ namespace Kartverket.Register.Models
             return systemId == Guid.Parse(GlobalVariables.GeodatalovRegistryId);
         }
 
+        public bool IsMareanoStatusRegister()
+        {
+            return systemId == Guid.Parse(GlobalVariables.MareanoRegistryId);
+        }
+
         public bool ContainedItemClassIsOrganization()
         {
             return containedItemClass == "Organization";

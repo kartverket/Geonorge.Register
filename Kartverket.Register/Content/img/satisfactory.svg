@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 18 18" style="enable-background:new 0 0 18 18;" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css">
+	.st0{fill:#FED633;stroke:#333333;stroke-miterlimit:10;}
+	.st1{fill:#333333;}
+	.st2{fill:none;stroke:#FFFFFF;stroke-miterlimit:10;}
+	.st3{fill:none;stroke:#333333;stroke-miterlimit:10;}
+</style>
+  </defs>
+  <circle class="st0" cx="9" cy="9" r="8.5"/>
+  <circle class="st1" cx="6" cy="6" r="1.5"/>
+  <circle class="st1" cx="12" cy="6" r="1.5"/>
+  <path class="st2" d="M8.8,14.4"/>
+  <path class="st3" d="M 9.124 12.768 C 8.092 12.768 7.113 12.528 6.298 12.145 C 5.533 11.786 4.911 11.3 4.524 10.768 M 9.124 12.768 C 11.124 12.768 12.724 11.868 13.524 10.768"/>
+</svg>

@@ -87,6 +87,11 @@ namespace Kartverket.Register.Models
             {
                 return inspireDataService.DetailPageUrl();
             }
+
+            if (this is MareanoDataset mareanoDataset)
+            {
+                return mareanoDataset.DetailPageUrl();
+            }
             return Register.GetObjectUrl() + "/" + Seoname + "/" + SystemId;
         }
 

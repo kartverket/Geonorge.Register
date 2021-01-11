@@ -1,0 +1,50 @@
+﻿@model PagedList.IPagedList<RegisterItemV2ViewModel>
+@using Kartverket.Register.Models.ViewModels
+@using Kartverket.Register.Helpers
+
+<div class="table-heading col-md-12">
+    <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, null, null, Request.QueryString["GeodataType"])</div>
+    <div class="col-md-4 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, null, null, Request.QueryString["GeodataType"])</div>
+    <div class="col-md-5 col-sm-12 status-icons first-four">
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "findable_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "reusable_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
+
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_productspecification_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_sosi_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_gml_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wms_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wfs_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_atom_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_common_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus", null, null, null, null, Request.QueryString["GeodataType"])
+    </div>
+</div>
+
+@foreach (MareanoDatasetViewModel item in Model)
+{
+    <div class="resultItemRow col-md-12 ">
+        <div class="col-md-3 col-sm-2 col"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
+        <div class="col-md-4 col"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.NameTranslated()</a></div>
+        <div class="col-md-5 col-sm-5 status-icons pull-right first-four">
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.FindableStatusId, false, "findable")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AccesibleStatusId, false, "accesible")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InteroperableStatusId, false, "interoperable")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ReUseableStatusId, false, "reusable")
+
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, "metadata")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSpesificationStatusId, false, "productspecification")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SosiDataStatusId, false, "sosi")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.GmlDataStatusId, false, "gml")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WmsStatusId, false, "wms")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatusId, false, "wfs")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatusId, false, "atom")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.CommonStatusId, false, "common")
+            <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>
+                <i class="statusIcon-@item.DokStatusId"></i>
+            </span>
+        </div>
+    </div>
+}

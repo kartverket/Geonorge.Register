@@ -468,3 +468,127 @@ a.link-unstyled {
     width: 24px;
     height: 24px;
 }
+
+.custom-icon.custom-icon-findable {
+    background-image: url("/Content/img/findable.svg");
+}
+
+.custom-icon.custom-icon-accesible {
+    background-image: url("/Content/img/accesible.svg");
+}
+
+.custom-icon.custom-icon-interoperable {
+    background-image: url("/Content/img/interoperable.svg");
+}
+
+.custom-icon.custom-icon-re-useable {
+    background-image: url("/Content/img/re-useable.svg");
+}
+
+.custom-icon.custom-icon-smile-yellow-satisfactory {
+    background-image: url("/Content/img/satisfactory.svg");
+}
+
+.arrow-icon {
+    background-image: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-right.svg);
+    width: 11px;
+    height: 12px;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+    display: inline-block;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+    .arrow-icon.active,
+    .active > .arrow-icon,
+    .dataset-list.active > div > div > p .arrow-icon {
+        background-image: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg);
+    }
+.toggle-content-button {
+    text-decoration: underline;
+    margin-top: -10px;
+    color: #3867c8;
+}
+    .toggle-content-button:hover {
+        cursor: pointer;
+    }
+.criteria-list {
+    display: none;
+    margin-left: 7%;
+}
+.metadata .icon {
+    text-align: center;
+    font-size: 1.2em;    
+}
+.metadata .icon:hover {
+        cursor: pointer;
+    }
+.metadata .custom-icon {
+    width: 35px;
+    height: 35px;
+}
+
+.criteria-list .title-field {
+    padding-left: 24px;
+}
+
+.criteria-list .official-field {
+    text-align: center;
+}
+.criteria-list.no-indent {
+    margin: 0;
+}
+
+.dataset-list {
+    line-height: 24pt;
+}
+.dataset-list.active .showmore, 
+.dataset-list .showless {
+        display: none;
+}
+
+.dataset-list .showmore,
+.dataset-list.active .showless {
+        display: inline-block
+    }
+.dataset-list.active .criteria-list {
+    display: block;
+}    
+.first-four > span:nth-child(4) {margin-right: 20px;}
+.first-four > a:nth-child(4) {margin-right: 20px}
+.fair ul li:before {
+    content: none;
+}
+.nested ul li {
+    font-weight: 600;
+    font-style: normal;
+}
+.nested ul li ul li {
+    font-weight: normal;
+}
+.nested ul li:before {
+    content: none;
+}
+.status-list ul {
+    display: flex;
+    flex-direction: column;
+}
+.status-list ul li {
+    margin: 10px 0;
+}
+    .status-list ul li > div > span:last-of-type {
+        font-size: 0.8em;
+        white-space: nowrap
+    }
+.criteria-list i.fa-check {
+    color: #36C545;
+}
+.criteria-list i.fa-times {
+    color: #EE432A;
+}
+.criteria-list i.fa {
+    margin-left: -23px;
+}

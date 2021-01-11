@@ -59,12 +59,20 @@ namespace Kartverket.Register.Models
             return StatusRegisterItems.FirstOrDefault() is GeodatalovDatasetStatusReport;
         }
 
+        public bool IsMareanoDatasetReport()
+        {
+            return StatusRegisterItems.FirstOrDefault() is MareanoDatasetStatusReport;
+        }
+
         public bool IsInspireDataserviceReport()
         {
             return StatusRegisterItems.FirstOrDefault() is InspireDataserviceStatusReport;
         }
 
-
+        public bool IsMareanoDataserviceReport()
+        {
+            return StatusRegisterItems.FirstOrDefault() is MareanoDatasetStatusReport;
+        }
 
         public int NumberOfItemsWithMetadata(string status)
         {
@@ -123,6 +131,86 @@ namespace Kartverket.Register.Models
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
                     if (geodatalovDatasetStatusReport.MetadataGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithFindable(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.FindableMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithAccesible(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.AccesibleMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithInteroperable(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.InteroperableMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithReUsable(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.ReUsableMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithMetadata(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.MetadataMareanoDataset == status)
                     {
                         number++;
                     }
@@ -195,6 +283,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfMareanoDatasetsWithProductSpecification(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.ProductSpesificationMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithWms(string status)
         {
             int number = 0;
@@ -235,6 +339,22 @@ namespace Kartverket.Register.Models
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
                     if (geodatalovDatasetStatusReport.WmsGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithWms(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.WmsMareanoDataset == status)
                     {
                         number++;
                     }
@@ -307,6 +427,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfMareanoDatasetsWithWfs(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.WfsMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithSosiRequirements(string status)
         {
             int number = 0;
@@ -339,6 +475,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfMareanoDatasetsWithSosiRequirements(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.SosiDataMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithGmlRequirements(string status)
         {
             int number = 0;
@@ -363,6 +515,22 @@ namespace Kartverket.Register.Models
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
                     if (geodatalovDatasetStatusReport.GmlDataGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithGmlRequirements(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.GmlDataMareanoDataset == status)
                     {
                         number++;
                     }
@@ -411,6 +579,22 @@ namespace Kartverket.Register.Models
                 if (item is GeodatalovDatasetStatusReport geodatalovDatasetStatusReport)
                 {
                     if (geodatalovDatasetStatusReport.AtomFeedGeodatalovDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithAtomFeed(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.AtomFeedMareanoDataset == status)
                     {
                         number++;
                     }
@@ -557,6 +741,14 @@ namespace Kartverket.Register.Models
 
             switch (statusType)
             {
+                case "Findable":
+                    return NumberOfMareanoDatasetsWithFindable(status);
+                case "Accesible":
+                    return NumberOfMareanoDatasetsWithAccesible(status);
+                case "Interoperable":
+                    return NumberOfMareanoDatasetsWithInteroperable(status);
+                case "ReUseable":
+                    return NumberOfMareanoDatasetsWithReUsable(status);
                 case "Metadata":
                     return NumberOfItemsWithMetadata(status);
                 case "ProductSheet":

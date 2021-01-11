@@ -209,6 +209,9 @@
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
     <Reference Include="SolrNet, Version=1.0.18.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SolrNet.Core.1.0.18\lib\net46\SolrNet.dll</HintPath>
     </Reference>
@@ -1074,6 +1077,34 @@
     <Compile Include="Migrations\202010230917426_AddGeoDataCollectionProperties.designer.cs">
       <DependentUpon>202010230917426_AddGeoDataCollectionProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011090609156_AddMareanoStatusRegistry.cs" />
+    <Compile Include="Migrations\202011090609156_AddMareanoStatusRegistry.designer.cs">
+      <DependentUpon>202011090609156_AddMareanoStatusRegistry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011091002164_AddMareanoStatusReport.cs" />
+    <Compile Include="Migrations\202011091002164_AddMareanoStatusReport.designer.cs">
+      <DependentUpon>202011091002164_AddMareanoStatusReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011101205261_AddGeoDataCollectionFields.cs" />
+    <Compile Include="Migrations\202011101205261_AddGeoDataCollectionFields.Designer.cs">
+      <DependentUpon>202011101205261_AddGeoDataCollectionFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011161458273_FixMigrationMareano.cs" />
+    <Compile Include="Migrations\202011161458273_FixMigrationMareano.designer.cs">
+      <DependentUpon>202011161458273_FixMigrationMareano.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011251406291_AddFAIRdata.cs" />
+    <Compile Include="Migrations\202011251406291_AddFAIRdata.designer.cs">
+      <DependentUpon>202011251406291_AddFAIRdata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011301319007_AddMareanoFair.cs" />
+    <Compile Include="Migrations\202011301319007_AddMareanoFair.designer.cs">
+      <DependentUpon>202011301319007_AddMareanoFair.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012041100249_AddImage.cs" />
+    <Compile Include="Migrations\202012041100249_AddImage.designer.cs">
+      <DependentUpon>202012041100249_AddImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1090,6 +1121,7 @@
     <Compile Include="Models\Api\FacetInput.cs" />
     <Compile Include="Models\Api\FieldValueModelBinder.cs" />
     <Compile Include="Models\Api\InspireDataset.cs" />
+    <Compile Include="Models\Api\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\Api\OrganizationV2.cs" />
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\RegisterData.cs" />
@@ -1103,10 +1135,17 @@
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\FAIR\FAIRDelivery.cs" />
+    <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
+    <Compile Include="Models\MareanoDataset.cs" />
+    <Compile Include="Models\StatusReports\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
     <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
+    <Compile Include="Models\ViewModels\MareanoDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoDatasetStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\GeodatalovDatasetStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\GeodatalovLineChart.cs" />
@@ -1215,6 +1254,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeodataCollection.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MareanoDataSet.en.Designer.cs">
+      <DependentUpon>MareanoDataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\MareanoDataSet.Designer.cs">
+      <DependentUpon>MareanoDataSet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\GeodatalovDataSet.en.Designer.cs">
       <DependentUpon>GeodatalovDataSet.en.resx</DependentUpon>
@@ -1346,6 +1395,7 @@
     <Compile Include="Services\IDatasetDeliveryService.cs" />
     <Compile Include="Services\IGeodatalovDatasetService.cs" />
     <Compile Include="Services\IInspireMonitoringService.cs" />
+    <Compile Include="Services\IMareanoDatasetService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
@@ -1358,6 +1408,7 @@
     <Compile Include="Services\ISynchronizationService.cs" />
     <Compile Include="Services\IStatusReportService.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\MareanoDatasetService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
     <Compile Include="Services\Notify\IEmailService.cs" />
@@ -1929,17 +1980,22 @@
     <Content Include="Content\bower_components\vue\dist\vue.runtime.js" />
     <Content Include="Content\bower_components\vue\dist\vue.runtime.min.js" />
     <Content Include="Content\custom.css" />
+    <Content Include="Content\img\accesible.svg" />
     <Content Include="Content\img\arrow-down.svg" />
     <Content Include="Content\img\arrow-up.svg" />
     <Content Include="Content\img\checked-black.svg" />
     <Content Include="Content\img\chosen-sprite.png" />
+    <Content Include="Content\img\findable.svg" />
+    <Content Include="Content\img\interoperable.svg" />
     <Content Include="Content\img\leaflet\layers-2x.png" />
     <Content Include="Content\img\leaflet\layers.png" />
     <Content Include="Content\img\leaflet\marker-icon-2x.png" />
     <Content Include="Content\img\leaflet\marker-icon.png" />
     <Content Include="Content\img\leaflet\marker-shadow.png" />
     <Content Include="Content\img\loader.gif" />
+    <Content Include="Content\img\re-useable.svg" />
     <Content Include="Content\img\rss.png" />
+    <Content Include="Content\img\satisfactory.svg" />
     <Content Include="Content\leaflet.css" />
     <Content Include="Content\print.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -2367,14 +2423,18 @@
     <Content Include="Views\Alerts\Create.cshtml" />
     <Content Include="Views\Shared\_alert.cshtml" />
     <Content Include="Views\Shared\_detailsAlert.cshtml" />
-    <Content Include="settings.default.config" />
+    <Content Include="settings.default.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Organizations\_Fields.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
     <Content Include="Views\InspireDatasets\Create.cshtml" />
     <Content Include="Views\InspireDatasets\Delete.cshtml" />
     <Content Include="Views\InspireDatasets\Edit.cshtml" />
     <Content Include="Views\Shared\_nationalDataset.cshtml" />
-    <Content Include="settings.config" />
+    <Content Include="settings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\_Resources.cshtml" />
     <Content Include="Views\Shared\_detailsInspireDataset.cshtml" />
     <Content Include="Views\Shared\_pagedListPagerRegisterItemViewModel.cshtml" />
@@ -2411,6 +2471,11 @@
     <Content Include="Views\GeoDataCollection\Edit.cshtml" />
     <Content Include="Views\GeoDataCollection\Delete.cshtml" />
     <Content Include="Views\GeoDataCollection\Details.cshtml" />
+    <Content Include="Views\Shared\_mareanoDataset.cshtml" />
+    <Content Include="Views\Registers\DetailsMareanoStatusRegistry.cshtml" />
+    <Content Include="Views\Registers\js\_mareanoReportCharts.cshtml" />
+    <Content Include="Views\Shared\_mareanoReport.cshtml" />
+    <Content Include="Views\Shared\_detailsMareanoDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -2910,6 +2975,27 @@
     <EmbeddedResource Include="Migrations\202010230917426_AddGeoDataCollectionProperties.resx">
       <DependentUpon>202010230917426_AddGeoDataCollectionProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011090609156_AddMareanoStatusRegistry.resx">
+      <DependentUpon>202011090609156_AddMareanoStatusRegistry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011091002164_AddMareanoStatusReport.resx">
+      <DependentUpon>202011091002164_AddMareanoStatusReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011101205261_AddGeoDataCollectionFields.resx">
+      <DependentUpon>202011101205261_AddGeoDataCollectionFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011161458273_FixMigrationMareano.resx">
+      <DependentUpon>202011161458273_FixMigrationMareano.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011251406291_AddFAIRdata.resx">
+      <DependentUpon>202011251406291_AddFAIRdata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011301319007_AddMareanoFair.resx">
+      <DependentUpon>202011301319007_AddMareanoFair.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012041100249_AddImage.resx">
+      <DependentUpon>202012041100249_AddImage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodataCollection.en.Designer.cs</LastGenOutput>
@@ -2918,6 +3004,19 @@
     <EmbeddedResource Include="Resources\GeodataCollection.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodataCollection.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MareanoDataSet.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MareanoDataSet.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MareanoDataSet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MareanoDataSet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

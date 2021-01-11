@@ -36,10 +36,11 @@ namespace Kartverket.Register.Controllers
         private readonly IInspireMonitoringService _inspireMonitoringService;
         private readonly ISynchronizationService _synchronizationService;
         private readonly IStatusReportService _statusReportService;
+        private readonly IMareanoDatasetService _mareanoDatasetService;
 
         public RegistersController(ITranslationService translationService,
             RegisterDbContext dbContext, IRegisterItemService registerItemService, ISearchService searchService, IVersioningService versioningService,
-            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService, ISynchronizationService synchronizationService, IStatusReportService statusReportService)
+            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService, ISynchronizationService synchronizationService, IStatusReportService statusReportService, IMareanoDatasetService mareanoDatasetService)
         {
             _db = dbContext;
             _registerItemService = registerItemService;
@@ -53,6 +54,7 @@ namespace Kartverket.Register.Controllers
             _inspireMonitoringService = inspireMonitoringService;
             _synchronizationService = synchronizationService;
             _statusReportService = statusReportService;
+            _mareanoDatasetService = mareanoDatasetService;
         }
 
         // GET: Registers
@@ -227,6 +229,35 @@ namespace Kartverket.Register.Controllers
 
             var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, geodatalovStatusReports);
             viewModel.SelectedGeodatalovTab = filter.GeodatalovSelectedTab;
+            viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+
+            ItemsOrderBy(sorting, viewModel);
+            ViewbagsRegisterDetails(sorting, page, filter, viewModel);
+            return View(viewModel);
+        }
+
+        [Route("mareano-statusregister")]
+        [Route("register/mareano-statusregister")]
+        public ActionResult DetailsMareanoStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
+        {
+            RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
+            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+
+            var register = _registerService.GetMareanoDatasetRegister();
+            if (register == null) return HttpNotFound();
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
+
+            register = FilterRegisterItems(register, filter);
+
+            List<StatusReport> mareanoStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : mareanoStatusReports.FirstOrDefault();
+
+            var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, mareanoStatusReports);
+            viewModel.SelectedMareanoTab = filter.MareanoSelectedTab;
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
 
             ItemsOrderBy(sorting, viewModel);
@@ -904,6 +935,10 @@ namespace Kartverket.Register.Controllers
             if (register.IsGeodatalovStatusRegister())
             {
                 return new GeodatalovDatasetViewModel(_geodatalovDatasetService.GetGeodatalovDatasetById(systemId));
+            }
+            if (register.IsMareanoStatusRegister())
+            {
+                return new MareanoDatasetViewModel(_mareanoDatasetService.GetMareanoDatasetById(systemId));
             }
             if (register.IsDokMunicipal())
             {

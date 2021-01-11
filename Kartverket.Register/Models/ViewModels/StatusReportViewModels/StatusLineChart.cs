@@ -9,6 +9,7 @@ namespace Kartverket.Register.Models
 
         public List<int> PointSize { get; set; }
         public List<int> Good { get; set; }
+        public List<int> Satisfactory { get; set; }
         public List<int> Deficient { get; set; }
         public List<int> Notset { get; set; }
         public List<int> Useable { get; set; }
@@ -19,6 +20,7 @@ namespace Kartverket.Register.Models
             PointSize = new List<int>();
 
             Good = new List<int>();
+            Satisfactory = new List<int>();
             Deficient = new List<int>();
             Notset = new List<int>();
             Useable = new List<int>();
@@ -32,6 +34,7 @@ namespace Kartverket.Register.Models
 
                     Labels.Add(xName);
                     Good.Add(statusReport.NumberOfItemsByType(statusType, "good"));
+                    Satisfactory.Add(statusReport.NumberOfItemsByType(statusType, "satisfactory"));
                     Deficient.Add(statusReport.NumberOfItemsByType(statusType, "deficient"));
                     Notset.Add(statusReport.NumberOfItemsByType(statusType, "notset"));
                     Useable.Add(statusReport.NumberOfItemsByType(statusType, "useable"));

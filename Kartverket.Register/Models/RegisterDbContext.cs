@@ -13,6 +13,7 @@ using System.Web.Configuration;
 using System.Security.Claims;
 using Kartverket.Register.Models.StatusReports;
 using Geonorge.AuthLib.Common;
+using Kartverket.Register.Models.FAIR;
 
 namespace Kartverket.Register.Models
 {
@@ -30,6 +31,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<DokStatus> DokStatuses { get; set; }
         public virtual DbSet<DokDeliveryStatus> DokDeliveryStatuses { get; set; }
+        public virtual DbSet<FAIRDeliveryStatus> FAIRDeliveryStatuses { get; set; }
         public virtual DbSet<accessType> AccessTypes { get; set; }
         public virtual DbSet<DOKTheme> DOKThemes { get; set; }
         public virtual DbSet<Register> Registers { get; set; }
@@ -50,6 +52,8 @@ namespace Kartverket.Register.Models
         public virtual DbSet<Alert> Alerts { get; set; }
         public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
         public virtual DbSet<GeodatalovDataset> GeodatalovDatasets { get; set; }
+        public virtual DbSet<MareanoDataset> MareanoDatasets { get; set; }
+        public virtual DbSet<FAIRDelivery> FAIRDeliveries { get; set; }
         public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
         public virtual DbSet<InspireDataService> InspireDataServices { get; set; }
         public virtual DbSet<InspireMonitoring> InspireMonitorings { get; set; }
@@ -99,6 +103,12 @@ namespace Kartverket.Register.Models
             {
                 m.MapInheritedProperties();
                 m.ToTable("GeodatalovDatasets");
+            });
+
+            modelBuilder.Entity<MareanoDataset>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("MareanoDatasets");
             });
 
             modelBuilder.Entity<InspireDataService>().Map(m =>

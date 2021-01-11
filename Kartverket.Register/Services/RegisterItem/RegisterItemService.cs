@@ -393,6 +393,10 @@ namespace Kartverket.Register.Services.RegisterItem
             {
                 return GeodatalovDatasetNameAlreadyExist((GeodatalovDataset)model);
             }
+            if (model is MareanoDataset)
+            {
+                return MareanoDatasetNameAlreadyExist((MareanoDataset)model);
+            }
             return false;
         }
 
@@ -408,6 +412,24 @@ namespace Kartverket.Register.Services.RegisterItem
             var queryResults = from o in _dbContext.GeodatalovDatasets
                                where (o.Name == geodatalovDataset.Name || o.Seoname == seoFriendlyName) &&
                                      o.SystemId != geodatalovDataset.SystemId
+                                     && o.RegisterId == registerId
+                               select o.SystemId;
+
+            return !queryResults.Any();
+        }
+
+        private bool MareanoDatasetNameAlreadyExist(MareanoDataset mareanoDataset)
+        {
+            if (string.IsNullOrWhiteSpace(mareanoDataset.Name))
+            {
+                return false;
+            }
+            if (mareanoDataset == null) throw new ArgumentNullException(nameof(mareanoDataset));
+            var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(mareanoDataset.Name);
+            var registerId = mareanoDataset.Register?.systemId ?? mareanoDataset.RegisterId;
+            var queryResults = from o in _dbContext.MareanoDatasets
+                               where (o.Name == mareanoDataset.Name || o.Seoname == seoFriendlyName) &&
+                                     o.SystemId != mareanoDataset.SystemId
                                      && o.RegisterId == registerId
                                select o.SystemId;
 
@@ -938,6 +960,47 @@ namespace Kartverket.Register.Services.RegisterItem
                     case "inspire_service_status_desc":
                         {
                             var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.ServiceStatus).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    //FAIR
+                    case "findable_metadata_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.FindableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "findable_metadata_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.FindableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "accesible_metadata_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.AccesibleStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "accesible_metadata_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.AccesibleStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "interoperable_metadata_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.InteroperableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "interoperable_metadata_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.InteroperableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "reusable_metadata_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.ReUseableStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "reusable_metadata_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.ReUseableStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
 

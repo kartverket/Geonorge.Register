@@ -64,7 +64,7 @@ namespace Kartverket.Register.Tests.Controllers
             var registerService = CreateRegisterServiceMock();
             registerService.Setup(r => r.GetRegister(null, null));
 
-            var controller = new RegistersController(null, null, null, null, null, registerService.Object, null, null, null, null, null, null);
+            var controller = new RegistersController(null, null, null, null, null, registerService.Object, null, null, null, null, null, null, null);
 
             var result = controller.Details(null, null, null, null, null, null, _filter) as ViewResult;
             result.Should().BeNull();
@@ -81,7 +81,7 @@ namespace Kartverket.Register.Tests.Controllers
 
             //var mockRequest = _mockHelper.SetupHttpContextRequestPath("~/registername");
             _mockHelper.SetupHttpContextRequestPath(_register.GetObjectUrl());
-            var controller = new RegistersController(null, null, registerItemService.Object, null, null, registerService.Object, accessControlService.Object, null, null, null, null, null);
+            var controller = new RegistersController(null, null, registerItemService.Object, null, null, registerService.Object, accessControlService.Object, null, null, null, null, null, null);
             controller.ControllerContext = new ControllerContext(_mockHelper.HttpContext.Object, new RouteData(), controller);
             var result = controller.Details(null,null, "RegisterName", null, null, null, _filter) as ViewResult;
             result.Should().NotBeNull();

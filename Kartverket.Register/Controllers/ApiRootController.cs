@@ -249,6 +249,11 @@ namespace Kartverket.Register.Controllers
                 return Ok(new GeodatalovDatasetStatusReport(statusReport));
             }
 
+            if (statusReport.IsMareanoDatasetReport())
+            {
+                return Ok(new MareanoDatasetStatusReport(statusReport));
+            }
+
             return Ok();
 
 
@@ -297,7 +302,19 @@ namespace Kartverket.Register.Controllers
                     geodatalovDatasetStatusReportApi.Add(new GeodatalovDatasetStatusReport(report));
                 }
                 return Ok(geodatalovDatasetStatusReportApi);
-            }   
+            }
+
+            else if (register.IsMareanoStatusRegister())
+            {
+                List<MareanoDatasetStatusReport> mareanoDatasetStatusReportApi = new List<MareanoDatasetStatusReport>();
+                statusReports = _statusReportService.GetMareanoStatusReports();
+
+                foreach (var report in statusReports)
+                {
+                    mareanoDatasetStatusReportApi.Add(new MareanoDatasetStatusReport(report));
+                }
+                return Ok(mareanoDatasetStatusReportApi);
+            }
 
             return Ok();
         }
@@ -625,6 +642,15 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeGeodatalovStatusregister()
         {
             new GeodatalovDatasetService(db).SynchronizeGeodatalovDatasets();
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/metadata/synchronize/mareano-statusregister")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult SynchronizeMareanoStatusregister()
+        {
+            new MareanoDatasetService(db).SynchronizeMareanoDatasets();
             return Ok();
         }
 

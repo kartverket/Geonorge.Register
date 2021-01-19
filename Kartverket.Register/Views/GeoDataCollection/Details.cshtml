@@ -73,7 +73,7 @@
         }
         @if (!string.IsNullOrEmpty(Model.ProcessHistory))
         {
-            <p><strong>@GeodataCollection.ProcessHistory: </strong><a href="@Model.ProcessHistory" target="_blank">@Model.ProcessHistory</a></p>
+            <p><a href="@Model.ProcessHistory" target="_blank">@GeodataCollection.ProcessHistory</a></p>
         }
     </article>
 </div>
@@ -119,11 +119,11 @@
                 }
                 @if (!string.IsNullOrEmpty(Model.Link))
                 {
-                    <p><strong>@GeodataCollection.Link: </strong><a href="@Model.Link" target="_blank">@Model.Link</a></p>
+                    <p><a href="@Model.Link" target="_blank">@GeodataCollection.Link</a></p>
                 }
                 @if (!string.IsNullOrEmpty(Model.OtherWebInfoAboutMappingMethodology))
                 {
-                    <p><strong>@GeodataCollection.OtherWebInfoAboutMappingMethodology: </strong><a href="@Model.OtherWebInfoAboutMappingMethodology" target="_blank">@Model.OtherWebInfoAboutMappingMethodology</a></p>
+                    <p><a href="@Model.OtherWebInfoAboutMappingMethodology" target="_blank">@GeodataCollection.OtherWebInfoAboutMappingMethodology</a></p>
                 }
             </article>
         </div>
@@ -140,7 +140,7 @@
                 }
                 @if (!string.IsNullOrEmpty(Model.LinkToRequirementsForDelivery))
                 {
-                    <p><strong>@GeodataCollection.LinkToRequirementsForDelivery: </strong><a href="@Model.LinkToRequirementsForDelivery" target="_blank">@Model.LinkToRequirementsForDelivery</a></p>
+                    <p><a href="@Model.LinkToRequirementsForDelivery" target="_blank">@GeodataCollection.LinkToRequirementsForDelivery</a></p>
                 }
             </article>
         </div>

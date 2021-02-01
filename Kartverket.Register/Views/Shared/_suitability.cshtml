@@ -54,59 +54,59 @@ else
                 </td>
                 <td></td>
                 <td class="text-center">
-                    <span class="hidden">@Model[i].RegionalPlan.Value</span>
-                    <span id="regionalPlan-@i" class="hidden" value="@Model[i].RegionalPlan.Value">@HtmlHelperExtensions.cbChecked(Model[i].RegionalPlan.HasValue)</span>
-                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Regionplan",Model[i].RegionalPlanNote)" class="custom-checkbox custom-checkbox-@Model[i].RegionalPlan">
+                    <span class="hidden">@(Model[i].RegionalPlan.HasValue ? Model[i].RegionalPlan.Value : 0)</span>
+                    <span id="regionalPlan-@i" class="hidden" value="@(Model[i].RegionalPlan.HasValue ? Model[i].RegionalPlan.Value : 0)">@HtmlHelperExtensions.cbChecked(Model[i].RegionalPlan.HasValue)</span>
+                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Regionplan",Model[i].RegionalPlanNote)" class="custom-checkbox custom-checkbox-@(Model[i].RegionalPlan.HasValue ? Model[i].RegionalPlan.Value : 0)">
                         @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].RegionalPlan" })
-                        <label for="dokMunicipalList[@i].RegionalPlan" class="checkbox-icon large">@FormatSuitability(Model[i].RegionalPlan.Value)</label>
+                        <label for="dokMunicipalList[@i].RegionalPlan" class="checkbox-icon large">@FormatSuitability(Model[i].RegionalPlan.HasValue ? Model[i].RegionalPlan.Value : 0)</label>
                     </span>
                 </td>
                 <td class="text-center">
-                    <span class="hidden">@Model[i].MunicipalSocialPlan.Value</span>
+                    <span class="hidden">@(Model[i].MunicipalSocialPlan.HasValue ? Model[i].MunicipalSocialPlan.Value : 0)</span>
                     <span id="municipalSocialPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalSocialPlan.HasValue)</span>
-                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Kommuneplanens samfunnsdel", Model[i].MunicipalSocialPlanNote)" class="custom-checkbox custom-checkbox-@Model[i].MunicipalSocialPlan">
+                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Kommuneplanens samfunnsdel", Model[i].MunicipalSocialPlanNote)" class="custom-checkbox custom-checkbox-@(Model[i].MunicipalSocialPlan.HasValue ? Model[i].MunicipalSocialPlan.Value : 0)">
                         @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].MunicipalSocialPlan" })
-                        <label for="dokMunicipalList[@i].MunicipalSocialPlan" class="checkbox-icon large">@FormatSuitability(Model[i].MunicipalSocialPlan.Value)</label>
+                        <label for="dokMunicipalList[@i].MunicipalSocialPlan" class="checkbox-icon large">@FormatSuitability(Model[i].MunicipalSocialPlan.HasValue ? Model[i].MunicipalSocialPlan.Value : 0)</label>
                     </span>
                 </td>
                 <td class="text-center">
-                    <span class="hidden">@Model[i].MunicipalLandUseElementPlan.Value</span>
+                    <span class="hidden">@(Model[i].MunicipalLandUseElementPlan.HasValue ? Model[i].MunicipalLandUseElementPlan.Value : 0)</span>
                     <span id="municipalLandUseElementPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalLandUseElementPlan.HasValue)</span>
-                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Kommuneplanens arealdel", Model[i].MunicipalLandUseElementPlanNote)" class="custom-checkbox custom-checkbox-@Model[i].MunicipalLandUseElementPlan">
+                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Kommuneplanens arealdel", Model[i].MunicipalLandUseElementPlanNote)" class="custom-checkbox custom-checkbox-@(Model[i].MunicipalLandUseElementPlan.HasValue ? Model[i].MunicipalLandUseElementPlan.Value : 0)">
                         @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalLandUseElementPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].MunicipalLandUseElementPlan" })
-                        <label for="dokMunicipalList[@i].MunicipalLandUseElementPlan" class="checkbox-icon large">@FormatSuitability(Model[i].MunicipalLandUseElementPlan.Value)</label>
+                        <label for="dokMunicipalList[@i].MunicipalLandUseElementPlan" class="checkbox-icon large">@FormatSuitability(Model[i].MunicipalLandUseElementPlan.HasValue ? Model[i].MunicipalLandUseElementPlan.Value : 0)</label>
                     </span>
                 </td>
                 <td class="text-center">
-                    <span class="hidden">@Model[i].ZoningPlan.Value</span>
+                    <span class="hidden">@(Model[i].ZoningPlan.HasValue ? Model[i].ZoningPlan.Value : 0)</span>
                     <span id="zoningPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlan.HasValue)</span>
-                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Reguleringsplan", Model[i].ZoningPlanNote)" class="custom-checkbox custom-checkbox-@Model[i].ZoningPlan">
+                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Reguleringsplan", Model[i].ZoningPlanNote)" class="custom-checkbox custom-checkbox-@(Model[i].ZoningPlan.HasValue ? Model[i].ZoningPlan.Value : 0)">
                         @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlan", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].ZoningPlan" })
-                        <label for="dokMunicipalList[@i].ZoningPlan" class="checkbox-icon large">@FormatSuitability(Model[i].ZoningPlan.Value)</label>
+                        <label for="dokMunicipalList[@i].ZoningPlan" class="checkbox-icon large">@FormatSuitability(Model[i].ZoningPlan.HasValue ? Model[i].ZoningPlan.Value : 0)</label>
                     </span>
                 </td>
                 <td class="text-center">
-                    <span class="hidden">@Model[i].BuildingMatter.Value</span>
+                    <span class="hidden">@(Model[i].BuildingMatter.HasValue ? Model[i].BuildingMatter.Value : 0)</span>
                     <span id="buildingMatter-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].BuildingMatter.HasValue)</span>
-                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Byggesak",Model[i].BuildingMatterNote)" class="custom-checkbox custom-checkbox-@Model[i].BuildingMatter">
+                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("Byggesak",Model[i].BuildingMatterNote)" class="custom-checkbox custom-checkbox-@(Model[i].BuildingMatter.HasValue ? Model[i].BuildingMatter.Value : 0)">
                         @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].BuildingMatter" })
-                        <label for="dokMunicipalList[@i].BuildingMatter" class="checkbox-icon large">@FormatSuitability(Model[i].BuildingMatter.Value)</label>
+                        <label for="dokMunicipalList[@i].BuildingMatter" class="checkbox-icon large">@FormatSuitability(Model[i].BuildingMatter.HasValue ? Model[i].BuildingMatter.Value : 0)</label>
                     </span>
                 </td>
                 <td class="text-center">
-                    <span class="hidden">@Model[i].ImpactAssessmentPlanningBuildingAct.Value</span>
+                    <span class="hidden">@(Model[i].ImpactAssessmentPlanningBuildingAct.HasValue ? Model[i].ImpactAssessmentPlanningBuildingAct.Value : 0)</span>
                     <span id="ImpactAssessmentPlanningBuildingAct-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ImpactAssessmentPlanningBuildingAct.HasValue)</span>
-                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("KU for pbl-planer", Model[i].ImpactAssessmentPlanningBuildingActNote)" class="custom-checkbox custom-checkbox-@Model[i].ImpactAssessmentPlanningBuildingAct">
+                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("KU for pbl-planer", Model[i].ImpactAssessmentPlanningBuildingActNote)" class="custom-checkbox custom-checkbox-@(Model[i].ImpactAssessmentPlanningBuildingAct.HasValue ? Model[i].ImpactAssessmentPlanningBuildingAct.Value : 0)">
                         @Html.CheckBox("dokMunicipalList[" + i + "].ImpactAssessmentPlanningBuildingAct", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].ImpactAssessmentPlanningBuildingAct" })
-                        <label for="dokMunicipalList[@i].ImpactAssessmentPlanningBuildingAct" class="checkbox-icon large">@FormatSuitability(Model[i].ImpactAssessmentPlanningBuildingAct.Value)</label>
+                        <label for="dokMunicipalList[@i].ImpactAssessmentPlanningBuildingAct" class="checkbox-icon large">@FormatSuitability(Model[i].ImpactAssessmentPlanningBuildingAct.HasValue ? Model[i].ImpactAssessmentPlanningBuildingAct.Value : 0)</label>
                     </span>
                 </td>
                 <td class="text-center">
-                    <span class="hidden">@Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct.Value</span>
+                    <span class="hidden">@(Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct.HasValue ? Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct.Value : 0)</span>
                     <span id="RiskVulnerabilityAnalysisPlanningBuildingAct-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct.HasValue)</span>
-                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("ROS for pbl-planer", Model[i].RiskVulnerabilityAnalysisPlanningBuildingActNote)" class="custom-checkbox custom-checkbox-@Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct">
+                    <span data-toggle="tooltip" data-placement="bottom" title="@FormatTitle("ROS for pbl-planer", Model[i].RiskVulnerabilityAnalysisPlanningBuildingActNote)" class="custom-checkbox custom-checkbox-@(Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct.HasValue ? Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct.Value : 0)">
                         @Html.CheckBox("dokMunicipalList[" + i + "].RiskVulnerabilityAnalysisPlanningBuildingAct", false, new { @onclick = "return false", @id = "dokMunicipalList[" + i + "].RiskVulnerabilityAnalysisPlanningBuildingAct" })
-                        <label for="dokMunicipalList[@i].RiskVulnerabilityAnalysisPlanningBuildingAct" class="checkbox-icon large">@FormatSuitability(Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct.Value)</label>
+                        <label for="dokMunicipalList[@i].RiskVulnerabilityAnalysisPlanningBuildingAct" class="checkbox-icon large">@FormatSuitability(Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct.HasValue ? Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct.Value : 0)</label>
                     </span>
                 </td>
 

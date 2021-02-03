@@ -916,7 +916,9 @@ namespace Kartverket.Register.Controllers
             {
                 string fileName = SaveFileToDisk(documentfile, documentname, registername, versionNr);
 
-                if (registername == "GML applikasjonsskjema" && System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true)
+                var schemaRemoteSynchEnabled = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true;
+
+                if (registername == "GML applikasjonsskjema" && schemaRemoteSynchEnabled)
                 {
                     string syncUrl = new SchemaSynchronizer().Synchronize(documentfile);
 
@@ -928,7 +930,8 @@ namespace Kartverket.Register.Controllers
             }
             else if (documenturl != null)
             {
-                if (registername == "GML applikasjonsskjema" && System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true)
+                var schemaRemoteSynchEnabled = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true;
+                if (registername == "GML applikasjonsskjema" && schemaRemoteSynchEnabled)
                 {
                     if(previousStatus != status)
                     { 

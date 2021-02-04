@@ -506,6 +506,9 @@ namespace Kartverket.DOK.Service
                         },
                         new PropertyIsLikeType
                             {
+                                escapeChar = "\\",
+                                singleChar = "_",
+                                wildCard = "%",
                                 PropertyName = new PropertyNameType {Text = new[] {"srv:type"}},
                                 Literal = new LiteralType {Text = new[] {"dataset"}}
                             }

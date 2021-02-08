@@ -598,7 +598,7 @@
             DokCoverageMapping
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetGeoLettRegister">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.ConvertCurrentAndVersions(System.String,System.String,System.String)">
             <summary>
             Get all Geolett
             </summary>

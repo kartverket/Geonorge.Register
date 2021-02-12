@@ -1386,6 +1386,20 @@ namespace Kartverket.Register.Services.Register
                 }
             }
             _dbContext.SaveChanges();
+
+            var mareanoDatasets = _dbContext.MareanoDatasets;
+            foreach (var mareanoDataset in mareanoDatasets)
+            {
+                dynamic metadata = GetMetadata(mareanoDataset.Uuid);
+                if (metadata != null)
+                {
+                    mareanoDataset.NameEnglish = metadata.EnglishTitle;
+                    mareanoDataset.DescriptionEnglish = metadata.EnglishAbstract;
+                    mareanoDataset.SpecificUsageEnglish = metadata.SpecificUsage;
+                }
+            }
+            _dbContext.SaveChanges();
+
         }
 
         private dynamic GetMetadata(string uuid)

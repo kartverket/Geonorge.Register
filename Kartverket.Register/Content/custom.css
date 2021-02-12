@@ -485,6 +485,10 @@ a.link-unstyled {
     background-image: url("/Content/img/re-useable.svg");
 }
 
+.custom-icon.custom-icon-smile-green {
+    background-image: url("/Content/img/smile-green.svg");
+}
+
 .custom-icon.custom-icon-smile-yellow-satisfactory {
     background-image: url("/Content/img/satisfactory.svg");
 }

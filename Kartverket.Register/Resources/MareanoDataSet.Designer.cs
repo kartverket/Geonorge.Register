@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det sjekkes om datsettet har en &quot;direkte&quot; nedlastningstjeneste (WFS eller WCS) (vekt 15).
+        ///   Looks up a localized string similar to Det sjekkes om datasettet har en &quot;direkte&quot; nedlastningstjeneste (WFS eller WCS) (vekt 15).
         /// </summary>
         public static string A1_a_Criteria {
             get {
@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det sjekkes om datsettet har en visningstjenste (WMS eller WMTS) (vekt 15).
+        ///   Looks up a localized string similar to Det sjekkes om datasettet har en visningstjeneste (WMS eller WMTS) (vekt 15).
         /// </summary>
         public static string A1_b_Criteria {
             get {
@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det sjekkes om datsett er tilgjengelig som en nedlastningstjeneste for forhåndsdefinerte geografiske områder (Atom Feed) (vekt 5).
+        ///   Looks up a localized string similar to Det sjekkes om datasett er tilgjengelig som en nedlastningstjeneste for forhåndsdefinerte geografiske områder (Atom Feed) (vekt 5).
         /// </summary>
         public static string A1_d_Criteria {
             get {
@@ -142,7 +142,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datsett skal være tilgjengelige gjennom standardiserte og åpne grensesnitt..
+        ///   Looks up a localized string similar to Datasett skal være tilgjengelige gjennom standardiserte og åpne grensesnitt..
         /// </summary>
         public static string Accesible_Description {
             get {
@@ -232,7 +232,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet og ikke lengre enn 600 tegn, da det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produkstspesifikasjoner, produktark m.m. (vekt 10).
+        ///   Looks up a localized string similar to Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet og ikke lengre enn 600 tegn, da det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produktspesifikasjoner, produktark m.m. (vekt 10).
         /// </summary>
         public static string F2_c_Criteria {
             get {
@@ -268,7 +268,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata som ligger i Geonorge er søkbare gjenom CSW-api (OGC) og DCAT-api (W3C). Dette gjør metadata søkbare gjennom standardiserte api-er både for geodatabransjen, forskningsmiljøer og &quot;open data&quot;-miljøer både nasjonalt og internasjonalt. (vekt 25).
+        ///   Looks up a localized string similar to Metadata som ligger i Geonorge er søkbare gjennom CSW-api (OGC) og DCAT-api (W3C). Dette gjør metadata søkbare gjennom standardiserte api-er både for geodatabransjen, forskningsmiljøer og &quot;open data&quot;-miljøer både nasjonalt og internasjonalt. (vekt 25).
         /// </summary>
         public static string F4_a_Criteria {
             get {
@@ -304,7 +304,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata for geodata skal etableres i henhold til metadatastandarden ISO19115. Metadata i Geonorge er basert på den nevnte strandarden. (vekt 20).
+        ///   Looks up a localized string similar to Metadata for geodata skal etableres i henhold til metadatastandarden ISO19115. Metadata i Geonorge er basert på den nevnte standarden. (vekt 20).
         /// </summary>
         public static string I1_a_Criteria {
             get {
@@ -340,7 +340,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tematisk hovedkategori må være utfylt i metadata for å kategorisere datsettet i en internasjonal kontekst (vekt 10).
+        ///   Looks up a localized string similar to Tematisk hovedkategori må være utfylt i metadata for å kategorisere datasettet i en internasjonal kontekst (vekt 10).
         /// </summary>
         public static string I2_a_Criteria {
             get {
@@ -367,7 +367,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata skal referere til begreper som er beskrevet/definert i datasettes UML-modell i Geonorges objektkatalog (vekt 10).
+        ///   Looks up a localized string similar to Metadata skal referere til begreper som er beskrevet/definert i datasett UML-modell i Geonorges objektkatalog (vekt 10).
         /// </summary>
         public static string I3_a_Criteria {
             get {

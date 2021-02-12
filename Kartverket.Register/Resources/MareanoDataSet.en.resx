@@ -151,25 +151,19 @@
     <value>Accessible</value>
   </data>
   <data name="Common" xml:space="preserve">
-    <value>Nedlastingskrav status</value>
-  </data>
-  <data name="Common1" xml:space="preserve">
-    <value>Nedlastingskrav status</value>
+    <value>Download requirements status</value>
   </data>
   <data name="Delivery_Statusdeficient" xml:space="preserve">
     <value>Bad</value>
   </data>
   <data name="Delivery_Status_Deficient" xml:space="preserve">
-    <value>Dårlig</value>
+    <value>Bad</value>
   </data>
   <data name="Delivery_Status_Satisfactory" xml:space="preserve">
-    <value>Tilfredsstillende</value>
+    <value>Satisfactory</value>
   </data>
   <data name="Delivery_Status_Useable" xml:space="preserve">
     <value>Useable</value>
-  </data>
-  <data name="Delivery_Status_Useable1" xml:space="preserve">
-    <value>Bør forbedres</value>
   </data>
   <data name="F1_a_Criteria" xml:space="preserve">
     <value>It is checked that there is metadata in Geonorge. (All metadata in Geonorge have persistent and unique identifiers and are searchable on the web). The request returns metadata in a standardized form. (weight 25)</value>

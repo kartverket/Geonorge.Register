@@ -7,15 +7,15 @@
 }
 @helper DisplayText(string s, bool replaceParagraph = false)
 {
-var pipeline = new MarkdownPipelineBuilder()
-                  .UseSoftlineBreakAsHardlineBreak()
-                  .Build();
-s = Markdown.ToHtml(s, pipeline);
-if (replaceParagraph)
-{
-    s = s.Replace("<p>", String.Empty).Replace("</p>", String.Empty);
-}
-@(new HtmlString(s))
+    var pipeline = new MarkdownPipelineBuilder()
+                      .UseSoftlineBreakAsHardlineBreak()
+                      .Build();
+    s = Markdown.ToHtml(s, pipeline);
+    if (replaceParagraph)
+    {
+        s = s.Replace("<p>", String.Empty).Replace("</p>", String.Empty);
+    }
+    @(new HtmlString(s))
 
 }
 @section breadcrumb {
@@ -35,10 +35,25 @@ if (replaceParagraph)
 <div class="row">
     <article class="col-md-12">
         <h3>@GeodataCollection.SystemCollecting</h3>
-            @if (!string.IsNullOrEmpty(Model.ThumbnailFileName))
-            {<p style="float: right">
-                <a href="/data/img/@Model.ImageFileName" target="_blank"><img src="/data/img/@Model.ThumbnailFileName" /></a>
-             </p>    
+        @if (!string.IsNullOrEmpty(Model.ThumbnailFileName))
+        {<p style="float: right">
+                <img class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal" style="cursor: pointer;" src="/data/img/@Model.ThumbnailFileName" />
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="img" style="display: none; position: fixed; padding-top: 0px; left: 0; top: 0; width: 100%; height: 100%; overflow: auto;">
+                    <div class="modal-dialog" style="width: 100%; height: 100%; margin: 0; padding: 0;">
+                        <!-- Modal content-->
+                        <div class="modal-content" style="height: auto; min-height: 100%; border-radius: 0;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                            </div>
+                            <div class="modal-body">
+                                <img src="/data/img/@Model.ImageFileName" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p>
         }
         <p><strong>@GeodataCollection.Title: </strong>@Model.Title</p>
         <p><strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle</p>
@@ -47,65 +62,6 @@ if (replaceParagraph)
         {
             <p><strong>@GeodataCollection.OtherOrganizationsInvolved: </strong>@Model.OtherOrganizationsInvolved</p>
         }
-    </article>
-</div>
-
-<div class="row">
-    <article class="col-md-12">
-        <h3>@GeodataCollection.Links</h3>
-        @if (!string.IsNullOrEmpty(Model.LinkToMapSolution))
-        {
-            <p><strong>@GeodataCollection.LinkToMapSolution: </strong><a href="@Model.LinkToMapSolution" target="_blank">@Model.LinkToMapSolution</a></p>
-        }
-        @if (!string.IsNullOrEmpty(Model.LinkInfoPage))
-        {
-            <p><strong>@GeodataCollection.LinkInfoPage: </strong><a href="@Model.LinkInfoPage" target="_blank">@Model.LinkInfoPage</a></p>
-        }
-        @if (!string.IsNullOrEmpty(Model.LinkOtherInfo))
-        {
-            <p><strong>@GeodataCollection.LinkOtherInfo: </strong><a href="@Model.LinkOtherInfo" target="_blank">@Model.LinkOtherInfo</a></p>
-        }
-        @if (!string.IsNullOrEmpty(Model.DatasetLink))
-        {
-            <p><strong>@GeodataCollection.DatasetLink: </strong><a href="@Model.DatasetLink" target="_blank">@Model.DatasetLink</a></p>
-        }
-
-        @if (!string.IsNullOrEmpty(Model.MethodologyDocumentLink))
-        {
-            <p><strong>@GeodataCollection.MethodologyDocumentLink: </strong><a href="@Model.MethodologyDocumentLink" target="_blank">@Model.MethodologyDocumentLink</a></p>
-        }
-        @if (!string.IsNullOrEmpty(Model.MethodologyLinkWebPage))
-        {
-            <p><strong>@GeodataCollection.MethodologyLinkWebPage: </strong><a href="@Model.MethodologyLinkWebPage" target="_blank">@Model.MethodologyLinkWebPage</a></p>
-        }
-
-        @if (!string.IsNullOrEmpty(Model.SupportSchemes))
-        {
-            <p><strong>@GeodataCollection.SupportSchemes: </strong>@DisplayText(Model.SupportSchemes)</p>
-        }
-    </article>
-</div>
-
-<div class="row">
-    <article class="col-md-12">
-        <h3>@GeodataCollection.MappingMethodology</h3>
-        @if (!string.IsNullOrEmpty(Model.MethodForMappingShort))
-        {
-            <p><strong>@GeodataCollection.MethodForMappingShort: </strong>@Model.MethodForMappingShort</p>
-        }
-        @if (!string.IsNullOrEmpty(Model.Link))
-        {
-            <p><strong>@GeodataCollection.Link: </strong><a href="@Model.Link" target="_blank">@Model.Link</a></p>
-        }
-        @if (!string.IsNullOrEmpty(Model.OtherWebInfoAboutMappingMethodology))
-        {
-            <p><strong>@GeodataCollection.OtherWebInfoAboutMappingMethodology: </strong><a href="@Model.OtherWebInfoAboutMappingMethodology" target="_blank">@Model.OtherWebInfoAboutMappingMethodology</a></p>
-        }
-    </article>
-</div>
-
-<div class="row">
-    <article class="col-md-12">
         <h3>@GeodataCollection.DeliverySolution</h3>
         @if (!string.IsNullOrEmpty(Model.Purpose))
         {
@@ -117,58 +73,108 @@ if (replaceParagraph)
         }
         @if (!string.IsNullOrEmpty(Model.ProcessHistory))
         {
-            <p><strong>@GeodataCollection.ProcessHistory: </strong><a href="@Model.ProcessHistory" target="_blank">@Model.ProcessHistory</a></p>
+            <p><a href="@Model.ProcessHistory" target="_blank">@GeodataCollection.ProcessHistory</a></p>
         }
     </article>
 </div>
-<div class="row">
-    <article class="col-md-12">
-        <h3>@GeodataCollection.Requirements</h3>
-        @if (!string.IsNullOrEmpty(Model.MappingRequirements))
-        {
-            <p><strong>@GeodataCollection.MappingRequirements: </strong>@DisplayText(Model.MappingRequirements)</p>
-        }
-        @if (!string.IsNullOrEmpty(Model.RegistrationRequirements))
-        {
-            <p><strong>@GeodataCollection.RegistrationRequirements: </strong>@DisplayText(Model.RegistrationRequirements)</p>
-        }
-        @if (!string.IsNullOrEmpty(Model.LinkToRequirementsForDelivery))
-        {
-            <p><strong>@GeodataCollection.LinkToRequirementsForDelivery: </strong><a href="@Model.LinkToRequirementsForDelivery" target="_blank">@Model.LinkToRequirementsForDelivery</a></p>
-        }
-    </article>
-</div>
-<div class="row">
-    <article class="col-md-12">
-        <h3>@GeodataCollection.ContactInformation</h3>
-        @if (!string.IsNullOrEmpty(Model.OrganizationInfo))
-        {
-            <p><strong>@GeodataCollection.OrganizationInfo: </strong>@Model.OrganizationInfo</p>
-        }
-        @if (!string.IsNullOrEmpty(Model.ContactEmail))
-        {
-            <p><strong>@GeodataCollection.ContactEmail: </strong><a href="mailto:@Model.ContactEmail" target="_blank">@Model.ContactEmail</a></p>
-        }
-        @if (!string.IsNullOrEmpty(Model.Mapper))
-        {
-            <p><strong>@GeodataCollection.Mapper: </strong>@Model.Mapper</p>
-        }
-        @if (!string.IsNullOrEmpty(Model.DataOwner))
-        {
-            <p><strong>@GeodataCollection.DataOwner: </strong>@Model.DataOwner</p>
-        }
-        @if (!string.IsNullOrEmpty(Model.Distributor))
-        {
-            <p><strong>@GeodataCollection.Distributor: </strong>@Model.Distributor</p>
-        }
-    </article>
-</div>
-<div class="hidden-print">
-    <hr />
-    @if (User.Identity.IsAuthenticated && User.IsInRole(GeonorgeRoles.MetadataAdmin))
-    {
-        <a href="/@GeodataCollection.RegisterSeoName/edit?id=@Model.systemId" class="btn btn-default btn-space pull-right">@Shared.Edit</a>
-        <a href="/@GeodataCollection.RegisterSeoName/delete?id=@Model.systemId" class="btn btn-default btn-space pull-right">@Shared.Delete</a>
-    }
-    <a href="/@GeodataCollection.RegisterSeoName">@Shared.Back</a>
-</div>
+        <div class="row">
+            <article class="col-md-12">
+                <h3>@GeodataCollection.Links</h3>
+                <ul>
+                    @if (!string.IsNullOrEmpty(Model.LinkToMapSolution))
+                    {
+                        <li><a href="@Model.LinkToMapSolution" target="_blank">@GeodataCollection.LinkToMapSolution</a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.LinkInfoPage))
+                    {
+                        <li><a href="@Model.LinkInfoPage" target="_blank">@GeodataCollection.LinkInfoPage</a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.LinkOtherInfo))
+                    {
+                        <li>
+                            <a href="@Model.LinkOtherInfo" target="_blank">@GeodataCollection.LinkOtherInfo</a>
+                        </li>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.DatasetLink))
+                    {
+                        <li>
+                            <a href="@Model.DatasetLink" target="_blank">@GeodataCollection.DatasetLink</a>
+                        </li>
+                    }
+                </ul>
+                    @if (!string.IsNullOrEmpty(Model.SupportSchemes))
+                    {
+                        <p><strong>@GeodataCollection.SupportSchemes: </strong>@DisplayText(Model.SupportSchemes)</p>
+                    }
+
+            </article>
+        </div>
+
+        <div class="row">
+            <article class="col-md-12">
+                <h3>@GeodataCollection.MappingMethodology</h3>
+                @if (!string.IsNullOrEmpty(Model.MethodForMappingShort))
+                {
+                    <p><strong>@GeodataCollection.MethodForMappingShort: </strong>@Model.MethodForMappingShort</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.Link))
+                {
+                    <p><a href="@Model.Link" target="_blank">@GeodataCollection.Link</a></p>
+                }
+                @if (!string.IsNullOrEmpty(Model.OtherWebInfoAboutMappingMethodology))
+                {
+                    <p><a href="@Model.OtherWebInfoAboutMappingMethodology" target="_blank">@GeodataCollection.OtherWebInfoAboutMappingMethodology</a></p>
+                }
+            </article>
+        </div>
+        <div class="row">
+            <article class="col-md-12">
+                <h3>@GeodataCollection.Requirements</h3>
+                @if (!string.IsNullOrEmpty(Model.MappingRequirements))
+                {
+                    <p><strong>@GeodataCollection.MappingRequirements: </strong>@DisplayText(Model.MappingRequirements)</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.RegistrationRequirements))
+                {
+                    <p><strong>@GeodataCollection.RegistrationRequirements: </strong>@DisplayText(Model.RegistrationRequirements)</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.LinkToRequirementsForDelivery))
+                {
+                    <p><a href="@Model.LinkToRequirementsForDelivery" target="_blank">@GeodataCollection.LinkToRequirementsForDelivery</a></p>
+                }
+            </article>
+        </div>
+        <div class="row">
+            <article class="col-md-12">
+                <h3>@GeodataCollection.ContactInformation</h3>
+                @if (!string.IsNullOrEmpty(Model.OrganizationInfo))
+                {
+                    <p><strong>@GeodataCollection.OrganizationInfo: </strong>@Model.OrganizationInfo</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.ContactEmail))
+                {
+                    <p><strong>@GeodataCollection.ContactEmail: </strong><a href="mailto:@Model.ContactEmail" target="_blank">@Model.ContactEmail</a></p>
+                }
+                @if (!string.IsNullOrEmpty(Model.Mapper))
+                {
+                    <p><strong>@GeodataCollection.Mapper: </strong>@Model.Mapper</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.DataOwner))
+                {
+                    <p><strong>@GeodataCollection.DataOwner: </strong>@Model.DataOwner</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.Distributor))
+                {
+                    <p><strong>@GeodataCollection.Distributor: </strong>@Model.Distributor</p>
+                }
+            </article>
+        </div>
+        <div class="hidden-print">
+            <hr />
+            @if (User.Identity.IsAuthenticated && User.IsInRole(GeonorgeRoles.MetadataAdmin))
+            {
+                <a href="/@GeodataCollection.RegisterSeoName/edit?id=@Model.systemId" class="btn btn-default btn-space pull-right">@Shared.Edit</a>
+                <a href="/@GeodataCollection.RegisterSeoName/delete?id=@Model.systemId" class="btn btn-default btn-space pull-right">@Shared.Delete</a>
+            }
+            <a href="/@GeodataCollection.RegisterSeoName">@Shared.Back</a>
+        </div>

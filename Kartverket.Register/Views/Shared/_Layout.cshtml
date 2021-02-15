@@ -42,10 +42,17 @@
 </head>
 
 <body class="geonorge-container prototype  geonorge">
+    <main-navigation environment="@Html.EnvironmentName()" signinurl="@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url }))" 
+                     signouturl="@Html.Raw(Url.Action("SignOut", "Home"))" 
+                     isLoggedIn="@Request.IsAuthenticated.ToString().ToLower()" 
+                     norwegianurl="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))"
+                     englishurl="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url }))"
+                     language="@CultureHelper.GetCurrentCulture()">
 
+    </main-navigation>
     <div id="loading-animation" class="loading-animation" style="display: none;"></div>
 
-    @Html.Raw(File.ReadAllText(Server.MapPath("~/dist/partials/Header.html")))
+    @*@Html.Raw(File.ReadAllText(Server.MapPath("~/dist/partials/Header.html")))*@
     @Styles.Render("~/shared-partials-styles")
     @Styles.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles")
     @Styles.Render("~/Content/local-styles")
@@ -124,10 +131,10 @@
             }
 
             $datepickerElement.datepicker({
-                    dateFormat: "dd/mm/yy",
-                    changeYear: true,
-                    showOn: "button"
-                }).css("display", "inline-block")
+                dateFormat: "dd/mm/yy",
+                changeYear: true,
+                showOn: "button"
+            }).css("display", "inline-block")
                 .next("button").button({
                     icons: { primary: "ui-icon-calendar" },
                     label: "Velg dato",
@@ -152,5 +159,6 @@
             <!-- @role.Value-->
         }
     }
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.1.32/MainNavigation.js")"></script>
 </body>
 </html>

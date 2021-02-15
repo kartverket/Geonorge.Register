@@ -121,7 +121,7 @@
     <value>Tilgjengelighet (Accessible)</value>
   </data>
   <data name="Accesible_Description" xml:space="preserve">
-    <value>Datsett skal være tilgjengelige gjennom standardiserte og åpne grensesnitt.</value>
+    <value>Datasett skal være tilgjengelige gjennom standardiserte og åpne grensesnitt.</value>
   </data>
   <data name="Common" xml:space="preserve">
     <value>Nedlastingskrav status</value>
@@ -142,7 +142,7 @@
     <value>Tittel bør maksimalt være på 100 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5)</value>
   </data>
   <data name="F2_c_Criteria" xml:space="preserve">
-    <value>Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet og ikke lengre enn 600 tegn, da det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produkstspesifikasjoner, produktark m.m. (vekt 10)</value>
+    <value>Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet og ikke lengre enn 600 tegn, da det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produktspesifikasjoner, produktark m.m. (vekt 10)</value>
   </data>
   <data name="F2_Label" xml:space="preserve">
     <value>F2: Det skal finnes gode søkemetadata</value>
@@ -154,7 +154,7 @@
     <value>F3: Metadata har datasett-id</value>
   </data>
   <data name="F4_a_Criteria" xml:space="preserve">
-    <value>Metadata som ligger i Geonorge er søkbare gjenom CSW-api (OGC) og DCAT-api (W3C). Dette gjør metadata søkbare gjennom standardiserte api-er både for geodatabransjen, forskningsmiljøer og "open data"-miljøer både nasjonalt og internasjonalt. (vekt 25)</value>
+    <value>Metadata som ligger i Geonorge er søkbare gjennom CSW-api (OGC) og DCAT-api (W3C). Dette gjør metadata søkbare gjennom standardiserte api-er både for geodatabransjen, forskningsmiljøer og "open data"-miljøer både nasjonalt og internasjonalt. (vekt 25)</value>
   </data>
   <data name="F4_Label" xml:space="preserve">
     <value>F4: Metadata skal være søkbare gjennom åpne og standardiserte api-er</value>
@@ -178,19 +178,19 @@
     <value> For å optimalisere gjenbruk av data bør datasett beskrives godt slik at de kan tas i bruk i andre brukerløsninger.</value>
   </data>
   <data name="A1_a_Criteria" xml:space="preserve">
-    <value>Det sjekkes om datsettet har en "direkte" nedlastningstjeneste (WFS eller WCS) (vekt 15)</value>
+    <value>Det sjekkes om datasettet har en "direkte" nedlastningstjeneste (WFS eller WCS) (vekt 15)</value>
   </data>
   <data name="A1_Label" xml:space="preserve">
     <value>A1: Datasett er tilgjengelige gjennom standard web-protokoller</value>
   </data>
   <data name="A1_b_Criteria" xml:space="preserve">
-    <value>Det sjekkes om datsettet har en visningstjenste (WMS eller WMTS) (vekt 15)</value>
+    <value>Det sjekkes om datasettet har en visningstjeneste (WMS eller WMTS) (vekt 15)</value>
   </data>
   <data name="A1_c_Criteria" xml:space="preserve">
     <value>Det sjekkes om datasettet er tilgjengelig gjennom "Geonorge nedlastnings-api" (vekt 15)</value>
   </data>
   <data name="A1_d_Criteria" xml:space="preserve">
-    <value>Det sjekkes om datsett er tilgjengelig som en nedlastningstjeneste for forhåndsdefinerte geografiske områder (Atom Feed) (vekt 5)</value>
+    <value>Det sjekkes om datasett er tilgjengelig som en nedlastningstjeneste for forhåndsdefinerte geografiske områder (Atom Feed) (vekt 5)</value>
   </data>
   <data name="A1_e_Criteria" xml:space="preserve">
     <value>Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons (vekt 40)</value>
@@ -205,7 +205,7 @@
     <value>A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig</value>
   </data>
   <data name="I1_a_Criteria" xml:space="preserve">
-    <value>Metadata for geodata skal etableres i henhold til metadatastandarden ISO19115. Metadata i Geonorge er basert på den nevnte strandarden. (vekt 20)</value>
+    <value>Metadata for geodata skal etableres i henhold til metadatastandarden ISO19115. Metadata i Geonorge er basert på den nevnte standarden. (vekt 20)</value>
   </data>
   <data name="I1_b_Criteria" xml:space="preserve">
     <value>Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata (vekt 10)</value>
@@ -217,7 +217,7 @@
     <value>I1: Metadata og datasett er representert gjennom internasjonale, godt dokumenterte og tilgjengelige standarder.</value>
   </data>
   <data name="I2_a_Criteria" xml:space="preserve">
-    <value>Tematisk hovedkategori må være utfylt i metadata for å kategorisere datsettet i en internasjonal kontekst (vekt 10)</value>
+    <value>Tematisk hovedkategori må være utfylt i metadata for å kategorisere datasettet i en internasjonal kontekst (vekt 10)</value>
   </data>
   <data name="I2_b_Criteria" xml:space="preserve">
     <value>Nasjonal temakategori må være utfylt  i metadata for å kategorisere datasettet i en nasjonal kontekst (vekt 10)</value>
@@ -226,7 +226,7 @@
     <value>I2: Metadata og datasett skal benytte vokabularer, kodeverk og referere til oppslagsbare ressurser på nett som forvaltes med unike identifikatorer</value>
   </data>
   <data name="I3_a_Criteria" xml:space="preserve">
-    <value>Metadata skal referere til begreper som er beskrevet/definert i datasettes UML-modell i Geonorges objektkatalog (vekt 10)</value>
+    <value>Metadata skal referere til begreper som er beskrevet/definert i datasett UML-modell i Geonorges objektkatalog (vekt 10)</value>
   </data>
   <data name="I3_b_Criteria" xml:space="preserve">
     <value>Datasettet skal modelleres i UML og metadataene skal referere til UML-modellen i Geonorges objektkatalog (vekt 20)</value>

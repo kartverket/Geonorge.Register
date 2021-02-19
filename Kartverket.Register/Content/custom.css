@@ -7,6 +7,24 @@
     src: url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.woff2") format("woff2"), url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.woff") format("woff"), url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.ttf") format("truetype"), url("../Content/bower_components/kartverket-felleskomponenter/assets/fonts/fontawesome-webfont.svg#fontawesome") format("svg");
 }
 
+.fixed-menu-margin {
+    margin-top: 140px;
+}
+@media (min-width: 360px) {
+    .fixed-menu-margin {
+        margin-top: 103px;
+    }
+}
+@media (min-width: 600px) {
+    .fixed-menu-margin {
+        margin-top: 62px;
+    }
+}
+
+.container-breadcrumbs {
+    display: block!important;
+}
+
 .fa {
     font-family: FontAwesome;
 }

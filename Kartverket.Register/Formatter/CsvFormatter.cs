@@ -1214,7 +1214,7 @@ namespace Kartverket.Register.Formatter
             }
             if (containedItemClass == "Organization")
             {
-                return Organizations.Organization_Name + ";" + Organizations.Organization_Number + ";" + Organizations.MunicipalityCode + ";" + Organizations.GeographicCenterX + ";" + Organizations.GeographicCenterY + ";" + Organizations.BoundingBoxNorth + ";" + Organizations.BoundingBoxSouth + ";" + Organizations.BoundingBoxWest + ";" + Organizations.BoundingBoxEast + ";" + Organizations.Member;
+                return Organizations.Organization_Name + ";" + Organizations.Organization_Number + ";" + Organizations.MunicipalityCode + ";" + Organizations.GeographicCenterX + ";" + Organizations.GeographicCenterY + ";" + Organizations.BoundingBoxNorth + ";" + Organizations.BoundingBoxWest + ";" + Organizations.BoundingBoxSouth + ";" + Organizations.BoundingBoxEast + ";" + Organizations.Member;
             }
             if (containedItemClass == "NameSpace")
             {

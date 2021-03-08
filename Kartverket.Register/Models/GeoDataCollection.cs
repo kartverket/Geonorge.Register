@@ -23,6 +23,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "Organization", ResourceType = typeof(GeodataCollection))]
         public Organization Organization { get; set; }
 
+        [Display(Name = "Responsible", ResourceType = typeof(GeodataCollection))]
+        public Organization Responsible { get; set; }
+
         [Display(Name = "DatasetTitle", ResourceType = typeof(GeodataCollection))]
         public string DatasetTitle { get; set; }
         [Display(Name = "DatasetLink", ResourceType = typeof(GeodataCollection))]

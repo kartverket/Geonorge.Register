@@ -222,4 +222,7 @@
   <data name="Image" xml:space="preserve">
     <value>Bilde</value>
   </data>
+  <data name="Responsible" xml:space="preserve">
+    <value>Mottaks-ansvarlig</value>
+  </data>
 </root>

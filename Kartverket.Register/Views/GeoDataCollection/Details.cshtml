@@ -62,6 +62,10 @@
         {
             <p><strong>@GeodataCollection.OtherOrganizationsInvolved: </strong>@Model.OtherOrganizationsInvolved</p>
         }
+        @if (Model.Responsible != null)
+        {
+            <p><strong>@GeodataCollection.Responsible: </strong>@Model.Responsible.NameTranslated()</p>
+        }
         <h3>@GeodataCollection.DeliverySolution</h3>
         @if (!string.IsNullOrEmpty(Model.Purpose))
         {

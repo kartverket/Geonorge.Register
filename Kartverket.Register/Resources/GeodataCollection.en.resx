@@ -219,4 +219,7 @@
   <data name="Image" xml:space="preserve">
     <value>Image</value>
   </data>
+  <data name="Responsible" xml:space="preserve">
+    <value>Responsible</value>
+  </data>
 </root>

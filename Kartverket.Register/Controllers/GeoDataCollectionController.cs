@@ -36,7 +36,7 @@ namespace Kartverket.Register.Controllers
         // GET: GeoDataCollection/Details/5
         public ActionResult Details(string itemname)
         {
-            return View(_dbContext.GeoDataCollections.Include("Organization").Where(o => o.SeoName == itemname).FirstOrDefault());
+            return View(_dbContext.GeoDataCollections.Include("Organization").Include("Responsible").Where(o => o.SeoName == itemname).FirstOrDefault());
         }
 
         // GET: GeoDataCollection/Create
@@ -76,13 +76,15 @@ namespace Kartverket.Register.Controllers
         {
             var collection = _dbContext.GeoDataCollections.Where(o => o.systemId.ToString() == id).FirstOrDefault();
             ViewBag.ownerId = new SelectList(_dbContext.Organizations.ToList().Select(s => new { s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", collection.Organization.systemId);
+            ViewBag.responsibleId = new SelectList(_dbContext.Organizations.ToList().Select(s => new { s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", collection.Responsible != null ? collection.Responsible.systemId : collection.Organization.systemId);
+
             return View(collection);
         }
 
         // POST: GeoDataCollection/Edit/5
         [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
         [HttpPost]
-        public ActionResult Edit(string systemId, string ownerId, GeoDataCollection collection, HttpPostedFileBase imagefile)
+        public ActionResult Edit(string systemId, string ownerId, string responsibleId, GeoDataCollection collection, HttpPostedFileBase imagefile)
         {
             try
             {
@@ -117,6 +119,10 @@ namespace Kartverket.Register.Controllers
 
                 var org = _dbContext.Organizations.Where(o => o.systemId.ToString() == ownerId).FirstOrDefault();
                 geodataCollection.Organization = org;
+
+                var responsible = _dbContext.Organizations.Where(o => o.systemId.ToString() == responsibleId).FirstOrDefault();
+                if(responsible != null)
+                    geodataCollection.Responsible = responsible;
 
                 if (imagefile != null && imagefile.ContentLength > 0)
                 {

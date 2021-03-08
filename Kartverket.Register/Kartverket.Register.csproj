@@ -1105,6 +1105,10 @@
     <Compile Include="Migrations\202012041100249_AddImage.designer.cs">
       <DependentUpon>202012041100249_AddImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103080901240_AddResponsibleGeoDataCollection.cs" />
+    <Compile Include="Migrations\202103080901240_AddResponsibleGeoDataCollection.designer.cs">
+      <DependentUpon>202103080901240_AddResponsibleGeoDataCollection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2996,6 +3000,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012041100249_AddImage.resx">
       <DependentUpon>202012041100249_AddImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103080901240_AddResponsibleGeoDataCollection.resx">
+      <DependentUpon>202103080901240_AddResponsibleGeoDataCollection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

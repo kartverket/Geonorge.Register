@@ -349,6 +349,15 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mottaks-ansvarlig.
+        /// </summary>
+        public static string Responsible {
+            get {
+                return ResourceManager.GetString("Responsible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Støtteordninger.
         /// </summary>
         public static string SupportSchemes {

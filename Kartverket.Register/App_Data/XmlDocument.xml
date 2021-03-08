@@ -1404,6 +1404,11 @@
               Looks up a localized string similar to Krav.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Responsible">
+            <summary>
+              Looks up a localized string similar to Mottaks-ansvarlig.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.SupportSchemes">
             <summary>
               Looks up a localized string similar to Støtteordninger.

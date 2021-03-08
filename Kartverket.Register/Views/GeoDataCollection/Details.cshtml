@@ -105,6 +105,12 @@
                             <a href="@Model.DatasetLink" target="_blank">@GeodataCollection.DatasetLink</a>
                         </li>
                     }
+                    @if (!string.IsNullOrEmpty(Model.MappingRequirementsLink))
+                    {
+                        <li>
+                            <a href="@Model.MappingRequirementsLink" target="_blank">@GeodataCollection.MappingRequirementsLink</a>
+                        </li>
+                    }
                 </ul>
                     @if (!string.IsNullOrEmpty(Model.SupportSchemes))
                     {

@@ -1329,6 +1329,11 @@
               Looks up a localized string similar to Krav til kartlegging.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.MappingRequirementsLink">
+            <summary>
+              Looks up a localized string similar to Krav til kartlegging.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MethodForMappingShort">
             <summary>
               Looks up a localized string similar to Metode for kartlegging -kort.

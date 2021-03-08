@@ -219,8 +219,14 @@
   <data name="Image" xml:space="preserve">
     <value>Image</value>
   </data>
+  <data name="AidAndSubsidies" xml:space="preserve">
+    <value>Aid and subsidies</value>
+  </data>
   <data name="MappingRequirementsLink" xml:space="preserve">
     <value>Mapping requirements link</value>
+  </data>
+  <data name="OtherInformation" xml:space="preserve">
+    <value>Other information</value>
   </data>
   <data name="Responsible" xml:space="preserve">
     <value>Responsible</value>

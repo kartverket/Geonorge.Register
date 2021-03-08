@@ -1113,6 +1113,10 @@
     <Compile Include="Migrations\202103080942488_AddMappingRequirementsLinkGeoDataCollection.designer.cs">
       <DependentUpon>202103080942488_AddMappingRequirementsLinkGeoDataCollection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103081035147_AddAidAndSubsidiesGeoDataCollection.cs" />
+    <Compile Include="Migrations\202103081035147_AddAidAndSubsidiesGeoDataCollection.designer.cs">
+      <DependentUpon>202103081035147_AddAidAndSubsidiesGeoDataCollection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3010,6 +3014,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103080942488_AddMappingRequirementsLinkGeoDataCollection.resx">
       <DependentUpon>202103080942488_AddMappingRequirementsLinkGeoDataCollection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103081035147_AddAidAndSubsidiesGeoDataCollection.resx">
+      <DependentUpon>202103081035147_AddAidAndSubsidiesGeoDataCollection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

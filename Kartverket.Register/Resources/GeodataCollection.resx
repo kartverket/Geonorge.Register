@@ -222,8 +222,14 @@
   <data name="Image" xml:space="preserve">
     <value>Bilde</value>
   </data>
+  <data name="AidAndSubsidies" xml:space="preserve">
+    <value>Bistand og støtteordninger</value>
+  </data>
   <data name="MappingRequirementsLink" xml:space="preserve">
     <value>Krav til kartlegging</value>
+  </data>
+  <data name="OtherInformation" xml:space="preserve">
+    <value>Annen informasjon</value>
   </data>
   <data name="Responsible" xml:space="preserve">
     <value>Mottaks-ansvarlig</value>

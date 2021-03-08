@@ -59,6 +59,11 @@ namespace Kartverket.Register.Models
         public string LinkToMapSolution { get; set; }
         [Display(Name = "LinkInfoPage", ResourceType = typeof(GeodataCollection))]
         public string LinkInfoPage { get; set; }
+
+        [Display(Name = "AidAndSubsidies", ResourceType = typeof(GeodataCollection))]
+        public string AidAndSubsidies { get; set; }
+        
+
         [Display(Name = "LinkOtherInfo", ResourceType = typeof(GeodataCollection))]
         public string LinkOtherInfo { get; set; }
         [Display(Name = "MethodForMappingShort", ResourceType = typeof(GeodataCollection))]

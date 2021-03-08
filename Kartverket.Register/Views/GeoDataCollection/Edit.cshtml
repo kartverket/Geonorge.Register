@@ -228,6 +228,43 @@
             @Html.ValidationMessageFor(model => model.LinkOtherInfo, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.OtherInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.OtherInfo)
+            @Html.ValidationMessageFor(model => model.OtherInfo, "", new { @class = "text-danger" })
+            <div id="editorOtherInfo"></div>
+            <script>
+
+                let hiddenBodyMarkdownOtherInfo = document.querySelector("#OtherInfo");
+                let onEditorUpdateOtherInfo = () => {
+                    hiddenBodyMarkdownOtherInfo.value = editorOtherInfo.getMarkdown();
+                                }
+
+                var contentOtherInfo = [
+                                @{
+                                    string[] OtherInfoLines = new string[] { };
+                                    if (Model.OtherInfo != null) {
+                                        OtherInfoLines = Model.OtherInfo.Split('\n');
+                                    }
+                                    foreach (var comment in OtherInfoLines)
+                                    {
+                                        @:'@comment.Replace("\r","")',
+                                    }
+                                }
+                                ].join('\n');
+                const editorOtherInfo = new toastui.Editor({
+                    el: document.querySelector('#editorOtherInfo'),
+                                    height: '150px',
+                    events: { "change": onEditorUpdateOtherInfo },
+                    initialValue: contentOtherInfo,
+                                    initialEditType: 'wysiwyg'
+                                });
+            </script>
+        </div>
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(model => model.DatasetLink, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">

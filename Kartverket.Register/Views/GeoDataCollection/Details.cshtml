@@ -161,6 +161,10 @@
                 {
                     <p><strong>@GeodataCollection.AidAndSubsidies: </strong>@DisplayText(Model.AidAndSubsidies)</p>
                 }
+                @if (!string.IsNullOrEmpty(Model.OtherInfo))
+                {
+                    <p><strong>@GeodataCollection.OtherInfo: </strong>@DisplayText(Model.OtherInfo)</p>
+                }
             </article>
         </div>
         <div class="row">

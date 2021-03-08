@@ -286,6 +286,15 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Annen info.
+        /// </summary>
+        public static string OtherInfo {
+            get {
+                return ResourceManager.GetString("OtherInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Annen informasjon.
         /// </summary>
         public static string OtherInformation {

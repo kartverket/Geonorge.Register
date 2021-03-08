@@ -225,6 +225,9 @@
   <data name="MappingRequirementsLink" xml:space="preserve">
     <value>Mapping requirements link</value>
   </data>
+  <data name="OtherInfo" xml:space="preserve">
+    <value>Other info</value>
+  </data>
   <data name="OtherInformation" xml:space="preserve">
     <value>Other information</value>
   </data>

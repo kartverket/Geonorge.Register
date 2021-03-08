@@ -62,7 +62,9 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "AidAndSubsidies", ResourceType = typeof(GeodataCollection))]
         public string AidAndSubsidies { get; set; }
-        
+
+        [Display(Name = "OtherInfo", ResourceType = typeof(GeodataCollection))]
+        public string OtherInfo { get; set; }
 
         [Display(Name = "LinkOtherInfo", ResourceType = typeof(GeodataCollection))]
         public string LinkOtherInfo { get; set; }

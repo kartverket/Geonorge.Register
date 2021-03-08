@@ -228,6 +228,9 @@
   <data name="MappingRequirementsLink" xml:space="preserve">
     <value>Krav til kartlegging</value>
   </data>
+  <data name="OtherInfo" xml:space="preserve">
+    <value>Annen info</value>
+  </data>
   <data name="OtherInformation" xml:space="preserve">
     <value>Annen informasjon</value>
   </data>

@@ -187,10 +187,10 @@
     <value>Mottaksordning formål</value>
   </data>
   <data name="RegisterDescription" xml:space="preserve">
-    <value>Inneholder informasjon og lenke til mottaksordninger for innsamling av Geodata</value>
+    <value>Inneholder informasjon om og lenker til kartleggingsmetodikk, krav til data og hvordan du kan avlevere data til mottaksordninger for geografiske data. Kommuner, konsulenter og profesjonelle kartleggingsfirma får her en samlet oversikt.</value>
   </data>
   <data name="RegisterName" xml:space="preserve">
-    <value>Mottaksordninger for innsamling av Geodata</value>
+    <value>Mottaksordninger for innsamling av geodata</value>
   </data>
   <data name="RegisterSeoName" xml:space="preserve">
     <value>mottaksordning-innsamling-geodata</value>

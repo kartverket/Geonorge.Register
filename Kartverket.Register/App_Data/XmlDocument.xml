@@ -1381,12 +1381,12 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.RegisterDescription">
             <summary>
-              Looks up a localized string similar to Inneholder informasjon og lenke til mottaksordninger for innsamling av Geodata.
+              Looks up a localized string similar to Inneholder informasjon om og lenker til kartleggingsmetodikk, krav til data og hvordan du kan avlevere data til mottaksordninger for geografiske data. Kommuner, konsulenter og profesjonelle kartleggingsfirma får her en samlet oversikt..
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.RegisterName">
             <summary>
-              Looks up a localized string similar to Mottaksordninger for innsamling av Geodata.
+              Looks up a localized string similar to Mottaksordninger for innsamling av geodata.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.RegisterSeoName">

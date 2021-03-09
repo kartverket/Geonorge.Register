@@ -6,10 +6,10 @@
 string selectedOrderBy = Request.QueryString["orderby"];
 if (!string.IsNullOrEmpty(selectedOrderBy))
 {
-    if (selectedOrderBy == "title") {
+    if (orderby.Contains("title") && selectedOrderBy == "title") {
         orderby = "title_desc";
     }
-    else if (selectedOrderBy == "owner") {
+    else if (orderby.Contains("owner") && selectedOrderBy == "owner") {
         orderby = "owner_desc";
     }
 }

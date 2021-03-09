@@ -22,15 +22,35 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: GeoDataCollection
-        public ActionResult Index(string text = null)
+        public ActionResult Index(string text = null, string sorting = null)
         {
             ViewBag.register = GeodataCollection.RegisterName;
             ViewBag.registerSEO = GeodataCollection.RegisterSeoName;
 
+            IEnumerable<GeoDataCollection> query;
+
             if (!string.IsNullOrEmpty(text))
-                return View(_dbContext.GeoDataCollections.Where(g=> g.Title.Contains(text) || g.Purpose.Contains(text)).Include("Organization").OrderBy(o => o.Title));
+                query = _dbContext.GeoDataCollections.Where(g => g.Title.Contains(text) || g.Purpose.Contains(text)).Include("Organization");
             else
-            return View(_dbContext.GeoDataCollections.Include("Organization").OrderBy(o => o.Title));
+                query = _dbContext.GeoDataCollections.Include("Organization");
+
+            if (!string.IsNullOrEmpty(sorting))
+            {
+                if (sorting == "title")
+                    query = query.ToList().OrderBy(o => o.Title);
+                else if (sorting == "title_desc")
+                    query = query.ToList().OrderByDescending(o => o.Title);
+                else if (sorting == "owner")
+                    query = query.ToList().OrderBy(o => o.Organization.NameTranslated());
+                else if (sorting == "owner_desc")
+                    query = query.ToList().OrderByDescending(o => o.Organization.NameTranslated());
+
+            }
+            else
+                query = query.ToList().OrderBy(o => o.Title).ToList();
+
+            return View(query);
+
         }
 
         // GET: GeoDataCollection/Details/5

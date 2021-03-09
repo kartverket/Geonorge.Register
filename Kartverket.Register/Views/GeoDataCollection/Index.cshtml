@@ -1,7 +1,20 @@
 ﻿@model IEnumerable<Kartverket.Register.Models.GeoDataCollection>
 @using Kartverket.Register.Resources;
 @using Geonorge.AuthLib.Common;
-
+@helper HeaderLink(string label, string orderby)
+{
+string selectedOrderBy = Request.QueryString["orderby"];
+if (!string.IsNullOrEmpty(selectedOrderBy))
+{
+    if (selectedOrderBy == "title") {
+        orderby = "title_desc";
+    }
+    else if (selectedOrderBy == "owner") {
+        orderby = "owner_desc";
+    }
+}
+    <a href="?text=@Request.QueryString["text"]&orderby=@orderby">@label</a>
+}
 @{
     ViewBag.Title = GeodataCollection.RegisterName;
 }
@@ -27,8 +40,8 @@
 
 <div class="table-view">
     <div class="table-heading search-results-table-heading col-md-12">
-        <div class="col-md-6 col-sm-6 col">@GeodataCollection.Title</div>
-        <div class="col-md-5 col-sm-6 col">@GeodataCollection.Organization</div>
+        <div class="col-md-6 col-sm-6 col">@HeaderLink(GeodataCollection.Title, "title")</div>
+        <div class="col-md-5 col-sm-6 col">@HeaderLink(GeodataCollection.Organization,"owner")</div>
         <div class="col-md-1 col-sm-6 col">@GeodataCollection.Link</div>
     </div>
     @foreach (var item in Model)

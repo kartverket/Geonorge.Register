@@ -3,7 +3,7 @@
 @using Geonorge.AuthLib.Common;
 @helper HeaderLink(string label, string orderby)
 {
-string selectedOrderBy = Request.QueryString["orderby"];
+string selectedOrderBy = Request.QueryString["sorting"];
 if (!string.IsNullOrEmpty(selectedOrderBy))
 {
     if (orderby.Contains("title") && selectedOrderBy == "title") {
@@ -13,7 +13,7 @@ if (!string.IsNullOrEmpty(selectedOrderBy))
         orderby = "owner_desc";
     }
 }
-    <a href="?text=@Request.QueryString["text"]&orderby=@orderby">@label</a>
+    <a href="?text=@Request.QueryString["text"]&sorting=@orderby">@label</a>
 }
 @{
     ViewBag.Title = GeodataCollection.RegisterName;

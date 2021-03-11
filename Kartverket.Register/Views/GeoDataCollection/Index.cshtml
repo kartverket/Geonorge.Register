@@ -40,8 +40,8 @@ if (!string.IsNullOrEmpty(selectedOrderBy))
 
 <div class="table-view">
     <div class="table-heading search-results-table-heading col-md-12">
-        <div class="col-md-6 col-sm-6 col">@HeaderLink(GeodataCollection.Title, "title")</div>
-        <div class="col-md-5 col-sm-6 col">@HeaderLink(GeodataCollection.Organization,"owner")</div>
+        <div class="col-md-6 col-sm-6 col">@HeaderLink(GeodataCollection.Title, "title") </div>
+        <div class="col-md-5 col-sm-6 col">@HeaderLink(GeodataCollection.Organization,"owner") </div>
         <div class="col-md-1 col-sm-6 col">@GeodataCollection.Link</div>
     </div>
     @foreach (var item in Model)

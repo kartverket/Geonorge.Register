@@ -486,7 +486,9 @@ a.link-unstyled {
     width: 24px;
     height: 24px;
 }
-
+.custom-icon.custom-icon-sort {
+    background-image: url("/Content/img/updown.svg");
+}
 .custom-icon.custom-icon-findable {
     background-image: url("/Content/img/findable.svg");
 }

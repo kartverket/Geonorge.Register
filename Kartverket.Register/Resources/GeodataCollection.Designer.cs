@@ -115,7 +115,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Leveranseløsning.
+        ///   Looks up a localized string similar to Leveranse- og mottaksordning.
         /// </summary>
         public static string DeliverySolution {
             get {
@@ -169,11 +169,11 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lenker.
+        ///   Looks up a localized string similar to Lenke til datasett.
         /// </summary>
-        public static string Links {
+        public static string LinkToDataset {
             get {
-                return ResourceManager.GetString("Links", resourceCulture);
+                return ResourceManager.GetString("LinkToDataset", resourceCulture);
             }
         }
         
@@ -228,6 +228,15 @@ namespace Kartverket.Register.Resources {
         public static string MappingRequirementsLink {
             get {
                 return ResourceManager.GetString("MappingRequirementsLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kartleggingsmetodikk.
+        /// </summary>
+        public static string MapSolutionTitle {
+            get {
+                return ResourceManager.GetString("MapSolutionTitle", resourceCulture);
             }
         }
         
@@ -390,6 +399,15 @@ namespace Kartverket.Register.Resources {
         public static string Responsible {
             get {
                 return ResourceManager.GetString("Responsible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aktører og roller.
+        /// </summary>
+        public static string Roles {
+            get {
+                return ResourceManager.GetString("Roles", resourceCulture);
             }
         }
         

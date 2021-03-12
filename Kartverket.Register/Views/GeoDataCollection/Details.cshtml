@@ -34,7 +34,7 @@
 </section>
 <div class="row">
     <article class="col-md-12">
-        <h3>@GeodataCollection.SystemCollecting</h3>
+        
         @if (!string.IsNullOrEmpty(Model.ThumbnailFileName))
         {<p style="float: right">
                 <img class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal" style="cursor: pointer;" src="/data/img/@Model.ThumbnailFileName" />
@@ -57,6 +57,12 @@
         }
         <p><strong>@GeodataCollection.Title: </strong>@Model.Title</p>
         <p><strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle</p>
+        <p>
+            <strong>@GeodataCollection.LinkToDataset: </strong> @if (!string.IsNullOrEmpty(Model.LinkToMapSolution))
+            {
+                <a href="@Model.LinkToMapSolution" target="_blank">@GeodataCollection.LinkToMapSolution</a>
+            }
+        </p>
         <p><strong>@GeodataCollection.Organization: </strong>@Model.Organization.NameTranslated()</p>
         @if (!string.IsNullOrEmpty(Model.OtherOrganizationsInvolved))
         {
@@ -66,7 +72,9 @@
         {
             <p><strong>@GeodataCollection.Responsible: </strong>@Model.Responsible.NameTranslated()</p>
         }
-        <h3>@GeodataCollection.DeliverySolution</h3>
+
+
+        <h3>@GeodataCollection.Roles</h3>
         @if (!string.IsNullOrEmpty(Model.Purpose))
         {
             <p><strong>@GeodataCollection.Purpose: </strong>@Model.Purpose</p>
@@ -83,12 +91,9 @@
 </div>
         <div class="row">
             <article class="col-md-12">
-                <h3>@GeodataCollection.Links</h3>
+                <h3>@GeodataCollection.DeliverySolution</h3>
                 <ul>
-                    @if (!string.IsNullOrEmpty(Model.LinkToMapSolution))
-                    {
-                        <li><a href="@Model.LinkToMapSolution" target="_blank">@GeodataCollection.LinkToMapSolution</a></li>
-                    }
+                   
                     @if (!string.IsNullOrEmpty(Model.LinkInfoPage))
                     {
                         <li><a href="@Model.LinkInfoPage" target="_blank">@GeodataCollection.LinkInfoPage</a></li>
@@ -122,7 +127,7 @@
 
         <div class="row">
             <article class="col-md-12">
-                <h3>@GeodataCollection.MappingMethodology</h3>
+                <h3>@GeodataCollection.MapSolutionTitle</h3>
                 @if (!string.IsNullOrEmpty(Model.MethodForMappingShort))
                 {
                     <p><strong>@GeodataCollection.MethodForMappingShort: </strong>@Model.MethodForMappingShort</p>
@@ -138,8 +143,7 @@
             </article>
         </div>
         <div class="row">
-            <article class="col-md-12">
-                <h3>@GeodataCollection.Requirements</h3>
+            <article class="col-md-12">               
                 @if (!string.IsNullOrEmpty(Model.MappingRequirements))
                 {
                     <p><strong>@GeodataCollection.MappingRequirements: </strong>@DisplayText(Model.MappingRequirements)</p>

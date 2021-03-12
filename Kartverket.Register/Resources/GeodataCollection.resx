@@ -141,8 +141,8 @@
   <data name="LinkOtherInfo" xml:space="preserve">
     <value>Lenke annen info</value>
   </data>
-  <data name="Links" xml:space="preserve">
-    <value>Lenker</value>
+  <data name="Roles" xml:space="preserve">
+    <value>Aktører og roller</value>
   </data>
   <data name="LinkToMapSolution" xml:space="preserve">
     <value>Kartløsning</value>
@@ -211,7 +211,7 @@
     <value>Kontaktinformasjon</value>
   </data>
   <data name="DeliverySolution" xml:space="preserve">
-    <value>Leveranseløsning</value>
+    <value>Leveranse- og mottaksordning</value>
   </data>
   <data name="MappingMethodology" xml:space="preserve">
     <value>Kartleggingsmetodikk</value>
@@ -236,5 +236,11 @@
   </data>
   <data name="Responsible" xml:space="preserve">
     <value>Mottaks-ansvarlig</value>
+  </data>
+  <data name="LinkToDataset" xml:space="preserve">
+    <value>Lenke til datasett</value>
+  </data>
+  <data name="MapSolutionTitle" xml:space="preserve">
+    <value>Kartleggingsmetodikk</value>
   </data>
 </root>

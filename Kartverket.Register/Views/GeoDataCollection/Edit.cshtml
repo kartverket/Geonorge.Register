@@ -195,14 +195,14 @@
             @Html.ValidationMessageFor(model => model.LinkInfoPage, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.ProcessHistory, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.ProcessHistory, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProcessHistory, "", new { @class = "text-danger" })
         </div>
     </div>
+
     <div class="form-group">
         @Html.LabelFor(model => model.LinkToRequirementsForDelivery, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -219,9 +219,6 @@
     </div>
 
     <h3>Kartleggingsmetodikk</h3>
-
-
-
     <div class="form-group">
         @Html.LabelFor(model => model.MethodForMappingShort, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -229,6 +226,7 @@
             @Html.ValidationMessageFor(model => model.MethodForMappingShort, "", new { @class = "text-danger" })
         </div>
     </div>
+   
     <div class="form-group">
         @Html.LabelFor(model => model.MappingRequirements, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -265,13 +263,12 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.ProcessHistory, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.ProcessHistory, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ProcessHistory, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
         </div>
     </div>
-
 
 
     <div class="form-group">
@@ -329,41 +326,7 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.SupportSchemes, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.HiddenFor(model => model.SupportSchemes)
-            @Html.ValidationMessageFor(model => model.SupportSchemes, "", new { @class = "text-danger" })
-            <div id="editorSupportSchemes"></div>
-            <script>
 
-                    let hiddenBodyMarkdownSupportSchemes = document.querySelector("#SupportSchemes");
-                    let onEditorUpdateSupportSchemes = () => {
-                        hiddenBodyMarkdownSupportSchemes.value = editorSupportSchemes.getMarkdown();
-                                }
-
-                    var contentSupportSchemes = [
-                                @{
-                                    commentLines = new string[] { };
-                                    if (Model.SupportSchemes != null) {
-                                        commentLines = Model.SupportSchemes.Split('\n');
-                                    }
-                                    foreach (var comment in commentLines)
-                                    {
-                                        @:'@comment.Replace("\r", "")',
-                                    }
-                                }
-                                ].join('\n');
-                    const editorSupportSchemes = new toastui.Editor({
-                        el: document.querySelector('#editorSupportSchemes'),
-                                    height: '150px',
-                        events: { "change": onEditorUpdateSupportSchemes },
-                        initialValue: contentSupportSchemes,
-                                    initialEditType: 'wysiwyg'
-                                });
-            </script>
-        </div>
-    </div>
     <div class="form-group">
         @Html.LabelFor(model => model.OtherInfo, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">

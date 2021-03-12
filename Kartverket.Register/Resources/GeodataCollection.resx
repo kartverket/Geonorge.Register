@@ -157,7 +157,7 @@
     <value>Krav til kartlegging</value>
   </data>
   <data name="MethodForMappingShort" xml:space="preserve">
-    <value>Metode for kartlegging -kort</value>
+    <value>Metode for kartlegging</value>
   </data>
   <data name="Methodology" xml:space="preserve">
     <value>Mottaksordning - beskrivelse</value>
@@ -178,7 +178,7 @@
     <value>Andre involverte etater</value>
   </data>
   <data name="OtherWebInfoAboutMappingMethodology" xml:space="preserve">
-    <value>Krav til kartlegging</value>
+    <value>Informasjonsside kartlegging</value>
   </data>
   <data name="ProcessHistory" xml:space="preserve">
     <value>Metodikk for avlevering</value>
@@ -199,7 +199,7 @@
     <value>Krav til avlevering</value>
   </data>
   <data name="SupportSchemes" xml:space="preserve">
-    <value>Støtteordninger</value>
+    <value>Bistand og støtteordninger</value>
   </data>
   <data name="SystemCollecting" xml:space="preserve">
     <value>Mottaksordning</value>

@@ -1276,7 +1276,7 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.DeliverySolution">
             <summary>
-              Looks up a localized string similar to Leveranseløsning.
+              Looks up a localized string similar to Leveranse- og mottaksordning.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Distributor">
@@ -1301,12 +1301,12 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkOtherInfo">
             <summary>
-              Looks up a localized string similar to Lenke annen info.
+              Looks up a localized string similar to Annen lenke.
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Resources.GeodataCollection.Links">
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkToDataset">
             <summary>
-              Looks up a localized string similar to Lenker.
+              Looks up a localized string similar to Lenke til datasett.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkToMapSolution">
@@ -1337,6 +1337,11 @@
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MappingRequirementsLink">
             <summary>
               Looks up a localized string similar to Krav til kartlegging.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.MapSolutionTitle">
+            <summary>
+              Looks up a localized string similar to Kartleggingsmetodikk.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MethodForMappingShort">
@@ -1427,6 +1432,11 @@
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Responsible">
             <summary>
               Looks up a localized string similar to Mottaks-ansvarlig.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Roles">
+            <summary>
+              Looks up a localized string similar to Aktører og roller.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.SupportSchemes">

@@ -34,7 +34,6 @@
 </section>
 <div class="row">
     <article class="col-md-12">
-        
         @if (!string.IsNullOrEmpty(Model.ThumbnailFileName))
         {<p style="float: right">
                 <img class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal" style="cursor: pointer;" src="/data/img/@Model.ThumbnailFileName" />
@@ -57,71 +56,92 @@
         }
         <p><strong>@GeodataCollection.Title: </strong>@Model.Title</p>
         <p><strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle</p>
-        <p>
-            <strong>@GeodataCollection.LinkToDataset: </strong> @if (!string.IsNullOrEmpty(Model.LinkToMapSolution))
-            {
-                <a href="@Model.LinkToMapSolution" target="_blank">@GeodataCollection.LinkToMapSolution</a>
-            }
-        </p>
+        @if (!string.IsNullOrEmpty(Model.DatasetLink))
+        {
+
+            <p>
+                <strong>
+                    @GeodataCollection.DatasetLink:  </strong>  <a href="@Model.DatasetLink" target="_blank">@GeodataCollection.DatasetLink</a>
+            </p>
+        }
         <p><strong>@GeodataCollection.Organization: </strong>@Model.Organization.NameTranslated()</p>
         @if (!string.IsNullOrEmpty(Model.OtherOrganizationsInvolved))
         {
             <p><strong>@GeodataCollection.OtherOrganizationsInvolved: </strong>@Model.OtherOrganizationsInvolved</p>
         }
+
+
+
+        <h3>@GeodataCollection.Roles</h3>
+        @if (!string.IsNullOrEmpty(Model.Mapper))
+        {
+            <p><strong>@GeodataCollection.Mapper: </strong>@Model.Mapper</p>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.DataOwner))
+        {
+            <p><strong>@GeodataCollection.DataOwner: </strong>@Model.DataOwner</p>
+        }
         @if (Model.Responsible != null)
         {
             <p><strong>@GeodataCollection.Responsible: </strong>@Model.Responsible.NameTranslated()</p>
         }
+        @if (!string.IsNullOrEmpty(Model.Distributor))
+        {
+            <p><strong>@GeodataCollection.Distributor: </strong>@Model.Distributor</p>
+        }
 
 
-        <h3>@GeodataCollection.Roles</h3>
-        @if (!string.IsNullOrEmpty(Model.Purpose))
-        {
-            <p><strong>@GeodataCollection.Purpose: </strong>@Model.Purpose</p>
-        }
-        @if (!string.IsNullOrEmpty(Model.Methodology))
-        {
-            <p><strong>@GeodataCollection.Methodology: </strong>@DisplayText(Model.Methodology)</p>
-        }
-        @if (!string.IsNullOrEmpty(Model.ProcessHistory))
-        {
-            <p><a href="@Model.ProcessHistory" target="_blank">@GeodataCollection.ProcessHistory</a></p>
-        }
+
+
     </article>
 </div>
         <div class="row">
             <article class="col-md-12">
                 <h3>@GeodataCollection.DeliverySolution</h3>
-                <ul>
-                   
-                    @if (!string.IsNullOrEmpty(Model.LinkInfoPage))
-                    {
-                        <li><a href="@Model.LinkInfoPage" target="_blank">@GeodataCollection.LinkInfoPage</a></li>
-                    }
-                    @if (!string.IsNullOrEmpty(Model.LinkOtherInfo))
-                    {
-                        <li>
-                            <a href="@Model.LinkOtherInfo" target="_blank">@GeodataCollection.LinkOtherInfo</a>
-                        </li>
-                    }
-                    @if (!string.IsNullOrEmpty(Model.DatasetLink))
-                    {
-                        <li>
-                            <a href="@Model.DatasetLink" target="_blank">@GeodataCollection.DatasetLink</a>
-                        </li>
-                    }
-                    @if (!string.IsNullOrEmpty(Model.MappingRequirementsLink))
-                    {
-                        <li>
-                            <a href="@Model.MappingRequirementsLink" target="_blank">@GeodataCollection.MappingRequirementsLink</a>
-                        </li>
-                    }
-                </ul>
-                    @if (!string.IsNullOrEmpty(Model.SupportSchemes))
-                    {
-                        <p><strong>@GeodataCollection.SupportSchemes: </strong>@DisplayText(Model.SupportSchemes)</p>
-                    }
 
+                @if (!string.IsNullOrEmpty(Model.Purpose))
+                {
+                    <p><strong>@GeodataCollection.Purpose: </strong>@Model.Purpose</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.Methodology))
+                {
+                    <p><strong>@GeodataCollection.Methodology: </strong>@DisplayText(Model.Methodology)</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.RegistrationRequirements))
+                {
+                    <p><strong>@GeodataCollection.RegistrationRequirements: </strong>@DisplayText(Model.RegistrationRequirements)</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.ProcessHistory))
+                {
+                    <p><strong>@GeodataCollection.ProcessHistory: </strong><a href="@Model.ProcessHistory" target="_blank">@GeodataCollection.ProcessHistory</a></p>
+                }
+                @if (!string.IsNullOrEmpty(Model.LinkToRequirementsForDelivery))
+                {
+                    <p><strong>@GeodataCollection.LinkToRequirementsForDelivery: </strong><a href="@Model.LinkToRequirementsForDelivery" target="_blank">@GeodataCollection.LinkToRequirementsForDelivery</a></p>
+                }
+                <p>
+                    <strong>@GeodataCollection.LinkToDataset: </strong> @if (!string.IsNullOrEmpty(Model.LinkToMapSolution))
+                    {
+                       <strong>@GeodataCollection.LinkToMapSolution: </strong> <a href="@Model.LinkToMapSolution" target="_blank">@GeodataCollection.LinkToMapSolution</a>
+                    }
+                </p>
+
+
+
+                @if (!string.IsNullOrEmpty(Model.LinkInfoPage))
+                {
+                    <p><strong>@GeodataCollection.LinkInfoPage: </strong> <a href="@Model.LinkInfoPage" target="_blank">@GeodataCollection.LinkInfoPage</a></p>
+                }
+               
+
+                @if (!string.IsNullOrEmpty(Model.MappingRequirementsLink))
+                {
+                    <p><strong>@GeodataCollection.MappingRequirementsLink:</strong> <a href="@Model.MappingRequirementsLink" target="_blank">@GeodataCollection.MappingRequirementsLink</a></p>
+
+                }
+
+               
             </article>
         </div>
 
@@ -132,32 +152,27 @@
                 {
                     <p><strong>@GeodataCollection.MethodForMappingShort: </strong>@Model.MethodForMappingShort</p>
                 }
-                @if (!string.IsNullOrEmpty(Model.Link))
-                {
-                    <p><a href="@Model.Link" target="_blank">@GeodataCollection.Link</a></p>
-                }
-                @if (!string.IsNullOrEmpty(Model.OtherWebInfoAboutMappingMethodology))
-                {
-                    <p><a href="@Model.OtherWebInfoAboutMappingMethodology" target="_blank">@GeodataCollection.OtherWebInfoAboutMappingMethodology</a></p>
-                }
-            </article>
-        </div>
-        <div class="row">
-            <article class="col-md-12">               
                 @if (!string.IsNullOrEmpty(Model.MappingRequirements))
                 {
                     <p><strong>@GeodataCollection.MappingRequirements: </strong>@DisplayText(Model.MappingRequirements)</p>
                 }
-                @if (!string.IsNullOrEmpty(Model.RegistrationRequirements))
+                @if (!string.IsNullOrEmpty(Model.Link))
                 {
-                    <p><strong>@GeodataCollection.RegistrationRequirements: </strong>@DisplayText(Model.RegistrationRequirements)</p>
+                    <p><strong>@GeodataCollection.Link: </strong><a href="@Model.Link" target="_blank">@GeodataCollection.Link</a></p>
                 }
-                @if (!string.IsNullOrEmpty(Model.LinkToRequirementsForDelivery))
+                @if (!string.IsNullOrEmpty(Model.OtherWebInfoAboutMappingMethodology))
                 {
-                    <p><a href="@Model.LinkToRequirementsForDelivery" target="_blank">@GeodataCollection.LinkToRequirementsForDelivery</a></p>
+                    <p><strong>@GeodataCollection.OtherWebInfoAboutMappingMethodology: </strong><a href="@Model.OtherWebInfoAboutMappingMethodology" target="_blank">@GeodataCollection.OtherWebInfoAboutMappingMethodology</a></p>
                 }
+                @if (!string.IsNullOrEmpty(Model.SupportSchemes))
+                {
+                    <p><strong>@GeodataCollection.SupportSchemes: </strong>@DisplayText(Model.SupportSchemes)</p>
+                }
+
+
             </article>
         </div>
+      
         <div class="row">
             <article class="col-md-12">
                 <h3>@GeodataCollection.OtherInformation</h3>
@@ -168,6 +183,12 @@
                 @if (!string.IsNullOrEmpty(Model.OtherInfo))
                 {
                     <p><strong>@GeodataCollection.OtherInfo: </strong>@DisplayText(Model.OtherInfo)</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.LinkOtherInfo))
+                {
+
+            <p><strong>@GeodataCollection.LinkOtherInfo: </strong><a href="@Model.LinkOtherInfo" target="_blank">@GeodataCollection.LinkOtherInfo</a></p>
+
                 }
             </article>
         </div>
@@ -182,18 +203,9 @@
                 {
                     <p><strong>@GeodataCollection.ContactEmail: </strong><a href="mailto:@Model.ContactEmail" target="_blank">@Model.ContactEmail</a></p>
                 }
-                @if (!string.IsNullOrEmpty(Model.Mapper))
-                {
-                    <p><strong>@GeodataCollection.Mapper: </strong>@Model.Mapper</p>
-                }
-                @if (!string.IsNullOrEmpty(Model.DataOwner))
-                {
-                    <p><strong>@GeodataCollection.DataOwner: </strong>@Model.DataOwner</p>
-                }
-                @if (!string.IsNullOrEmpty(Model.Distributor))
-                {
-                    <p><strong>@GeodataCollection.Distributor: </strong>@Model.Distributor</p>
-                }
+               
+               
+               
             </article>
         </div>
         <div class="hidden-print">

@@ -160,7 +160,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lenke annen info.
+        ///   Looks up a localized string similar to Annen lenke.
         /// </summary>
         public static string LinkOtherInfo {
             get {

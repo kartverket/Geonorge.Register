@@ -1341,7 +1341,7 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MethodForMappingShort">
             <summary>
-              Looks up a localized string similar to Metode for kartlegging -kort.
+              Looks up a localized string similar to Metode for kartlegging.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Methodology">
@@ -1386,7 +1386,7 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.OtherWebInfoAboutMappingMethodology">
             <summary>
-              Looks up a localized string similar to Krav til kartlegging.
+              Looks up a localized string similar to Informasjonsside kartlegging.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.ProcessHistory">
@@ -1431,7 +1431,7 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.SupportSchemes">
             <summary>
-              Looks up a localized string similar to Støtteordninger.
+              Looks up a localized string similar to Bistand og støtteordninger.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.SystemCollecting">

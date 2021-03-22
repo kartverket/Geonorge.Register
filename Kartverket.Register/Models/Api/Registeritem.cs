@@ -150,6 +150,14 @@ namespace Kartverket.Register.Models.Api
         }
 
         [DataMemberAttribute]
+        [XmlIgnore]
+        public List<NarrowerDetails> narrowerdetails { get; set; }
+        public bool ShouldSerializenarrowerdetails()
+        {
+            return narrowerdetails != null && narrowerdetails.Count() > 0;
+        }
+
+        [DataMemberAttribute]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ValidFrom { get; set; }
         public bool ShouldSerializeValidFrom()
@@ -325,6 +333,7 @@ namespace Kartverket.Register.Models.Api
         {
             this.versions = new HashSet<Registeritem>();
             this.narrower = new HashSet<string>();
+            this.narrowerdetails = new List<NarrowerDetails>();
 
             if (item is RegisterItem registerItem)
             {
@@ -574,6 +583,10 @@ namespace Kartverket.Register.Models.Api
                 {
                     narrower.Add(baseUrl + codelistvalue.GetObjectUrl());
                 }
+
+
+                this.narrowerdetails = GetNarrowerDetails(c.narrowerItems.ToList(), baseUrl);
+
                 ValidFrom = c.ValidFromDate;
                 ValidTo = c.ValidToDate;
             }
@@ -671,6 +684,29 @@ namespace Kartverket.Register.Models.Api
                 ServiceUuid = s.UuidExternal;
                 AlertCategory = s.AlertCategory;
             }
+        }
+
+        private List<NarrowerDetails> GetNarrowerDetails(List<CodelistValue> narrowerItems, string baseUrl)
+        {
+            List<NarrowerDetails> details = new List<NarrowerDetails>();
+            foreach (var codelistvalue in narrowerItems)
+            {
+                details.Add(GetNarrowerDetail(codelistvalue, baseUrl));
+            }
+            return details;
+        }
+
+        private NarrowerDetails GetNarrowerDetail(CodelistValue codelistvalue, string baseUrl)
+        {
+            var itemNarrower = new NarrowerDetails { id= baseUrl + codelistvalue.GetObjectUrl(), label = codelistvalue.name, codevalue = codelistvalue.value };
+            foreach (var codelistvalue2 in codelistvalue.narrowerItems)
+            {
+                NarrowerDetails narrowerDetails = GetNarrowerDetail(codelistvalue2, baseUrl);
+                itemNarrower.narrowerdetails = narrowerDetails;
+                narrowerdetails.Add(itemNarrower);
+            }
+
+            return itemNarrower;
         }
 
         public bool IsInspireDataset()
@@ -823,5 +859,12 @@ namespace Kartverket.Register.Models.Api
 
             return description;
         }
+    }
+
+    public class NarrowerDetails {
+        public string id { get; set; }
+        public string label { get; set; }
+        public string codevalue { get; set; }
+        public NarrowerDetails narrowerdetails { get; set; }
     }
 }

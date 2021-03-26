@@ -33,13 +33,32 @@
     </article>
 </section>
 <div class="row">
-    <article class="col-md-12">
+    <div class="col-md-6">
+        <p><strong>@GeodataCollection.Title: </strong>@Model.Title</p>
+        <p><strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle</p>
+        @if (!string.IsNullOrEmpty(Model.DatasetLink))
+        {
+
+            <p>
+                <strong>
+                    @GeodataCollection.DatasetLink:
+                </strong>  <a href="@Model.DatasetLink" target="_blank">@GeodataCollection.DatasetLink</a>
+            </p>
+        }  
+
+        <p><strong>@GeodataCollection.Organization: </strong>@Model.Organization.NameTranslated()</p>
+        @if (!string.IsNullOrEmpty(Model.OtherOrganizationsInvolved))
+        {
+            <p><strong>@GeodataCollection.OtherOrganizationsInvolved: </strong>@Model.OtherOrganizationsInvolved</p>
+        }
+    </div>
+    <div class="col-md-6">
         @if (!string.IsNullOrEmpty(Model.ThumbnailFileName))
-        {<p style="float: right">
+        {<p>
                 <img class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal" style="cursor: pointer;" src="/data/img/@Model.ThumbnailFileName" />
                 <!-- Modal -->
                 <div class="modal fade" id="myModal" role="img" style="display: none; position: fixed; padding-top: 0px; left: 0; top: 0; width: 100%; height: 100%; overflow: auto;">
-                    <div class="modal-dialog" style="width: 100%; height: 100%; margin: 0; padding: 0;">
+                    <div class="modal-dialog" style="width: 90%; height: 90%; margin: 0; padding: 0;">
                         <!-- Modal content-->
                         <div class="modal-content" style="height: auto; min-height: 100%; border-radius: 0;">
                             <div class="modal-header">
@@ -54,21 +73,10 @@
                 </div>
             </p>
         }
-        <p><strong>@GeodataCollection.Title: </strong>@Model.Title</p>
-        <p><strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle</p>
-        @if (!string.IsNullOrEmpty(Model.DatasetLink))
-        {
-
-            <p>
-                <strong>
-                    @GeodataCollection.DatasetLink:  </strong>  <a href="@Model.DatasetLink" target="_blank">@GeodataCollection.DatasetLink</a>
-            </p>
-        }
-        <p><strong>@GeodataCollection.Organization: </strong>@Model.Organization.NameTranslated()</p>
-        @if (!string.IsNullOrEmpty(Model.OtherOrganizationsInvolved))
-        {
-            <p><strong>@GeodataCollection.OtherOrganizationsInvolved: </strong>@Model.OtherOrganizationsInvolved</p>
-        }
+    </div>
+    <article class="col-md-12">
+      
+       
 
 
 

@@ -119,9 +119,12 @@ namespace Kartverket.Register
                 {
                     returnUrl = returnUrl.Replace("http://", "");
                     returnUrl = returnUrl.Replace("https://", "");
-                    returnUrl = returnUrl.Replace(":44346/", "");
 
-                    if (!returnUrl.StartsWith(Request.Url.Host))
+                    var host = Request.Url.Host;
+                    if (returnUrl.StartsWith("https://localhost:44346"))
+                        host = "localhost";
+
+                    if (!returnUrl.StartsWith(host))
                             HttpContext.Current.Response.StatusCode = 400;
                 }
             }

@@ -121,7 +121,7 @@ namespace Kartverket.Register
                     returnUrl = returnUrl.Replace("https://", "");
 
                     var host = Request.Url.Host;
-                    if (returnUrl.StartsWith("https://localhost:44346"))
+                    if (returnUrl.StartsWith("localhost:44346"))
                         host = "localhost";
 
                     if (!returnUrl.StartsWith(host))

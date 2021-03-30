@@ -69,9 +69,6 @@ namespace Kartverket.Register
             {
                 var cookieToken = new HttpCookie("oidcAccessToken", Context.Request.Form["access_token"]) { SameSite = SameSiteMode.Lax };
 
-                if (!Request.IsLocal)
-                    cookieToken.Domain = ".geonorge.no";
-
                 cookieToken.Expires = DateTime.Now.AddHours(1);
                 HttpContext.Current.Response.Cookies.Add(cookieToken);
             }

@@ -65,6 +65,24 @@ namespace Kartverket.Register
 
         protected void Application_BeginRequest()
         {
+            if(Context.Request.Form["access_token"] != null)
+            {
+                var cookieToken = new HttpCookie("oidcAccessToken", Context.Request.Form["access_token"]) { SameSite = SameSiteMode.Lax };
+
+                if (!Request.IsLocal)
+                    cookieToken.Domain = ".geonorge.no";
+
+                cookieToken.Expires = DateTime.Now.AddHours(1);
+                HttpContext.Current.Response.Cookies.Add(cookieToken);
+            }
+            else if(Context.Request.AppRelativeCurrentExecutionFilePath == "~/SignOut")
+            {
+                if (Request.Cookies["oidcAccessToken"] != null)
+                {
+                    Response.Cookies["oidcAccessToken"].Expires = DateTime.Now.AddDays(-1);
+                }
+            }
+
             ValidateReturnUrl(Context.Request.QueryString);
 
             var cookie = Context.Request.Cookies["_culture"];

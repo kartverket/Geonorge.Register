@@ -14,6 +14,7 @@ using System.Threading;
 using Kartverket.Register.Models.Translations;
 using System.Collections.Specialized;
 using Kartverket.Register.Helpers;
+using System.Web.SessionState;
 
 namespace Kartverket.Register
 {
@@ -148,11 +149,14 @@ namespace Kartverket.Register
         }
         void Application_AcquireRequestState(object sender, EventArgs e)
         {
-            if (Session != null)
-            {
-                if (Context.Request.Form["access_token"] != null)
+            if(Context.Handler is IRequiresSessionState || Context.Handler is IReadOnlySessionState)
+            { 
+                if (Session != null)
                 {
-                    Session.Add("access_token", Context.Request.Form["access_token"]);
+                    if (Context.Request.Form["access_token"] != null)
+                    {
+                        Session.Add("access_token", Context.Request.Form["access_token"]);
+                    }
                 }
             }
         }

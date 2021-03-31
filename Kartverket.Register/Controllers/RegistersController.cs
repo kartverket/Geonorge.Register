@@ -64,6 +64,16 @@ namespace Kartverket.Register.Controllers
 
             return View(_registerService.GetRegistersGrouped());
         }
+        [Route("gettoken")]
+        public JsonResult SessionInfo()
+        {
+            var token = "";
+
+            if (Session["access_token"] != null)
+                token = Session["access_token"].ToString();
+
+            return Json(new { access_token = token }, JsonRequestBehavior.AllowGet);
+        }
 
         [Route("setculture/{culture}")]
         public ActionResult SetCulture(string culture, string returnUrl)

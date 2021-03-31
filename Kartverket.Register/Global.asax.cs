@@ -1,4 +1,4 @@
-﻿using System.Web.Http;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -143,6 +143,16 @@ namespace Kartverket.Register
 
                     if (!returnUrl.StartsWith(host))
                             HttpContext.Current.Response.StatusCode = 400;
+                }
+            }
+        }
+        void Application_AcquireRequestState(object sender, EventArgs e)
+        {
+            if (Session != null)
+            {
+                if (Context.Request.Form["access_token"] != null)
+                {
+                    Session.Add("access_token", Context.Request.Form["access_token"]);
                 }
             }
         }

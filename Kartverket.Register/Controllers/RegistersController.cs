@@ -22,6 +22,7 @@ using System.Web.Http.Cors;
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
+    [EnableCors("*", "*", "*")]
     public class RegistersController : Controller
     {
         private readonly RegisterDbContext _db;
@@ -65,7 +66,7 @@ namespace Kartverket.Register.Controllers
 
             return View(_registerService.GetRegistersGrouped());
         }
-        [EnableCors("*", "*", "*")]
+
         [Route("gettoken")]
         public JsonResult SessionInfo()
         {

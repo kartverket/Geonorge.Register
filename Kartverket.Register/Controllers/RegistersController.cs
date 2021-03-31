@@ -17,6 +17,7 @@ using Kartverket.Register.Services.Translation;
 using System.Web;
 using System.Web.Configuration;
 using Resources;
+using System.Web.Http.Cors;
 
 namespace Kartverket.Register.Controllers
 {
@@ -64,6 +65,7 @@ namespace Kartverket.Register.Controllers
 
             return View(_registerService.GetRegistersGrouped());
         }
+        [EnableCors("*", "*", "*")]
         [Route("gettoken")]
         public JsonResult SessionInfo()
         {

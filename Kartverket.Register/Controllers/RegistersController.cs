@@ -66,6 +66,7 @@ namespace Kartverket.Register.Controllers
             return View(_registerService.GetRegistersGrouped());
         }
 
+        [AllowCrossSiteJson]
         [Route("gettoken")]
         public JsonResult SessionInfo()
         {

@@ -67,11 +67,6 @@ namespace Kartverket.Register
 
         protected void Application_BeginRequest()
         {
-            if (Request.Headers.AllKeys.Contains("Origin"))
-            {
-                Response.Flush();
-            }
-
             if (Context.Request.Form["access_token"] != null)
             {
                 var cookieToken = new HttpCookie("oidcAccessToken", Context.Request.Form["access_token"]) { SameSite = SameSiteMode.Lax };

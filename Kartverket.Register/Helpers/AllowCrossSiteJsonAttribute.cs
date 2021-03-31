@@ -12,6 +12,7 @@ namespace Kartverket.Register.Helpers
         {
             filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "https://localhost:44346,https://register.dev.geonorge.no,https://register.test.geonorge.no,https://register.geonorge.no");
             filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Credentials", "true");
             base.OnActionExecuting(filterContext);
         }
     }

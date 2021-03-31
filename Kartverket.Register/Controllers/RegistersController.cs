@@ -22,7 +22,6 @@ using System.Web.Http.Cors;
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
-    [EnableCors("*", "*", "*")]
     public class RegistersController : Controller
     {
         private readonly RegisterDbContext _db;

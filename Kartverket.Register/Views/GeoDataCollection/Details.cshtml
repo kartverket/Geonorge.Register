@@ -85,8 +85,12 @@
         {
             <p><strong>@GeodataCollection.Mapper: </strong>@Model.Mapper</p>
         }
-
-        @if (!string.IsNullOrEmpty(Model.DataOwner))
+        @if (Model.Responsible != null)
+        {
+            <p><strong>@GeodataCollection.Responsible: </strong>@Model.Responsible.NameTranslated()</p>
+        }
+        <h3>@GeodataCollection.DeliverySolution</h3>
+        @if (!string.IsNullOrEmpty(Model.Purpose))
         {
             <p><strong>@GeodataCollection.DataOwner: </strong>@Model.DataOwner</p>
         }

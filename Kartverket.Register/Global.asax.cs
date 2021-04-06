@@ -69,7 +69,7 @@ namespace Kartverket.Register
         {
             if (Context.Request.Form["access_token"] != null)
             {
-                var cookieToken = new HttpCookie("oidcAccessToken", Context.Request.Form["access_token"]) { SameSite = SameSiteMode.Lax };
+                var cookieToken = new HttpCookie("oidcAccessToken", Context.Request.Form["access_token"]) { /*SameSite = SameSiteMode.Lax*/ };
 
                 cookieToken.Domain = null;
 
@@ -107,11 +107,11 @@ namespace Kartverket.Register
                 cultureName = CultureHelper.GetImplementedCulture(cultureName);
                 if (CultureHelper.IsNorwegian(cultureName))
                 {
-                    cookie = new HttpCookie("_culture", Culture.NorwegianCode) {SameSite = SameSiteMode.Lax};
+                    cookie = new HttpCookie("_culture", Culture.NorwegianCode) {/*SameSite = SameSiteMode.Lax*/};
                 }
                 else
                 {
-                    cookie = new HttpCookie("_culture", Culture.EnglishCode) {SameSite = SameSiteMode.Lax};
+                    cookie = new HttpCookie("_culture", Culture.EnglishCode) {/*SameSite = SameSiteMode.Lax*/};
                 }
 
                 if (!Request.IsLocal)

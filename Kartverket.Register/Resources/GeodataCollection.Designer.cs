@@ -61,6 +61,15 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bistand og støtteordninger.
+        /// </summary>
+        public static string AidAndSubsidies {
+            get {
+                return ResourceManager.GetString("AidAndSubsidies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kontaktperson epost.
         /// </summary>
         public static string ContactEmail {
@@ -291,6 +300,15 @@ namespace Kartverket.Register.Resources {
         public static string OrganizationInfo {
             get {
                 return ResourceManager.GetString("OrganizationInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annen informasjon.
+        /// </summary>
+        public static string OtherInformation {
+            get {
+                return ResourceManager.GetString("OtherInformation", resourceCulture);
             }
         }
         

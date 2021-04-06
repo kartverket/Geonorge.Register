@@ -164,9 +164,83 @@
     <div class="form-group">
         @Html.LabelFor(model => model.RegistrationRequirements, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.HiddenFor(model => model.RegistrationRequirements)
-            @Html.ValidationMessageFor(model => model.RegistrationRequirements, "", new { @class = "text-danger" })
-            <div id="editorRegistrationRequirements"></div>
+            @Html.EditorFor(model => model.ProcessHistory, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProcessHistory, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkToMapSolution, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkToMapSolution, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkToMapSolution, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkInfoPage, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkInfoPage, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkInfoPage, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AidAndSubsidies, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.AidAndSubsidies)
+            @Html.ValidationMessageFor(model => model.AidAndSubsidies, "", new { @class = "text-danger" })
+            <div id="editorAidAndSubsidies"></div>
+            <script>
+
+                                let hiddenBodyMarkdownAidAndSubsidies = document.querySelector("#AidAndSubsidies");
+                                let onEditorUpdateAidAndSubsidies = () => {
+                                    hiddenBodyMarkdownAidAndSubsidies.value = editorAidAndSubsidies.getMarkdown();
+                                }
+
+                                var contentAidAndSubsidies = [
+                                @{
+                                    string[] AidAndSubsidiesLines = new string[] { };
+                                    if (Model.AidAndSubsidies != null) {
+                                        AidAndSubsidiesLines = Model.AidAndSubsidies.Split('\n');
+                                    }
+                                    foreach (var comment in AidAndSubsidiesLines)
+                                    {
+                                        @:'@comment.Replace("\r","")',
+                                    }
+                                }
+                                ].join('\n');
+                                    const editorAidAndSubsidies = new toastui.Editor({
+                                    el: document.querySelector('#editorAidAndSubsidies'),
+                                    height: '150px',
+                                    events: { "change": onEditorUpdateAidAndSubsidies },
+                                    initialValue: contentAidAndSubsidies,
+                                    initialEditType: 'wysiwyg'
+                                });
+            </script>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkOtherInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkOtherInfo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkOtherInfo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DatasetLink, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DatasetLink, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DatasetLink, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.SupportSchemes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.SupportSchemes)
+            @Html.ValidationMessageFor(model => model.SupportSchemes, "", new { @class = "text-danger" })
+            <div id="editorSupportSchemes"></div>
             <script>
 
                     let hiddenBodyMarkdownRegistrationRequirements = document.querySelector("#RegistrationRequirements");

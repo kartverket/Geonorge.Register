@@ -132,6 +132,7 @@ namespace Kartverket.Register.Controllers
                 geodataCollection.LinkToMapSolution = collection.LinkToMapSolution;
                 geodataCollection.LinkInfoPage = collection.LinkInfoPage;
                 geodataCollection.LinkOtherInfo = collection.LinkOtherInfo;
+                geodataCollection.AidAndSubsidies = collection.AidAndSubsidies;
                 geodataCollection.MethodForMappingShort = collection.MethodForMappingShort;
                 geodataCollection.OtherWebInfoAboutMappingMethodology = collection.OtherWebInfoAboutMappingMethodology;
                 geodataCollection.LinkToRequirementsForDelivery = collection.LinkToMapSolution;

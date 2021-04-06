@@ -206,6 +206,15 @@
         </div>
         <div class="row">
             <article class="col-md-12">
+                <h3>@GeodataCollection.OtherInformation</h3>
+                @if (!string.IsNullOrEmpty(Model.AidAndSubsidies))
+                {
+                    <p><strong>@GeodataCollection.AidAndSubsidies: </strong>@DisplayText(Model.AidAndSubsidies)</p>
+                }
+            </article>
+        </div>
+        <div class="row">
+            <article class="col-md-12">
                 <h3>@GeodataCollection.ContactInformation</h3>
                 @if (!string.IsNullOrEmpty(Model.OrganizationInfo))
                 {

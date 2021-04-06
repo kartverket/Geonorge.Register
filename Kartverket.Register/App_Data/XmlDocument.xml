@@ -1244,6 +1244,11 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.AidAndSubsidies">
+            <summary>
+              Looks up a localized string similar to Bistand og støtteordninger.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.ContactEmail">
             <summary>
               Looks up a localized string similar to Kontaktperson epost.
@@ -1367,6 +1372,11 @@
         <member name="P:Kartverket.Register.Resources.GeodataCollection.OrganizationInfo">
             <summary>
               Looks up a localized string similar to Etatsinfo.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.OtherInformation">
+            <summary>
+              Looks up a localized string similar to Annen informasjon.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.OtherOrganizationsInvolved">

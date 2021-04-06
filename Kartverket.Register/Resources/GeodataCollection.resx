@@ -130,13 +130,13 @@
     <value>Hvilket datasett gjelder det</value>
   </data>
   <data name="Distributor" xml:space="preserve">
-    <value>Distributør</value>
+    <value>Distributøransvarlig</value>
   </data>
   <data name="Link" xml:space="preserve">
-    <value>Lenke til metodikk for kartlegging</value>
+    <value>Metode for kartlegging</value>
   </data>
   <data name="LinkInfoPage" xml:space="preserve">
-    <value>Lenke informasjonsside</value>
+    <value>Informasjonsside avlevering</value>
   </data>
   <data name="LinkOtherInfo" xml:space="preserve">
     <value>Lenke annen info</value>
@@ -145,13 +145,13 @@
     <value>Lenker</value>
   </data>
   <data name="LinkToMapSolution" xml:space="preserve">
-    <value>Lenke til kartløsning</value>
+    <value>Kartløsning</value>
   </data>
   <data name="LinkToRequirementsForDelivery" xml:space="preserve">
-    <value>Lenke til krav avlevering</value>
+    <value>Krav avlevering</value>
   </data>
   <data name="Mapper" xml:space="preserve">
-    <value>Kartlegger</value>
+    <value>Hvem utfører kartlegging</value>
   </data>
   <data name="MappingRequirements" xml:space="preserve">
     <value>Krav til kartlegging</value>
@@ -178,10 +178,10 @@
     <value>Andre involverte etater</value>
   </data>
   <data name="OtherWebInfoAboutMappingMethodology" xml:space="preserve">
-    <value>Annen webinfo om kartleggingsmetodikk</value>
+    <value>Krav til kartlegging</value>
   </data>
   <data name="ProcessHistory" xml:space="preserve">
-    <value>Lenke til metodikk for avlevering</value>
+    <value>Metodikk for avlevering</value>
   </data>
   <data name="Purpose" xml:space="preserve">
     <value>Mottaksordning formål</value>

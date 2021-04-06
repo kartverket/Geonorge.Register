@@ -1997,6 +1997,7 @@
     <Content Include="Content\img\rss.png" />
     <Content Include="Content\img\satisfactory.svg" />
     <Content Include="Content\img\smile-green.svg" />
+    <Content Include="Content\img\updown.svg" />
     <Content Include="Content\leaflet.css" />
     <Content Include="Content\print.css" />
     <Content Include="Content\themes\base\accordion.css" />

@@ -115,7 +115,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Distributør.
+        ///   Looks up a localized string similar to Distributøransvarlig.
         /// </summary>
         public static string Distributor {
             get {
@@ -133,7 +133,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lenke til metodikk for kartlegging.
+        ///   Looks up a localized string similar to Metode for kartlegging.
         /// </summary>
         public static string Link {
             get {
@@ -142,7 +142,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lenke informasjonsside.
+        ///   Looks up a localized string similar to Informasjonsside avlevering.
         /// </summary>
         public static string LinkInfoPage {
             get {
@@ -169,7 +169,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lenke til kartløsning.
+        ///   Looks up a localized string similar to Kartløsning.
         /// </summary>
         public static string LinkToMapSolution {
             get {
@@ -178,7 +178,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lenke til krav avlevering.
+        ///   Looks up a localized string similar to Krav avlevering.
         /// </summary>
         public static string LinkToRequirementsForDelivery {
             get {
@@ -187,7 +187,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kartlegger.
+        ///   Looks up a localized string similar to Hvem utfører kartlegging.
         /// </summary>
         public static string Mapper {
             get {
@@ -277,7 +277,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Annen webinfo om kartleggingsmetodikk.
+        ///   Looks up a localized string similar to Krav til kartlegging.
         /// </summary>
         public static string OtherWebInfoAboutMappingMethodology {
             get {
@@ -286,7 +286,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lenke til metodikk for avlevering.
+        ///   Looks up a localized string similar to Metodikk for avlevering.
         /// </summary>
         public static string ProcessHistory {
             get {

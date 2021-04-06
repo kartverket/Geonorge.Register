@@ -214,7 +214,16 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metode for kartlegging -kort.
+        ///   Looks up a localized string similar to Krav til kartlegging.
+        /// </summary>
+        public static string MappingRequirementsLink {
+            get {
+                return ResourceManager.GetString("MappingRequirementsLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metode for kartlegging.
         /// </summary>
         public static string MethodForMappingShort {
             get {
@@ -277,7 +286,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Krav til kartlegging.
+        ///   Looks up a localized string similar to Informasjonsside kartlegging.
         /// </summary>
         public static string OtherWebInfoAboutMappingMethodology {
             get {
@@ -349,7 +358,16 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Støtteordninger.
+        ///   Looks up a localized string similar to Mottaks-ansvarlig.
+        /// </summary>
+        public static string Responsible {
+            get {
+                return ResourceManager.GetString("Responsible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bistand og støtteordninger.
         /// </summary>
         public static string SupportSchemes {
             get {

@@ -141,8 +141,8 @@
   <data name="LinkOtherInfo" xml:space="preserve">
     <value>Link other info</value>
   </data>
-  <data name="Links" xml:space="preserve">
-    <value>Lenker</value>
+  <data name="Roles" xml:space="preserve">
+    <value>Participants and roles</value>
   </data>
   <data name="LinkToMapSolution" xml:space="preserve">
     <value>Link to map solution</value>
@@ -218,5 +218,26 @@
   </data>
   <data name="Image" xml:space="preserve">
     <value>Image</value>
+  </data>
+  <data name="AidAndSubsidies" xml:space="preserve">
+    <value>Aid and subsidies</value>
+  </data>
+  <data name="MappingRequirementsLink" xml:space="preserve">
+    <value>Mapping requirements link</value>
+  </data>
+  <data name="OtherInfo" xml:space="preserve">
+    <value>Other info</value>
+  </data>
+  <data name="OtherInformation" xml:space="preserve">
+    <value>Other information</value>
+  </data>
+  <data name="Responsible" xml:space="preserve">
+    <value>Responsible</value>
+  </data>
+  <data name="LinkToDataset" xml:space="preserve">
+    <value>Url to Dataset</value>
+  </data>
+  <data name="MapSolutionTitle" xml:space="preserve">
+    <value>Mapmethology</value>
   </data>
 </root>

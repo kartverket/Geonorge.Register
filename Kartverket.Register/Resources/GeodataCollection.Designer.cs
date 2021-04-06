@@ -223,6 +223,15 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Metode for kartlegging -kort.
+        /// </summary>
+        public static string MappingRequirementsLink {
+            get {
+                return ResourceManager.GetString("MappingRequirementsLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kartleggingsmetodikk.
         /// </summary>
         public static string MapSolutionTitle {

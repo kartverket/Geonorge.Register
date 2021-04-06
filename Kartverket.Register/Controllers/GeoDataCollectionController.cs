@@ -123,6 +123,7 @@ namespace Kartverket.Register.Controllers
                 geodataCollection.ProcessHistory = collection.ProcessHistory;
                 geodataCollection.RegistrationRequirements = collection.RegistrationRequirements;
                 geodataCollection.MappingRequirements = collection.MappingRequirements;
+                geodataCollection.MappingRequirementsLink = collection.MappingRequirementsLink;
                 geodataCollection.MethodologyDocumentLink = collection.MethodologyDocumentLink;
                 geodataCollection.MethodologyLinkWebPage = collection.MethodologyLinkWebPage;
                 geodataCollection.SupportSchemes = collection.SupportSchemes;

@@ -43,6 +43,8 @@ namespace Kartverket.Register.Models
         [Display(Name = "RegistrationRequirements", ResourceType = typeof(GeodataCollection))]
         public string RegistrationRequirements { get; set; }
         [Display(Name = "MappingRequirements", ResourceType = typeof(GeodataCollection))]
+        public string MappingRequirementsLink { get; set; }
+        [Display(Name = "MappingRequirementsLink", ResourceType = typeof(GeodataCollection))]
         public string MappingRequirements { get; set; }
         [Display(Name = "MethodologyDocumentLink", ResourceType = typeof(GeodataCollection))]
         public string MethodologyDocumentLink { get; set; }

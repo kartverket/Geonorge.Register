@@ -129,7 +129,7 @@
             <p><strong>@GeodataCollection.LinkToRequirementsForDelivery: </strong><a href="@Model.LinkToRequirementsForDelivery" target="_blank">@GeodataCollection.LinkToRequirementsForDelivery</a></p>
         }
         <p>
-            <strong>@GeodataCollection.LinkToDataset: </strong> @if (!string.IsNullOrEmpty(Model.LinkToMapSolution))
+            @if (!string.IsNullOrEmpty(Model.LinkToMapSolution))
             {
                 <strong>@GeodataCollection.LinkToMapSolution: </strong> <a href="@Model.LinkToMapSolution" target="_blank">@GeodataCollection.LinkToMapSolution</a>
             }

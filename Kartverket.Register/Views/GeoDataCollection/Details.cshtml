@@ -2,6 +2,7 @@
 @using Kartverket.Register.Resources;
 @using Geonorge.AuthLib.Common;
 @using Markdig;
+@using System.Security.Claims;
 @{
     ViewBag.Title = Model.Title;
 }
@@ -218,7 +219,7 @@
 </div>
 <div class="hidden-print">
     <hr />
-    @if (User.Identity.IsAuthenticated && User.IsInRole(GeonorgeRoles.MetadataAdmin))
+    @if (User.Identity.IsAuthenticated && User.IsInRole(GeonorgeRoles.MetadataAdmin) || (User.IsInRole(GeonorgeRoles.MetadataEditor) && Model.Owner == ClaimsPrincipal.Current.GetOrganizationName()) )
     {
         <a href="/@GeodataCollection.RegisterSeoName/edit?id=@Model.systemId" class="btn btn-default btn-space pull-right">@Shared.Edit</a>
         <a href="/@GeodataCollection.RegisterSeoName/delete?id=@Model.systemId" class="btn btn-default btn-space pull-right">@Shared.Delete</a>

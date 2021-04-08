@@ -235,28 +235,28 @@
                 <div id="editorMappingRequirements"></div>
                 <script>
 
-                                let hiddenBodyMarkdownAidAndSubsidies = document.querySelector("#AidAndSubsidies");
-                                let onEditorUpdateAidAndSubsidies = () => {
-                                    hiddenBodyMarkdownAidAndSubsidies.value = editorAidAndSubsidies.getMarkdown();
+                    let hiddenBodyMarkdownMappingRequirements = document.querySelector("#MappingRequirements");
+                    let onEditorUpdateMappingRequirements = () => {
+                        hiddenBodyMarkdownMappingRequirements.value = editorMappingRequirements.getMarkdown();
                                 }
 
-                                var contentAidAndSubsidies = [
+                    var contentMappingRequirements = [
                                 @{
-                                    string[] AidAndSubsidiesLines = new string[] { };
-                                    if (Model.AidAndSubsidies != null) {
-                                        AidAndSubsidiesLines = Model.AidAndSubsidies.Split('\n');
+                                    commentLines = new string[] { };
+                                    if (Model.MappingRequirements != null) {
+                                        commentLines = Model.MappingRequirements.Split('\n');
                                     }
-                                    foreach (var comment in AidAndSubsidiesLines)
+                                    foreach (var comment in commentLines)
                                     {
-                                        @:'@comment.Replace("\r","")',
+                                        @:'@comment.Replace("\r", "")',
                                     }
                                 }
                                 ].join('\n');
-                                    const editorAidAndSubsidies = new toastui.Editor({
-                                    el: document.querySelector('#editorAidAndSubsidies'),
+                    const editorMappingRequirements = new toastui.Editor({
+                        el: document.querySelector('#editorMappingRequirements'),
                                     height: '150px',
-                                    events: { "change": onEditorUpdateAidAndSubsidies },
-                                    initialValue: contentAidAndSubsidies,
+                        events: { "change": onEditorUpdateMappingRequirements },
+                        initialValue: contentMappingRequirements,
                                     initialEditType: 'wysiwyg'
                                 });
                 </script>

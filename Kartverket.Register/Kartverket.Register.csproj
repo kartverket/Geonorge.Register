@@ -118,8 +118,8 @@
     <Reference Include="Kartverket.ReportApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Kartverket.ReportApi.13.0.256\lib\net472\Kartverket.ReportApi.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Markdig, Version=0.22.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Markdig.0.22.0\lib\net452\Markdig.dll</HintPath>
@@ -1121,6 +1121,10 @@
     <Compile Include="Migrations\202103081138281_AddOtherInfoGeoDataCollection.cs" />
     <Compile Include="Migrations\202103081138281_AddOtherInfoGeoDataCollection.designer.cs">
       <DependentUpon>202103081138281_AddOtherInfoGeoDataCollection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104071050090_AddOwnerForGeodataCollection.cs" />
+    <Compile Include="Migrations\202104071050090_AddOwnerForGeodataCollection.designer.cs">
+      <DependentUpon>202104071050090_AddOwnerForGeodataCollection.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -3028,6 +3032,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103081138281_AddOtherInfoGeoDataCollection.resx">
       <DependentUpon>202103081138281_AddOtherInfoGeoDataCollection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104071050090_AddOwnerForGeodataCollection.resx">
+      <DependentUpon>202104071050090_AddOwnerForGeodataCollection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

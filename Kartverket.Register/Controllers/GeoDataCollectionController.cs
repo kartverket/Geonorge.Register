@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Resources;
 using System.IO;
+using System.Security.Claims;
 
 namespace Kartverket.Register.Controllers
 {
@@ -67,15 +68,19 @@ namespace Kartverket.Register.Controllers
         }
 
         // POST: GeoDataCollection/Create
-        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
+        [Authorize]
         [HttpPost]
         public ActionResult Create(GeoDataCollection collection, string ownerId)
         {
             try
             {
+                if (!(User.IsInRole(GeonorgeRoles.MetadataAdmin) || User.IsInRole(GeonorgeRoles.MetadataEditor)))
+                    new HttpUnauthorizedResult();
+
                 var org = _dbContext.Organizations.Where(o => o.systemId.ToString() == ownerId).FirstOrDefault();
                 collection.systemId = Guid.NewGuid();
                 collection.Organization = org;
+                collection.Owner = ClaimsPrincipal.Current.GetOrganizationName();
                 collection.SeoName = RegisterUrls.MakeSeoFriendlyString(collection.Title);
 
                 _dbContext.GeoDataCollections.Add(collection);
@@ -91,7 +96,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: GeoDataCollection/Edit/5
-        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
+        [Authorize]
         public ActionResult Edit(string id)
         {
             var collection = _dbContext.GeoDataCollections.Where(o => o.systemId.ToString() == id).FirstOrDefault();
@@ -102,13 +107,17 @@ namespace Kartverket.Register.Controllers
         }
 
         // POST: GeoDataCollection/Edit/5
-        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(string systemId, string ownerId, string responsibleId, GeoDataCollection collection, HttpPostedFileBase imagefile)
         {
             try
             {
                 var geodataCollection = _dbContext.GeoDataCollections.Where(g => g.systemId.ToString() == systemId).FirstOrDefault();
+
+                if (!(User.IsInRole(GeonorgeRoles.MetadataAdmin) || (User.IsInRole(GeonorgeRoles.MetadataEditor) && geodataCollection.Owner == ClaimsPrincipal.Current.GetOrganizationName()) ))
+                    new HttpUnauthorizedResult();
+
                 geodataCollection.Title = collection.Title;
                 geodataCollection.SeoName = RegisterUrls.MakeSeoFriendlyString(collection.Title);
                 geodataCollection.Link = collection.Link;
@@ -169,20 +178,24 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: GeoDataCollection/Delete/5
-        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
+        [Authorize]
         public ActionResult Delete(string id)
         {
             return View(_dbContext.GeoDataCollections.Where(o => o.systemId.ToString() == id).FirstOrDefault());
         }
 
         // POST: GeoDataCollection/Delete/5
-        [Authorize(Roles = GeonorgeRoles.MetadataAdmin)]
+        [Authorize]
         [HttpPost]
         public ActionResult Delete(string id, GeoDataCollection collection)
         {
             try
             {
                 var geocollection = _dbContext.GeoDataCollections.Where(g => g.systemId.ToString() == id).FirstOrDefault();
+
+                if (!(User.IsInRole(GeonorgeRoles.MetadataAdmin) || (User.IsInRole(GeonorgeRoles.MetadataEditor) && geocollection.Owner == ClaimsPrincipal.Current.GetOrganizationName())))
+                    new HttpUnauthorizedResult();
+
                 _dbContext.GeoDataCollections.Remove(geocollection);
                 _dbContext.SaveChanges();
 

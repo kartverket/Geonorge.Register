@@ -81,5 +81,6 @@ namespace Kartverket.Register.Models
         [Display(Name = "Image", ResourceType = typeof(GeodataCollection))]
         public string ImageFileName { get; set; }
         public string ThumbnailFileName { get; set; }
+        public string Owner { get; set; }
     }
 }

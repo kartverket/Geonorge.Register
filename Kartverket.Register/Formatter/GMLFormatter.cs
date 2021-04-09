@@ -86,6 +86,9 @@ namespace Kartverket.Register.Formatter
 
                         from k in register.containeditems
                         select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", GetGmlId(k)),
+                          new XElement(gmlNs + "metaDataProperty", new XElement(gmlNs + "GenericMetaData",
+                          new XElement("status", new XAttribute(xsiNs + "type", "gml:StringOrRefType"), k.status),
+                          GetValidTime(k, gmlNs))),
                           new XElement(gmlNs + "description", k.description),
                           new XElement(gmlNs + "identifier", new XAttribute("codeSpace", register.id), !string.IsNullOrEmpty(k.codevalue) ? k.codevalue : k.seoname),
                           new XElement(gmlNs + "name", k.label)
@@ -109,6 +112,9 @@ namespace Kartverket.Register.Formatter
                         new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
                         new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
                         new XAttribute(gmlNs + "id", GetGmlId(register)),
+                        new XElement(gmlNs + "metaDataProperty", new XElement(gmlNs + "GenericMetaData",
+                        new XElement("status", new XAttribute(xsiNs + "type", "gml:StringOrRefType"), register.status),
+                        GetValidTime(register, gmlNs) )),
                         new XElement(gmlNs + "description", register.description),
                         new XElement(gmlNs + "identifier", new XAttribute("codeSpace", GetCodespace(register)), register.codevalue),
                         new XElement(gmlNs + "name", register.label)
@@ -119,6 +125,26 @@ namespace Kartverket.Register.Formatter
                     xdoc.WriteTo(writer);
                 }
             }
+        }
+
+        private static XElement GetValidTime(Registeritem register, XNamespace gmlNs)
+        {
+            XElement vaildTime = null;
+            if (register.ValidFrom.HasValue || register.ValidTo.HasValue)
+            {
+                XElement beginPosition = null;
+                XElement endPosition = null;
+
+                if (register.ValidFrom.HasValue)
+                    beginPosition = new XElement("beginPosition", register.ValidFrom.Value);
+
+                if (register.ValidTo.HasValue)
+                    endPosition = new XElement("endPosition", register.ValidTo.Value);
+
+                vaildTime = new XElement("validTime", new XElement("TimePeriod", new XAttribute(gmlNs + "id", "timeperiod_" + register.uuid), beginPosition, endPosition));
+            }
+
+            return vaildTime;
         }
 
         private object GetCodespace(Registeritem register)

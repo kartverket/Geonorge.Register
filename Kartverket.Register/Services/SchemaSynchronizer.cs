@@ -40,6 +40,7 @@ namespace Kartverket.Register.Services
         string SchemaRemoteUrlTest = WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
 
         string SchemaFtpSite = WebConfigurationManager.AppSettings["SchemaFtpSite"];
+        string SchemaUsernamesBaatMappings = WebConfigurationManager.AppSettings["SchemaUsernamesBaatMappings"];
         string SchemaUsernames = WebConfigurationManager.AppSettings["SchemaFtpUsernames"];
         string SchemaPasswords = WebConfigurationManager.AppSettings["SchemaFtpPasswords"];
         string SchemaFtpWorkingDirectory = WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectory"]; 
@@ -71,7 +72,7 @@ namespace Kartverket.Register.Services
         private bool UserHasAccess()
         {
             var user = ClaimsPrincipal.Current.GetUsername();
-            string[] users = SchemaUsernames.Split(','); 
+            string[] users = SchemaUsernamesBaatMappings.Split(','); 
 
             if (users.ToList().Contains(user))
             {
@@ -217,14 +218,15 @@ namespace Kartverket.Register.Services
         private User GetUser()
         {
             var user = ClaimsPrincipal.Current.GetUsername();
-            string[] users = SchemaUsernames.Split(',');
+            string[] usersBaat = SchemaUsernamesBaatMappings.Split(',');
+            string[] usersFtp = SchemaUsernames.Split(',');
             string[] passwords = SchemaPasswords.Split(',');
 
-            for (int u = 0; u < users.Length; u++)
+            for (int u = 0; u < usersBaat.Length; u++)
             {
-                if(users[u] == user)
+                if(usersBaat[u] == user)
                 {
-                    return new User { Username = users[u], Password = passwords[u] };
+                    return new User { Username = usersFtp[u], Password = passwords[u] };
                 }
             }
           

@@ -338,7 +338,60 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        private string GetInspireRegistryType(string filter)
+        [Route("sosi-kodelister")]
+        [Route("sosi-kodelister/{*subregisters}")]
+        public ActionResult DetailsAll(string sorting, int? page, string format, FilterParameters filter,string subregisters = null)
+        {
+            var path = "sosi-kodelister";
+            if(!string.IsNullOrEmpty(subregisters))
+                path = path + "/" + subregisters;
+
+            var item = _db.Database.SqlQuery<Item>
+                            (@"WITH H AS 
+                             (
+                            SELECT systemId, parentRegisterId, name, CAST(seoname AS NVARCHAR(300)) AS path
+                            FROM Registers
+                            WHERE parentRegisterId IS NULL
+                                UNION ALL
+                            SELECT R.systemId, R.parentRegisterId, R.name, CAST(H.path + '/' + R.seoname AS NVARCHAR(300))
+                            FROM Registers R INNER JOIN H ON R.parentRegisterId = H.systemId
+                            )
+                            SELECT systemId FROM H
+                               WHERE PATH = {0}", path)
+                        .FirstOrDefault();
+
+            if(item == null)
+                return HttpNotFound();
+
+            RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
+
+            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+
+            var register = _registerService.GetRegisterBySystemId(item.systemId);
+            if (register == null) return HttpNotFound();
+
+               
+            register = FilterRegisterItems(register, filter);
+            var viewModel = new RegisterV2ViewModel(register, filter, null, null, null);
+            viewModel.MunicipalityCode = filter.municipality;
+            viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
+            viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+
+            ItemsOrderBy(sorting, viewModel);
+            ViewBagOrganizationMunizipality(filter.municipality);
+            ViewBagOrganizationTypes(viewModel);
+            ViewbagsRegisterDetails(sorting, page, filter, viewModel);
+            return View("Details", viewModel);
+
+        }
+
+        public class Item
+        {
+            public Guid systemId { get; set; }
+        }
+
+            private string GetInspireRegistryType(string filter)
         {
             if (filter == "inspirereport")
             {

@@ -1,4 +1,4 @@
-﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models.ViewModels
 @using Resources
 @model List<DokMunicipalEdit>
@@ -24,7 +24,7 @@
                     }
                 });
 
-                 $('.tablesorter-childRow td').hide();
+                $('.tablesorter-childRow td').hide();
                 $(".tableSuitability")
                     .tablesorter({
                         theme: 'blue',
@@ -160,6 +160,7 @@
                                         @Html.Hidden("dokMunicipalList[" + i + "].Owner", Model[i].Owner, new { @readonly = "readonly" })
                                         @Html.Hidden("dokMunicipalList[" + i + "].NationalDokStatus", Model[i].NationalDokStatus, new { @readonly = "readonly" })
                                         @Html.Hidden("dokMunicipalList[" + i + "].Type", Model[i].Type, new { @readonly = "readonly" })
+                                        @Html.Hidden("dokMunicipalList[" + i + "].NationalDokStatus", Model[i].NationalDokStatus, new { @readonly = "readonly" })
 
                                         <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">
                                             @Model[i].Themegroup
@@ -175,8 +176,8 @@
                                         <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
                                             <span id="@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].Confirmed)</span>
                                             <span class="custom-checkbox custom-checkbox">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbConfirmdChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte", @id = "dokMunicipalListdokMunicipalListReadOnly[" + i + "].Confirmed" })
-                                                <label for="dokMunicipalListdokMunicipalListReadOnly[@i].Confirmed" class="checkbox-icon"></label>
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbConfirmdChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte", @id = "dokMunicipalList[" + i + "].Confirmed" })
+                                                <label for="dokMunicipalList[@i].Confirmed" class="checkbox-icon"></label>
                                             </span>
                                         </td>
                                         <td style="text-align: center" title="@DataSet.DOK_Coverage_Municipality">
@@ -252,106 +253,106 @@
                                 {
                                     if (Model[i].Confirmed)
                                     {
-                                <tr class="mother">
-                                    <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup</td>
-                                    <td style="background-color:rgb(234, 234, 234)" title="Datasett: @Model[i].Name">
-                                        @Model[i].Name
-                                        @Html.Hidden("dokMunicipalListSuitability[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
-                                    </td>
-                                    <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge toggle" onclick="InfoText('@i')" style="background-color: #337ab7">i</a></td>
-                                    <td class="text-center">
-                                        <span class="hidden">@Model[i].NationalAssessmentRegionalPlan</span>
-                                        <span id="regionalPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].RegionalPlan)</span>
-                                        <span data-toggle="tooltip" data-placement="bottom" title="Regionplan" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentRegionalPlan">
-                                            @Html.CheckBox("dokMunicipalListSuitability[" + i + "].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @id = "dokMunicipalListSuitabilityReadOnly[" + i + "].RegionalPlan" })
-                                            <label for="dokMunicipalListSuitabilityReadOnly[@i].RegionalPlan" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="hidden">@Model[i].NationalAssessmentMunicipalSocialPlan</span>
-                                        <span id="municipalSocialPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalSocialPlan)</span>
-                                        <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens samfunnsdel" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentMunicipalSocialPlan">
-                                            @Html.CheckBox("dokMunicipalListSuitability[" + i + "].MunicipalSocialPlan", Model[i].MunicipalSocialPlan, new { @readonly = "readonly", @id = "dokMunicipalListSuitabilityReadOnly[" + i + "].MunicipalSocialPlan" })
-                                            <label for="dokMunicipalListSuitabilityReadOnly[@i].MunicipalSocialPlan" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="hidden">@Model[i].NationalAssessmentMunicipalLandUseElementPlan</span>
-                                        <span id="municipalLandUseElementPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalLandUseElementPlan)</span>
-                                        <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens arealdel" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentMunicipalLandUseElementPlan">
-                                            @Html.CheckBox("dokMunicipalListSuitability[" + i + "].MunicipalLandUseElementPlan", Model[i].MunicipalLandUseElementPlan, new { @readonly = "readonly", @id = "dokMunicipalListSuitabilityReadOnly[" + i + "].MunicipalLandUseElementPlan" })
-                                            <label for="dokMunicipalListSuitabilityReadOnly[@i].MunicipalLandUseElementPlan" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="hidden">@Model[i].NationalAssessmentZoningPlan</span>
-                                        <span id="zoningPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlan)</span>
-                                        <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentZoningPlan">
-                                            @Html.CheckBox("dokMunicipalListSuitability[" + i + "].ZoningPlan", Model[i].ZoningPlan, new { @readonly = "readonly", @id = "dokMunicipalListSuitabilityReadOnly[" + i + "].ZoningPlan" })
-                                            <label for="dokMunicipalListSuitabilityReadOnly[@i].ZoningPlan" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="hidden">@Model[i].NationalAssessmentBuildingMatter</span>
-                                        <span id="buildingMatter-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].BuildingMatter)</span>
-                                        <span data-toggle="tooltip" data-placement="bottom" title="Byggesak" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentBuildingMatter">
-                                            @Html.CheckBox("dokMunicipalListSuitability[" + i + "].BuildingMatter", Model[i].BuildingMatter, new { @readonly = "readonly", @id = "dokMunicipalListSuitabilityReadOnly[" + i + "].BuildingMatter" })
-                                            <label for="dokMunicipalListSuitabilityReadOnly[@i].BuildingMatter" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="hidden">@Model[i].NationalAssessmentPartitionOff</span>
-                                        <span id="partitionOff-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].PartitionOff)</span>
-                                        <span data-toggle="tooltip" data-placement="bottom" title="Fradeling" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentPartitionOff">
-                                            @Html.CheckBox("dokMunicipalListSuitability[" + i + "].PartitionOff", Model[i].PartitionOff, new { @readonly = "readonly", @id = "dokMunicipalListSuitabilityReadOnly[" + i + "].PartitionOff" })
-                                            <label for="dokMunicipalListSuitabilityReadOnly[@i].PartitionOff" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="hidden">@Model[i].NationalAssessmentImpactPlanningBuildingAct</span>
-                                        <span id="NationalAssessmentImpactPlanningBuildingAct-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ImpactAssessmentPlanningBuildingAct)</span>
-                                        <span data-toggle="tooltip" data-placement="bottom" title="KU for pbl-planer" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentImpactPlanningBuildingAct">
-                                            @Html.CheckBox("dokMunicipalListSuitability[" + i + "].ImpactAssessmentPlanningBuildingAct", Model[i].ImpactAssessmentPlanningBuildingAct, new { @readonly = "readonly", @id = "dokMunicipalListSuitabilityReadOnly[" + i + "].ImpactAssessmentPlanningBuildingAct" })
-                                            <label for="dokMunicipalListSuitabilityReadOnly[@i].ImpactAssessmentPlanningBuildingAct" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
-                                        </span>
-                                    </td>
+                                        <tr class="mother">
+                                            <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup</td>
+                                            <td style="background-color:rgb(234, 234, 234)" title="Datasett: @Model[i].Name">
+                                                @Model[i].Name
+                                                @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
+                                            </td>
+                                            <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge toggle" onclick="InfoText('@i')" style="background-color: #337ab7">i</a></td>
+                                            <td class="text-center">
+                                                <span class="hidden">@Model[i].NationalAssessmentRegionalPlan</span>
+                                                <span id="regionalPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].RegionalPlan)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="Regionplan" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentRegionalPlan">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].RegionalPlan" })
+                                                    <label for="dokMunicipalList[@i].RegionalPlan" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="hidden">@Model[i].NationalAssessmentMunicipalSocialPlan</span>
+                                                <span id="municipalSocialPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalSocialPlan)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens samfunnsdel" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentMunicipalSocialPlan">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", Model[i].MunicipalSocialPlan, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].MunicipalSocialPlan" })
+                                                    <label for="dokMunicipalList[@i].MunicipalSocialPlan" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="hidden">@Model[i].NationalAssessmentMunicipalLandUseElementPlan</span>
+                                                <span id="municipalLandUseElementPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalLandUseElementPlan)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens arealdel" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentMunicipalLandUseElementPlan">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalLandUseElementPlan", Model[i].MunicipalLandUseElementPlan, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].MunicipalLandUseElementPlan" })
+                                                    <label for="dokMunicipalList[@i].MunicipalLandUseElementPlan" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="hidden">@Model[i].NationalAssessmentZoningPlan</span>
+                                                <span id="zoningPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlan)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentZoningPlan">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlan", Model[i].ZoningPlan, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].ZoningPlan" })
+                                                    <label for="dokMunicipalList[@i].ZoningPlan" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="hidden">@Model[i].NationalAssessmentBuildingMatter</span>
+                                                <span id="buildingMatter-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].BuildingMatter)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="Byggesak" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentBuildingMatter">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", Model[i].BuildingMatter, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].BuildingMatter" })
+                                                    <label for="dokMunicipalList[@i].BuildingMatter" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="hidden">@Model[i].NationalAssessmentPartitionOff</span>
+                                                <span id="partitionOff-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].PartitionOff)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="Fradeling" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentPartitionOff">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].PartitionOff", Model[i].PartitionOff, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].PartitionOff" })
+                                                    <label for="dokMunicipalList[@i].PartitionOff" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="hidden">@Model[i].NationalAssessmentImpactPlanningBuildingAct</span>
+                                                <span id="NationalAssessmentImpactPlanningBuildingAct-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ImpactAssessmentPlanningBuildingAct)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="KU for pbl-planer" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentImpactPlanningBuildingAct">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].ImpactAssessmentPlanningBuildingAct", Model[i].ImpactAssessmentPlanningBuildingAct, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].ImpactAssessmentPlanningBuildingAct" })
+                                                    <label for="dokMunicipalList[@i].ImpactAssessmentPlanningBuildingAct" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
+                                                </span>
+                                            </td>
 
 
-                                    <td class="text-center">
-                                        <span class="hidden">@Model[i].NationalAssessmentRiskVulnerabilityAnalysisPlanningBuildingAct</span>
-                                        <span id="NationalAssessmentRiskVulnerabilityAnalysisPlanningBuildingAct-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct)</span>
-                                        <span data-toggle="tooltip" data-placement="bottom" title="ROS for pbl-planer" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentRiskVulnerabilityAnalysisPlanningBuildingAct">
-                                            @Html.CheckBox("dokMunicipalListSuitability[" + i + "].RiskVulnerabilityAnalysisPlanningBuildingAct", Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct, new { @readonly = "readonly", @id = "dokMunicipalListSuitabilityReadOnly[" + i + "].RiskVulnerabilityAnalysisPlanningBuildingAct" })
-                                            <label for="dokMunicipalListSuitabilityReadOnly[@i].RiskVulnerabilityAnalysisPlanningBuildingAct" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
-                                        </span>
-                                    </td>
+                                            <td class="text-center">
+                                                <span class="hidden">@Model[i].NationalAssessmentRiskVulnerabilityAnalysisPlanningBuildingAct</span>
+                                                <span id="NationalAssessmentRiskVulnerabilityAnalysisPlanningBuildingAct-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="ROS for pbl-planer" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentRiskVulnerabilityAnalysisPlanningBuildingAct">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].RiskVulnerabilityAnalysisPlanningBuildingAct", Model[i].RiskVulnerabilityAnalysisPlanningBuildingAct, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].RiskVulnerabilityAnalysisPlanningBuildingAct" })
+                                                    <label for="dokMunicipalList[@i].RiskVulnerabilityAnalysisPlanningBuildingAct" class="checkbox-icon large"><span class="checkbox-character"><span class="checkmark"></span></span></label>
+                                                </span>
+                                            </td>
 
 
 
-                                    <td>
-                                        <span id="modalBtn-@i" type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal-@i" title="@Shared.Text" style="font-size:20px; cursor: pointer; color:#337ab7; vertical-align: middle"></span>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="myModal-@i" role="textbox">
-                                            <div class="modal-dialog">
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h3 class="modal-title">@DataSet.DOK_SuitabilityRating - @Model[i].Name</h3>
-                                                        <p>@DataSet.SuitabilityText</p>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px", @id = "txtArea-" + i })
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button id="saveSuitabilityText-@i" type="button" class="btn btn-default" data-dismiss="modal" onclick="changeBtnColor(@i)">@Shared.Save</button>
+                                            <td>
+                                                <span id="modalBtn-@i" type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal-@i" title="@Shared.Text" style="font-size:20px; cursor: pointer; color:#337ab7; vertical-align: middle"></span>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModal-@i" role="textbox">
+                                                    <div class="modal-dialog">
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h3 class="modal-title">@DataSet.DOK_SuitabilityRating - @Model[i].Name</h3>
+                                                                <p>@DataSet.SuitabilityText</p>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px", @id = "txtArea-" + i })
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button id="saveSuitabilityText" type="button" class="btn btn-default" data-dismiss="modal" onclick="changeBtnColor(@i)">@Shared.Save</button>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                            </td>
+                                        </tr>
                                         <tr class="tablesorter-childRow infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
                                             <td colspan="3" style="padding:0px">
                                                 <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">

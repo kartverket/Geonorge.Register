@@ -66,7 +66,8 @@ namespace Kartverket.Register.Controllers
         //[Route("subregister/{registerName}/ny")]
         public ActionResult Create(Models.Register subRegister, string registerName, string registerparant)
         {
-            subRegister.parentRegister = _registerService.GetRegister(registerparant, registerName);
+            if(subRegister.parentRegisterId.HasValue)
+                subRegister.parentRegister = _registerService.GetRegisterBySystemId(subRegister.parentRegisterId.Value);
             if (!_registerService.RegisterNameIsValid(subRegister)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
 
             if (ModelState.IsValid)

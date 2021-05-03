@@ -565,7 +565,7 @@
             <param name="item">The search engine optimized name of the register item</param>
             <param name="id"></param>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterItemByName(System.String,System.String)">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterItemByName(System.String,System.String,System.String)">
             <summary>
             Gets sosi-codelist
             </summary>

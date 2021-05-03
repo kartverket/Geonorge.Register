@@ -479,9 +479,9 @@ namespace Kartverket.Register.Controllers
         /// </summary>
         /// <param name="register">The search engine optimized name of the register</param>
         /// <param name="item">The search engine optimized name of the register item</param>
-        [System.Web.Http.Route("api/sosi-kodelister/{register}/{item}")]
+        [System.Web.Http.Route("api/sosi-kodelister/{register}/{item}/{*subregisters}")]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetSubregisterItemByName(string register, string item)
+        public IHttpActionResult GetSubregisterItemByName(string register, string item, string subregisters = null)
         {
             Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions("sosi-kodelister", register, item);
             return Ok(currentVersion);

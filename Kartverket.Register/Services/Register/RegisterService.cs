@@ -1222,12 +1222,65 @@ namespace Kartverket.Register.Services.Register
         /// <returns></returns>
         public bool RegisterNameIsValid(object model)
         {
+
             if (model is Models.Register register)
             {
                 var registerNameSeo = RegisterUrls.MakeSeoFriendlyString(register.name);
+
+                var pathToRegister =  GetPathForRegister(register.parentRegisterId.Value);
+                if (pathToRegister.StartsWith("sosi-kodelister"))
+                { 
+                    return !PathForRegisterExists(pathToRegister + "/" + registerNameSeo);
+
+                }
+
                 return !_dbContext.Registers.Any(r => r.name == register.name || r.seoname == registerNameSeo);
             }
             return false;
+        }
+
+        private bool PathForRegisterExists(string pathToRegister)
+        {
+            var item = _dbContext.Database.SqlQuery<Navigation>
+                (@"WITH H AS 
+                             (
+                            SELECT systemId, parentRegisterId, name, CAST(seoname AS NVARCHAR(300)) AS path
+                            FROM Registers
+                            WHERE parentRegisterId IS NULL
+                                UNION ALL
+                            SELECT R.systemId, R.parentRegisterId, R.name, CAST(H.path + '/' + R.seoname AS NVARCHAR(300))
+                            FROM Registers R INNER JOIN H ON R.parentRegisterId = H.systemId
+                            )
+                            SELECT path FROM H
+                               WHERE path = {0}", pathToRegister)
+            .FirstOrDefault();
+
+            if (item == null)
+                return false;
+
+            return true;
+        }
+
+        private string GetPathForRegister(Guid value)
+        {
+            var item = _dbContext.Database.SqlQuery<Navigation>
+                (@"WITH H AS 
+                             (
+                            SELECT systemId, parentRegisterId, name, CAST(seoname AS NVARCHAR(300)) AS path
+                            FROM Registers
+                            WHERE parentRegisterId IS NULL
+                                UNION ALL
+                            SELECT R.systemId, R.parentRegisterId, R.name, CAST(H.path + '/' + R.seoname AS NVARCHAR(300))
+                            FROM Registers R INNER JOIN H ON R.parentRegisterId = H.systemId
+                            )
+                            SELECT path FROM H
+                               WHERE systemId = {0}", value)
+            .FirstOrDefault();
+
+            if (item == null)
+                return "";
+
+            return item.path;
         }
 
         public Models.Register CreateNewRegister(Models.Register register)
@@ -1416,5 +1469,10 @@ namespace Kartverket.Register.Services.Register
             catch { }
             return null;
         }
+    }
+
+    public class Navigation
+    {
+        public string path { get; set; }
     }
 }

@@ -503,7 +503,46 @@ namespace Kartverket.Register.Migrations
                 context.Database.ExecuteSqlCommand("UPDATE CoverageDatasets SET ConfirmedDok = 'True' WHERE  CoverageId ='" + coverageId + "'");
                 context.Database.ExecuteSqlCommand("UPDATE CoverageDatasets SET Coverage = 'True' WHERE  CoverageId ='" + coverageId + "'");
             }
+
+
+            var items = context.Database.SqlQuery<Item>
+                (@"WITH H AS 
+                             (
+                            SELECT systemId, parentRegisterId, name, CAST(seoname AS NVARCHAR(300)) AS path
+                            FROM Registers
+                            WHERE pathOld is null AND parentRegisterId IS NULL
+                                UNION ALL
+                            SELECT R.systemId, R.parentRegisterId, R.name, CAST(H.path + '/' + R.seoname AS NVARCHAR(300))
+                            FROM Registers R INNER JOIN H ON R.parentRegisterId = H.systemId
+                            )
+                            SELECT systemId, path FROM H")
+            .ToList();
+
+            foreach(var item in items)
+            {
+                var pathArray = item.path.Split('/');
+                string oldPath = "";
+                if (pathArray.Length == 1)
+                    oldPath = pathArray[0];
+                else
+                {
+                    var length = pathArray.Length;
+                    oldPath = pathArray[length - 2] + "/" + pathArray[length - 1];
+                }
+
+                context.Database.ExecuteSqlCommand("UPDATE Registers SET pathOld = '" + oldPath + "' WHERE  systemId ='" + item.systemId + "'");
+
+            }
+
+
+
         }
+    }
+
+    public class Item
+    {
+        public Guid systemId { get; set; }
+        public string path { get; set; }
     }
 }
 

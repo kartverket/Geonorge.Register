@@ -70,6 +70,10 @@ namespace Kartverket.Register.Models
         [Url]
         public string targetNamespace { get; set; }
         public string seoname { get; set; }
+        [StringLength(450)]
+        public string pathOld { get; set; }
+        [StringLength(450)]
+        public string path { get; set; }
         [ForeignKey("versioning")]
         public Guid? versioningId { get; set; }
         public virtual Version versioning { get; set; }

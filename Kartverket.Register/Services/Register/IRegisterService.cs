@@ -52,5 +52,6 @@ namespace Kartverket.Register.Services.Register
         void UpdateRegisterItemV2Translations();
         Models.Register GetGeodatalovDatasetRegister();
         Models.Register GetMareanoDatasetRegister();
+        Models.Register GetRegisterByPath(string path);
     }
 }

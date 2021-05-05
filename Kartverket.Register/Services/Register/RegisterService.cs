@@ -968,6 +968,16 @@ namespace Kartverket.Register.Services.Register
             return queryResult.FirstOrDefault();
         }
 
+        public Models.Register GetRegisterByPath(string path)
+        {
+            var queryResult = from r in _dbContext.Registers
+                              where r.pathOld == path || r.path == path
+                              select r;
+
+            return queryResult.FirstOrDefault();
+        }
+
+
         public Models.Register GetRegister(string parentRegisterName, string registerName)
         {
             if (string.IsNullOrWhiteSpace(parentRegisterName))

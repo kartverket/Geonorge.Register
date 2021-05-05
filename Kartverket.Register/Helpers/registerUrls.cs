@@ -1,4 +1,5 @@
 ﻿using Kartverket.Register.Models.Translations;
+using System;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -153,6 +154,19 @@ namespace Kartverket.Register.Helpers
             return encodedUrl;
         }
 
+        public static string GetFileExtension(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                if (path.Contains("."))
+                {
+                    return path.Split('.')[1];
+                }
+            }
+
+            return null;
+        }
+
 
         public static string registerUrl(string parentregister, string registerOwner, string register)
         {
@@ -227,6 +241,47 @@ namespace Kartverket.Register.Helpers
                 url += "/" + id + "." + format + "?" + request.QueryString;
             }
             return url;
+        }
+
+        internal static string GetSystemIdFromPath(string path)
+        {
+            Guid guidOutput;
+
+            if (string.IsNullOrEmpty(path))
+                return null;
+
+            var paths = path.Split('/');
+            
+            foreach(var item in paths)
+            {
+                if (Guid.TryParse(item, out guidOutput))
+                    return item;
+            }
+
+            return null;
+        }
+
+        internal static string GetPath(string registername, string subregisters)
+        {
+            var path = registername;
+            if (!string.IsNullOrEmpty(subregisters))
+                path = path + "/" + subregisters;
+
+            if (!string.IsNullOrEmpty(GetSystemIdFromPath(path)))
+            {
+                var paths = path.Split('/');
+
+                path = "";
+
+                for (int p = 0; p < paths.Length-2;p++)
+                {
+                    path = path + paths[p];
+                    if(p < paths.Length - 3)
+                        path = path + "/";
+                }
+            }
+
+            return path;
         }
     }
 }

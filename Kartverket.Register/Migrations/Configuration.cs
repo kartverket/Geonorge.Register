@@ -534,6 +534,26 @@ namespace Kartverket.Register.Migrations
 
             }
 
+            items = context.Database.SqlQuery<Item>
+                (@"WITH H AS 
+                             (
+                            SELECT systemId, parentRegisterId, name, CAST(seoname AS NVARCHAR(300)) AS path
+                            FROM Registers
+                            WHERE path is null AND parentRegisterId IS NULL
+                                UNION ALL
+                            SELECT R.systemId, R.parentRegisterId, R.name, CAST(H.path + '/' + R.seoname AS NVARCHAR(300))
+                            FROM Registers R INNER JOIN H ON R.parentRegisterId = H.systemId
+                            )
+                            SELECT systemId, path FROM H")
+            .ToList();
+
+            foreach (var item in items)
+            {
+
+                context.Database.ExecuteSqlCommand("UPDATE Registers SET path = '" + item.path + "' WHERE  systemId ='" + item.systemId + "'");
+
+            }
+
 
 
         }

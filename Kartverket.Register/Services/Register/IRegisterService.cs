@@ -23,7 +23,7 @@ namespace Kartverket.Register.Services.Register
         Guid GetRegisterId(string parentRegister, string register);
         Models.Register SetStatus(Models.Register register, Models.Register originalRegister);
         bool RegisterHasChildren(string parentname, string registername);
-        bool validationName(Object model);
+        bool validationName(Models.Register model, Models.Register originalRegister);
         Organization GetOrganizationByUserName();
         Guid GetOrganizationIdByUserName();
         Organization GetOrganizationByOrganizationNr(string number);

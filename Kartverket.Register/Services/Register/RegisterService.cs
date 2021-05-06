@@ -1060,20 +1060,25 @@ namespace Kartverket.Register.Services.Register
             else return false;
         }
 
-        public bool validationName(object model)
+        public bool validationName(Models.Register register, Models.Register originalRegister)
         {
-            if (model is Models.Register)
-            {
-                Models.Register register = (Models.Register)model;
-                var queryResults = from o in _dbContext.Registers
-                                   where o.name == register.name && o.systemId != register.systemId
-                                   select o.systemId;
 
-                if (queryResults.Count() > 0)
+            var seoName = Helpers.RegisterUrls.MakeSeoFriendlyString(register.name);
+
+            register.pathOld = RegisterUrls.GetNewPath(originalRegister.pathOld, seoName);
+            register.path = RegisterUrls.GetNewPath(originalRegister.path, seoName);
+
+
+            var queryResults = from o in _dbContext.Registers
+                                      where o.systemId != register.systemId && (o.path == register.pathOld || o.path == register.path)
+                                      select o.systemId;
+
+
+            if (queryResults.Count() > 0)
                 {
                     return true;
                 }
-            }
+
             return false;
         }
 

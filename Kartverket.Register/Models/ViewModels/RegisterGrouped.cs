@@ -48,6 +48,9 @@ namespace Kartverket.Register.Models.ViewModels
                 return ExternalUrl;
             else
             {
+                if (path == null && pathOld == null)
+                    return "/" + seoname;
+
                 return path != null
                     ? "/" + path
                     : "/" + pathOld;

@@ -21,7 +21,7 @@ namespace Kartverket.Register
 
             // Register
             routes.MapRoute("RegisterCreate", "ny", new { controller = "Registers", action = "Create"});
-            routes.MapRoute("RegisterEdit", "rediger/{registername}", new { controller = "Registers", action = "Edit"});
+            routes.MapRoute("RegisterEdit", "rediger/{systemid}", new { controller = "Registers", action = "Edit"});
             routes.MapRoute("RegisterDelete", "slett/{registername}", new { controller = "Registers", action = "Delet"});
             routes.MapRoute("EditDokMunicipal", "dok/kommunalt/{municipalityCode}/rediger", new { controller = "Registers", action = "EditDokMunicipal" });
 

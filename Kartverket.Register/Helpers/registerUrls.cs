@@ -294,5 +294,13 @@ namespace Kartverket.Register.Helpers
 
             return path;
         }
+
+        public static string GetNewPath(string path, string seoName)
+        {
+            if (!path.Contains('/'))
+                return seoName;
+
+            return path.Substring(0, path.LastIndexOf('/')) + "/" + seoName; ;
+        }
     }
 }

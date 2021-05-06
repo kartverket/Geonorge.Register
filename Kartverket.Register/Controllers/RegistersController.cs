@@ -359,7 +359,10 @@ namespace Kartverket.Register.Controllers
             {
                 if (!string.IsNullOrEmpty(systemId))
                 {
-                    return View("DetailsRegisterItem", GetRegisterItemById(register, systemId, InspireRegisteryType));
+                    var viewModelDetail = GetRegisterItemById(register, systemId, InspireRegisteryType);
+                    viewModelDetail.AccessRegisterItem = _accessControlService.HasAccessTo(viewModelDetail);
+
+                    return View("DetailsRegisterItem", viewModelDetail);
                 }
                 else
                 {
@@ -562,9 +565,9 @@ namespace Kartverket.Register.Controllers
 
         [Authorize]
         //[Route("rediger/{registername}")]
-        public ActionResult Edit(string registername)
+        public ActionResult Edit(string systemid)
         {
-            var register = _registerService.GetRegister(null, registername);
+            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
 
             if (register == null) return HttpNotFound();
 
@@ -583,12 +586,13 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         //[Route("rediger/{registername}")]
         [Authorize]
-        public ActionResult Edit(Models.Register register, string registername, string accessRegister)
+        public ActionResult Edit(Models.Register register)
         {
             if (IsAdmin())
             {
-                if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
-                Models.Register originalRegister = _registerService.GetRegister(null, registername);
+                Models.Register originalRegister = _registerService.GetRegisterBySystemId(register.systemId);
+
+                if (_registerService.validationName(register, originalRegister)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
 
                 if (ModelState.IsValid)
                 {
@@ -601,6 +605,7 @@ namespace Kartverket.Register.Controllers
                     originalRegister.accessId = register.accessId;
                     originalRegister.parentRegisterId = register.parentRegisterId;
                     originalRegister.seoname = RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
+                    originalRegister.path = RegisterUrls.GetNewPath(originalRegister.path, originalRegister.seoname);
                     originalRegister.modified = DateTime.Now;
                     if (register.statusId != null) originalRegister = _registerService.SetStatus(register, originalRegister);
                     _translationService.UpdateTranslations(register, originalRegister);
@@ -608,7 +613,7 @@ namespace Kartverket.Register.Controllers
                     _db.SaveChanges();
                     Viewbags(register);
 
-                    return Redirect(RegisterUrls.registerUrl(null, null, registername));
+                    return Redirect("/" + originalRegister.path);
                 }
                 Viewbags(register);
                 return View(originalRegister);

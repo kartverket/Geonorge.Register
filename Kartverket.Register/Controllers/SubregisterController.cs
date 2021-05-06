@@ -5,6 +5,7 @@ using System.Linq;
 using System.ServiceModel.Security;
 using System.Web;
 using System.Web.Mvc;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
@@ -110,6 +111,7 @@ namespace Kartverket.Register.Controllers
                 {
                     if (register.name != null) originalRegister.name = register.name;
                     originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
+                    originalRegister.path = RegisterUrls.GetNewPath(originalRegister.path, originalRegister.seoname);
                     if (register.description != null) originalRegister.description = register.description;
                     if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
                     if (register.managerId != null) originalRegister.managerId = register.managerId;
@@ -243,8 +245,8 @@ namespace Kartverket.Register.Controllers
         {
             var seoName = Helpers.RegisterUrls.MakeSeoFriendlyString(subRegister.name);
 
-            subRegister.pathOld = originalRegister.pathOld.Substring(0, originalRegister.pathOld.LastIndexOf('/')) + "/" + seoName;
-            subRegister.path = originalRegister.path.Substring(0, originalRegister.path.LastIndexOf('/')) + "/" + seoName;
+            subRegister.pathOld = RegisterUrls.GetNewPath(originalRegister.pathOld, seoName);
+            subRegister.path = RegisterUrls.GetNewPath(originalRegister.path, seoName);
 
 
             var queryResultsDataset = from o in _db.Registers

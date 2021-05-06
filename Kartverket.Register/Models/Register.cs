@@ -122,9 +122,9 @@ namespace Kartverket.Register.Models
         /// <returns>Url</returns>
         public virtual string GetObjectUrl()
         {
-            return parentRegisterId == null
-                ? "/" + seoname
-                : "/" + parentRegister.seoname + "/" + seoname;
+            return path != null
+                ? "/" + path
+                : "/" + pathOld;
         }
 
         public bool IsAlertRegister()

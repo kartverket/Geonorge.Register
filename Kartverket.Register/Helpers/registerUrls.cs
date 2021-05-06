@@ -254,8 +254,9 @@ namespace Kartverket.Register.Helpers
             
             foreach(var item in paths)
             {
-                if (Guid.TryParse(item, out guidOutput))
-                    return item;
+                var data = RemoveExtension(item);
+                if (Guid.TryParse(data, out guidOutput))
+                    return data;
             }
 
             return null;
@@ -279,6 +280,16 @@ namespace Kartverket.Register.Helpers
                     if(p < paths.Length - 3)
                         path = path + "/";
                 }
+            }
+
+            return path;
+        }
+
+        public static string RemoveExtension(string path)
+        {
+            if (path.Contains("."))
+            {
+                path = path.Split('.')[0];
             }
 
             return path;

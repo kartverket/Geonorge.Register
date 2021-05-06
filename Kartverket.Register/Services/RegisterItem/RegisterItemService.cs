@@ -1825,5 +1825,24 @@ namespace Kartverket.Register.Services.RegisterItem
 
             return queryResult.FirstOrDefault();
         }
+
+        public List<Models.RegisterItem> GetAllVersionsOfRegisterItem(Models.Register register, string itemSystemId)
+        {
+            Models.RegisterItem registerItem = null;
+
+            if (!string.IsNullOrEmpty(itemSystemId)) 
+                registerItem = GetRegisterItemBySystemId(Guid.Parse(itemSystemId));
+
+            var versions = new List<Models.RegisterItem>();
+
+            if (registerItem != null)
+            {
+                var queryResultVersions = from r in _dbContext.RegisterItems
+                                          where r.versioningId == registerItem.versioningId
+                                          select r;
+                versions = queryResultVersions.ToList();
+            }
+            return versions;
+        }
     }
 }

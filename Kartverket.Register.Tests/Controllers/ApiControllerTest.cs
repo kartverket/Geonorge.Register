@@ -135,21 +135,21 @@ namespace Kartverket.Register.Tests.Controllers
             actualVersions.versionNumber.Should().Be(2);
         }
 
-        [Fact]
-        public void GetSubregisterItemByName()
-        {
-            Models.Register register = NewRegister("Register name");
-            register.parentRegister = NewRegister("parent name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
+        //[Fact]
+        //public void GetSubregisterItemByName()
+        //{
+        //    Models.Register register = NewRegister("Register name");
+        //    register.parentRegister = NewRegister("parent name");
+        //    List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
-            var registerItemService = new Mock<IRegisterItemService>();
-            registerItemService.Setup(s => s.GetAllVersionsOfItem(register.parentRegister.seoname, register.seoname, "itemname")).Returns(versions);
-            var controller = createController(url, null, registerItemService.Object);
-            var result = controller.GetSubregisterItemByName(register.parentRegister.seoname, register.seoname, "itemname", null) as OkNegotiatedContentResult<Models.Api.Registeritem>;
+        //    var registerItemService = new Mock<IRegisterItemService>();
+        //    registerItemService.Setup(s => s.GetAllVersionsOfItem(register.parentRegister.seoname, register.seoname, "itemname")).Returns(versions);
+        //    var controller = createController(url, null, registerItemService.Object);
+        //    var result = controller.GetSubregisterItemByName(register.parentRegister.seoname, register.seoname, "itemname", null) as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
-            Models.Api.Registeritem actualVersions = result.Content;
-            actualVersions.label.Should().Be("itemName");
-        }
+        //    Models.Api.Registeritem actualVersions = result.Content;
+        //    actualVersions.label.Should().Be("itemName");
+        //}
 
         [Fact]
         public void GetRegisterItemsByOrganization()

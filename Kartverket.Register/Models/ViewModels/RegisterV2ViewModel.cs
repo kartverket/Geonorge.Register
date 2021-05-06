@@ -306,8 +306,8 @@ namespace Kartverket.Register.Models.ViewModels
         public string GetEditObjectUrl()
         {
             return ParentRegister == null
-                ? "/rediger/" + Seoname
-                : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/rediger";
+                ? "/rediger/" + SystemId
+                : "/subregister/" + SystemId + "/rediger";
         }
 
         public string GetDeleteObjectUrl()

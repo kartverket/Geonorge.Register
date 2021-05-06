@@ -47,10 +47,10 @@ namespace Kartverket.Register.Models.ViewModels
             if (!string.IsNullOrEmpty(ExternalUrl))
                 return ExternalUrl;
             else
-            { 
-            return parentRegisterId == null
-                ? "/" + seoname
-                : "/" + parentRegister.seoname + "/" + seoname;
+            {
+                return path != null
+                    ? "/" + path
+                    : "/" + pathOld;
             }
         }
     }

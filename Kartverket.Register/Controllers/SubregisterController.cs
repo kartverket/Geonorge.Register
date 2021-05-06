@@ -82,9 +82,9 @@ namespace Kartverket.Register.Controllers
         // GET: Subregister/Edit/5
         [Authorize]
         //[Route("subregister/{registername}/{registerOwner}/{subregister}/rediger")]
-        public ActionResult Edit(string registername, string subregister)
+        public ActionResult Edit(string systemId)
         {
-            var register = _registerService.GetRegister(registername, subregister);
+            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemId));
             if (register == null) return HttpNotFound("Fant ikke register");
 
             Viewbags(register);
@@ -99,12 +99,12 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Authorize]
         //[Route("subregister/{registername}/{registerOwner}/{subregister}/rediger")]
-        public ActionResult Edit(Models.Register register, string registername, string subregister)
+        public ActionResult Edit(Models.Register register, string registername)
         {
-            var originalRegister = _registerService.GetRegister(registername, subregister);
+            var originalRegister = _registerService.GetRegisterBySystemId(register.systemId);
             if (_accessControlService.HasAccessTo(originalRegister))
             {
-                ValidationName(register, registername);
+                ValidationName(register, originalRegister);
 
                 if (ModelState.IsValid)
                 {
@@ -239,10 +239,16 @@ namespace Kartverket.Register.Controllers
             ViewBag.registerSEO = register.seoname;
         }
 
-        private void ValidationName(Models.Register subRegister, string register)
+        private void ValidationName(Models.Register subRegister, Models.Register originalRegister)
         {
+            var seoName = Helpers.RegisterUrls.MakeSeoFriendlyString(subRegister.name);
+
+            subRegister.pathOld = originalRegister.pathOld.Substring(0, originalRegister.pathOld.LastIndexOf('/')) + "/" + seoName;
+            subRegister.path = originalRegister.path.Substring(0, originalRegister.path.LastIndexOf('/')) + "/" + seoName;
+
+
             var queryResultsDataset = from o in _db.Registers
-                                      where o.name == subRegister.name && o.systemId != subRegister.systemId && o.parentRegister.seoname == register
+                                      where o.systemId != subRegister.systemId && (o.path == subRegister.pathOld || o.path == subRegister.path)
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

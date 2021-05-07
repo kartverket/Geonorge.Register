@@ -265,9 +265,12 @@ namespace Kartverket.Register.Helpers
 
         internal static string GetPath(string registername, string subregisters)
         {
+            if (registername == "register")
+                registername = "";
+
             var path = registername;
             if (!string.IsNullOrEmpty(subregisters))
-                path = path + "/" + subregisters;
+                path = path + (!string.IsNullOrEmpty(registername) ? "/" : "") + subregisters;
 
             if (!string.IsNullOrEmpty(GetSystemIdFromPath(path)))
             {

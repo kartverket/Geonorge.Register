@@ -282,13 +282,16 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string GetObjectCreateUrl()
         {
+            var url = ParentRegister == null
+                    ? Seoname + "/ny"
+                    : ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/ny";
 
-            var url = SystemId + "/ny";
+            var urlFixed = SystemId + "/ny";
 
 
             if (ContainedItemClassIsDocument()) return "/dokument/" + url;
             if (ContainedItemClassIsCodelistValue()) return "/kodeliste/" + url;
-            if (ContainedItemClassIsRegister()) return "/subregister/" + url;
+            if (ContainedItemClassIsRegister()) return "/subregister/" + urlFixed;
             if (ContainedItemClassIsOrganization()) return "/organisasjoner/" + url;
             if (ContainedItemClassIsEpsg()) return "/epsg/" + url;
             if (ContainedItemClassIsNameSpace()) return "/navnerom/" + url;

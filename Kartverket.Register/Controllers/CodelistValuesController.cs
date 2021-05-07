@@ -203,7 +203,8 @@ namespace Kartverket.Register.Controllers
                             return View(originalCodelistValue);
                         }
                         _registerItemService.SaveEditedRegisterItem(originalCodelistValue);
-                        return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentregister, registerowner, registername, itemowner, originalCodelistValue.seoname));
+                        return Redirect("/" + originalCodelistValue.register.path + "/" + originalCodelistValue.seoname + "/" + originalCodelistValue.systemId);
+                        //return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentregister, registerowner, registername, itemowner, originalCodelistValue.seoname));
                     }
                 }
                 else

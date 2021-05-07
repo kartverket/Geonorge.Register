@@ -162,9 +162,9 @@ namespace Kartverket.Register.Controllers
         // GET: Subregister/Delete/5
         [Authorize]
         //[Route("subregister/{registername}/{owner}/{subregister}/slett")]
-        public ActionResult Delete(string registername, string owner, string subregister)
+        public ActionResult Delete(string systemid)
         {
-            Models.Register register = _registerService.GetRegister(registername, subregister);
+            Models.Register register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
 
             if (register == null)
             {
@@ -183,9 +183,9 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [HttpPost, ActionName("Delete")]
         //[Route("subregister/{registername}/{owner}/{subregister}/slett")]
-        public ActionResult DeleteConfirmed(string registername, string owner, string subregister)
+        public ActionResult DeleteConfirmed(string systemid)
         {
-            var register = _registerService.GetRegister(registername, subregister);
+            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (register != null)
             {
                 if (!_accessControlService.HasAccessTo(register))

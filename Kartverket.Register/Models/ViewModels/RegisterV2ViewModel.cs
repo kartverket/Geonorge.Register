@@ -315,9 +315,13 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string GetDeleteObjectUrl()
         {
+            //return ParentRegister == null
+            //    ? "/slett/" + Seoname
+            //    : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
+
             return ParentRegister == null
                 ? "/slett/" + Seoname
-                : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
+                : "/subregister/" + SystemId + "/slett";
         }
 
 

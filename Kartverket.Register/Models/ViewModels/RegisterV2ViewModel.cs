@@ -282,9 +282,9 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string GetObjectCreateUrl()
         {
-            var url = ParentRegister == null
-                ? Seoname + "/ny"
-                : ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/ny";
+
+            var url = SystemId + "/ny";
+
 
             if (ContainedItemClassIsDocument()) return "/dokument/" + url;
             if (ContainedItemClassIsCodelistValue()) return "/kodeliste/" + url;

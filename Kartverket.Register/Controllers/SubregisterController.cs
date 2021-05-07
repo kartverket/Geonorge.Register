@@ -41,10 +41,10 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("subregister/{registerparant}/{parentRegisterOwner}/{registername}/ny")]
         //[Route("subregister/{registername}/ny")]
-        public ActionResult Create(string registerparant, string parentRegisterOwner, string registername)
+        public ActionResult Create(string systemid)
         {
             var register = new Models.Register();
-            register.parentRegister = _registerService.GetRegister(registerparant, registername);
+            register.parentRegister = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
 
             if (_accessControlService.HasAccessTo(register.parentRegister))
             {
@@ -65,7 +65,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         //[Route("subregister/{registerparant}/{parentRegisterOwner}/{registerName}/ny")]
         //[Route("subregister/{registerName}/ny")]
-        public ActionResult Create(Models.Register subRegister, string registerName, string registerparant)
+        public ActionResult Create(Models.Register subRegister)
         {
             if(subRegister.parentRegisterId.HasValue)
                 subRegister.parentRegister = _registerService.GetRegisterBySystemId(subRegister.parentRegisterId.Value);

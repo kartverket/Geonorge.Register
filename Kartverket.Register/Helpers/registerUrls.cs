@@ -1,4 +1,5 @@
-﻿using Kartverket.Register.Models.Translations;
+﻿using Kartverket.Register.Models;
+using Kartverket.Register.Models.Translations;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
@@ -301,6 +302,21 @@ namespace Kartverket.Register.Helpers
                 return seoName;
 
             return path.Substring(0, path.LastIndexOf('/')) + "/" + seoName; ;
+        }
+
+        internal static string CreatePath(string registername, Models.Register parentRegister = null)
+        {
+            var path = RegisterUrls.MakeSeoFriendlyString(registername);
+
+            if (parentRegister != null)
+            {
+                if (!string.IsNullOrEmpty(parentRegister.path))
+                {
+                    path = parentRegister.path + "/" + path;
+                }
+            }
+
+            return path;
         }
     }
 }

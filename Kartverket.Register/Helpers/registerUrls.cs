@@ -158,13 +158,21 @@ namespace Kartverket.Register.Helpers
             {
                 if (path.Contains("."))
                 {
-                    return path.Split('.')[1];
+                    string[] split = path.Split('.');
+                    var ext = split.Last();
+                    if (AllowedExtension(ext))
+                        return ext;
                 }
             }
 
             return null;
         }
 
+        private static bool AllowedExtension(string ext)
+        {
+            string[] extensions = { "json", "xml", "csv", "gml", "gml", "rdf", "rss", "atom" };
+            return extensions.Any(ext.Contains);
+        }
 
         public static string registerUrl(string parentregister, string registerOwner, string register)
         {

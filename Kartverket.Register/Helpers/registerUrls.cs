@@ -293,7 +293,8 @@ namespace Kartverket.Register.Helpers
         {
             if (path.Contains("."))
             {
-                path = path.Split('.')[0];
+                string[] split = path.Split('.');
+                path = string.Join(".", split.Take(split.Length - 1));
             }
 
             return path;

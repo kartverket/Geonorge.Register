@@ -140,11 +140,8 @@ namespace Kartverket.Register.Helpers
             // remove characters
             encodedUrl = encodedUrl.Replace("'", "");
 
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
             // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9æøå.]", "-");
 
             // remove duplicates
             encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");

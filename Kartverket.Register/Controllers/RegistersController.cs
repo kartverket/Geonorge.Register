@@ -455,13 +455,18 @@ namespace Kartverket.Register.Controllers
                 registerId = new Guid("DE8C76C0-875A-4D10-A914-0A1317CE19BE");
             }
 
-            var register = _db.CodelistValues.Where(x => x.registerId == registerId && x.value == codevalue).FirstOrDefault();
-            if (register == null)
+            var registerItem = _db.CodelistValues.Where(x => x.registerId == registerId && x.value == codevalue).FirstOrDefault();
+            if (registerItem == null)
             {
                 return HttpNotFound();
             }
 
-            return DetailsRegisterItem("nasjonalt-rammeverk-for-geografisk-informasjon", registername, null, Convert.ToInt32(versionnumber), "", register.systemId.ToString());
+            var register = _registerService.GetRegisterBySystemId(registerId);
+
+            RegisterItemV2ViewModel viewModel = GetRegisterItemById(register, registerItem.systemId.ToString(), null);
+
+            return View("DetailsRegisterItem", viewModel);
+
         }
 
 

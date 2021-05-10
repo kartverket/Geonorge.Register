@@ -1126,6 +1126,10 @@
     <Compile Include="Migrations\202104071050090_AddOwnerForGeodataCollection.designer.cs">
       <DependentUpon>202104071050090_AddOwnerForGeodataCollection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105041319585_AddRegisterPath.cs" />
+    <Compile Include="Migrations\202105041319585_AddRegisterPath.designer.cs">
+      <DependentUpon>202105041319585_AddRegisterPath.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3035,6 +3039,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104071050090_AddOwnerForGeodataCollection.resx">
       <DependentUpon>202104071050090_AddOwnerForGeodataCollection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105041319585_AddRegisterPath.resx">
+      <DependentUpon>202105041319585_AddRegisterPath.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

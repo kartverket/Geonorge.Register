@@ -292,34 +292,86 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        // GET: Registers/Details/5
-        [Route("{registername}")]
-        [Route("{parentRegister}/{registername}/")]
-        [Route("{registername}.{format}")]
-        [Route("{parentRegister}/{registername}.{format}/")]
-        [Route("register/{registername}")]
-        [Route("register/{registername}.{format}")]
-        [Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
-        [Route("subregister/{parentRegister}/{owner}/{registername}")]
-        public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
+        //// GET: Registers/Details/5
+        //[Route("{registername}")]
+        //[Route("{parentRegister}/{registername}/")]
+        //[Route("{registername}.{format}")]
+        //[Route("{parentRegister}/{registername}.{format}/")]
+        //[Route("register/{registername}")]
+        //[Route("register/{registername}.{format}")]
+        //[Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
+        //[Route("subregister/{parentRegister}/{owner}/{registername}")]
+        //public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
+        //{
+        //    RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
+        //    var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+        //    if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+
+        //    var register = _registerService.GetRegister(parentRegister, registername);
+        //    if (register == null) return HttpNotFound();
+
+        //    if (register.RedirectToNewPath(HttpContext.Request.Path))
+        //    {
+        //        return RedirectPermanent(register.GetObjectUrl());
+        //    }
+
+        //    //List<StatusReport> statusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+        //    //StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : statusReports.FirstOrDefault();
+
+        //    register = FilterRegisterItems(register, filter);
+        //    var viewModel = new RegisterV2ViewModel(register, filter, null, null, null);
+        //    viewModel.MunicipalityCode = filter.municipality;
+        //    viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
+        //    viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+
+        //    ItemsOrderBy(sorting, viewModel);
+        //    ViewBagOrganizationMunizipality(filter.municipality);
+        //    ViewBagOrganizationTypes(viewModel);
+        //    ViewbagsRegisterDetails(sorting, page, filter, viewModel);
+        //    return View(viewModel);
+        //}
+
+        private void ViewBagOrganizationTypes(RegisterV2ViewModel viewModel)
         {
+            ViewBag.SelectedOrganizationType = new SelectList(OrganizationType.OrganizationTypes(), "Value", "Text");
+            
+        }
+
+
+        [Route("{registername}/{*subregisters}")]
+        public ActionResult DetailsAll(string registername, string sorting, int? page, FilterParameters filter,string subregisters = null, string InspireRegisteryType = null)
+        {
+            var path = RegisterUrls.GetPath(registername, subregisters);
+            string systemId = RegisterUrls.GetSystemIdFromPath(registername + "/" + subregisters);
+
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
+            string format = RegisterUrls.GetFileExtension(registername + "/" + subregisters);
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            var register = _registerService.GetRegister(parentRegister, registername);
+            var register = _registerService.GetRegisterByPath(path);
             if (register == null) return HttpNotFound();
 
-            if (register.RedirectToNewPath(HttpContext.Request.Path))
-            {
-                return RedirectPermanent(register.GetObjectUrl());
-            }
-
-            //List<StatusReport> statusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
-            //StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : statusReports.FirstOrDefault();
-
+               
             register = FilterRegisterItems(register, filter);
-            var viewModel = new RegisterV2ViewModel(register, filter, null, null, null);
+            RegisterV2ViewModel viewModel;
+            try
+            {
+                if (!string.IsNullOrEmpty(systemId))
+                {
+                    var viewModelDetail = GetRegisterItemById(register, systemId, InspireRegisteryType);
+                    viewModelDetail.AccessRegisterItem = _accessControlService.HasAccessTo(viewModelDetail);
+
+                    return View("DetailsRegisterItem", viewModelDetail);
+                }
+                else
+                {
+                    viewModel = new RegisterV2ViewModel(register, filter, null, null, null);
+                }
+            }
+            catch (Exception ex) { return HttpNotFound(); }
+
+
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
@@ -328,15 +380,9 @@ namespace Kartverket.Register.Controllers
             ViewBagOrganizationMunizipality(filter.municipality);
             ViewBagOrganizationTypes(viewModel);
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
-            return View(viewModel);
-        }
+            return View("Details", viewModel);
 
-        private void ViewBagOrganizationTypes(RegisterV2ViewModel viewModel)
-        {
-            ViewBag.SelectedOrganizationType = new SelectList(OrganizationType.OrganizationTypes(), "Value", "Text");
-            
         }
-
 
         private string GetInspireRegistryType(string filter)
         {
@@ -357,47 +403,47 @@ namespace Kartverket.Register.Controllers
             viewModel.Subregisters = _registerService.OrderBy(viewModel.Subregisters, sorting);
         }
 
-        [Route("{registername}/{itemname}/{systemId}")]
-        [Route("{registername}/{itemname}/{systemId}.{format}")]
-        [Route("{parentRegister}/{registername}/{itemname}/{systemId}")]
-        [Route("{parentRegister}/{registername}/{itemname}/{systemId}.{format}")]
-        [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
-        [Route("register/{registername}/{itemowner}/{itemname}")]
-        [Route("register/{registername}/{itemowner}/{itemname}/{systemId}")]
-        [Route("subregister/{parentRegister}/{owner}/{registername}/{submitter}/{itemname}.{format}")]
-        [Route("subregister/{parentRegister}/{owner}/{registername}/{submitter}/{itemname}")]
-        public ActionResult DetailsRegisterItem(string parentRegister, string registername, string itemowner, string itemname, string format, string systemId, string InspireRegisteryType = null)
-        {
-            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
-            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+        //[Route("{registername}/{itemname}/{systemId}")]
+        //[Route("{registername}/{itemname}/{systemId}.{format}")]
+        //[Route("{parentRegister}/{registername}/{itemname}/{systemId}")]
+        //[Route("{parentRegister}/{registername}/{itemname}/{systemId}.{format}")]
+        //[Route("register/{registername}/{itemowner}/{itemname}.{format}")]
+        //[Route("register/{registername}/{itemowner}/{itemname}")]
+        //[Route("register/{registername}/{itemowner}/{itemname}/{systemId}")]
+        //[Route("subregister/{parentRegister}/{owner}/{registername}/{submitter}/{itemname}.{format}")]
+        //[Route("subregister/{parentRegister}/{owner}/{registername}/{submitter}/{itemname}")]
+        //public ActionResult DetailsRegisterItem(string parentRegister, string registername, string itemowner, string itemname, string format, string systemId, string InspireRegisteryType = null)
+        //{
+        //    var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+        //    if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            RegisterItemV2ViewModel viewModel;
-            try
-            {
-                if (string.IsNullOrWhiteSpace(systemId))
-                {
-                    viewModel = GetRegisterItemByName(parentRegister, registername, itemowner, itemname, InspireRegisteryType);
-                }
-                else
-                {
-                    viewModel = GetRegisterItemById(parentRegister, registername, systemId, InspireRegisteryType);
-                }
-            }
-            catch (Exception)
-            {
-                return HttpNotFound();
-            }
-            if (viewModel.RedirectToNewPath(HttpContext.Request.Path))
-            {
-                return RedirectPermanent(viewModel.DetailPageUrl());
-            }
-            viewModel.AccessRegisterItem = _accessControlService.HasAccessTo(viewModel);
-            if (string.IsNullOrWhiteSpace(viewModel.Name))
-            {
-                return HttpNotFound();
-            }
-            return View(viewModel);
-        }
+        //    RegisterItemV2ViewModel viewModel;
+        //    try
+        //    {
+        //        if (string.IsNullOrWhiteSpace(systemId))
+        //        {
+        //            viewModel = GetRegisterItemByName(parentRegister, registername, itemowner, itemname, InspireRegisteryType);
+        //        }
+        //        else
+        //        {
+        //            viewModel = GetRegisterItemById(parentRegister, registername, systemId, InspireRegisteryType);
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    if (viewModel.RedirectToNewPath(HttpContext.Request.Path))
+        //    {
+        //        return RedirectPermanent(viewModel.DetailPageUrl());
+        //    }
+        //    viewModel.AccessRegisterItem = _accessControlService.HasAccessTo(viewModel);
+        //    if (string.IsNullOrWhiteSpace(viewModel.Name))
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(viewModel);
+        //}
 
         public ActionResult DetailsRegisterItemFramework(string versionnumber, string registername, string codevalue)
         {
@@ -409,13 +455,18 @@ namespace Kartverket.Register.Controllers
                 registerId = new Guid("DE8C76C0-875A-4D10-A914-0A1317CE19BE");
             }
 
-            var register = _db.CodelistValues.Where(x => x.registerId == registerId && x.value == codevalue).FirstOrDefault();
-            if (register == null)
+            var registerItem = _db.CodelistValues.Where(x => x.registerId == registerId && x.value == codevalue).FirstOrDefault();
+            if (registerItem == null)
             {
                 return HttpNotFound();
             }
 
-            return DetailsRegisterItem("nasjonalt-rammeverk-for-geografisk-informasjon", registername, null, register.seoname, "", register.systemId.ToString());
+            var register = _registerService.GetRegisterBySystemId(registerId);
+
+            RegisterItemV2ViewModel viewModel = GetRegisterItemById(register, registerItem.systemId.ToString(), null);
+
+            return View("DetailsRegisterItem", viewModel);
+
         }
 
 
@@ -519,9 +570,9 @@ namespace Kartverket.Register.Controllers
 
         [Authorize]
         //[Route("rediger/{registername}")]
-        public ActionResult Edit(string registername)
+        public ActionResult Edit(string systemid)
         {
-            var register = _registerService.GetRegister(null, registername);
+            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
 
             if (register == null) return HttpNotFound();
 
@@ -540,12 +591,13 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         //[Route("rediger/{registername}")]
         [Authorize]
-        public ActionResult Edit(Models.Register register, string registername, string accessRegister)
+        public ActionResult Edit(Models.Register register)
         {
             if (IsAdmin())
             {
-                if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
-                Models.Register originalRegister = _registerService.GetRegister(null, registername);
+                Models.Register originalRegister = _registerService.GetRegisterBySystemId(register.systemId);
+
+                if (_registerService.validationName(register, originalRegister)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
 
                 if (ModelState.IsValid)
                 {
@@ -558,6 +610,7 @@ namespace Kartverket.Register.Controllers
                     originalRegister.accessId = register.accessId;
                     originalRegister.parentRegisterId = register.parentRegisterId;
                     originalRegister.seoname = RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
+                    originalRegister.path = RegisterUrls.GetNewPath(originalRegister.path, originalRegister.seoname);
                     originalRegister.modified = DateTime.Now;
                     if (register.statusId != null) originalRegister = _registerService.SetStatus(register, originalRegister);
                     _translationService.UpdateTranslations(register, originalRegister);
@@ -565,7 +618,7 @@ namespace Kartverket.Register.Controllers
                     _db.SaveChanges();
                     Viewbags(register);
 
-                    return Redirect(RegisterUrls.registerUrl(null, null, registername));
+                    return Redirect("/" + originalRegister.path);
                 }
                 Viewbags(register);
                 return View(originalRegister);
@@ -920,9 +973,9 @@ namespace Kartverket.Register.Controllers
 
         }
 
-        private RegisterItemV2ViewModel GetRegisterItemById(string parentregister, string registername, string systemId, string inspireRegistryType)
+        private RegisterItemV2ViewModel GetRegisterItemById(Models.Register register, string systemId, string inspireRegistryType)
         {
-            var register = _registerService.GetRegister(parentregister, registername);
+            //var register = _registerService.GetRegister(parentregister, registername);
 
             if (register.IsInspireStatusRegister())
             {

@@ -84,7 +84,8 @@ namespace Kartverket.Register.Controllers
                             return View(epsgKode);
                         }
                         _registerItemService.SaveNewRegisterItem(epsgKode);
-                        return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, epsgKode.submitter.seoname, epsgKode.seoname));
+                        return Redirect("/" + epsgKode.register.path + "/" + epsgKode.seoname +  "/" + epsgKode.systemId);
+                        //return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, epsgKode.submitter.seoname, epsgKode.seoname));
 
                     }
                     else
@@ -203,7 +204,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else
                 {
-                    return Redirect("/register/" + registername + "/" + originalEPSG.submitter.seoname + "/" + originalEPSG.seoname);
+                    return Redirect("/" + register.path + "/" + originalEPSG.seoname + "/" + systId);
                 }
 
             }

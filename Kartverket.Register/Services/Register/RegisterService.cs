@@ -968,6 +968,16 @@ namespace Kartverket.Register.Services.Register
             return queryResult.FirstOrDefault();
         }
 
+        public Models.Register GetRegisterByPath(string path)
+        {
+            var queryResult = from r in _dbContext.Registers
+                              where r.pathOld == path || r.path == path
+                              select r;
+
+            return queryResult.FirstOrDefault();
+        }
+
+
         public Models.Register GetRegister(string parentRegisterName, string registerName)
         {
             if (string.IsNullOrWhiteSpace(parentRegisterName))
@@ -1050,20 +1060,25 @@ namespace Kartverket.Register.Services.Register
             else return false;
         }
 
-        public bool validationName(object model)
+        public bool validationName(Models.Register register, Models.Register originalRegister)
         {
-            if (model is Models.Register)
-            {
-                Models.Register register = (Models.Register)model;
-                var queryResults = from o in _dbContext.Registers
-                                   where o.name == register.name && o.systemId != register.systemId
-                                   select o.systemId;
 
-                if (queryResults.Count() > 0)
+            var seoName = Helpers.RegisterUrls.MakeSeoFriendlyString(register.name);
+
+            register.pathOld = RegisterUrls.GetNewPath(originalRegister.pathOld, seoName);
+            register.path = RegisterUrls.GetNewPath(originalRegister.path, seoName);
+
+
+            var queryResults = from o in _dbContext.Registers
+                                      where o.systemId != register.systemId && (o.path == register.pathOld || o.path == register.path)
+                                      select o.systemId;
+
+
+            if (queryResults.Count() > 0)
                 {
                     return true;
                 }
-            }
+
             return false;
         }
 
@@ -1222,10 +1237,12 @@ namespace Kartverket.Register.Services.Register
         /// <returns></returns>
         public bool RegisterNameIsValid(object model)
         {
+
             if (model is Models.Register register)
             {
-                var registerNameSeo = RegisterUrls.MakeSeoFriendlyString(register.name);
-                return !_dbContext.Registers.Any(r => r.name == register.name || r.seoname == registerNameSeo);
+                var path = RegisterUrls.CreatePath(register.name, register.parentRegister);
+
+                return !_dbContext.Registers.Any(r => r.path == path || r.pathOld == path);
             }
             return false;
         }
@@ -1237,6 +1254,7 @@ namespace Kartverket.Register.Services.Register
             register.dateSubmitted = DateTime.Now;
             register.statusId = "Submitted";
             register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name);
+            register.path = RegisterUrls.CreatePath(register.seoname, register.parentRegister);
             register.parentRegisterId = register.parentRegister?.systemId;
             register.ownerId = register.parentRegister != null ? register.parentRegister.ownerId : _userService.GetUserOrganizationId();
             register.managerId = _userService.GetUserOrganizationId();
@@ -1416,5 +1434,10 @@ namespace Kartverket.Register.Services.Register
             catch { }
             return null;
         }
+    }
+
+    public class Navigation
+    {
+        public string path { get; set; }
     }
 }

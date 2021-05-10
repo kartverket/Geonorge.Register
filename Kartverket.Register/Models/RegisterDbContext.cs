@@ -122,6 +122,16 @@ namespace Kartverket.Register.Models
 
             modelBuilder.Entity<CoverageDataset>().Property(e => e.Coverage).IsOptional();
 
+
+            // later alligator, kan kun ha en NULL verdi i unique constraint.
+            //modelBuilder.Entity<Register>()
+            //.HasIndex(p => p.pathOld)
+            //.IsUnique();
+
+            //modelBuilder.Entity<Register>()
+            //.HasIndex(p => p.path)
+            //.IsUnique();
+
         }
 
         public override int SaveChanges()

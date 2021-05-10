@@ -25,9 +25,10 @@
 
 @using (Html.BeginForm("Create", "Subregister", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    if (Model.parentRegister.parentRegister != null)
+    if (Model.parentRegister != null)
     {
-        <input type="hidden" value="@Model.parentRegister.parentRegister.seoname" id="registerparant" name="registerparant" />
+        <input type="hidden" value="@Model.parentRegister.seoname" id="registerparant" name="registerparant" />
+        <input type="hidden" value="@Model.parentRegister.systemId" id="registerparantId" name="parentregisterId" />
     }
     <div class="form-horizontal">
 

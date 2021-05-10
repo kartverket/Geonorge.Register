@@ -142,7 +142,8 @@ namespace Kartverket.Register.Controllers
                             return View(organization);
                         }
                         _registerItemService.SaveNewRegisterItem(organization);
-                        return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerOwner, registername, organization.submitter.seoname, organization.seoname));
+                        return Redirect("/" + organization.register.path + "/" + organization.seoname + "/" + organization.systemId);
+                        //return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerOwner, registername, organization.submitter.seoname, organization.seoname));
 
                     }
                     else

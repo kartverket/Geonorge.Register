@@ -87,6 +87,8 @@ namespace Kartverket.Register.Controllers
         {
             var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemId));
             if (register == null) return HttpNotFound("Fant ikke register");
+            register.MakeAllItemsRetired = false;
+            register.MakeAllItemsValid = false;
 
             Viewbags(register);
             register.AddMissingTranslations();

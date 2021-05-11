@@ -338,12 +338,12 @@ namespace Kartverket.Register.Models.Api
             if (item is RegisterItem registerItem)
             {
                 id = baseUrl + registerItem.GetObjectUrl();
-                label = registerItem.name;
+                label = registerItem.NameTranslated();
                 seoname = registerItem.seoname;
                 lang = CultureHelper.GetCurrentCulture();
                 lastUpdated = registerItem.modified;
                 if (registerItem.submitter != null) owner = registerItem.submitter.name;
-                if (registerItem.register.owner != null) owner = registerItem.register.owner.name;
+                if (registerItem.register.owner != null) owner = registerItem.register.owner.NameTranslated();
                 if (registerItem.status != null)
                 {
                     if (CultureHelper.IsNorwegian())
@@ -351,7 +351,7 @@ namespace Kartverket.Register.Models.Api
                     else
                         status = registerItem.status.value;
                 }
-                if (registerItem.description != null) description = registerItem.description;
+                if (registerItem.description != null) description = registerItem.DescriptionTranslated();
                 if (registerItem.versionName != null) versionName = registerItem.description;
                 versionNumber = registerItem.versionNumber;
                 versionName = registerItem.versionName;

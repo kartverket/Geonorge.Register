@@ -319,6 +319,6 @@
     <value>Sett status for alle verdier i kodelista. Individuelle verdier kan fortsatt settes</value>
   </data>
   <data name="TransliterNorwegian" xml:space="preserve">
-    <value>Transliter æøå til eao</value>
+    <value>Transliter æøå til eao i url sti</value>
   </data>
 </root>

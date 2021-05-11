@@ -628,7 +628,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transliter æøå til eao.
+        ///   Looks up a localized string similar to Transliter æøå til eao i url sti.
         /// </summary>
         public static string TransliterNorwegian {
             get {

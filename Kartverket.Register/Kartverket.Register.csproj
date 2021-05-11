@@ -1130,6 +1130,10 @@
     <Compile Include="Migrations\202105041319585_AddRegisterPath.designer.cs">
       <DependentUpon>202105041319585_AddRegisterPath.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105111405145_AddTransliterNorwegian.cs" />
+    <Compile Include="Migrations\202105111405145_AddTransliterNorwegian.designer.cs">
+      <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3042,6 +3046,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105041319585_AddRegisterPath.resx">
       <DependentUpon>202105041319585_AddRegisterPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105111405145_AddTransliterNorwegian.resx">
+      <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

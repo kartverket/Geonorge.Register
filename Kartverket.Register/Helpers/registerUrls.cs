@@ -130,7 +130,7 @@ namespace Kartverket.Register.Helpers
             return url;
         }
 
-        public static string MakeSeoFriendlyString(string input)
+        public static string MakeSeoFriendlyString(string input, bool transliterNorwegian = false)
         {
             string encodedUrl = (input ?? "").ToLower();
 
@@ -142,6 +142,9 @@ namespace Kartverket.Register.Helpers
 
             // remove invalid characters
             encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9æøå.]", "-");
+
+            if(transliterNorwegian)
+                encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "e").Replace("ø", "o");
 
             // remove duplicates
             encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
@@ -307,15 +310,18 @@ namespace Kartverket.Register.Helpers
 
         public static string GetNewPath(string path, string seoName)
         {
+            if (path == null)
+                return null;
+
             if (!path.Contains('/'))
                 return seoName;
 
             return path.Substring(0, path.LastIndexOf('/')) + "/" + seoName; ;
         }
 
-        internal static string CreatePath(string registername, Models.Register parentRegister = null)
+        internal static string CreatePath(string registername, Models.Register parentRegister = null, bool transliterNorwegian = false)
         {
-            var path = RegisterUrls.MakeSeoFriendlyString(registername);
+            var path = RegisterUrls.MakeSeoFriendlyString(registername, transliterNorwegian);
 
             if (parentRegister != null)
             {

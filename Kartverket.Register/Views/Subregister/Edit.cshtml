@@ -40,6 +40,13 @@
             @Html.ValidationMessage("ErrorMessage")
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+            @Html.CheckBoxFor(m => m.TransliterNorwegian, new { title = Registers.TransliterNorwegian, @class = "checkbox-inline" })
+            <small>@Registers.TransliterNorwegian.</small>
+        </div>
+    </div>
 
     @for (int t = 0; t < Model.Translations.Count; t++)
     {

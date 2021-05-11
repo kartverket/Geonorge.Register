@@ -1240,7 +1240,7 @@ namespace Kartverket.Register.Services.Register
 
             if (model is Models.Register register)
             {
-                var path = RegisterUrls.CreatePath(register.name, register.parentRegister);
+                var path = RegisterUrls.CreatePath(register.name, register.parentRegister, register.TransliterNorwegian);
 
                 return !_dbContext.Registers.Any(r => r.path == path || r.pathOld == path);
             }
@@ -1253,8 +1253,8 @@ namespace Kartverket.Register.Services.Register
             register.modified = DateTime.Now;
             register.dateSubmitted = DateTime.Now;
             register.statusId = "Submitted";
-            register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name);
-            register.path = RegisterUrls.CreatePath(register.seoname, register.parentRegister);
+            register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name, register.TransliterNorwegian);
+            register.path = RegisterUrls.CreatePath(register.seoname, register.parentRegister, register.TransliterNorwegian);
             register.parentRegisterId = register.parentRegister?.systemId;
             register.ownerId = register.parentRegister != null ? register.parentRegister.ownerId : _userService.GetUserOrganizationId();
             register.managerId = _userService.GetUserOrganizationId();

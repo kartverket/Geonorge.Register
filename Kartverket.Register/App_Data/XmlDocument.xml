@@ -4887,6 +4887,11 @@
               Looks up a localized string similar to Symbol.
             </summary>
         </member>
+        <member name="P:Resources.Registers.TransliterNorwegian">
+            <summary>
+              Looks up a localized string similar to Transliter æøå til eao.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Updated">
             <summary>
               Looks up a localized string similar to Oppdatert.

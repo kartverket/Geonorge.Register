@@ -112,7 +112,7 @@ namespace Kartverket.Register.Controllers
                 if (ModelState.IsValid)
                 {
                     if (register.name != null) originalRegister.name = register.name;
-                    originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
+                    originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name, register.TransliterNorwegian);
                     originalRegister.path = RegisterUrls.GetNewPath(originalRegister.path, originalRegister.seoname);
                     if (register.description != null) originalRegister.description = register.description;
                     if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
@@ -143,6 +143,7 @@ namespace Kartverket.Register.Controllers
                     originalRegister.MakeAllItemsRetired = register.MakeAllItemsRetired;
                     if (originalRegister.MakeAllItemsRetired)
                         _registerItemService.MakeAllRegisterItemsRetired(originalRegister);
+                    originalRegister.TransliterNorwegian = register.TransliterNorwegian;
                     _translationService.UpdateTranslations(register, originalRegister);
                     _db.Entry(originalRegister).State = EntityState.Modified;
                     _db.SaveChanges();
@@ -245,7 +246,7 @@ namespace Kartverket.Register.Controllers
 
         private void ValidationName(Models.Register subRegister, Models.Register originalRegister)
         {
-            var seoName = Helpers.RegisterUrls.MakeSeoFriendlyString(subRegister.name);
+            var seoName = Helpers.RegisterUrls.MakeSeoFriendlyString(subRegister.name, subRegister.TransliterNorwegian);
 
             subRegister.pathOld = RegisterUrls.GetNewPath(originalRegister.pathOld, seoName);
             subRegister.path = RegisterUrls.GetNewPath(originalRegister.path, seoName);

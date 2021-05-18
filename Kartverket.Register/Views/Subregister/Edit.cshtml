@@ -170,6 +170,21 @@
         </div>
         <div class="form-group">
             <div class="col-md-2"></div>
+            <label for="itemsValidFrom" class="control-label col-md-2">@CodelistValues.ValidFromDate</label>
+            <div class="col-md-8">
+                <input type="date" name="itemsValidFrom" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <label for="itemsValidTo" class="control-label col-md-2">@CodelistValues.ValidToDate</label>
+            <div class="col-md-8">
+                <input type="date" name="itemsValidTo" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2"></div>
             <div class="col-md-10">
                 @Html.LabelFor(model => model.MakeAllItemsRetired)
             </div>

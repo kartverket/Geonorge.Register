@@ -55,7 +55,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
         ICollection<RegisterItemV2ViewModel> OrderBy(ICollection<RegisterItemV2ViewModel> registerItems, string sorting);
         ICollection<Models.RegisterItem> OrderBy(ICollection<Models.RegisterItem> registerItems, string sorting);
-        void MakeAllRegisterItemsValid(Models.Register register);
+        void MakeAllRegisterItemsValid(Models.Register register, DateTime? itemsValidFrom, DateTime? itemsValidTo);
         string GetDistributionType(string codeValue);
         void DeleteRegisterItems(ICollection<Models.RegisterItem> registerItems);
         void ImportRegisterItemFromFile(Models.Register register, HttpPostedFileBase file);

@@ -102,7 +102,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Authorize]
         //[Route("subregister/{registername}/{registerOwner}/{subregister}/rediger")]
-        public ActionResult Edit(Models.Register register, string registername)
+        public ActionResult Edit(Models.Register register, string registername, DateTime? itemsValidFrom, DateTime? itemsValidTo)
         {
             var originalRegister = _registerService.GetRegisterBySystemId(register.systemId);
             if (_accessControlService.HasAccessTo(originalRegister))
@@ -139,7 +139,7 @@ namespace Kartverket.Register.Controllers
 
                     originalRegister.MakeAllItemsValid = register.MakeAllItemsValid;
                     if (originalRegister.MakeAllItemsValid)
-                        _registerItemService.MakeAllRegisterItemsValid(originalRegister);
+                        _registerItemService.MakeAllRegisterItemsValid(originalRegister, itemsValidFrom, itemsValidTo);
                     originalRegister.MakeAllItemsRetired = register.MakeAllItemsRetired;
                     if (originalRegister.MakeAllItemsRetired)
                         _registerItemService.MakeAllRegisterItemsRetired(originalRegister);

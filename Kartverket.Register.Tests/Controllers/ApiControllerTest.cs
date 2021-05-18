@@ -279,6 +279,7 @@ namespace Kartverket.Register.Tests.Controllers
             register.name = name;
             register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name);
             register.description = "testbeskrivelse";
+            register.status = new Status { value = "Valid", description = "Gyldig" };
             register.owner = NewOrganization("Testorg");
             register.Translations.Add(new Models.Translations.RegisterTranslation { CultureName = Culture.NorwegianCode });
             register.AddMissingTranslations();

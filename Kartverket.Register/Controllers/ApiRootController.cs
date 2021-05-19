@@ -380,7 +380,11 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetSubregisterByName(string parentregister, string register, string systemid = null)
         {
-            var it = _registerService.GetRegister(parentregister, register) ?? _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+            var it = _registerService.GetRegister(parentregister, register);
+
+            if(it == null && !string.IsNullOrEmpty(systemid))
+                _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+
             if (it == null)
             {
                 return NotFound();

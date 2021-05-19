@@ -383,7 +383,7 @@ namespace Kartverket.Register.Controllers
             var it = _registerService.GetRegister(parentregister, register);
 
             if(it == null && !string.IsNullOrEmpty(systemid))
-                _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+               it = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
 
             if (it == null)
             {

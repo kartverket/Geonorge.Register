@@ -699,10 +699,14 @@ namespace Kartverket.Register.Models.Api
         private NarrowerDetails GetNarrowerDetail(CodelistValue codelistvalue, string baseUrl)
         {
             var itemNarrower = new NarrowerDetails { id= baseUrl + codelistvalue.GetObjectUrl(), label = codelistvalue.name, codevalue = codelistvalue.value };
+
+            if(codelistvalue.narrowerItems != null && codelistvalue.narrowerItems.Any())
+                itemNarrower.narrowerdetails = new List<NarrowerDetails>();
+
             foreach (var codelistvalue2 in codelistvalue.narrowerItems)
             {
                 NarrowerDetails narrowerDetails = GetNarrowerDetail(codelistvalue2, baseUrl);
-                itemNarrower.narrowerdetails = narrowerDetails;
+                itemNarrower.narrowerdetails.Add(narrowerDetails);
                 narrowerdetails.Add(itemNarrower);
             }
 
@@ -865,6 +869,6 @@ namespace Kartverket.Register.Models.Api
         public string id { get; set; }
         public string label { get; set; }
         public string codevalue { get; set; }
-        public NarrowerDetails narrowerdetails { get; set; }
+        public List<NarrowerDetails> narrowerdetails { get; set; }
     }
 }

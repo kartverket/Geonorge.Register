@@ -1,4 +1,6 @@
-﻿using Kartverket.Register.Models.Translations;
+﻿using Kartverket.Register.Models;
+using Kartverket.Register.Models.Translations;
+using System;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -128,7 +130,7 @@ namespace Kartverket.Register.Helpers
             return url;
         }
 
-        public static string MakeSeoFriendlyString(string input)
+        public static string MakeSeoFriendlyString(string input, bool transliterNorwegian = false)
         {
             string encodedUrl = (input ?? "").ToLower();
 
@@ -138,11 +140,11 @@ namespace Kartverket.Register.Helpers
             // remove characters
             encodedUrl = encodedUrl.Replace("'", "");
 
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
             // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9æøå.]", "-");
+
+            if(transliterNorwegian)
+                encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "e").Replace("ø", "o");
 
             // remove duplicates
             encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
@@ -153,6 +155,27 @@ namespace Kartverket.Register.Helpers
             return encodedUrl;
         }
 
+        public static string GetFileExtension(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                if (path.Contains("."))
+                {
+                    string[] split = path.Split('.');
+                    var ext = split.Last();
+                    if (AllowedExtension(ext))
+                        return ext;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool AllowedExtension(string ext)
+        {
+            string[] extensions = { "json", "xml", "csv", "gml", "gml", "rdf", "rss", "atom" };
+            return extensions.Any(ext.Contains);
+        }
 
         public static string registerUrl(string parentregister, string registerOwner, string register)
         {
@@ -227,6 +250,88 @@ namespace Kartverket.Register.Helpers
                 url += "/" + id + "." + format + "?" + request.QueryString;
             }
             return url;
+        }
+
+        internal static string GetSystemIdFromPath(string path)
+        {
+            Guid guidOutput;
+
+            if (string.IsNullOrEmpty(path))
+                return null;
+
+            var paths = path.Split('/');
+            
+            foreach(var item in paths)
+            {
+                var data = RemoveExtension(item);
+                if (Guid.TryParse(data, out guidOutput))
+                    return data;
+            }
+
+            return null;
+        }
+
+        internal static string GetPath(string registername, string subregisters)
+        {
+            if (registername == "register")
+                registername = "";
+
+            var path = registername;
+            if (!string.IsNullOrEmpty(subregisters))
+                path = path + (!string.IsNullOrEmpty(registername) ? "/" : "") + subregisters;
+
+            if (!string.IsNullOrEmpty(GetSystemIdFromPath(path)))
+            {
+                var paths = path.Split('/');
+
+                path = "";
+
+                for (int p = 0; p < paths.Length-2;p++)
+                {
+                    path = path + paths[p];
+                    if(p < paths.Length - 3)
+                        path = path + "/";
+                }
+            }
+
+            return path;
+        }
+
+        public static string RemoveExtension(string path)
+        {
+            if (path.Contains("."))
+            {
+                string[] split = path.Split('.');
+                path = string.Join(".", split.Take(split.Length - 1));
+            }
+
+            return path;
+        }
+
+        public static string GetNewPath(string path, string seoName)
+        {
+            if (path == null)
+                return null;
+
+            if (!path.Contains('/'))
+                return seoName;
+
+            return path.Substring(0, path.LastIndexOf('/')) + "/" + seoName; ;
+        }
+
+        internal static string CreatePath(string registername, Models.Register parentRegister = null, bool transliterNorwegian = false)
+        {
+            var path = RegisterUrls.MakeSeoFriendlyString(registername, transliterNorwegian);
+
+            if (parentRegister != null)
+            {
+                if (!string.IsNullOrEmpty(parentRegister.path))
+                {
+                    path = parentRegister.path + "/" + path;
+                }
+            }
+
+            return path;
         }
     }
 }

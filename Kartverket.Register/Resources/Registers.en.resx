@@ -318,4 +318,7 @@
   <data name="MakeAllItemsRetiredMessage" xml:space="preserve">
     <value>Set status of all values in code list. Individual values can still be set</value>
   </data>
+  <data name="TransliterNorwegian" xml:space="preserve">
+    <value>Transliter æøå to eoa in url path</value>
+  </data>
 </root>

@@ -1,4 +1,4 @@
-﻿using System.Web.Http;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -14,6 +14,8 @@ using System.Threading;
 using Kartverket.Register.Models.Translations;
 using System.Collections.Specialized;
 using Kartverket.Register.Helpers;
+using System.Web.SessionState;
+using System.Linq;
 
 namespace Kartverket.Register
 {
@@ -65,6 +67,23 @@ namespace Kartverket.Register
 
         protected void Application_BeginRequest()
         {
+            if (Context.Request.Form["access_token"] != null)
+            {
+                var cookieToken = new HttpCookie("oidcAccessToken", Context.Request.Form["access_token"]) { /*SameSite = SameSiteMode.Lax*/ };
+
+                cookieToken.Domain = null;
+
+                cookieToken.Expires = DateTime.Now.AddHours(1);
+                HttpContext.Current.Response.Cookies.Add(cookieToken);
+            }
+            else if(Context.Request.AppRelativeCurrentExecutionFilePath == "~/SignOut")
+            {
+                if (Request.Cookies["oidcAccessToken"] != null)
+                {
+                    Response.Cookies["oidcAccessToken"].Expires = DateTime.Now.AddDays(-1);
+                }
+            }
+
             ValidateReturnUrl(Context.Request.QueryString);
 
             var cookie = Context.Request.Cookies["_culture"];
@@ -88,11 +107,11 @@ namespace Kartverket.Register
                 cultureName = CultureHelper.GetImplementedCulture(cultureName);
                 if (CultureHelper.IsNorwegian(cultureName))
                 {
-                    cookie = new HttpCookie("_culture", Culture.NorwegianCode) {SameSite = SameSiteMode.Lax};
+                    cookie = new HttpCookie("_culture", Culture.NorwegianCode) {/*SameSite = SameSiteMode.Lax*/};
                 }
                 else
                 {
-                    cookie = new HttpCookie("_culture", Culture.EnglishCode) {SameSite = SameSiteMode.Lax};
+                    cookie = new HttpCookie("_culture", Culture.EnglishCode) {/*SameSite = SameSiteMode.Lax*/};
                 }
 
                 if (!Request.IsLocal)
@@ -120,8 +139,25 @@ namespace Kartverket.Register
                     returnUrl = returnUrl.Replace("http://", "");
                     returnUrl = returnUrl.Replace("https://", "");
 
-                    if (!returnUrl.StartsWith(Request.Url.Host))
-                        HttpContext.Current.Response.StatusCode = 400;
+                    var host = Request.Url.Host;
+                    if (returnUrl.StartsWith("localhost:44346"))
+                        host = "localhost";
+
+                    if (!returnUrl.StartsWith(host))
+                            HttpContext.Current.Response.StatusCode = 400;
+                }
+            }
+        }
+        void Application_AcquireRequestState(object sender, EventArgs e)
+        {
+            if(Context.Handler is IRequiresSessionState || Context.Handler is IReadOnlySessionState)
+            { 
+                if (Session != null)
+                {
+                    if (Context.Request.Form["access_token"] != null)
+                    {
+                        Session.Add("access_token", Context.Request.Form["access_token"]);
+                    }
                 }
             }
         }

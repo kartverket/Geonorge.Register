@@ -24,6 +24,8 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string owner { get; set; }
         [DataMemberAttribute]
+        public string status { get; set; }
+        [DataMemberAttribute]
         public string manager { get; set; }
         [DataMemberAttribute]
         public string controlbody { get; set; }
@@ -47,13 +49,14 @@ namespace Kartverket.Register.Models.Api
             if (item != null)
             {
                 id = baseUrl + item.GetObjectUrl();
-                label = GetNameLocale(item, cultureName);
+                label = item.NameTranslated();
                 lang = cultureName;
-                contentsummary = GetDescriptionLocale(item, cultureName);
+                contentsummary = item.DescriptionTranslated();
                 lastUpdated = item.modified;
+                status = item.status.DescriptionTranslated();
                 targetNamespace = item.targetNamespace;
                 containedItemClass = item.containedItemClass;
-                if (item.owner != null) owner = item.owner.name;
+                if (item.owner != null) owner = item.owner.NameTranslated();
                 if (item.manager != null) manager = item.manager.name;
                 containeditems = new List<Registeritem>();
                 containedSubRegisters = new List<Register>();

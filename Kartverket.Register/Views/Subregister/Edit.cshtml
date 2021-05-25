@@ -40,6 +40,13 @@
             @Html.ValidationMessage("ErrorMessage")
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+            @Html.CheckBoxFor(m => m.TransliterNorwegian, new { title = Registers.TransliterNorwegian, @class = "checkbox-inline" })
+            <small>@Registers.TransliterNorwegian.</small>
+        </div>
+    </div>
 
     @for (int t = 0; t < Model.Translations.Count; t++)
     {
@@ -159,6 +166,21 @@
             <div class="col-md-10">
                 @Html.CheckBoxFor(m => m.MakeAllItemsValid, new { title = Registers.MakeAllItemsValidMessage, @class = "checkbox-inline" })
                 <small>@Registers.MakeAllItemsValidMessage.</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <label for="itemsValidFrom" class="control-label col-md-2">@CodelistValues.ValidFromDate</label>
+            <div class="col-md-8">
+                <input type="date" name="itemsValidFrom" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <label for="itemsValidTo" class="control-label col-md-2">@CodelistValues.ValidToDate</label>
+            <div class="col-md-8">
+                <input type="date" name="itemsValidTo" class="form-control" />
             </div>
         </div>
         <div class="form-group">

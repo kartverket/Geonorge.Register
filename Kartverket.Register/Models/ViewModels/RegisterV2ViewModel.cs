@@ -283,12 +283,15 @@ namespace Kartverket.Register.Models.ViewModels
         public string GetObjectCreateUrl()
         {
             var url = ParentRegister == null
-                ? Seoname + "/ny"
-                : ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/ny";
+                    ? Seoname + "/ny"
+                    : ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/ny";
+
+            var urlFixed = SystemId + "/ny";
+
 
             if (ContainedItemClassIsDocument()) return "/dokument/" + url;
             if (ContainedItemClassIsCodelistValue()) return "/kodeliste/" + url;
-            if (ContainedItemClassIsRegister()) return "/subregister/" + url;
+            if (ContainedItemClassIsRegister()) return "/subregister/" + urlFixed;
             if (ContainedItemClassIsOrganization()) return "/organisasjoner/" + url;
             if (ContainedItemClassIsEpsg()) return "/epsg/" + url;
             if (ContainedItemClassIsNameSpace()) return "/navnerom/" + url;
@@ -306,15 +309,19 @@ namespace Kartverket.Register.Models.ViewModels
         public string GetEditObjectUrl()
         {
             return ParentRegister == null
-                ? "/rediger/" + Seoname
-                : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/rediger";
+                ? "/rediger/" + SystemId
+                : "/subregister/" + SystemId + "/rediger";
         }
 
         public string GetDeleteObjectUrl()
         {
+            //return ParentRegister == null
+            //    ? "/slett/" + Seoname
+            //    : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
+
             return ParentRegister == null
                 ? "/slett/" + Seoname
-                : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
+                : "/subregister/" + SystemId + "/slett";
         }
 
 

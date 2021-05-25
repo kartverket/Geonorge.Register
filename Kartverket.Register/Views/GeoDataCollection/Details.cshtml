@@ -34,7 +34,7 @@
     </article>
 </section>
 <div class="row">
-    <div class="col-md-6">
+    <article class="col-md-6">
         <p><strong>@GeodataCollection.Title: </strong>@Model.Title</p>
         <p><strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle</p>
         @if (!string.IsNullOrEmpty(Model.DatasetLink))
@@ -52,22 +52,24 @@
         {
             <p><strong>@GeodataCollection.OtherOrganizationsInvolved: </strong>@Model.OtherOrganizationsInvolved</p>
         }
-    </div>
+    </article>
     <div class="col-md-6">
         @if (!string.IsNullOrEmpty(Model.ThumbnailFileName))
         {<p>
-                <img class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal" style="cursor: pointer;" src="/data/img/@Model.ThumbnailFileName" />
+                <img class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal" style="cursor: pointer;" src="/data/img/@Model.ImageFileName" />
                 <!-- Modal -->
-                <div class="modal fade" id="myModal" role="img" style="display: none; position: fixed; padding-top: 0px; left: 0; top: 0; width: 100%; height: 100%; overflow: auto;">
-                    <div class="modal-dialog" style="width: 90%; height: 90%; margin: 0; padding: 0;">
-                        <!-- Modal content-->
-                        <div class="modal-content" style="height: auto; min-height: 100%; border-radius: 0;">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="modal fade" id="myModal" role="img" style="display: none; position: fixed; padding-top: 20px; left: 10px; top: 0; width: 100%; height: 100%; overflow: auto;">
+                    <div style="display: flex; justify-content: center">
+                        <div class="modal-dialog" style="width: 70%; height: 90%; margin: 0; padding: 0;">
+                            <!-- Modal content-->
+                            <div class="modal-content" style="height: auto; min-height: 100%; border-radius: 0;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                            </div>
-                            <div class="modal-body">
-                                <img src="/data/img/@Model.ImageFileName" />
+                                </div>
+                                <div class="modal-body">
+                                    <img src="/data/img/@Model.ImageFileName" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -111,11 +113,11 @@
 
         @if (!string.IsNullOrEmpty(Model.Purpose))
         {
-            <p><strong>@GeodataCollection.Purpose: </strong>@Model.Purpose</p>
+            <p><strong>@GeodataCollection.DataOwner: </strong>@Model.DataOwner</p>
         }
-        @if (!string.IsNullOrEmpty(Model.Methodology))
+        @if (Model.Responsible != null)
         {
-            <p><strong>@GeodataCollection.Methodology: </strong>@DisplayText(Model.Methodology)</p>
+            <p><strong>@GeodataCollection.Responsible: </strong>@Model.Responsible.NameTranslated()</p>
         }
         @if (!string.IsNullOrEmpty(Model.RegistrationRequirements))
         {

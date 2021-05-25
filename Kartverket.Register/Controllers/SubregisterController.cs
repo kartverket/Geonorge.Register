@@ -5,6 +5,7 @@ using System.Linq;
 using System.ServiceModel.Security;
 using System.Web;
 using System.Web.Mvc;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
@@ -40,10 +41,10 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("subregister/{registerparant}/{parentRegisterOwner}/{registername}/ny")]
         //[Route("subregister/{registername}/ny")]
-        public ActionResult Create(string registerparant, string parentRegisterOwner, string registername)
+        public ActionResult Create(string systemid)
         {
             var register = new Models.Register();
-            register.parentRegister = _registerService.GetRegister(registerparant, registername);
+            register.parentRegister = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
 
             if (_accessControlService.HasAccessTo(register.parentRegister))
             {
@@ -64,9 +65,10 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         //[Route("subregister/{registerparant}/{parentRegisterOwner}/{registerName}/ny")]
         //[Route("subregister/{registerName}/ny")]
-        public ActionResult Create(Models.Register subRegister, string registerName, string registerparant)
+        public ActionResult Create(Models.Register subRegister)
         {
-            subRegister.parentRegister = _registerService.GetRegister(registerparant, registerName);
+            if(subRegister.parentRegisterId.HasValue)
+                subRegister.parentRegister = _registerService.GetRegisterBySystemId(subRegister.parentRegisterId.Value);
             if (!_registerService.RegisterNameIsValid(subRegister)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
 
             if (ModelState.IsValid)
@@ -81,10 +83,12 @@ namespace Kartverket.Register.Controllers
         // GET: Subregister/Edit/5
         [Authorize]
         //[Route("subregister/{registername}/{registerOwner}/{subregister}/rediger")]
-        public ActionResult Edit(string registername, string subregister)
+        public ActionResult Edit(string systemId)
         {
-            var register = _registerService.GetRegister(registername, subregister);
+            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemId));
             if (register == null) return HttpNotFound("Fant ikke register");
+            register.MakeAllItemsRetired = false;
+            register.MakeAllItemsValid = false;
 
             Viewbags(register);
             register.AddMissingTranslations();
@@ -98,17 +102,18 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Authorize]
         //[Route("subregister/{registername}/{registerOwner}/{subregister}/rediger")]
-        public ActionResult Edit(Models.Register register, string registername, string subregister)
+        public ActionResult Edit(Models.Register register, string registername, DateTime? itemsValidFrom, DateTime? itemsValidTo)
         {
-            var originalRegister = _registerService.GetRegister(registername, subregister);
+            var originalRegister = _registerService.GetRegisterBySystemId(register.systemId);
             if (_accessControlService.HasAccessTo(originalRegister))
             {
-                ValidationName(register, registername);
+                ValidationName(register, originalRegister);
 
                 if (ModelState.IsValid)
                 {
                     if (register.name != null) originalRegister.name = register.name;
-                    originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
+                    originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name, register.TransliterNorwegian);
+                    originalRegister.path = RegisterUrls.GetNewPath(originalRegister.path, originalRegister.seoname);
                     if (register.description != null) originalRegister.description = register.description;
                     if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
                     if (register.managerId != null) originalRegister.managerId = register.managerId;
@@ -134,10 +139,11 @@ namespace Kartverket.Register.Controllers
 
                     originalRegister.MakeAllItemsValid = register.MakeAllItemsValid;
                     if (originalRegister.MakeAllItemsValid)
-                        _registerItemService.MakeAllRegisterItemsValid(originalRegister);
+                        _registerItemService.MakeAllRegisterItemsValid(originalRegister, itemsValidFrom, itemsValidTo);
                     originalRegister.MakeAllItemsRetired = register.MakeAllItemsRetired;
                     if (originalRegister.MakeAllItemsRetired)
                         _registerItemService.MakeAllRegisterItemsRetired(originalRegister);
+                    originalRegister.TransliterNorwegian = register.TransliterNorwegian;
                     _translationService.UpdateTranslations(register, originalRegister);
                     _db.Entry(originalRegister).State = EntityState.Modified;
                     _db.SaveChanges();
@@ -159,9 +165,9 @@ namespace Kartverket.Register.Controllers
         // GET: Subregister/Delete/5
         [Authorize]
         //[Route("subregister/{registername}/{owner}/{subregister}/slett")]
-        public ActionResult Delete(string registername, string owner, string subregister)
+        public ActionResult Delete(string systemid)
         {
-            Models.Register register = _registerService.GetRegister(registername, subregister);
+            Models.Register register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
 
             if (register == null)
             {
@@ -180,9 +186,9 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [HttpPost, ActionName("Delete")]
         //[Route("subregister/{registername}/{owner}/{subregister}/slett")]
-        public ActionResult DeleteConfirmed(string registername, string owner, string subregister)
+        public ActionResult DeleteConfirmed(string systemid)
         {
-            var register = _registerService.GetRegister(registername, subregister);
+            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (register != null)
             {
                 if (!_accessControlService.HasAccessTo(register))
@@ -238,10 +244,16 @@ namespace Kartverket.Register.Controllers
             ViewBag.registerSEO = register.seoname;
         }
 
-        private void ValidationName(Models.Register subRegister, string register)
+        private void ValidationName(Models.Register subRegister, Models.Register originalRegister)
         {
+            var seoName = Helpers.RegisterUrls.MakeSeoFriendlyString(subRegister.name, subRegister.TransliterNorwegian);
+
+            subRegister.pathOld = RegisterUrls.GetNewPath(originalRegister.pathOld, seoName);
+            subRegister.path = RegisterUrls.GetNewPath(originalRegister.path, seoName);
+
+
             var queryResultsDataset = from o in _db.Registers
-                                      where o.name == subRegister.name && o.systemId != subRegister.systemId && o.parentRegister.seoname == register
+                                      where o.systemId != subRegister.systemId && (o.path == subRegister.pathOld || o.path == subRegister.path)
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

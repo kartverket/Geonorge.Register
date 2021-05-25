@@ -15,6 +15,12 @@ namespace Kartverket.Register.Controllers
         public void SignIn()
         {
             var redirectUri = Url.Action(nameof(RegistersController.Index), "Registers");
+
+            if (Request.QueryString["ReturnUrl"] != null)
+            {
+                redirectUri = Request.QueryString["ReturnUrl"];
+            }
+
             HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = redirectUri },
                 OpenIdConnectAuthenticationDefaults.AuthenticationType);
         }

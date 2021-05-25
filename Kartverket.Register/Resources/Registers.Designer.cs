@@ -628,6 +628,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transliter æøå til eoa i url sti.
+        /// </summary>
+        public static string TransliterNorwegian {
+            get {
+                return ResourceManager.GetString("TransliterNorwegian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oppdatert.
         /// </summary>
         public static string Updated {

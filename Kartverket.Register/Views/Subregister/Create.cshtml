@@ -25,104 +25,113 @@
 
 @using (Html.BeginForm("Create", "Subregister", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    if (Model.parentRegister.parentRegister != null)
+    if (Model.parentRegister != null)
     {
-        <input type="hidden" value="@Model.parentRegister.parentRegister.seoname" id="registerparant" name="registerparant" />
+        <input type="hidden" value="@Model.parentRegister.seoname" id="registerparant" name="registerparant" />
+        <input type="hidden" value="@Model.parentRegister.systemId" id="registerparantId" name="parentregisterId" />
     }
-    <div class="form-horizontal">
+        <div class="form-horizontal">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessage("ErrorMessage")
-            </div>
-        </div>
-
-        @for (int t = 0; t < Model.Translations.Count; t++)
-        {
-            @Html.HiddenFor(m => Model.Translations[t].CultureName)
             <div class="form-group">
-                @Html.LabelFor(m => Model.Translations[t].Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => Model.Translations[t].Name)
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessage("ErrorMessage")
                 </div>
             </div>
-        }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @for (int t = 0; t < Model.Translations.Count; t++)
-        {
-            @Html.HiddenFor(m => Model.Translations[t].CultureName)
-            <div class="form-group">
-                @Html.LabelFor(m => Model.Translations[t].Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => Model.Translations[t].Description)
-                </div>
-            </div>
-        }
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.containedItemClass, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("containedItemClass", null, "-- Velg innhold --", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.targetNamespace, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.targetNamespace, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        @if (HtmlHelperExtensions.IsAdmin())
-        {
             <div class="form-group">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    @Html.LabelFor(model => model.accessId, Registers.AccessLabel)
-                    <br /><small>@Registers.AccessText</small> <br /><br />
-                </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-5">
-                    @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = Registers.AccessAdmin, @class = "col-md-1", @checked = "checked" })
-                    <label class="col-md-4" for=" admin">Admin</label>
-                    @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = Registers.AccessEditor, @class = "col-md-1" })
-                    <label class="col-md-4" for="editor">Admin + Editor</label>
+                    @Html.CheckBoxFor(m => m.TransliterNorwegian, new { title = Registers.TransliterNorwegian, @class = "checkbox-inline" })
+                    <small>@Registers.TransliterNorwegian.</small>
                 </div>
             </div>
-        }
-        else
-        {
-            <input type="hidden" value="2" id="accessId" name="accessId" />
-        }
 
-        <div class="form-group">
-            <hr />
-            <input type="submit" value="@Registers.Propose" class="btn btn-default pull-right" />
-            @if (Model.parentRegister.parentRegister != null)
+            @for (int t = 0; t < Model.Translations.Count; t++)
             {
-                <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">@Shared.Back</a>
+                @Html.HiddenFor(m => Model.Translations[t].CultureName)
+                <div class="form-group">
+                    @Html.LabelFor(m => Model.Translations[t].Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => Model.Translations[t].Name)
+                    </div>
+                </div>
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @for (int t = 0; t < Model.Translations.Count; t++)
+            {
+                @Html.HiddenFor(m => Model.Translations[t].CultureName)
+                <div class="form-group">
+                    @Html.LabelFor(m => Model.Translations[t].Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => Model.Translations[t].Description)
+                    </div>
+                </div>
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.containedItemClass, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("containedItemClass", null, "-- Velg innhold --", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.targetNamespace, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.targetNamespace, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            @if (HtmlHelperExtensions.IsAdmin())
+            {
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        @Html.LabelFor(model => model.accessId, Registers.AccessLabel)
+                        <br /><small>@Registers.AccessText</small> <br /><br />
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-5">
+                        @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = Registers.AccessAdmin, @class = "col-md-1", @checked = "checked" })
+                        <label class="col-md-4" for=" admin">Admin</label>
+                        @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = Registers.AccessEditor, @class = "col-md-1" })
+                        <label class="col-md-4" for="editor">Admin + Editor</label>
+                    </div>
+                </div>
             }
             else
             {
-                <a href="/register/@Model.parentRegister.seoname/">@Shared.Back</a>
+                <input type="hidden" value="2" id="accessId" name="accessId" />
             }
+
+            <div class="form-group">
+                <hr />
+                <input type="submit" value="@Registers.Propose" class="btn btn-default pull-right" />
+                @if (Model.parentRegister.parentRegister != null)
+                {
+                    <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">@Shared.Back</a>
+                }
+                else
+                {
+                    <a href="/register/@Model.parentRegister.seoname/">@Shared.Back</a>
+                }
+            </div>
         </div>
-    </div>
 }

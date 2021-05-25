@@ -225,6 +225,10 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string UuidMetadata { get; set; }
 
+        [DataMemberAttribute]
+        public Suitability Suitability { get; set; }
+
+
         //MunicipalDataset
         [DataMemberAttribute]
         public string ConfirmedDok { get; set; }
@@ -338,12 +342,12 @@ namespace Kartverket.Register.Models.Api
             if (item is RegisterItem registerItem)
             {
                 id = baseUrl + registerItem.GetObjectUrl();
-                label = registerItem.name;
+                label = registerItem.NameTranslated();
                 seoname = registerItem.seoname;
                 lang = CultureHelper.GetCurrentCulture();
                 lastUpdated = registerItem.modified;
                 if (registerItem.submitter != null) owner = registerItem.submitter.name;
-                if (registerItem.register.owner != null) owner = registerItem.register.owner.name;
+                if (registerItem.register.owner != null) owner = registerItem.register.owner.NameTranslated();
                 if (registerItem.status != null)
                 {
                     if (CultureHelper.IsNorwegian())
@@ -351,7 +355,7 @@ namespace Kartverket.Register.Models.Api
                     else
                         status = registerItem.status.value;
                 }
-                if (registerItem.description != null) description = registerItem.description;
+                if (registerItem.description != null) description = registerItem.DescriptionTranslated();
                 if (registerItem.versionName != null) versionName = registerItem.description;
                 versionNumber = registerItem.versionNumber;
                 versionName = registerItem.versionName;
@@ -626,6 +630,32 @@ namespace Kartverket.Register.Models.Api
                 dokDeliveryAtomFeedStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryAtomFeedStatus.description;
 
                 MetadataUrl = d.MetadataUrl;
+
+                Suitability = new Suitability();
+
+                Suitability.BuildingMatter = d.BuildingMatter.HasValue ? d.BuildingMatter.Value : 0;
+                Suitability.BuildingMatterNote = d.BuildingMatterNote;
+
+                Suitability.ImpactAssessmentPlanningBuildingAct = d.ImpactAssessmentPlanningBuildingAct.HasValue ? d.ImpactAssessmentPlanningBuildingAct.Value : 0;
+                Suitability.ImpactAssessmentPlanningBuildingActNote = d.ImpactAssessmentPlanningBuildingActNote;
+
+                Suitability.MunicipalLandUseElementPlan = d.MunicipalLandUseElementPlan.HasValue ? d.MunicipalLandUseElementPlan.Value : 0;
+                Suitability.MunicipalLandUseElementPlanNote = d.MunicipalLandUseElementPlanNote;
+
+                Suitability.MunicipalSocialPlan = d.MunicipalSocialPlan.HasValue ? d.MunicipalSocialPlan.Value : 0;
+                Suitability.MunicipalSocialPlanNote = d.MunicipalSocialPlanNote;
+
+                Suitability.RegionalPlan = d.RegionalPlan.HasValue ? d.RegionalPlan.Value : 0;
+                Suitability.RegionalPlanNote = d.RegionalPlanNote;
+
+                Suitability.RiskVulnerabilityAnalysisPlanningBuildingAct = d.RiskVulnerabilityAnalysisPlanningBuildingAct.HasValue ?
+                    d.RiskVulnerabilityAnalysisPlanningBuildingAct.Value : 0;
+                Suitability.RiskVulnerabilityAnalysisPlanningBuildingActNote = d.RiskVulnerabilityAnalysisPlanningBuildingActNote;
+
+                Suitability.ZoningPlan = d.ZoningPlan.HasValue ? d.ZoningPlan.Value : 0;
+                Suitability.ZoningPlanNote = d.ZoningPlanNote;
+
+
                 ConfirmedDok = "NEI";
                 Coverage = "NEI";
                 if (filter != null && !string.IsNullOrEmpty(filter.municipality))
@@ -699,10 +729,14 @@ namespace Kartverket.Register.Models.Api
         private NarrowerDetails GetNarrowerDetail(CodelistValue codelistvalue, string baseUrl)
         {
             var itemNarrower = new NarrowerDetails { id= baseUrl + codelistvalue.GetObjectUrl(), label = codelistvalue.name, codevalue = codelistvalue.value };
+
+            if(codelistvalue.narrowerItems != null && codelistvalue.narrowerItems.Any())
+                itemNarrower.narrowerdetails = new List<NarrowerDetails>();
+
             foreach (var codelistvalue2 in codelistvalue.narrowerItems)
             {
                 NarrowerDetails narrowerDetails = GetNarrowerDetail(codelistvalue2, baseUrl);
-                itemNarrower.narrowerdetails = narrowerDetails;
+                itemNarrower.narrowerdetails.Add(narrowerDetails);
                 narrowerdetails.Add(itemNarrower);
             }
 
@@ -865,6 +899,30 @@ namespace Kartverket.Register.Models.Api
         public string id { get; set; }
         public string label { get; set; }
         public string codevalue { get; set; }
-        public NarrowerDetails narrowerdetails { get; set; }
+        public List<NarrowerDetails> narrowerdetails { get; set; }
+    }
+
+    public class Suitability
+    {
+        public int RegionalPlan { get; set; }
+        public string RegionalPlanNote { get; set; }
+
+        public int MunicipalSocialPlan { get; set; }
+        public string MunicipalSocialPlanNote { get; set; }
+
+        public int MunicipalLandUseElementPlan { get; set; }
+        public string MunicipalLandUseElementPlanNote { get; set; }
+
+        public int ZoningPlan { get; set; }
+        public string ZoningPlanNote { get; set; }
+
+        public int BuildingMatter { get; set; }
+        public string BuildingMatterNote { get; set; }
+
+        public int ImpactAssessmentPlanningBuildingAct { get; set; }
+        public string ImpactAssessmentPlanningBuildingActNote { get; set; }
+
+        public int RiskVulnerabilityAnalysisPlanningBuildingAct { get; set; }
+        public string RiskVulnerabilityAnalysisPlanningBuildingActNote { get; set; }
     }
 }

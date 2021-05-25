@@ -24,6 +24,7 @@ using Kartverket.Register.App_Start;
 using StatusReport = Kartverket.Register.Models.StatusReport;
 using Swashbuckle.Examples;
 using System.Net;
+using System.Net.Http.Formatting;
 
 namespace Kartverket.Register.Controllers
 {
@@ -379,7 +380,11 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetSubregisterByName(string parentregister, string register, string systemid = null)
         {
-            var it = _registerService.GetRegister(parentregister, register) ?? _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+            var it = _registerService.GetRegister(parentregister, register);
+
+            if(it == null && !string.IsNullOrEmpty(systemid))
+               it = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+
             if (it == null)
             {
                 return NotFound();
@@ -389,33 +394,119 @@ namespace Kartverket.Register.Controllers
             return Ok(result);
         }
 
-
         /// <summary>
-        /// Gets current and historical versions of register item by register- organization- and registeritem-name 
+        /// Gets current and historical versions of register
         /// </summary>
         /// <param name="registerName">The search engine optimized name of the register</param>
-        /// <param name="item">The search engine optimized name of the register item</param>
-        /// <param name="id"></param>
-        [System.Web.Http.Route("api/{registerName}/{item}/{id}.{ext}")]
-        [System.Web.Http.Route("api/{registerName}/{item}/{id}")]
-        [System.Web.Http.Route("api/register/{registerName}/{itemowner}/{item}.{ext}")]
-        [System.Web.Http.Route("api/register/{registerName}/{itemowner}/{item}")]
-        [System.Web.Http.Route("api/register/versjoner/{registerName}/{itemowner}/{item}.{ext}")]
-        [System.Web.Http.Route("api/register/versjoner/{registerName}/{itemowner}/{item}")]
+        /// <param name="subregisters">The path to the register</param>
+        [System.Web.Http.Route("api/{registerName}/{*subregisters}")]
+        [System.Web.Http.Route("api/register/versjoner/{registerName}/{*subregisters}")]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetRegisterItemByName(string registerName, string item, string id = null)
+        public IHttpActionResult GetRegisterItemByName(string registerName, string subregisters = null)
         {
-            var register = _registerService.GetRegister(null, registerName);
+            var path = RegisterUrls.GetPath(registerName, subregisters);
+            string systemId = RegisterUrls.GetSystemIdFromPath(registerName + "/" + subregisters);
+            string format = RegisterUrls.GetFileExtension(registerName + "/" + subregisters);
+            path = RegisterUrls.RemoveExtension(path);
+
+            var register = _registerService.GetRegisterByPath(path);
             if (register == null)
             {
                 return NotFound();
             }
-            Registeritem currentVersion;
 
-            currentVersion = register.IsInspireStatusRegister() ? ConvertInspireRegister(registerName, item) : ConvertCurrentAndVersions(null, registerName, item);
+            var mediatype = GetFormattingForMediaType(format);
 
-            return Ok(currentVersion);
+            //todo handle inspire?
+            //currentVersion = register.IsInspireStatusRegister() ? ConvertInspireRegister(registerName, item) : ConvertCurrentAndVersions(null, registerName, item);
+            if (!string.IsNullOrEmpty(systemId)) { 
+                var currentVersion = ConvertCurrentAndVersions(register, systemId);
+                return Content(HttpStatusCode.OK, currentVersion, mediatype.Formatter, mediatype.MediaTypeHeader);
+            }
+            else {
+                var result = (ConvertRegisterAndNextLevel(register));
+                return Content(HttpStatusCode.OK, result, mediatype.Formatter, mediatype.MediaTypeHeader);
+            }
         }
+
+
+        private MediaType GetFormattingForMediaType(string extension)
+        {
+
+            MediaType mediaType = new MediaType();
+
+            if(extension == "csv")
+            {
+                mediaType.Formatter = new CsvFormatter();
+                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("text/csv");
+            }
+            else if (extension == "gml")
+            {
+                mediaType.Formatter = new GMLFormatter();
+                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/gml+xml");
+            }
+            else if (extension == "rdf")
+            {
+                mediaType.Formatter = new SKOSFormatter();
+                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/gml+xml");
+            }
+            else if (extension == "rss")
+            {
+                mediaType.Formatter = new SyndicationFeedFormatter();
+                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/rss+xml");
+            }
+            else if (extension == "atom")
+            {
+                mediaType.Formatter = new SyndicationFeedFormatter();
+                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/atom+xml");
+            }
+            else if (extension == "xml")
+            {
+                mediaType.Formatter = new XMLFormatter();
+                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/xml");
+            }
+            else
+            {
+                mediaType.Formatter = new JsonMediaTypeFormatter();
+                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/json");
+            }
+
+            return mediaType;
+        }
+
+        class MediaType
+        {
+            public MediaTypeFormatter Formatter { get; set; }
+            public MediaTypeHeaderValue MediaTypeHeader { get; set; }
+        }
+
+
+        ///// <summary>
+        ///// Gets current and historical versions of register item by register- organization- and registeritem-name 
+        ///// </summary>
+        ///// <param name="registerName">The search engine optimized name of the register</param>
+        ///// <param name="item">The search engine optimized name of the register item</param>
+        ///// <param name="id"></param>
+        //[System.Web.Http.Route("api/{registerName}/{item}/{id}.{ext}")]
+        //[System.Web.Http.Route("api/{registerName}/{item}/{id}")]
+        //[System.Web.Http.Route("api/register/{registerName}/{itemowner}/{item}.{ext}")]
+        //[System.Web.Http.Route("api/register/{registerName}/{itemowner}/{item}")]
+        //[System.Web.Http.Route("api/register/versjoner/{registerName}/{itemowner}/{item}.{ext}")]
+        //[System.Web.Http.Route("api/register/versjoner/{registerName}/{itemowner}/{item}")]
+        //[System.Web.Http.HttpGet]
+        //public IHttpActionResult GetRegisterItemByName(string registerName, string item, string id = null)
+        //{
+        //    var register = _registerService.GetRegister(null, registerName);
+        //    if (register == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Registeritem currentVersion;
+
+        //    currentVersion = register.IsInspireStatusRegister() ? ConvertInspireRegister(registerName, item) : ConvertCurrentAndVersions(null, registerName, item);
+
+        //    return Ok(currentVersion);
+        //}
 
         /// <summary>
         /// Gets current and historical versions of register item by register- organization- and registeritem-name 
@@ -456,36 +547,36 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        /// <summary>
-        /// Gets register item by parent-register, register- organization- and registeritem-name 
-        /// </summary>
-        /// <param name="parentregister">The search engine optimized name of the parent register</param>
-        /// <param name="register">The search engine optimized name of the register</param>
-        /// <param name="item">The search engine optimized name of the register item</param>
-        /// <param name="id"></param>
-        [System.Web.Http.Route("api/{parentregister}/{register}/{item}/{id}")]
-        [System.Web.Http.Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}")]
-        [System.Web.Http.Route("api/{parentregister}/{register}/{item}/{id}.{ext}")]
-        [System.Web.Http.Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}.{ext}")]
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string item, string id = null)
-        {
-            Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(parentregister, register, item);
-            return Ok(currentVersion);
-        }
+        ///// <summary>
+        ///// Gets register item by parent-register, register- organization- and registeritem-name 
+        ///// </summary>
+        ///// <param name="parentregister">The search engine optimized name of the parent register</param>
+        ///// <param name="register">The search engine optimized name of the register</param>
+        ///// <param name="item">The search engine optimized name of the register item</param>
+        ///// <param name="id"></param>
+        //[System.Web.Http.Route("api/{parentregister}/{register}/{item}/{id}")]
+        //[System.Web.Http.Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}")]
+        //[System.Web.Http.Route("api/{parentregister}/{register}/{item}/{id}.{ext}")]
+        //[System.Web.Http.Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}.{ext}")]
+        //[System.Web.Http.HttpGet]
+        //public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string item, string id = null)
+        //{
+        //    Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(parentregister, register, item);
+        //    return Ok(currentVersion);
+        //}
 
-        /// <summary>
-        /// Gets sosi-codelist
-        /// </summary>
-        /// <param name="register">The search engine optimized name of the register</param>
-        /// <param name="item">The search engine optimized name of the register item</param>
-        [System.Web.Http.Route("api/sosi-kodelister/{register}/{item}")]
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult GetSubregisterItemByName(string register, string item)
-        {
-            Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions("sosi-kodelister", register, item);
-            return Ok(currentVersion);
-        }
+        ///// <summary>
+        ///// Gets sosi-codelist
+        ///// </summary>
+        ///// <param name="register">The search engine optimized name of the register</param>
+        ///// <param name="item">The search engine optimized name of the register item</param>
+        //[System.Web.Http.Route("api/sosi-kodelister/{register}/{item}")]
+        //[System.Web.Http.HttpGet]
+        //public IHttpActionResult GetSubregisterItemByName(string register, string item)
+        //{
+        //    Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions("sosi-kodelister", register, item);
+        //    return Ok(currentVersion);
+        //}
 
         /// <summary>
         /// List items for specific organization 
@@ -742,10 +833,10 @@ namespace Kartverket.Register.Controllers
 
         // **** HJELPEMETODER ****
 
-        private Registeritem ConvertCurrentAndVersions(string parent, string register, string item)
+        private Registeritem ConvertCurrentAndVersions(Models.Register register, string itemSystemId = null)
         {
             Registeritem currentVersion = null;
-            var versjoner = _registerItemService.GetAllVersionsOfItem(parent, register, item);
+            var versjoner = _registerItemService.GetAllVersionsOfRegisterItem(register, itemSystemId);
             if (versjoner != null)
             {
                 foreach (var v in versjoner)

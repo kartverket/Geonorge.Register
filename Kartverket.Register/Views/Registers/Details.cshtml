@@ -84,6 +84,9 @@
             <div class="col-sm-12 col-md-2 text-right">
                 <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span><br />
             </div>
+            <div class="col-sm-12 col-md-2 text-right">
+                <span class="small">Status: @Model.Status.DescriptionTranslated()</span><br />
+            </div>
 
             @if (Model.ContainedItemClassIsInspireDataset())
             {

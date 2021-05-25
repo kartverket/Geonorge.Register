@@ -21,7 +21,7 @@ namespace Kartverket.Register
 
             // Register
             routes.MapRoute("RegisterCreate", "ny", new { controller = "Registers", action = "Create"});
-            routes.MapRoute("RegisterEdit", "rediger/{registername}", new { controller = "Registers", action = "Edit"});
+            routes.MapRoute("RegisterEdit", "rediger/{systemid}", new { controller = "Registers", action = "Edit"});
             routes.MapRoute("RegisterDelete", "slett/{registername}", new { controller = "Registers", action = "Delet"});
             routes.MapRoute("EditDokMunicipal", "dok/kommunalt/{municipalityCode}/rediger", new { controller = "Registers", action = "EditDokMunicipal" });
 
@@ -106,10 +106,10 @@ namespace Kartverket.Register
             routes.MapRoute("CreateAlert", "varsler/{registerName}/ny", new { controller = "Alerts", action = "Create" });
 
             // Subregister
-            routes.MapRoute("CreateSubRegistrySub", "subregister/{registerparant}/{parentRegisterOwner}/{registerName}/ny", new { controller = "Subregister", action = "Create" });
+            routes.MapRoute("CreateSubRegistrySub", "subregister/{systemid}/ny", new { controller = "Subregister", action = "Create" });
             routes.MapRoute("CreateSubRegistry", "subregister/{registerName}/ny", new { controller = "Subregister", action = "Create" });
-            routes.MapRoute("EditSubRegistry", "subregister/{registername}/{registerOwner}/{subregister}/rediger", new { controller = "Subregister", action = "Edit" });
-            routes.MapRoute("DeleteSubRegistry", "subregister/{registername}/{owner}/{subregister}/slett", new { controller = "Subregister", action = "Delete" });
+            routes.MapRoute("EditSubRegistry", "subregister/{systemId}/rediger", new { controller = "Subregister", action = "Edit" });
+            routes.MapRoute("DeleteSubRegistry", "subregister/{systemid}/slett", new { controller = "Subregister", action = "Delete" });
 
 
             routes.MapRoute("SignIn", "SignIn", new { controller = "Home", action = "SignIn" });

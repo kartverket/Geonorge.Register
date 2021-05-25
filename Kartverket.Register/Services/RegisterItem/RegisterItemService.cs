@@ -1678,12 +1678,29 @@ namespace Kartverket.Register.Services.RegisterItem
             return registerItems;
         }
 
-        public void MakeAllRegisterItemsValid(Models.Register register)
+        public void MakeAllRegisterItemsValid(Models.Register register, DateTime? itemsValidFrom = null, DateTime? itemsValidTo = null)
         {
             foreach (var item in register.items)
             {
-                item.statusId = "Valid";
-                _dbContext.Entry(item).State = EntityState.Modified;
+                if (register.ContainedItemClassIsCodelistValue())
+                {
+                    var codelistvalue = item as CodelistValue;
+
+                    codelistvalue.ValidFromDate = null;
+                    codelistvalue.ValidToDate = null;
+
+                    if (itemsValidFrom.HasValue)
+                        codelistvalue.ValidFromDate = itemsValidFrom.Value;
+                    if (itemsValidTo.HasValue)
+                        codelistvalue.ValidToDate = itemsValidTo.Value;
+
+                    codelistvalue.statusId = "Valid";
+                    _dbContext.Entry(codelistvalue).State = EntityState.Modified;
+                }
+                else {
+                    item.statusId = "Valid";
+                    _dbContext.Entry(item).State = EntityState.Modified;
+                }
             }
             _dbContext.SaveChanges();
         }
@@ -1824,6 +1841,25 @@ namespace Kartverket.Register.Services.RegisterItem
                 select o;
 
             return queryResult.FirstOrDefault();
+        }
+
+        public List<Models.RegisterItem> GetAllVersionsOfRegisterItem(Models.Register register, string itemSystemId)
+        {
+            Models.RegisterItem registerItem = null;
+
+            if (!string.IsNullOrEmpty(itemSystemId)) 
+                registerItem = GetRegisterItemBySystemId(Guid.Parse(itemSystemId));
+
+            var versions = new List<Models.RegisterItem>();
+
+            if (registerItem != null)
+            {
+                var queryResultVersions = from r in _dbContext.RegisterItems
+                                          where r.versioningId == registerItem.versioningId
+                                          select r;
+                versions = queryResultVersions.ToList();
+            }
+            return versions;
         }
     }
 }

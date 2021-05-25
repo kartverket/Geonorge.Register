@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Kartverket.Register</RootNamespace>
     <AssemblyName>Kartverket.Register</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>44301</IISExpressSSLPort>
@@ -116,7 +116,7 @@
       <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.49\lib\net45\Kartverket.Geonorge.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Kartverket.ReportApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.ReportApi.13.0.256\lib\net472\Kartverket.ReportApi.dll</HintPath>
+      <HintPath>..\packages\Kartverket.ReportApi.13.1.260\lib\net472\Kartverket.ReportApi.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
@@ -278,9 +278,9 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -405,6 +405,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AllowCrossSiteJsonAttribute.cs" />
     <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Helpers\CustomDocumentFilter.cs" />
     <Compile Include="Helpers\GlobalVariables.cs" />
@@ -1124,6 +1125,14 @@
     <Compile Include="Migrations\202104071050090_AddOwnerForGeodataCollection.cs" />
     <Compile Include="Migrations\202104071050090_AddOwnerForGeodataCollection.designer.cs">
       <DependentUpon>202104071050090_AddOwnerForGeodataCollection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105041319585_AddRegisterPath.cs" />
+    <Compile Include="Migrations\202105041319585_AddRegisterPath.designer.cs">
+      <DependentUpon>202105041319585_AddRegisterPath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105111405145_AddTransliterNorwegian.cs" />
+    <Compile Include="Migrations\202105111405145_AddTransliterNorwegian.designer.cs">
+      <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -2361,7 +2370,9 @@
     <Content Include="Scripts\tabs.js" />
     <Content Include="Scripts\vue.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -3032,6 +3043,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104071050090_AddOwnerForGeodataCollection.resx">
       <DependentUpon>202104071050090_AddOwnerForGeodataCollection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105041319585_AddRegisterPath.resx">
+      <DependentUpon>202105041319585_AddRegisterPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105111405145_AddTransliterNorwegian.resx">
+      <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

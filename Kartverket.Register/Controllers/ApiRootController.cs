@@ -409,16 +409,19 @@ namespace Kartverket.Register.Controllers
             string format = RegisterUrls.GetFileExtension(registerName + "/" + subregisters);
             path = RegisterUrls.RemoveExtension(path);
 
+            var mediatype = GetFormattingForMediaType(format);
+
             var register = _registerService.GetRegisterByPath(path);
             if (register == null)
             {
+                var currentVersion = ConvertCurrentAndVersions(null, registerName, RegisterUrls.GetItemFromPath(subregisters));
+
+                if (currentVersion != null)
+                    return Content(HttpStatusCode.OK, currentVersion, mediatype.Formatter, mediatype.MediaTypeHeader);
+
                 return NotFound();
             }
 
-            var mediatype = GetFormattingForMediaType(format);
-
-            //todo handle inspire?
-            //currentVersion = register.IsInspireStatusRegister() ? ConvertInspireRegister(registerName, item) : ConvertCurrentAndVersions(null, registerName, item);
             if (!string.IsNullOrEmpty(systemId)) { 
                 var currentVersion = ConvertCurrentAndVersions(register, systemId);
                 return Content(HttpStatusCode.OK, currentVersion, mediatype.Formatter, mediatype.MediaTypeHeader);
@@ -923,6 +926,31 @@ namespace Kartverket.Register.Controllers
             tmp.ContainedItemsResult = new Result(filter, tmp.containeditems.Count);
 
             return tmp;
+        }
+
+        private Registeritem ConvertCurrentAndVersions(string parent, string register, string item)
+        {
+            Registeritem currentVersion = null;
+            var versjoner = _registerItemService.GetAllVersionsOfItem(parent, register, item);
+            if (versjoner != null)
+            {
+                foreach (var v in versjoner)
+                {
+                    if (v.versioning.currentVersion == v.systemId)
+                    {
+                        currentVersion = ConvertRegisterItem(v);
+
+                        foreach (var ve in versjoner)
+                        {
+                            if (v.versionNumber != ve.versionNumber)
+                            {
+                                currentVersion.versions.Add(ConvertRegisterItem(ve));
+                            }
+                        }
+                    }
+                }
+            }
+            return currentVersion;
         }
 
         private Registeritem ConvertRegisterItem(RegisterItem item, FilterParameters filter = null)

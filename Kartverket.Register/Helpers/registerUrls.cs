@@ -333,5 +333,18 @@ namespace Kartverket.Register.Helpers
 
             return path;
         }
+
+        internal static string GetItemFromPath(string subregisters)
+        {
+
+            if(subregisters != null && subregisters.Contains("/"))
+            {
+                var item = subregisters.Split('/').Last();
+                item = RemoveExtension(item);
+                return item;
+            }
+
+            return null;
+        }
     }
 }

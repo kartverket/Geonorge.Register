@@ -1138,6 +1138,10 @@
     <Compile Include="Migrations\202105310829110_AlertExtendedProperties.designer.cs">
       <DependentUpon>202105310829110_AlertExtendedProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105310937335_AddAlertProperties.cs" />
+    <Compile Include="Migrations\202105310937335_AddAlertProperties.designer.cs">
+      <DependentUpon>202105310937335_AddAlertProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3057,6 +3061,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105310829110_AlertExtendedProperties.resx">
       <DependentUpon>202105310829110_AlertExtendedProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105310937335_AddAlertProperties.resx">
+      <DependentUpon>202105310937335_AddAlertProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

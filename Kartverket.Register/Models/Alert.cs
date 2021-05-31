@@ -61,6 +61,14 @@ namespace Kartverket.Register.Models
         public string stationId { get; set; }
         public virtual Station station { get; set; }
 
+        public DateTime? ValidFrom { get; set; }
+        public DateTime? ValidTo { get; set; }
+        public string Summary { get; set; }
+        public string Link { get; set; }
+        public string Image1 { get; set; }
+        public string Image2 { get; set; }
+        public DateTime? DateResolved { get; set; }
+
 
         public void GetMetadataByUuid()
         {

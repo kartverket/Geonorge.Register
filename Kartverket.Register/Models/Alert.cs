@@ -8,6 +8,7 @@ using System.Linq;
 using Resources;
 using Kartverket.Register.Models.Translations;
 using Kartverket.Register.Helpers;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kartverket.Register.Models
 {
@@ -52,6 +53,13 @@ namespace Kartverket.Register.Models
         [StringLength(500, MinimumLength = 3)]
         [Display(Name = "Note", ResourceType = typeof(Alerts))]
         public string Note { get; set; }
+
+        public string Tag { get; set; }
+        public string Category { get; set; }
+        public string State { get; set; }
+        [ForeignKey("station")]
+        public string stationId { get; set; }
+        public virtual Station station { get; set; }
 
 
         public void GetMetadataByUuid()

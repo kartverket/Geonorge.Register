@@ -54,7 +54,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
         //[Route("tjenestevarsler/{registerName}/ny")]
-        public ActionResult Create(Alert alert, string parentRegister, string registerName, string category = Constants.AlertCategoryService)
+        public ActionResult Create(Alert alert, string parentRegister, string registerName, string[] tags, string category = Constants.AlertCategoryService)
         {
             alert.register = _registerService.GetRegister(parentRegister, registerName);
             if (alert.register != null)
@@ -77,6 +77,11 @@ namespace Kartverket.Register.Controllers
                         {
                             alert.Owner = alert.submitter.name;
                             alert.name = alert.UuidExternal;
+                            alert.Tag = new List<Tag>();
+                            foreach (var tag in tags)
+                            {
+                                alert.Tag.Add(new Tag { value = tag, description = tag });
+                            }
                         }
                         alert.AlertType = alertTranslation.Key.Value;
                         for (int t = 0; t < alert.Translations.Count; t++)
@@ -106,8 +111,9 @@ namespace Kartverket.Register.Controllers
             ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(category), "Key", "Value", alert.UuidExternal);
             ViewBag.Category = category;
             ViewBag.AlertType = new SelectList(new AlertTypes(_registerService, category).GetAlertTypes(), "Key", "Value", alert.AlertType);
-            ViewBag.Tag = new SelectList(GetTags(), "Key", "Value", alert.Tag);
-            ViewBag.SubCategory = new SelectList(SubCategories(), "Key", "Value", alert.Department);
+
+            ViewBag.tags = new MultiSelectList(GetTags(), "Key", "Value");
+            ViewBag.SubCategory = new SelectList(SubCategories(), "Key", "Value", alert.departmentId);
             Dictionary<string, string> items = new Dictionary<string, string>();
             var operation = Resources.Resource.AlertCategory(Constants.AlertCategoryOperation);
             items.Add(operation, operation);

@@ -1134,9 +1134,9 @@
     <Compile Include="Migrations\202105111405145_AddTransliterNorwegian.designer.cs">
       <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202106010742239_AddAlertProperties.cs" />
-    <Compile Include="Migrations\202106010742239_AddAlertProperties.designer.cs">
-      <DependentUpon>202106010742239_AddAlertProperties.cs</DependentUpon>
+    <Compile Include="Migrations\202106011338450_AddAlertProperties.cs" />
+    <Compile Include="Migrations\202106011338450_AddAlertProperties.designer.cs">
+      <DependentUpon>202106011338450_AddAlertProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -1168,10 +1168,12 @@
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\FAIR\FAIRDelivery.cs" />
     <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
     <Compile Include="Models\MareanoDataset.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Models\Station.cs" />
     <Compile Include="Models\StatusReports\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
@@ -3056,8 +3058,8 @@
     <EmbeddedResource Include="Migrations\202105111405145_AddTransliterNorwegian.resx">
       <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106010742239_AddAlertProperties.resx">
-      <DependentUpon>202106010742239_AddAlertProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106011338450_AddAlertProperties.resx">
+      <DependentUpon>202106011338450_AddAlertProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

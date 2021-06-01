@@ -1134,13 +1134,9 @@
     <Compile Include="Migrations\202105111405145_AddTransliterNorwegian.designer.cs">
       <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202105310829110_AlertExtendedProperties.cs" />
-    <Compile Include="Migrations\202105310829110_AlertExtendedProperties.designer.cs">
-      <DependentUpon>202105310829110_AlertExtendedProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105310937335_AddAlertProperties.cs" />
-    <Compile Include="Migrations\202105310937335_AddAlertProperties.designer.cs">
-      <DependentUpon>202105310937335_AddAlertProperties.cs</DependentUpon>
+    <Compile Include="Migrations\202106010742239_AddAlertProperties.cs" />
+    <Compile Include="Migrations\202106010742239_AddAlertProperties.designer.cs">
+      <DependentUpon>202106010742239_AddAlertProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -1179,6 +1175,7 @@
     <Compile Include="Models\Station.cs" />
     <Compile Include="Models\StatusReports\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
     <Compile Include="Models\ViewModels\MareanoDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
@@ -3059,11 +3056,8 @@
     <EmbeddedResource Include="Migrations\202105111405145_AddTransliterNorwegian.resx">
       <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105310829110_AlertExtendedProperties.resx">
-      <DependentUpon>202105310829110_AlertExtendedProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105310937335_AddAlertProperties.resx">
-      <DependentUpon>202105310937335_AddAlertProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106010742239_AddAlertProperties.resx">
+      <DependentUpon>202106010742239_AddAlertProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

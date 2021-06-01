@@ -86,6 +86,7 @@ namespace Kartverket.Register.Controllers
                         }
                         alert.versioningId = _registerItemService.NewVersioningGroup(alert);
                         alert.register.modified = System.DateTime.Now;
+
                         _registerItemService.SaveNewRegisterItem(alert);
                         return Redirect(alert.GetObjectUrl());
                     }
@@ -105,12 +106,42 @@ namespace Kartverket.Register.Controllers
             ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(category), "Key", "Value", alert.UuidExternal);
             ViewBag.Category = category;
             ViewBag.AlertType = new SelectList(new AlertTypes(_registerService, category).GetAlertTypes(), "Key", "Value", alert.AlertType);
+            ViewBag.Tag = new SelectList(GetTags(), "Key", "Value", alert.Tag);
+            ViewBag.SubCategory = new SelectList(SubCategories(), "Key", "Value", alert.Department);
             Dictionary<string, string> items = new Dictionary<string, string>();
             var operation = Resources.Resource.AlertCategory(Constants.AlertCategoryOperation);
             items.Add(operation, operation);
             ViewBag.UuidExternal = new SelectList(items, "Key", "Value", operation);
             if (category == Constants.AlertCategoryService || category == Constants.AlertCategoryDataset)
                 ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(category), "Key", "Value", alert.UuidExternal);
+        }
+
+        public Dictionary<string, string> GetTags()
+        {
+            Dictionary<string, string> tags = new Dictionary<string, string>();
+
+            tags.Add("SATREF", "SATREF");
+            tags.Add("Matrikkel", "Matrikkel");
+            tags.Add("Vannstand", "Vannstand");
+            tags.Add("FKB", "FKB");
+            tags.Add("Norge i bilder", "Norge i bilder");
+            tags.Add("Høydedata", "Høydedata");
+            tags.Add("CPOS", "CPOS");
+            tags.Add("DPOS", "DPOS");
+            tags.Add("EFS ", "EFS");
+
+            return tags;
+        }
+        public Dictionary<string, string> SubCategories()
+        {
+            Dictionary<string, string> tags = new Dictionary<string, string>();
+
+            tags.Add("Geodesi", "Geodesi");
+            tags.Add("Eiendom", "Eiendom");
+            tags.Add("Sjø", "Sjø");
+            tags.Add("Land", "Land");
+
+            return tags;
         }
 
         public Dictionary<string, string> GetServicesFromKartkatalogen(string category)

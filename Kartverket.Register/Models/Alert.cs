@@ -54,14 +54,14 @@ namespace Kartverket.Register.Models
         [Display(Name = "Note", ResourceType = typeof(Alerts))]
         public string Note { get; set; }
 
-        public string Tag { get; set; }
-        public string Category { get; set; }
+        public virtual List<Tag> Tag { get; set; }
+        public string Department { get; set; }
         public string State { get; set; }
         [ForeignKey("station")]
         public string stationId { get; set; }
         public virtual Station station { get; set; }
 
-        public DateTime? ValidFrom { get; set; }
+        //public DateTime? ValidFrom { get; set; } //EffectiveDate?
         public DateTime? ValidTo { get; set; }
         public string Summary { get; set; }
         public string Link { get; set; }

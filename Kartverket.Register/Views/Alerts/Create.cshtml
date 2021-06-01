@@ -178,6 +178,48 @@
         </div>
     }
 
+    @if (ViewBag.Category == @Constants.AlertCategoryOperation)
+    {
+        <div class="form-group required has-feedback">
+            @Html.LabelFor(model => model.Tag, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-9">
+                <div class="col-md-6 row">
+                    @Html.DropDownList("Tag", null, Alerts.Select, htmlAttributes: new { @class = "form-control" })
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-tag" style="display: none">
+
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-1 pull-right">
+                <p class="form-control-static">
+                    <a href="#" data-help-text-id="help-text-tag" class="badge help-text-toggle">?</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group required has-feedback">
+            @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-9">
+                <div class="col-md-6 row">
+                    @Html.DropDownList("SubCategory", null, Alerts.Select, htmlAttributes: new { @class = "form-control" })
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-subcategory" style="display: none">
+
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-1 pull-right">
+                <p class="form-control-static">
+                    <a href="#" data-help-text-id="help-text-subcategory" class="badge help-text-toggle">?</a>
+                </p>
+            </div>
+        </div>
+    }
     <div class="form-group">
         <hr />
         <input type="submit" value="@Registers.Publish" class="btn btn-default pull-right" />

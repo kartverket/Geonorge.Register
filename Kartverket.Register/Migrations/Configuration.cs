@@ -218,19 +218,19 @@ namespace Kartverket.Register.Migrations
             //        containedItemClass = "GeodatalovDataset",
             //        accessId = 1
             //    }
-            new Register
-            {
-                systemId = Guid.Parse(GlobalVariables.MareanoRegistryId),
-                ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
-                managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
-                name = "Mareano statusregister",
-                seoname = "mareano-statusregister",
-                statusId = "Valid",
-                dateSubmitted = DateTime.Now,
-                modified = DateTime.Now,
-                containedItemClass = "MareanoDataset",
-                accessId = 1
-                }
+            //new Register
+            //{
+            //    systemId = Guid.Parse(GlobalVariables.MareanoRegistryId),
+            //    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+            //    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+            //    name = "Mareano statusregister",
+            //    seoname = "mareano-statusregister",
+            //    statusId = "Valid",
+            //    dateSubmitted = DateTime.Now,
+            //    modified = DateTime.Now,
+            //    containedItemClass = "MareanoDataset",
+            //    accessId = 1
+            //    }
             );
 
 
@@ -505,54 +505,54 @@ namespace Kartverket.Register.Migrations
             }
 
 
-            var items = context.Database.SqlQuery<Item>
-                (@"WITH H AS 
-                             (
-                            SELECT systemId, parentRegisterId, name, CAST(seoname AS NVARCHAR(300)) AS path
-                            FROM Registers
-                            WHERE pathOld is null AND parentRegisterId IS NULL
-                                UNION ALL
-                            SELECT R.systemId, R.parentRegisterId, R.name, CAST(H.path + '/' + R.seoname AS NVARCHAR(300))
-                            FROM Registers R INNER JOIN H ON R.parentRegisterId = H.systemId
-                            )
-                            SELECT systemId, path FROM H")
-            .ToList();
+            //var items = context.Database.SqlQuery<Item>
+            //    (@"WITH H AS 
+            //                 (
+            //                SELECT systemId, parentRegisterId, name, CAST(seoname AS NVARCHAR(300)) AS path
+            //                FROM Registers
+            //                WHERE pathOld is null AND parentRegisterId IS NULL
+            //                    UNION ALL
+            //                SELECT R.systemId, R.parentRegisterId, R.name, CAST(H.path + '/' + R.seoname AS NVARCHAR(300))
+            //                FROM Registers R INNER JOIN H ON R.parentRegisterId = H.systemId
+            //                )
+            //                SELECT systemId, path FROM H")
+            //.ToList();
 
-            foreach(var item in items)
-            {
-                var pathArray = item.path.Split('/');
-                string oldPath = "";
-                if (pathArray.Length == 1)
-                    oldPath = pathArray[0];
-                else
-                {
-                    var length = pathArray.Length;
-                    oldPath = pathArray[length - 2] + "/" + pathArray[length - 1];
-                }
+            //foreach(var item in items)
+            //{
+            //    var pathArray = item.path.Split('/');
+            //    string oldPath = "";
+            //    if (pathArray.Length == 1)
+            //        oldPath = pathArray[0];
+            //    else
+            //    {
+            //        var length = pathArray.Length;
+            //        oldPath = pathArray[length - 2] + "/" + pathArray[length - 1];
+            //    }
 
-                context.Database.ExecuteSqlCommand("UPDATE Registers SET pathOld = '" + oldPath + "' WHERE  systemId ='" + item.systemId + "'");
+            //    context.Database.ExecuteSqlCommand("UPDATE Registers SET pathOld = '" + oldPath + "' WHERE  systemId ='" + item.systemId + "'");
 
-            }
+            //}
 
-            items = context.Database.SqlQuery<Item>
-                (@"WITH H AS 
-                             (
-                            SELECT systemId, parentRegisterId, name, CAST(seoname AS NVARCHAR(300)) AS path
-                            FROM Registers
-                            WHERE path is null AND parentRegisterId IS NULL
-                                UNION ALL
-                            SELECT R.systemId, R.parentRegisterId, R.name, CAST(H.path + '/' + R.seoname AS NVARCHAR(300))
-                            FROM Registers R INNER JOIN H ON R.parentRegisterId = H.systemId
-                            )
-                            SELECT systemId, path FROM H")
-            .ToList();
+            //items = context.Database.SqlQuery<Item>
+            //    (@"WITH H AS 
+            //                 (
+            //                SELECT systemId, parentRegisterId, name, CAST(seoname AS NVARCHAR(300)) AS path
+            //                FROM Registers
+            //                WHERE path is null AND parentRegisterId IS NULL
+            //                    UNION ALL
+            //                SELECT R.systemId, R.parentRegisterId, R.name, CAST(H.path + '/' + R.seoname AS NVARCHAR(300))
+            //                FROM Registers R INNER JOIN H ON R.parentRegisterId = H.systemId
+            //                )
+            //                SELECT systemId, path FROM H")
+            //.ToList();
 
-            foreach (var item in items)
-            {
+            //foreach (var item in items)
+            //{
 
-                context.Database.ExecuteSqlCommand("UPDATE Registers SET path = '" + item.path + "' WHERE  systemId ='" + item.systemId + "'");
+            //    context.Database.ExecuteSqlCommand("UPDATE Registers SET path = '" + item.path + "' WHERE  systemId ='" + item.systemId + "'");
 
-            }
+            //}
 
 
 

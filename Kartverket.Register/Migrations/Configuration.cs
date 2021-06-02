@@ -202,6 +202,13 @@ namespace Kartverket.Register.Migrations
                 new Models.Tag { value = "EFS", description = "EFS" }
             );
 
+            context.Departments.AddOrUpdate(
+                new Models.Department { value = "Geodesi", description = "Geodesi" },
+                new Models.Department { value = "Eiendom", description = "Eiendom" },
+                new Models.Department { value = "Sjø", description = "Sjø" },
+                new Models.Department { value = "Land", description = "Land" }
+            );
+
             context.Registers.AddOrUpdate(
             //new Register
             //{

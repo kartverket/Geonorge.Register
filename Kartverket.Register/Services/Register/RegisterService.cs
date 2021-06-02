@@ -164,7 +164,14 @@ namespace Kartverket.Register.Services.Register
                 alerts = alertsTagged.Distinct();
             }
 
-            
+            if (!string.IsNullOrEmpty(filter.department))
+            {
+
+                alerts = alerts.Where(d => d.departmentId == filter.department);
+
+            }
+
+
 
             if (!string.IsNullOrEmpty(filter.Category) && !string.IsNullOrEmpty(filter.filterOrganization))
                 foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category && a.Owner == filter.filterOrganization).OrderByDescending(o => o.AlertDate))

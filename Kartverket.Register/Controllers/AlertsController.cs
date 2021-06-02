@@ -78,10 +78,13 @@ namespace Kartverket.Register.Controllers
                             alert.Owner = alert.submitter.name;
                             alert.name = alert.UuidExternal;
                             alert.Tags = new List<Tag>();
-                            foreach (var tagId in tagslist)
-                            {
-                                var tag = _dbContext.Tags.Where(t => t.value == tagId).FirstOrDefault();
-                                alert.Tags.Add(tag);
+                            if(tagslist != null)
+                            { 
+                                foreach (var tagId in tagslist)
+                                {
+                                    var tag = _dbContext.Tags.Where(t => t.value == tagId).FirstOrDefault();
+                                    alert.Tags.Add(tag);
+                                }
                             }
                         }
                         alert.AlertType = alertTranslation.Key.Value;
@@ -114,25 +117,13 @@ namespace Kartverket.Register.Controllers
             ViewBag.AlertType = new SelectList(new AlertTypes(_registerService, category).GetAlertTypes(), "Key", "Value", alert.AlertType);
 
             ViewBag.tagsList = new MultiSelectList(_dbContext.Tags.Select(t => new { Key = t.value, Value = t.description  }), "Key", "Value");
-            //ViewBag.SubCategory = new SelectList(SubCategories(), "Key", "Value", alert.departmentId);
+            ViewBag.departmentId = new SelectList(_dbContext.Departments.Select(t => new { Key = t.value, Value = t.description }), "Key", "Value", alert.departmentId);
             Dictionary<string, string> items = new Dictionary<string, string>();
             var operation = Resources.Resource.AlertCategory(Constants.AlertCategoryOperation);
             items.Add(operation, operation);
             ViewBag.UuidExternal = new SelectList(items, "Key", "Value", operation);
             if (category == Constants.AlertCategoryService || category == Constants.AlertCategoryDataset)
                 ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(category), "Key", "Value", alert.UuidExternal);
-        }
-
-        public Dictionary<string, string> SubCategories()
-        {
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-
-            tags.Add("Geodesi", "Geodesi");
-            tags.Add("Eiendom", "Eiendom");
-            tags.Add("Sjø", "Sjø");
-            tags.Add("Land", "Land");
-
-            return tags;
         }
 
         public Dictionary<string, string> GetServicesFromKartkatalogen(string category)

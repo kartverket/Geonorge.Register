@@ -56,9 +56,10 @@ namespace Kartverket.Register.Models
 
         public virtual ICollection<Tag> Tags { get; set; }
 
-        //[ForeignKey("department")]
-        //public string departmentId { get; set; }
-        //public virtual Department department { get; set; }
+        [ForeignKey("department")]
+        public string departmentId { get; set; }
+        public virtual Department department { get; set; }
+
         //[ForeignKey("state")]
         //public string stateId { get; set; }
         //public virtual State state { get; set; }

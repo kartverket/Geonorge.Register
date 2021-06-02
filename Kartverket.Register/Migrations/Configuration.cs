@@ -209,6 +209,11 @@ namespace Kartverket.Register.Migrations
                 new Models.Department { value = "Land", description = "Land" }
             );
 
+            context.States.AddOrUpdate(
+                new Models.State { value = "active", description = "active" },
+                new Models.State { value = "resolved", description = "resolved" }
+            );
+
             context.Registers.AddOrUpdate(
             //new Register
             //{

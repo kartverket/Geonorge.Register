@@ -190,6 +190,18 @@ namespace Kartverket.Register.Migrations
                 new Models.Dimension { value = "compound", description = "Sammensatt" }
             );
 
+            context.Tags.AddOrUpdate(
+                new Models.Tag { value = "SATREF", description = "SATREF" },
+                new Models.Tag { value = "Matrikkel", description = "Matrikkel" },
+                new Models.Tag { value = "Vannstand", description = "Vannstand" },
+                new Models.Tag { value = "FKB", description = "FKB" },
+                new Models.Tag { value = "Norge i bilder", description = "Norge i bilder" },
+                new Models.Tag { value = "Høydedata", description = "Høydedata" },
+                new Models.Tag { value = "CPOS", description = "CPOS" },
+                new Models.Tag { value = "DPOS", description = "DPOS" },
+                new Models.Tag { value = "EFS", description = "EFS" }
+            );
+
             context.Registers.AddOrUpdate(
             //new Register
             //{

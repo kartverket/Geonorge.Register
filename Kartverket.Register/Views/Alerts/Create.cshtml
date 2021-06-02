@@ -181,11 +181,10 @@
     @if (ViewBag.Category == @Constants.AlertCategoryOperation)
     {
         <div class="form-group has-feedback">
-            @Html.LabelFor(model => model.Tag, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label for="tags" class="control-label col-md-2">Tags</label>
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    @Html.ListBox("tags", (MultiSelectList)ViewBag.tagsList, new { @class = "form-control compatibilitySelect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.Tag, "", new { @class = "text-danger" })
+                    @Html.ListBox("tagslist", (MultiSelectList)ViewBag.tagsList, new { @class = "form-control compatibilitySelect", multiple = "multiple" })
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">

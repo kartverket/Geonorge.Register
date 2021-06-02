@@ -54,22 +54,23 @@ namespace Kartverket.Register.Models
         [Display(Name = "Note", ResourceType = typeof(Alerts))]
         public string Note { get; set; }
 
-        public virtual List<Tag> Tag { get; set; }
-        [ForeignKey("department")]
-        public string departmentId { get; set; }
-        public virtual Department department { get; set; }
-        [ForeignKey("state")]
-        public string stateId { get; set; }
-        public virtual State state { get; set; }
-        [ForeignKey("station")]
-        public string stationId { get; set; }
-        public virtual Station station { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
 
-        public string Summary { get; set; }
-        public string Link { get; set; }
-        public string Image1 { get; set; }
-        public string Image2 { get; set; }
-        public DateTime? DateResolved { get; set; } // validTo
+        //[ForeignKey("department")]
+        //public string departmentId { get; set; }
+        //public virtual Department department { get; set; }
+        //[ForeignKey("state")]
+        //public string stateId { get; set; }
+        //public virtual State state { get; set; }
+        //[ForeignKey("station")]
+        //public string stationId { get; set; }
+        //public virtual Station station { get; set; }
+
+        //public string Summary { get; set; }
+        //public string Link { get; set; }
+        //public string Image1 { get; set; }
+        //public string Image2 { get; set; }
+        //public DateTime? DateResolved { get; set; } // validTo
 
 
         public void GetMetadataByUuid()

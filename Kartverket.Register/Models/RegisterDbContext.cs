@@ -50,6 +50,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<ContainedItemClass> ContainedItemClass { get; set; }
         public virtual DbSet<CoverageDataset> CoverageDatasets { get; set; }
         public virtual DbSet<Alert> Alerts { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
         public virtual DbSet<GeodatalovDataset> GeodatalovDatasets { get; set; }
         public virtual DbSet<MareanoDataset> MareanoDatasets { get; set; }
@@ -131,6 +132,16 @@ namespace Kartverket.Register.Models
             //modelBuilder.Entity<Register>()
             //.HasIndex(p => p.path)
             //.IsUnique();
+
+            modelBuilder.Entity<Alert>()
+               .HasMany<Tag>(t => t.Tags)
+               .WithMany(a => a.Alerts)
+               .Map(cs =>
+               {
+                   cs.MapLeftKey("AlertRefId");
+                   cs.MapRightKey("TagRefId");
+                   cs.ToTable("AlertTags");
+               });
 
         }
 

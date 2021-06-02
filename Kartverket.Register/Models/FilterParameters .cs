@@ -49,6 +49,7 @@ namespace Kartverket.Register.Models
         public string filterTheme { get; set; }
         public string[] tag { get; set; }
         public string department { get; set; }
+        public string station { get; set; }
 
         public bool InspireRegistertTypeIsDataset()
         {

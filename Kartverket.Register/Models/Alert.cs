@@ -64,9 +64,9 @@ namespace Kartverket.Register.Models
         public string stateId { get; set; }
         public virtual State state { get; set; }
 
-        //[ForeignKey("station")]
-        //public string stationId { get; set; }
-        //public virtual Station station { get; set; }
+        [ForeignKey("station")]
+        public string stationId { get; set; }
+        public virtual Station station { get; set; }
 
         //public string Summary { get; set; }
         //public string Link { get; set; }

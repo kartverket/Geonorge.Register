@@ -237,6 +237,43 @@
                 </p>
             </div>
         </div>
+
+        <div class="form-group has-feedback">
+            @Html.LabelFor(model => model.station, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-9">
+                <div class="col-md-6 row">
+                    <select name="stationId">
+                        <option></option>
+                        <optgroup label="SATREF"></optgroup>
+                        @foreach (var station in (List<Station>)ViewBag.stations)
+                        {
+                            if(station.group == "SATREF") { 
+                            <option value="@station.value">@station.description</option>
+                            }
+                        }
+                        <optgroup label="Vannstandsmåler"></optgroup>
+                        @foreach (var station in (List<Station>)ViewBag.stations)
+                        {
+                            if (station.group == "Vannstandsmåler")
+                            {
+                            <option value="@station.value">@station.description</option>
+                            }
+                        }
+                    </select>
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-station" style="display: none">
+
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-1 pull-right">
+                <p class="form-control-static">
+                    <a href="#" data-help-text-id="help-text-station" class="badge help-text-toggle">?</a>
+                </p>
+            </div>
+        </div>
     }
     <div class="form-group">
         <hr />

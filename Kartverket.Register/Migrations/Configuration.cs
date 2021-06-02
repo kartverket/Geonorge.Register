@@ -214,6 +214,37 @@ namespace Kartverket.Register.Migrations
                 new Models.State { value = "resolved", description = "resolved" }
             );
 
+            context.Stations.AddOrUpdate(
+                new Models.Station { value = "Tyin stasjon", description = "Tyin stasjon" , group = "SATREF" },
+                new Models.Station { value = "Øverbygd stasjon", description = "Øverbygd stasjon", group = "SATREF" },
+                //todo add all SATREF
+
+                //Vannstandsmåler  https://www.kartverket.no/globalassets/til-sjos/illustrasjoner/permanente-vannstandsmaalere-kartverket.pdf
+                new Models.Station { value = "Viker", description = "Viker", group = "Vannstandsmåler" },
+                new Models.Station { value = "Tregde", description = "Tregde", group = "Vannstandsmåler" },
+                new Models.Station { value = "Helgeroa", description = "Helgeroa", group = "Vannstandsmåler" },
+                new Models.Station { value = "Stavanger", description = "Stavanger", group = "Vannstandsmåler" },
+                new Models.Station { value = "Oscarsborg", description = "Oscarsborg", group = "Vannstandsmåler" },
+                new Models.Station { value = "Oslo", description = "Oslo", group = "Vannstandsmåler" },
+                new Models.Station { value = "Bergen", description = "Bergen", group = "Vannstandsmåler" },
+                new Models.Station { value = "Måløy", description = "Måløy", group = "Vannstandsmåler" },
+                new Models.Station { value = "Ålesund", description = "Ålesund", group = "Vannstandsmåler" },
+                new Models.Station { value = "Kristiansund", description = "Kristiansund", group = "Vannstandsmåler" },
+                new Models.Station { value = "Trondheim", description = "Trondheim", group = "Vannstandsmåler" },
+                new Models.Station { value = "Heimsjø", description = "Heimsjø", group = "Vannstandsmåler" },
+                new Models.Station { value = "Mausund", description = "Mausund", group = "Vannstandsmåler" },
+                new Models.Station { value = "Rørvik", description = "Rørvik", group = "Vannstandsmåler" },
+                new Models.Station { value = "Bodø", description = "Bodø", group = "Vannstandsmåler" },
+                new Models.Station { value = "Kabelvåg", description = "Kabelvåg", group = "Vannstandsmåler" },
+                new Models.Station { value = "Narvik", description = "Narvik", group = "Vannstandsmåler" },
+                new Models.Station { value = "Harstad", description = "Harstad", group = "Vannstandsmåler" },
+                new Models.Station { value = "Andenes", description = "Andenes", group = "Vannstandsmåler" },
+                new Models.Station { value = "Tromsø", description = "Tromsø", group = "Vannstandsmåler" },
+                new Models.Station { value = "Hammerfest", description = "Hammerfest", group = "Vannstandsmåler" },
+                new Models.Station { value = "Vardø", description = "Vardø", group = "Vannstandsmåler" },
+                new Models.Station { value = "Honningsvåg", description = "Honningsvåg", group = "Vannstandsmåler" }
+            );
+
             context.Registers.AddOrUpdate(
             //new Register
             //{

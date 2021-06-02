@@ -53,6 +53,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<Station> Stations { get; set; }
         public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
         public virtual DbSet<GeodatalovDataset> GeodatalovDatasets { get; set; }
         public virtual DbSet<MareanoDataset> MareanoDatasets { get; set; }

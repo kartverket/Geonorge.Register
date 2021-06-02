@@ -119,6 +119,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.tagsList = new MultiSelectList(_dbContext.Tags.Select(t => new { Key = t.value, Value = t.description  }), "Key", "Value");
             ViewBag.departmentId = new SelectList(_dbContext.Departments.Select(t => new { Key = t.value, Value = t.description }), "Key", "Value", alert.departmentId);
             ViewBag.stateId = new SelectList(_dbContext.States.Select(t => new { Key = t.value, Value = t.description }), "Key", "Value", alert.stateId);
+            ViewBag.stations = _dbContext.Stations.ToList();
             Dictionary<string, string> items = new Dictionary<string, string>();
             var operation = Resources.Resource.AlertCategory(Constants.AlertCategoryOperation);
             items.Add(operation, operation);

@@ -1,0 +1,102 @@
+﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Models
+@model Kartverket.Register.Models.Alert
+@using Kartverket.Register.Resources
+﻿@using Kartverket.Register.Helpers
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<!-- Editor's Dependecy Style -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
+<!-- Editor's Style -->
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+@{
+    ViewBag.Title = Shared.Edit + " " + Model.UuidExternal;
+}
+
+@section breadcrumb {
+    <li>@Shared.Edit</li>
+}
+
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                @Shared.Edit @Model.UuidExternal
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+
+@using (Html.BeginForm("Edit", "Alerts", FormMethod.Post))
+{
+<div class="form-horizontal">
+    @Html.ValidationSummary(false, Shared.ValidationSummary, new { @class = "alert alert-danger" })
+    @Html.HiddenFor(model => model.systemId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.Summary)
+            @Html.ValidationMessageFor(model => model.Summary, "", new { @class = "text-danger" })
+            <div id="editorSummary"></div>
+            <script>
+
+                let hiddenBodyMarkdownSummary = document.querySelector("#Summary");
+                let onEditorUpdateSummary = () => {
+                    hiddenBodyMarkdownSummary.value = editorSummary.getMarkdown();
+                                }
+
+                                var contentSummary = [
+                                @{
+                                    string[] commentLines = new string[] { };
+                                    if (Model.Summary != null) {
+                                        commentLines = Model.Summary.Split('\n');
+                                    }
+                                    foreach (var comment in commentLines)
+                                    {
+                                        @:'@comment.Replace("\r","")',
+                                    }
+                                }
+                                ].join('\n');
+                const editorSummary = new toastui.Editor({
+                    el: document.querySelector('#editorSummary'),
+                                    height: '150px',
+                    events: { "change": onEditorUpdateSummary },
+                    initialValue: contentSummary,
+                                    initialEditType: 'wysiwyg'
+                                });
+            </script>
+        </div>
+    </div>
+    <div class="form-group has-feedback">
+        @Html.LabelFor(model => model.DateResolved, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-9">
+            <div class="col-md-4 row">
+                <input type="date" value="@Model.DateResolved" name="DateResolved" />
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+            </div>
+            <div class="col-md-12 row">
+                <p class="help-text bg-success" id="help-text-dateresolved" style="display: none">
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-1 pull-right">
+            <p class="form-control-static">
+                <a href="#" data-help-text-id="help-text-dateresolved" class="badge help-text-toggle">?</a>
+            </p>
+        </div>
+    </div>
+
+
+
+</div>
+    <div class="form-group">
+        <hr />
+        <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />
+        <a href="/varsler/@Model.seoname/@Model.systemId">@Shared.Back</a>
+    </div>
+
+}

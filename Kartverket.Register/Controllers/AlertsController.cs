@@ -9,6 +9,7 @@ using Kartverket.Register.Models.Translations;
 using System.Linq;
 using System.Web;
 using System.IO;
+using System;
 
 namespace Kartverket.Register.Controllers
 {
@@ -48,14 +49,11 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
-
         // POST: Alerts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
-        //[Route("tjenestevarsler/{registerName}/ny")]
         public ActionResult Create(Alert alert, string parentRegister, string registerName, string[] tagslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2, string category = Constants.AlertCategoryService)
         {
             alert.register = _registerService.GetRegister(parentRegister, registerName);
@@ -63,11 +61,6 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.AddToRegister(alert.register))
                 {
-                    //if (!_registerItemService.ItemNameIsValid(alert))
-                    //{
-                    //    ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                    //    return View(alert);
-                    //}
                     if (ModelState.IsValid)
                     {
                         var selectedStatusId = alert.statusId;
@@ -124,6 +117,42 @@ namespace Kartverket.Register.Controllers
             }
             ViewBags(alert, category);
             return View(alert);
+        }
+
+        // GET: Alerts/Edit
+        [Authorize]
+        public ActionResult Edit(string systemid)
+        {
+            Alert alert = _dbContext.Alerts.Where(a => a.systemId == new Guid(systemid)).FirstOrDefault();
+            if (alert.register != null)
+            {
+                if (_accessControlService.AddToRegister(alert.register))
+                {
+                    return View(alert);
+                }
+            }
+            return HttpNotFound();
+        }
+
+        // POST: Alerts/Edit
+        [HttpPost]
+        [Authorize]
+        public ActionResult Edit(Alert alert)
+        {
+            Alert alertOriginal = _dbContext.Alerts.Where(a => a.systemId == alert.systemId).FirstOrDefault();
+            if (alert.register != null)
+            {
+                if (_accessControlService.AddToRegister(alert.register))
+                {
+                    alertOriginal.EffectiveDate = alert.EffectiveDate;
+                    alertOriginal.Summary = alert.Summary;
+
+                    _registerItemService.SaveEditedRegisterItem(alertOriginal);
+
+                    return Redirect("/varsler/" + alertOriginal.seoname + "/" + alertOriginal.systemId);
+                }
+            }
+            return HttpNotFound();
         }
 
 

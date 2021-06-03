@@ -131,6 +131,11 @@
         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
     }
 
+    @if (Model.RegisterItem is Alert)
+    {
+        <a class="btn btn-default btn-space pull-right" href="/varsler/rediger/@Model.RegisterItem.systemId">@Shared.Edit</a>
+    }
+
     <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
 
 </div>

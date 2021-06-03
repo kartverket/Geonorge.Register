@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Net;
 using Kartverket.Register.Models.Translations;
 using System.Linq;
+using System.Web;
+using System.IO;
 
 namespace Kartverket.Register.Controllers
 {
@@ -54,7 +56,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
         //[Route("tjenestevarsler/{registerName}/ny")]
-        public ActionResult Create(Alert alert, string parentRegister, string registerName, string[] tagslist, string category = Constants.AlertCategoryService)
+        public ActionResult Create(Alert alert, string parentRegister, string registerName, string[] tagslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2, string category = Constants.AlertCategoryService)
         {
             alert.register = _registerService.GetRegister(parentRegister, registerName);
             if (alert.register != null)
@@ -97,6 +99,22 @@ namespace Kartverket.Register.Controllers
                             alert.Translations[t].AlertType = translation.Where(c => c.Culture.Equals(alert.Translations[t].CultureName)).Select(s => s.AlertType).FirstOrDefault();
                         }
                         alert.versioningId = _registerItemService.NewVersioningGroup(alert);
+
+                        if (imagefile1 != null && imagefile1.ContentLength > 0)
+                        {
+                            alert.Image1Thumbnail = SaveImageOptimizedToDisk(imagefile1, alert.systemId.ToString());
+
+                            alert.Image1 = SaveImageToDisk(imagefile1, alert.systemId.ToString());
+                        }
+
+                        if (imagefile2 != null && imagefile2.ContentLength > 0)
+                        {
+                            alert.Image2Thumbnail = SaveImageOptimizedToDisk(imagefile2, alert.systemId.ToString());
+
+                            alert.Image2 = SaveImageToDisk(imagefile2, alert.systemId.ToString());
+                        }
+
+
                         alert.register.modified = System.DateTime.Now;
 
                         _registerItemService.SaveNewRegisterItem(alert);
@@ -181,6 +199,28 @@ namespace Kartverket.Register.Controllers
                 _dbContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private string SaveImageToDisk(HttpPostedFileBase file, string seo)
+        {
+            string filename = seo + "_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + "img/"), filename);
+            file.SaveAs(path);
+            return filename;
+        }
+
+        private string SaveImageOptimizedToDisk(HttpPostedFileBase file, string seo)
+        {
+            string filename = seo + "_thumb_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + "img/"), filename);
+
+            ImageResizer.ImageJob newImage =
+               new ImageResizer.ImageJob(file, path,
+               new ImageResizer.Instructions("maxwidth=300;maxheight=1000;quality=75"));
+
+            newImage.Build();
+
+            return filename;
         }
     }
 }

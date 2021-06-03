@@ -68,6 +68,8 @@ namespace Kartverket.Register.Models
         public string Link { get; set; }
         public string Image1 { get; set; }
         public string Image2 { get; set; }
+        public string Image1Thumbnail { get; set; }
+        public string Image2Thumbnail { get; set; }
         public DateTime? DateResolved { get; set; } // validTo
 
 

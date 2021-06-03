@@ -13,7 +13,7 @@ namespace Kartverket.Register.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202106030806298_AddAlertExtendedProperties"; }
+            get { return "202106030854264_AddAlertExtendedProperties"; }
         }
         
         string IMigrationMetadata.Source

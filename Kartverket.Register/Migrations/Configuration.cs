@@ -203,10 +203,10 @@ namespace Kartverket.Register.Migrations
             );
 
             context.Departments.AddOrUpdate(
-                new Models.Department { value = "Geodesi", description = "Geodesi" },
+                new Models.Department { value = "Posisjonstjenester", description = "Posisjonstjenester" },
                 new Models.Department { value = "Eiendom", description = "Eiendom" },
-                new Models.Department { value = "Sjø", description = "Sjø" },
-                new Models.Department { value = "Land", description = "Land" }
+                new Models.Department { value = "Til sjøs", description = "Til sjøs" },
+                new Models.Department { value = "Data, API, nettsider", description = "Data, API, nettsider" }
             );
 
             context.Stations.AddOrUpdate(

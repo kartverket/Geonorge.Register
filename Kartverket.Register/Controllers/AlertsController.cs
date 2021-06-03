@@ -68,11 +68,14 @@ namespace Kartverket.Register.Controllers
                     //}
                     if (ModelState.IsValid)
                     {
+                        var selectedStatusId = alert.statusId;
                         var alertTranslation = new AlertTypes(_registerService, category).GetAlertType(alert.AlertType);
                         alert.GetMetadataByUuid();
                         alert.AlertCategory = category;
                         alert.submitter = _registerService.GetOrganizationByUserName();
                         alert.InitializeNewAlert();
+                        if (!string.IsNullOrEmpty(selectedStatusId))
+                            alert.statusId = selectedStatusId;
                         if (category == Constants.AlertCategoryOperation)
                         {
                             alert.Owner = alert.submitter.name;
@@ -118,7 +121,7 @@ namespace Kartverket.Register.Controllers
 
             ViewBag.tagsList = new MultiSelectList(_dbContext.Tags.Select(t => new { Key = t.value, Value = t.description  }), "Key", "Value");
             ViewBag.departmentId = new SelectList(_dbContext.Departments.Select(t => new { Key = t.value, Value = t.description }), "Key", "Value", alert.departmentId);
-            ViewBag.stateId = new SelectList(_dbContext.States.Select(t => new { Key = t.value, Value = t.description }), "Key", "Value", alert.stateId);
+            ViewBag.statusId = new SelectList(_dbContext.Statuses.Where(s => s.value == "Valid" || s.value == "Retired").Select(t => new { Key = t.value, Value = t.description }).OrderByDescending(o => o.Key), "Key", "Value", alert.statusId);
             ViewBag.stations = _dbContext.Stations.ToList();
             Dictionary<string, string> items = new Dictionary<string, string>();
             var operation = Resources.Resource.AlertCategory(Constants.AlertCategoryOperation);

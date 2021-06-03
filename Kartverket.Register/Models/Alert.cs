@@ -60,19 +60,15 @@ namespace Kartverket.Register.Models
         public string departmentId { get; set; }
         public virtual Department department { get; set; }
 
-        [ForeignKey("state")]
-        public string stateId { get; set; }
-        public virtual State state { get; set; }
-
         [ForeignKey("station")]
         public string stationId { get; set; }
         public virtual Station station { get; set; }
 
-        //public string Summary { get; set; }
-        //public string Link { get; set; }
-        //public string Image1 { get; set; }
-        //public string Image2 { get; set; }
-        //public DateTime? DateResolved { get; set; } // validTo
+        public string Summary { get; set; }
+        public string Link { get; set; }
+        public string Image1 { get; set; }
+        public string Image2 { get; set; }
+        public DateTime? DateResolved { get; set; } // validTo
 
 
         public void GetMetadataByUuid()

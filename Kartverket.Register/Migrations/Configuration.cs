@@ -209,15 +209,21 @@ namespace Kartverket.Register.Migrations
                 new Models.Department { value = "Land", description = "Land" }
             );
 
-            context.States.AddOrUpdate(
-                new Models.State { value = "active", description = "active" },
-                new Models.State { value = "resolved", description = "resolved" }
-            );
-
             context.Stations.AddOrUpdate(
-                new Models.Station { value = "Tyin stasjon", description = "Tyin stasjon" , group = "SATREF" },
-                new Models.Station { value = "Øverbygd stasjon", description = "Øverbygd stasjon", group = "SATREF" },
-                //todo add all SATREF
+
+                //http://satref.geodesi.no/
+                new Models.Station { value = "Birkenes station", description = "Birkenes station", group = "SATREF" },
+                new Models.Station { value = "Jørstad station", description = "Jørstad station", group = "SATREF" },
+                new Models.Station { value = "Hurum station", description = "Hurum station", group = "SATREF" },
+                new Models.Station { value = "Drevsjø station", description = "Drevsjø station", group = "SATREF" },
+                new Models.Station { value = "Bleikvassli station", description = "Bleikvassli station", group = "SATREF" },
+                new Models.Station { value = "Volda station", description = "Volda station", group = "SATREF" },
+                new Models.Station { value = "Steinkjer station", description = "Steinkjer station", group = "SATREF" },
+                new Models.Station { value = "Vikna station", description = "Vikna station", group = "SATREF" },
+                new Models.Station { value = "Stjørdal station", description = "Stjørdal station", group = "SATREF" },
+                new Models.Station { value = "Østerbø station", description = "Østerbø station", group = "SATREF" },
+                new Models.Station { value = "Stavanger station", description = "Stavanger station", group = "SATREF" },
+                //todo add more satref 300?
 
                 //Vannstandsmåler  https://www.kartverket.no/globalassets/til-sjos/illustrasjoner/permanente-vannstandsmaalere-kartverket.pdf
                 new Models.Station { value = "Viker", description = "Viker", group = "Vannstandsmåler" },

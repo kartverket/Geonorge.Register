@@ -263,6 +263,39 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string AlertCategory { get; set; }
 
+        [DataMemberAttribute]
+        public string Departement { get; set; }
+        public bool ShouldSerializeDepartement()
+        {
+            return !string.IsNullOrEmpty(Departement);
+        }
+        [DataMemberAttribute]
+        public string Station { get; set; }
+        public bool ShouldSerializeStation()
+        {
+            return !string.IsNullOrEmpty(Station);
+        }
+        [DataMemberAttribute]
+        public List<string> Tags { get; set; }
+        public bool ShouldSerializeTags()
+        {
+            return Tags != null && Tags.Count > 0;
+        }
+
+        [DataMemberAttribute]
+        public DateTime? DateResolved { get; set; }
+        public bool ShouldSerializeDateResolved()
+        {
+            return DateResolved.HasValue;
+        }
+
+        [DataMemberAttribute]
+        public string Summary { get; set; }
+        public bool ShouldSerializeSummary()
+        {
+            return !string.IsNullOrEmpty(Summary);
+        }
+
         // InspireDataset
         [DataMemberAttribute]
         public string MetadataStatus { get; set; }
@@ -713,6 +746,15 @@ namespace Kartverket.Register.Models.Api
                 Note = GetNoteLocale(s);
                 ServiceUuid = s.UuidExternal;
                 AlertCategory = s.AlertCategory;
+
+                Station = s.stationId;
+                if(s.DateResolved.HasValue)
+                    DateResolved = s.DateResolved;
+                Summary = s.Summary;
+                Departement = s.departmentId;
+                if(s.Tags != null)
+                    Tags = s.Tags.Select(t => t.value).ToList();
+                
             }
         }
 

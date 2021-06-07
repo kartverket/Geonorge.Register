@@ -93,6 +93,8 @@ namespace Kartverket.Register.Controllers
                         }
                         alert.versioningId = _registerItemService.NewVersioningGroup(alert);
 
+
+                        //todo check filetype
                         if (imagefile1 != null && imagefile1.ContentLength > 0)
                         {
                             alert.Image1Thumbnail = SaveImageOptimizedToDisk(imagefile1, alert.systemId.ToString());
@@ -128,6 +130,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.AddToRegister(alert.register))
                 {
+                    ViewBags(alert, alert.AlertCategory);
                     return View(alert);
                 }
             }
@@ -137,15 +140,48 @@ namespace Kartverket.Register.Controllers
         // POST: Alerts/Edit
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(Alert alert)
+        public ActionResult Edit(Alert alert, string[] tagslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2)
         {
-            Alert alertOriginal = _dbContext.Alerts.Where(a => a.systemId == alert.systemId).FirstOrDefault();
-            if (alert.register != null)
+            //todo skal alle felter redigeres, sjekk om det er noen mangler validering og ressurser feilmelding når man legger til
+            if (!ModelState.IsValid)
             {
-                if (_accessControlService.AddToRegister(alert.register))
+                return View(alert);
+            }
+
+            Alert alertOriginal = _dbContext.Alerts.Where(a => a.systemId == alert.systemId).FirstOrDefault();
+            if (alertOriginal.register != null)
+            {
+                if (_accessControlService.AddToRegister(alertOriginal.register))
                 {
-                    alertOriginal.EffectiveDate = alert.EffectiveDate;
+                    alertOriginal.DateResolved = alert.DateResolved;
                     alertOriginal.Summary = alert.Summary;
+
+                    alertOriginal.Tags = new List<Tag>();
+                    if (tagslist != null)
+                    {
+                        alertOriginal.Tags.Clear();
+
+                        foreach (var tagId in tagslist)
+                        {
+                            var tag = _dbContext.Tags.Where(t => t.value == tagId).FirstOrDefault();
+                            alertOriginal.Tags.Add(tag);
+                        }
+                    }
+
+                    //todo check filetype
+                    if (imagefile1 != null && imagefile1.ContentLength > 0)
+                    {
+                        alertOriginal.Image1Thumbnail = SaveImageOptimizedToDisk(imagefile1, alert.systemId.ToString());
+
+                        alertOriginal.Image1 = SaveImageToDisk(imagefile1, alert.systemId.ToString());
+                    }
+
+                    if (imagefile2 != null && imagefile2.ContentLength > 0)
+                    {
+                        alertOriginal.Image2Thumbnail = SaveImageOptimizedToDisk(imagefile2, alert.systemId.ToString());
+
+                        alertOriginal.Image2 = SaveImageToDisk(imagefile2, alert.systemId.ToString());
+                    }
 
                     _registerItemService.SaveEditedRegisterItem(alertOriginal);
 
@@ -161,12 +197,19 @@ namespace Kartverket.Register.Controllers
             if (string.IsNullOrEmpty(category))
                 category = Constants.AlertCategoryService;
             //ViewBag.AlertType = new SelectList(alert.GetAlertTypes(), alert.AlertType);
-            ViewBag.AlertType = new SelectList(new AlertTypes(_registerService, category).GetAlertTypes() , "Key", "Value", alert.AlertType);
             ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(category), "Key", "Value", alert.UuidExternal);
             ViewBag.Category = category;
             ViewBag.AlertType = new SelectList(new AlertTypes(_registerService, category).GetAlertTypes(), "Key", "Value", alert.AlertType);
 
-            ViewBag.tagsList = new MultiSelectList(_dbContext.Tags.Select(t => new { Key = t.value, Value = t.description  }), "Key", "Value");
+            string[] alertSelected = { };
+
+            if(alert.Tags != null )
+                alertSelected = alert.Tags.Select(c => c.value).ToArray();
+
+            var tagList = new MultiSelectList(_dbContext.Tags.Select(t => new { Key = t.value, Value = t.description }).ToList(), "Key", "Value", alertSelected);
+
+            ViewBag.tagList = tagList;
+
             ViewBag.departmentId = new SelectList(_dbContext.Departments.Select(t => new { Key = t.value, Value = t.description }), "Key", "Value", alert.departmentId);
             ViewBag.statusId = new SelectList(_dbContext.Statuses.Where(s => s.value == "Valid" || s.value == "Retired").Select(t => new { Key = t.value, Value = t.description }).OrderByDescending(o => o.Key), "Key", "Value", alert.statusId);
             ViewBag.stations = _dbContext.Stations.ToList();

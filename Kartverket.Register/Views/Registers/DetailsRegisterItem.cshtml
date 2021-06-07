@@ -11,7 +11,6 @@
 @section breadcrumb {
     <li>@Model.Name</li>
 }
-
 <section class="heading">
     <article class="row">
         <div class="col-sm-12">
@@ -43,8 +42,12 @@
         {<p><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</p>}
 
             @if (Model.Owner != null)
-            {<p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>}
-            @if (Model.Register.containedItemClass != "MareanoDataset") { 
+            {
+                if (Model.Register.containedItemClass != "Alert") { 
+                <p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>
+                }
+            }
+            @if (Model.Register.containedItemClass != "MareanoDataset" && Model.Register.containedItemClass != "Alert") { 
             <p><strong>@Html.DisplayNameFor(m => m.VersionNumber)</strong> @Model.VersionNumber</p>
             if (Model.VersionName != null)
             {<p><strong>@Html.DisplayNameFor(model => model.VersionName):</strong> @Model.VersionName</p>}

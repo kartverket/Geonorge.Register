@@ -201,6 +201,16 @@ namespace Kartverket.Register.Helpers
             }
         }
 
+        public static string GetParentPath(string path)
+        {
+            if (!string.IsNullOrEmpty(path) && path.Contains("/"))
+            {
+                path = path.Substring(0, path.LastIndexOf("/") + 1);
+            }
+
+            return path;
+        }
+
         /// <summary>
         /// Makes an SEO friendly document name
         /// </summary>
@@ -275,6 +285,10 @@ namespace Kartverket.Register.Helpers
         {
             if (registername == "register")
                 registername = "";
+
+            if(!string.IsNullOrEmpty(subregisters) && subregisters.EndsWith("/"))
+                subregisters  = subregisters.Substring(0, subregisters.LastIndexOf("/"));
+
 
             var path = registername;
             if (!string.IsNullOrEmpty(subregisters))

@@ -682,7 +682,8 @@ namespace Kartverket.Register.Services.Search
                                    CodelistValue = null,
                                    ObjektkatalogUrl = null,
                                    Type = null,
-                                   currentVersion = null
+                                   currentVersion = null,
+                                   Path = d.path
 
                                }).Union(
                                 (from d in _dbContext.CodelistValues
@@ -720,7 +721,8 @@ namespace Kartverket.Register.Services.Search
                                      CodelistValue = d.value,
                                      ObjektkatalogUrl = null,
                                      Type = null,
-                                     currentVersion = d.versioning.currentVersion
+                                     currentVersion = d.versioning.currentVersion,
+                                     Path = d.register.path
                                  }).Union(
                                 (from o in _dbContext.Organizations
                                  where o.register.name.Contains(parameters.Text)
@@ -757,7 +759,8 @@ namespace Kartverket.Register.Services.Search
                                      CodelistValue = null,
                                      ObjektkatalogUrl = null,
                                      Type = null,
-                                     currentVersion = o.versioning.currentVersion
+                                     currentVersion = o.versioning.currentVersion,
+                                     Path = o.register.path
                                  }).Union(
                                  (from o in _dbContext.NameSpases
                                   where o.register.name.Contains(parameters.Text)
@@ -792,7 +795,8 @@ namespace Kartverket.Register.Services.Search
                                       CodelistValue = null,
                                       ObjektkatalogUrl = null,
                                       Type = null,
-                                      currentVersion = o.versioning.currentVersion
+                                      currentVersion = o.versioning.currentVersion,
+                                      Path = o.register.path
                                   }).Union(
                                 (from d in _dbContext.Datasets
                                  where d.register.name.Contains(parameters.Text)
@@ -828,7 +832,8 @@ namespace Kartverket.Register.Services.Search
                                      CodelistValue = null,
                                      ObjektkatalogUrl = null,
                                      Type = null,
-                                     currentVersion = d.versioning.currentVersion
+                                     currentVersion = d.versioning.currentVersion,
+                                     Path = d.register.path
 
                                  }).Union(
                                 (from e in _dbContext.EPSGs
@@ -865,7 +870,8 @@ namespace Kartverket.Register.Services.Search
                                      CodelistValue = null,
                                      ObjektkatalogUrl = null,
                                      Type = null,
-                                     currentVersion = e.versioning.currentVersion
+                                     currentVersion = e.versioning.currentVersion,
+                                     Path = e.register.path
                                  }).Union(
                                 (from o in _dbContext.Alerts
                                  where o.register.name.Contains(parameters.Text)
@@ -898,7 +904,8 @@ namespace Kartverket.Register.Services.Search
                                      CodelistValue = null,
                                      ObjektkatalogUrl = null,
                                      Type = null,
-                                     currentVersion = o.versioning.currentVersion
+                                     currentVersion = o.versioning.currentVersion,
+                                     Path = o.register.path
                                  }).Union(
                                 (from i in _dbContext.InspireDataServices
                                  where i.Register.name.Contains(parameters.Text)
@@ -930,7 +937,8 @@ namespace Kartverket.Register.Services.Search
                                      CodelistValue = null,
                                      ObjektkatalogUrl = null,
                                      Type = null,
-                                     currentVersion = i.Versioning.currentVersion
+                                     currentVersion = i.Versioning.currentVersion,
+                                     Path = i.Register.path
                                  }).Union(
                                 (from i in _dbContext.InspireDatasets
                                  where i.Register.name.Contains(parameters.Text)
@@ -962,7 +970,8 @@ namespace Kartverket.Register.Services.Search
                                      CodelistValue = null,
                                      ObjektkatalogUrl = null,
                                      Type = null,
-                                     currentVersion = i.Versioning.currentVersion
+                                     currentVersion = i.Versioning.currentVersion,
+                                     Path = i.Register.path
                                  }).Union(
                                 (from i in _dbContext.GeodatalovDatasets
                                  where i.Register.name.Contains(parameters.Text)
@@ -994,7 +1003,8 @@ namespace Kartverket.Register.Services.Search
                                      CodelistValue = null,
                                      ObjektkatalogUrl = null,
                                      Type = null,
-                                     currentVersion = i.Versioning.currentVersion
+                                     currentVersion = i.Versioning.currentVersion,
+                                     Path = i.Register.path
                                  })
                               )))))))));
 
@@ -1032,7 +1042,8 @@ namespace Kartverket.Register.Services.Search
                                 CodelistValue = null,
                                 ObjektkatalogUrl = null,
                                 Type = null,
-                                currentVersion = d.versioning.currentVersion
+                                currentVersion = d.versioning.currentVersion,
+                                Path = d.register.path
                             };
             foreach (var doc in documents)
             {
@@ -1121,7 +1132,8 @@ namespace Kartverket.Register.Services.Search
                      CodelistValue = null,
                      ObjektkatalogUrl = o.ObjektkatalogUrl,
                      Type = o.Type,
-                     currentVersion = o.currentVersion
+                     currentVersion = o.currentVersion,
+                     Path = o.Path
                  }
                 );
 
@@ -1158,18 +1170,19 @@ namespace Kartverket.Register.Services.Search
                     DocumentOwner = register.DocumentOwner,
                     RegisterItemUpdated = register.RegisterItemUpdated,
                     RegisterItemStatus = register.RegisterItemStatus,
-                    SubregisterUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "subregister/" + register.ParentRegisterSeoname + "/" + register.ParentregisterOwner + "/" + register.RegisterSeoname,
-                    RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + register.ParentRegisterSeoname + "/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.Submitter) + "/" + register.RegisterItemSeoname,
+                    SubregisterUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + register.Path,
+                    RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + register.Path + "/" + register.RegisterItemSeoname + "/" + register.SystemID,
                     RegisteItemUrlDocument = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/versjoner/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.DocumentOwner) + "/" + register.RegisterItemSeoname,
-                    RegisteItemUrlDataset = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.DatasetOwner) + "/" + register.RegisterItemSeoname,
-                    subregisterItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "subregister/" + register.ParentRegisterSeoname + "/" + register.ParentregisterOwner + "/" + register.RegisterSeoname + "/" + register.Submitter + "/" + register.RegisterItemSeoname,
-                    ParentRegisterUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.ParentRegisterSeoname,
+                    RegisteItemUrlDataset = WebConfigurationManager.AppSettings["RegistryUrl"] + register.Path + "/" + register.RegisterItemSeoname + "/" + register.SystemID,
+                    subregisterItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + register.Path + "/" + register.RegisterItemSeoname + "/" + register.SystemID,
+                    ParentRegisterUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + RegisterUrls.GetParentPath(register.Path),
                     Submitter = register.Submitter,
                     Shortname = register.Shortname,
                     CodelistValue = register.CodelistValue,
                     ObjektkatalogUrl = register.ObjektkatalogUrl,
                     Type = register.Type,
-                    currentVersion = register.currentVersion
+                    currentVersion = register.currentVersion,
+                    Path = register.Path
                 };
 
                 items.Add(item);

@@ -171,10 +171,10 @@ namespace Kartverket.Register.Services.Register
 
             }
 
-            if (!string.IsNullOrEmpty(filter.station))
+            if (!string.IsNullOrEmpty(filter.StatusType) && filter.StatusType != "all")
             {
 
-                alerts = alerts.Where(d => d.stationId == filter.station);
+                alerts = alerts.Where(d => d.statusId == filter.StatusType);
 
             }
 

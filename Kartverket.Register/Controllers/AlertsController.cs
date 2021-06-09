@@ -153,8 +153,18 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.AddToRegister(alertOriginal.register))
                 {
+                    alertOriginal.UuidExternal = alert.UuidExternal;
+                    alertOriginal.AlertType = alert.AlertType;
+                    alertOriginal.AlertDate = alert.AlertDate;
+                    alertOriginal.EffectiveDate = alert.EffectiveDate;
+                    alertOriginal.Note = alert.Note;
+                    alertOriginal.Translations[0].Note = alert.Translations[0].Note;
+                    alertOriginal.departmentId = alert.departmentId;
+                    alertOriginal.statusId = alert.statusId;
+                    alertOriginal.stationId = alert.stationId;
                     alertOriginal.DateResolved = alert.DateResolved;
                     alertOriginal.Summary = alert.Summary;
+                    alertOriginal.Link = alert.Link;
 
                     alertOriginal.Tags = new List<Tag>();
                     if (tagslist != null)

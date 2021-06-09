@@ -3278,6 +3278,11 @@
               Looks up a localized string similar to Datasettvarsel.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.Department">
+            <summary>
+              Looks up a localized string similar to Department.
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.Description">
             <summary>
               Looks up a localized string similar to Beskrivelse.
@@ -3368,6 +3373,11 @@
         <member name="P:Resources.Alerts.Service">
             <summary>
               Looks up a localized string similar to Tjeneste.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Station">
+            <summary>
+              Looks up a localized string similar to Station.
             </summary>
         </member>
         <member name="P:Resources.Alerts.SubscribeServiceAlert">

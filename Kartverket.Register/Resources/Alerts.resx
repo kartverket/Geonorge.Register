@@ -138,6 +138,9 @@
   <data name="Datasettvarsel" xml:space="preserve">
     <value>Datasettvarsel</value>
   </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Beskrivelse</value>
   </data>
@@ -193,6 +196,9 @@ I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden bruke
   </data>
   <data name="Service" xml:space="preserve">
     <value>Tjeneste</value>
+  </data>
+  <data name="Station" xml:space="preserve">
+    <value>Station</value>
   </data>
   <data name="SubscribeServiceAlert" xml:space="preserve">
     <value>Abonnere på varsler</value>

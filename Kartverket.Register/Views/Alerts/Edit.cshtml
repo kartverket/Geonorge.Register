@@ -184,7 +184,7 @@
             <label for="tags" class="control-label col-md-2">Tags</label>
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    @Html.DropDownList("tagsList", (MultiSelectList)ViewBag.tagList, new { multiple = "multiple" })
+                    @Html.DropDownList("tagsList", (MultiSelectList)ViewBag.tagList, new { multiple = "multiple", @class = "form-control" })
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
@@ -219,7 +219,7 @@
             </div>
         </div>
         <div class="form-group has-feedback">
-            @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label for="statusId" class="control-label col-md-2">Status</label>
             <div class="col-md-9">
                 <div class="col-md-6 row">
                     @Html.DropDownList("statusId", null, null, htmlAttributes: new { @class = "form-control" })
@@ -242,7 +242,7 @@
             @Html.LabelFor(model => model.station, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    <select name="stationId">
+                    <select name="stationId" class="form-control">
                         <option></option>
                         <optgroup label="SATREF"></optgroup>
                         @foreach (var station in (List<Station>)ViewBag.stations)
@@ -257,7 +257,7 @@
                         {
                             if (station.group == "Vannstandsmåler")
                             {
-                                <option value="@station.value"  @(Model.stationId == station.value ? "selected" : "")>@station.description</option>
+                                <option value="@station.value" @(Model.stationId == station.value ? "selected" : "")>@station.description</option>
                             }
                         }
                     </select>
@@ -281,6 +281,12 @@
             <div class="col-md-9">
                 <div class="col-md-6 row">
                     @Html.EditorFor(model => model.Link)
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-link" style="display: none">
+
+                    </p>
                 </div>
             </div>
             <div class="col-sm-1 pull-right">
@@ -346,7 +352,7 @@
             @Html.LabelFor(model => model.DateResolved, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-4 row">
-                    <input type="date" value="@(Model.DateResolved.HasValue ? Model.DateResolved.Value.ToString("yyyy-MM-dd") : "")" name="DateResolved" />
+                    <input type="date" class="form-control" value="@(Model.DateResolved.HasValue ? Model.DateResolved.Value.ToString("yyyy-MM-dd") : "")" name="DateResolved" />
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
@@ -360,7 +366,7 @@
                 </p>
             </div>
         </div>
-     }
+    }
     <div class="form-group">
         <hr />
         <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />

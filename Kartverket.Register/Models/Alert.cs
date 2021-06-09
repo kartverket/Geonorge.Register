@@ -58,10 +58,12 @@ namespace Kartverket.Register.Models
 
         [ForeignKey("department")]
         public string departmentId { get; set; }
+        [Display(Name = "Department", ResourceType = typeof(Alerts))]
         public virtual Department department { get; set; }
 
         [ForeignKey("station")]
         public string stationId { get; set; }
+        [Display(Name = "Station", ResourceType = typeof(Alerts))]
         public virtual Station station { get; set; }
 
         public string Summary { get; set; }

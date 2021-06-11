@@ -96,6 +96,7 @@
             <label class="control-label col-md-2" for="documentfile">@Documents.DocumentFile:</label>
             <div class="col-md-10">
                 <input type="file" name="documentfile" id="documentfile" />
+                @Html.ValidationMessage("FileName", new { @class = "text-danger" })
             </div>
         </div>
 

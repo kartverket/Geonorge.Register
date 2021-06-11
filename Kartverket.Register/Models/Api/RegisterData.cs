@@ -54,7 +54,7 @@ namespace Kartverket.Register.Models.Api
         {
             Id = item.SystemID.ToString();
             Name = item.RegisterItemName;
-            Url = item.RegisteItemUrl;
+            Url = ItemUrl(item);
             Description = item.RegisterItemDescription;
             Type = item.Type;
             RegisterName = item.RegisterName;
@@ -66,6 +66,35 @@ namespace Kartverket.Register.Models.Api
             else
                 Status = item.RegisterItemStatus;
             
+        }
+
+        public string ItemUrl(SearchResultItem item)
+        {
+            if (item.RegisterItemName == null)
+            {
+                return item.SubregisterUrl;
+            }
+
+            if (item.Discriminator == "Dataset" && string.IsNullOrEmpty(item.RegisteItemUrlDataset))
+                item.RegisteItemUrlDataset = item.RegisteItemUrl;
+
+            if (item.Discriminator == "Document" && string.IsNullOrEmpty(item.RegisteItemUrlDocument))
+                item.RegisteItemUrlDocument = item.RegisteItemUrl;
+
+            if (item.ParentRegisterName == null)
+            {
+                switch (item.Discriminator)
+                {
+                    case "Document":
+                        return item.RegisteItemUrlDocument;
+                    case "Dataset":
+                        return item.RegisteItemUrlDataset;
+                    case "Objektregister":
+                        return item.ObjektkatalogUrl;
+                }
+                return item.RegisteItemUrl;
+            }
+            return item.subregisterItemUrl;
         }
 
         public static List<RegisterData> CreateFromList(IEnumerable<SearchResultItem> items)

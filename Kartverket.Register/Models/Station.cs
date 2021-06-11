@@ -1,12 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kartverket.Register.Models
 {
     public class Station
     {
         [Key]
-        public string value { get; set; }
-        public string description { get; set; }
-        public string group { get; set; }
+        [Column(Order = 1)]
+        public string StationName { get; set; }
+        [Key]
+        [Column(Order = 2)]
+        public string StationType { get; set; }
+        public string Description { get; set; }
+
     }
 }

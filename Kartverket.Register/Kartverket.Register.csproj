@@ -1134,13 +1134,9 @@
     <Compile Include="Migrations\202105111405145_AddTransliterNorwegian.designer.cs">
       <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202106030854264_AddAlertExtendedProperties.cs" />
-    <Compile Include="Migrations\202106030854264_AddAlertExtendedProperties.designer.cs">
-      <DependentUpon>202106030854264_AddAlertExtendedProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106030920250_AddAlertImageThumbnail.cs" />
-    <Compile Include="Migrations\202106030920250_AddAlertImageThumbnail.designer.cs">
-      <DependentUpon>202106030920250_AddAlertImageThumbnail.cs</DependentUpon>
+    <Compile Include="Migrations\202106111052573_AddAlertProperties.cs" />
+    <Compile Include="Migrations\202106111052573_AddAlertProperties.designer.cs">
+      <DependentUpon>202106111052573_AddAlertProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -3062,11 +3058,8 @@
     <EmbeddedResource Include="Migrations\202105111405145_AddTransliterNorwegian.resx">
       <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106030854264_AddAlertExtendedProperties.resx">
-      <DependentUpon>202106030854264_AddAlertExtendedProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106030920250_AddAlertImageThumbnail.resx">
-      <DependentUpon>202106030920250_AddAlertImageThumbnail.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106111052573_AddAlertProperties.resx">
+      <DependentUpon>202106111052573_AddAlertProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

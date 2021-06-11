@@ -7,13 +7,13 @@ namespace Kartverket.Register.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.3.0")]
-    public sealed partial class AddAlertExtendedProperties : IMigrationMetadata
+    public sealed partial class AddAlertProperties : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddAlertExtendedProperties));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddAlertProperties));
         
         string IMigrationMetadata.Id
         {
-            get { return "202106030854264_AddAlertExtendedProperties"; }
+            get { return "202106111052573_AddAlertProperties"; }
         }
         
         string IMigrationMetadata.Source

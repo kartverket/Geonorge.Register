@@ -109,6 +109,13 @@ namespace Kartverket.Register.Controllers
                             alert.Image2 = SaveImageToDisk(imagefile2, alert.systemId.ToString());
                         }
 
+                        if (!string.IsNullOrEmpty(alert.StationName))
+                        {
+                            var station = alert.StationName.Split(',');
+                            alert.StationName = station[0];
+                            alert.StationType = station[1];
+                        }
+
 
                         alert.register.modified = System.DateTime.Now;
 
@@ -161,7 +168,12 @@ namespace Kartverket.Register.Controllers
                     alertOriginal.Translations[0].Note = alert.Translations[0].Note;
                     alertOriginal.departmentId = alert.departmentId;
                     alertOriginal.statusId = alert.statusId;
-                    alertOriginal.stationId = alert.stationId;
+                    if (!string.IsNullOrEmpty(alert.StationName))
+                    {
+                        var station = alert.StationName.Split(',');
+                        alertOriginal.StationName = station[0];
+                        alertOriginal.StationType = station[1];
+                    }
                     alertOriginal.DateResolved = alert.DateResolved;
                     alertOriginal.Summary = alert.Summary;
                     alertOriginal.Link = alert.Link;

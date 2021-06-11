@@ -61,8 +61,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "Department", ResourceType = typeof(Alerts))]
         public virtual Department department { get; set; }
 
-        [ForeignKey("station")]
-        public string stationId { get; set; }
+        public string StationName { get; set; }
+        public string StationType { get; set; }
+        [ForeignKey("StationName,StationType")]
         [Display(Name = "Station", ResourceType = typeof(Alerts))]
         public virtual Station station { get; set; }
 

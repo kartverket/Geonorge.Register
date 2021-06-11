@@ -746,9 +746,9 @@ namespace Kartverket.Register.Models.Api
                 Note = GetNoteLocale(s);
                 ServiceUuid = s.UuidExternal;
                 AlertCategory = s.AlertCategory;
-
-                Station = s.stationId;
-                if(s.DateResolved.HasValue)
+                if(!string.IsNullOrEmpty(s.StationName))
+                    Station = s.StationName + " " + s.StationType?.ToLower();
+                if (s.DateResolved.HasValue)
                     DateResolved = s.DateResolved;
                 Summary = s.Summary;
                 Departement = s.departmentId;

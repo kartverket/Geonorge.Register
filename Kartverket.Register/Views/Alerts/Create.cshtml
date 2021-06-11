@@ -242,22 +242,22 @@
             @Html.LabelFor(model => model.station, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    <select name="stationId" class="form-control">
+                    <select name="StationName" class="form-control">
                         <option></option>
                         <optgroup label="SATREF"></optgroup>
                         @foreach (var station in (List<Station>)ViewBag.stations)
                         {
-                            if (station.group == "SATREF")
+                            if (station.StationType == "SATREF")
                             {
-                                <option value="@station.value">@station.description</option>
+                                <option value="@station.StationName,@station.StationType">@station.Description</option>
                             }
                         }
                         <optgroup label="Vannstandsmåler"></optgroup>
                         @foreach (var station in (List<Station>)ViewBag.stations)
                         {
-                            if (station.group == "Vannstandsmåler")
+                            if (station.StationType == "Vannstandsmåler")
                             {
-                                <option value="@station.value">@station.description</option>
+                                <option value="@station.StationName,@station.StationType">@station.Description</option>
                             }
                         }
                     </select>

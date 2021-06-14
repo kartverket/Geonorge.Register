@@ -79,11 +79,6 @@ namespace Kartverket.Register.Controllers
         //[Route("dokument/{registername}/ny")]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerowner)
         {
-            if (documentfile == null)
-            {
-                ModelState.AddModelError("FileName", "En fil må velges");
-            }
-
             document.register = _registerService.GetRegister(parentRegister, registername);
             if (_accessControlService.AddToRegister(document.register))
             {

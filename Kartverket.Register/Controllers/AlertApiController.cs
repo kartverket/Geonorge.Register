@@ -32,7 +32,7 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Add service alert
         /// </summary>
-        //[System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         [ResponseType(typeof(AlertAdd))]
         [ApiExplorerSettings(IgnoreApi = false)]
         [System.Web.Http.HttpPost]
@@ -127,7 +127,7 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Update service alert
         /// </summary>
-        //[System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         [ApiExplorerSettings(IgnoreApi = false)]
         [ResponseType(typeof(void))]
         [System.Web.Http.HttpPut]

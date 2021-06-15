@@ -64,6 +64,8 @@ namespace Kartverket.Register.Controllers
             {
                     if (ModelState.IsValid)
                     {
+                        if(string.IsNullOrEmpty(serviceAlert.Owner))
+                            serviceAlert.Owner = "Kartverket";
                         serviceAlert.GetMetadataByUuid();
                         serviceAlert.submitterId = new Guid("10087020-F17C-45E1-8542-02ACBCF3D8A3");
                         serviceAlert.InitializeNewAlert();

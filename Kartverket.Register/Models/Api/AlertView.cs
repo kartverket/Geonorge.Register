@@ -6,8 +6,9 @@ using System.Web;
 
 namespace Kartverket.Register.Models.Api
 {
-    public class AlertService
+    public class AlertView
     {
+        public string SystemId { get; set; }
 
         /// <summary>
         /// Hva har skjedd? "Endret datainnhold", "Ny tjeneste" etc.

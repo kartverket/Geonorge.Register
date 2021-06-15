@@ -595,9 +595,24 @@
             Register search
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.AlertServiceController.PostServiceAlert(Kartverket.Register.Models.Api.AlertService)">
+        <member name="M:Kartverket.Register.Controllers.AlertApiController.PostServiceAlert(Kartverket.Register.Models.Api.AlertAdd)">
             <summary>
             Add service alert
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.AlertApiController.Get">
+            <summary>
+            Get all service alerts
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.AlertApiController.GetId(System.String)">
+            <summary>
+            Get service alert
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.AlertApiController.PutServiceAlert(System.String,Kartverket.Register.Models.Api.AlertUpdate)">
+            <summary>
+            Update service alert
             </summary>
         </member>
         <member name="T:Kartverket.Register.Controllers.BaseController">
@@ -917,6 +932,56 @@
             <param name="filtype"></param>
             <param name="seofilename"></param>
         </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertUpdate.AlertType">
+            <summary>
+            Hva har skjedd? "Endret datainnhold", "Ny tjeneste" etc.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertUpdate.ServiceUuid">
+            <summary>
+            Uuid til tjenesten
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertUpdate.Note">
+            <summary>
+            Beskrivelse av hva varselet gjelder
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertUpdate.AlertDate">
+            <summary>
+            Valgfri, dersom ikke oppgitt settes til dagens dato. Format: YYYY-MM-DD, f.eks. "2017-03-15".
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertUpdate.EffectiveDate">
+            <summary>
+            Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertView.AlertType">
+            <summary>
+            Hva har skjedd? "Endret datainnhold", "Ny tjeneste" etc.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertView.ServiceUuid">
+            <summary>
+            Uuid til tjenesten
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertView.Note">
+            <summary>
+            Beskrivelse av hva varselet gjelder
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertView.AlertDate">
+            <summary>
+            Valgfri, dersom ikke oppgitt settes til dagens dato. Format: YYYY-MM-DD, f.eks. "2017-03-15".
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertView.EffectiveDate">
+            <summary>
+            Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
+            </summary>
+        </member>
         <member name="T:Kartverket.Register.Models.Api.GeoLett">
             <summary>
             Geolett
@@ -1142,27 +1207,27 @@
             Result grouped by facets
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertService.AlertType">
+        <member name="P:Kartverket.Register.Models.Api.AlertAdd.AlertType">
             <summary>
             Hva har skjedd? "Endret datainnhold", "Ny tjeneste" etc.
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertService.ServiceUuid">
+        <member name="P:Kartverket.Register.Models.Api.AlertAdd.ServiceUuid">
             <summary>
             Uuid til tjenesten
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertService.Note">
+        <member name="P:Kartverket.Register.Models.Api.AlertAdd.Note">
             <summary>
             Beskrivelse av hva varselet gjelder
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertService.AlertDate">
+        <member name="P:Kartverket.Register.Models.Api.AlertAdd.AlertDate">
             <summary>
             Valgfri, dersom ikke oppgitt settes til dagens dato. Format: YYYY-MM-DD, f.eks. "2017-03-15".
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertService.EffectiveDate">
+        <member name="P:Kartverket.Register.Models.Api.AlertAdd.EffectiveDate">
             <summary>
             Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
             </summary>

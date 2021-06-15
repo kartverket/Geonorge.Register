@@ -374,7 +374,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ApiSearchController.cs" />
-    <Compile Include="Controllers\AlertServiceController.cs" />
+    <Compile Include="Controllers\AlertApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CodelistValuesController.cs" />
     <Compile Include="Controllers\DatasetsController.cs" />
@@ -1143,6 +1143,8 @@
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
     <Compile Include="ModelsDok\ThemeGroup.cs" />
     <Compile Include="Models\AccessType.cs" />
+    <Compile Include="Models\Api\AlertUpdate.cs" />
+    <Compile Include="Models\Api\AlertView.cs" />
     <Compile Include="Models\Api\Concept.cs" />
     <Compile Include="Models\Api\ConceptSheme.cs" />
     <Compile Include="Models\Api\GeodatalovDatasetStatusReport.cs" />
@@ -1162,7 +1164,7 @@
     <Compile Include="Models\Api\Result.cs" />
     <Compile Include="Models\Api\SearchParameters.cs" />
     <Compile Include="Models\Api\SearchResult.cs" />
-    <Compile Include="Models\Api\AlertService.cs" />
+    <Compile Include="Models\Api\AlertAdd.cs" />
     <Compile Include="Models\Api\DokStatusReport.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />

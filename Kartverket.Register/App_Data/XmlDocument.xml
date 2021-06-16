@@ -932,27 +932,12 @@
             <param name="filtype"></param>
             <param name="seofilename"></param>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertUpdate.AlertType">
-            <summary>
-            Hva har skjedd? "Endret datainnhold", "Ny tjeneste" etc.
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertUpdate.ServiceUuid">
-            <summary>
-            Uuid til tjenesten
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertUpdate.Note">
-            <summary>
-            Beskrivelse av hva varselet gjelder
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertUpdate.AlertDate">
+        <member name="P:Kartverket.Register.Models.Api.AlertView.AlertDate">
             <summary>
             Valgfri, dersom ikke oppgitt settes til dagens dato. Format: YYYY-MM-DD, f.eks. "2017-03-15".
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertUpdate.EffectiveDate">
+        <member name="P:Kartverket.Register.Models.Api.AlertView.EffectiveDate">
             <summary>
             Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
             </summary>
@@ -962,7 +947,17 @@
             Hva har skjedd? "Endret datainnhold", "Ny tjeneste" etc.
             </summary>
         </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertView.ServiceUuid">
+        <member name="P:Kartverket.Register.Models.Api.AlertView.Type">
+            <summary>
+            Service type ex OGC:WMS
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertView.AlertCategory">
+            <summary>
+            Tjenestevarsel, Datasettvarsel, Driftsmelding
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertView.UuidExternal">
             <summary>
             Uuid til tjenesten
             </summary>
@@ -970,16 +965,6 @@
         <member name="P:Kartverket.Register.Models.Api.AlertView.Note">
             <summary>
             Beskrivelse av hva varselet gjelder
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertView.AlertDate">
-            <summary>
-            Valgfri, dersom ikke oppgitt settes til dagens dato. Format: YYYY-MM-DD, f.eks. "2017-03-15".
-            </summary>
-        </member>
-        <member name="P:Kartverket.Register.Models.Api.AlertView.EffectiveDate">
-            <summary>
-            Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
             </summary>
         </member>
         <member name="T:Kartverket.Register.Models.Api.GeoLett">

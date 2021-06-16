@@ -97,8 +97,7 @@ namespace Kartverket.Register.Controllers
                         AlertDate = alert.AlertDate,
                         AlertType = alert.AlertType,
                         EffectiveDate = alert.EffectiveDate,
-                        Note = alert.Note,
-                        ServiceUuid = alert?.UuidExternal
+                        Note = alert.Note
                     });
             }
 
@@ -108,7 +107,7 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Get service alert
         /// </summary>
-        [ResponseType(typeof(AlertAdd))]
+        [ResponseType(typeof(AlertView))]
         [ApiExplorerSettings(IgnoreApi = false)]
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetId(string id)
@@ -119,7 +118,27 @@ namespace Kartverket.Register.Controllers
 
             var alertView = new AlertView();
             alertView.SystemId = alert.systemId.ToString();
+            alertView.AlertCategory = alert.AlertCategory;
+            alertView.AlertDate = alert.AlertDate;
+            alertView.AlertType = alert.AlertType;
+            alertView.DateResolved = alert.DateResolved;
             alertView.EffectiveDate = alert.EffectiveDate;
+            alertView.Department = alert.departmentId;
+            alertView.Image1 = alert.Image1;
+            alertView.Image1Thumbnail = alert.Image1Thumbnail;
+            alertView.Image2 = alert.Image2;
+            alertView.Image2Thumbnail = alert.Image2Thumbnail;
+            alertView.Link = alert.Link;
+            alertView.Note = alert.Note;
+            alertView.Owner = alert.Owner;
+            alertView.StationName = alert.StationName;
+            alertView.StationType = alert.StationType;
+            alertView.Summary = alert.Summary;
+            alertView.Tags = alert.Tags.Select(t => t.value).ToList();
+            alertView.Type = alert.Type;
+            alertView.UrlExternal = alert.UrlExternal;
+            alertView.UuidExternal = alert.UuidExternal;
+
 
             return Ok(alertView);
         }

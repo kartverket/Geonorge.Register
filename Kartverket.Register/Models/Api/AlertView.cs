@@ -11,25 +11,6 @@ namespace Kartverket.Register.Models.Api
         public string SystemId { get; set; }
 
         /// <summary>
-        /// Hva har skjedd? "Endret datainnhold", "Ny tjeneste" etc.
-        /// </summary>
-        [Required]
-        public string AlertType { get; set; }
-
-        /// <summary>
-        /// Uuid til tjenesten
-        /// </summary>
-        [Required]
-        public string ServiceUuid { get; set; }
-
-        /// <summary>
-        /// Beskrivelse av hva varselet gjelder
-        /// </summary>
-        [Required]
-        [StringLength(500, MinimumLength = 3)]
-        public string Note { get; set; }
-
-        /// <summary>
         /// Valgfri, dersom ikke oppgitt settes til dagens dato. Format: YYYY-MM-DD, f.eks. "2017-03-15".
         /// </summary>
         [Display(Name = "Varslingsdato")]
@@ -40,6 +21,52 @@ namespace Kartverket.Register.Models.Api
         /// </summary>
         [Display(Name = "Ikrafttredelsesdato")]
         public DateTime? EffectiveDate { get; set; }
+
+        /// <summary>
+        /// Hva har skjedd? "Endret datainnhold", "Ny tjeneste" etc.
+        /// </summary>
+        public string AlertType { get; set; }
+
+        /// <summary>
+        /// Service type ex OGC:WMS
+        /// </summary>
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Tjenestevarsel, Datasettvarsel, Driftsmelding
+        /// </summary>
+        public string AlertCategory { get; set; }
+
+        public string Owner { get; set; }
+
+        public string UrlExternal { get; set; }
+
+        /// <summary>
+        /// Uuid til tjenesten
+        /// </summary>
+        public string UuidExternal { get; set; }
+
+        /// <summary>
+        /// Beskrivelse av hva varselet gjelder
+        /// </summary>
+        public string Note { get; set; }
+
+        public List<string> Tags { get; set; }
+
+        public string Department { get; set; }
+
+        public string StationName { get; set; }
+        public string StationType { get; set; }
+
+        public string Summary { get; set; }
+        public string Link { get; set; }
+        public string Image1 { get; set; }
+        public string Image2 { get; set; }
+        public string Image1Thumbnail { get; set; }
+        public string Image2Thumbnail { get; set; }
+
+
+        public DateTime? DateResolved { get; set; }
 
     }
 }

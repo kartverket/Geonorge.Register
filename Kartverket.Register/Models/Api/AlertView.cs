@@ -10,6 +10,8 @@ namespace Kartverket.Register.Models.Api
     {
         public string SystemId { get; set; }
 
+        public string Label { get; set; }
+
         /// <summary>
         /// Valgfri, dersom ikke oppgitt settes til dagens dato. Format: YYYY-MM-DD, f.eks. "2017-03-15".
         /// </summary>

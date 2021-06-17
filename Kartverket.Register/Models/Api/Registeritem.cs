@@ -741,10 +741,13 @@ namespace Kartverket.Register.Models.Api
                 MetadataUrl = s.UrlExternal;
                 AlertDate = s.AlertDate;
                 AlertType = GetAlertTypeLocale(s);
-                ServiceType = s.Type;
+                if (s.AlertCategory != "Driftsmelding")
+                {
+                    ServiceType = s.Type;
+                    ServiceUuid = s.UuidExternal;
+                }
                 EffectiveDate = s.EffectiveDate;
                 Note = GetNoteLocale(s);
-                ServiceUuid = s.UuidExternal;
                 AlertCategory = s.AlertCategory;
                 if(!string.IsNullOrEmpty(s.StationName))
                     Station = s.StationName + " " + s.StationType?.ToLower();

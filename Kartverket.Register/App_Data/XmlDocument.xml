@@ -597,22 +597,22 @@
         </member>
         <member name="M:Kartverket.Register.Controllers.AlertApiController.PostServiceAlert(Kartverket.Register.Models.Api.AlertAdd)">
             <summary>
-            Add service alert
+            Add alert
             </summary>
         </member>
         <member name="M:Kartverket.Register.Controllers.AlertApiController.Get">
             <summary>
-            Get all service alerts
+            Get all alerts
             </summary>
         </member>
         <member name="M:Kartverket.Register.Controllers.AlertApiController.GetId(System.String)">
             <summary>
-            Get service alert
+            Get alert
             </summary>
         </member>
         <member name="M:Kartverket.Register.Controllers.AlertApiController.PutServiceAlert(System.String,Kartverket.Register.Models.Api.AlertUpdate)">
             <summary>
-            Update service alert
+            Update alert
             </summary>
         </member>
         <member name="T:Kartverket.Register.Controllers.BaseController">

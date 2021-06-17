@@ -30,7 +30,7 @@ namespace Kartverket.Register.Controllers
         }
 
         /// <summary>
-        /// Add service alert
+        /// Add alert
         /// </summary>
         [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         [ResponseType(typeof(AlertAdd))]
@@ -79,7 +79,7 @@ namespace Kartverket.Register.Controllers
         }
 
         /// <summary>
-        /// Get all service alerts
+        /// Get all alerts
         /// </summary>
         [ResponseType(typeof(List<AlertView>))]
         [ApiExplorerSettings(IgnoreApi = false)]
@@ -94,10 +94,12 @@ namespace Kartverket.Register.Controllers
                 alerts.Add(
                     new AlertView {
                         SystemId = alert.systemId.ToString(),
+                        Label = alert.name,
                         AlertDate = alert.AlertDate,
                         AlertType = alert.AlertType,
                         EffectiveDate = alert.EffectiveDate,
-                        Note = alert.Note
+                        Note = alert.Note,
+                        AlertCategory = alert.AlertCategory
                     });
             }
 
@@ -105,7 +107,7 @@ namespace Kartverket.Register.Controllers
         }
 
         /// <summary>
-        /// Get service alert
+        /// Get alert
         /// </summary>
         [ResponseType(typeof(AlertView))]
         [ApiExplorerSettings(IgnoreApi = false)]
@@ -118,6 +120,7 @@ namespace Kartverket.Register.Controllers
 
             var alertView = new AlertView();
             alertView.SystemId = alert.systemId.ToString();
+            alertView.Label = alert.name;
             alertView.AlertCategory = alert.AlertCategory;
             alertView.AlertDate = alert.AlertDate;
             alertView.AlertType = alert.AlertType;
@@ -135,16 +138,19 @@ namespace Kartverket.Register.Controllers
             alertView.StationType = alert.StationType;
             alertView.Summary = alert.Summary;
             alertView.Tags = alert.Tags.Select(t => t.value).ToList();
-            alertView.Type = alert.Type;
             alertView.UrlExternal = alert.UrlExternal;
-            alertView.UuidExternal = alert.UuidExternal;
 
+            if(alert.AlertCategory != "Driftsmelding")
+            { 
+                alertView.Type = alert.Type;
+                alertView.UuidExternal = alert.UuidExternal;
+            }
 
             return Ok(alertView);
         }
 
         /// <summary>
-        /// Update service alert
+        /// Update alert
         /// </summary>
         [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         [ApiExplorerSettings(IgnoreApi = false)]

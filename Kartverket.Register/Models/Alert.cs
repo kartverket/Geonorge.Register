@@ -8,6 +8,7 @@ using System.Linq;
 using Resources;
 using Kartverket.Register.Models.Translations;
 using Kartverket.Register.Helpers;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kartverket.Register.Models
 {
@@ -28,7 +29,7 @@ namespace Kartverket.Register.Models
         [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "EffectiveDateErrorMessage")]
         [Display(Name = "EffectiveDate", ResourceType = typeof(Alerts))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime EffectiveDate { get; set; }
+        public DateTime EffectiveDate { get; set; } //validFrom
 
         [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "AlertTypeErrorMessage")]
         [Display(Name = "AlertType", ResourceType = typeof(Alerts))]
@@ -52,6 +53,27 @@ namespace Kartverket.Register.Models
         [StringLength(500, MinimumLength = 3)]
         [Display(Name = "Note", ResourceType = typeof(Alerts))]
         public string Note { get; set; }
+
+        public virtual ICollection<Tag> Tags { get; set; }
+
+        [ForeignKey("department")]
+        public string departmentId { get; set; }
+        [Display(Name = "Department", ResourceType = typeof(Alerts))]
+        public virtual Department department { get; set; }
+
+        public string StationName { get; set; }
+        public string StationType { get; set; }
+        [ForeignKey("StationName,StationType")]
+        [Display(Name = "Station", ResourceType = typeof(Alerts))]
+        public virtual Station station { get; set; }
+
+        public string Summary { get; set; }
+        public string Link { get; set; }
+        public string Image1 { get; set; }
+        public string Image2 { get; set; }
+        public string Image1Thumbnail { get; set; }
+        public string Image2Thumbnail { get; set; }
+        public DateTime? DateResolved { get; set; } // validTo
 
 
         public void GetMetadataByUuid()

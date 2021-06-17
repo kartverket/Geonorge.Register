@@ -204,7 +204,16 @@ namespace Kartverket.Register.Formatter
                     content = content + "Link til tjenestevarsel: " + "<a href='" + u.id + "'>" + u.label + "</a><br>";
 
                 if (!string.IsNullOrEmpty(u.MetadataUrl))
-                    content = content + "Link til tjenestebeskrivelse: " + "<a href='" + u.MetadataUrl + "'>" +u.MetadataUrl + "</a>";
+                    content = content + "Link til tjenestebeskrivelse: " + "<a href='" + u.MetadataUrl + "'>" +u.MetadataUrl + "</a><br>";
+
+                if (!string.IsNullOrEmpty(u.Summary))
+                    content = content + "Summary: " + u.Summary + "<br>";
+
+                if (u.DateResolved.HasValue)
+                    content = content + "DateResolved: " + u.DateResolved.Value + "<br>";
+
+                if (u.Station != null)
+                    content = content + "Station: " + u.Station + "<br>";
             }
 
             return content;

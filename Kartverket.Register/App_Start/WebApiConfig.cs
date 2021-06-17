@@ -36,7 +36,11 @@ namespace Kartverket.Register
             config.Routes.MapHttpRoute("ReportPost", "api/Report", new { controller = "Report", action = "Post" });
 
             // Alert
-            config.Routes.MapHttpRoute("AlertServicePost", "api/AlertService", new { controller = "AlertService", action = "PostServiceAlert" });
+            config.Routes.MapHttpRoute("AlertServicePost", "api/alert/add", new { controller = "AlertApi", action = "PostServiceAlert" });
+            config.Routes.MapHttpRoute("AlertServiceGet", "api/alerts", new { controller = "AlertApi", action = "Get" });
+            config.Routes.MapHttpRoute("AlertServiceGetId", "api/alert/{id}", new { controller = "AlertApi", action = "GetId" });
+            config.Routes.MapHttpRoute("AlertServiceUpdate", "api/alert/update/{id}", new { controller = "AlertApi", action = "PutServiceAlert" });
+            //config.Routes.MapHttpRoute("AlertServiceDelete", "api/alert/delete", new { controller = "AlertApi", action = "DeleteServiceAlert" });
 
             config.MapHttpAttributeRoutes();
 
@@ -49,6 +53,12 @@ namespace Kartverket.Register
                    routeTemplate: "api/search/{search}",
                    defaults: new { controller = "ApiSearch", search = RouteParameter.Optional }
             );
+
+            //config.Routes.MapHttpRoute(
+            //   name: "AlertApi",
+            //   routeTemplate: "api/alert/",
+            //   defaults: new { controller = "AlertService", id = RouteParameter.Optional }
+            //);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

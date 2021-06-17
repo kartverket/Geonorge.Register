@@ -27,14 +27,15 @@ namespace Kartverket.Register.Helpers
 
             foreach(var api in apiExplorer.ApiDescriptions)
             {
-                if (api.ID == "GETapi/ApiSearch" || api.ID == "GETapi/OrganizationsApi" || api.ID.Contains("ApiRoot")
+                if (api.ID.Contains("GETapi/AlertApi") || api.ID == "GETapi/ApiSearch" || api.ID == "GETapi/OrganizationsApi" || api.ID.Contains("ApiRoot")
                     || api.ID.Contains("report") || api.ID.Contains(".{ext}"))
                     removeDescriptions.Add(api);
             }
 
             foreach (var description in removeDescriptions) { 
                 apiExplorer.ApiDescriptions.Remove(description);
-                swaggerDoc.paths.Remove(description.ID);
+                var descriptionId = description.ID.Replace("GET", "/");
+                swaggerDoc.paths.Remove(descriptionId);
             }
 
         }

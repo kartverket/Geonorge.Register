@@ -3,19 +3,25 @@
 @model Kartverket.Register.Models.Alert
 @using Kartverket.Register.Resources
 ﻿@using Kartverket.Register.Helpers
-
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<!-- Editor's Dependecy Style -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
+<!-- Editor's Style -->
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 @{
-    ViewBag.Title = Alerts.Title;
+    ViewBag.Title = Shared.Edit + " " + Model.UuidExternal;
 }
 
 @section breadcrumb {
-    <li>@Alerts.Title</li>
+    <li>@Shared.Edit</li>
 }
+
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                @Alerts.Title
+                @Shared.Edit @Model.UuidExternal
             </h2>
         </div>
         <div class="col-sm-12">
@@ -24,26 +30,20 @@
     </div>
 </section>
 
-@using (Html.BeginForm("Create", "Alerts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Alerts", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-
 <div class="form-horizontal">
     @Html.ValidationSummary(false, Shared.ValidationSummary, new { @class = "alert alert-danger" })
-    @Html.Hidden("name", "navn")
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="radio" name="category" value="@Constants.AlertCategoryService" onclick="location.href='?category=@Constants.AlertCategoryService'" @(ViewBag.Category == Constants.AlertCategoryService || string.IsNullOrEmpty(ViewBag.Category) ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryService)
-            <input type="radio" name="category" value="@Constants.AlertCategoryDataset" onclick="location.href='?category=@Constants.AlertCategoryDataset'" @(ViewBag.Category == Constants.AlertCategoryDataset ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryDataset)
-            <input type="radio" name="category" value="@Constants.AlertCategoryOperation" onclick="location.href='?category=@Constants.AlertCategoryOperation'" @(ViewBag.Category == @Constants.AlertCategoryOperation ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryOperation)
-        </div>
-    </div>
+    @Html.HiddenFor(model => model.systemId)
+    @Html.HiddenFor(model => model.AlertCategory)
+
     @if (ViewBag.UuidExternal != null && ViewBag.UuidExternal.Items.Count == 1)
     {
         <div class="form-group required has-feedback">
             @Html.LabelFor(model => model.UuidExternal, Alerts.AppliesTo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    <input type="text" name="UuidExternal" />
+                    <input type="text" name="UuidExternal" value="@Model.UuidExternal" />
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
@@ -184,7 +184,7 @@
             <label for="tags" class="control-label col-md-2">Tags</label>
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    @Html.ListBox("tagslist", (MultiSelectList)ViewBag.tagList, new { @class = "form-control compatibilitySelect", multiple = "multiple" })
+                    @Html.DropDownList("tagsList", (MultiSelectList)ViewBag.tagList, new { multiple = "multiple", @class = "form-control" })
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
@@ -249,7 +249,7 @@
                         {
                             if (station.StationType == "SATREF")
                             {
-                                <option value="@station.StationName,@station.StationType">@station.Description</option>
+                                <option value="@station.StationName,@station.StationType" @(Model.StationName == station.StationName && Model.StationType == station.StationType ? "selected" : "")>@station.Description</option>
                             }
                         }
                         <optgroup label="Vannstandsmåler"></optgroup>
@@ -257,7 +257,7 @@
                         {
                             if (station.StationType == "Vannstandsmåler")
                             {
-                                <option value="@station.StationName,@station.StationType">@station.Description</option>
+                        <option value="@station.StationName,@station.StationType" @(Model.StationName == station.StationName && Model.StationType == station.StationType ? "selected" : "")>@station.Description</option>
                             }
                         }
                     </select>
@@ -299,62 +299,78 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Image1, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="imagefile1" />
+                <input type="file" name="imagefile1" />@Model.Image1
                 @Html.ValidationMessageFor(model => model.Image1, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Image2, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="imagefile2" />
+                <input type="file" name="imagefile2" />@Model.Image2
                 @Html.ValidationMessageFor(model => model.Image2, "", new { @class = "text-danger" })
             </div>
         </div>
 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.Summary)
+                @Html.ValidationMessageFor(model => model.Summary, "", new { @class = "text-danger" })
+                <div id="editorSummary"></div>
+                <script>
+
+                let hiddenBodyMarkdownSummary = document.querySelector("#Summary");
+                let onEditorUpdateSummary = () => {
+                    hiddenBodyMarkdownSummary.value = editorSummary.getMarkdown();
+                                }
+
+                                var contentSummary = [
+                                @{
+                                    string[] commentLines = new string[] { };
+                                    if (Model.Summary != null)
+                                    {
+                                        commentLines = Model.Summary.Split('\n');
+                                    }
+                                    foreach (var comment in commentLines)
+                                    {
+                                        @:'@comment.Replace("\r", "")',
+                                    }
+                                }
+                                ].join('\n');
+                const editorSummary = new toastui.Editor({
+                    el: document.querySelector('#editorSummary'),
+                                    height: '150px',
+                    events: { "change": onEditorUpdateSummary },
+                    initialValue: contentSummary,
+                                    initialEditType: 'wysiwyg'
+                                });
+                </script>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            @Html.LabelFor(model => model.DateResolved, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-9">
+                <div class="col-md-4 row">
+                    <input type="date" class="form-control" value="@(Model.DateResolved.HasValue ? Model.DateResolved.Value.ToString("yyyy-MM-dd") : "")" name="DateResolved" />
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-dateresolved" style="display: none">
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-1 pull-right">
+                <p class="form-control-static">
+                    <a href="#" data-help-text-id="help-text-dateresolved" class="badge help-text-toggle">?</a>
+                </p>
+            </div>
+        </div>
     }
     <div class="form-group">
         <hr />
-        <input type="submit" value="@Registers.Publish" class="btn btn-default pull-right" />
-        <a href="@Model.register.GetObjectUrl()">@Shared.Back</a>
+        <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />
+        <a href="/varsler/@Model.seoname/@Model.systemId">@Shared.Back</a>
     </div>
 </div>
 }
-<script>
-    $(function () {
-
-        var today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        $(".date").datepicker("option", "minDate", today);
-
-
-        $('#AlertDate').change(function () {
-            var dateSelected = $('#AlertDate').val();
-
-            var selectedDay = dateSelected.substr(0, 2);
-            var selectedMonth = dateSelected.substr(3, 2);
-            var selectedYear = dateSelected.substr(6, 4);
-            var selectedDate = new Date(selectedYear, selectedMonth - 1, selectedDay);
-
-            if (selectedDate < today) {
-                $('#AlertDate_validationMessage').removeClass("field-validation-valid");
-                $('#AlertDate_validationMessage').addClass("field-validation-error")
-                return false;
-            }
-            else
-                $('#AlertDate_validationMessage').removeClass("field-validation-error");
-            $('#AlertDate_validationMessage').addClass("field-validation-valid")
-        });
-
-        $('.input-validation-error').each(function () {
-            var inputElement = $(this);
-            console.log(inputElement);
-            inputElement.closest('.form-group').addClass('has-error');
-        });
-
-    });
-
-
-
-</script>
-

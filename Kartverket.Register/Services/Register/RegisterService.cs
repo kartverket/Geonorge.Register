@@ -184,13 +184,13 @@ namespace Kartverket.Register.Services.Register
             }
 
             if (!string.IsNullOrEmpty(filter.Category) && !string.IsNullOrEmpty(filter.filterOrganization))
-                foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category && a.Owner == filter.filterOrganization).OrderByDescending(o => o.AlertDate))
+                foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category && a.Owner.ToLower() == filter.filterOrganization.ToLower()).OrderByDescending(o => o.AlertDate))
                     registerItems.Add(item);
             else if (!string.IsNullOrEmpty(filter.Category))
                 foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category).OrderByDescending(o => o.AlertDate))
                     registerItems.Add(item);
             else if (!string.IsNullOrEmpty(filter.filterOrganization))
-                foreach (Alert item in alerts.Where(a => a.Owner == filter.filterOrganization).OrderByDescending(o => o.AlertDate))
+                foreach (Alert item in alerts.Where(a => a.Owner.ToLower() == filter.filterOrganization.ToLower()).OrderByDescending(o => o.AlertDate))
                     registerItems.Add(item);
             else if (filter.OrderBy.Equals("alertDate"))
                 registerItems.AddRange(alerts.OrderByDescending(a => a.AlertDate));

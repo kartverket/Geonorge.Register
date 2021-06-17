@@ -145,6 +145,11 @@ namespace Kartverket.Register.Services.Register
         {
             var alerts = register.items.Cast<Alert>();
 
+            if(!string.IsNullOrEmpty(filter.stationName) && !string.IsNullOrEmpty(filter.stationType))
+            {
+                alerts = alerts.Where(s => s.StationName == filter.stationName && s.StationType == filter.stationType);
+            }
+
             if(filter.tag != null)
             {
                 var alertsTagged = new List<Alert>();

@@ -37,6 +37,21 @@
 
     </div>
 </div>
+
+<div class="col-md-12">
+    <div class="col-md-12 text-right">
+        @if (Request.QueryString["StatusType"] == "Valid")
+        {
+            <a href="?category=@Request.QueryString["category"]&filterOrganization=@Request.QueryString["owner"]&StatusType=">Vis alle statuser</a>
+        }
+        else
+        {
+            <a href="?category=@Request.QueryString["category"]&filterOrganization=@Request.QueryString["owner"]&StatusType=Valid">Vis kun gyldige</a>
+        }
+    </div>
+</div>
+
+
 <div class="table-view">
     <div class="table-heading search-results-table-heading col-md-12">
         <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, null, Request.QueryString["category"])</div>
@@ -64,7 +79,7 @@
                 <p>@item.AlertTypeTranslated()</p>
             </div>
             <div class="col-md-3 col-sm-12 col">
-                <p>@item.OwnerTranslated()</p>
+                <p><a href="?category=@Request.QueryString["category"]&filterOrganization=@item.Owner&StatusType=@Request.QueryString["StatusType"]">@item.OwnerTranslated()</a></p>
             </div>
             <div class="col-md-1 col-sm-12 col">
                 <a href="@item.GetObjectUrl()" title="Beskrivelse av @item.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Shared.Details</a>

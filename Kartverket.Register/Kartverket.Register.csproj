@@ -374,7 +374,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ApiSearchController.cs" />
-    <Compile Include="Controllers\AlertServiceController.cs" />
+    <Compile Include="Controllers\AlertApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CodelistValuesController.cs" />
     <Compile Include="Controllers\DatasetsController.cs" />
@@ -1134,11 +1134,17 @@
     <Compile Include="Migrations\202105111405145_AddTransliterNorwegian.designer.cs">
       <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106111052573_AddAlertProperties.cs" />
+    <Compile Include="Migrations\202106111052573_AddAlertProperties.designer.cs">
+      <DependentUpon>202106111052573_AddAlertProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
     <Compile Include="ModelsDok\ThemeGroup.cs" />
     <Compile Include="Models\AccessType.cs" />
+    <Compile Include="Models\Api\AlertUpdate.cs" />
+    <Compile Include="Models\Api\AlertView.cs" />
     <Compile Include="Models\Api\Concept.cs" />
     <Compile Include="Models\Api\ConceptSheme.cs" />
     <Compile Include="Models\Api\GeodatalovDatasetStatusReport.cs" />
@@ -1158,18 +1164,21 @@
     <Compile Include="Models\Api\Result.cs" />
     <Compile Include="Models\Api\SearchParameters.cs" />
     <Compile Include="Models\Api\SearchResult.cs" />
-    <Compile Include="Models\Api\AlertService.cs" />
+    <Compile Include="Models\Api\AlertAdd.cs" />
     <Compile Include="Models\Api\DokStatusReport.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\FAIR\FAIRDelivery.cs" />
     <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
     <Compile Include="Models\MareanoDataset.cs" />
+    <Compile Include="Models\Station.cs" />
     <Compile Include="Models\StatusReports\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
     <Compile Include="Models\ViewModels\MareanoDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
@@ -2509,6 +2518,7 @@
     <Content Include="Views\Registers\js\_mareanoReportCharts.cshtml" />
     <Content Include="Views\Shared\_mareanoReport.cshtml" />
     <Content Include="Views\Shared\_detailsMareanoDataset.cshtml" />
+    <Content Include="Views\Alerts\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -3049,6 +3059,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105111405145_AddTransliterNorwegian.resx">
       <DependentUpon>202105111405145_AddTransliterNorwegian.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106111052573_AddAlertProperties.resx">
+      <DependentUpon>202106111052573_AddAlertProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

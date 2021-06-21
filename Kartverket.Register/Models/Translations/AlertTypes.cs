@@ -21,7 +21,7 @@ namespace Kartverket.Register.Models.Translations
 
         public KeyValuePair<Alert, List<Translated>> GetAlertType(string type)
         {
-            var alertType = Items.Where(k => k.Key.Key.Equals(type)).FirstOrDefault();
+            var alertType = Items.Where(k => k.Key.Value.Equals(type)).FirstOrDefault();
             return alertType;
         }
 
@@ -31,14 +31,14 @@ namespace Kartverket.Register.Models.Translations
             foreach(var item in Items)
             {
                 if (CultureHelper.IsNorwegian())
-                    alertTypes.Add(item.Key.Key, item.Key.Value);
+                    alertTypes.Add(item.Key.Value, item.Key.Value);
                 else
                 {
                     var translated = item.Value.Where(c => c.Culture == CultureHelper.GetCurrentCulture()).FirstOrDefault();
                     if (translated != null )
-                        alertTypes.Add(item.Key.Key, translated.AlertType);
+                        alertTypes.Add(item.Key.Value, translated.AlertType);
                     else
-                        alertTypes.Add(item.Key.Key, item.Key.Value);
+                        alertTypes.Add(item.Key.Value, item.Key.Value);
                 }
             }
 

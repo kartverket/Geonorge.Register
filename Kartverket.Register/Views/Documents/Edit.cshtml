@@ -13,7 +13,10 @@
     //    $('.date').datepicker({ dateFormat: "dd/mm/yy" });
     //});
 
-    window.onload = function () {
+    window.onload = init();
+
+    function init()
+    {
         if (document.getElementById('accepted').checked == true) {
             document.getElementById('cbRetired').hidden = false;
             enable();
@@ -27,11 +30,11 @@
             disable();
         }
 
-        if ((document.getElementById('accepted').checked == true || document.getElementById('not-accepted').checked == true) && @Model.statusId != "Superseded") {
+        if ((document.getElementById('accepted').checked == true || document.getElementById('not-accepted').checked == true) && '@Model.statusId' != "Superseded") {
             document.getElementById('cbRetired').hidden = false;
         }
 
-        if (@Model.statusId == "Retired" || @Model.statusId == "Superseded") {
+        if ('@Model.statusId' == "Retired" || '@Model.statusId' == "Superseded") {
             document.getElementById('accepted').disabled == true;
             document.getElementById('not-accepted').disabled == true;
         }
@@ -47,7 +50,11 @@
         else{
             document.getElementById('NotAcceptedate').hidden = false;
         }
-        document.getElementById('sosiinfo').hidden = true;
+
+        var sosiinfo = document.getElementById('sosiinfo');
+        if (typeof (sosiinfo) != 'undefined' && sosiinfo != null) {
+            document.getElementById('sosiinfo').hidden = true;
+        }
     }
 
     function enable() {
@@ -56,7 +63,10 @@
         document.getElementById('approvalRef').hidden = false;
         document.getElementById('NotAcceptedate').hidden = true;
         document.getElementById('cbRetired').hidden = false;
-        document.getElementById('sosiinfo').hidden = false;
+        var sosiinfo = document.getElementById('sosiinfo');
+        if (typeof (sosiinfo) != 'undefined' && sosiinfo != null) {
+            document.getElementById('sosiinfo').hidden = false;
+        }
     }
 
 
@@ -162,7 +172,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.documentUrl, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <input type="file" name="documentfile" />@Model.documentUrl
+                        <input type="file" name="documentfile" id="documentfile" onchange="checkDocumentApproval($('#documentfile').val())" />@Model.documentUrl
                         @Html.ValidationMessageFor(model => model.documentUrl, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -241,20 +251,22 @@
 
             if (HtmlHelperExtensions.IsAdmin())
             {
-                @Html.HiddenFor(model => model.documentownerId)
-                <br />
-                <h3>@Documents.DocumentApproval</h3>
+                <div id="document-approval">
+                    @Html.HiddenFor(model => model.documentownerId)
+                    <br />
+                    <h3>@Documents.DocumentApproval</h3>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Accepted, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-1">
-                        @Html.RadioButtonFor(m => m.Accepted, "true", htmlAttributes: new { @onclick = "enable()", @id = "accepted" }) @Documents.Yes
-                    </div>
-                    <div class="col-md-1">
-                        @Html.RadioButtonFor(m => m.Accepted, "false", htmlAttributes: new { @onclick = "disable()", @id = "not-accepted" }) @Documents.No
-                    </div>
-                    <div class="col-md-2" id="cbRetired">
-                        <b>@Documents.But</b><span class="pull-right">@Html.CheckBox("retired", false, new { htmlAttributes = new { @class = "pull-right" } }) @Documents.Expired</span>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Accepted, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-1">
+                            @Html.RadioButtonFor(m => m.Accepted, "true", htmlAttributes: new { @onclick = "enable()", @id = "accepted" }) @Documents.Yes
+                        </div>
+                        <div class="col-md-1">
+                            @Html.RadioButtonFor(m => m.Accepted, "false", htmlAttributes: new { @onclick = "disable()", @id = "not-accepted" }) @Documents.No
+                        </div>
+                        <div class="col-md-2" id="cbRetired">
+                            <b>@Documents.But</b><span class="pull-right">@Html.CheckBox("retired", false, new { htmlAttributes = new { @class = "pull-right" } }) @Documents.Expired</span>
+                        </div>
                     </div>
                 </div>
                 if (Model.register.name == "Tegneregler")
@@ -392,6 +404,19 @@
             });
 
         });
+    }
+
+
+    function checkDocumentApproval(file)
+    {
+        if (file !== "") {
+            document.getElementById('accepted').checked = false;
+            init();
+            $('#document-approval').hide()
+        }
+        else
+            $('#document-approval').show()
+
     }
 
     function CheckOfficial(value)

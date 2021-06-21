@@ -1,13 +1,58 @@
 ﻿@model Kartverket.Register.Models.Alert
 @using Kartverket.Register.Resources
+@using Markdig;
+@helper DisplayText(string s, bool replaceParagraph = false)
+{
+    var pipeline = new MarkdownPipelineBuilder()
+                      .UseSoftlineBreakAsHardlineBreak()
+                      .Build();
+    s = Markdown.ToHtml(s, pipeline);
+    if (replaceParagraph)
+    {
+        s = s.Replace("<p>", String.Empty).Replace("</p>", String.Empty);
+    }
+    @(new HtmlString(s))
 
+}
 <article class="col-sm-12 col-md-12">
     <h3>@Alerts.Details @Resource.AlertCategory(Model.AlertCategory).ToLower()</h3>
     <p><b>@Html.DisplayNameFor(model => model.AlertType): </b>@Model.AlertTypeTranslated()</p>
-    <p><b>@Html.DisplayNameFor(model => model.Type): </b>@Model.Type</p>
+    @if (Model.Type != null && Model.Type != "Ikke satt")
+    {
+        <p><b>@Html.DisplayNameFor(model => model.Type): </b>@Model.Type</p>
+    }
     <p><b>@Html.DisplayNameFor(model => model.AlertDate): </b>@Html.DisplayFor(model => model.AlertDate)</p>
     <p><b>@Html.DisplayNameFor(model => model.EffectiveDate): </b>@Html.DisplayFor(model => model.EffectiveDate)</p>
     <p><b>@Html.DisplayNameFor(model => model.Note):</b> @Model.NoteTranslated()</p>
+
+    @if (Model.station != null)
+    {
+        <p><b>Station: </b>@Model.station.Description (@Model.station.StationType)</p>
+    }
+
+    @if (Model.DateResolved != null && Model.DateResolved.HasValue)
+    {
+        <p><b>@Html.DisplayNameFor(model => model.DateResolved): </b>@Model.DateResolved.Value.ToShortDateString()</p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Summary))
+    {
+        <p><b>@Html.DisplayNameFor(model => model.Summary):</b> @DisplayText(Model.Summary)</p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Link))
+    {
+        <p><b>@Html.DisplayNameFor(model => model.Link): </b><a href="@Model.Link" target="_blank">@Model.Link</a></p>
+    }
+    @if (!string.IsNullOrEmpty(Model.Image1))
+    {
+        <p><a href="/data/img/@Model.Image1" target="_blank"><img src="/data/img/@Model.Image1Thumbnail" /></a></p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Image2))
+    {
+        <p><a href="/data/img/@Model.Image2" target="_blank"><img src="/data/img/@Model.Image2Thumbnail" /></a></p>
+    }
 </article>
 
 @if (!string.IsNullOrWhiteSpace(Model.UrlExternal))

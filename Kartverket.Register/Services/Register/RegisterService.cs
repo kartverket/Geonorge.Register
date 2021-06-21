@@ -144,20 +144,60 @@ namespace Kartverket.Register.Services.Register
         private void FilterAlert(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
         {
             var alerts = register.items.Cast<Alert>();
+
+            if(!string.IsNullOrEmpty(filter.stationName) && !string.IsNullOrEmpty(filter.stationType))
+            {
+                alerts = alerts.Where(s => s.StationName == filter.stationName && s.StationType == filter.stationType);
+            }
+
+            if(filter.tag != null)
+            {
+                var alertsTagged = new List<Alert>();
+
+                foreach(var alert in alerts)
+                {
+                    foreach(var tag in filter.tag)
+                    {
+                        if (alert.Tags.Select(t => t.value).Contains(tag))
+                        {
+                            alertsTagged.Add(alert);
+                        }
+                    }
+
+                }
+
+                alerts = alertsTagged.Distinct();
+            }
+
+            if (!string.IsNullOrEmpty(filter.department))
+            {
+
+                alerts = alerts.Where(d => d.departmentId == filter.department);
+
+            }
+
+            if (!string.IsNullOrEmpty(filter.StatusType) && filter.StatusType != "all")
+            {
+
+                alerts = alerts.Where(d => d.statusId == filter.StatusType);
+
+            }
+
             if (!string.IsNullOrEmpty(filter.Category) && !string.IsNullOrEmpty(filter.filterOrganization))
-                foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category && a.Owner == filter.filterOrganization).OrderByDescending(o => o.AlertDate))
+                foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category && a.Owner.ToLower() == filter.filterOrganization.ToLower()).OrderByDescending(o => o.AlertDate))
                     registerItems.Add(item);
             else if (!string.IsNullOrEmpty(filter.Category))
                 foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category).OrderByDescending(o => o.AlertDate))
                     registerItems.Add(item);
             else if (!string.IsNullOrEmpty(filter.filterOrganization))
-                foreach (Alert item in alerts.Where(a => a.Owner == filter.filterOrganization).OrderByDescending(o => o.AlertDate))
+                foreach (Alert item in alerts.Where(a => a.Owner.ToLower() == filter.filterOrganization.ToLower()).OrderByDescending(o => o.AlertDate))
                     registerItems.Add(item);
             else if (filter.OrderBy.Equals("alertDate"))
                 registerItems.AddRange(alerts.OrderByDescending(a => a.AlertDate));
             else
                 foreach (Alert item in alerts)
                     registerItems.Add(item);
+
         }
 
         private List<RegisterItemV2> FilterInspireStatusregister(Models.Register register, FilterParameters filter, List<RegisterItemV2> registerItems)

@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Net;
 using Kartverket.Register.Models.Translations;
 using System.Linq;
+using System.Web;
+using System.IO;
+using System;
 
 namespace Kartverket.Register.Controllers
 {
@@ -46,37 +49,41 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
-
         // POST: Alerts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
-        //[Route("tjenestevarsler/{registerName}/ny")]
-        public ActionResult Create(Alert alert, string parentRegister, string registerName, string category = Constants.AlertCategoryService)
+        public ActionResult Create(Alert alert, string parentRegister, string registerName, string[] tagslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2, string category = Constants.AlertCategoryService)
         {
             alert.register = _registerService.GetRegister(parentRegister, registerName);
             if (alert.register != null)
             {
                 if (_accessControlService.AddToRegister(alert.register))
                 {
-                    //if (!_registerItemService.ItemNameIsValid(alert))
-                    //{
-                    //    ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                    //    return View(alert);
-                    //}
                     if (ModelState.IsValid)
                     {
+                        var selectedStatusId = alert.statusId;
                         var alertTranslation = new AlertTypes(_registerService, category).GetAlertType(alert.AlertType);
                         alert.GetMetadataByUuid();
                         alert.AlertCategory = category;
                         alert.submitter = _registerService.GetOrganizationByUserName();
                         alert.InitializeNewAlert();
+                        if (!string.IsNullOrEmpty(selectedStatusId))
+                            alert.statusId = selectedStatusId;
                         if (category == Constants.AlertCategoryOperation)
                         {
                             alert.Owner = alert.submitter.name;
                             alert.name = alert.UuidExternal;
+                            alert.Tags = new List<Tag>();
+                            if(tagslist != null)
+                            { 
+                                foreach (var tagId in tagslist)
+                                {
+                                    var tag = _dbContext.Tags.Where(t => t.value == tagId).FirstOrDefault();
+                                    alert.Tags.Add(tag);
+                                }
+                            }
                         }
                         alert.AlertType = alertTranslation.Key.Value;
                         for (int t = 0; t < alert.Translations.Count; t++)
@@ -85,7 +92,33 @@ namespace Kartverket.Register.Controllers
                             alert.Translations[t].AlertType = translation.Where(c => c.Culture.Equals(alert.Translations[t].CultureName)).Select(s => s.AlertType).FirstOrDefault();
                         }
                         alert.versioningId = _registerItemService.NewVersioningGroup(alert);
+
+
+                        //todo check filetype
+                        if (imagefile1 != null && imagefile1.ContentLength > 0)
+                        {
+                            alert.Image1Thumbnail = SaveImageOptimizedToDisk(imagefile1, alert.systemId.ToString());
+
+                            alert.Image1 = SaveImageToDisk(imagefile1, alert.systemId.ToString());
+                        }
+
+                        if (imagefile2 != null && imagefile2.ContentLength > 0)
+                        {
+                            alert.Image2Thumbnail = SaveImageOptimizedToDisk(imagefile2, alert.systemId.ToString());
+
+                            alert.Image2 = SaveImageToDisk(imagefile2, alert.systemId.ToString());
+                        }
+
+                        if (!string.IsNullOrEmpty(alert.StationName))
+                        {
+                            var station = alert.StationName.Split(',');
+                            alert.StationName = station[0];
+                            alert.StationType = station[1];
+                        }
+
+
                         alert.register.modified = System.DateTime.Now;
+
                         _registerItemService.SaveNewRegisterItem(alert);
                         return Redirect(alert.GetObjectUrl());
                     }
@@ -95,16 +128,113 @@ namespace Kartverket.Register.Controllers
             return View(alert);
         }
 
+        // GET: Alerts/Edit
+        [Authorize]
+        public ActionResult Edit(string systemid)
+        {
+            Alert alert = _dbContext.Alerts.Where(a => a.systemId == new Guid(systemid)).FirstOrDefault();
+            if (alert.register != null)
+            {
+                if (_accessControlService.AddToRegister(alert.register))
+                {
+                    ViewBags(alert, alert.AlertCategory);
+                    return View(alert);
+                }
+            }
+            return HttpNotFound();
+        }
+
+        // POST: Alerts/Edit
+        [HttpPost]
+        [Authorize]
+        public ActionResult Edit(Alert alert, string[] tagslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2)
+        {
+            //todo skal alle felter redigeres, sjekk om det er noen mangler validering og ressurser feilmelding når man legger til
+            if (!ModelState.IsValid)
+            {
+                return View(alert);
+            }
+
+            Alert alertOriginal = _dbContext.Alerts.Where(a => a.systemId == alert.systemId).FirstOrDefault();
+            if (alertOriginal.register != null)
+            {
+                if (_accessControlService.AddToRegister(alertOriginal.register))
+                {
+                    alertOriginal.UuidExternal = alert.UuidExternal;
+                    alertOriginal.AlertType = alert.AlertType;
+                    alertOriginal.AlertDate = alert.AlertDate;
+                    alertOriginal.EffectiveDate = alert.EffectiveDate;
+                    alertOriginal.Note = alert.Note;
+                    alertOriginal.Translations[0].Note = alert.Translations[0].Note;
+                    alertOriginal.departmentId = alert.departmentId;
+                    alertOriginal.statusId = alert.statusId;
+                    if (!string.IsNullOrEmpty(alert.StationName))
+                    {
+                        var station = alert.StationName.Split(',');
+                        alertOriginal.StationName = station[0];
+                        alertOriginal.StationType = station[1];
+                    }
+                    alertOriginal.DateResolved = alert.DateResolved;
+                    alertOriginal.Summary = alert.Summary;
+                    alertOriginal.Link = alert.Link;
+
+                    alertOriginal.Tags = new List<Tag>();
+                    if (tagslist != null)
+                    {
+                        alertOriginal.Tags.Clear();
+
+                        foreach (var tagId in tagslist)
+                        {
+                            var tag = _dbContext.Tags.Where(t => t.value == tagId).FirstOrDefault();
+                            alertOriginal.Tags.Add(tag);
+                        }
+                    }
+
+                    //todo check filetype
+                    if (imagefile1 != null && imagefile1.ContentLength > 0)
+                    {
+                        alertOriginal.Image1Thumbnail = SaveImageOptimizedToDisk(imagefile1, alert.systemId.ToString());
+
+                        alertOriginal.Image1 = SaveImageToDisk(imagefile1, alert.systemId.ToString());
+                    }
+
+                    if (imagefile2 != null && imagefile2.ContentLength > 0)
+                    {
+                        alertOriginal.Image2Thumbnail = SaveImageOptimizedToDisk(imagefile2, alert.systemId.ToString());
+
+                        alertOriginal.Image2 = SaveImageToDisk(imagefile2, alert.systemId.ToString());
+                    }
+
+                    _registerItemService.SaveEditedRegisterItem(alertOriginal);
+
+                    return Redirect("/varsler/" + alertOriginal.seoname + "/" + alertOriginal.systemId);
+                }
+            }
+            return HttpNotFound();
+        }
+
 
         private void ViewBags(Alert alert, string category)
         {
             if (string.IsNullOrEmpty(category))
                 category = Constants.AlertCategoryService;
             //ViewBag.AlertType = new SelectList(alert.GetAlertTypes(), alert.AlertType);
-            ViewBag.AlertType = new SelectList(new AlertTypes(_registerService, category).GetAlertTypes() , "Key", "Value", alert.AlertType);
             ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(category), "Key", "Value", alert.UuidExternal);
             ViewBag.Category = category;
             ViewBag.AlertType = new SelectList(new AlertTypes(_registerService, category).GetAlertTypes(), "Key", "Value", alert.AlertType);
+
+            string[] alertSelected = { };
+
+            if(alert.Tags != null )
+                alertSelected = alert.Tags.Select(c => c.value).ToArray();
+
+            var tagList = new MultiSelectList(_dbContext.Tags.Select(t => new { Key = t.value, Value = t.description }).ToList(), "Key", "Value", alertSelected);
+
+            ViewBag.tagList = tagList;
+
+            ViewBag.departmentId = new SelectList(_dbContext.Departments.Select(t => new { Key = t.value, Value = t.description }), "Key", "Value", alert.departmentId);
+            ViewBag.statusId = new SelectList(_dbContext.Statuses.Where(s => s.value == "Valid" || s.value == "Retired").Select(t => new { Key = t.value, Value = t.description }).OrderByDescending(o => o.Key), "Key", "Value", alert.statusId);
+            ViewBag.stations = _dbContext.Stations.ToList();
             Dictionary<string, string> items = new Dictionary<string, string>();
             var operation = Resources.Resource.AlertCategory(Constants.AlertCategoryOperation);
             items.Add(operation, operation);
@@ -163,6 +293,28 @@ namespace Kartverket.Register.Controllers
                 _dbContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private string SaveImageToDisk(HttpPostedFileBase file, string seo)
+        {
+            string filename = seo + "_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + "img/"), filename);
+            file.SaveAs(path);
+            return filename;
+        }
+
+        private string SaveImageOptimizedToDisk(HttpPostedFileBase file, string seo)
+        {
+            string filename = seo + "_thumb_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + "img/"), filename);
+
+            ImageResizer.ImageJob newImage =
+               new ImageResizer.ImageJob(file, path,
+               new ImageResizer.Instructions("maxwidth=300;maxheight=1000;quality=75"));
+
+            newImage.Build();
+
+            return filename;
         }
     }
 }

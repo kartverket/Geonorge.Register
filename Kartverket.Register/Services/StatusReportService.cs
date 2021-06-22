@@ -174,6 +174,7 @@ namespace Kartverket.Register.Services
         public List<StatusReport> GetMareanoStatusReports(int numberOfReports = 0)
         {
             List<StatusReport> statusReports = GetStatusReports();
+            statusReports = statusReports.OrderBy(d => d.Date).ToList();
             List<StatusReport> mareanoStatusReports = new List<StatusReport>();
 
             foreach (var report in statusReports)

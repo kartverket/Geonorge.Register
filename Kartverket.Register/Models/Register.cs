@@ -288,7 +288,7 @@ namespace Kartverket.Register.Models
         public bool RedirectToNewPath(string requestPath)
         {
             var newPath = GetObjectUrl();
-            return requestPath != newPath;
+            return newPath !="/" && requestPath != newPath;
         }
 
         public int NumberOfCurrentVersions(Organization organization = null)

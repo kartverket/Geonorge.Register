@@ -604,7 +604,8 @@ namespace Kartverket.Register.Helpers
                 sortTitle = GeodatalovDataSet.Geodatalov;
                 statusIcon += "custom-icon-seksjonstegn";
             }
-            else if (sortingParam == "geodatalov_metadata_status" || sortingParam == "geodatalov_metadata_status_desc")
+            else if (sortingParam == "geodatalov_metadata_status" || sortingParam == "geodatalov_metadata_status_desc"
+                || sortingParam == "mareano_metadata_status" || sortingParam == "mareano_metadata_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_Metadata;
                 statusIcon += "custom-icon-info";
@@ -629,37 +630,44 @@ namespace Kartverket.Register.Helpers
                 sortTitle = MareanoDataSet.ReUseable_Label;
                 statusIcon += "custom-icon-re-useable";
             }
-            else if (sortingParam == "geodatalov_productspecification_status" || sortingParam == "geodatalov_productspecification_status_desc")
+            else if (sortingParam == "geodatalov_productspecification_status" || sortingParam == "geodatalov_productspecification_status_desc"
+                || sortingParam == "mareano_productspecification_status" || sortingParam == "mareano_productspecification_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_ProductSpesification;
                 statusIcon += "glyphicon glyphicon-list-alt";
             }
-            else if (sortingParam == "geodatalov_sosi_status" || sortingParam == "geodatalov_sosi_status_desc")
+            else if (sortingParam == "geodatalov_sosi_status" || sortingParam == "geodatalov_sosi_status_desc" 
+                || sortingParam == "mareano_sosi_status" || sortingParam == "mareano_sosi_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_SosiRequirements;
                 statusIcon += "custom-icon-sosi";
             }
-            else if (sortingParam == "geodatalov_gml_status" || sortingParam == "geodatalov_gml_status_desc")
+            else if (sortingParam == "geodatalov_gml_status" || sortingParam == "geodatalov_gml_status_desc"
+                || sortingParam == "mareano_gml_status" || sortingParam == "mareano_gml_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_GmlRequirements;
                 statusIcon += "custom-icon-gml";
             }
-            else if (sortingParam == "geodatalov_wms_status" || sortingParam == "geodatalov_wms_status_desc")
+            else if (sortingParam == "geodatalov_wms_status" || sortingParam == "geodatalov_wms_status_desc"
+                || sortingParam == "mareano_wms_status" || sortingParam == "mareano_wms_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_Wms;
                 statusIcon += "glyphicon glyphicon-globe";
             }
-            else if (sortingParam == "geodatalov_wfs_status" || sortingParam == "geodatalov_wfs_status_desc")
+            else if (sortingParam == "geodatalov_wfs_status" || sortingParam == "geodatalov_wfs_status_desc"
+                || sortingParam == "mareano_wfs_status" || sortingParam == "mareano_wfs_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_Wfs;
                 statusIcon += "custom-icon-wfs";
             }
-            else if (sortingParam == "geodatalov_atom_status" || sortingParam == "geodatalov_atom_status_desc")
+            else if (sortingParam == "geodatalov_atom_status" || sortingParam == "geodatalov_atom_status_desc"
+                || sortingParam == "mareano_atom_status" || sortingParam == "mareano_atom_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_AtomFeed;
                 statusIcon = "fa fa-rss-square";
             }
-            else if (sortingParam == "geodatalov_common_status" || sortingParam == "geodatalov_common_status_desc")
+            else if (sortingParam == "geodatalov_common_status" || sortingParam == "geodatalov_common_status_desc"
+                || sortingParam == "mareano_common_status" || sortingParam == "mareano_common_status_desc")
             {
                 sortTitle = GeodatalovDataSet.Common;
                 statusIcon += "custom-icon-info";

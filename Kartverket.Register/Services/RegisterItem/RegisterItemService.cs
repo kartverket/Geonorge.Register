@@ -1024,6 +1024,26 @@ namespace Kartverket.Register.Services.RegisterItem
                             var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.ProductSpesificationStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
+                    case "mareano_productsheet_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.ProductSheetStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "mareano_productsheet_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.ProductSheetStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "mareano_presentationrules_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.PresentationRulesStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "mareano_presentationrules_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.PresentationRulesStatusId).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "mareano_sosi_status":
                         {
                             var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.SosiDataStatusId).ToList();

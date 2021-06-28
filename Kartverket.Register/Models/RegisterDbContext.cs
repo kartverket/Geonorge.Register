@@ -222,7 +222,11 @@ namespace Kartverket.Register.Models
         }
         int Save()
         {
+            try { 
             return base.SaveChanges();
+            }
+            catch(System.Exception ex) { }
+            return 0;
         }
     }
 }

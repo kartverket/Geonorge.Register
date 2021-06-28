@@ -156,6 +156,16 @@ namespace Kartverket.Register.Models
         public Guid ProductSpesificationStatusId { get; set; }
         public virtual DatasetDelivery ProductSpesificationStatus { get; set; }
 
+        //Produktark
+        [ForeignKey("ProductSheetStatus"), Required, Display(Name = "Produktark:")]
+        public Guid? ProductSheetStatusId { get; set; }
+        public virtual DatasetDelivery ProductSheetStatus { get; set; }
+
+        //Tegneregler
+        [ForeignKey("PresentationRulesStatus"), Required, Display(Name = "Tegneregler:")]
+        public Guid? PresentationRulesStatusId { get; set; }
+        public virtual DatasetDelivery PresentationRulesStatus { get; set; }
+
         //SOSI-data i hht nasjonal produkstspesifikasjon
         [ForeignKey("SosiDataStatus"), Required, Display(Name = "SOSI-data i hht nasjonal produkstspesifikasjon :")]
         public Guid SosiDataStatusId { get; set; }

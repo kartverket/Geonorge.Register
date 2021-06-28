@@ -408,7 +408,8 @@ namespace Kartverket.Register.Helpers
             {
                 sortTitle = DataSet.DOK_Delivery_Theme;
             }
-            else if (sortingParam == "productsheet" || sortingParam == "productsheet_desc")
+            else if (sortingParam == "productsheet" || sortingParam == "productsheet_desc"
+                || sortingParam == "mareano_productsheet_status" || sortingParam == "mareano_productsheet_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_ProductSheet;
                 statusIcon += "custom-icon-produktark";
@@ -444,7 +445,8 @@ namespace Kartverket.Register.Helpers
                 sortTitle = DataSet.DOK_Delivery_ProductSheet;
                 statusIcon += "custom-icon-produktark";
             }
-            else if (sortingParam == "dokDeliveryPresentationRulesStatus" || sortingParam == "dokDeliveryPresentationRulesStatus_desc")
+            else if (sortingParam == "dokDeliveryPresentationRulesStatus" || sortingParam == "dokDeliveryPresentationRulesStatus_desc"
+                || sortingParam == "mareano_presentationrules_status" || sortingParam == "mareano_presentationrules_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_PresentationRules;
                 statusIcon = "glyphicon glyphicon-picture";

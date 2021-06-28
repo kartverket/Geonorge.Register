@@ -1405,6 +1405,7 @@ namespace Kartverket.Register.Services.Register
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("b2e5f822-994d-47f5-ac52-cd4153d55198"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("61E5A933-EA1E-4B16-8CE4-B1A1645B5B51"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("75A778A8-AD2C-4D91-A39F-1320762B2D5F"))));
+            registers.Add(new RegisterView { name = "Geolett", ExternalUrl = "/geolett" });
 
             register.Items.Add(new Group
             {

@@ -713,6 +713,9 @@ namespace Kartverket.Register.Helpers
 
         public static IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string label, string type = null)
         {
+            var notSet = DataSet.DOK_Delivery_Status_NotSet;
+            if (type == "mareano")
+                notSet = DataSet.DOK_Delivery_Status_NotRelevant;
             var delivery_Status_Useable = DataSet.DOK_Delivery_Status_Useable;
             var delivery_Status_Deficient = DataSet.DOK_Delivery_Status_Deficient;
 
@@ -742,7 +745,7 @@ namespace Kartverket.Register.Helpers
                 {
                     case "notset":
                         statusSymbol = symbolNotSet;
-                        title = DataSet.DOK_Delivery_Status_NotSet;
+                        title = notSet;
                         break;
                     case "deficient":
                         statusSymbol = symbolDeficient;

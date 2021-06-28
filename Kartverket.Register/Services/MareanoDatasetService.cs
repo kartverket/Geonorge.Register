@@ -318,6 +318,9 @@ namespace Kartverket.Register.Services
         {
             int findableWeight = 0;
 
+            if (_metadata?.SimpleMetadata == null)
+                return;
+
             mareanoDataset.F2_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.TYPE_THEME, null).ToList().Count() >= 3;
             mareanoDataset.F2_b_Criteria = _metadata.SimpleMetadata.Title.Count() <= 100;
             mareanoDataset.F2_c_Criteria = _metadata.SimpleMetadata.Abstract?.Count() >= 200 && _metadata.SimpleMetadata.Abstract?.Count() <= 600;

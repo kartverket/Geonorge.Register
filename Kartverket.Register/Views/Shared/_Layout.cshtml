@@ -42,9 +42,9 @@
 </head>
 
 <body class="geonorge-container prototype  geonorge">
-    <main-navigation environment="@Html.EnvironmentName()" signinurl="@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url }))" 
-                     signouturl="@Html.Raw(Url.Action("SignOut", "Home"))" 
-                     isLoggedIn="@Request.IsAuthenticated.ToString().ToLower()" 
+    <main-navigation environment="@Html.EnvironmentName()" signinurl="@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url }))"
+                     signouturl="@Html.Raw(Url.Action("SignOut", "Home"))"
+                     isLoggedIn="@Request.IsAuthenticated.ToString().ToLower()"
                      norwegianurl="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))"
                      englishurl="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url }))"
                      language="@CultureHelper.GetCurrentCulture()">
@@ -95,15 +95,8 @@
         </div>
 
     </div>
-    @if (CultureHelper.IsNorwegian())
-    {
-        @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer.min.cshtml");
-    }
-    else
-    {
-        @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer_eng.min.cshtml");
-    }
 
+    <geonorge-footer language="@CultureHelper.GetCurrentCulture()" version="@Html.ApplicationVersionNumber()" environment="@Html.EnvironmentName()" />
     <script>
         searchOption.loginUrl = '@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url }))';
         searchOption.logoutUrl = '@Html.Raw(Url.Action("SignOut", "Home"))';
@@ -143,6 +136,8 @@
         });
     </script>
 
+
+
     @if (Html.EnvironmentName() == "dev" && HttpContext.Current.IsDebuggingEnabled)
     {
         <!-- user claims: -->
@@ -150,15 +145,16 @@
         foreach (var claim in cp.Claims)
         {
             <!-- @claim.Type = @claim.Value -->
-        }
+            }
 
-        <!-- roles: -->
-        var roles = cp.FindAll(GeonorgeAuthorizationService.ClaimIdentifierRole);
-        foreach (var role in roles)
-        {
+            <!-- roles: -->
+            var roles = cp.FindAll(GeonorgeAuthorizationService.ClaimIdentifierRole);
+            foreach (var role in roles)
+            {
             <!-- @role.Value-->
-        }
-    }
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.1.41/MainNavigation.js")"></script>
-</body>
+            }
+            }
+            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.1.53/MainNavigation.js")"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.1.53/GeonorgeFooter.js")"></script>
+        </body>
 </html>

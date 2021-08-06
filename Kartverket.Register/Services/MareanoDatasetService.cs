@@ -104,6 +104,8 @@ namespace Kartverket.Register.Services
         {
             MareanoDatasetViewModel.MetadataStatusId = _datasetDeliveryService.GetMetadataStatus(MareanoDataset.Uuid, true, MareanoDatasetViewModel.MetadataStatusId);
             MareanoDatasetViewModel.ProductSpesificationStatusId = _registerService.GetDOKStatus(MareanoDataset.ProductSpecificationUrl, true, MareanoDatasetViewModel.ProductSpesificationStatusId);
+            MareanoDatasetViewModel.ProductSheetStatusId = _registerService.GetDOKStatus(MareanoDataset.ProductSheetUrl, true, MareanoDatasetViewModel.ProductSpesificationStatusId);
+            MareanoDatasetViewModel.PresentationRulesStatusId = _registerService.GetDOKStatus(MareanoDataset.PresentationRulesUrl, true, MareanoDatasetViewModel.PresentationRulesStatusId);
             MareanoDatasetViewModel.SosiDataStatusId = _registerService.GetSosiRequirements(MareanoDataset.Uuid, MareanoDatasetViewModel.ProductSpecificationUrl, true, MareanoDatasetViewModel.SosiDataStatusId);
             MareanoDatasetViewModel.GmlDataStatusId = _registerService.GetGmlRequirements(MareanoDataset.Uuid, true, MareanoDatasetViewModel.GmlDataStatusId);
             MareanoDatasetViewModel.WmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(MareanoDataset.Uuid, true, MareanoDatasetViewModel.WmsStatusId, MareanoDataset.UuidService);
@@ -290,6 +292,8 @@ namespace Kartverket.Register.Services
 
             var metadataStatusId = _datasetDeliveryService.GetMetadataStatus(MareanoDataset.Uuid);
             var productSpesificationStatusId = _registerService.GetDOKStatus(MareanoDataset.ProductSpecificationUrl, true, "deficient");
+            var productSheetStatusId = _registerService.GetDOKStatus(MareanoDataset.ProductSheetUrl, true, "deficient");
+            var presentationRulesStatusId = _registerService.GetDOKStatus(MareanoDataset.PresentationRulesUrl, true, "deficient");
             var sosiDataStatusId = _registerService.GetSosiRequirements(MareanoDataset.Uuid, "", true, "deficient");
             var gmlDataStatusId = _registerService.GetGmlRequirements(MareanoDataset.Uuid, true, "deficient");
             var wmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(MareanoDataset.Uuid, true, "deficient", MareanoDataset.UuidService);
@@ -301,6 +305,8 @@ namespace Kartverket.Register.Services
 
             MareanoDataset.MetadataStatusId = _datasetDeliveryService.CreateDatasetDelivery(metadataStatusId);
             MareanoDataset.ProductSpesificationStatusId = _datasetDeliveryService.CreateDatasetDelivery(productSpesificationStatusId);
+            MareanoDataset.ProductSheetStatusId = _datasetDeliveryService.CreateDatasetDelivery(productSheetStatusId);
+            MareanoDataset.PresentationRulesStatusId = _datasetDeliveryService.CreateDatasetDelivery(presentationRulesStatusId);
             MareanoDataset.SosiDataStatusId = _datasetDeliveryService.CreateDatasetDelivery(sosiDataStatusId);
             MareanoDataset.GmlDataStatusId = _datasetDeliveryService.CreateDatasetDelivery(gmlDataStatusId);
             MareanoDataset.WmsStatusId = _datasetDeliveryService.CreateDatasetDelivery(wmsStatusId);
@@ -317,6 +323,9 @@ namespace Kartverket.Register.Services
         private void SetFAIR(ref MareanoDataset mareanoDataset)
         {
             int findableWeight = 0;
+
+            if (_metadata?.SimpleMetadata == null)
+                return;
 
             mareanoDataset.F2_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.TYPE_THEME, null).ToList().Count() >= 3;
             mareanoDataset.F2_b_Criteria = _metadata.SimpleMetadata.Title.Count() <= 100;
@@ -550,6 +559,28 @@ namespace Kartverket.Register.Services
             {
                 originalDataset.ProductSpesificationStatus.StatusId = _registerService.GetDOKStatus(MareanoDatasetFromKartkatalogen.ProductSpecificationUrl, true, originalDataset.ProductSpesificationStatus.StatusId);
             }
+
+            if (originalDataset.ProductSheetStatus == null)
+            {
+                originalDataset.ProductSheetStatus = CreateDatasetDelivery("notset", null, true);
+            }
+
+            if (originalDataset.PresentationRulesStatus == null)
+            {
+                originalDataset.PresentationRulesStatus = CreateDatasetDelivery("notset", null, true);
+            }
+
+            if (originalDataset.ProductSheetStatus != null)
+            {
+                originalDataset.ProductSheetStatus.StatusId = _registerService.GetDOKStatus(MareanoDatasetFromKartkatalogen.ProductSheetUrl, true, originalDataset.ProductSheetStatus.StatusId);
+            }
+
+
+            if (originalDataset.PresentationRulesStatus != null)
+            {
+                originalDataset.PresentationRulesStatus.StatusId = _registerService.GetDOKStatus(MareanoDatasetFromKartkatalogen.PresentationRulesUrl, true, originalDataset.PresentationRulesStatus.StatusId);
+            }
+
             if (originalDataset.SosiDataStatus != null)
             {
                 originalDataset.SosiDataStatus.StatusId = _registerService.GetSosiRequirements(MareanoDatasetFromKartkatalogen.Uuid, originalDataset.ProductSpecificationUrl, true, originalDataset.SosiDataStatus.StatusId);
@@ -662,6 +693,12 @@ namespace Kartverket.Register.Services
                 System.Diagnostics.Debug.WriteLine(url);
                 return null;
             }
+        }
+
+        public DatasetDelivery CreateDatasetDelivery(string deliveryStatusId, string note, bool autoupdate = true)
+        {
+            var datasetDelivery = new DatasetDelivery(deliveryStatusId, note, autoupdate);
+            return datasetDelivery;
         }
     }
 

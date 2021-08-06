@@ -331,6 +331,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ikke relevant for dette datasettet.
+        /// </summary>
+        public static string DOK_Delivery_Status_NotRelevant {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Status_NotRelevant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Leveransestatus er ikke satt.
         /// </summary>
         public static string DOK_Delivery_Status_NotSet {

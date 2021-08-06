@@ -433,8 +433,9 @@ namespace Kartverket.Register.Services
                 {
                     foreach (var service in metadata)
                     {
-                        if (service.Protocol == "WFS-tjeneste" || service.Protocol == "OGC:WFS")
-                        { statusValue = Useable;
+                        if (service.Protocol == "WFS-tjeneste" || service.Protocol == "OGC:WFS"
+                          || service.Protocol == "WCS-tjeneste" || service.Protocol == "OGC:WCS")
+                        { statusValue = Good;
                             serviceUuid = service.Uuid;
                         }
                     }

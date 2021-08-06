@@ -82,6 +82,19 @@ namespace Kartverket.Register.Models.ViewModels
         public string ProduktspesifikasjonNote { get; set; }
         public bool ProduktspesifikasjonAutoUpdate { get; set; }
 
+        [Display(Name = "DOK_ProductSheetStatus", ResourceType = typeof(DataSet))]
+        public string ProductSheetStatusId { get; set; }
+        public virtual DokDeliveryStatus ProductSheetStatus { get; set; }
+        public string ProductSheetNote { get; set; }
+        public bool ProductSheetAutoUpdate { get; set; }
+
+        [Display(Name = "DOK_PresentationRulesStatus", ResourceType = typeof(DataSet))]
+        public string PresentationRulesStatusId { get; set; }
+        public virtual DokDeliveryStatus PresentationRulesStatus { get; set; }
+        public string PresentationRulesNote { get; set; }
+        public bool PresentationRulesAutoUpdate { get; set; }
+
+
         [Display(Name = "DOK_Delivery_SosiRequirements", ResourceType = typeof(DataSet))]
         public string SosiDataStatusId { get; set; }
         public virtual DokDeliveryStatus SosiDataStatus { get; set; }
@@ -214,6 +227,20 @@ namespace Kartverket.Register.Models.ViewModels
                     ProductSpesificationStatus = mareanoDataset.ProductSpesificationStatus.Status;
                     ProduktspesifikasjonNote = mareanoDataset.ProductSpesificationStatus.Note;
                     ProduktspesifikasjonAutoUpdate = mareanoDataset.ProductSpesificationStatus.AutoUpdate;
+                }
+                if (mareanoDataset.ProductSheetStatus != null)
+                {
+                    ProductSheetStatusId = mareanoDataset.ProductSheetStatus.StatusId;
+                    ProductSheetStatus = mareanoDataset.ProductSheetStatus.Status;
+                    ProductSheetNote = mareanoDataset.ProductSheetStatus.Note;
+                    ProductSheetAutoUpdate = mareanoDataset.ProductSheetStatus.AutoUpdate;
+                }
+                if (mareanoDataset.PresentationRulesStatus != null)
+                {
+                    PresentationRulesStatusId = mareanoDataset.PresentationRulesStatus.StatusId;
+                    PresentationRulesStatus = mareanoDataset.PresentationRulesStatus.Status;
+                    PresentationRulesNote = mareanoDataset.PresentationRulesStatus.Note;
+                    PresentationRulesAutoUpdate = mareanoDataset.PresentationRulesStatus.AutoUpdate;
                 }
                 if (mareanoDataset.SosiDataStatus != null)
                 {

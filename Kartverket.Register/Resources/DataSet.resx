@@ -517,4 +517,7 @@ Metode baserer seg på intervjuer av planleggere og GIS-folk fra kommuner, fylke
   <data name="SuitabilityZoningPlan" xml:space="preserve">
     <value>Regulerings- planlegging</value>
   </data>
+  <data name="DOK_Delivery_Status_NotRelevant" xml:space="preserve">
+    <value>Ikke relevant for dette datasettet</value>
+  </data>
 </root>

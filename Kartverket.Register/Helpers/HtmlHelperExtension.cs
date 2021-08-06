@@ -408,7 +408,8 @@ namespace Kartverket.Register.Helpers
             {
                 sortTitle = DataSet.DOK_Delivery_Theme;
             }
-            else if (sortingParam == "productsheet" || sortingParam == "productsheet_desc")
+            else if (sortingParam == "productsheet" || sortingParam == "productsheet_desc"
+                || sortingParam == "mareano_productsheet_status" || sortingParam == "mareano_productsheet_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_ProductSheet;
                 statusIcon += "custom-icon-produktark";
@@ -444,7 +445,8 @@ namespace Kartverket.Register.Helpers
                 sortTitle = DataSet.DOK_Delivery_ProductSheet;
                 statusIcon += "custom-icon-produktark";
             }
-            else if (sortingParam == "dokDeliveryPresentationRulesStatus" || sortingParam == "dokDeliveryPresentationRulesStatus_desc")
+            else if (sortingParam == "dokDeliveryPresentationRulesStatus" || sortingParam == "dokDeliveryPresentationRulesStatus_desc"
+                || sortingParam == "mareano_presentationrules_status" || sortingParam == "mareano_presentationrules_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_PresentationRules;
                 statusIcon = "glyphicon glyphicon-picture";
@@ -713,6 +715,9 @@ namespace Kartverket.Register.Helpers
 
         public static IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string label, string type = null)
         {
+            var notSet = DataSet.DOK_Delivery_Status_NotSet;
+            if (type == "mareano")
+                notSet = DataSet.DOK_Delivery_Status_NotRelevant;
             var delivery_Status_Useable = DataSet.DOK_Delivery_Status_Useable;
             var delivery_Status_Deficient = DataSet.DOK_Delivery_Status_Deficient;
 
@@ -742,7 +747,7 @@ namespace Kartverket.Register.Helpers
                 {
                     case "notset":
                         statusSymbol = symbolNotSet;
-                        title = DataSet.DOK_Delivery_Status_NotSet;
+                        title = notSet;
                         break;
                     case "deficient":
                         statusSymbol = symbolDeficient;

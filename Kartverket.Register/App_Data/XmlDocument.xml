@@ -3697,6 +3697,11 @@
               Looks up a localized string similar to God.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Delivery_Status_NotRelevant">
+            <summary>
+              Looks up a localized string similar to Ikke relevant for dette datasettet.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Delivery_Status_NotSet">
             <summary>
               Looks up a localized string similar to Leveransestatus er ikke satt.

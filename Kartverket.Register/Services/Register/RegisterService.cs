@@ -86,6 +86,9 @@ namespace Kartverket.Register.Services.Register
                 }
                 else
                 {
+                    if (!string.IsNullOrEmpty(filter.text))
+                        register.RegisterItems = register.RegisterItems.Where(r => r.Name.Contains(filter.text)).ToList();
+
                     foreach (var item in register.RegisterItems)
                     {
                         if (filter.filterOrganization != null)
@@ -752,6 +755,9 @@ namespace Kartverket.Register.Services.Register
 
                     if (metadata != null)
                     {
+                        if (metadata.SpatialRepresentation == "Rasterbilde")
+                            return "notset";
+
                         var qualitySpecifications = metadata.QualitySpecifications;
                         if (qualitySpecifications != null && qualitySpecifications.Count > 0)
                         {
@@ -825,6 +831,10 @@ namespace Kartverket.Register.Services.Register
 
                     if (metadata != null)
                     {
+
+                        if(metadata.SpatialRepresentation == "Rasterbilde")
+                            return "notset";
+
                         var qualitySpecifications = metadata.QualitySpecifications;
                         if (qualitySpecifications != null && qualitySpecifications.Count > 0)
                         {
@@ -866,7 +876,7 @@ namespace Kartverket.Register.Services.Register
                         statusValue = "deficient";
                 }
 
-                catch (Exception)
+                catch (Exception ex)
                 {
                     return "deficient";
                 }

@@ -87,7 +87,7 @@ namespace Kartverket.Register.Services.Register
                 else
                 {
                     if (!string.IsNullOrEmpty(filter.text))
-                        register.RegisterItems = register.RegisterItems.Where(r => r.Name.Contains(filter.text)).ToList();
+                        register.RegisterItems = register.RegisterItems.Where(r => r.Name.ToLower().Contains(filter.text.ToLower())).ToList();
 
                     foreach (var item in register.RegisterItems)
                     {

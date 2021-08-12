@@ -114,18 +114,18 @@ namespace Kartverket.Register.Migrations
             );
 
             context.DokDeliveryStatuses.AddOrUpdate(
-                new Models.DokDeliveryStatus { value = "deficient", description = "Ikke levert" },
-                new Models.DokDeliveryStatus { value = "useable", description = "Brukbar" },
-                new Models.DokDeliveryStatus { value = "good", description = "God" },
-                new Models.DokDeliveryStatus { value = "notset", description = "Ikke angitt" }
+                new Models.DokDeliveryStatus { value = "deficient", description = "Ikke levert" ,sortorder = 4 },
+                new Models.DokDeliveryStatus { value = "useable", description = "Brukbar", sortorder = 2 },
+                new Models.DokDeliveryStatus { value = "good", description = "God", sortorder = 1 },
+                new Models.DokDeliveryStatus { value = "notset", description = "Ikke angitt", sortorder = 3 }
             );
 
             context.FAIRDeliveryStatuses.AddOrUpdate(
-                new Models.FAIRDeliveryStatus { value = "deficient", description = "Dårlig" },
-                new Models.FAIRDeliveryStatus { value = "satisfactory", description = "Tilfredsstillende" },
-                new Models.FAIRDeliveryStatus { value = "useable", description = "Bør forbedres" },
-                new Models.FAIRDeliveryStatus { value = "good", description = "God" },
-                new Models.FAIRDeliveryStatus { value = "notset", description = "Ikke angitt" }
+                new Models.FAIRDeliveryStatus { value = "deficient", description = "Dårlig", sortorder = 5 },
+                new Models.FAIRDeliveryStatus { value = "satisfactory", description = "Tilfredsstillende", sortorder = 2 },
+                new Models.FAIRDeliveryStatus { value = "useable", description = "Bør forbedres", sortorder = 3 },
+                new Models.FAIRDeliveryStatus { value = "good", description = "God", sortorder = 1 },
+                new Models.FAIRDeliveryStatus { value = "notset", description = "Ikke angitt", sortorder = 4 }
             );
 
             context.AccessTypes.AddOrUpdate(

@@ -498,6 +498,9 @@ namespace Kartverket.Register.Controllers
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
+            if (!string.IsNullOrEmpty(format))
+                itemname = itemname + "." + format;
+
             var versionsItem = _versioningService.Versions(registername, parentRegister, itemname);
             var model = new VersionsViewModel(versionsItem);
             model.AccessCreateNewVersions = _accessControlService.AccessCreateNewVersion(model.CurrentVersion);
@@ -884,7 +887,7 @@ namespace Kartverket.Register.Controllers
             if (Request != null && Request.FilePath != null && (Request.FilePath.Contains("/register/tjenestevarsler") || Request.FilePath.Contains("geonorge.no/varsler.atom")))
                 return WebConfigurationManager.AppSettings["RegistryUrl"] + "varsler.atom";
 
-            if (!string.IsNullOrWhiteSpace(format))
+            if (!string.IsNullOrWhiteSpace(format) && RegisterUrls.AllowedExtension(format))
             {
                 return "/api/" + Request.FilePath + "?" + Request.QueryString;
             }

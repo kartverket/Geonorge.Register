@@ -171,7 +171,7 @@ namespace Kartverket.Register.Helpers
             return null;
         }
 
-        private static bool AllowedExtension(string ext)
+        public static bool AllowedExtension(string ext)
         {
             string[] extensions = { "json", "xml", "csv", "gml", "gml", "rdf", "rss", "atom" };
             return extensions.Any(ext.Contains);

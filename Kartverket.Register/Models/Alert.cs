@@ -14,12 +14,16 @@ namespace Kartverket.Register.Models
 {
     public class Alert : RegisterItem
     {
-        public Alert()
+        public Alert(string category = null)
         {
             AlertDate = DateTime.Now;
-            EffectiveDate = DateTime.Now.AddMonths(3);
+            if (category == "Driftsmelding")
+                EffectiveDate = AlertDate;
+            else
+                EffectiveDate = DateTime.Now.AddMonths(3);
             Translations = new TranslationCollection<AlertTranslation>();
         }
+        public Alert() { }
 
         [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "AlertDateErrorMessage")]
         [Display(Name = "AlertDate", ResourceType = typeof(Alerts))]

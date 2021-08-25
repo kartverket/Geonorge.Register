@@ -108,8 +108,9 @@
     <div class="form-group required has-feedback">
         @Html.LabelFor(model => model.AlertDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-9">
-            <div class="col-md-4 row">
-                @Html.EditorFor(model => model.AlertDate, new { cssClass = "date" })
+            <div class="col-md-5 row">
+                @Html.TextBoxFor(m => m.AlertDate, "{0:yyyy-MM-ddTHH:mm:ss}", new { @class = "form-control", type = "datetime-local" })
+                @Html.ValidationMessageFor(m => m.AlertDate, "", new { @class = "text-danger" })
                 <span class="field-validation-valid" id="AlertDate_validationMessage">@Alerts.AlertDateValidationMessage</span>
                 <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
             </div>
@@ -129,8 +130,9 @@
     <div class="form-group required has-feedback">
         @Html.LabelFor(model => model.EffectiveDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-9">
-            <div class="col-md-4 row">
-                @Html.EditorFor(model => model.EffectiveDate, new { cssClass = "date" })
+            <div class="col-md-5 row">
+                @Html.TextBoxFor(m => m.EffectiveDate, "{0:yyyy-MM-ddTHH:mm:ss}", new { @class = "form-control", type = "datetime-local" })
+                @Html.ValidationMessageFor(m => m.EffectiveDate, "", new { @class = "text-danger" })
                 <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
             </div>
             <div class="col-md-12 row">
@@ -353,8 +355,6 @@
         });
 
     });
-
-
 
 </script>
 

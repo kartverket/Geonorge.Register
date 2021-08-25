@@ -141,6 +141,9 @@
   <data name="Department" xml:space="preserve">
     <value>Department</value>
   </data>
+  <data name="DepartmentHelp" xml:space="preserve">
+    <value>Fagområder: Merkelapper som brukes for å sortere driftsmeldinger til ulike fagområder.</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Beskrivelse</value>
   </data>
@@ -179,6 +182,9 @@ I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden bruke
   <data name="LastAlert" xml:space="preserve">
     <value>Siste varsel</value>
   </data>
+  <data name="LinkHelp" xml:space="preserve">
+    <value>Lenke: URL til nettside med mer informasjon</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Navn</value>
   </data>
@@ -200,8 +206,17 @@ I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden bruke
   <data name="Station" xml:space="preserve">
     <value>Station</value>
   </data>
+  <data name="StationHelp" xml:space="preserve">
+    <value>Stasjon: Brukes kun for SATREF og Vanstandsmåler-stasjoner. Vannstandsmålerstasjoner er listet på bunn av listen.</value>
+  </data>
+  <data name="StatusHelp" xml:space="preserve">
+    <value>Status: Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes "gyldig". Hvis meldingen referer til noe som er overstått skal den merkes "utgått".</value>
+  </data>
   <data name="SubscribeServiceAlert" xml:space="preserve">
     <value>Abonnere på varsler</value>
+  </data>
+  <data name="SummaryHelp" xml:space="preserve">
+    <value>Oppsummering av løsning/status: Her beskriver du utvikling i status av pågående driftsproblem og eventuelt hva som var problemet, avbøtende tiltak og om løsningen er stabil eller om feilen kan oppstå igjen.</value>
   </data>
   <data name="TableHeader_alertDate" xml:space="preserve">
     <value>Siste</value>
@@ -214,6 +229,9 @@ I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden bruke
   </data>
   <data name="TableHeder_alert" xml:space="preserve">
     <value>Varsel</value>
+  </data>
+  <data name="TagsHelp" xml:space="preserve">
+    <value>Nøkkelord: Merkelapper som brukes for å sortere driftsmeldinger til ulike fagsystemer.</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Legg til nytt varsel</value>

@@ -345,7 +345,10 @@ namespace Kartverket.Register.Controllers
             string systemId = RegisterUrls.GetSystemIdFromPath(registername + "/" + subregisters);
 
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
-            string format = RegisterUrls.GetFileExtension(registername + "/" + subregisters);
+            var registerPath = registername;
+            if (!string.IsNullOrEmpty(subregisters))
+                registerPath = registerPath + "/" + subregisters;
+            string format = RegisterUrls.GetFileExtension(registerPath);
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 

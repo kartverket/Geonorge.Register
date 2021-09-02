@@ -133,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fagområder: Merkelapper som brukes for å sortere driftsmeldinger til ulike fagområder..
+        /// </summary>
+        public static string DepartmentHelp {
+            get {
+                return ResourceManager.GetString("DepartmentHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beskrivelse.
         /// </summary>
         public static string Description {
@@ -243,6 +252,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lenke: URL til nettside med mer informasjon.
+        /// </summary>
+        public static string LinkHelp {
+            get {
+                return ResourceManager.GetString("LinkHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Navn.
         /// </summary>
         public static string Name {
@@ -306,11 +324,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stasjon: Brukes kun for SATREF og Vanstandsmåler-stasjoner. Vannstandsmålerstasjoner er listet på bunn av listen..
+        /// </summary>
+        public static string StationHelp {
+            get {
+                return ResourceManager.GetString("StationHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status: Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;utgått&quot;..
+        /// </summary>
+        public static string StatusHelp {
+            get {
+                return ResourceManager.GetString("StatusHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abonnere på varsler.
         /// </summary>
         public static string SubscribeServiceAlert {
             get {
                 return ResourceManager.GetString("SubscribeServiceAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oppsummering av løsning/status: Her beskriver du utvikling i status av pågående driftsproblem og eventuelt hva som var problemet, avbøtende tiltak og om løsningen er stabil eller om feilen kan oppstå igjen..
+        /// </summary>
+        public static string SummaryHelp {
+            get {
+                return ResourceManager.GetString("SummaryHelp", resourceCulture);
             }
         }
         
@@ -347,6 +392,15 @@ namespace Resources {
         public static string TableHeder_alert {
             get {
                 return ResourceManager.GetString("TableHeder_alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nøkkelord: Merkelapper som brukes for å sortere driftsmeldinger til ulike fagsystemer..
+        /// </summary>
+        public static string TagsHelp {
+            get {
+                return ResourceManager.GetString("TagsHelp", resourceCulture);
             }
         }
         

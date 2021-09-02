@@ -34,7 +34,7 @@ namespace Kartverket.Register.Controllers
         //[Route("tjenestevarsler/{registerName}/ny")]
         public ActionResult Create(string parentRegister, string registerName, string category = Constants.AlertCategoryService)
         {
-            Alert alert = new Alert();
+            Alert alert = new Alert(category);
             alert.AddMissingTranslations();
             alert.register = _registerService.GetRegister(parentRegister, registerName);
             ViewBags(alert, category);

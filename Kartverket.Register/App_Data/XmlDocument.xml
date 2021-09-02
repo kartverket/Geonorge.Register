@@ -3333,6 +3333,11 @@
               Looks up a localized string similar to Department.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.DepartmentHelp">
+            <summary>
+              Looks up a localized string similar to Fagområder: Merkelapper som brukes for å sortere driftsmeldinger til ulike fagområder..
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.Description">
             <summary>
               Looks up a localized string similar to Beskrivelse.
@@ -3395,6 +3400,11 @@
               Looks up a localized string similar to Siste varsel.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.LinkHelp">
+            <summary>
+              Looks up a localized string similar to Lenke: URL til nettside med mer informasjon.
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.Name">
             <summary>
               Looks up a localized string similar to Navn.
@@ -3430,9 +3440,24 @@
               Looks up a localized string similar to Station.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.StationHelp">
+            <summary>
+              Looks up a localized string similar to Stasjon: Brukes kun for SATREF og Vanstandsmåler-stasjoner. Vannstandsmålerstasjoner er listet på bunn av listen..
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.StatusHelp">
+            <summary>
+              Looks up a localized string similar to Status: Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;utgått&quot;..
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.SubscribeServiceAlert">
             <summary>
               Looks up a localized string similar to Abonnere på varsler.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.SummaryHelp">
+            <summary>
+              Looks up a localized string similar to Oppsummering av løsning/status: Her beskriver du utvikling i status av pågående driftsproblem og eventuelt hva som var problemet, avbøtende tiltak og om løsningen er stabil eller om feilen kan oppstå igjen..
             </summary>
         </member>
         <member name="P:Resources.Alerts.TableHeader_alertDate">
@@ -3453,6 +3478,11 @@
         <member name="P:Resources.Alerts.TableHeder_alert">
             <summary>
               Looks up a localized string similar to Varsel.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.TagsHelp">
+            <summary>
+              Looks up a localized string similar to Nøkkelord: Merkelapper som brukes for å sortere driftsmeldinger til ulike fagsystemer..
             </summary>
         </member>
         <member name="P:Resources.Alerts.Title">

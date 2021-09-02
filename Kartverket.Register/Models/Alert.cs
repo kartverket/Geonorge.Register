@@ -14,21 +14,25 @@ namespace Kartverket.Register.Models
 {
     public class Alert : RegisterItem
     {
-        public Alert()
+        public Alert(string category = null)
         {
             AlertDate = DateTime.Now;
-            EffectiveDate = DateTime.Now.AddMonths(3);
+            if (category == "Driftsmelding")
+                EffectiveDate = AlertDate;
+            else
+                EffectiveDate = DateTime.Now.AddMonths(3);
             Translations = new TranslationCollection<AlertTranslation>();
         }
+        public Alert() { }
 
         [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "AlertDateErrorMessage")]
         [Display(Name = "AlertDate", ResourceType = typeof(Alerts))]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime AlertDate { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "EffectiveDateErrorMessage")]
         [Display(Name = "EffectiveDate", ResourceType = typeof(Alerts))]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime EffectiveDate { get; set; } //validFrom
 
         [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "AlertTypeErrorMessage")]
@@ -73,6 +77,7 @@ namespace Kartverket.Register.Models
         public string Image2 { get; set; }
         public string Image1Thumbnail { get; set; }
         public string Image2Thumbnail { get; set; }
+        [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? DateResolved { get; set; } // validTo
 
 

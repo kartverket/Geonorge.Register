@@ -369,7 +369,7 @@ namespace Kartverket.Register.Services
                                             ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Responsible == "uml-gml" && r.Result.HasValue && r.Result.Value == true).Any() : false;
             mareanoDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
             mareanoDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
-            mareanoDataset.I3_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.THESAURUS_CONCEPT, null).ToList().Count() >= 1;
+            mareanoDataset.I3_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_CONCEPT).ToList().Count() >= 1;
             mareanoDataset.I3_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
 
             if (mareanoDataset.I1_a_Criteria) interoperableWeight += 20;

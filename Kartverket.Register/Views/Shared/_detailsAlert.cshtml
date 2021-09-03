@@ -27,7 +27,7 @@
 
     @if (Model.station != null)
     {
-        <p><b>Station: </b>@Model.station.Description (@Model.station.StationType)</p>
+        <p><b>@Alerts.Station: </b>@Model.station.Description (@Model.station.StationType)</p>
     }
 
     @if (Model.DateResolved != null && Model.DateResolved.HasValue)

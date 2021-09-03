@@ -58,6 +58,7 @@ namespace Kartverket.Register.Models
         [Display(Name = "Note", ResourceType = typeof(Alerts))]
         public string Note { get; set; }
 
+        [Display(Name = "Tags", ResourceType = typeof(Alerts))]
         public virtual ICollection<Tag> Tags { get; set; }
 
         [ForeignKey("department")]
@@ -71,13 +72,17 @@ namespace Kartverket.Register.Models
         [Display(Name = "Station", ResourceType = typeof(Alerts))]
         public virtual Station station { get; set; }
 
+        [Display(Name = "Summary", ResourceType = typeof(Alerts))]
         public string Summary { get; set; }
         public string Link { get; set; }
+        [Display(Name = "Image1", ResourceType = typeof(Alerts))]
         public string Image1 { get; set; }
+        [Display(Name = "Image2", ResourceType = typeof(Alerts))]
         public string Image2 { get; set; }
         public string Image1Thumbnail { get; set; }
         public string Image2Thumbnail { get; set; }
         [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "DateResolved", ResourceType = typeof(Alerts))]
         public DateTime? DateResolved { get; set; } // validTo
 
 

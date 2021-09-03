@@ -183,7 +183,7 @@
     @if (ViewBag.Category == @Constants.AlertCategoryOperation)
     {
         <div class="form-group has-feedback">
-            <label for="tags" class="control-label col-md-2">Tags</label>
+            <label for="tags" class="control-label col-md-2">@Alerts.Tags</label>
             <div class="col-md-9">
                 <div class="col-md-6 row">
                     @Html.ListBox("tagslist", (MultiSelectList)ViewBag.tagList, new { @class = "form-control compatibilitySelect", multiple = "multiple" })

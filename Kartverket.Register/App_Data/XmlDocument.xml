@@ -3328,9 +3328,14 @@
               Looks up a localized string similar to Datasettvarsel.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.DateResolved">
+            <summary>
+              Looks up a localized string similar to Dato løst.
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.Department">
             <summary>
-              Looks up a localized string similar to Department.
+              Looks up a localized string similar to Fagområder.
             </summary>
         </member>
         <member name="P:Resources.Alerts.DepartmentHelp">
@@ -3395,6 +3400,16 @@
               Looks up a localized string similar to Oppgi navnet på systemet/løsningen eller applikasjonene som har driftsproblemer. Feks: &quot;Geonorge&quot;, Geonorge - kartkatalog, &quot;Matrikkelen&quot;, &quot;WMS-servere fra Kystverket&quot;, &quot;Tjenester fra Miljødirektoratet&quot;.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.Image1">
+            <summary>
+              Looks up a localized string similar to Bilde 1.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Image2">
+            <summary>
+              Looks up a localized string similar to Bilde 2.
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.LastAlert">
             <summary>
               Looks up a localized string similar to Siste varsel.
@@ -3437,7 +3452,7 @@
         </member>
         <member name="P:Resources.Alerts.Station">
             <summary>
-              Looks up a localized string similar to Station.
+              Looks up a localized string similar to Stasjon.
             </summary>
         </member>
         <member name="P:Resources.Alerts.StationHelp">
@@ -3453,6 +3468,11 @@
         <member name="P:Resources.Alerts.SubscribeServiceAlert">
             <summary>
               Looks up a localized string similar to Abonnere på varsler.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Summary">
+            <summary>
+              Looks up a localized string similar to Oppsummering.
             </summary>
         </member>
         <member name="P:Resources.Alerts.SummaryHelp">
@@ -3478,6 +3498,11 @@
         <member name="P:Resources.Alerts.TableHeder_alert">
             <summary>
               Looks up a localized string similar to Varsel.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.Tags">
+            <summary>
+              Looks up a localized string similar to Nøkkelord.
             </summary>
         </member>
         <member name="P:Resources.Alerts.TagsHelp">

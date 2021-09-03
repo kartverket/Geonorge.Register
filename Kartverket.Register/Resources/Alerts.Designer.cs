@@ -124,7 +124,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Department.
+        ///   Looks up a localized string similar to Dato løst.
+        /// </summary>
+        public static string DateResolved {
+            get {
+                return ResourceManager.GetString("DateResolved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fagområder.
         /// </summary>
         public static string Department {
             get {
@@ -243,6 +252,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bilde 1.
+        /// </summary>
+        public static string Image1 {
+            get {
+                return ResourceManager.GetString("Image1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilde 2.
+        /// </summary>
+        public static string Image2 {
+            get {
+                return ResourceManager.GetString("Image2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Siste varsel.
         /// </summary>
         public static string LastAlert {
@@ -315,7 +342,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Station.
+        ///   Looks up a localized string similar to Stasjon.
         /// </summary>
         public static string Station {
             get {
@@ -347,6 +374,15 @@ namespace Resources {
         public static string SubscribeServiceAlert {
             get {
                 return ResourceManager.GetString("SubscribeServiceAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oppsummering.
+        /// </summary>
+        public static string Summary {
+            get {
+                return ResourceManager.GetString("Summary", resourceCulture);
             }
         }
         
@@ -392,6 +428,15 @@ namespace Resources {
         public static string TableHeder_alert {
             get {
                 return ResourceManager.GetString("TableHeder_alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nøkkelord.
+        /// </summary>
+        public static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
             }
         }
         

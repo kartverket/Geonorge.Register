@@ -23,8 +23,8 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public CodelistValue NewCodelistValueFromImport(Models.Register register, string[] codelistValueImport)
         {
-            //name, value, description
-            //name, value, description, nameTranslated, descriptionTranslated
+            //name, description, value
+            //name, description, value, nameTranslated, descriptionTranslated
             var codelistValue = new CodelistValue();
             switch (codelistValueImport.Length)
             {
@@ -37,7 +37,7 @@ namespace Kartverket.Register.Services.RegisterItem
                     codelistValue.systemId = Guid.NewGuid();
 
                     codelistValue.name = codelistValueImport[0];
-                    codelistValue.value = codelistValueImport[1];
+                    codelistValue.value = codelistValueImport[2];
                     codelistValue.description = codelistValueImport[6];
                     codelistValue.registerId = register.systemId;
                     codelistValue.register = register;
@@ -55,8 +55,8 @@ namespace Kartverket.Register.Services.RegisterItem
             codelistValue.systemId = Guid.NewGuid();
 
             codelistValue.name = codelistValueImport[0];
-            codelistValue.value = codelistValueImport[1];
-            codelistValue.description = codelistValueImport[2];
+            codelistValue.value = codelistValueImport[2];
+            codelistValue.description = codelistValueImport[1];
             codelistValue.registerId = register.systemId;
             codelistValue.register = register;
 

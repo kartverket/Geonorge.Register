@@ -159,4 +159,7 @@
   <data name="ValidToDate" xml:space="preserve">
     <value>Gyldig til</value>
   </data>
+  <data name="CodeValueEnglish" xml:space="preserve">
+    <value>Kodeverdi engelsk</value>
+  </data>
 </root>

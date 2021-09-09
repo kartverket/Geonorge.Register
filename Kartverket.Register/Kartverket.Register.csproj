@@ -1146,6 +1146,10 @@
     <Compile Include="Migrations\202108121317287_SortOrderDeliveryStatus.designer.cs">
       <DependentUpon>202108121317287_SortOrderDeliveryStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109090937313_AddCodelistValueEnglish.cs" />
+    <Compile Include="Migrations\202109090937313_AddCodelistValueEnglish.designer.cs">
+      <DependentUpon>202109090937313_AddCodelistValueEnglish.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3076,6 +3080,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108121317287_SortOrderDeliveryStatus.resx">
       <DependentUpon>202108121317287_SortOrderDeliveryStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109090937313_AddCodelistValueEnglish.resx">
+      <DependentUpon>202109090937313_AddCodelistValueEnglish.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

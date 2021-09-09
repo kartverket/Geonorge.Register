@@ -30,7 +30,7 @@ namespace Kartverket.Register.Services.RegisterItem
             {
                 case 3:
                     break;
-                case 5:
+                case 6:
                     codelistValue.Translations.Add(Translation(codelistValueImport, codelistValue));
                     break;
                 case 10:
@@ -56,6 +56,8 @@ namespace Kartverket.Register.Services.RegisterItem
 
             codelistValue.name = codelistValueImport[0];
             codelistValue.value = codelistValueImport[2];
+            if(codelistValueImport.Length == 6)
+                codelistValue.valueEnglish = codelistValueImport[5];
             codelistValue.description = codelistValueImport[1];
             codelistValue.registerId = register.systemId;
             codelistValue.register = register;

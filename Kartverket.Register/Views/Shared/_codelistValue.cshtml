@@ -22,7 +22,7 @@
                 <span>@item.DescriptionTranslated()</span>
             </div>
             <div class="col-md-3 col-sm-12 col">
-                <span title="@CodelistValues.CodeValue: @item.value">@item.value</span>
+                <span title="@CodelistValues.CodeValue: @item.CodelistvalueTranslated()">@item.CodelistvalueTranslated()</span>
             </div>
             <div class="col-md-2 col-sm-12 col text-right">
                 <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))">@item.status.DescriptionTranslated() <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>

@@ -67,6 +67,11 @@ namespace Kartverket.Register.Models
             return base.DescriptionTranslated();
         }
 
+        public new string CodelistvalueTranslated()
+        {
+            return base.CodelistvalueTranslated();
+        }
+
         public virtual string GetCodelistValueEditUrl()
         {
             if (register.parentRegister == null)

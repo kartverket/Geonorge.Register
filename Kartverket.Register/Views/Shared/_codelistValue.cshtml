@@ -3,11 +3,16 @@
 @model PagedList.IPagedList<RegisterItem>
 
 <h3 style="margin-top: 0;">@CodelistValues.Codelist</h3>
-@if (CultureHelper.IsNorwegian())
+
+@if (Model.Cast<CodelistValue>().Where(c => !string.IsNullOrEmpty(c.valueEnglish)).Any())
 {
-    if (Model.Cast<CodelistValue>().Where(c => !string.IsNullOrEmpty(c.valueEnglish)).Any())
+    if (CultureHelper.IsNorwegian())
     {
         <a href="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url }))">Finnes også med engelske kodeverdier</a>
+    }
+    else
+    {
+        <a href="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))">Tilbake til norske kodeverdier</a>
     }
 }
 <div class="table-view">

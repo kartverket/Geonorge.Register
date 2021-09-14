@@ -217,7 +217,7 @@ namespace Kartverket.Register.Models
             {
                 CodelistValue codelistValue = (CodelistValue)this;
                 codevalue = codelistValue.value;
-                if (!CultureHelper.IsNorwegian())
+                if (!CultureHelper.IsNorwegian() && !string.IsNullOrEmpty(codelistValue.valueEnglish))
                 {
                     codevalue = codelistValue.valueEnglish;
                 }

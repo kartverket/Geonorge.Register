@@ -4,15 +4,15 @@
 
 <h3 style="margin-top: 0;">@CodelistValues.Codelist</h3>
 
-@if (Model.Cast<CodelistValue>().Where(c => !string.IsNullOrEmpty(c.valueEnglish)).Any())
+@if (Model.Cast<CodelistValue>().Where(c => c.Translations.Where(d => !string.IsNullOrEmpty(d.Name)).Any()).Any())
 {
     if (CultureHelper.IsNorwegian())
     {
-        <a href="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url }))">Finnes også med engelske kodeverdier</a>
+        <a href="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url }))">Finnes også på engelsk</a>
     }
     else
     {
-        <a href="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))">Tilbake til norske kodeverdier</a>
+        <a href="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))">Also available in norwegian</a>
     }
 }
 <div class="table-view">

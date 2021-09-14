@@ -611,7 +611,7 @@ namespace Kartverket.Register.Models.Api
                 var c = (CodelistValue)item;
                 label = GetNameLocale(c);
                 if (c.description != null) description = GetDescriptionLocale(c);
-                codevalue = c.value;
+                codevalue = GetCodevalueLocale(c);
                 if (string.IsNullOrEmpty(codevalue))
                     codevalue = label;
                 if (c.broaderItemId != null)
@@ -937,6 +937,11 @@ namespace Kartverket.Register.Models.Api
                 description = item.description;
 
             return description;
+        }
+
+        private string GetCodevalueLocale(Models.CodelistValue item)
+        {
+            return item.CodelistvalueTranslated();
         }
     }
 

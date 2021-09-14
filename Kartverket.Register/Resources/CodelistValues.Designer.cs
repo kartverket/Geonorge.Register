@@ -88,6 +88,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kodeverdi engelsk.
+        /// </summary>
+        public static string CodeValueEnglish {
+            get {
+                return ResourceManager.GetString("CodeValueEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Foreslå ny kodeverdi.
         /// </summary>
         public static string CreateNew {

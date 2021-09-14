@@ -4,6 +4,17 @@
 
 <h3 style="margin-top: 0;">@CodelistValues.Codelist</h3>
 
+@if (Model.Cast<CodelistValue>().Where(c => !string.IsNullOrEmpty(c.valueEnglish)).Any())
+{
+    if (CultureHelper.IsNorwegian())
+    {
+        <a href="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url }))">Finnes også med engelske kodeverdier</a>
+    }
+    else
+    {
+        <a href="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))">Tilbake til norske kodeverdier</a>
+    }
+}
 <div class="table-view">
     <div class="table-heading search-results-table-heading col-md-12">
         <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Navn", "name")</div>
@@ -22,7 +33,7 @@
                 <span>@item.DescriptionTranslated()</span>
             </div>
             <div class="col-md-3 col-sm-12 col">
-                <span title="@CodelistValues.CodeValue: @item.value">@item.value</span>
+                <span title="@CodelistValues.CodeValue: @item.CodelistvalueTranslated()">@item.CodelistvalueTranslated()</span>
             </div>
             <div class="col-md-2 col-sm-12 col text-right">
                 <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))">@item.status.DescriptionTranslated() <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>

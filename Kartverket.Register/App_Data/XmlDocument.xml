@@ -4229,6 +4229,11 @@
               Looks up a localized string similar to Kodeverdi.
             </summary>
         </member>
+        <member name="P:Resources.CodelistValues.CodeValueEnglish">
+            <summary>
+              Looks up a localized string similar to Kodeverdi engelsk.
+            </summary>
+        </member>
         <member name="P:Resources.CodelistValues.CreateNew">
             <summary>
               Looks up a localized string similar to Foreslå ny kodeverdi.

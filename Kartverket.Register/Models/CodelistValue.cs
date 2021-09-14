@@ -28,6 +28,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "CodeValue", ResourceType = typeof(CodelistValues))]
         public string value { get; set; }
 
+        [Display(Name = "CodeValueEnglish", ResourceType = typeof(CodelistValues))]
+        public string valueEnglish { get; set; }
+
         [ForeignKey("broaderItem")]
         public Guid? broaderItemId { get; set; }
         [Display(Name = "BroaderItem", ResourceType = typeof(CodelistValues))]
@@ -62,6 +65,11 @@ namespace Kartverket.Register.Models
         public new string DescriptionTranslated()
         {
             return base.DescriptionTranslated();
+        }
+
+        public new string CodelistvalueTranslated()
+        {
+            return base.CodelistvalueTranslated();
         }
 
         public virtual string GetCodelistValueEditUrl()
@@ -108,7 +116,8 @@ namespace Kartverket.Register.Models
             UpdateRegisterItem(codelistValue);
 
 	        value = codelistValue.value;
-	        ValidFromDate = codelistValue.ValidFromDate;
+            valueEnglish = codelistValue.valueEnglish;
+            ValidFromDate = codelistValue.ValidFromDate;
 	        ValidToDate = codelistValue.ValidToDate;
             statusId = codelistValue.statusId;
 	        dateAccepted = GetDateAccepted();

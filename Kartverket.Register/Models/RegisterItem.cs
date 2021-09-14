@@ -210,6 +210,22 @@ namespace Kartverket.Register.Models
             return descriptionTranslated;
         }
 
+        public virtual string CodelistvalueTranslated()
+        {
+            string codevalue = "";
+            if (this is CodelistValue)
+            {
+                CodelistValue codelistValue = (CodelistValue)this;
+                codevalue = codelistValue.value;
+                if (!CultureHelper.IsNorwegian())
+                {
+                    codevalue = codelistValue.valueEnglish;
+                }
+            }
+
+            return codevalue;
+        }
+
 
         public virtual string GetObjectUrl()
         {

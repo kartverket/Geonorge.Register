@@ -162,7 +162,7 @@ namespace Kartverket.Register.Services.Report
         }
 
 
-        public ReportResult GetSelectedMeasureDatasets(ReportQuery param)
+        public ReportResult GetSelectedSuitabilityDatasets(ReportQuery param)
         {
             ReportResult reportResult = new ReportResult();
 
@@ -178,7 +178,11 @@ namespace Kartverket.Register.Services.Report
 
             var resultsSelected = (from c in _dbContext.CoverageDatasets
                                    join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
-                                   where !string.IsNullOrEmpty(c.MeasureDOKStatusId) && ds.DatasetType != "Kommunalt"
+                                   where (c.RegionalPlan || c.MunicipalSocialPlan || c.MunicipalLandUseElementPlan 
+                                   || c.ZoningPlan || c.BuildingMatter || c.PartitionOff  
+                                   || c.ImpactAssessmentPlanningBuildingAct 
+                                   || c.RiskVulnerabilityAnalysisPlanningBuildingAct) 
+                                   && ds.DatasetType != "Kommunalt"
                                    group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode, c.Municipality.StatusConfirmationMunicipalDOK } into grouped
                                    select new
                                    {
@@ -194,7 +198,11 @@ namespace Kartverket.Register.Services.Report
 
             var resultsNotSelected = (from c in _dbContext.CoverageDatasets
                                       join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
-                                      where string.IsNullOrEmpty(c.MeasureDOKStatusId) && ds.DatasetType != "Kommunalt"
+                                      where !(c.RegionalPlan || c.MunicipalSocialPlan || c.MunicipalLandUseElementPlan
+                                        || c.ZoningPlan || c.BuildingMatter || c.PartitionOff
+                                        || c.ImpactAssessmentPlanningBuildingAct
+                                        || c.RiskVulnerabilityAnalysisPlanningBuildingAct)
+                                      && ds.DatasetType != "Kommunalt"
                                       group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode, c.Municipality.StatusConfirmationMunicipalDOK } into grouped
                                       select new
                                       {

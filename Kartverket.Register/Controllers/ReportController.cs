@@ -31,6 +31,8 @@ namespace Kartverket.Register.Controllers
 
             if (query.QueryName == "register-DOK-selectedAndAdditional")
                 result = _dokReportService.GetSelectedAndAdditionalDatasets(query);
+            else if (query.QueryName == "register-DOK-selectedMeasure")
+                result = _dokReportService.GetSelectedMeasureDatasets(query);
             else if (query.QueryName == "register-DOK-selectedTheme")
                 result = _dokReportService.GetSelectedDatasetsByTheme(query);
             else if (query.QueryName == "register-DOK-coverage")

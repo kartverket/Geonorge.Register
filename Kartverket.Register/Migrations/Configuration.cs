@@ -113,6 +113,14 @@ namespace Kartverket.Register.Migrations
                 new DokStatus { value = "Accepted", description = "Godkjent" }
             );
 
+            context.DokMeasureStatuses.AddOrUpdate(
+                new DokMeasureStatus { value = "Forslag til tiltak i geodataplanen", description = "1. Forslag til tiltak i geodataplanen" },
+                new DokMeasureStatus { value = "Forslag til tiltak hos dataeier", description = "2. Forslag til tiltak hos dataeier" },
+                new DokMeasureStatus { value = "Kommunens egne tiltak", description = "3. Kommunens egne tiltak" },
+                new DokMeasureStatus { value = "Forslag til endringer i DOK", description = "4. Forslag til endringer i DOK" },
+                new DokMeasureStatus { value = "Annet", description = "5. Annet" }
+            );
+
             context.DokDeliveryStatuses.AddOrUpdate(
                 new Models.DokDeliveryStatus { value = "deficient", description = "Ikke levert" ,sortorder = 4 },
                 new Models.DokDeliveryStatus { value = "useable", description = "Brukbar", sortorder = 2 },

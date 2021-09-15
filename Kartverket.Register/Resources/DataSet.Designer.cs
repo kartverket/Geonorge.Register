@@ -187,6 +187,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tiltak.
+        /// </summary>
+        public static string DOK_Coverage_Measure {
+            get {
+                return ResourceManager.GetString("DOK_Coverage_Measure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dekning viser om datasettet faktisk finnes i kommunen.
         /// </summary>
         public static string DOK_Coverage_Municipality {

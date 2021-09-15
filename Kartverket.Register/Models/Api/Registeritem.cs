@@ -236,6 +236,8 @@ namespace Kartverket.Register.Models.Api
         public string Coverage { get; set; }
         [DataMemberAttribute]
         public string NoteMunicipal { get; set; }
+        [DataMemberAttribute]
+        public string Measure { get; set; }
 
         // Alert
         [DataMemberAttribute]
@@ -703,6 +705,8 @@ namespace Kartverket.Register.Models.Api
                             NoteMunicipal = coverage.Note;
                             ConfirmedDok = coverage.ConfirmedDok ? "JA" : "NEI";
                             Coverage = !coverage.Coverage.HasValue ? "Ukjent" : coverage.Coverage.Value == true ? "JA" : "NEI";
+                            Measure = coverage?.MeasureDOKStatus?.description;
+                            if (Measure == null) Measure = "";
                         }
                     }
                 }

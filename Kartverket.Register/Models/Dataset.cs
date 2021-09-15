@@ -452,6 +452,25 @@ namespace Kartverket.Register.Models
             }
         }
 
+        public string GetCoverageMeasureByUser(Guid municipalityId)
+        {
+            if (IsNationalDataset())
+            {
+                foreach (CoverageDataset coverage in Coverage)
+                {
+                    if (coverage.MunicipalityId == municipalityId)
+                    {
+                        return coverage.MeasureDOKStatusId;
+                    }
+                }
+                return null;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public bool GetCoverageRegionalPlaneByUser(Guid municipalityId) {
             foreach (CoverageDataset coverage in Coverage)
             {

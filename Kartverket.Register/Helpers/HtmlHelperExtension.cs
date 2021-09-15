@@ -285,6 +285,17 @@ namespace Kartverket.Register.Helpers
             return coverage?.Note;
         }
 
+        public static string GetMeasureFromCoverage(Dataset item, CodelistValue selectedMunicipality)
+        {
+            if (item.register.IsDokMunicipal())
+            {
+                return null;
+            }
+
+            var coverage = Coverage(item, selectedMunicipality);
+            return coverage?.MeasureDOKStatus?.description;
+        }
+
         public static bool SosiIsChecked(string statusId)
         {
             if (statusId == "Sosi-valid")

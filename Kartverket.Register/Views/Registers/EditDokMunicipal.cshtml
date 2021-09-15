@@ -146,8 +146,9 @@
                                     <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Tittel">@Shared.Title</a></th>
                                     <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Bekreftet_Kommune">@DataSet.DOK_Confirmed</a></th>
                                     <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Coverage_Municipality">@DataSet.DOK_Coverage</a></th>
+                                    <th>@DataSet.DOK_Coverage_Measure</th>
                                     <th><span data-toggle="tooltip" class="link-unstyled" title="@DataSet.DOK_Kommentar">@DataSet.DOK_Note</span></th>
-                                    <th class="text-center">@Shared.Delete</th>
+                                    <th width="5%" class="text-center">@Shared.Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -189,6 +190,15 @@
                                             {
                                                 <span>@Shared.No</span>
                                             }
+                                        </td>
+                                        <td>
+                                            <select name="dokMunicipalList[@i].Measure">
+                                                <option></option>
+                                                @foreach (var measure in ViewBag.MeasureStatuses)
+                                                {
+                                                    <option value="@measure.value" @(Model[i].Measure == measure.value ? "selected" : "")>@measure.description</option>
+                                                }
+                                            </select>
                                         </td>
                                         <td title="@DataSet.SuitabilityNoteTitle">
                                             @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 1, 10, new { @style = "min-height:0px" })

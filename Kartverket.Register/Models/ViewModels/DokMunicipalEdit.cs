@@ -16,6 +16,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string Type { get; set; }
         public bool Confirmed { get; set; }
         public bool? Coverage { get; set; }
+        public string Measure { get; set; }
         public string Note { get; set; }
         public bool Delete { get; set; }
         public Guid MunicipalityId { get; set; }
@@ -67,6 +68,7 @@ namespace Kartverket.Register.Models.ViewModels
             Confirmed = dataset.GetCoverageConfirmedByUser(municipality.systemId);
             Coverage = dataset.GetCoverageByUser(municipality.systemId);
             Note = dataset.GetCoverageNoteByUser(municipality.systemId);
+            Measure = dataset.GetCoverageMeasureByUser(municipality.systemId);
             Delete = false;
             RegionalPlan = dataset.GetCoverageRegionalPlaneByUser(municipality.systemId);
             MunicipalSocialPlan = dataset.GetCoverageMunicipalSocialPlanByUser(municipality.systemId);

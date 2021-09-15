@@ -510,4 +510,7 @@ Method is based on interviews of planners and GIS people from municipalities, co
   <data name="DOK_Delivery_Status_NotRelevant" xml:space="preserve">
     <value>Not relevant for this dataset</value>
   </data>
+  <data name="DOK_Coverage_Measure" xml:space="preserve">
+    <value>Measure</value>
+  </data>
 </root>

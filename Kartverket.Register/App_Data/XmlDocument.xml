@@ -3672,6 +3672,11 @@
               Looks up a localized string similar to Dekning.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Coverage_Measure">
+            <summary>
+              Looks up a localized string similar to Tiltak.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Coverage_Municipality">
             <summary>
               Looks up a localized string similar to Dekning viser om datasettet faktisk finnes i kommunen.

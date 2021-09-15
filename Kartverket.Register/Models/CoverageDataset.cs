@@ -34,6 +34,11 @@ namespace Kartverket.Register.Models
         public string CoverageDOKStatusId { get; set; }
         public virtual DokStatus CoverageDOKStatus { get; set; }
 
+        [ForeignKey("MeasureDOKStatus")]
+        [Display(Name = "Tiltak")]
+        public string MeasureDOKStatusId { get; set; }
+        public virtual DokMeasureStatus MeasureDOKStatus { get; set; }
+
         // DOK Suitability Rating
         [Display(Name = "Regionplan")]
         public bool RegionalPlan { get; set; }

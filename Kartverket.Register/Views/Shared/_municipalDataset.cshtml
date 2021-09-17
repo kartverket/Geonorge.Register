@@ -5,7 +5,46 @@
     CodelistValue selectedMunicipality = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipalityCode);
     var selectedMunicipalName = HtmlHelperExtensions.GetSelectedMunicipalityName(selectedMunicipality);
 }
+<style>
+    .tooltipCustom {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
 
+        .tooltipCustom .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 5px 5px 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+            .tooltipCustom .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
+            }
+
+        .tooltipCustom:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+</style>
 <div class="table-view">
     @if (selectedMunicipality != null)
     {
@@ -80,14 +119,26 @@
                 @HtmlHelperExtensions.GetMeasureFromCoverage(item, selectedMunicipality)
             </span>
         </div>
-        <div class="col-md-1 col-sm-12 col">
-            <span title="Merknad: @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipality)">
-                @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipality)
+        <div class="col-md-1 col-sm-12 col text-right">
+            <span class="tooltipCustom" style="text-align: right">
+                @{
+                    var note = HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipality);
+                    if (!string.IsNullOrEmpty(note) && note.Length > 3)
+                    {
+                        var notePreview = note.Substring(0, 3) + "...";
+                        @notePreview
+                        <a class="tooltiptext">Merknad: @note</a>
+                    }
+                    else
+                    {
+                        @note
+                    }
+                }
             </span>
         </div>
     </div>
         }
-    }
+     }
 </div>
 
 

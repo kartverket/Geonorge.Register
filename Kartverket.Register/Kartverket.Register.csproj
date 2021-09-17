@@ -1154,6 +1154,10 @@
     <Compile Include="Migrations\202109141344440_AddDokMeasureStatuses.designer.cs">
       <DependentUpon>202109141344440_AddDokMeasureStatuses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109170735043_AddDokMeasureStatusSortorder.cs" />
+    <Compile Include="Migrations\202109170735043_AddDokMeasureStatusSortorder.designer.cs">
+      <DependentUpon>202109170735043_AddDokMeasureStatusSortorder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3091,6 +3095,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109141344440_AddDokMeasureStatuses.resx">
       <DependentUpon>202109141344440_AddDokMeasureStatuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109170735043_AddDokMeasureStatusSortorder.resx">
+      <DependentUpon>202109170735043_AddDokMeasureStatusSortorder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

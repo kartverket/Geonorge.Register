@@ -114,11 +114,11 @@ namespace Kartverket.Register.Migrations
             );
 
             context.DokMeasureStatuses.AddOrUpdate(
-                new DokMeasureStatus { value = "Forslag til tiltak i geodataplanen", description = "1. Forslag til tiltak i geodataplanen" },
-                new DokMeasureStatus { value = "Forslag til tiltak hos dataeier", description = "2. Forslag til tiltak hos dataeier" },
-                new DokMeasureStatus { value = "Kommunens egne tiltak", description = "3. Kommunens egne tiltak" },
-                new DokMeasureStatus { value = "Forslag til endringer i DOK", description = "4. Forslag til endringer i DOK" },
-                new DokMeasureStatus { value = "Annet", description = "5. Annet" }
+                new DokMeasureStatus { value = "Forslag til tiltak i geodataplanen", description = "Forslag til tiltak i geodataplanen", sortorder = 1 },
+                new DokMeasureStatus { value = "Forslag til tiltak hos dataeier", description = "Forslag til tiltak hos dataeier", sortorder = 2 },
+                new DokMeasureStatus { value = "Kommunens egne tiltak", description = "Kommunens egne tiltak", sortorder = 3 },
+                new DokMeasureStatus { value = "Forslag til endringer i DOK", description = "Forslag til endringer i DOK", sortorder = 4 },
+                new DokMeasureStatus { value = "Annet", description = "Annet", sortorder = 5 }
             );
 
             context.DokDeliveryStatuses.AddOrUpdate(

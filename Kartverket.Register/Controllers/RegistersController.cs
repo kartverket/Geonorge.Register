@@ -654,7 +654,7 @@ namespace Kartverket.Register.Controllers
                     }
                     ViewBag.selectedMunicipality = municipality.name;
                     ViewBag.selectedMunicipalityCode = municipalityCode;
-                    ViewBag.MeasureStatuses = _db.DokMeasureStatuses.OrderBy(o => o.description);
+                    ViewBag.MeasureStatuses = _db.DokMeasureStatuses.OrderBy(o => o.sortorder);
                     var statusDokMunicipalList = CreateStatusDokMunicipalList();
 
                     ViewBag.statusDOKMunicipal = new SelectList(statusDokMunicipalList, "value", "description", DOKmunicipalStatus(municipality));

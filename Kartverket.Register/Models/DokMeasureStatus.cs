@@ -10,6 +10,7 @@ namespace Kartverket.Register.Models {
         [Key]
         public string value { get; set; }
         public string description { get; set; }
+        public int sortorder { get; set; }
 
         public string DescriptionTranslated()
         {

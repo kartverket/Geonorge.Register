@@ -185,7 +185,7 @@ namespace Kartverket.Register.Models
 
         public void InitializeNewAlert()
         {
-            InitializeNew();
+            InitializeNew(false);
         }
 
         public void UpdateAlert(Alert alert)

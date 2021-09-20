@@ -12,5 +12,7 @@ namespace Kartverket.Register.Services
     {
         Synchronize StartSynchronizationJob(Models.Register register, string itemType);
         void StopSynchronizationJob(Synchronize register);
+
+        void UpdatePaths(string systemId, bool transliterNorwegian);
     }
 }

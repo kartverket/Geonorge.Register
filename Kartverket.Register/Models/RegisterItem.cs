@@ -325,23 +325,23 @@ namespace Kartverket.Register.Models
             return versioningId;
         }
 
-        public void InitializeNew()
+        public void InitializeNew(bool transliterNorwegian)
         {
             systemId = Guid.NewGuid();
             modified = DateTime.Now;
             dateSubmitted = DateTime.Now;
             modified = DateTime.Now;
             statusId = "Submitted";
-            seoname = RegisterUrls.MakeSeoFriendlyString(name);
+            seoname = RegisterUrls.MakeSeoFriendlyString(name, transliterNorwegian);
             versionNumber = 1;
             if (submitter != null) submitterId = submitter.systemId;
             if (register != null) registerId = register.systemId;
         }
 
-        public void UpdateRegisterItem(RegisterItem item)
+        public void UpdateRegisterItem(RegisterItem item, bool transliterNorwegian)
         {
             name = item.name;
-            seoname = RegisterUrls.MakeSeoFriendlyString(name);
+            seoname = RegisterUrls.MakeSeoFriendlyString(name, transliterNorwegian);
             description = item.description;
             submitterId = item.submitterId;
         }

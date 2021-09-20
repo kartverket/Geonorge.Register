@@ -132,7 +132,7 @@ namespace Kartverket.Register.Controllers
                     if (ModelState.IsValid)
                     {
                         codelistValue.submitter = _registerService.GetOrganizationByUserName();
-                        codelistValue.InitializeNewCodelistValue();
+                        codelistValue.InitializeNewCodelistValue(codelistValue.register.TransliterNorwegian);
                         codelistValue.versioningId = _registerItemService.NewVersioningGroup(codelistValue);
                         SetBroaderAndNarrowerItems(codelistValue, narrower, broader);
 
@@ -195,6 +195,7 @@ namespace Kartverket.Register.Controllers
                 {
                     if (ModelState.IsValid)
                     {
+                        codelistValue.register = _registerService.GetRegisterBySystemId(codelistValue.registerId);
                         InitialisationCodelistValue(codelistValue, narrower, broader, originalCodelistValue);
                         if (!NameIsValid(codelistValue))
                         {
@@ -271,7 +272,7 @@ namespace Kartverket.Register.Controllers
             string parent = null;
             if (codelistValue.register.parentRegisterId != null)
             {
-                parent = codelistValue.register.parentRegister.seoname;
+                parent = codelistValue.register.parentRegister.path;
             }
 
             _registerItemService.RemoveBroaderAndNarrower(codelistValue);
@@ -286,7 +287,7 @@ namespace Kartverket.Register.Controllers
             _db.SaveChanges();
             if (parent != null)
             {
-                return Redirect("/subregister/" + parentregister + "/" + itemowner + "/" + registername);
+                return Redirect("/" + parent);
             }
             return Redirect("/register/" + registername);
         }

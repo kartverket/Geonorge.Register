@@ -106,14 +106,14 @@ namespace Kartverket.Register.Models
             }
         }
 
-        internal void InitializeNewCodelistValue()
+        internal void InitializeNewCodelistValue(bool transliterNorwegian)
         {
-            InitializeNew();
+            InitializeNew(transliterNorwegian);
         }
 
 	    public void Update(CodelistValue codelistValue)
 	    {
-            UpdateRegisterItem(codelistValue);
+            UpdateRegisterItem(codelistValue, codelistValue.register.TransliterNorwegian);
 
 	        value = codelistValue.value;
             valueEnglish = codelistValue.valueEnglish;

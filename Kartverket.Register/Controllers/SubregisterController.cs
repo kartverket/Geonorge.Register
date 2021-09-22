@@ -113,6 +113,8 @@ namespace Kartverket.Register.Controllers
                 {
                     if (register.name != null) originalRegister.name = register.name;
                     originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name, register.TransliterNorwegian);
+                    var pathOld = originalRegister.path;
+                    var transliterNorwegianOld = originalRegister.TransliterNorwegian;
                     originalRegister.path = RegisterUrls.GetNewPath(originalRegister.path, originalRegister.seoname);
                     if (register.description != null) originalRegister.description = register.description;
                     if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
@@ -147,6 +149,12 @@ namespace Kartverket.Register.Controllers
                     _translationService.UpdateTranslations(register, originalRegister);
                     _db.Entry(originalRegister).State = EntityState.Modified;
                     _db.SaveChanges();
+
+                    if(pathOld != originalRegister.path || transliterNorwegianOld != originalRegister.TransliterNorwegian)
+                    {
+                        new SynchronizationService(_db).UpdatePaths(originalRegister.systemId.ToString(), originalRegister.TransliterNorwegian);
+                    }
+
                     Viewbags(register);
 
                     return Redirect(originalRegister.GetObjectUrl());
@@ -160,6 +168,11 @@ namespace Kartverket.Register.Controllers
 
             Viewbags(register);
             return View(originalRegister);
+        }
+
+        public void UpdatePaths(string systemId)
+        {
+            throw new NotImplementedException();
         }
 
         // GET: Subregister/Delete/5

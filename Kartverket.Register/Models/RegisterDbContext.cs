@@ -30,6 +30,8 @@ namespace Kartverket.Register.Models
         public virtual DbSet<Version> Versions { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<DokStatus> DokStatuses { get; set; }
+
+        public virtual DbSet<DokMeasureStatus> DokMeasureStatuses { get; set; }
         public virtual DbSet<DokDeliveryStatus> DokDeliveryStatuses { get; set; }
         public virtual DbSet<FAIRDeliveryStatus> FAIRDeliveryStatuses { get; set; }
         public virtual DbSet<accessType> AccessTypes { get; set; }

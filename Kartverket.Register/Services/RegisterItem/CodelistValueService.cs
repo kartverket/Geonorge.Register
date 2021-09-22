@@ -46,7 +46,7 @@ namespace Kartverket.Register.Services.RegisterItem
                     codelistValue.modified = DateTime.Now;
                     codelistValue.dateSubmitted = DateTime.Now;
                     codelistValue.statusId = "Submitted";
-                    codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
+                    codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name, register.TransliterNorwegian);
                     return codelistValue;
                 default:
                     return null;
@@ -66,7 +66,7 @@ namespace Kartverket.Register.Services.RegisterItem
             codelistValue.modified = DateTime.Now;
             codelistValue.dateSubmitted = DateTime.Now;
             codelistValue.statusId = "Submitted";
-            codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
+            codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name, register.TransliterNorwegian);
             return codelistValue;
         }
 

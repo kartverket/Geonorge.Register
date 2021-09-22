@@ -1095,7 +1095,7 @@ namespace Kartverket.Register.Formatter
         {
             item.description = RemoveBreaksAndSemicolon(item.description);
             string text = null;
-            text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.DatasetType + ";" + item.ConfirmedDok + ";" + item.Coverage + ";" + item.NoteMunicipal + ";" + item.MetadataUrl;
+            text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.DatasetType + ";" + item.ConfirmedDok + ";" + item.Coverage + ";" + item.Measure + ";" + item.NoteMunicipal + ";" + item.MetadataUrl;
             streamWriter.WriteLine(text);
         }
 
@@ -1336,7 +1336,7 @@ namespace Kartverket.Register.Formatter
         private string RegisterItemDokMunicipalHeading(Models.Api.Register register)
         {
             string heading = "Det offentlige kartgrunnlaget - " + register.SelectedDOKMunicipality + ", " + DateTime.Today.ToString("d") + "\r\n";
-            heading = heading + DataSet.DOK_Delivery_Theme + ";" + Registers.Name + ";" + Registers.Owner + ";DOK-status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + DataSet.RegionType + ";" + DataSet.DOK_Confirmed + ";" + DataSet.DOK_Coverage + ";" + DataSet.DOK_Note + ";" + DataSet.DisplayKartkatalogen;
+            heading = heading + DataSet.DOK_Delivery_Theme + ";" + Registers.Name + ";" + Registers.Owner + ";DOK-status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + DataSet.RegionType + ";" + DataSet.DOK_Confirmed + ";" + DataSet.DOK_Coverage + ";" + DataSet.DOK_Coverage_Measure + ";" + DataSet.DOK_Note + ";" + DataSet.DisplayKartkatalogen;
             return heading;
         }
 

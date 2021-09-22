@@ -1150,6 +1150,14 @@
     <Compile Include="Migrations\202109090937313_AddCodelistValueEnglish.designer.cs">
       <DependentUpon>202109090937313_AddCodelistValueEnglish.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109141344440_AddDokMeasureStatuses.cs" />
+    <Compile Include="Migrations\202109141344440_AddDokMeasureStatuses.designer.cs">
+      <DependentUpon>202109141344440_AddDokMeasureStatuses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109170735043_AddDokMeasureStatusSortorder.cs" />
+    <Compile Include="Migrations\202109170735043_AddDokMeasureStatusSortorder.designer.cs">
+      <DependentUpon>202109170735043_AddDokMeasureStatusSortorder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1183,6 +1191,7 @@
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DokMeasureStatus.cs" />
     <Compile Include="Models\FAIR\FAIRDelivery.cs" />
     <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
@@ -3083,6 +3092,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109090937313_AddCodelistValueEnglish.resx">
       <DependentUpon>202109090937313_AddCodelistValueEnglish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109141344440_AddDokMeasureStatuses.resx">
+      <DependentUpon>202109141344440_AddDokMeasureStatuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109170735043_AddDokMeasureStatusSortorder.resx">
+      <DependentUpon>202109170735043_AddDokMeasureStatusSortorder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

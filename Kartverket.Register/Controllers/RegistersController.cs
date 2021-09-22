@@ -1,23 +1,21 @@
-﻿using System;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
+﻿using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
-using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Models.ViewModels;
-using Kartverket.Register.Services.Search;
+using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
-using Kartverket.Register.Helpers;
-using Kartverket.Register.Services;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
+using Kartverket.Register.Services.Search;
 using Kartverket.Register.Services.Translation;
+using Kartverket.Register.Services.Versioning;
+using Resources;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Configuration;
-using Resources;
-using System.Web.Http.Cors;
+using System.Web.Mvc;
 
 namespace Kartverket.Register.Controllers
 {
@@ -656,6 +654,7 @@ namespace Kartverket.Register.Controllers
                     }
                     ViewBag.selectedMunicipality = municipality.name;
                     ViewBag.selectedMunicipalityCode = municipalityCode;
+                    ViewBag.MeasureStatuses = _db.DokMeasureStatuses.OrderBy(o => o.sortorder);
                     var statusDokMunicipalList = CreateStatusDokMunicipalList();
 
                     ViewBag.statusDOKMunicipal = new SelectList(statusDokMunicipalList, "value", "description", DOKmunicipalStatus(municipality));
@@ -721,8 +720,8 @@ namespace Kartverket.Register.Controllers
                                 "INSERT INTO CoverageDatasets (ConfirmedDok, Coverage, Note," +
                                 "RegionalPlan, MunicipalSocialPlan, MunicipalLandUseElementPlan, ZoningPlanArea, ZoningPlanDetails, " +
                                 "BuildingMatter, PartitionOff, EenvironmentalImpactAssessment, SuitabilityAssessmentText, " +
-                                "CoverageId, MunicipalityId, DatasetId, CoverageDOKStatusId, ZoningPlan,ImpactAssessmentPlanningBuildingAct,RiskVulnerabilityAnalysisPlanningBuildingAct  ) " +
-                                " VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18 " +
+                                "CoverageId, MunicipalityId, DatasetId, CoverageDOKStatusId, ZoningPlan,ImpactAssessmentPlanningBuildingAct,RiskVulnerabilityAnalysisPlanningBuildingAct,MeasureDOKStatusId  ) " +
+                                " VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19 " +
                                 ")",
                                 coverageNew.ConfirmedDok,
                                 coverageFound,
@@ -742,7 +741,8 @@ namespace Kartverket.Register.Controllers
                                 coverageNew.CoverageDOKStatusId,
                                 item.ZoningPlan,
                                 item.ImpactAssessmentPlanningBuildingAct,
-                                item.RiskVulnerabilityAnalysisPlanningBuildingAct
+                                item.RiskVulnerabilityAnalysisPlanningBuildingAct,
+                                item.Measure
                                 );
                         }
                         else
@@ -762,8 +762,9 @@ namespace Kartverket.Register.Controllers
                                 "SuitabilityAssessmentText = @p11, " +
                                 "ZoningPlan = @p12, " +
                                 "ImpactAssessmentPlanningBuildingAct = @p13, " +
-                                "RiskVulnerabilityAnalysisPlanningBuildingAct = @p14 " +
-                                "WHERE CoverageId = @p15",
+                                "RiskVulnerabilityAnalysisPlanningBuildingAct = @p14, " +
+                                "MeasureDOKStatusId = @p15 " +
+                                "WHERE CoverageId = @p16",
                                 item.Confirmed,
                                 coverageFound,
                                 item.Note,
@@ -779,6 +780,7 @@ namespace Kartverket.Register.Controllers
                                 item.ZoningPlan,
                                 item.ImpactAssessmentPlanningBuildingAct,
                                 item.RiskVulnerabilityAnalysisPlanningBuildingAct,
+                                item.Measure,
                                 originalCoverage.CoverageId);
                         }
                     }

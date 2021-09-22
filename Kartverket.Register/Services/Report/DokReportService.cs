@@ -162,6 +162,114 @@ namespace Kartverket.Register.Services.Report
         }
 
 
+        public ReportResult GetSelectedSuitabilityDatasets(ReportQuery param)
+        {
+            ReportResult reportResult = new ReportResult();
+
+            reportResult.Data = new List<ReportResultData>();
+
+            _dbContext.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+
+            var total = (from dd in _dbContext.Datasets
+                         where dd.DatasetType != "Kommunalt"
+                         select dd.systemId).Distinct().Count();
+
+            reportResult.TotalDataCount = 0;
+
+            var resultsSelected = (from c in _dbContext.CoverageDatasets
+                                   join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
+                                   where (c.RegionalPlan || c.MunicipalSocialPlan || c.MunicipalLandUseElementPlan 
+                                   || c.ZoningPlan || c.BuildingMatter || c.PartitionOff  
+                                   || c.ImpactAssessmentPlanningBuildingAct 
+                                   || c.RiskVulnerabilityAnalysisPlanningBuildingAct) 
+                                   && ds.DatasetType != "Kommunalt"
+                                   group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode, c.Municipality.StatusConfirmationMunicipalDOK } into grouped
+                                   select new
+                                   {
+                                       name = grouped.Key.name,
+                                       Count = grouped.Distinct().Count(),
+                                       number = grouped.Key.number,
+                                       DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
+                                       MunicipalityCode = grouped.Key.MunicipalityCode,
+                                       DOKStatus = grouped.Key.StatusConfirmationMunicipalDOK
+                                   }).OrderByDescending(x => x.Count).ToList();
+
+
+
+            var resultsNotSelected = (from c in _dbContext.CoverageDatasets
+                                      join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
+                                      where !(c.RegionalPlan || c.MunicipalSocialPlan || c.MunicipalLandUseElementPlan
+                                        || c.ZoningPlan || c.BuildingMatter || c.PartitionOff
+                                        || c.ImpactAssessmentPlanningBuildingAct
+                                        || c.RiskVulnerabilityAnalysisPlanningBuildingAct)
+                                      && ds.DatasetType != "Kommunalt"
+                                      group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode, c.Municipality.StatusConfirmationMunicipalDOK } into grouped
+                                      select new
+                                      {
+                                          name = grouped.Key.name,
+                                          Count = 0,
+                                          number = grouped.Key.number,
+                                          DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
+                                          MunicipalityCode = grouped.Key.MunicipalityCode,
+                                          DOKStatus = grouped.Key.StatusConfirmationMunicipalDOK
+                                      })
+                                   .OrderByDescending(x => x.Count)
+                                   .ToList();
+
+            resultsNotSelected = (from cc in resultsNotSelected
+                                  where !resultsSelected.Any(s => s.number == cc.number)
+                                  select cc)
+                                 .ToList();
+
+            var results = resultsSelected.Union(resultsNotSelected).Distinct();
+
+            var areas = param.Parameters.Where(p => p.Name == "area").Select(a => a.Value).ToList();
+            if (areas.Any())
+            {
+                if (areas[0] != "Hele landet")
+                {
+
+                    var resultsNr = (from res in results
+                                     join munici in _dbContext.Organizations on res.number equals munici.number
+                                     select new { res.name, res.Count, res.number, munici.MunicipalityCode, munici.DateConfirmedMunicipalDOK, res.DOKStatus }).ToList();
+
+                    results = (from r in resultsNr
+                               where (from c in areas
+                                      select c)
+                                          .Contains(r.MunicipalityCode)
+                                 || (from c in areas
+                                     select c)
+                                          .Contains(r.MunicipalityCode.Substring(0, 2))
+
+                               select new { r.name, r.Count, r.number, r.DateConfirmedMunicipalDOK, r.MunicipalityCode, r.DOKStatus }).ToList();
+                }
+            }
+
+
+            foreach (var result in results.OrderByDescending(s => s.Count).ThenBy(ss => ss.name))
+            {
+                ReportResultData reportResultData = new ReportResultData();
+
+                List<ReportResultDataValue> reportResultDataValues = new List<ReportResultDataValue>();
+
+                reportResultData.Label = result.name.ToString();
+                reportResultData.TotalDataCount = total;
+
+                ReportResultDataValue reportResultDataValue = new ReportResultDataValue();
+
+                reportResultDataValue.Key = "Det offentlige kartgrunnlaget";
+                reportResultDataValue.Value = result.Count.ToString();
+
+                reportResultDataValues.Add(reportResultDataValue);
+
+                reportResultData.Values = reportResultDataValues;
+
+                reportResult.Data.Add(reportResultData);
+            }
+
+            return reportResult;
+        }
+
         public ReportResult GetSelectedDatasetsByTheme(ReportQuery param)
         {
 

@@ -147,6 +147,16 @@ namespace Kartverket.Register.Models
                    cs.ToTable("AlertTags");
                });
 
+            modelBuilder.Entity<Alert>()
+               .HasMany<Department>(t => t.Departments)
+               .WithMany(d => d.Alerts)
+               .Map(cs =>
+               {
+                   cs.MapLeftKey("AlertRefId");
+                   cs.MapRightKey("DepartmentRefId");
+                   cs.ToTable("AlertDepartments");
+               });
+
         }
 
         public override int SaveChanges()

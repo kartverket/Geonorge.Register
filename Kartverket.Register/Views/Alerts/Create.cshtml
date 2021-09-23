@@ -205,7 +205,7 @@
             @Html.LabelFor(model => model.department, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
-                    @Html.DropDownList("departmentId", null, Alerts.Select, htmlAttributes: new { @class = "form-control" })
+                    @Html.ListBox("departmentslist", (MultiSelectList)ViewBag.departmentList, new { @class = "form-control compatibilitySelect", multiple = "multiple" })
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">

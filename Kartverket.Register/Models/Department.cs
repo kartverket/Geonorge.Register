@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kartverket.Register.Models
 {
@@ -7,5 +8,7 @@ namespace Kartverket.Register.Models
         [Key]
         public string value { get; set; }
         public string description { get; set; }
+
+        public virtual ICollection<Alert> Alerts { get; set; }
     }
 }

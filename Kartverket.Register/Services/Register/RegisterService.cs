@@ -175,7 +175,7 @@ namespace Kartverket.Register.Services.Register
             if (!string.IsNullOrEmpty(filter.department))
             {
 
-                alerts = alerts.Where(d => d.departmentId == filter.department);
+                alerts = alerts.Where(d => d.Departments.Any(dd => dd.value == filter.department));
 
             }
 

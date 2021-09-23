@@ -466,7 +466,7 @@ namespace Kartverket.Register.Migrations
                 new Models.Station { StationName = "Ålesund", Description = "Ålesund", StationType = "Vannstandsmåler" },
                 new Models.Station { StationName = "Kristiansund", Description = "Kristiansund", StationType = "Vannstandsmåler" },
                 new Models.Station { StationName = "Trondheim", Description = "Trondheim", StationType = "Vannstandsmåler" },
-                new Models.Station { StationName = "Heimsjø", Description = "Heimsjø", StationType = "Vannstandsmåler" },
+                new Models.Station { StationName = "Heimsjøen", Description = "Heimsjøen", StationType = "Vannstandsmåler" },
                 new Models.Station { StationName = "Mausund", Description = "Mausund", StationType = "Vannstandsmåler" },
                 new Models.Station { StationName = "Rørvik", Description = "Rørvik", StationType = "Vannstandsmåler" },
                 new Models.Station { StationName = "Bodø", Description = "Bodø", StationType = "Vannstandsmåler" },

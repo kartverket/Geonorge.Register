@@ -213,7 +213,7 @@ namespace Kartverket.Register.Migrations
             context.Departments.AddOrUpdate(
                 new Models.Department { value = "Posisjonstjenester", description = "Posisjonstjenester" },
                 new Models.Department { value = "Eiendom", description = "Eiendom" },
-                new Models.Department { value = "Til sjøs", description = "Til sjøs" },
+                new Models.Department { value = "Vannstand", description = "Vannstand" },
                 new Models.Department { value = "Data, API, nettsider", description = "Data, API, nettsider" }
             );
 

@@ -704,6 +704,12 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("UPDATE Registers SET name = 'Varsler', description = 'Register over alle varsler registrert i Geonorge', seoname = 'varsler'  WHERE  systemid='0f428034-0b2d-4fb7-84ea-c547b872b418'");
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET AlertCategory = '" + Constants.AlertCategoryService+ "'  WHERE  [AlertCategory] is  null and Discriminator='Alert'");
 
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET StationName = NULL, StationType = NULL  WHERE  StationName='Heimsjø'");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET departmentId = NULL  WHERE  departmentId='Til sjøs'");
+
+            context.Database.ExecuteSqlCommand("DELETE FROM Departments  WHERE  value='Til sjøs'");
+            context.Database.ExecuteSqlCommand("DELETE FROM Stations  WHERE  [StationName] = 'Heimsjø'");
+
             //context.Registers.AddOrUpdate(
             //    produktspesifikasjon,
             //    organisasjoner,

@@ -321,4 +321,10 @@
   <data name="TransliterNorwegian" xml:space="preserve">
     <value>Transliter æøå to eoa in url path</value>
   </data>
+  <data name="MakeAllItemsDraft" xml:space="preserve">
+    <value>Set status "Draft" for all code values</value>
+  </data>
+  <data name="MakeAllItemsDraftMessage" xml:space="preserve">
+    <value>Set status of all values in code list. Individual values can still be set</value>
+  </data>
 </root>

@@ -72,5 +72,6 @@ namespace Kartverket.Register.Services.RegisterItem
         Organization GetOrganizationByFilterOrganizationParameter(string filterFilterOrganization);
         void MakeAllRegisterItemsRetired(Models.Register originalRegister);
         List<Models.RegisterItem> GetAllVersionsOfRegisterItem(Models.Register register, string itemSystemId);
+        void MakeAllRegisterItemsDraft(Models.Register originalRegister);
     }
 }

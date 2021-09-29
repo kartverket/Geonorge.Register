@@ -89,6 +89,7 @@ namespace Kartverket.Register.Controllers
             if (register == null) return HttpNotFound("Fant ikke register");
             register.MakeAllItemsRetired = false;
             register.MakeAllItemsValid = false;
+            register.MakeAllItemsDraft = false;
 
             Viewbags(register);
             register.AddMissingTranslations();
@@ -145,6 +146,9 @@ namespace Kartverket.Register.Controllers
                     originalRegister.MakeAllItemsRetired = register.MakeAllItemsRetired;
                     if (originalRegister.MakeAllItemsRetired)
                         _registerItemService.MakeAllRegisterItemsRetired(originalRegister);
+                    originalRegister.MakeAllItemsDraft = register.MakeAllItemsDraft;
+                    if (originalRegister.MakeAllItemsDraft)
+                        _registerItemService.MakeAllRegisterItemsDraft(originalRegister);
                     originalRegister.TransliterNorwegian = register.TransliterNorwegian;
                     _translationService.UpdateTranslations(register, originalRegister);
                     _db.Entry(originalRegister).State = EntityState.Modified;

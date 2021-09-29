@@ -194,6 +194,18 @@
                 <small>@Registers.MakeAllItemsRetiredMessage.</small>
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                @Html.LabelFor(model => model.MakeAllItemsDraft)
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                @Html.CheckBoxFor(m => m.MakeAllItemsDraft, new { title = Registers.MakeAllItemsDraftMessage, @class = "checkbox-inline" })
+                <small>@Registers.MakeAllItemsDraftMessage.</small>
+            </div>
+        </div>
     }
 
 </div>

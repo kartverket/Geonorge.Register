@@ -4892,6 +4892,16 @@
               Looks up a localized string similar to Henter register.
             </summary>
         </member>
+        <member name="P:Resources.Registers.MakeAllItemsDraft">
+            <summary>
+              Looks up a localized string similar to Sett status &quot;Utkast&quot; på alle kodeverdier.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.MakeAllItemsDraftMessage">
+            <summary>
+              Looks up a localized string similar to Sett status for alle verdier i kodelista. Individuelle verdier kan fortsatt settes.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.MakeAllItemsRetired">
             <summary>
               Looks up a localized string similar to Sett status &quot;Utgått&quot; på alle kodeverdier.

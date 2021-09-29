@@ -213,7 +213,7 @@ namespace Kartverket.Register.Migrations
             context.Departments.AddOrUpdate(
                 new Models.Department { value = "Posisjonstjenester", description = "Posisjonstjenester" },
                 new Models.Department { value = "Eiendom", description = "Eiendom" },
-                new Models.Department { value = "Til sjøs", description = "Til sjøs" },
+                new Models.Department { value = "Vannstand", description = "Vannstand" },
                 new Models.Department { value = "Data, API, nettsider", description = "Data, API, nettsider" }
             );
 
@@ -466,7 +466,7 @@ namespace Kartverket.Register.Migrations
                 new Models.Station { StationName = "Ålesund", Description = "Ålesund", StationType = "Vannstandsmåler" },
                 new Models.Station { StationName = "Kristiansund", Description = "Kristiansund", StationType = "Vannstandsmåler" },
                 new Models.Station { StationName = "Trondheim", Description = "Trondheim", StationType = "Vannstandsmåler" },
-                new Models.Station { StationName = "Heimsjø", Description = "Heimsjø", StationType = "Vannstandsmåler" },
+                new Models.Station { StationName = "Heimsjøen", Description = "Heimsjøen", StationType = "Vannstandsmåler" },
                 new Models.Station { StationName = "Mausund", Description = "Mausund", StationType = "Vannstandsmåler" },
                 new Models.Station { StationName = "Rørvik", Description = "Rørvik", StationType = "Vannstandsmåler" },
                 new Models.Station { StationName = "Bodø", Description = "Bodø", StationType = "Vannstandsmåler" },
@@ -703,6 +703,12 @@ namespace Kartverket.Register.Migrations
 
             context.Database.ExecuteSqlCommand("UPDATE Registers SET name = 'Varsler', description = 'Register over alle varsler registrert i Geonorge', seoname = 'varsler'  WHERE  systemid='0f428034-0b2d-4fb7-84ea-c547b872b418'");
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET AlertCategory = '" + Constants.AlertCategoryService+ "'  WHERE  [AlertCategory] is  null and Discriminator='Alert'");
+
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET StationName = NULL, StationType = NULL  WHERE  StationName='Heimsjø'");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET departmentId = NULL  WHERE  departmentId='Til sjøs'");
+
+            context.Database.ExecuteSqlCommand("DELETE FROM Departments  WHERE  value='Til sjøs'");
+            context.Database.ExecuteSqlCommand("DELETE FROM Stations  WHERE  [StationName] = 'Heimsjø'");
 
             //context.Registers.AddOrUpdate(
             //    produktspesifikasjon,

@@ -54,7 +54,7 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        public ActionResult Create(Alert alert, string parentRegister, string registerName, string[] tagslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2, string category = Constants.AlertCategoryService)
+        public ActionResult Create(Alert alert, string parentRegister, string registerName, string[] tagslist, string[] departmentslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2, string category = Constants.AlertCategoryService)
         {
             alert.register = _registerService.GetRegister(parentRegister, registerName);
             if (alert.register != null)
@@ -82,6 +82,15 @@ namespace Kartverket.Register.Controllers
                                 {
                                     var tag = _dbContext.Tags.Where(t => t.value == tagId).FirstOrDefault();
                                     alert.Tags.Add(tag);
+                                }
+                            }
+                            alert.Departments = new List<Department>();
+                            if (departmentslist != null)
+                            {
+                                foreach (var departmentId in departmentslist)
+                                {
+                                    var department = _dbContext.Departments.Where(t => t.value == departmentId).FirstOrDefault();
+                                    alert.Departments.Add(department);
                                 }
                             }
                         }
@@ -147,7 +156,7 @@ namespace Kartverket.Register.Controllers
         // POST: Alerts/Edit
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(Alert alert, string[] tagslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2)
+        public ActionResult Edit(Alert alert, string[] tagslist, string[] departmentslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2)
         {
             //todo skal alle felter redigeres, sjekk om det er noen mangler validering og ressurser feilmelding når man legger til
             if (!ModelState.IsValid)
@@ -190,6 +199,18 @@ namespace Kartverket.Register.Controllers
                         }
                     }
 
+                    alertOriginal.Departments = new List<Department>();
+                    if (departmentslist != null)
+                    {
+                        alertOriginal.Departments.Clear();
+
+                        foreach (var departmentId in departmentslist)
+                        {
+                            var department = _dbContext.Departments.Where(t => t.value == departmentId).FirstOrDefault();
+                            alertOriginal.Departments.Add(department);
+                        }
+                    }
+
                     //todo check filetype
                     if (imagefile1 != null && imagefile1.ContentLength > 0)
                     {
@@ -225,12 +246,21 @@ namespace Kartverket.Register.Controllers
 
             string[] alertSelected = { };
 
-            if(alert.Tags != null )
+            if (alert.Tags != null )
                 alertSelected = alert.Tags.Select(c => c.value).ToArray();
+
+            string[] alertSelectedDepartement = { };
+
+            if (alert.Departments != null)
+                alertSelectedDepartement = alert.Departments.Select(c => c.value).ToArray();
 
             var tagList = new MultiSelectList(_dbContext.Tags.Select(t => new { Key = t.value, Value = t.description }).ToList(), "Key", "Value", alertSelected);
 
             ViewBag.tagList = tagList;
+
+            var departmentList = new MultiSelectList(_dbContext.Departments.Select(t => new { Key = t.value, Value = t.description }).ToList(), "Key", "Value", alertSelectedDepartement);
+
+            ViewBag.departmentList = departmentList;
 
             ViewBag.departmentId = new SelectList(_dbContext.Departments.Select(t => new { Key = t.value, Value = t.description }), "Key", "Value", alert.departmentId);
             ViewBag.statusId = new SelectList(_dbContext.Statuses.Where(s => s.value == "Valid" || s.value == "Retired").Select(t => new { Key = t.value, Value = t.description }).OrderByDescending(o => o.Key), "Key", "Value", alert.statusId);

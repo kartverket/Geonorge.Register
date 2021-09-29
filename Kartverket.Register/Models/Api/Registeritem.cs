@@ -266,10 +266,10 @@ namespace Kartverket.Register.Models.Api
         public string AlertCategory { get; set; }
 
         [DataMemberAttribute]
-        public string Departement { get; set; }
+        public List<string> Departements { get; set; }
         public bool ShouldSerializeDepartement()
         {
-            return !string.IsNullOrEmpty(Departement);
+            return Departements != null && Departements.Count > 0;
         }
         [DataMemberAttribute]
         public string Station { get; set; }
@@ -758,8 +758,9 @@ namespace Kartverket.Register.Models.Api
                 if (s.DateResolved.HasValue)
                     DateResolved = s.DateResolved;
                 Summary = s.Summary;
-                Departement = s.departmentId;
-                if(s.Tags != null)
+                if (s.Departments != null)
+                    Departements = s.Departments.Select(t => t.value).ToList();
+                if (s.Tags != null)
                     Tags = s.Tags.Select(t => t.value).ToList();
                 
             }

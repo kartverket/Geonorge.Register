@@ -117,6 +117,8 @@ namespace Kartverket.Register.Services.Register
                                     registerItemsv2.Add(item);
                                 else if (geodata.EcologicalBaseMap && filter.GeodataType == "ecologicalBaseMap")
                                     registerItemsv2.Add(item);
+                                else if (geodata.ModellbaserteVegprosjekter && filter.GeodataType == "modellbaserteVegprosjekter")
+                                    registerItemsv2.Add(item);
                             }
                         }
                         else
@@ -175,7 +177,7 @@ namespace Kartverket.Register.Services.Register
             if (!string.IsNullOrEmpty(filter.department))
             {
 
-                alerts = alerts.Where(d => d.departmentId == filter.department);
+                alerts = alerts.Where(d => d.Departments.Any(dd => dd.value == filter.department));
 
             }
 

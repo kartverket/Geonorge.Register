@@ -397,6 +397,10 @@ namespace Kartverket.DOK.Service
                         {
                             geodatalovDataset.EcologicalBaseMap = true;
                         }
+                        else if (keyword.KeywordValue == "modellbaserteVegprosjekter")
+                        {
+                            geodatalovDataset.ModellbaserteVegprosjekter = true;
+                        }
                     }
 
                     if (geodatalovDataset.NationalDataset)

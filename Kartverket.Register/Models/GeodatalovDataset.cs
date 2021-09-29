@@ -14,6 +14,7 @@ namespace Kartverket.Register.Models
         public bool Geodatalov { get; set; }
         public bool Mareano { get; set; }
         public bool EcologicalBaseMap { get; set; }
+        public bool ModellbaserteVegprosjekter { get; set; }
 
         //Geodatalov delivery statuses
 
@@ -56,7 +57,6 @@ namespace Kartverket.Register.Models
         [ForeignKey("CommonStatus"), Required, Display(Name = "Nedlastingstjeneste Atom-feed:")]
         public Guid CommonStatusId { get; set; }
         public virtual DatasetDelivery CommonStatus { get; set; }
-
 
         public string DetailPageUrl()
         {

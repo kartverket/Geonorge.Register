@@ -117,6 +117,8 @@ namespace Kartverket.Register.Services.Register
                                     registerItemsv2.Add(item);
                                 else if (geodata.EcologicalBaseMap && filter.GeodataType == "ecologicalBaseMap")
                                     registerItemsv2.Add(item);
+                                else if (geodata.ModellbaserteVegprosjekter && filter.GeodataType == "modellbaserteVegprosjekter")
+                                    registerItemsv2.Add(item);
                             }
                         }
                         else

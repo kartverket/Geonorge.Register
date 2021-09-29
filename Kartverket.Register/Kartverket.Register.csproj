@@ -1162,6 +1162,10 @@
     <Compile Include="Migrations\202109230736528_AddDepartmentsList.designer.cs">
       <DependentUpon>202109230736528_AddDepartmentsList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109291028326_AddModellbaserteVegprosjekter.cs" />
+    <Compile Include="Migrations\202109291028326_AddModellbaserteVegprosjekter.designer.cs">
+      <DependentUpon>202109291028326_AddModellbaserteVegprosjekter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3105,6 +3109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109230736528_AddDepartmentsList.resx">
       <DependentUpon>202109230736528_AddDepartmentsList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109291028326_AddModellbaserteVegprosjekter.resx">
+      <DependentUpon>202109291028326_AddModellbaserteVegprosjekter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -1,0 +1,37 @@
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.Register
+﻿@using Kartverket.Register.Helpers
+
+@{
+    ViewBag.Title = Shared.Delete + " " + Model.name;
+}
+
+@section breadcrumb {
+    <li><a href="@Model.GetObjectUrl()">@Model.NameTranslated()</a></li>
+    <li>@Shared.Delete</li>
+}
+
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                @Shared.DeleteCodeValues @Model.NameTranslated()
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+
+<h4>@Registers.DeleteConfirm <b>@Model.NameTranslated()</b>?</h4>
+<hr />
+@using (Html.BeginForm())
+{
+
+    <div class="form-actions no-color">
+        <input type="submit" value="@Shared.DeleteCodeValues" class="btn btn-default pull-right" />
+        <a href="@Model.GetObjectUrl()">@Shared.Back</a>
+    </div>
+}
+

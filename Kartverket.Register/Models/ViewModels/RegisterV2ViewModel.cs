@@ -324,6 +324,12 @@ namespace Kartverket.Register.Models.ViewModels
                 : "/subregister/" + SystemId + "/slett";
         }
 
+        public string GetDeleteAllObjectUrl()
+        {
+
+            return "/subregister/" + SystemId + "/slettalle";
+        }
+
 
         public string GetEditListUrl()
         {

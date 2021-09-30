@@ -254,6 +254,10 @@
             {
                 <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteObjectUrl()">@Shared.Delete</a>
             }
+            if (Model.ContainedItemClass == "CodelistValue" && Model.AccessRegister.Delete)
+            {
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteAllObjectUrl()">@Shared.DeleteCodeValues</a>
+            }
         }
         <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
     </div>

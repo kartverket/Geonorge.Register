@@ -142,6 +142,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Slett kodeverdier.
+        /// </summary>
+        public static string DeleteCodeValues {
+            get {
+                return ResourceManager.GetString("DeleteCodeValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vis.
         /// </summary>
         public static string Details {

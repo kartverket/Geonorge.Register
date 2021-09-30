@@ -5118,6 +5118,11 @@
               Looks up a localized string similar to Slett.
             </summary>
         </member>
+        <member name="P:Resources.Shared.DeleteCodeValues">
+            <summary>
+              Looks up a localized string similar to Slett kodeverdier.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Details">
             <summary>
               Looks up a localized string similar to Vis.

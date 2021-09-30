@@ -280,4 +280,7 @@
   <data name="Unknown" xml:space="preserve">
     <value>Ukjent</value>
   </data>
+  <data name="DeleteCodeValues" xml:space="preserve">
+    <value>Slett kodeverdier</value>
+  </data>
 </root>

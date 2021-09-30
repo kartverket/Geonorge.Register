@@ -162,4 +162,7 @@
   <data name="CodeValueEnglish" xml:space="preserve">
     <value>Code value english</value>
   </data>
+  <data name="CodeValues" xml:space="preserve">
+    <value>Code values</value>
+  </data>
 </root>

@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modellbaserte vegprosjekter.
+        /// </summary>
+        public static string ModellbaserteVegprosjekter {
+            get {
+                return ResourceManager.GetString("ModellbaserteVegprosjekter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Norge digitalt-avtale.
         /// </summary>
         public static string NationalDataset {

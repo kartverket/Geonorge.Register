@@ -22,6 +22,9 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "EcologicalBaseMap", ResourceType = typeof(GeodatalovDataSet))]
         public bool EcologicalBaseMap { get; set; }
 
+        [Display(Name = "ModellbaserteVegprosjekter", ResourceType = typeof(GeodatalovDataSet))]
+        public bool ModellbaserteVegprosjekter { get; set; }
+
         [Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
         public string MetadataStatusId { get; set; }
         public virtual DokDeliveryStatus MetadataStatus { get; set; }
@@ -90,6 +93,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Geodatalov = geodatalovDataset.Geodatalov;
                 Mareano = geodatalovDataset.Mareano;
                 EcologicalBaseMap = geodatalovDataset.EcologicalBaseMap;
+                ModellbaserteVegprosjekter = geodatalovDataset.ModellbaserteVegprosjekter;
 
                 if (geodatalovDataset.MetadataStatus != null)
                 {

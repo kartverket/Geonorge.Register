@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using Kartverket.Register.Models;
@@ -333,6 +333,7 @@ namespace Kartverket.Register.Services
             originalDataset.Geodatalov = geodatalovDatasetFromKartkatalogen.Geodatalov;
             originalDataset.Mareano = geodatalovDatasetFromKartkatalogen.Mareano;
             originalDataset.EcologicalBaseMap = geodatalovDatasetFromKartkatalogen.EcologicalBaseMap;
+            originalDataset.ModellbaserteVegprosjekter = geodatalovDatasetFromKartkatalogen.ModellbaserteVegprosjekter;
 
             if (originalDataset.MetadataStatus != null)
             {

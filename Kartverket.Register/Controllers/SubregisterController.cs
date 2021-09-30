@@ -223,6 +223,50 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
+        // GET: Subregister/Delete/5
+        [Authorize]
+        //[Route("subregister/{registername}/{owner}/{subregister}/slett")]
+        public ActionResult DeleteAll(string systemid)
+        {
+            Models.Register register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+
+            if (register == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (_accessControlService.HasAccessTo(register))
+            {
+                return View(register);
+            }
+
+            throw new HttpException(401, "Access Denied");
+        }
+
+        // POST: Subregister/Delete/5
+        [Authorize]
+        [HttpPost, ActionName("DeleteAll")]
+        //[Route("subregister/{registername}/{owner}/{subregister}/slett")]
+        public ActionResult DeleteAllConfirmed(string systemid)
+        {
+            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+            if (register != null)
+            {
+                if (!_accessControlService.HasAccessTo(register))
+                {
+                    throw new HttpException(401, "Access Denied");
+                }
+
+                var registerUrl = register.GetObjectUrl();
+
+                _db.Database.ExecuteSqlCommand("DELETE FROM RegisterItems Where registerId = '"+ Guid.Parse(systemid) + "'");
+
+                return Redirect(registerUrl);
+            }
+
+            return HttpNotFound();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

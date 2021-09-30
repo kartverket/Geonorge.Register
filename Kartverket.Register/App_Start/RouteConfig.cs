@@ -111,6 +111,7 @@ namespace Kartverket.Register
             routes.MapRoute("CreateSubRegistry", "subregister/{registerName}/ny", new { controller = "Subregister", action = "Create" });
             routes.MapRoute("EditSubRegistry", "subregister/{systemId}/rediger", new { controller = "Subregister", action = "Edit" });
             routes.MapRoute("DeleteSubRegistry", "subregister/{systemid}/slett", new { controller = "Subregister", action = "Delete" });
+            routes.MapRoute("DeleteSubRegistryAll", "subregister/{systemid}/slettalle", new { controller = "Subregister", action = "DeleteAll" });
 
 
             routes.MapRoute("SignIn", "SignIn", new { controller = "Home", action = "SignIn" });

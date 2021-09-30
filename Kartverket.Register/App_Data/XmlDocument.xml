@@ -4244,6 +4244,11 @@
               Looks up a localized string similar to Kodeverdi engelsk.
             </summary>
         </member>
+        <member name="P:Resources.CodelistValues.CodeValues">
+            <summary>
+              Looks up a localized string similar to Kodeverdier.
+            </summary>
+        </member>
         <member name="P:Resources.CodelistValues.CreateNew">
             <summary>
               Looks up a localized string similar to Foreslå ny kodeverdi.
@@ -5116,6 +5121,11 @@
         <member name="P:Resources.Shared.Delete">
             <summary>
               Looks up a localized string similar to Slett.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.DeleteCodeValues">
+            <summary>
+              Looks up a localized string similar to Slett kodeverdier.
             </summary>
         </member>
         <member name="P:Resources.Shared.Details">

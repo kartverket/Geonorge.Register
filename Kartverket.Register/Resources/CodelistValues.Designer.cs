@@ -97,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kodeverdier.
+        /// </summary>
+        public static string CodeValues {
+            get {
+                return ResourceManager.GetString("CodeValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Foreslå ny kodeverdi.
         /// </summary>
         public static string CreateNew {

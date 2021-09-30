@@ -2552,6 +2552,7 @@
     <Content Include="Views\Shared\_mareanoReport.cshtml" />
     <Content Include="Views\Shared\_detailsMareanoDataset.cshtml" />
     <Content Include="Views\Alerts\Edit.cshtml" />
+    <Content Include="Views\Subregister\DeleteAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

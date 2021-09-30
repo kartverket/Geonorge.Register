@@ -373,31 +373,31 @@ namespace Kartverket.DOK.Service
                         {
                             geodatalovDataset.Dok = true;
                         }
-                        else if (keyword.KeywordValue == "geodataloven")
+                        if (keyword.KeywordValue == "geodataloven")
                         {
                             geodatalovDataset.Geodatalov = true;
                         }
-                        else if (keyword.KeywordValue == "Norge digitalt")
+                        if (keyword.KeywordValue == "Norge digitalt")
                         {
                             geodatalovDataset.NationalDataset = true;
                         }
-                        else if (keyword.KeywordValue == "Inspire")
+                        if (keyword.KeywordValue == "Inspire")
                         {
                             geodatalovDataset.InspireTheme = true;
                         }
-                        else if (keyword.KeywordValue == "arealplanerPBL")
+                        if (keyword.KeywordValue == "arealplanerPBL")
                         {
                             geodatalovDataset.Plan = true;
                         }
-                        else if (keyword.KeywordValue == "Mareano")
+                        if (keyword.KeywordValue == "Mareano")
                         {
                             geodatalovDataset.Mareano = true;
                         }
-                        else if (keyword.KeywordValue == "ØkologiskGrunnkart" || keyword.KeywordValue == "Økologisk grunnkart")
+                        if (keyword.KeywordValue == "ØkologiskGrunnkart" || keyword.KeywordValue == "Økologisk grunnkart")
                         {
                             geodatalovDataset.EcologicalBaseMap = true;
                         }
-                        else if (keyword.KeywordValue == "modellbaserteVegprosjekter")
+                        if (keyword.KeywordValue == "modellbaserteVegprosjekter")
                         {
                             geodatalovDataset.ModellbaserteVegprosjekter = true;
                         }

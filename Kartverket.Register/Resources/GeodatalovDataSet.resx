@@ -132,6 +132,9 @@
   <data name="InspireTheme" xml:space="preserve">
     <value>Inspire i henhold rapportering</value>
   </data>
+  <data name="ModellbaserteVegprosjekter" xml:space="preserve">
+    <value>Modellbaserte vegprosjekter</value>
+  </data>
   <data name="NationalDataset" xml:space="preserve">
     <value>Norge digitalt-avtale</value>
   </data>

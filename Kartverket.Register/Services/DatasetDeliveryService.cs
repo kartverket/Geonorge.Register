@@ -246,18 +246,21 @@ namespace Kartverket.Register.Services
 
                         if (data.cors.svar == "not all")
                             supportCorsNotAll = true;
+                        try
+                        { 
+                            if (data.epsgSupported.vurdering == "yes")
+                                epsgSupport = true; //Todo check epsg code
 
-                        if (data.epsgSupported.vurdering == "yes")
-                            epsgSupport = true; //Todo check epsg code
+                            if (data.hasGFI.vurdering == "yes")
+                                featuresSupport = true;
 
-                        if (data.hasGFI.vurdering == "yes")
-                            featuresSupport = true;
+                            if (data.hasLegend.vurdering == "yes")
+                                hasLegend = true;
 
-                        if (data.hasLegend.vurdering == "yes")
-                            hasLegend = true;
-
-                        if (data.bbox.vurdering == "yes")
-                            hasCoverage = true;
+                            if (data.bbox.vurdering == "yes")
+                                hasCoverage = true;
+                        }
+                        catch (Exception ex) {Log.Info("Property does not exist, info: " + ex);}
 
                         if (!hasServiceUrl)
                             status = Deficient;

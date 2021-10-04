@@ -58,6 +58,7 @@ namespace Kartverket.Register.Controllers
             Document document = new Document();
             document.AddMissingTranslations();
             document.register = _registerService.GetRegister(parentRegister, registername);
+            Viewbags(document);
             if (document.register != null)
             {
                 if (_accessControlService.AddToRegister(document.register))
@@ -439,6 +440,8 @@ namespace Kartverket.Register.Controllers
         {
             ViewBag.statusId = _registerItemService.GetStatusSelectList(document);
             ViewBag.submitterId = _registerItemService.GetSubmitterSelectList(document.submitterId);
+            if (document.documentownerId == Guid.Empty)
+                document.documentownerId = GetDocumentOwnerId(document.documentownerId);
             ViewBag.documentownerId = _registerItemService.GetOwnerSelectList(document.documentownerId);
         }
 
@@ -478,6 +481,8 @@ namespace Kartverket.Register.Controllers
             if (originalDocument == null)
             {
                 document.dateSubmitted = DateTime.Now;
+                if(document.documentownerId != Guid.Empty)
+                    document.documentowner = db.Organizations.Where(o => o.systemId == document.documentownerId).FirstOrDefault();
                 document.statusId = "Submitted";
                 db.Entry(document).State = EntityState.Modified;
                 db.RegisterItems.Add(document);

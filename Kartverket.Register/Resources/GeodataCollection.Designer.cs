@@ -196,7 +196,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hvem utfører kartlegging.
+        ///   Looks up a localized string similar to Hvem utfører kartlegging eller etablerer data?.
         /// </summary>
         public static string Mapper {
             get {

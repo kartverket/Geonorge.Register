@@ -1354,7 +1354,7 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Mapper">
             <summary>
-              Looks up a localized string similar to Hvem utfører kartlegging.
+              Looks up a localized string similar to Hvem utfører kartlegging eller etablerer data?.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MappingMethodology">

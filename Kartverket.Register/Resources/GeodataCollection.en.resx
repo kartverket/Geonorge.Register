@@ -151,7 +151,7 @@
     <value>Link to requirements for delivery</value>
   </data>
   <data name="Mapper" xml:space="preserve">
-    <value>Mapper</value>
+    <value>Who performs mapping or establishes data?</value>
   </data>
   <data name="MappingRequirements" xml:space="preserve">
     <value>Requirements for mapping</value>

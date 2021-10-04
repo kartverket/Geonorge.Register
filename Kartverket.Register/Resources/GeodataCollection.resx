@@ -151,7 +151,7 @@
     <value>Krav avlevering</value>
   </data>
   <data name="Mapper" xml:space="preserve">
-    <value>Hvem utfører kartlegging</value>
+    <value>Hvem utfører kartlegging eller etablerer data?</value>
   </data>
   <data name="MappingRequirements" xml:space="preserve">
     <value>Krav til kartlegging</value>

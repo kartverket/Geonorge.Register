@@ -240,4 +240,7 @@
   <data name="MapSolutionTitle" xml:space="preserve">
     <value>Mapmethology</value>
   </data>
+  <data name="TitleHelp" xml:space="preserve">
+    <value>If the reception scheme does not have its own title with the agency, the name of the data set should come first.</value>
+  </data>
 </root>

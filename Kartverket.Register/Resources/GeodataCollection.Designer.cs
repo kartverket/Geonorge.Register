@@ -437,5 +437,14 @@ namespace Kartverket.Register.Resources {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dersom ikke mottaksordning har en egen tittel hos etaten, bør navnet på datasettet komme først..
+        /// </summary>
+        public static string TitleHelp {
+            get {
+                return ResourceManager.GetString("TitleHelp", resourceCulture);
+            }
+        }
     }
 }

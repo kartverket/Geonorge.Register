@@ -243,4 +243,7 @@
   <data name="MapSolutionTitle" xml:space="preserve">
     <value>Kartleggingsmetodikk</value>
   </data>
+  <data name="TitleHelp" xml:space="preserve">
+    <value>Dersom ikke mottaksordning har en egen tittel hos etaten, bør navnet på datasettet komme først.</value>
+  </data>
 </root>

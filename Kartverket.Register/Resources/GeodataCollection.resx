@@ -235,7 +235,7 @@
     <value>Annen informasjon</value>
   </data>
   <data name="Responsible" xml:space="preserve">
-    <value>Mottaks-ansvarlig</value>
+    <value>Mottaksansvarlig</value>
   </data>
   <data name="LinkToDataset" xml:space="preserve">
     <value>Lenke til datasett</value>

@@ -1464,7 +1464,7 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Responsible">
             <summary>
-              Looks up a localized string similar to Mottaks-ansvarlig.
+              Looks up a localized string similar to Mottaksansvarlig.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Roles">

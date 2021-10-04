@@ -113,6 +113,15 @@
 
         @if (!string.IsNullOrEmpty(Model.Purpose))
         {
+            <p><strong>@GeodataCollection.Purpose: </strong></p>
+            <p><span style="white-space: pre-line">@Model.Purpose</span></p>
+        }
+        @if (!string.IsNullOrEmpty(Model.Methodology))
+        {
+            <p><strong>@GeodataCollection.Methodology: </strong>@DisplayText(Model.Methodology)</p>
+        }
+        @if (!string.IsNullOrEmpty(Model.DataOwner))
+        {
             <p><strong>@GeodataCollection.DataOwner: </strong>@Model.DataOwner</p>
         }
         @if (Model.Responsible != null)

@@ -21,8 +21,8 @@
     {
         <p><b>@Html.DisplayNameFor(model => model.Type): </b>@Model.Type</p>
     }
-    <p><b>@Html.DisplayNameFor(model => model.AlertDate): </b>@Html.DisplayFor(model => model.AlertDate)</p>
-    <p><b>@Html.DisplayNameFor(model => model.EffectiveDate): </b>@Html.DisplayFor(model => model.EffectiveDate)</p>
+    <p><b>@Html.DisplayNameFor(model => model.AlertDate): </b>@Model.AlertDate.ToString("dd.MM.yyyy HH:mm")</p>
+    <p><b>@Html.DisplayNameFor(model => model.EffectiveDate): </b>@Model.EffectiveDate.ToString("dd.MM.yyyy HH:mm")</p>
     <p><b>@Html.DisplayNameFor(model => model.Note):</b> @Model.NoteTranslated()</p>
 
     @if (Model.station != null)

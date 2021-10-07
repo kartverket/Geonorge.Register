@@ -85,10 +85,10 @@
                 <a href="@item.GetObjectUrl()" title="Beskrivelse av @item.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Shared.Details</a>
             </div>
             <div class="col-md-1 col-sm-12 col">
-                <p>@Html.DisplayFor(model => item.AlertDate)</p>
+                <p>@item.AlertDate.ToString("dd.MM.yyyy HH:mm")</p>
             </div>
             <div class="col-md-2 col-sm-12 col text-right">
-                <p>@Html.DisplayFor(model => item.EffectiveDate)</p>
+                <p>@item.EffectiveDate.ToString("dd.MM.yyyy HH:mm")</p>
             </div>
         </div>
     }

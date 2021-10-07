@@ -3388,6 +3388,41 @@
               Looks up a localized string similar to Ikrafttredelsesdato er påkrevd.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.HeaderAlert">
+            <summary>
+              Looks up a localized string similar to Hva varselet gjelder.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderDetails">
+            <summary>
+              Looks up a localized string similar to Lenke til mer informasjon om varselet.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderDisplayValid">
+            <summary>
+              Looks up a localized string similar to Viser kun meldinger som fremdeles er gjeldende.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderEffectivedate">
+            <summary>
+              Looks up a localized string similar to Dato som meldingen trer i kraft.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderLast">
+            <summary>
+              Looks up a localized string similar to Dato oppdatert melding.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderOwner">
+            <summary>
+              Looks up a localized string similar to Hvem som er eier av datasett/tjeneste eller system som det meldes om.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderTitle">
+            <summary>
+              Looks up a localized string similar to Navn på datasett/tjeneste eller system som det meldes om og lenke til metadata hvis det finnes.
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.HelpTextAlertdate">
             <summary>
               Looks up a localized string similar to Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet..

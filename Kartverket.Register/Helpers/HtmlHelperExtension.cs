@@ -406,14 +406,33 @@ namespace Kartverket.Register.Helpers
                 sortTitle = "Sortert etter logisk rekkefølge";
             }
             var text = searchParam;
-
             if (sortingParam == "title" || sortingParam == "title_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_Title;
             }
+            else if (sortingParam == "name" || sortingParam == "name_desc")
+            {
+                sortTitle = Alerts.HeaderTitle;
+            }
+            else if (sortingParam == "alert" || sortingParam == "alert_desc")
+            {
+                sortTitle = Alerts.HeaderAlert;
+            }
+            else if (sortingParam == "description" || sortingParam == "description_desc")
+            {
+                sortTitle = Alerts.HeaderDetails;
+            }
+            else if (sortingParam == "effektivedate" || sortingParam == "effektivedate_desc")
+            {
+                sortTitle = Alerts.HeaderEffectivedate;
+            }
+            else if (sortingParam == "alertdate" || sortingParam == "alertdate_desc")
+            {
+                sortTitle = Alerts.HeaderLast;
+            }
             else if (sortingParam == "owner" || sortingParam == "owner_desc" || sortingParam == "datasetOwner" || sortingParam == "datasetOwner_desc")
             {
-                sortTitle = DataSet.DOK_Delivery_Owner;
+                sortTitle = Alerts.HeaderOwner;
             }
             else if (sortingParam == "theme" || sortingParam == "theme_desc")
             {

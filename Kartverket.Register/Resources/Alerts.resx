@@ -162,6 +162,27 @@
   <data name="EffectiveDateErrorMessage" xml:space="preserve">
     <value>Ikrafttredelsesdato er påkrevd</value>
   </data>
+  <data name="HeaderAlert" xml:space="preserve">
+    <value>Hva varselet gjelder</value>
+  </data>
+  <data name="HeaderDetails" xml:space="preserve">
+    <value>Lenke til mer informasjon om varselet</value>
+  </data>
+  <data name="HeaderDisplayValid" xml:space="preserve">
+    <value>Viser kun meldinger som fremdeles er gjeldende</value>
+  </data>
+  <data name="HeaderEffectivedate" xml:space="preserve">
+    <value>Dato som meldingen trer i kraft</value>
+  </data>
+  <data name="HeaderLast" xml:space="preserve">
+    <value>Dato oppdatert melding</value>
+  </data>
+  <data name="HeaderOwner" xml:space="preserve">
+    <value>Hvem som er eier av datasett/tjeneste eller system som det meldes om</value>
+  </data>
+  <data name="HeaderTitle" xml:space="preserve">
+    <value>Navn på datasett/tjeneste eller system som det meldes om og lenke til metadata hvis det finnes</value>
+  </data>
   <data name="HelpTextAlertdate" xml:space="preserve">
     <value>Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet.</value>
   </data>

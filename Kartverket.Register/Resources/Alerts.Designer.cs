@@ -196,6 +196,69 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hva varselet gjelder.
+        /// </summary>
+        public static string HeaderAlert {
+            get {
+                return ResourceManager.GetString("HeaderAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lenke til mer informasjon om varselet.
+        /// </summary>
+        public static string HeaderDetails {
+            get {
+                return ResourceManager.GetString("HeaderDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viser kun meldinger som fremdeles er gjeldende.
+        /// </summary>
+        public static string HeaderDisplayValid {
+            get {
+                return ResourceManager.GetString("HeaderDisplayValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato som meldingen trer i kraft.
+        /// </summary>
+        public static string HeaderEffectivedate {
+            get {
+                return ResourceManager.GetString("HeaderEffectivedate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato oppdatert melding.
+        /// </summary>
+        public static string HeaderLast {
+            get {
+                return ResourceManager.GetString("HeaderLast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hvem som er eier av datasett/tjeneste eller system som det meldes om.
+        /// </summary>
+        public static string HeaderOwner {
+            get {
+                return ResourceManager.GetString("HeaderOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navn på datasett/tjeneste eller system som det meldes om og lenke til metadata hvis det finnes.
+        /// </summary>
+        public static string HeaderTitle {
+            get {
+                return ResourceManager.GetString("HeaderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet..
         /// </summary>
         public static string HelpTextAlertdate {

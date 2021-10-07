@@ -156,6 +156,27 @@
   <data name="EffectiveDateErrorMessage" xml:space="preserve">
     <value>Effective date is required</value>
   </data>
+  <data name="HeaderAlert" xml:space="preserve">
+    <value>What the alert applies to</value>
+  </data>
+  <data name="HeaderDetails" xml:space="preserve">
+    <value>Link to more information about the alert</value>
+  </data>
+  <data name="HeaderDisplayValid" xml:space="preserve">
+    <value>Displays only messages that are still valid</value>
+  </data>
+  <data name="HeaderEffectivedate" xml:space="preserve">
+    <value>Date the message takes effect</value>
+  </data>
+  <data name="HeaderLast" xml:space="preserve">
+    <value>Date updated message</value>
+  </data>
+  <data name="HeaderOwner" xml:space="preserve">
+    <value>Who owns the data set / service or system that is reported</value>
+  </data>
+  <data name="HeaderTitle" xml:space="preserve">
+    <value>Name of data set / service or system that is reported and link to metadata if available</value>
+  </data>
   <data name="HelpTextAlertdate" xml:space="preserve">
     <value>Here you choose the date the notice is registered in Geonorge. The system proposes today's date. When you press the "Publish" button, the notification will be immediately available to anyone who follows service notifications, regardless of the date you selected in this field.</value>
   </data>

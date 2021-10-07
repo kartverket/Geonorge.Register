@@ -70,6 +70,15 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ledetekst.
+        /// </summary>
+        public static string AnchorText {
+            get {
+                return ResourceManager.GetString("AnchorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kontaktperson epost.
         /// </summary>
         public static string ContactEmail {
@@ -444,6 +453,15 @@ namespace Kartverket.Register.Resources {
         public static string TitleHelp {
             get {
                 return ResourceManager.GetString("TitleHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL.
+        /// </summary>
+        public static string Url {
+            get {
+                return ResourceManager.GetString("Url", resourceCulture);
             }
         }
     }

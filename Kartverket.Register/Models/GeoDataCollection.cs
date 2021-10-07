@@ -16,8 +16,10 @@ namespace Kartverket.Register.Models
         public string Title { get; set; }
         [Index("SeoName", IsUnique = true), StringLength(255)]
         public string SeoName { get; set; }
-        [Display(Name = "Link", ResourceType = typeof(GeodataCollection))]
+        [Display(Name = "Url", ResourceType = typeof(GeodataCollection))]
         public string Link { get; set; }
+        [Display(Name = "AnchorText", ResourceType = typeof(GeodataCollection))] 
+        public string LinkLabel { get; set; }
         [Display(Name = "Purpose", ResourceType = typeof(GeodataCollection))]
         public string Purpose { get; set; }
         [Display(Name = "Organization", ResourceType = typeof(GeodataCollection))]
@@ -38,12 +40,16 @@ namespace Kartverket.Register.Models
         public string Distributor { get; set; }
         [Display(Name = "Methodology", ResourceType = typeof(GeodataCollection))]
         public string Methodology { get; set; }
-        [Display(Name = "ProcessHistory", ResourceType = typeof(GeodataCollection))]
+        [Display(Name = "Url", ResourceType = typeof(GeodataCollection))]
         public string ProcessHistory { get; set; }
+        [Display(Name = "AnchorText", ResourceType = typeof(GeodataCollection))]
+        public string ProcessHistoryLabel { get; set; }
         [Display(Name = "RegistrationRequirements", ResourceType = typeof(GeodataCollection))]
         public string RegistrationRequirements { get; set; }
-        [Display(Name = "MappingRequirements", ResourceType = typeof(GeodataCollection))]
+        [Display(Name = "Url", ResourceType = typeof(GeodataCollection))]
         public string MappingRequirementsLink { get; set; }
+        [Display(Name = "AnchorText", ResourceType = typeof(GeodataCollection))]
+        public string MappingRequirementsLinkLabel { get; set; }
         [Display(Name = "MappingRequirementsLink", ResourceType = typeof(GeodataCollection))]
         public string MappingRequirements { get; set; }
         [Display(Name = "MethodologyDocumentLink", ResourceType = typeof(GeodataCollection))]
@@ -55,10 +61,14 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "OtherOrganizationsInvolved", ResourceType = typeof(GeodataCollection))]
         public string OtherOrganizationsInvolved { get; set; }
-        [Display(Name = "LinkToMapSolution", ResourceType = typeof(GeodataCollection))]
+        [Display(Name = "Url", ResourceType = typeof(GeodataCollection))]
         public string LinkToMapSolution { get; set; }
-        [Display(Name = "LinkInfoPage", ResourceType = typeof(GeodataCollection))]
+        [Display(Name = "AnchorText", ResourceType = typeof(GeodataCollection))]
+        public string LinkToMapSolutionLabel { get; set; }
+        [Display(Name = "Url", ResourceType = typeof(GeodataCollection))]
         public string LinkInfoPage { get; set; }
+        [Display(Name = "AnchorText", ResourceType = typeof(GeodataCollection))]
+        public string LinkInfoPageLabel { get; set; }
 
         [Display(Name = "AidAndSubsidies", ResourceType = typeof(GeodataCollection))]
         public string AidAndSubsidies { get; set; }
@@ -70,10 +80,14 @@ namespace Kartverket.Register.Models
         public string LinkOtherInfo { get; set; }
         [Display(Name = "MethodForMappingShort", ResourceType = typeof(GeodataCollection))]
         public string MethodForMappingShort { get; set; }
-        [Display(Name = "OtherWebInfoAboutMappingMethodology", ResourceType = typeof(GeodataCollection))]
+        [Display(Name = "Url", ResourceType = typeof(GeodataCollection))]
         public string OtherWebInfoAboutMappingMethodology { get; set; }
-        [Display(Name = "LinkToRequirementsForDelivery", ResourceType = typeof(GeodataCollection))]
+        [Display(Name = "AnchorText", ResourceType = typeof(GeodataCollection))]
+        public string OtherWebInfoAboutMappingMethodologyLabel { get; set; }
+        [Display(Name = "Url", ResourceType = typeof(GeodataCollection))]
         public string LinkToRequirementsForDelivery { get; set; }
+        [Display(Name = "AnchorText", ResourceType = typeof(GeodataCollection))]
+        public string LinkToRequirementsForDeliveryLabel { get; set; }
         [Display(Name = "OrganizationInfo", ResourceType = typeof(GeodataCollection))]
         public string OrganizationInfo { get; set; }
         [Display(Name = "ContactEmail", ResourceType = typeof(GeodataCollection))]

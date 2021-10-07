@@ -1170,6 +1170,10 @@
     <Compile Include="Migrations\202109291121360_AddMakeAllRegisterItemsDraft.designer.cs">
       <DependentUpon>202109291121360_AddMakeAllRegisterItemsDraft.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110070744123_AddGeoDataCollectionLinkLabels.cs" />
+    <Compile Include="Migrations\202110070744123_AddGeoDataCollectionLinkLabels.designer.cs">
+      <DependentUpon>202110070744123_AddGeoDataCollectionLinkLabels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3120,6 +3124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109291121360_AddMakeAllRegisterItemsDraft.resx">
       <DependentUpon>202109291121360_AddMakeAllRegisterItemsDraft.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110070744123_AddGeoDataCollectionLinkLabels.resx">
+      <DependentUpon>202110070744123_AddGeoDataCollectionLinkLabels.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

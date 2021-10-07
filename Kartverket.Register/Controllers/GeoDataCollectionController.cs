@@ -57,7 +57,33 @@ namespace Kartverket.Register.Controllers
         // GET: GeoDataCollection/Details/5
         public ActionResult Details(string itemname)
         {
-            return View(_dbContext.GeoDataCollections.Include("Organization").Include("Responsible").Where(o => o.SeoName == itemname).FirstOrDefault());
+            var model = _dbContext.GeoDataCollections.Include("Organization").Include("Responsible").Where(o => o.SeoName == itemname).FirstOrDefault();
+            FixEmptyLabels(ref model);
+            return View(model);
+        }
+
+        private void FixEmptyLabels(ref GeoDataCollection model)
+        {
+            if (string.IsNullOrEmpty(model.LinkInfoPageLabel))
+                model.LinkInfoPageLabel = GeodataCollection.LinkInfoPage;
+
+            if (string.IsNullOrEmpty(model.ProcessHistoryLabel))
+                model.ProcessHistoryLabel = GeodataCollection.ProcessHistory;
+
+            if (string.IsNullOrEmpty(model.LinkToRequirementsForDeliveryLabel))
+                model.LinkToRequirementsForDeliveryLabel = GeodataCollection.LinkToRequirementsForDelivery;
+
+            if (string.IsNullOrEmpty(model.LinkToMapSolutionLabel))
+                model.LinkToMapSolutionLabel = GeodataCollection.LinkToMapSolution;
+
+            if (string.IsNullOrEmpty(model.LinkLabel))
+                model.LinkLabel = GeodataCollection.Link;
+
+            if (string.IsNullOrEmpty(model.OtherWebInfoAboutMappingMethodologyLabel))
+                model.OtherWebInfoAboutMappingMethodologyLabel = GeodataCollection.OtherWebInfoAboutMappingMethodology;
+
+            if (string.IsNullOrEmpty(model.MappingRequirementsLinkLabel))
+                model.MappingRequirementsLinkLabel = GeodataCollection.MappingRequirementsLink;
         }
 
         // GET: GeoDataCollection/Create
@@ -121,6 +147,7 @@ namespace Kartverket.Register.Controllers
                 geodataCollection.Title = collection.Title;
                 geodataCollection.SeoName = RegisterUrls.MakeSeoFriendlyString(collection.Title);
                 geodataCollection.Link = collection.Link;
+                geodataCollection.LinkLabel = collection.LinkLabel;
                 geodataCollection.Purpose = collection.Purpose;
 
                 geodataCollection.DatasetTitle = collection.DatasetTitle;
@@ -130,22 +157,28 @@ namespace Kartverket.Register.Controllers
                 geodataCollection.Distributor = collection.Distributor;
                 geodataCollection.Methodology = collection.Methodology;
                 geodataCollection.ProcessHistory = collection.ProcessHistory;
+                geodataCollection.ProcessHistoryLabel = collection.ProcessHistoryLabel;
                 geodataCollection.RegistrationRequirements = collection.RegistrationRequirements;
                 geodataCollection.MappingRequirements = collection.MappingRequirements;
                 geodataCollection.MappingRequirementsLink = collection.MappingRequirementsLink;
+                geodataCollection.MappingRequirementsLinkLabel = collection.MappingRequirementsLinkLabel;
                 geodataCollection.MethodologyDocumentLink = collection.MethodologyDocumentLink;
                 geodataCollection.MethodologyLinkWebPage = collection.MethodologyLinkWebPage;
                 geodataCollection.SupportSchemes = collection.SupportSchemes;
 
                 geodataCollection.OtherOrganizationsInvolved = collection.OtherOrganizationsInvolved;
                 geodataCollection.LinkToMapSolution = collection.LinkToMapSolution;
+                geodataCollection.LinkToMapSolutionLabel = collection.LinkToMapSolutionLabel;
                 geodataCollection.LinkInfoPage = collection.LinkInfoPage;
+                geodataCollection.LinkInfoPageLabel = collection.LinkInfoPageLabel;
                 geodataCollection.LinkOtherInfo = collection.LinkOtherInfo;
                 geodataCollection.OtherInfo = collection.OtherInfo;
                 geodataCollection.AidAndSubsidies = collection.AidAndSubsidies;
                 geodataCollection.MethodForMappingShort = collection.MethodForMappingShort;
                 geodataCollection.OtherWebInfoAboutMappingMethodology = collection.OtherWebInfoAboutMappingMethodology;
+                geodataCollection.OtherWebInfoAboutMappingMethodologyLabel = collection.OtherWebInfoAboutMappingMethodologyLabel;
                 geodataCollection.LinkToRequirementsForDelivery = collection.LinkToMapSolution;
+                geodataCollection.LinkToRequirementsForDeliveryLabel = collection.LinkToRequirementsForDeliveryLabel;
                 geodataCollection.OrganizationInfo = collection.OrganizationInfo;
                 geodataCollection.ContactEmail = collection.ContactEmail;
 

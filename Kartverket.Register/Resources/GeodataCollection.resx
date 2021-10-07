@@ -246,4 +246,10 @@
   <data name="TitleHelp" xml:space="preserve">
     <value>Dersom ikke mottaksordning har en egen tittel hos etaten, bør navnet på datasettet komme først.</value>
   </data>
+  <data name="AnchorText" xml:space="preserve">
+    <value>Ledetekst</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>URL</value>
+  </data>
 </root>

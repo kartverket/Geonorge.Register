@@ -1282,6 +1282,11 @@
               Looks up a localized string similar to Bistand og støtteordninger.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.AnchorText">
+            <summary>
+              Looks up a localized string similar to Ledetekst.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.ContactEmail">
             <summary>
               Looks up a localized string similar to Kontaktperson epost.
@@ -1490,6 +1495,11 @@
         <member name="P:Kartverket.Register.Resources.GeodataCollection.TitleHelp">
             <summary>
               Looks up a localized string similar to Dersom ikke mottaksordning har en egen tittel hos etaten, bør navnet på datasettet komme først..
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Url">
+            <summary>
+              Looks up a localized string similar to URL.
             </summary>
         </member>
         <member name="M:Kartverket.Register.Services.AccessControlService.IsAdmin">

@@ -525,8 +525,21 @@ namespace Kartverket.Register.Services
             if (!autoUpdate) return statusValue;
             try
             {
-                var atomfeed = AtomFeed(metadataUuid);
-                statusValue = !string.IsNullOrEmpty(atomfeed) ? Good : Deficient;
+                statusValue = Deficient;
+
+                var metadata = GetDistributions(metadataUuid);
+
+                if (metadata != null)
+                {
+                    foreach (var service in metadata)
+                    {
+                        if (service.Protocol == "W3C:AtomFeed" || service.Protocol == "Atom Feed")
+                        {
+                            statusValue = Good;
+                            break;
+                        }
+                    }
+                }
             }
             catch (Exception)
             {

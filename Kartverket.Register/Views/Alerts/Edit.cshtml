@@ -180,27 +180,47 @@
         </div>
     }
 
-    @if (ViewBag.Category == @Constants.AlertCategoryOperation)
-    {
-        <div class="form-group has-feedback">
-            <label for="tags" class="control-label col-md-2">@Alerts.Tags</label>
-            <div class="col-md-9">
-                <div class="col-md-6 row">
-                    @Html.DropDownList("tagsList", (MultiSelectList)ViewBag.tagList, new { multiple = "multiple", @class = "form-control" })
-                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-                </div>
-                <div class="col-md-12 row">
-                    <p class="help-text bg-success" id="help-text-tag" style="display: none">
-                        @Alerts.TagsHelp
-                    </p>
-                </div>
+
+    <div class="form-group has-feedback">
+        <label for="tags" class="control-label col-md-2">@Alerts.Tags</label>
+        <div class="col-md-9">
+            <div class="col-md-6 row">
+                @Html.DropDownList("tagsList", (MultiSelectList)ViewBag.tagList, new { multiple = "multiple", @class = "form-control" })
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
             </div>
-            <div class="col-sm-1 pull-right">
-                <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-tag" class="badge help-text-toggle">?</a>
+            <div class="col-md-12 row">
+                <p class="help-text bg-success" id="help-text-tag" style="display: none">
+                    @Alerts.TagsHelp
                 </p>
             </div>
         </div>
+        <div class="col-sm-1 pull-right">
+            <p class="form-control-static">
+                <a href="#" data-help-text-id="help-text-tag" class="badge help-text-toggle">?</a>
+            </p>
+        </div>
+    </div>
+    <div class="form-group has-feedback">
+        <label for="statusId" class="control-label col-md-2">Status</label>
+        <div class="col-md-9">
+            <div class="col-md-6 row">
+                @Html.DropDownList("statusId", null, null, htmlAttributes: new { @class = "form-control" })
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+            </div>
+            <div class="col-md-12 row">
+                <p class="help-text bg-success" id="help-text-state" style="display: none">
+                    @Alerts.StatusHelp
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-1 pull-right">
+            <p class="form-control-static">
+                <a href="#" data-help-text-id="help-text-state" class="badge help-text-toggle">?</a>
+            </p>
+        </div>
+    </div>
+    @if (ViewBag.Category == @Constants.AlertCategoryOperation)
+    {
         <div class="form-group has-feedback">
             @Html.LabelFor(model => model.department, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
@@ -217,25 +237,6 @@
             <div class="col-sm-1 pull-right">
                 <p class="form-control-static">
                     <a href="#" data-help-text-id="help-text-departement" class="badge help-text-toggle">?</a>
-                </p>
-            </div>
-        </div>
-        <div class="form-group has-feedback">
-            <label for="statusId" class="control-label col-md-2">Status</label>
-            <div class="col-md-9">
-                <div class="col-md-6 row">
-                    @Html.DropDownList("statusId", null, null, htmlAttributes: new { @class = "form-control" })
-                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-                </div>
-                <div class="col-md-12 row">
-                    <p class="help-text bg-success" id="help-text-state" style="display: none">
-                        @Alerts.StatusHelp
-                    </p>
-                </div>
-            </div>
-            <div class="col-sm-1 pull-right">
-                <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-state" class="badge help-text-toggle">?</a>
                 </p>
             </div>
         </div>
@@ -259,7 +260,7 @@
                         {
                             if (station.StationType == "Vannstandsmåler")
                             {
-                        <option value="@station.StationName,@station.StationType" @(Model.StationName == station.StationName && Model.StationType == station.StationType ? "selected" : "")>@station.Description</option>
+                                <option value="@station.StationName,@station.StationType" @(Model.StationName == station.StationName && Model.StationType == station.StationType ? "selected" : "")>@station.Description</option>
                             }
                         }
                     </select>

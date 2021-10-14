@@ -1,4 +1,4 @@
-﻿using Kartverket.Register.Models;
+using Kartverket.Register.Models;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -459,8 +459,9 @@ namespace Kartverket.Register.Services
                 return Notset;
             }
 
-            if(!string.IsNullOrEmpty(serviceUuid))
-                return GetServiceStatus(serviceUuid, statusValue, statusValue == Useable);
+            //Todo check service status
+            //if(!string.IsNullOrEmpty(serviceUuid))
+            //    return GetServiceStatus(serviceUuid, statusValue, hasServiceUrl);
 
             return statusValue;
         }

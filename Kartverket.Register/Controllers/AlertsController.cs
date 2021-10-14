@@ -163,6 +163,7 @@ namespace Kartverket.Register.Controllers
             //todo skal alle felter redigeres, sjekk om det er noen mangler validering og ressurser feilmelding når man legger til
             if (!ModelState.IsValid)
             {
+                ViewBags(alert, alert.AlertCategory);
                 return View(alert);
             }
 

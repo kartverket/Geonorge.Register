@@ -54,7 +54,7 @@
                             {
                                 <div class="row result-row metadata">
                                     <div class="col-sm-11">
-                                        @metadata.Title
+                                        @metadata.Title (@metadata.Type)
                                     </div>
                                     <div class="col-sm-1">
                                         <input type="button" value="@Shared.Select" class="btn" name="metadataUuid" id="metadataUuid" onclick="$(this).selectMetadata('@metadata.Uuid');" />

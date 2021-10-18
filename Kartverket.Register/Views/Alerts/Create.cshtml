@@ -377,6 +377,24 @@
                 @Html.ValidationMessageFor(model => model.Image2, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group has-feedback">
+            @Html.LabelFor(model => model.DateResolved, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-9">
+                <div class="col-md-4 row">
+                    <input type="datetime-local" class="form-control" value="@(Model.DateResolved.HasValue ? Model.DateResolved.Value.ToString("yyyy-MM-ddTHH:mm:ss") : "")" name="DateResolved" />
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-dateresolved" style="display: none">
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-1 pull-right">
+                <p class="form-control-static">
+                    <a href="#" data-help-text-id="help-text-dateresolved" class="badge help-text-toggle">?</a>
+                </p>
+            </div>
+        </div>
 
     }
     <div class="form-group">

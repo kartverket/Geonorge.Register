@@ -1289,7 +1289,7 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.AnchorText">
             <summary>
-              Looks up a localized string similar to Ledetekst.
+              Looks up a localized string similar to Lenketekst.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.ContactEmail">
@@ -1337,9 +1337,19 @@
               Looks up a localized string similar to Metode for kartlegging.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Metode for kartlegging&quot;.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkInfoPage">
             <summary>
               Looks up a localized string similar to Informasjonsside avlevering.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkInfoPageHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Informasjonsside for avlevering&quot;.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkOtherInfo">
@@ -1357,9 +1367,19 @@
               Looks up a localized string similar to Kartløsning.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkToMapSolutionHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Kartløsning&quot;.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkToRequirementsForDelivery">
             <summary>
               Looks up a localized string similar to Krav avlevering.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkToRequirementsForDeliveryHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Krav avlevering&quot;.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Mapper">
@@ -1380,6 +1400,11 @@
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MappingRequirementsLink">
             <summary>
               Looks up a localized string similar to Krav til kartlegging.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.MappingRequirementsLinkHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Krav til kartlegging&quot;.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MapSolutionTitle">
@@ -1437,9 +1462,19 @@
               Looks up a localized string similar to Informasjonsside kartlegging.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.OtherWebInfoAboutMappingMethodologyHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Informasjonsside kartlegging&quot;.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.ProcessHistory">
             <summary>
               Looks up a localized string similar to Metodikk for avlevering.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.ProcessHistoryHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Metodikk for avlevering&quot;.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Purpose">

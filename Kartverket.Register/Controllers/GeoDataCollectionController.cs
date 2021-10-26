@@ -128,7 +128,6 @@ namespace Kartverket.Register.Controllers
             var collection = _dbContext.GeoDataCollections.Where(o => o.systemId.ToString() == id).FirstOrDefault();
             ViewBag.ownerId = new SelectList(_dbContext.Organizations.ToList().Select(s => new { s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", collection.Organization.systemId);
             ViewBag.responsibleId = new SelectList(_dbContext.Organizations.ToList().Select(s => new { s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", collection.Responsible != null ? collection.Responsible.systemId : collection.Organization.systemId);
-
             return View(collection);
         }
 

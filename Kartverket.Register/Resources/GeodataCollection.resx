@@ -247,9 +247,30 @@
     <value>Dersom ikke mottaksordning har en egen tittel hos etaten, bør navnet på datasettet komme først.</value>
   </data>
   <data name="AnchorText" xml:space="preserve">
-    <value>Ledetekst</value>
+    <value>Lenketekst</value>
   </data>
   <data name="Url" xml:space="preserve">
     <value>URL</value>
+  </data>
+  <data name="LinkHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Metode for kartlegging"</value>
+  </data>
+  <data name="LinkInfoPageHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Informasjonsside for avlevering"</value>
+  </data>
+  <data name="LinkToMapSolutionHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Kartløsning"</value>
+  </data>
+  <data name="LinkToRequirementsForDeliveryHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Krav avlevering"</value>
+  </data>
+  <data name="MappingRequirementsLinkHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Krav til kartlegging"</value>
+  </data>
+  <data name="OtherWebInfoAboutMappingMethodologyHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Informasjonsside kartlegging"</value>
+  </data>
+  <data name="ProcessHistoryHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Metodikk for avlevering"</value>
   </data>
 </root>

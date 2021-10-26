@@ -70,7 +70,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ledetekst.
+        ///   Looks up a localized string similar to Lenketekst.
         /// </summary>
         public static string AnchorText {
             get {
@@ -160,11 +160,29 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Metode for kartlegging&quot;.
+        /// </summary>
+        public static string LinkHelp {
+            get {
+                return ResourceManager.GetString("LinkHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Informasjonsside avlevering.
         /// </summary>
         public static string LinkInfoPage {
             get {
                 return ResourceManager.GetString("LinkInfoPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Informasjonsside for avlevering&quot;.
+        /// </summary>
+        public static string LinkInfoPageHelp {
+            get {
+                return ResourceManager.GetString("LinkInfoPageHelp", resourceCulture);
             }
         }
         
@@ -196,11 +214,29 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Kartløsning&quot;.
+        /// </summary>
+        public static string LinkToMapSolutionHelp {
+            get {
+                return ResourceManager.GetString("LinkToMapSolutionHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Krav avlevering.
         /// </summary>
         public static string LinkToRequirementsForDelivery {
             get {
                 return ResourceManager.GetString("LinkToRequirementsForDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Krav avlevering&quot;.
+        /// </summary>
+        public static string LinkToRequirementsForDeliveryHelp {
+            get {
+                return ResourceManager.GetString("LinkToRequirementsForDeliveryHelp", resourceCulture);
             }
         }
         
@@ -237,6 +273,15 @@ namespace Kartverket.Register.Resources {
         public static string MappingRequirementsLink {
             get {
                 return ResourceManager.GetString("MappingRequirementsLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Krav til kartlegging&quot;.
+        /// </summary>
+        public static string MappingRequirementsLinkHelp {
+            get {
+                return ResourceManager.GetString("MappingRequirementsLinkHelp", resourceCulture);
             }
         }
         
@@ -340,11 +385,29 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Informasjonsside kartlegging&quot;.
+        /// </summary>
+        public static string OtherWebInfoAboutMappingMethodologyHelp {
+            get {
+                return ResourceManager.GetString("OtherWebInfoAboutMappingMethodologyHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metodikk for avlevering.
         /// </summary>
         public static string ProcessHistory {
             get {
                 return ResourceManager.GetString("ProcessHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Metodikk for avlevering&quot;.
+        /// </summary>
+        public static string ProcessHistoryHelp {
+            get {
+                return ResourceManager.GetString("ProcessHistoryHelp", resourceCulture);
             }
         }
         

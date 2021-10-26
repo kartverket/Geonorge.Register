@@ -3438,9 +3438,14 @@
               Looks up a localized string similar to Velg en type varsel fra nedtrekkslisten. Dersom du ikke finner en passende type varsel kan du sende en epost til &lt;a href=&quot;mailto:post@norgedigitalt.no&quot;&gt;post@norgedigitalt.no&lt;/a&gt; og fremme ditt ønske om nye typer varsler. Men husk at for brukerne som mottar varslene så må varseltype være så konkret og presis som mulig, samtidig som det kan være forvirrende med altfor mange ulike typer varsel. Ofte er det godt nok med en varseltype som dekker et litt større emne. Forsøk derfor å bruke de foreslåtte varseltype [rest of string was truncated]&quot;;.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.HelpTextDateResolved">
+            <summary>
+              Looks up a localized string similar to Her legger du inn dato og klokkeslett for tidspunkt løsningen er oppe igjen. Hvis varselet gjelder forhåndsdefinert nedetid, så kan dette tidspunktet settes med en gang. Status vil da endres til &quot;Utgått&quot; etter at tidspunktet er passert.
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.HelpTextEffectivedate">
             <summary>
-              Looks up a localized string similar to Her velger du den datoen hvor endringen vil tre i kraft. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet..
+              Looks up a localized string similar to Her velger du den datoen hvor endringen vil tre i kraft..
             </summary>
         </member>
         <member name="P:Resources.Alerts.HelpTextNote">
@@ -3522,7 +3527,7 @@
         </member>
         <member name="P:Resources.Alerts.StatusHelp">
             <summary>
-              Looks up a localized string similar to Status: Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;utgått&quot;..
+              Looks up a localized string similar to Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;utgått&quot;. Hvis &quot;Løst dato&quot; er passert så vil &quot;status&quot; automatisk settes til &quot;utgått&quot;.
             </summary>
         </member>
         <member name="P:Resources.Alerts.SubscribeServiceAlert">

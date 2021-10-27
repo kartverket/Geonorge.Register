@@ -2075,6 +2075,7 @@
     <Content Include="Content\img\updown.svg" />
     <Content Include="Content\leaflet.css" />
     <Content Include="Content\print.css" />
+    <Content Include="Content\select2.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -2160,6 +2161,7 @@
     <Content Include="Scripts\axios.js" />
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\easyXDM.js" />
     <Content Include="Scripts\expressive.annotations.validate.js" />
     <Content Include="Scripts\expressive.annotations.validate.min.js" />
@@ -2413,6 +2415,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\tabs.js" />
     <Content Include="Scripts\vue.js" />
     <Content Include="Scripts\_references.js" />

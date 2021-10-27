@@ -6,6 +6,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
 <!-- Editor's Style -->
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/2.5.2/toastui-editor.css" />
+
+<link href="~/Content/select2.min.css" rel="stylesheet" />
 @{
     ViewBag.Title = Shared.Edit;
 }
@@ -56,11 +58,12 @@
             </p>
         </div>
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(model => model.DatasetTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.DatasetTitle, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DatasetTitle, new { htmlAttributes = new { @class = "form-control" } })
+            <select class="datasetSelect form-control" id="DatasetTitle" name="DatasetTitle">
+                <option value="@Model.DatasetTitle">@Model.DatasetTitle</option>
+            </select>
             @Html.ValidationMessageFor(model => model.DatasetTitle, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -606,5 +609,7 @@
 }
 
 @section Scripts {
+    <script src="~/Scripts/select2.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/custom.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }

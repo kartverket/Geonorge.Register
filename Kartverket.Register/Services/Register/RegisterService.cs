@@ -174,11 +174,24 @@ namespace Kartverket.Register.Services.Register
                 alerts = alertsTagged.Distinct();
             }
 
-            if (!string.IsNullOrEmpty(filter.department))
+
+            if (filter.department != null)
             {
+                var alertsDepartement = new List<Alert>();
 
-                alerts = alerts.Where(d => d.Departments.Any(dd => dd.value == filter.department));
+                foreach (var alert in alerts)
+                {
+                    foreach (var department in filter.department)
+                    {
+                        if (alert.Departments.Select(t => t.value).Contains(department))
+                        {
+                            alertsDepartement.Add(alert);
+                        }
+                    }
 
+                }
+
+                alerts = alertsDepartement.Distinct();
             }
 
             if (!string.IsNullOrEmpty(filter.StatusType) && filter.StatusType != "all")

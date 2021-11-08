@@ -335,7 +335,7 @@ namespace Kartverket.Register.Services
             if (mareanoDataset.F1_a_Criteria) findableWeight += 25;
             if (mareanoDataset.F2_a_Criteria) findableWeight += 10;
             if (mareanoDataset.F2_b_Criteria) findableWeight += 5;
-            if (mareanoDataset.F2_b_Criteria) findableWeight += 10;
+            if (mareanoDataset.F2_c_Criteria) findableWeight += 10;
             if (mareanoDataset.F3_a_Criteria) findableWeight += 25;
             if (mareanoDataset.F4_a_Criteria) findableWeight += 25;
 

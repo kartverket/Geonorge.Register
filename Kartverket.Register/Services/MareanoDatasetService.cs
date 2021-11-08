@@ -399,7 +399,7 @@ namespace Kartverket.Register.Services
                                            || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageCellUrl);
 
             mareanoDataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.Purpose);
-            mareanoDataset.R3_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
+            mareanoDataset.R3_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML" || p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000" || p.FormatName == "NetCDF" || p.FormatName == "NetCDF-CF").Any();
 
             if (mareanoDataset.R1_a_Criteria) reusableWeight += 30;
             if (mareanoDataset.R2_a_Criteria) reusableWeight += 10;

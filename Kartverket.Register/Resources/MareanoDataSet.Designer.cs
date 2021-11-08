@@ -520,7 +520,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett leveres på internasjonale åpne formater som GML (vekt 15).
+        ///   Looks up a localized string similar to Datasett leveres på internasjonale åpne vektorformater som GML eller raster/griddede data som TIFF/JPEG/NetCDF (vekt 15).
         /// </summary>
         public static string R3_b_Criteria {
             get {

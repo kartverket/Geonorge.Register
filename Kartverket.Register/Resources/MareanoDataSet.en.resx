@@ -274,7 +274,7 @@
     <value>Metadata must follow the standards: ISO19115 and DCAT-AP-NO (weight 15)</value>
   </data>
   <data name="R3_b_Criteria" xml:space="preserve">
-    <value>Datasets are delivered in international open formats such as GML (weight 15)</value>
+    <value>Datasets are delivered on international open vector formats such as GML or raster / gridded data such as TIFF / JPEG / NetCDF (weight 15)</value>
   </data>
   <data name="R3_Label" xml:space="preserve">
     <value>R1.3 (Meta)data meet domain-relevant community standards</value>

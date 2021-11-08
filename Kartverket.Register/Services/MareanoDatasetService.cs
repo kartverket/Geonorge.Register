@@ -364,7 +364,11 @@ namespace Kartverket.Register.Services
 
             int interoperableWeight = 0;
 
-            mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
+            var spatialRepresentation = _metadata.SimpleMetadata.SpatialRepresentation;
+            if(spatialRepresentation == "vector")
+                mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
+            else if(spatialRepresentation == "grid")
+                mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000").Any();
             mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null 
                                             ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Responsible == "uml-gml" && r.Result.HasValue && r.Result.Value == true).Any() : false;
             mareanoDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
@@ -395,7 +399,7 @@ namespace Kartverket.Register.Services
                                            || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageCellUrl);
 
             mareanoDataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.Purpose);
-            mareanoDataset.R3_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
+            mareanoDataset.R3_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML" || p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000" || p.FormatName == "NetCDF" || p.FormatName == "NetCDF-CF").Any();
 
             if (mareanoDataset.R1_a_Criteria) reusableWeight += 30;
             if (mareanoDataset.R2_a_Criteria) reusableWeight += 10;

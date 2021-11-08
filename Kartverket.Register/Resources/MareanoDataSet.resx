@@ -265,7 +265,7 @@
     <value>Metadata skal følge standardene: ISO19115 og DCAT-AP-NO (vekt 15)</value>
   </data>
   <data name="R3_b_Criteria" xml:space="preserve">
-    <value>Datasett leveres på internasjonale åpne formater som GML (vekt 15)</value>
+    <value>Datasett leveres på internasjonale åpne vektorformater som GML eller raster/griddede data som TIFF/JPEG/NetCDF (vekt 15)</value>
   </data>
   <data name="R3_Label" xml:space="preserve">
     <value>R3: Metadata og datasett følger internasjonale standarder</value>

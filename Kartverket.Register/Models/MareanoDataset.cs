@@ -97,7 +97,7 @@ namespace Kartverket.Register.Models
         public bool I1_b_Criteria { get; set; } = false;
 
         [Display(Name = "I1_c_Criteria", ResourceType = typeof(MareanoDataSet))]
-        public bool I1_c_Criteria { get; set; } = false;
+        public bool? I1_c_Criteria { get; set; } = null;
 
         [Display(Name = "I2_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool I2_a_Criteria { get; set; } = false;
@@ -106,10 +106,10 @@ namespace Kartverket.Register.Models
         public bool I2_b_Criteria { get; set; } = false;
 
         [Display(Name = "I3_a_Criteria", ResourceType = typeof(MareanoDataSet))]
-        public bool I3_a_Criteria { get; set; } = false;
+        public bool? I3_a_Criteria { get; set; } = null;
 
         [Display(Name = "I3_b_Criteria", ResourceType = typeof(MareanoDataSet))]
-        public bool I3_b_Criteria { get; set; } = false;
+        public bool? I3_b_Criteria { get; set; } = null;
 
         #endregion
 

@@ -1174,6 +1174,10 @@
     <Compile Include="Migrations\202110070744123_AddGeoDataCollectionLinkLabels.designer.cs">
       <DependentUpon>202110070744123_AddGeoDataCollectionLinkLabels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111081312048_AddNullableBoolInteroperable.cs" />
+    <Compile Include="Migrations\202111081312048_AddNullableBoolInteroperable.designer.cs">
+      <DependentUpon>202111081312048_AddNullableBoolInteroperable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3130,6 +3134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110070744123_AddGeoDataCollectionLinkLabels.resx">
       <DependentUpon>202110070744123_AddGeoDataCollectionLinkLabels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111081312048_AddNullableBoolInteroperable.resx">
+      <DependentUpon>202111081312048_AddNullableBoolInteroperable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

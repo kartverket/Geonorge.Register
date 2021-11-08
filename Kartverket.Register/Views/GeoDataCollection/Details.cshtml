@@ -113,6 +113,15 @@
 
         @if (!string.IsNullOrEmpty(Model.Purpose))
         {
+            <p><strong>@GeodataCollection.Purpose: </strong></p>
+            <p><span style="white-space: pre-line">@Model.Purpose</span></p>
+        }
+        @if (!string.IsNullOrEmpty(Model.Methodology))
+        {
+            <p><strong>@GeodataCollection.Methodology: </strong>@DisplayText(Model.Methodology)</p>
+        }
+        @if (!string.IsNullOrEmpty(Model.DataOwner))
+        {
             <p><strong>@GeodataCollection.DataOwner: </strong>@Model.DataOwner</p>
         }
         @if (Model.Responsible != null)
@@ -123,34 +132,27 @@
         {
             <p><strong>@GeodataCollection.RegistrationRequirements: </strong>@DisplayText(Model.RegistrationRequirements)</p>
         }
-        @if (!string.IsNullOrEmpty(Model.ProcessHistory))
-        {
-            <p><strong>@GeodataCollection.ProcessHistory: </strong><a href="@Model.ProcessHistory" target="_blank">@GeodataCollection.ProcessHistory</a></p>
-        }
-        @if (!string.IsNullOrEmpty(Model.LinkToRequirementsForDelivery))
-        {
-            <p><strong>@GeodataCollection.LinkToRequirementsForDelivery: </strong><a href="@Model.LinkToRequirementsForDelivery" target="_blank">@GeodataCollection.LinkToRequirementsForDelivery</a></p>
-        }
-        <p>
-            @if (!string.IsNullOrEmpty(Model.LinkToMapSolution))
-            {
-                <strong>@GeodataCollection.LinkToMapSolution: </strong> <a href="@Model.LinkToMapSolution" target="_blank">@GeodataCollection.LinkToMapSolution</a>
-            }
-        </p>
+            <ul>
+                @if (!string.IsNullOrEmpty(Model.ProcessHistory))
+                {
+                    <li><a href="@Model.ProcessHistory" target="_blank">@Model.ProcessHistoryLabel</a></li>
+                }
+                @if (!string.IsNullOrEmpty(Model.LinkToRequirementsForDelivery))
+                {
+                    <li><a href="@Model.LinkToRequirementsForDelivery" target="_blank">@Model.LinkToRequirementsForDeliveryLabel</a></li>
+                }
+                @if (!string.IsNullOrEmpty(Model.LinkToMapSolution))
+                {
+                    <li><a href="@Model.LinkToMapSolution" target="_blank">@Model.LinkToMapSolutionLabel</li>
+                }
 
 
 
-        @if (!string.IsNullOrEmpty(Model.LinkInfoPage))
-        {
-            <p><strong>@GeodataCollection.LinkInfoPage: </strong> <a href="@Model.LinkInfoPage" target="_blank">@GeodataCollection.LinkInfoPage</a></p>
-        }
-
-
-        @if (!string.IsNullOrEmpty(Model.MappingRequirementsLink))
-        {
-            <p><strong>@GeodataCollection.MappingRequirementsLink:</strong> <a href="@Model.MappingRequirementsLink" target="_blank">@GeodataCollection.MappingRequirementsLink</a></p>
-
-        }
+                @if (!string.IsNullOrEmpty(Model.LinkInfoPage))
+                {
+                    <li><a href="@Model.LinkInfoPage" target="_blank">@Model.LinkInfoPageLabel</a></li>
+                }
+            </ul>
 
 
     </article>
@@ -167,14 +169,21 @@
         {
             <p><strong>@GeodataCollection.MappingRequirements: </strong>@DisplayText(Model.MappingRequirements)</p>
         }
-        @if (!string.IsNullOrEmpty(Model.Link))
-        {
-            <p><strong>@GeodataCollection.Link: </strong><a href="@Model.Link" target="_blank">@GeodataCollection.Link</a></p>
-        }
-        @if (!string.IsNullOrEmpty(Model.OtherWebInfoAboutMappingMethodology))
-        {
-            <p><strong>@GeodataCollection.OtherWebInfoAboutMappingMethodology: </strong><a href="@Model.OtherWebInfoAboutMappingMethodology" target="_blank">@GeodataCollection.OtherWebInfoAboutMappingMethodology</a></p>
-        }
+            <ul>
+                @if (!string.IsNullOrEmpty(Model.Link))
+                {
+                <li><a href="@Model.Link" target="_blank">@Model.LinkLabel</a></li>
+                }
+                @if (!string.IsNullOrEmpty(Model.OtherWebInfoAboutMappingMethodology))
+                {
+                <li><a href="@Model.OtherWebInfoAboutMappingMethodology" target="_blank">@Model.OtherWebInfoAboutMappingMethodologyLabel</a></li>
+                }
+                @if (!string.IsNullOrEmpty(Model.MappingRequirementsLink))
+                {
+                <li><a href="@Model.MappingRequirementsLink" target="_blank">@Model.MappingRequirementsLinkLabel</a></li>
+
+                }
+            </ul>
         @if (!string.IsNullOrEmpty(Model.SupportSchemes))
         {
             <p><strong>@GeodataCollection.SupportSchemes: </strong>@DisplayText(Model.SupportSchemes)</p>

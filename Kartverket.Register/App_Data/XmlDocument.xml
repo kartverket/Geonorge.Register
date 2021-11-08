@@ -581,6 +581,11 @@
             DokCoverageMapping
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.SetStatusRetired">
+            <summary>
+            Update alert status
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.ConvertCurrentAndVersions(Kartverket.Register.Models.Register,System.String)">
             <summary>
             Get all Geolett
@@ -1282,6 +1287,11 @@
               Looks up a localized string similar to Bistand og støtteordninger.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.AnchorText">
+            <summary>
+              Looks up a localized string similar to Lenketekst.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.ContactEmail">
             <summary>
               Looks up a localized string similar to Kontaktperson epost.
@@ -1327,9 +1337,19 @@
               Looks up a localized string similar to Metode for kartlegging.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Metode for kartlegging&quot;.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkInfoPage">
             <summary>
               Looks up a localized string similar to Informasjonsside avlevering.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkInfoPageHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Informasjonsside for avlevering&quot;.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkOtherInfo">
@@ -1347,14 +1367,24 @@
               Looks up a localized string similar to Kartløsning.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkToMapSolutionHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Kartløsning&quot;.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkToRequirementsForDelivery">
             <summary>
               Looks up a localized string similar to Krav avlevering.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.LinkToRequirementsForDeliveryHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Krav avlevering&quot;.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Mapper">
             <summary>
-              Looks up a localized string similar to Hvem utfører kartlegging.
+              Looks up a localized string similar to Hvem utfører kartlegging eller etablerer data?.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MappingMethodology">
@@ -1370,6 +1400,11 @@
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MappingRequirementsLink">
             <summary>
               Looks up a localized string similar to Krav til kartlegging.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.MappingRequirementsLinkHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Krav til kartlegging&quot;.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MapSolutionTitle">
@@ -1427,9 +1462,19 @@
               Looks up a localized string similar to Informasjonsside kartlegging.
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.OtherWebInfoAboutMappingMethodologyHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Informasjonsside kartlegging&quot;.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.ProcessHistory">
             <summary>
               Looks up a localized string similar to Metodikk for avlevering.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.ProcessHistoryHelp">
+            <summary>
+              Looks up a localized string similar to Hvis lenketekst ikke oppgis blir det &quot;Metodikk for avlevering&quot;.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Purpose">
@@ -1464,7 +1509,7 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Responsible">
             <summary>
-              Looks up a localized string similar to Mottaks-ansvarlig.
+              Looks up a localized string similar to Mottaksansvarlig.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Roles">
@@ -1485,6 +1530,16 @@
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Title">
             <summary>
               Looks up a localized string similar to Tittel på mottaksordning.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.TitleHelp">
+            <summary>
+              Looks up a localized string similar to Dersom ikke mottaksordning har en egen tittel hos etaten, bør navnet på datasettet komme først..
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Resources.GeodataCollection.Url">
+            <summary>
+              Looks up a localized string similar to URL.
             </summary>
         </member>
         <member name="M:Kartverket.Register.Services.AccessControlService.IsAdmin">
@@ -3373,6 +3428,41 @@
               Looks up a localized string similar to Ikrafttredelsesdato er påkrevd.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.HeaderAlert">
+            <summary>
+              Looks up a localized string similar to Hva varselet gjelder.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderDetails">
+            <summary>
+              Looks up a localized string similar to Lenke til mer informasjon om varselet.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderDisplayValid">
+            <summary>
+              Looks up a localized string similar to Viser kun meldinger som fremdeles er gjeldende.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderEffectivedate">
+            <summary>
+              Looks up a localized string similar to Dato som meldingen trer i kraft.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderLast">
+            <summary>
+              Looks up a localized string similar to Dato oppdatert melding.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderOwner">
+            <summary>
+              Looks up a localized string similar to Hvem som er eier av datasett/tjeneste eller system som det meldes om.
+            </summary>
+        </member>
+        <member name="P:Resources.Alerts.HeaderTitle">
+            <summary>
+              Looks up a localized string similar to Navn på datasett/tjeneste eller system som det meldes om og lenke til metadata hvis det finnes.
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.HelpTextAlertdate">
             <summary>
               Looks up a localized string similar to Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet..
@@ -3383,9 +3473,14 @@
               Looks up a localized string similar to Velg en type varsel fra nedtrekkslisten. Dersom du ikke finner en passende type varsel kan du sende en epost til &lt;a href=&quot;mailto:post@norgedigitalt.no&quot;&gt;post@norgedigitalt.no&lt;/a&gt; og fremme ditt ønske om nye typer varsler. Men husk at for brukerne som mottar varslene så må varseltype være så konkret og presis som mulig, samtidig som det kan være forvirrende med altfor mange ulike typer varsel. Ofte er det godt nok med en varseltype som dekker et litt større emne. Forsøk derfor å bruke de foreslåtte varseltype [rest of string was truncated]&quot;;.
             </summary>
         </member>
+        <member name="P:Resources.Alerts.HelpTextDateResolved">
+            <summary>
+              Looks up a localized string similar to Her legger du inn dato og klokkeslett for tidspunkt løsningen er oppe igjen. Hvis varselet gjelder forhåndsdefinert nedetid, så kan dette tidspunktet settes med en gang. Status vil da endres til &quot;Utgått&quot; etter at tidspunktet er passert.
+            </summary>
+        </member>
         <member name="P:Resources.Alerts.HelpTextEffectivedate">
             <summary>
-              Looks up a localized string similar to Her velger du den datoen hvor endringen vil tre i kraft. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet..
+              Looks up a localized string similar to Her velger du den datoen hvor endringen vil tre i kraft..
             </summary>
         </member>
         <member name="P:Resources.Alerts.HelpTextNote">
@@ -3467,7 +3562,7 @@
         </member>
         <member name="P:Resources.Alerts.StatusHelp">
             <summary>
-              Looks up a localized string similar to Status: Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;utgått&quot;..
+              Looks up a localized string similar to Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;utgått&quot;. Hvis &quot;Løst dato&quot; er passert så vil &quot;status&quot; automatisk settes til &quot;utgått&quot;.
             </summary>
         </member>
         <member name="P:Resources.Alerts.SubscribeServiceAlert">

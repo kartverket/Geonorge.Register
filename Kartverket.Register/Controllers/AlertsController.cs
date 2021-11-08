@@ -71,19 +71,21 @@ namespace Kartverket.Register.Controllers
                         alert.InitializeNewAlert();
                         if (!string.IsNullOrEmpty(selectedStatusId))
                             alert.statusId = selectedStatusId;
+
+                        alert.Tags = new List<Tag>();
+                        if (tagslist != null)
+                        {
+                            foreach (var tagId in tagslist)
+                            {
+                                var tag = _dbContext.Tags.Where(t => t.value == tagId).FirstOrDefault();
+                                alert.Tags.Add(tag);
+                            }
+                        }
+
                         if (category == Constants.AlertCategoryOperation)
                         {
                             alert.Owner = alert.submitter.name;
                             alert.name = alert.UuidExternal;
-                            alert.Tags = new List<Tag>();
-                            if(tagslist != null)
-                            { 
-                                foreach (var tagId in tagslist)
-                                {
-                                    var tag = _dbContext.Tags.Where(t => t.value == tagId).FirstOrDefault();
-                                    alert.Tags.Add(tag);
-                                }
-                            }
                             alert.Departments = new List<Department>();
                             if (departmentslist != null)
                             {
@@ -161,6 +163,7 @@ namespace Kartverket.Register.Controllers
             //todo skal alle felter redigeres, sjekk om det er noen mangler validering og ressurser feilmelding når man legger til
             if (!ModelState.IsValid)
             {
+                ViewBags(alert, alert.AlertCategory);
                 return View(alert);
             }
 

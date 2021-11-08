@@ -322,6 +322,10 @@ namespace Kartverket.Register.Services
 
         private void SetFAIR(ref MareanoDataset mareanoDataset)
         {
+            mareanoDataset.I1_c_Criteria = null;
+            mareanoDataset.I3_a_Criteria = null;
+            mareanoDataset.I3_b_Criteria = null;
+
             int findableWeight = 0;
 
             if (_metadata?.SimpleMetadata == null)
@@ -367,22 +371,25 @@ namespace Kartverket.Register.Services
             var spatialRepresentation = _metadata.SimpleMetadata.SpatialRepresentation;
             if(spatialRepresentation == "vector")
                 mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
-            else if(spatialRepresentation == "grid")
+            else if(spatialRepresentation == "grid") 
                 mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000").Any();
-            mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null 
+
+            if (spatialRepresentation != "grid") 
+                mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null 
                                             ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Responsible == "uml-gml" && r.Result.HasValue && r.Result.Value == true).Any() : false;
             mareanoDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
             mareanoDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
-            mareanoDataset.I3_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_CONCEPT).ToList().Count() >= 1;
-            mareanoDataset.I3_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
-
+            if (spatialRepresentation != "grid") { 
+                mareanoDataset.I3_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_CONCEPT).ToList().Count() >= 1;
+                mareanoDataset.I3_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
+            }
             if (mareanoDataset.I1_a_Criteria) interoperableWeight += 20;
             if (mareanoDataset.I1_b_Criteria) interoperableWeight += 10;
-            if (mareanoDataset.I1_c_Criteria) interoperableWeight += 20;
+            if (!mareanoDataset.I1_c_Criteria.HasValue || (mareanoDataset.I1_c_Criteria.HasValue && mareanoDataset.I1_c_Criteria.Value)) interoperableWeight += 20;
             if (mareanoDataset.I2_a_Criteria) interoperableWeight += 10;
             if (mareanoDataset.I2_b_Criteria) interoperableWeight += 10;
-            if (mareanoDataset.I3_a_Criteria) interoperableWeight += 10;
-            if (mareanoDataset.I3_b_Criteria) interoperableWeight += 20;
+            if (!mareanoDataset.I3_a_Criteria.HasValue || (mareanoDataset.I3_a_Criteria.HasValue && mareanoDataset.I3_a_Criteria.Value)) interoperableWeight += 10;
+            if (!mareanoDataset.I3_b_Criteria.HasValue || (mareanoDataset.I3_b_Criteria.HasValue && mareanoDataset.I3_b_Criteria.Value)) interoperableWeight += 20;
 
             mareanoDataset.InteroperableStatusPerCent = interoperableWeight;
             mareanoDataset.InteroperableStatusId = CreateFairDelivery(interoperableWeight);

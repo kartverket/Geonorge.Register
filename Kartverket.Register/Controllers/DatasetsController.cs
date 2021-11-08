@@ -349,7 +349,9 @@ namespace Kartverket.Register.Controllers
                     MetadataItemViewModel m = new MetadataItemViewModel();
                     m.Uuid = ((DCMIRecordType)(res.Items[s])).Items[0].Text[0];
                     m.Title = ((DCMIRecordType)(res.Items[s])).Items[2].Text[0];
-                    result.Add(m);
+                    m.Type = ((DCMIRecordType)(res.Items[s])).Items[3].Text[0];
+                    if(m.Type == "dataset" || m.Type == "series")
+                        result.Add(m);
                 }
             }
 

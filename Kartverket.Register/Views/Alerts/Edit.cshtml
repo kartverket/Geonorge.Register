@@ -109,7 +109,7 @@
         @Html.LabelFor(model => model.AlertDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-9">
             <div class="col-md-5 row">
-                @Html.TextBoxFor(m => m.AlertDate, "{0:yyyy-MM-ddTHH:mm:ss}", new { @class = "form-control", type = "datetime-local" })
+                @Html.TextBoxFor(m => m.AlertDate, "{0:yyyy-MM-ddTHH:mm:00}", new { @class = "form-control", type = "datetime-local" })
                 @Html.ValidationMessageFor(m => m.AlertDate, "", new { @class = "text-danger" })
                 <span class="field-validation-valid" id="AlertDate_validationMessage">@Alerts.AlertDateValidationMessage</span>
                 <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
@@ -131,7 +131,7 @@
         @Html.LabelFor(model => model.EffectiveDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-9">
             <div class="col-md-5 row">
-                @Html.TextBoxFor(m => m.EffectiveDate, "{0:yyyy-MM-ddTHH:mm:ss}", new { @class = "form-control", type = "datetime-local" })
+                @Html.TextBoxFor(m => m.EffectiveDate, "{0:yyyy-MM-ddTHH:mm:00}", new { @class = "form-control", type = "datetime-local" })
                 @Html.ValidationMessageFor(m => m.EffectiveDate, "", new { @class = "text-danger" })
                 <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
             </div>
@@ -148,12 +148,42 @@
         </div>
     </div>
 
-    <div class="form-group required has-feedback">
+    <div class="form-group">
         @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-9">
             <div class="col-md-12 row">
-                @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
-                <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                @Html.HiddenFor(model => model.Note)
+                @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                @*<span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>*@
+                <div id="editorNote"></div>
+                <script>
+
+                let hiddenBodyMarkdownNote = document.querySelector("#Note");
+                let onEditorUpdateNote = () => {
+                    hiddenBodyMarkdownNote.value = editorNote.getMarkdown();
+                                }
+
+                                var contentNote = [
+                                @{
+                                    string[] noteLines = new string[] { };
+                                    if (Model.Note != null)
+                                    {
+                                        noteLines = Model.Note.Split('\n');
+                                    }
+                                    foreach (var note in noteLines)
+                                    {
+                                        @:'@note.Replace("\r", "")',
+                                    }
+                                }
+                                ].join('\n');
+                const editorNote = new toastui.Editor({
+                    el: document.querySelector('#editorNote'),
+                                    height: '150px',
+                    events: { "change": onEditorUpdateNote },
+                    initialValue: contentNote,
+                                    initialEditType: 'wysiwyg'
+                                });
+                </script>
             </div>
             <div class="col-md-12 row">
                 <p class="help-text bg-success" id="help-text-note" style="display: none">
@@ -168,39 +198,89 @@
         </div>
     </div>
 
+
     @for (int t = 0; t < Model.Translations.Count; t++)
     {
         @Html.HiddenFor(m => Model.Translations[t].CultureName)
+        @Html.HiddenFor(m => Model.Translations[t].Note)
         <div class="form-group">
             @Html.LabelFor(m => Model.Translations[t].Note, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => Model.Translations[t].Note, new { htmlAttributes = new { @class = "form-control" } })
+                <div id="editorNote_@t"></div>
+                <script>
+
+                let hiddenBodyMarkdownNote_@t = document.querySelector("#Translations_@(t)__Note");
+                let onEditorUpdateNote_@t = () => {
+                    hiddenBodyMarkdownNote_@(t).value = editorNote_@(t).getMarkdown();
+                                }
+
+                                var contentNote_@t = [
+                                @{
+                                    string[] noteLinesE = new string[] { };
+                                    if (Model.Translations[t].Note != null)
+                                    {
+                                        noteLinesE = Model.Translations[t].Note.Split('\n');
+                                    }
+                                    foreach (var noteE in noteLinesE)
+                                    {
+                                        @:'@noteE.Replace("\r", "")',
+                                    }
+                                }
+                                ].join('\n');
+                const editorNote_@t = new toastui.Editor({
+                    el: document.querySelector('#editorNote_@t'),
+                                    height: '150px',
+                    events: { "change": onEditorUpdateNote_@t },
+                    initialValue: contentNote_@t,
+                                    initialEditType: 'wysiwyg'
+                                });
+                </script>
                 @Html.ValidationMessageFor(m => Model.Translations[t].Note)
             </div>
         </div>
     }
 
-    @if (ViewBag.Category == @Constants.AlertCategoryOperation)
-    {
-        <div class="form-group has-feedback">
-            <label for="tags" class="control-label col-md-2">@Alerts.Tags</label>
-            <div class="col-md-9">
-                <div class="col-md-6 row">
-                    @Html.DropDownList("tagsList", (MultiSelectList)ViewBag.tagList, new { multiple = "multiple", @class = "form-control" })
-                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-                </div>
-                <div class="col-md-12 row">
-                    <p class="help-text bg-success" id="help-text-tag" style="display: none">
-                        @Alerts.TagsHelp
-                    </p>
-                </div>
+
+    <div class="form-group has-feedback">
+        <label for="tags" class="control-label col-md-2">@Alerts.Tags</label>
+        <div class="col-md-9">
+            <div class="col-md-6 row">
+                @Html.DropDownList("tagsList", (MultiSelectList)ViewBag.tagList, new { multiple = "multiple", @class = "form-control" })
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
             </div>
-            <div class="col-sm-1 pull-right">
-                <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-tag" class="badge help-text-toggle">?</a>
+            <div class="col-md-12 row">
+                <p class="help-text bg-success" id="help-text-tag" style="display: none">
+                    @Alerts.TagsHelp
                 </p>
             </div>
         </div>
+        <div class="col-sm-1 pull-right">
+            <p class="form-control-static">
+                <a href="#" data-help-text-id="help-text-tag" class="badge help-text-toggle">?</a>
+            </p>
+        </div>
+    </div>
+    <div class="form-group has-feedback">
+        <label for="statusId" class="control-label col-md-2">Status</label>
+        <div class="col-md-9">
+            <div class="col-md-6 row">
+                @Html.DropDownList("statusId", null, null, htmlAttributes: new { @class = "form-control" })
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+            </div>
+            <div class="col-md-12 row">
+                <p class="help-text bg-success" id="help-text-state" style="display: none">
+                    @Alerts.StatusHelp
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-1 pull-right">
+            <p class="form-control-static">
+                <a href="#" data-help-text-id="help-text-state" class="badge help-text-toggle">?</a>
+            </p>
+        </div>
+    </div>
+    @if (ViewBag.Category == @Constants.AlertCategoryOperation)
+    {
         <div class="form-group has-feedback">
             @Html.LabelFor(model => model.department, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
@@ -217,25 +297,6 @@
             <div class="col-sm-1 pull-right">
                 <p class="form-control-static">
                     <a href="#" data-help-text-id="help-text-departement" class="badge help-text-toggle">?</a>
-                </p>
-            </div>
-        </div>
-        <div class="form-group has-feedback">
-            <label for="statusId" class="control-label col-md-2">Status</label>
-            <div class="col-md-9">
-                <div class="col-md-6 row">
-                    @Html.DropDownList("statusId", null, null, htmlAttributes: new { @class = "form-control" })
-                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-                </div>
-                <div class="col-md-12 row">
-                    <p class="help-text bg-success" id="help-text-state" style="display: none">
-                        @Alerts.StatusHelp
-                    </p>
-                </div>
-            </div>
-            <div class="col-sm-1 pull-right">
-                <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-state" class="badge help-text-toggle">?</a>
                 </p>
             </div>
         </div>
@@ -259,7 +320,7 @@
                         {
                             if (station.StationType == "Vannstandsmåler")
                             {
-                        <option value="@station.StationName,@station.StationType" @(Model.StationName == station.StationName && Model.StationType == station.StationType ? "selected" : "")>@station.Description</option>
+                                <option value="@station.StationName,@station.StationType" @(Model.StationName == station.StationName && Model.StationType == station.StationType ? "selected" : "")>@station.Description</option>
                             }
                         }
                     </select>
@@ -359,6 +420,7 @@
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-dateresolved" style="display: none">
+                        @Alerts.HelpTextDateResolved
                     </p>
                 </div>
             </div>

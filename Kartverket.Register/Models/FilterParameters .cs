@@ -48,7 +48,7 @@ namespace Kartverket.Register.Models
         public string InspireAnnex { get; set; }
         public string filterTheme { get; set; }
         public string[] tag { get; set; }
-        public string department { get; set; }
+        public string[] department { get; set; }
         public string stationName { get; set; }
         public string stationType { get; set; }
 

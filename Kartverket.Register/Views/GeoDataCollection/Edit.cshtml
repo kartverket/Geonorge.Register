@@ -6,6 +6,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
 <!-- Editor's Style -->
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/2.5.2/toastui-editor.css" />
+
+<link href="~/Content/select2.min.css" rel="stylesheet" />
 @{
     ViewBag.Title = Shared.Edit;
 }
@@ -33,98 +35,111 @@
 @using (Html.BeginForm(
     "Edit", "GeoDataCollection", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.systemId)
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.systemId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-9">
+            <div class="col-md-12 row">
                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DatasetTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DatasetTitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DatasetTitle, "", new { @class = "text-danger" })
+            <div class="col-md-12 row">
+                <p class="help-text bg-success" id="help-text-title" style="display: none">
+                    @GeodataCollection.TitleHelp
+                </p>
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.DatasetLink, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DatasetLink, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DatasetLink, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-sm-1 pull-right">
+            <p class="form-control-static">
+                <a href="#" data-help-text-id="help-text-title" class="badge help-text-toggle">?</a>
+            </p>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Organization, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ownerId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Organization, "", new { @class = "text-danger" })
-            </div>
+    </div>
+    <div class="form-group">
+    @Html.LabelFor(model => model.DatasetTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select class="datasetSelect form-control" id="DatasetTitle" name="DatasetTitle">
+                <option value="@Model.DatasetTitle">@Model.DatasetTitle</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.DatasetTitle, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OtherOrganizationsInvolved, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OtherOrganizationsInvolved, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OtherOrganizationsInvolved, "", new { @class = "text-danger" })
-            </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DatasetLink, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DatasetLink, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DatasetLink, "", new { @class = "text-danger" })
         </div>
-
-        <h3>Aktører og roller</h3>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Mapper, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Mapper, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Mapper, "", new { @class = "text-danger" })
-            </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Organization, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("ownerId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Organization, "", new { @class = "text-danger" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataOwner, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DataOwner, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DataOwner, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Responsible, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("responsibleId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Responsible, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.OtherOrganizationsInvolved, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.OtherOrganizationsInvolved, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.OtherOrganizationsInvolved, "", new { @class = "text-danger" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Distributor, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Distributor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Distributor, "", new { @class = "text-danger" })
-            </div>
+    </div>
+
+    <h3>Aktører og roller</h3>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Mapper, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Mapper, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Mapper, "", new { @class = "text-danger" })
         </div>
-
-        <h3>Leveranse- og mottaksordning</h3>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Purpose, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Purpose, 5, 100, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Purpose, "", new { @class = "text-danger" })
-            </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DataOwner, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DataOwner, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DataOwner, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Methodology, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.Methodology)
-                @Html.ValidationMessageFor(model => model.Methodology, "", new { @class = "text-danger" })
-                <div id="editorMethodology"></div>
-                <script>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Responsible, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("responsibleId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Responsible, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Distributor, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Distributor, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Distributor, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <h3>Leveranse- og mottaksordning</h3>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Purpose, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Purpose, 5, 100, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Purpose, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Methodology, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.Methodology)
+            @Html.ValidationMessageFor(model => model.Methodology, "", new { @class = "text-danger" })
+            <div id="editorMethodology"></div>
+            <script>
 
                                 let hiddenBodyMarkdownMethodology = document.querySelector("#Methodology");
                                 let onEditorUpdateMethodology = () => {
@@ -150,16 +165,16 @@
                                     initialValue: contentMethodology,
                                     initialEditType: 'wysiwyg'
                                 });
-                </script>
-            </div>
+            </script>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.RegistrationRequirements, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.RegistrationRequirements)
-                @Html.ValidationMessageFor(model => model.RegistrationRequirements, "", new { @class = "text-danger" })
-                <div id="editorRegistrationRequirements"></div>
-                <script>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.RegistrationRequirements, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.RegistrationRequirements)
+            @Html.ValidationMessageFor(model => model.RegistrationRequirements, "", new { @class = "text-danger" })
+            <div id="editorRegistrationRequirements"></div>
+            <script>
 
                     let hiddenBodyMarkdownRegistrationRequirements = document.querySelector("#RegistrationRequirements");
                     let onEditorUpdateRegistrationRequirements = () => {
@@ -185,55 +200,160 @@
                         initialValue: contentRegistrationRequirements,
                                     initialEditType: 'wysiwyg'
                                 });
-                </script>
-            </div>
+            </script>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.LinkInfoPage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LinkInfoPage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LinkInfoPage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProcessHistory, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProcessHistory, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProcessHistory, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LinkToRequirementsForDelivery, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LinkToRequirementsForDelivery, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LinkToRequirementsForDelivery, "", new { @class = "text-danger" })
-            </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-9">
+        <div class="col-md-12 row">
+            <h4>@GeodataCollection.LinkInfoPage</h4>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.LinkToMapSolution, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LinkToMapSolution, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LinkToMapSolution, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-12 row">
+            <p class="help-text bg-success" id="help-text-linkinfopage" style="display: none">
+                @GeodataCollection.LinkInfoPageHelp
+            </p>
         </div>
+    </div>
+    <div class="col-sm-1 pull-right">
+        <p class="form-control-static">
+            <a href="#" data-help-text-id="help-text-linkinfopage" class="badge help-text-toggle">?</a>
+        </p>
+    </div>
 
-        <h3>Kartleggingsmetodikk</h3>
-        <div class="form-group">
-            @Html.LabelFor(model => model.MethodForMappingShort, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MethodForMappingShort, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MethodForMappingShort, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MappingRequirements, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.MappingRequirements)
-                @Html.ValidationMessageFor(model => model.MappingRequirements, "", new { @class = "text-danger" })
-                <div id="editorMappingRequirements"></div>
-                <script>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkInfoPageLabel, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkInfoPageLabel, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkInfoPageLabel, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkInfoPage, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkInfoPage, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkInfoPage, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-2"></div>
+    <div class="col-md-9">
+        <div class="col-md-12 row">
+            <h4>@GeodataCollection.ProcessHistory</h4>
+        </div>
+        <div class="col-md-12 row">
+            <p class="help-text bg-success" id="help-text-ProcessHistory" style="display: none">
+                @GeodataCollection.ProcessHistoryHelp
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-1 pull-right">
+        <p class="form-control-static">
+            <a href="#" data-help-text-id="help-text-ProcessHistory" class="badge help-text-toggle">?</a>
+        </p>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProcessHistoryLabel, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ProcessHistoryLabel, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProcessHistoryLabel, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProcessHistory, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ProcessHistory, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProcessHistory, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-2"></div>
+    <div class="col-md-9">
+        <div class="col-md-12 row">
+            <h4>@GeodataCollection.LinkToRequirementsForDelivery</h4>
+        </div>
+        <div class="col-md-12 row">
+            <p class="help-text bg-success" id="help-text-LinkToRequirementsForDelivery" style="display: none">
+                @GeodataCollection.LinkToRequirementsForDeliveryHelp
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-1 pull-right">
+        <p class="form-control-static">
+            <a href="#" data-help-text-id="help-text-LinkToRequirementsForDelivery" class="badge help-text-toggle">?</a>
+        </p>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkToRequirementsForDeliveryLabel, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkToRequirementsForDeliveryLabel, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkToRequirementsForDeliveryLabel, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkToRequirementsForDelivery, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkToRequirementsForDelivery, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkToRequirementsForDelivery, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-2"></div>
+    <div class="col-md-9">
+        <div class="col-md-12 row">
+            <h4>@GeodataCollection.LinkToMapSolution</h4>
+        </div>
+        <div class="col-md-12 row">
+            <p class="help-text bg-success" id="help-text-LinkToMapSolution" style="display: none">
+                @GeodataCollection.LinkToMapSolutionHelp
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-1 pull-right">
+        <p class="form-control-static">
+            <a href="#" data-help-text-id="help-text-LinkToMapSolution" class="badge help-text-toggle">?</a>
+        </p>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkToMapSolutionLabel, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkToMapSolutionLabel, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkToMapSolutionLabel, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkToMapSolution, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkToMapSolution, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkToMapSolution, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <h3>Kartleggingsmetodikk</h3>
+    <div class="form-group">
+        @Html.LabelFor(model => model.MethodForMappingShort, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MethodForMappingShort, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MethodForMappingShort, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MappingRequirements, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.MappingRequirements)
+            @Html.ValidationMessageFor(model => model.MappingRequirements, "", new { @class = "text-danger" })
+            <div id="editorMappingRequirements"></div>
+            <script>
 
                     let hiddenBodyMarkdownMappingRequirements = document.querySelector("#MappingRequirements");
                     let onEditorUpdateMappingRequirements = () => {
@@ -259,44 +379,120 @@
                         initialValue: contentMappingRequirements,
                                     initialEditType: 'wysiwyg'
                                 });
-                </script>
-            </div>
+            </script>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
-            </div>
+    </div>
+
+    <div class="col-md-2"></div>
+    <div class="col-md-9">
+        <div class="col-md-12 row">
+            <h4>@GeodataCollection.Link</h4>
         </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OtherWebInfoAboutMappingMethodology, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OtherWebInfoAboutMappingMethodology, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OtherWebInfoAboutMappingMethodology, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-12 row">
+            <p class="help-text bg-success" id="help-text-Link" style="display: none">
+                @GeodataCollection.LinkHelp
+            </p>
         </div>
+    </div>
+    <div class="col-sm-1 pull-right">
+        <p class="form-control-static">
+            <a href="#" data-help-text-id="help-text-Link" class="badge help-text-toggle">?</a>
+        </p>
+    </div>
 
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MappingRequirementsLink, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MappingRequirementsLink, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MappingRequirementsLink, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkLabel, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkLabel, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkLabel, "", new { @class = "text-danger" })
         </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
-        <h3>Annen informasjon</h3>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AidAndSubsidies, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.AidAndSubsidies)
-                @Html.ValidationMessageFor(model => model.AidAndSubsidies, "", new { @class = "text-danger" })
-                <div id="editorAidAndSubsidies"></div>
-                <script>
+
+    <div class="col-md-2"></div>
+    <div class="col-md-9">
+        <div class="col-md-12 row">
+            <h4>@GeodataCollection.OtherWebInfoAboutMappingMethodology</h4>
+        </div>
+        <div class="col-md-12 row">
+            <p class="help-text bg-success" id="help-text-OtherWebInfoAboutMappingMethodology" style="display: none">
+                @GeodataCollection.OtherWebInfoAboutMappingMethodologyHelp
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-1 pull-right">
+        <p class="form-control-static">
+            <a href="#" data-help-text-id="help-text-OtherWebInfoAboutMappingMethodology" class="badge help-text-toggle">?</a>
+        </p>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.OtherWebInfoAboutMappingMethodologyLabel, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.OtherWebInfoAboutMappingMethodologyLabel, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.OtherWebInfoAboutMappingMethodologyLabel, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.OtherWebInfoAboutMappingMethodology, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.OtherWebInfoAboutMappingMethodology, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.OtherWebInfoAboutMappingMethodology, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="col-md-2"></div>
+    <div class="col-md-9">
+        <div class="col-md-12 row">
+            <h4>@GeodataCollection.MappingRequirementsLink</h4>
+        </div>
+        <div class="col-md-12 row">
+            <p class="help-text bg-success" id="help-text-MappingRequirementsLink" style="display: none">
+                @GeodataCollection.MappingRequirementsLinkHelp
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-1 pull-right">
+        <p class="form-control-static">
+            <a href="#" data-help-text-id="help-text-MappingRequirementsLink" class="badge help-text-toggle">?</a>
+        </p>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MappingRequirementsLinkLabel, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MappingRequirementsLinkLabel, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MappingRequirementsLinkLabel, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.MappingRequirementsLink, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MappingRequirementsLink, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MappingRequirementsLink, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <h3>Annen informasjon</h3>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AidAndSubsidies, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.AidAndSubsidies)
+            @Html.ValidationMessageFor(model => model.AidAndSubsidies, "", new { @class = "text-danger" })
+            <div id="editorAidAndSubsidies"></div>
+            <script>
 
                                 let hiddenBodyMarkdownAidAndSubsidies = document.querySelector("#AidAndSubsidies");
                                 let onEditorUpdateAidAndSubsidies = () => {
@@ -322,18 +518,18 @@
                                     initialValue: contentAidAndSubsidies,
                                     initialEditType: 'wysiwyg'
                                 });
-                </script>
-            </div>
+            </script>
         </div>
+    </div>
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OtherInfo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.OtherInfo)
-                @Html.ValidationMessageFor(model => model.OtherInfo, "", new { @class = "text-danger" })
-                <div id="editorOtherInfo"></div>
-                <script>
+    <div class="form-group">
+        @Html.LabelFor(model => model.OtherInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.OtherInfo)
+            @Html.ValidationMessageFor(model => model.OtherInfo, "", new { @class = "text-danger" })
+            <div id="editorOtherInfo"></div>
+            <script>
 
                 let hiddenBodyMarkdownOtherInfo = document.querySelector("#OtherInfo");
                 let onEditorUpdateOtherInfo = () => {
@@ -359,59 +555,61 @@
                     initialValue: contentOtherInfo,
                                     initialEditType: 'wysiwyg'
                                 });
-                </script>
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.LinkOtherInfo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LinkOtherInfo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LinkOtherInfo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-
-        <h3>Kontaktinfo</h3>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrganizationInfo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrganizationInfo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrganizationInfo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContactEmail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ContactEmail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ContactEmail, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ImageFileName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="imagefile" />@Model.ImageFileName
-                @Html.ValidationMessageFor(model => model.ImageFileName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />
-            <a href="/@GeodataCollection.RegisterSeoName/@Model.SeoName">@Shared.Back</a>
+            </script>
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LinkOtherInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LinkOtherInfo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LinkOtherInfo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+    <h3>Kontaktinfo</h3>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.OrganizationInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.OrganizationInfo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.OrganizationInfo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ContactEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ContactEmail, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ContactEmail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImageFileName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="imagefile" />@Model.ImageFileName
+            @Html.ValidationMessageFor(model => model.ImageFileName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />
+        <a href="/@GeodataCollection.RegisterSeoName/@Model.SeoName">@Shared.Back</a>
+    </div>
+</div>
 }
 
 @section Scripts {
+    <script src="~/Scripts/select2.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/custom.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }

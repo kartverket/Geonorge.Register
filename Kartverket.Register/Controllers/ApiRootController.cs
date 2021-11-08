@@ -758,6 +758,26 @@ namespace Kartverket.Register.Controllers
             return Ok(DokCoverageWmsMapping.DatasetUuidToWmsLayerMapping);
         }
 
+        /// <summary>
+        /// Update alert status
+        /// </summary>
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/metadata/alert-set-status-retired")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult SetStatusRetired()
+        {
+            try {
+                Log.Info("Start alert-set-status-retired");
+                db.Database.ExecuteSqlCommandAsync("UPDATE[kartverket_register].[dbo].[RegisterItems] set statusId = 'Retired' where Discriminator = 'Alert' and((GETDATE() > DateResolved and AlertCategory = 'Driftsmelding') or(GETDATE() > EffectiveDate and AlertCategory <> 'Driftsmelding'))");
+            }
+            catch(Exception ex)
+            {
+                Log.Error("Feil alert-set-status-retired: ", ex);
+            }
+            Log.Info("Stop alert-set-status-retired");
+            return Ok();
+        }
+
         //[System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         //[ApiExplorerSettings(IgnoreApi = true)]
         //[System.Web.Http.Route("api/codelist/update/kommunereform-2020")]

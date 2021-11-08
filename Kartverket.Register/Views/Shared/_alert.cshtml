@@ -46,7 +46,7 @@
         }
         else
         {
-            <a href="?category=@Request.QueryString["category"]&filterOrganization=@Request.QueryString["owner"]&StatusType=Valid">Vis kun gyldige</a>
+            <a href="?category=@Request.QueryString["category"]&filterOrganization=@Request.QueryString["owner"]&StatusType=Valid" title="@Alerts.HeaderDisplayValid">Vis kun aktive</a>
         }
     </div>
 </div>
@@ -54,42 +54,46 @@
 
 <div class="table-view">
     <div class="table-heading search-results-table-heading col-md-12">
-        <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, null, Request.QueryString["category"])</div>
+        <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, null, Request.QueryString["category"])</div>
         <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeder_alert, "alert", null, null, null, Request.QueryString["category"])</div>
         <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, null, Request.QueryString["category"])</div>
         <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeader_description, "description", null, null, null, Request.QueryString["category"])</div>
         <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeader_alertDate, "alertdate", null, null, null, Request.QueryString["category"])</div>
         <div class="col-md-2 col-sm-12 col text-right">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Alerts.TableHeader_effektivedate, "effektivedate", null, null, null, Request.QueryString["category"])</div>
+         <div class="col-md-1"></div>
     </div>
 
     @foreach (Alert item in Model)
     {
-        <div class="resultItemRow col-md-12">
-            <div class="col-sm-12 col-md-3 col">
-                @if (!string.IsNullOrEmpty(item.UrlExternal))
-                {
-                    <a href="@item.UrlExternal" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
-                }
-                else
-                {
-                    @item.NameTranslated()
-                }
-            </div>
-            <div class="col-md-2 col-sm-12 col">
-                <p>@item.AlertTypeTranslated()</p>
-            </div>
-            <div class="col-md-3 col-sm-12 col">
-                <p><a href="?category=@Request.QueryString["category"]&filterOrganization=@item.Owner&StatusType=@Request.QueryString["StatusType"]">@item.OwnerTranslated()</a></p>
-            </div>
-            <div class="col-md-1 col-sm-12 col">
-                <a href="@item.GetObjectUrl()" title="Beskrivelse av @item.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Shared.Details</a>
-            </div>
-            <div class="col-md-1 col-sm-12 col">
-                <p>@Html.DisplayFor(model => item.AlertDate)</p>
-            </div>
-            <div class="col-md-2 col-sm-12 col text-right">
-                <p>@Html.DisplayFor(model => item.EffectiveDate)</p>
-            </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-sm-12 col-md-2 col">
+            @if (!string.IsNullOrEmpty(item.UrlExternal))
+            {
+                <a href="@item.UrlExternal" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
+            }
+            else
+            {
+                @item.NameTranslated()
+            }
         </div>
+        <div class="col-md-2 col-sm-12 col">
+            <p>@item.AlertTypeTranslated()</p>
+        </div>
+        <div class="col-md-3 col-sm-12 col">
+            <p><a href="?category=@Request.QueryString["category"]&filterOrganization=@item.Owner&StatusType=@Request.QueryString["StatusType"]">@item.OwnerTranslated()</a></p>
+        </div>
+        <div class="col-md-1 col-sm-12 col">
+            <a href="@item.GetObjectUrl()" title="Beskrivelse av @item.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Shared.Details</a>
+        </div>
+        <div class="col-md-1 col-sm-12 col">
+            <p>@item.AlertDate.ToString("dd.MM.yyyy HH:mm")</p>
+        </div>
+        <div class="col-md-2 col-sm-12 col text-right">
+            <p>@item.EffectiveDate.ToString("dd.MM.yyyy HH:mm")</p>
+        </div>
+        <div class="col-md-1 text-right">
+            <span class="statusIcon-@(item.statusId == "Retired" ? "avvist" : "Accepted")" title="@(item.statusId == "Retired" ? "Utgått" : "Gyldig")"></span>
+        </div>
+    </div>
     }
 </div>

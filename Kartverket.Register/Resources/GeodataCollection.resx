@@ -151,7 +151,7 @@
     <value>Krav avlevering</value>
   </data>
   <data name="Mapper" xml:space="preserve">
-    <value>Hvem utfører kartlegging</value>
+    <value>Hvem utfører kartlegging eller etablerer data?</value>
   </data>
   <data name="MappingRequirements" xml:space="preserve">
     <value>Krav til kartlegging</value>
@@ -235,12 +235,42 @@
     <value>Annen informasjon</value>
   </data>
   <data name="Responsible" xml:space="preserve">
-    <value>Mottaks-ansvarlig</value>
+    <value>Mottaksansvarlig</value>
   </data>
   <data name="LinkToDataset" xml:space="preserve">
     <value>Lenke til datasett</value>
   </data>
   <data name="MapSolutionTitle" xml:space="preserve">
     <value>Kartleggingsmetodikk</value>
+  </data>
+  <data name="TitleHelp" xml:space="preserve">
+    <value>Dersom ikke mottaksordning har en egen tittel hos etaten, bør navnet på datasettet komme først.</value>
+  </data>
+  <data name="AnchorText" xml:space="preserve">
+    <value>Lenketekst</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="LinkHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Metode for kartlegging"</value>
+  </data>
+  <data name="LinkInfoPageHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Informasjonsside for avlevering"</value>
+  </data>
+  <data name="LinkToMapSolutionHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Kartløsning"</value>
+  </data>
+  <data name="LinkToRequirementsForDeliveryHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Krav avlevering"</value>
+  </data>
+  <data name="MappingRequirementsLinkHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Krav til kartlegging"</value>
+  </data>
+  <data name="OtherWebInfoAboutMappingMethodologyHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Informasjonsside kartlegging"</value>
+  </data>
+  <data name="ProcessHistoryHelp" xml:space="preserve">
+    <value>Hvis lenketekst ikke oppgis blir det "Metodikk for avlevering"</value>
   </data>
 </root>

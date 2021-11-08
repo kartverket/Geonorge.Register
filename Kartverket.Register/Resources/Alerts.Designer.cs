@@ -196,6 +196,69 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hva varselet gjelder.
+        /// </summary>
+        public static string HeaderAlert {
+            get {
+                return ResourceManager.GetString("HeaderAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lenke til mer informasjon om varselet.
+        /// </summary>
+        public static string HeaderDetails {
+            get {
+                return ResourceManager.GetString("HeaderDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viser kun meldinger som fremdeles er gjeldende.
+        /// </summary>
+        public static string HeaderDisplayValid {
+            get {
+                return ResourceManager.GetString("HeaderDisplayValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato som meldingen trer i kraft.
+        /// </summary>
+        public static string HeaderEffectivedate {
+            get {
+                return ResourceManager.GetString("HeaderEffectivedate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato oppdatert melding.
+        /// </summary>
+        public static string HeaderLast {
+            get {
+                return ResourceManager.GetString("HeaderLast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hvem som er eier av datasett/tjeneste eller system som det meldes om.
+        /// </summary>
+        public static string HeaderOwner {
+            get {
+                return ResourceManager.GetString("HeaderOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navn på datasett/tjeneste eller system som det meldes om og lenke til metadata hvis det finnes.
+        /// </summary>
+        public static string HeaderTitle {
+            get {
+                return ResourceManager.GetString("HeaderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet..
         /// </summary>
         public static string HelpTextAlertdate {
@@ -214,7 +277,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Her velger du den datoen hvor endringen vil tre i kraft. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet..
+        ///   Looks up a localized string similar to Her legger du inn dato og klokkeslett for tidspunkt løsningen er oppe igjen. Hvis varselet gjelder forhåndsdefinert nedetid, så kan dette tidspunktet settes med en gang. Status vil da endres til &quot;Utgått&quot; etter at tidspunktet er passert.
+        /// </summary>
+        public static string HelpTextDateResolved {
+            get {
+                return ResourceManager.GetString("HelpTextDateResolved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Her velger du den datoen hvor endringen vil tre i kraft..
         /// </summary>
         public static string HelpTextEffectivedate {
             get {
@@ -360,7 +432,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status: Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;utgått&quot;..
+        ///   Looks up a localized string similar to Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;utgått&quot;. Hvis &quot;Løst dato&quot; er passert så vil &quot;status&quot; automatisk settes til &quot;utgått&quot;.
         /// </summary>
         public static string StatusHelp {
             get {

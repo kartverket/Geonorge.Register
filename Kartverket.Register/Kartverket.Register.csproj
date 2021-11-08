@@ -1170,6 +1170,14 @@
     <Compile Include="Migrations\202109291121360_AddMakeAllRegisterItemsDraft.designer.cs">
       <DependentUpon>202109291121360_AddMakeAllRegisterItemsDraft.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110070744123_AddGeoDataCollectionLinkLabels.cs" />
+    <Compile Include="Migrations\202110070744123_AddGeoDataCollectionLinkLabels.designer.cs">
+      <DependentUpon>202110070744123_AddGeoDataCollectionLinkLabels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111081312048_AddNullableBoolInteroperable.cs" />
+    <Compile Include="Migrations\202111081312048_AddNullableBoolInteroperable.designer.cs">
+      <DependentUpon>202111081312048_AddNullableBoolInteroperable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2071,6 +2079,7 @@
     <Content Include="Content\img\updown.svg" />
     <Content Include="Content\leaflet.css" />
     <Content Include="Content\print.css" />
+    <Content Include="Content\select2.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -2156,6 +2165,7 @@
     <Content Include="Scripts\axios.js" />
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\easyXDM.js" />
     <Content Include="Scripts\expressive.annotations.validate.js" />
     <Content Include="Scripts\expressive.annotations.validate.min.js" />
@@ -2409,6 +2419,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\tabs.js" />
     <Content Include="Scripts\vue.js" />
     <Content Include="Scripts\_references.js" />
@@ -3120,6 +3131,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109291121360_AddMakeAllRegisterItemsDraft.resx">
       <DependentUpon>202109291121360_AddMakeAllRegisterItemsDraft.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110070744123_AddGeoDataCollectionLinkLabels.resx">
+      <DependentUpon>202110070744123_AddGeoDataCollectionLinkLabels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111081312048_AddNullableBoolInteroperable.resx">
+      <DependentUpon>202111081312048_AddNullableBoolInteroperable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

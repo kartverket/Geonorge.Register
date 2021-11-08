@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using GeoNorgeAPI;
 using Kartverket.Register.Models;
 using www.opengis.net;
@@ -496,10 +496,6 @@ namespace Kartverket.DOK.Service
             GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);
             var filters = new object[]
                    {
-                    new BinaryLogicOpType()
-                    {
-                       Items = new object[]
-                        {
                         new PropertyIsLikeType
                         {
                             escapeChar = "\\",
@@ -507,27 +503,13 @@ namespace Kartverket.DOK.Service
                             wildCard = "%",
                             PropertyName = new PropertyNameType {Text = new[] {"srv:title"}},
                             Literal = new LiteralType {Text = new[] {searchString}}
-                        },
-                        new PropertyIsLikeType
-                            {
-                                escapeChar = "\\",
-                                singleChar = "_",
-                                wildCard = "%",
-                                PropertyName = new PropertyNameType {Text = new[] {"srv:type"}},
-                                Literal = new LiteralType {Text = new[] {"dataset"}}
-                            }
-                       },
-                       ItemsElementName = new ItemsChoiceType22[]
-                        {
-                            ItemsChoiceType22.PropertyIsLike, ItemsChoiceType22.PropertyIsLike,
-                        }
                     }
                    };
 
 
             var filterNames = new ItemsChoiceType23[]
             {
-                        ItemsChoiceType23.And
+                        ItemsChoiceType23.PropertyIsLike,
             };
 
             var result = g.SearchWithFilters(filters, filterNames, 1, 200, true);

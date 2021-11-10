@@ -152,7 +152,7 @@ namespace Kartverket.Register.Services.Register
 
             if(!string.IsNullOrEmpty(filter.stationName) && !string.IsNullOrEmpty(filter.stationType))
             {
-                alerts = alerts.Where(s => s.StationName == filter.stationName && s.StationType == filter.stationType);
+                alerts = alerts.Where(s => string.Equals(s.StationName, filter.stationName, StringComparison.OrdinalIgnoreCase) && string.Equals(s.StationType, filter.stationType, StringComparison.OrdinalIgnoreCase));
             }
 
             if(filter.tag != null)
@@ -163,7 +163,7 @@ namespace Kartverket.Register.Services.Register
                 {
                     foreach(var tag in filter.tag)
                     {
-                        if (alert.Tags.Select(t => t.value).Contains(tag))
+                        if (alert.Tags.Select(t => t.value.ToLower()).Contains(tag.ToLower()))
                         {
                             alertsTagged.Add(alert);
                         }
@@ -183,7 +183,7 @@ namespace Kartverket.Register.Services.Register
                 {
                     foreach (var department in filter.department)
                     {
-                        if (alert.Departments.Select(t => t.value).Contains(department))
+                        if (alert.Departments.Select(t => t.value.ToLower()).Contains(department.ToLower()))
                         {
                             alertsDepartement.Add(alert);
                         }
@@ -197,15 +197,15 @@ namespace Kartverket.Register.Services.Register
             if (!string.IsNullOrEmpty(filter.StatusType) && filter.StatusType != "all")
             {
 
-                alerts = alerts.Where(d => d.statusId == filter.StatusType);
+                alerts = alerts.Where(d => d.statusId.ToLower() == filter.StatusType.ToLower());
 
             }
 
             if (!string.IsNullOrEmpty(filter.Category) && !string.IsNullOrEmpty(filter.filterOrganization))
-                foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category && a.Owner.ToLower() == filter.filterOrganization.ToLower()).OrderByDescending(o => o.AlertDate))
+                foreach (Alert item in alerts.Where(a => a.AlertCategory.ToLower() == filter.Category.ToLower() && a.Owner.ToLower() == filter.filterOrganization.ToLower()).OrderByDescending(o => o.AlertDate))
                     registerItems.Add(item);
-            else if (!string.IsNullOrEmpty(filter.Category))
-                foreach (Alert item in alerts.Where(a => a.AlertCategory == filter.Category).OrderByDescending(o => o.AlertDate))
+            else if (alerts != null && alerts.Count() > 0 && !string.IsNullOrEmpty(filter.Category))
+                foreach (Alert item in alerts.Where(a => a.AlertCategory.ToLower() == filter.Category.ToLower()).OrderByDescending(o => o.AlertDate))
                     registerItems.Add(item);
             else if (!string.IsNullOrEmpty(filter.filterOrganization))
                 foreach (Alert item in alerts.Where(a => a.Owner.ToLower() == filter.filterOrganization.ToLower()).OrderByDescending(o => o.AlertDate))

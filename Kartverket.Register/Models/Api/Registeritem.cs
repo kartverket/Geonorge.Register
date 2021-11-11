@@ -277,6 +277,21 @@ namespace Kartverket.Register.Models.Api
         {
             return !string.IsNullOrEmpty(Station);
         }
+
+        [DataMemberAttribute]
+        public string StationName { get; set; }
+        public bool ShouldSerializeStationName()
+        {
+            return !string.IsNullOrEmpty(StationName);
+        }
+
+        [DataMemberAttribute]
+        public string StationType { get; set; }
+        public bool ShouldSerializeStationType()
+        {
+            return !string.IsNullOrEmpty(StationType);
+        }
+
         [DataMemberAttribute]
         public List<string> Tags { get; set; }
         public bool ShouldSerializeTags()
@@ -755,6 +770,10 @@ namespace Kartverket.Register.Models.Api
                 AlertCategory = s.AlertCategory;
                 if(!string.IsNullOrEmpty(s.StationName))
                     Station = s.StationName + " " + s.StationType?.ToLower();
+                if (!string.IsNullOrEmpty(s.StationName))
+                    StationName = s.StationName;
+                if (!string.IsNullOrEmpty(s.StationType))
+                    StationType = s.StationType?.ToLower();
                 if (s.DateResolved.HasValue)
                     DateResolved = s.DateResolved;
                 Summary = s.Summary;

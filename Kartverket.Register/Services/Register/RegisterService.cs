@@ -154,8 +154,16 @@ namespace Kartverket.Register.Services.Register
             {
                 alerts = alerts.Where(s => string.Equals(s.StationName, filter.stationName, StringComparison.OrdinalIgnoreCase) && string.Equals(s.StationType, filter.stationType, StringComparison.OrdinalIgnoreCase));
             }
+            else if (!string.IsNullOrEmpty(filter.stationType))
+            {
+                alerts = alerts.Where(s => string.Equals(s.StationType, filter.stationType, StringComparison.OrdinalIgnoreCase));
+            }
+            else if (!string.IsNullOrEmpty(filter.stationName))
+            {
+                alerts = alerts.Where(s => string.Equals(s.StationName, filter.stationName, StringComparison.OrdinalIgnoreCase));
+            }
 
-            if(filter.tag != null)
+            if (filter.tag != null)
             {
                 var alertsTagged = new List<Alert>();
 

@@ -359,8 +359,8 @@ namespace Kartverket.Register.Controllers
                 string seofilename = MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
                 string documentNameSeo = RegisterUrls.MakeSeoFriendlyString(document.name);
 
-                string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
-                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_thumbnail_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + ".jpg");
+                string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.seoname + "_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
+                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.seoname + "_thumbnail_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + ".jpg");
                 GhostscriptWrapper.GenerateOutput(input, output, GsSettings());
 
                 ImageResizer.ImageJob newImage =

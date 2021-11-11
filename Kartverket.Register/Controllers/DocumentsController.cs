@@ -408,6 +408,7 @@ namespace Kartverket.Register.Controllers
             string filtype;
             string seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
             name = RegisterUrls.MakeSeoFriendlyString(name);
+            register = RegisterUrls.MakeSeoFriendlyString(register);
             string filename = register + "_" + name + "_v" + vnr + "_" + seofilename + "." + filtype;
             var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
             file.SaveAs(path);

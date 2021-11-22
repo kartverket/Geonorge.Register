@@ -768,7 +768,7 @@ namespace Kartverket.Register.Controllers
         {
             try {
                 Log.Info("Start alert-set-status-retired");
-                db.Database.ExecuteSqlCommandAsync("UPDATE[kartverket_register].[dbo].[RegisterItems] set statusId = 'Retired' where Discriminator = 'Alert' and((GETDATE() > DateResolved and AlertCategory = 'Driftsmelding') or(GETDATE() > EffectiveDate and AlertCategory <> 'Driftsmelding'))");
+                db.Database.ExecuteSqlCommandAsync("UPDATE [RegisterItems] set statusId = 'Retired' where Discriminator = 'Alert' and((GETDATE() > DateResolved and AlertCategory = 'Driftsmelding') or(GETDATE() > EffectiveDate and AlertCategory <> 'Driftsmelding'))");
             }
             catch(Exception ex)
             {

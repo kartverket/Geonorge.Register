@@ -903,8 +903,47 @@ namespace Kartverket.Register.Controllers
         private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, FilterParameters filter = null)
         {
             var tmp = ConvertRegister(item, filter);
+            var count = 0;
             tmp.containeditems = new List<Registeritem>();
             tmp.lang = CultureHelper.GetCurrentCulture();
+
+            if (filter.Offset > 0)
+            {
+                if (!item.items.Any())
+                {
+                    item.RegisterItems = item.RegisterItems.Skip(filter.Offset).ToList();
+                }
+                if (item.items.Any())
+                {
+                    item.items = item.items.Skip(filter.Offset).ToList();
+                }
+            }
+
+            if (filter.Limit > 0)
+            {
+                if (!item.items.Any()) {
+                    count = item.RegisterItems.Count;
+                    item.RegisterItems = item.RegisterItems.Take(filter.Limit).ToList();
+                }
+                if (item.items.Any()) {
+                    count = item.items.Count;
+                    item.items = item.items.Take(filter.Limit).ToList();
+                }
+
+            }
+            else
+            {
+                if (!item.items.Any())
+                {
+                    count = item.RegisterItems.Count;
+                }
+                if (item.items.Any())
+                {
+                    count = item.items.Count;
+                }
+            }
+
+
             if (!item.items.Any())
             {
                 foreach (var registerItem in item.RegisterItems)
@@ -936,6 +975,7 @@ namespace Kartverket.Register.Controllers
                 var subregisters = _registerService.GetSubregisters(item);
                 if (subregisters != null)
                 {
+                    count = subregisters.Count;
                     foreach (var reg in subregisters)
                     {
                         tmp.containedSubRegisters.Add(ConvertRegister(reg));
@@ -943,7 +983,7 @@ namespace Kartverket.Register.Controllers
                 }
             }
 
-            tmp.ContainedItemsResult = new Result(filter, tmp.containeditems.Count);
+            tmp.ContainedItemsResult = new Result(filter, count);
 
             return tmp;
         }

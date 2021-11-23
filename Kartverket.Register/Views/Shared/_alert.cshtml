@@ -1,6 +1,7 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
 @using Kartverket.Register.Models
 @using Kartverket.Register.Helpers
+@using System.Globalization
 
 @functions {
 
@@ -86,10 +87,10 @@
             <a href="@item.GetObjectUrl()" title="Beskrivelse av @item.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Shared.Details</a>
         </div>
         <div class="col-md-1 col-sm-12 col">
-            <p>@item.AlertDate.ToString("dd.MM.yyyy HH:mm")</p>
+            <p>@item.AlertDate.ToString("dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture)</p>
         </div>
         <div class="col-md-2 col-sm-12 col text-right">
-            <p>@item.EffectiveDate.ToString("dd.MM.yyyy HH:mm")</p>
+            <p>@item.EffectiveDate.ToString("dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture)</p>
         </div>
         <div class="col-md-1 text-right">
             <span class="statusIcon-@(item.statusId == "Retired" ? "avvist" : "Accepted")" title="@(item.statusId == "Retired" ? "Utgått" : "Gyldig")"></span>

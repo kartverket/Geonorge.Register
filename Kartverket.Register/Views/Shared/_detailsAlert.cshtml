@@ -1,6 +1,8 @@
 ﻿@model Kartverket.Register.Models.Alert
 @using Kartverket.Register.Resources
 @using Markdig;
+@using System.Globalization
+
 @helper DisplayText(string s, bool replaceParagraph = false)
 {
     var pipeline = new MarkdownPipelineBuilder()
@@ -21,8 +23,8 @@
     {
         <p><b>@Html.DisplayNameFor(model => model.Type): </b>@Model.Type</p>
     }
-    <p><b>@Html.DisplayNameFor(model => model.AlertDate): </b>@Model.AlertDate.ToString("dd.MM.yyyy HH:mm")</p>
-    <p><b>@Html.DisplayNameFor(model => model.EffectiveDate): </b>@Model.EffectiveDate.ToString("dd.MM.yyyy HH:mm")</p>
+    <p><b>@Html.DisplayNameFor(model => model.AlertDate): </b>@Model.AlertDate.ToString("dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture)</p>
+    <p><b>@Html.DisplayNameFor(model => model.EffectiveDate): </b>@Model.EffectiveDate.ToString("dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture)</p>
     <p><b>@Html.DisplayNameFor(model => model.Note):</b> @DisplayText(Model.NoteTranslated())</p>
 
     @if (Model.station != null)
@@ -32,7 +34,7 @@
 
     @if (Model.DateResolved != null && Model.DateResolved.HasValue)
     {
-        <p><b>@Html.DisplayNameFor(model => model.DateResolved): </b>@Model.DateResolved.Value.ToString("dd.MM.yyyy HH:mm")</p>
+        <p><b>@Html.DisplayNameFor(model => model.DateResolved): </b>@Model.DateResolved.Value.ToString("dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture)</p>
     }
 
     @if (!string.IsNullOrEmpty(Model.Summary))

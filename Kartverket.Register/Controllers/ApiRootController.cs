@@ -907,7 +907,7 @@ namespace Kartverket.Register.Controllers
             tmp.containeditems = new List<Registeritem>();
             tmp.lang = CultureHelper.GetCurrentCulture();
 
-            if (filter.Offset > 0)
+            if (filter != null && filter.Offset > 0)
             {
                 if (!item.items.Any())
                 {
@@ -919,7 +919,7 @@ namespace Kartverket.Register.Controllers
                 }
             }
 
-            if (filter.Limit > 0)
+            if (filter != null && filter.Limit > 0)
             {
                 if (!item.items.Any()) {
                     count = item.RegisterItems.Count;

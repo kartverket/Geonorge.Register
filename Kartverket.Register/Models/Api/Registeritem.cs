@@ -142,8 +142,7 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string broader { get; set; }
         [DataMemberAttribute]
-        [XmlIgnore]
-        public ICollection<string> narrower { get; set; }
+        public List<string> narrower { get; set; }
         public bool ShouldSerializenarrower()
         {
             return narrower != null && narrower.Count() > 0;
@@ -386,7 +385,7 @@ namespace Kartverket.Register.Models.Api
         public Registeritem(Object item, string baseUrl, FilterParameters filter = null)
         {
             this.versions = new HashSet<Registeritem>();
-            this.narrower = new HashSet<string>();
+            this.narrower = new List<string>();
             this.narrowerdetails = new List<NarrowerDetails>();
 
             if (item is RegisterItem registerItem)

@@ -1,4 +1,5 @@
-﻿@{
+﻿﻿@using Kartverket.Register.Helpers
+@{
     ViewBag.Title = "Import";
     var path = ViewBag.path;
     var registerName = ViewBag.registerName;
@@ -35,9 +36,10 @@
         </div>
     </div>
 </section>
+<h3>Importer kodeliste</h3>
 <p>@CodelistValues.ImportFileInfo...</p>
 <p>Må ha følgende kolonner:</p>
-<p><b>Navn;Beskrivelse;Kodeverdi</b> <br/> eller <br/> <b>Navn;Beskrivelse;Kodeverdi;Navn engelsk;beskrivelse engelsk;kodeverdi engelsk</b></p>
+<p><b>Navn;Beskrivelse;Kodeverdi</b> <br /> eller <br /> <b>Navn;Beskrivelse;Kodeverdi;Navn engelsk;beskrivelse engelsk;kodeverdi engelsk</b></p>
 <form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
     @if (parentregister != null)
     {
@@ -56,7 +58,64 @@
 
     <div class="form-group">
         <input type="submit" value="Importer" class="btn btn-default pull-right" />
-        <a href="/@path">@Shared.Back</a>
     </div>
 
 </form>
+<div class="form-horizontal">
+    <br /><br />
+    <hr />
+</div>
+<h3>Importer hierarkisk kopling</h3>
+<p>Velg csv fil i UTF-8</p>
+<p>Må ha følgende kolonner:</p>
+<p><b>Broader;Narrower</b> </p>
+<p>
+    For eksempel:<br />
+<pre>
+Broader;Narrower
+1100;1101
+1100;1102
+1200;1201
+1200;1202
+</pre>
+
+</p>
+<form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
+    @if (parentregister != null)
+    {
+        <input type="hidden" value="@parentRegisterSeoName" id="parentregister" name="parentregister" />
+    }
+    <input type="hidden" value="true" id="hierarchy" name="hierarchy" />
+
+    <div class="form-group">
+        <label for="narrower" class="control-label col-md-4">Velg kodeliste du ønsker å danne hierarki med:</label>
+        <div class="col-md-8">
+            <div>
+                <select name="codelistforhierarchy"  class="chosen-select form-control">
+                    <option value="">Velg kodeliste</option>
+                    @foreach (var register in HtmlHelperExtensions.CodelistRegister().OrderBy(o => o.name))
+                    {
+                        <option value="@register.systemId">@register.name</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="file" name="csvfile" />
+                @*@Html.ValidationMessage("ErrorMessageFile")*@
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Importer hierarki" class="btn btn-default pull-right" />
+    </div>
+
+</form>
+
+<a class="pull-left" href="/@path">@Shared.Back</a>

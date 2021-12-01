@@ -1869,6 +1869,44 @@ namespace Kartverket.Register.Services.RegisterItem
             }
         }
 
+        public void ImportRegisterItemHierarchyFromFile(Models.Register register, HttpPostedFileBase file, string codelistforhierarchy)
+        {
+            var csvreader = new StreamReader(file.InputStream);
+
+            if (csvreader.EndOfStream) return;
+            csvreader.ReadLine();
+            if (register.ContainedItemClassIsCodelistValue())
+            {
+                while (!csvreader.EndOfStream)
+                {
+                    var line = csvreader.ReadLine();
+                    var codeListValueImport = StringExtensions.SplitQuoted(line, ';', '"');
+
+                    var broader = codeListValueImport[0];
+                    var narrower = codeListValueImport[1];
+
+                    var broaderItem = _dbContext.CodelistValues.Where(c => c.registerId == register.systemId && c.value == broader).FirstOrDefault();
+
+                    if(broaderItem != null) 
+                    {
+                        var id = Guid.Parse(codelistforhierarchy);
+                        var codelistValues = _dbContext.CodelistValues.Where(c => c.registerId == id && c.value == narrower).ToList();
+                        if(codelistValues != null) 
+                        {
+                            if(codelistValues.Count == 1) 
+                            {
+                                var codelistValue = codelistValues.First();
+                                codelistValue.broaderItemId = broaderItem.systemId;
+                                codelistValue.broaderItem = broaderItem;
+                                SaveEditedRegisterItem(codelistValue);
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+
         public void DeleteCoverageByDatasetId(Guid datasetSystemId)
         {
             var queryResult = from c in _dbContext.CoverageDatasets

@@ -330,6 +330,18 @@ namespace Kartverket.Register.Models.ViewModels
             return "/subregister/" + SystemId + "/slettalle";
         }
 
+        public string GetImportUrl()
+        {
+            if (_register.parentRegister != null)
+            {
+                return "/kodeliste/" + _register.parentRegister.seoname + "/" + _register.owner.seoname + "/" + _register.seoname + "/ny/import";
+            }
+            else
+            {
+                return "/kodeliste/" + _register.seoname + "/ny/import";
+            }
+        }
+
 
         public string GetEditListUrl()
         {

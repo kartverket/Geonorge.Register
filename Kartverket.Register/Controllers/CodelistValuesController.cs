@@ -316,12 +316,14 @@ namespace Kartverket.Register.Controllers
         {
             ViewBag.registerName = register.name;
             ViewBag.registerSeoName = register.seoname;
+            ViewBag.path = register.path;
 
             if (register.parentRegisterId != null)
             {
                 ViewBag.parentRegister = register.parentRegister.name;
                 ViewBag.parentRegisterSeoName = register.parentRegister.seoname;
                 ViewBag.parentRegisterOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentPath = register.parentRegister.path;
             }
         }
 

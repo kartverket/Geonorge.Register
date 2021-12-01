@@ -1,24 +1,24 @@
 ﻿@{
     ViewBag.Title = "Import";
+    var path = ViewBag.path;
     var registerName = ViewBag.registerName;
     var registerSeoName = ViewBag.registerSeoName;
     var parentregister = ViewBag.parentRegister;
     var parentRegisterOwner = ViewBag.parentRegisterOwner;
     var parentRegisterSeoName = ViewBag.parentRegisterSeoName;
+    var parentPath = ViewBag.parentPath;
 }
 
 @section breadcrumb {
     @if (parentregister != null)
     {
-        <li><a href="/register/@parentRegisterSeoName">@parentregister</a></li>
-        <li><a href="/subregister/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName">@registerName</a></li>
-        <li><a href="/kodeliste/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName/ny/">Ny</a></li>
+        <li><a href="/@parentPath">@parentregister</a></li>
+        <li><a href="/@path">@registerName</a></li>
         <li>@CodelistValues.Import</li>
     }
     else
     {
-        <li><a href="/register/@registerSeoName">@registerName</a></li>
-        <li><a href="/kodelister/@registerSeoName/ny/">Ny</a></li>
+        <li><a href="/@path">@registerName</a></li>
         <li>@CodelistValues.Import</li>
     }
 }
@@ -56,7 +56,7 @@
 
     <div class="form-group">
         <input type="submit" value="Importer" class="btn btn-default pull-right" />
-        <a href="/kodeliste/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName/ny/">@Shared.Back</a>
+        <a href="/@path">@Shared.Back</a>
     </div>
 
 </form>

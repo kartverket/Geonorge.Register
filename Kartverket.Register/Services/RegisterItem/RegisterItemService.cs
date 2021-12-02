@@ -1896,9 +1896,7 @@ namespace Kartverket.Register.Services.RegisterItem
                             if(codelistValues.Count == 1) 
                             {
                                 var codelistValue = codelistValues.First();
-                                codelistValue.broaderItemId = broaderItem.systemId;
-                                codelistValue.broaderItem = broaderItem;
-                                SaveEditedRegisterItem(codelistValue);
+                                _dbContext.Database.ExecuteSqlCommand("update RegisterItems set [broaderItemId] = '"+ broaderItem.systemId + "' ,[CodelistValue_systemId]='"+ broaderItem.systemId + "'  WHERE systemId = '"+ codelistValue.systemId + "'");
                             }
                         }
                     }

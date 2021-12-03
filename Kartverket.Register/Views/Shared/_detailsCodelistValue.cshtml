@@ -1,14 +1,19 @@
 ﻿@model Kartverket.Register.Models.CodelistValue
 
 <article class="col-md-12">
-    <h3>@CodelistValues.CodeValue</h3>
     <p><strong>@CodelistValues.CodeValue:</strong> @Model.CodelistvalueTranslated()</p>
-    <p><strong>@CodelistValues.ValidFromDate:</strong> @Html.DisplayFor(c => c.ValidFromDate)</p>
-    <p><strong>@CodelistValues.ValidToDate:</strong> @Html.DisplayFor(c => c.ValidToDate)</p>
-</article>
+    @if (Model.ValidFromDate.HasValue)
+    {
+        <p><strong>@CodelistValues.ValidFromDate:</strong> @Html.DisplayFor(c => c.ValidFromDate)</p>
+    }
+    @if (Model.ValidToDate.HasValue)
+    {
+        <p><strong>@CodelistValues.ValidToDate:</strong> @Html.DisplayFor(c => c.ValidToDate)</p>
+    }
+    </article>
 
 <article class="col-sm-12">
-    <h3>@CodelistValues.HierarchicalCodelists</h3>
+    <h3 style="margin-top: 10px;">@CodelistValues.HierarchicalCodelists</h3>
     <div class="col-sm-12 col-md-6 col">
         <p><strong>@CodelistValues.BroaderItem</strong></p>
         @if (Model.broaderItemId != null)

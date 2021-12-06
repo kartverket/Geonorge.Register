@@ -176,7 +176,7 @@ namespace Kartverket.Register.Controllers
                 geodataCollection.MethodForMappingShort = collection.MethodForMappingShort;
                 geodataCollection.OtherWebInfoAboutMappingMethodology = collection.OtherWebInfoAboutMappingMethodology;
                 geodataCollection.OtherWebInfoAboutMappingMethodologyLabel = collection.OtherWebInfoAboutMappingMethodologyLabel;
-                geodataCollection.LinkToRequirementsForDelivery = collection.LinkToMapSolution;
+                geodataCollection.LinkToRequirementsForDelivery = collection.LinkToRequirementsForDelivery;
                 geodataCollection.LinkToRequirementsForDeliveryLabel = collection.LinkToRequirementsForDeliveryLabel;
                 geodataCollection.OrganizationInfo = collection.OrganizationInfo;
                 geodataCollection.ContactEmail = collection.ContactEmail;

@@ -3,25 +3,25 @@
 @using Kartverket.Register.Helpers
 
 <div class="table-heading col-md-12">
-    <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, null, null, Request.QueryString["GeodataType"])</div>
-    <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, null, null, Request.QueryString["GeodataType"])</div>
+    <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])</div>
+    <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])</div>
     <div class="col-md-6 col-sm-12 status-icons first-four">
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "findable_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "reusable_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "findable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "reusable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
 
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_metadata_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_productspecification_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_productsheet_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_presentationrules_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_sosi_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_gml_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_wms_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_wfs_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_atom_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_common_status", null, null, null, null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus", null, null, null, null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_productspecification_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_productsheet_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_presentationrules_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_sosi_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_gml_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_wms_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_wfs_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_atom_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "mareano_common_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
     </div>
 </div>
 

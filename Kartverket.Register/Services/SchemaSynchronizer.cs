@@ -36,6 +36,7 @@ namespace Kartverket.Register.Services
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         static string TargetNamespace = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/";
+        static string TargetNamespaceTest = "http://skjema.test.geonorge.no/SOSI/produktspesifikasjon/";
         string SchemaRemoteUrl = WebConfigurationManager.AppSettings["SchemaRemoteUrl"];
         string SchemaRemoteUrlTest = WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
 
@@ -63,6 +64,11 @@ namespace Kartverket.Register.Services
                 {
                     string path = GetFilePath(targetNamespace.Value);
                     syncFile = UploadFile(file, path);
+                }
+                else 
+                {
+                    Log.Error("Ugyldig skjemaplassering:" + targetNamespace);
+                    return "IllegalSchemaLocation";
                 }
             }
 
@@ -107,12 +113,13 @@ namespace Kartverket.Register.Services
         private string GetFilePath(string path)
         {
             path = path.Replace(TargetNamespace, "");
+            path = path.Replace(TargetNamespaceTest, "");
             return path;
         }
 
         bool ValidTargetNamespace(XmlNode node)
         {
-            return node != null && node.Value.Contains(TargetNamespace);
+            return node != null && (node.Value.Contains(TargetNamespace) || node.Value.Contains(TargetNamespaceTest)) ;
         }
 
         string UploadFile(HttpPostedFileBase file, string path)

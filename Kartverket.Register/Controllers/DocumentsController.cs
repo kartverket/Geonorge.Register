@@ -36,6 +36,7 @@ namespace Kartverket.Register.Controllers
         private IAccessControlService _accessControlService;
         private INotificationService _notificationService;
         private ITranslationService _translationService;
+        string ErrorMessageIllegalSchemaLocation = "Beklager, skjemaet ble ikke lastet opp! Ugyldig skjemaplassering. Sjekk targetNamespace i XSD. Skal starte med «http(s)//skjema.geonorge.no» eller «http(s)://skjema.test.geonorge.no»";
 
         public DocumentsController(RegisterDbContext dbContext, INotificationService notificationService, ITranslationService translationService, IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService, IDocumentService documentService)
         {
@@ -90,8 +91,10 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     document = initialisationDocument(document, documentfile, thumbnail);
-                    return Redirect(document.GetObjectUrl());
+                    if (ModelState.IsValid)
+                        return Redirect(document.GetObjectUrl());
                 }
+                Viewbags(document);
             }
             return View(document);
         }
@@ -139,7 +142,8 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     document = initialisationDocument(document, documentfile, thumbnail);
-                    return Redirect(document.GetObjectUrl());
+                    if (ModelState.IsValid)
+                        return Redirect(document.GetObjectUrl());
                 }
             }
             return View(document);
@@ -187,6 +191,12 @@ namespace Kartverket.Register.Controllers
                 {
                     var url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                     document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString());
+                    if (document.documentUrl == "IllegalSchemaLocation")
+                    {
+                        ModelState.AddModelError("ErrorMessageFileName", ErrorMessageIllegalSchemaLocation);
+                        document.documentUrl = "";
+                    }
+                    else { 
                     if (document.register == null)
                         document.register = originalDocument.register;
                     document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
@@ -195,6 +205,7 @@ namespace Kartverket.Register.Controllers
 
                     //document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
                     return Redirect(originalDocument.GetObjectUrl());
+                    }
                 }
             }
             Viewbags(document);
@@ -470,11 +481,19 @@ namespace Kartverket.Register.Controllers
             document.versionNumber = GetVersionNr(inputDocument.versionNumber, originalDocument, inputDocument);
             document.registerId = GetRegisterId(inputDocument, document);
             document.Accepted = inputDocument.Accepted;
+            document.documentownerId = GetDocumentOwnerId(inputDocument.documentownerId);
+            if (document.documentownerId != Guid.Empty)
+                document.documentowner = db.Organizations.Where(o => o.systemId == document.documentownerId).FirstOrDefault();
+            document.submitterId = GetSubmitterId(inputDocument.submitterId);
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
             document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber, document?.status?.value, originalDocument?.status?.value);
+            if (document.documentUrl == "IllegalSchemaLocation")
+            {
+                ModelState.AddModelError("ErrorMessageFileName", ErrorMessageIllegalSchemaLocation);
+                document.documentUrl = "";
+                return document;
+            }
             document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
-            document.documentownerId = GetDocumentOwnerId(inputDocument.documentownerId);
-            document.submitterId = GetSubmitterId(inputDocument.submitterId);
             document.versioningId = GetVersioningId(document, inputDocument.versioningId);
 
             bool sendNotification = false;

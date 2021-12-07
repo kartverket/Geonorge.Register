@@ -2,8 +2,7 @@
 @model Kartverket.Register.Models.ViewModels.DocumentViewModel
 
 @{
-    string thumb;
-    thumb = Model.Thumbnail ?? "/Content/pdf.jpg";
+    string thumb = HtmlHelperExtensions.GetThumbnail(Model.Thumbnail, Model.DocumentUrl);
 }
 
 <article>

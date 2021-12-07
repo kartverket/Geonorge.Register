@@ -2121,6 +2121,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\xsd.svg" />
     <Content Include="dist\images\geonorge_logo_350px.svg" />
     <Content Include="dist\images\geonorge_logo_350px_dev.svg" />
     <Content Include="dist\images\geonorge_logo_350px_test.svg" />

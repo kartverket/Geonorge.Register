@@ -383,6 +383,10 @@ namespace Kartverket.Register.Controllers
                 return url + document.register.seoname + "_thumbnail_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + ".jpg";
 
             }
+            else if (document.documentUrl.Contains(".xsd")) 
+            {
+                return "/Content/xsd.svg";
+            }
             else
             {
                 return "/Content/pdf.jpg";

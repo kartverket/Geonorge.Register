@@ -1,4 +1,4 @@
-﻿@model Kartverket.Register.Models.GeoDataCollection
+@model Kartverket.Register.Models.GeoDataCollection
 @using Kartverket.Register.Resources;
 <script src="https://uicdn.toast.com/editor/2.5.2/toastui-editor-all.js"></script>
 <!-- Editor's Dependecy Style -->
@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="form-group">
-    @Html.LabelFor(model => model.DatasetTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.DatasetTitle, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <select class="datasetSelect form-control" id="DatasetTitle" name="DatasetTitle">
                 <option value="@Model.DatasetTitle">@Model.DatasetTitle</option>
@@ -154,7 +154,7 @@
                                     }
                                     foreach (var comment in commentLines)
                                     {
-                                        @:'@comment.Replace("\r","")',
+                                        @:@Html.Raw(Json.Encode(comment.Replace("\r",""))),
                                     }
                                 }
                                 ].join('\n');
@@ -189,7 +189,7 @@
                                     }
                                     foreach (var comment in commentLines)
                                     {
-                                        @:'@comment.Replace("\r", "")',
+                                        @:@Html.Raw(Json.Encode(comment.Replace("\r",""))),
                                     }
                                 }
                                 ].join('\n');
@@ -368,7 +368,7 @@
                                     }
                                     foreach (var comment in commentLines)
                                     {
-                                        @:'@comment.Replace("\r", "")',
+                                        @:@Html.Raw(Json.Encode(comment.Replace("\r",""))),
                                     }
                                 }
                                 ].join('\n');
@@ -507,7 +507,7 @@
                                     }
                                     foreach (var comment in AidAndSubsidiesLines)
                                     {
-                                        @:'@comment.Replace("\r","")',
+                                        @:@Html.Raw(Json.Encode(comment.Replace("\r",""))),
                                     }
                                 }
                                 ].join('\n');
@@ -544,7 +544,7 @@
                                     }
                                     foreach (var comment in OtherInfoLines)
                                     {
-                                        @:'@comment.Replace("\r","")',
+                                        @:@Html.Raw(Json.Encode(comment.Replace("\r",""))),
                                     }
                                 }
                                 ].join('\n');

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Kartverket.Register.Resources;
 using System.IO;
 using System.Security.Claims;
+using Ganss.XSS;
 
 namespace Kartverket.Register.Controllers
 {
@@ -132,54 +133,57 @@ namespace Kartverket.Register.Controllers
         }
 
         // POST: GeoDataCollection/Edit/5
+        [ValidateInput(false)]
         [Authorize]
         [HttpPost]
         public ActionResult Edit(string systemId, string ownerId, string responsibleId, GeoDataCollection collection, HttpPostedFileBase imagefile)
         {
             try
             {
+                var sanitizer = new HtmlSanitizer();
+
                 var geodataCollection = _dbContext.GeoDataCollections.Where(g => g.systemId.ToString() == systemId).FirstOrDefault();
 
                 if (!(User.IsInRole(GeonorgeRoles.MetadataAdmin) || (User.IsInRole(GeonorgeRoles.MetadataEditor) && geodataCollection.Owner == ClaimsPrincipal.Current.GetOrganizationName()) ))
                     new HttpUnauthorizedResult();
 
-                geodataCollection.Title = collection.Title;
-                geodataCollection.SeoName = RegisterUrls.MakeSeoFriendlyString(collection.Title);
-                geodataCollection.Link = collection.Link;
-                geodataCollection.LinkLabel = collection.LinkLabel;
-                geodataCollection.Purpose = collection.Purpose;
+                geodataCollection.Title = sanitizer.Sanitize(collection.Title);
+                geodataCollection.SeoName = RegisterUrls.MakeSeoFriendlyString(sanitizer.Sanitize(collection.Title));
+                geodataCollection.Link = sanitizer.Sanitize(collection.Link);
+                geodataCollection.LinkLabel = sanitizer.Sanitize(collection.LinkLabel);
+                geodataCollection.Purpose = sanitizer.Sanitize(collection.Purpose);
 
-                geodataCollection.DatasetTitle = collection.DatasetTitle;
-                geodataCollection.DatasetLink = collection.DatasetLink;
-                geodataCollection.Mapper = collection.Mapper;
-                geodataCollection.DataOwner = collection.DataOwner;
-                geodataCollection.Distributor = collection.Distributor;
-                geodataCollection.Methodology = collection.Methodology;
-                geodataCollection.ProcessHistory = collection.ProcessHistory;
-                geodataCollection.ProcessHistoryLabel = collection.ProcessHistoryLabel;
-                geodataCollection.RegistrationRequirements = collection.RegistrationRequirements;
-                geodataCollection.MappingRequirements = collection.MappingRequirements;
-                geodataCollection.MappingRequirementsLink = collection.MappingRequirementsLink;
-                geodataCollection.MappingRequirementsLinkLabel = collection.MappingRequirementsLinkLabel;
-                geodataCollection.MethodologyDocumentLink = collection.MethodologyDocumentLink;
-                geodataCollection.MethodologyLinkWebPage = collection.MethodologyLinkWebPage;
-                geodataCollection.SupportSchemes = collection.SupportSchemes;
+                geodataCollection.DatasetTitle = sanitizer.Sanitize(collection.DatasetTitle);
+                geodataCollection.DatasetLink = sanitizer.Sanitize(collection.DatasetLink);
+                geodataCollection.Mapper = sanitizer.Sanitize(collection.Mapper);
+                geodataCollection.DataOwner = sanitizer.Sanitize(collection.DataOwner);
+                geodataCollection.Distributor = sanitizer.Sanitize(collection.Distributor);
+                geodataCollection.Methodology = sanitizer.Sanitize(collection.Methodology);
+                geodataCollection.ProcessHistory = sanitizer.Sanitize(collection.ProcessHistory);
+                geodataCollection.ProcessHistoryLabel = sanitizer.Sanitize(collection.ProcessHistoryLabel);
+                geodataCollection.RegistrationRequirements = sanitizer.Sanitize(collection.RegistrationRequirements);
+                geodataCollection.MappingRequirements = sanitizer.Sanitize(collection.MappingRequirements);
+                geodataCollection.MappingRequirementsLink = sanitizer.Sanitize(collection.MappingRequirementsLink);
+                geodataCollection.MappingRequirementsLinkLabel = sanitizer.Sanitize(collection.MappingRequirementsLinkLabel);
+                geodataCollection.MethodologyDocumentLink = sanitizer.Sanitize(collection.MethodologyDocumentLink);
+                geodataCollection.MethodologyLinkWebPage = sanitizer.Sanitize(collection.MethodologyLinkWebPage);
+                geodataCollection.SupportSchemes = sanitizer.Sanitize(collection.SupportSchemes);
 
-                geodataCollection.OtherOrganizationsInvolved = collection.OtherOrganizationsInvolved;
-                geodataCollection.LinkToMapSolution = collection.LinkToMapSolution;
-                geodataCollection.LinkToMapSolutionLabel = collection.LinkToMapSolutionLabel;
-                geodataCollection.LinkInfoPage = collection.LinkInfoPage;
-                geodataCollection.LinkInfoPageLabel = collection.LinkInfoPageLabel;
-                geodataCollection.LinkOtherInfo = collection.LinkOtherInfo;
-                geodataCollection.OtherInfo = collection.OtherInfo;
-                geodataCollection.AidAndSubsidies = collection.AidAndSubsidies;
-                geodataCollection.MethodForMappingShort = collection.MethodForMappingShort;
-                geodataCollection.OtherWebInfoAboutMappingMethodology = collection.OtherWebInfoAboutMappingMethodology;
-                geodataCollection.OtherWebInfoAboutMappingMethodologyLabel = collection.OtherWebInfoAboutMappingMethodologyLabel;
-                geodataCollection.LinkToRequirementsForDelivery = collection.LinkToRequirementsForDelivery;
-                geodataCollection.LinkToRequirementsForDeliveryLabel = collection.LinkToRequirementsForDeliveryLabel;
-                geodataCollection.OrganizationInfo = collection.OrganizationInfo;
-                geodataCollection.ContactEmail = collection.ContactEmail;
+                geodataCollection.OtherOrganizationsInvolved = sanitizer.Sanitize(collection.OtherOrganizationsInvolved);
+                geodataCollection.LinkToMapSolution = sanitizer.Sanitize(collection.LinkToMapSolution);
+                geodataCollection.LinkToMapSolutionLabel = sanitizer.Sanitize(collection.LinkToMapSolutionLabel);
+                geodataCollection.LinkInfoPage = sanitizer.Sanitize(collection.LinkInfoPage);
+                geodataCollection.LinkInfoPageLabel = sanitizer.Sanitize(collection.LinkInfoPageLabel);
+                geodataCollection.LinkOtherInfo = sanitizer.Sanitize(collection.LinkOtherInfo);
+                geodataCollection.OtherInfo = sanitizer.Sanitize(collection.OtherInfo);
+                geodataCollection.AidAndSubsidies = sanitizer.Sanitize(collection.AidAndSubsidies);
+                geodataCollection.MethodForMappingShort = sanitizer.Sanitize(collection.MethodForMappingShort);
+                geodataCollection.OtherWebInfoAboutMappingMethodology = sanitizer.Sanitize(collection.OtherWebInfoAboutMappingMethodology);
+                geodataCollection.OtherWebInfoAboutMappingMethodologyLabel = sanitizer.Sanitize(collection.OtherWebInfoAboutMappingMethodologyLabel);
+                geodataCollection.LinkToRequirementsForDelivery = sanitizer.Sanitize(collection.LinkToRequirementsForDelivery);
+                geodataCollection.LinkToRequirementsForDeliveryLabel = sanitizer.Sanitize(collection.LinkToRequirementsForDeliveryLabel);
+                geodataCollection.OrganizationInfo = sanitizer.Sanitize(collection.OrganizationInfo);
+                geodataCollection.ContactEmail = sanitizer.Sanitize(collection.ContactEmail);
 
                 var org = _dbContext.Organizations.Where(o => o.systemId.ToString() == ownerId).FirstOrDefault();
                 geodataCollection.Organization = org;

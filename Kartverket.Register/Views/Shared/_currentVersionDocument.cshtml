@@ -3,8 +3,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    string thumb;
-    thumb = Model.Thumbnail ?? "/Content/pdf.jpg";
+    string thumb = HtmlHelperExtensions.GetThumbnail(Model.Thumbnail, Model.DocumentUrl);
 }
 
 
@@ -15,7 +14,7 @@
     }
     else if (Model.DocumentUrl.Contains("ikke angitt"))
     {
-        <img src="@HtmlHelperExtensions.GetThumbnail(Model.Thumbnail)" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
+        <img src="@HtmlHelperExtensions.GetThumbnail(Model.Thumbnail, Model.DocumentUrl)" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
     }
     else
     {

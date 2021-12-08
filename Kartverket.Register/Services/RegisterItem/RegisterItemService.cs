@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;
+using System.Text;
 
 namespace Kartverket.Register.Services.RegisterItem
 {
@@ -1857,13 +1858,49 @@ namespace Kartverket.Register.Services.RegisterItem
                 while (!csvreader.EndOfStream)
                 {
                     var line = csvreader.ReadLine();
-                    var codeListValueImport = line.Split(';');
+                    var codeListValueImport = StringExtensions.SplitQuoted(line, ';', '"');
 
                     var codelistValue = _codelistValueService.NewCodelistValueFromImport(register, codeListValueImport);
                     if (!ItemNameIsValid(codelistValue)) return;
                     codelistValue.versionNumber = 1;
                     codelistValue.versioningId = NewVersioningGroup(codelistValue);
                     SaveNewRegisterItem(codelistValue);
+                }
+            }
+        }
+
+        public void ImportRegisterItemHierarchyFromFile(Models.Register register, HttpPostedFileBase file, string codelistforhierarchy)
+        {
+            var csvreader = new StreamReader(file.InputStream);
+
+            if (csvreader.EndOfStream) return;
+            csvreader.ReadLine();
+            if (register.ContainedItemClassIsCodelistValue())
+            {
+                while (!csvreader.EndOfStream)
+                {
+                    var line = csvreader.ReadLine();
+                    var codeListValueImport = StringExtensions.SplitQuoted(line, ';', '"');
+
+                    var broader = codeListValueImport[0];
+                    var narrower = codeListValueImport[1];
+
+                    var broaderItem = _dbContext.CodelistValues.Where(c => c.registerId == register.systemId && c.value == broader).FirstOrDefault();
+
+                    if(broaderItem != null) 
+                    {
+                        var id = Guid.Parse(codelistforhierarchy);
+                        var codelistValues = _dbContext.CodelistValues.Where(c => c.registerId == id && c.value == narrower).ToList();
+                        if(codelistValues != null) 
+                        {
+                            if(codelistValues.Count == 1) 
+                            {
+                                var codelistValue = codelistValues.First();
+                                _dbContext.Database.ExecuteSqlCommand("update RegisterItems set [broaderItemId] = '"+ broaderItem.systemId + "' ,[CodelistValue_systemId]='"+ broaderItem.systemId + "'  WHERE systemId = '"+ codelistValue.systemId + "'");
+                            }
+                        }
+                    }
+                    
                 }
             }
         }
@@ -1972,4 +2009,42 @@ namespace Kartverket.Register.Services.RegisterItem
             return versions;
         }
     }
+
+    public static class StringExtensions
+    {
+        public static string[] SplitQuoted(this string input, char separator, char quotechar)
+        {
+            List<string> tokens = new List<string>();
+
+            StringBuilder sb = new StringBuilder();
+            bool escaped = false;
+            foreach (char c in input)
+            {
+                if (c.Equals(separator) && !escaped)
+                {
+                    // we have a token
+                    tokens.Add(sb.ToString().Trim());
+                    sb.Clear();
+                }
+                else if (c.Equals(separator) && escaped)
+                {
+                    // ignore but add to string
+                    sb.Append(c);
+                }
+                else if (c.Equals(quotechar))
+                {
+                    escaped = !escaped;
+                    sb.Append(c);
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+            }
+            tokens.Add(sb.ToString().Trim());
+
+            return tokens.ToArray();
+        }
+    }
+
 }

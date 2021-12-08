@@ -4892,6 +4892,11 @@
               Looks up a localized string similar to Dato erstattet.
             </summary>
         </member>
+        <member name="P:Resources.Registers.Definition">
+            <summary>
+              Looks up a localized string similar to Definisjon.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.DeleteConfirm">
             <summary>
               Looks up a localized string similar to Er du sikker på at du vil slette.

@@ -884,9 +884,12 @@ namespace Kartverket.Register.Helpers
             return value.Value ? Shared.Yes : Shared.No;
         }
 
-        public static string GetThumbnail(string thumbnailSrc)
+        public static string GetThumbnail(string thumbnailSrc, string documentUrl = null)
         {
-            return thumbnailSrc ?? "/Content/pdf.jpg";
+            var thumb = thumbnailSrc ?? "/Content/pdf.jpg";
+            if(!string.IsNullOrEmpty(documentUrl) && documentUrl.EndsWith(".xsd"))
+                thumb = "/Content/xsd.svg";
+            return thumb;
         }
 
         public static double Percent(int numberOf, int total)

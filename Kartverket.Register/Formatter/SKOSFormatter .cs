@@ -105,7 +105,7 @@ namespace Kartverket.Register.Formatter
 
         private List<object> GetElementsForConceptScheme(ConceptSheme conceptSheme)
         {
-            if (!conceptSheme.concepts.Any())
+            if (!conceptSheme.concepts.Any() && !conceptSheme.narrower.Any())
             {
                 return GetElementsForConcept(conceptSheme, null);
             }

@@ -61,7 +61,7 @@ namespace Kartverket.Register.Controllers
         //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
         //[Route("kodeliste/{registername}/ny/import")]
         [Authorize]
-        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner, string parentregister)
+        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner, string parentregister, bool hierarchy = false, string codelistforhierarchy = null)
         {
             var register = _registerService.GetRegister(parentregister, registername);
             if (register == null) return HttpNotFound();
@@ -71,6 +71,11 @@ namespace Kartverket.Register.Controllers
                 {
                     if (ContentTypeIsCsv(csvfile))
                     {
+                        if (hierarchy) { 
+                            if(!string.IsNullOrEmpty(codelistforhierarchy))
+                                _registerItemService.ImportRegisterItemHierarchyFromFile(register, csvfile, codelistforhierarchy);
+                        }
+                        else
                         _registerItemService.ImportRegisterItemFromFile(register, csvfile);
                         return Redirect(register.GetObjectUrl());
                     }
@@ -316,12 +321,14 @@ namespace Kartverket.Register.Controllers
         {
             ViewBag.registerName = register.name;
             ViewBag.registerSeoName = register.seoname;
+            ViewBag.path = register.path;
 
             if (register.parentRegisterId != null)
             {
                 ViewBag.parentRegister = register.parentRegister.name;
                 ViewBag.parentRegisterSeoName = register.parentRegister.seoname;
                 ViewBag.parentRegisterOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentPath = register.parentRegister.path;
             }
         }
 

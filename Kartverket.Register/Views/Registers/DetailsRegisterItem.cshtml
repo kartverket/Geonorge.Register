@@ -1,8 +1,8 @@
-﻿
-@using Kartverket.Register.Helpers
+﻿@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
 @using Kartverket.Register.Models.ViewModels
 @model RegisterItemV2ViewModel
+@using System.Globalization
 
 @{
     ViewBag.Title = @Model.Name;
@@ -17,6 +17,8 @@
             <h1 class="small-h1">
                 @Model.Name
             </h1>
+            @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset" && Model.Register.containedItemClass != "MareanoDataset" && Model.Status != null)
+            {<div class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></div>}
         </div>
         <div class="col-sm-12">
             <span class="separator-lg"></span>
@@ -30,36 +32,16 @@
             {
                 <span title="" data-toggle="tooltip" data-placement="bottom" class="label label-dataset" style="width: auto;" data-original-title="Tilgjengelig som datasett">@InspireDataSet.DataSet</span>
             }
-
-            @if (Model.Register.containedItemClass != "NameSpace")
-            {<p> @Model.Description</p>}
-            @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset" && Model.Register.containedItemClass != "MareanoDataset" && Model.Status != null)
-            {<p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>}
-
-            @if (Model.Register.containedItemClass == "NameSpace")
-            {<p><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</p>}
-        else if (Model.Register.containedItemClass != "MareanoDataset")
-        {<p><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</p>}
-
-            @if (Model.Owner != null)
-            {
-                if (Model.Register.containedItemClass != "Alert") { 
-                <p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>
-                }
-            }
-            @if (Model.Register.containedItemClass != "MareanoDataset" && Model.Register.containedItemClass != "Alert") { 
-            <p><strong>@Html.DisplayNameFor(m => m.VersionNumber)</strong> @Model.VersionNumber</p>
-            if (Model.VersionName != null)
-            {<p><strong>@Html.DisplayNameFor(model => model.VersionName):</strong> @Model.VersionName</p>}
-            }
+            @if (Model.Register.containedItemClass != "NameSpace" && !string.IsNullOrEmpty(Model.Description))
+            {<p><b>@Registers.Definition:</b> @Model.Description</p>}
         </div>
         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-            <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span>
+            <span class="small"><b>@Registers.Updated:</b> @Model.Modified.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)</span>
             @if (Model.Register.containedItemClass != "Dataset")
             {
                 if (Model.DateAccepted != null)
                 {
-                    <span class="small">@Html.DisplayNameFor(model => model.DateAccepted): @Html.DisplayFor(modelItem => Model.DateAccepted)</span>
+                    <br /><span class="small">@Html.DisplayNameFor(model => model.DateAccepted): @Html.DisplayFor(modelItem => Model.DateAccepted)</span>
                 }
                 if (Model.DateSuperseded != null)
                 {
@@ -74,6 +56,25 @@
                     <br /><span class="small">@Html.DisplayNameFor(model => model.DateNotAccepted): @Html.DisplayFor(modelItem => Model.DateNotAccepted)</span>
                 }
             }
+
+            @if (Model.Register.containedItemClass == "NameSpace")
+            {<br /><span class="small"><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</span>}
+        else if (Model.Register.containedItemClass != "MareanoDataset")
+        {<br /><span class="small"><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</span>}
+
+            @if (Model.Owner != null)
+            {
+                if (Model.Register.containedItemClass != "Alert")
+                {
+                    <br /><span class="small"><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</span>
+                }
+            }
+            @if (Model.Register.containedItemClass != "MareanoDataset" && Model.Register.containedItemClass != "Alert")
+            {
+                <br /><span class="small"><strong>@Html.DisplayNameFor(m => m.VersionNumber)</strong> @Model.VersionNumber</span>
+                if (Model.VersionName != null)
+                {<br /><span class="small"><strong>@Html.DisplayNameFor(model => model.VersionName):</strong> @Model.VersionName</span>}
+        }
         </div>
     </article>
 </section>

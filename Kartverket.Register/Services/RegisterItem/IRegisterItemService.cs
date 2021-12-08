@@ -59,6 +59,7 @@ namespace Kartverket.Register.Services.RegisterItem
         string GetDistributionType(string codeValue);
         void DeleteRegisterItems(ICollection<Models.RegisterItem> registerItems);
         void ImportRegisterItemFromFile(Models.Register register, HttpPostedFileBase file);
+        void ImportRegisterItemHierarchyFromFile(Models.Register register, HttpPostedFileBase file, string codelistforhierarchy);
         void DeleteCoverageByDatasetId(Guid datasetSystemId);
         
         /// <summary>

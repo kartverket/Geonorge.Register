@@ -985,6 +985,9 @@ namespace Kartverket.Register.Controllers
 
             tmp.ContainedItemsResult = new Result(filter, count);
 
+            if (tmp.containedItemClass == "Alert") 
+                tmp.containeditems = tmp.containeditems.OrderBy(o => o.status).ThenByDescending(o => o.lastUpdated).ToList();
+
             return tmp;
         }
 

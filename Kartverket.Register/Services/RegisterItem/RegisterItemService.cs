@@ -1249,6 +1249,48 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             if (registerItems.Any())
             {
+
+                bool isCodeListValueRegister = registerItems.FirstOrDefault()?.register?.containedItemClass == "CodelistValue";
+
+                bool orderByNumeric = false;
+                bool orderByNameNumeric = false;
+
+                if (isCodeListValueRegister)
+                {
+                    var notValidIntegers = registerItems.OfType<CodelistValue>().Select(str => {
+                        int value;
+                        bool success = int.TryParse(str.value, out value);
+                        return new { value, success };
+                     })
+                      .Where(pair => !pair.success)
+                      .Select(pair => pair.value);
+
+                    if (notValidIntegers.Count() == 0)
+                    {
+                        orderByNumeric = true;
+                    }
+
+                    var diff = registerItems.OfType<CodelistValue>().Where(n => n.name != n.value).ToList();
+
+                    if (diff.Count() == 0)
+                    {
+                        orderByNameNumeric = true;
+                    }
+
+                    if (string.IsNullOrEmpty(sorting)) 
+                    { 
+                        if (HttpContext.Current.Request.QueryString["sorting"] != null)
+                            sorting = HttpContext.Current.Request.QueryString["sorting"].ToString();
+                        
+                        if (string.IsNullOrEmpty(sorting))
+                            if(!orderByNameNumeric)
+                                sorting = "name";
+                            else if(orderByNumeric)
+                                sorting = "codevalue";
+                    }
+                }
+
+
                 var text = HttpContext.Current.Request.QueryString["text"] != null ? HttpContext.Current.Request.QueryString["text"].ToString() : "";
                 var filterVertikalt = HttpContext.Current.Request.QueryString["filterVertikalt"] != null ? HttpContext.Current.Request.QueryString["filterVertikalt"].ToString() : "";
                 var municipality = HttpContext.Current.Request.QueryString["municipality"] != null ? HttpContext.Current.Request.QueryString["municipality"].ToString() : "";
@@ -1374,6 +1416,9 @@ namespace Kartverket.Register.Services.RegisterItem
 
                 var sortedList = registerItems.OrderBy(o => o.NameTranslated()).ToList();
 
+                if (orderByNameNumeric)
+                    sortedList = registerItems.OrderBy(o => string.IsNullOrEmpty(o.NameTranslated()) ? int.Parse("0") : int.Parse(o.NameTranslated())).ToList();
+
                 if (registerItems != null && registerItems.Count > 0 
                     && registerItems.First() is Alert && string.IsNullOrEmpty(sorting))
                     sorting = "alertdate_desc";
@@ -1382,7 +1427,10 @@ namespace Kartverket.Register.Services.RegisterItem
 
                 if (sorting == "name_desc")
                 {
-                    sortedList = registerItems.OrderByDescending(o => o.NameTranslated()).ToList();
+                    if (orderByNameNumeric)
+                        sortedList = registerItems.OrderByDescending(o => string.IsNullOrEmpty(o.NameTranslated()) ? int.Parse("0") : int.Parse(o.NameTranslated())).ToList();
+                    else
+                        sortedList = registerItems.OrderByDescending(o => o.NameTranslated()).ToList();
                 }
                 else if (sorting == "description")
                 {
@@ -1618,13 +1666,29 @@ namespace Kartverket.Register.Services.RegisterItem
 
                 else if (sorting == "codevalue")
                 {
-                    var codevalue = registerItems.OfType<CodelistValue>().OrderBy(o => o.value);
-                    sortedList = codevalue.Cast<Models.RegisterItem>().ToList();
+                    if (orderByNumeric) 
+                    {
+                        var codevalue = registerItems.OfType<CodelistValue>().OrderBy(o => string.IsNullOrEmpty(o.value) ? int.Parse("0") : int.Parse(o.value));
+                        sortedList = codevalue.Cast<Models.RegisterItem>().ToList();
+                    }
+                    else 
+                    { 
+                        var codevalue = registerItems.OfType<CodelistValue>().OrderBy(o => o.value);
+                        sortedList = codevalue.Cast<Models.RegisterItem>().ToList();
+                    }
                 }
                 else if (sorting == "codevalue_desc")
                 {
-                    var codevalue = registerItems.OfType<CodelistValue>().OrderByDescending(o => o.value);
-                    sortedList = codevalue.Cast<Models.RegisterItem>().ToList();
+                    if (orderByNumeric)
+                    {
+                        var codevalue = registerItems.OfType<CodelistValue>().OrderByDescending(o => string.IsNullOrEmpty(o.value) ? int.Parse("0") : int.Parse(o.value));
+                        sortedList = codevalue.Cast<Models.RegisterItem>().ToList();
+                    }
+                    else
+                    {
+                        var codevalue = registerItems.OfType<CodelistValue>().OrderByDescending(o => o.value);
+                        sortedList = codevalue.Cast<Models.RegisterItem>().ToList();
+                    }
                 }
 
                 // ***** Organization

@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class MareanoDataSet {
@@ -192,6 +192,15 @@ namespace Resources {
         public static string Delivery_Status_Useable {
             get {
                 return ResourceManager.GetString("Delivery_Status_Useable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nedlastingskrav.
+        /// </summary>
+        public static string DownloadRequirements {
+            get {
+                return ResourceManager.GetString("DownloadRequirements", resourceCulture);
             }
         }
         
@@ -426,6 +435,15 @@ namespace Resources {
         public static string lesmindre {
             get {
                 return ResourceManager.GetString("lesmindre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produktspesifikasjon.
+        /// </summary>
+        public static string Productspesification {
+            get {
+                return ResourceManager.GetString("Productspesification", resourceCulture);
             }
         }
         

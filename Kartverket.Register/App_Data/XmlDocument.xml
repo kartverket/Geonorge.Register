@@ -2613,6 +2613,11 @@
               Looks up a localized string similar to Bør forbedres.
             </summary>
         </member>
+        <member name="P:Resources.MareanoDataSet.DownloadRequirements">
+            <summary>
+              Looks up a localized string similar to Nedlastingskrav.
+            </summary>
+        </member>
         <member name="P:Resources.MareanoDataSet.F1_a_Criteria">
             <summary>
               Looks up a localized string similar to Det sjekkes at det finnes metadata i Geonorge. Alle metadata i Geonorge har stabile og unike identifikatorer som er oppslagbare og returnerer metadata på standardisert form. ( vekt 25 ).
@@ -2741,6 +2746,11 @@
         <member name="P:Resources.MareanoDataSet.lesmindre">
             <summary>
               Looks up a localized string similar to Lukk.
+            </summary>
+        </member>
+        <member name="P:Resources.MareanoDataSet.Productspesification">
+            <summary>
+              Looks up a localized string similar to Produktspesifikasjon.
             </summary>
         </member>
         <member name="P:Resources.MareanoDataSet.R1_a_Criteria">

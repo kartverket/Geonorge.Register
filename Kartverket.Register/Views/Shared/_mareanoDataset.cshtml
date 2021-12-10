@@ -37,7 +37,7 @@
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ReUseableStatusId, false, "reusable")
 
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, "metadata")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSpesificationStatusId, false, "productspecification")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSpesificationStatusId, false, MareanoDataSet.Productspesification)
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSheetStatusId, false, "produktark")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.PresentationRulesStatusId, false, "tegneregler")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SosiDataStatusId, false, "sosi", "mareano")
@@ -45,7 +45,7 @@
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WmsStatusId, false, "wms")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatusId, false, "wfs")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatusId, false, "atom")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.CommonStatusId, false, "common")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.CommonStatusId, false, MareanoDataSet.DownloadRequirements)
             <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>
                 <i class="statusIcon-@item.DokStatusId"></i>
             </span>

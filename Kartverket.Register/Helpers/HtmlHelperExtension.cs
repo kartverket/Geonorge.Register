@@ -464,6 +464,13 @@ namespace Kartverket.Register.Helpers
                 statusIcon = "statusIcon-Accepted";
             }
 
+            else if (sortingParam == "mareano_status" || sortingParam == "mareano_status_desc")
+            {
+                sortTitle = "";
+                statusIcon = "statusIcon-Accepted";
+            }
+
+
             // *** DOK STATUS SORTERING
             else if (sortingParam == "dokDeliveryMetadataStatus" || sortingParam == "dokDeliveryMetadataStatus_desc")
             {

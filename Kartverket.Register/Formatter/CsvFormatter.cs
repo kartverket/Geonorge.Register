@@ -1080,6 +1080,8 @@ namespace Kartverket.Register.Formatter
                     item.ReUsableStatus + ";" +
                     item.MetadataStatus + ";" +
                    item.ProductspesificationStatus + ";" +
+                   item.ProductSheetStatus + ";" +
+                   item.PresentationRulesStatus + ";" +
                    item.SosiStatus + ";" +
                    item.GmlStatus + ";" +
                    item.WmsStatus + ";" +
@@ -1200,6 +1202,8 @@ namespace Kartverket.Register.Formatter
                        MareanoDataSet.ReUseable_Label + ";" +
                        DataSet.DOK_Delivery_Metadata + ";" +
                        DataSet.DOK_Delivery_ProductSpesification + ";" +
+                       DataSet.DOK_Delivery_ProductSheet + ";" +
+                       DataSet.DOK_Delivery_PresentationRules + ";" +
                        DataSet.DOK_Delivery_SosiRequirements + ";" +
                        DataSet.DOK_Delivery_GmlRequirements + ";" +
                        DataSet.DOK_Delivery_Wms + ";" +

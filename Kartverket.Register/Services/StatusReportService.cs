@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.StatusReports;
 
@@ -16,9 +17,19 @@ namespace Kartverket.Register.Services
             _dbContext = dbContext;
         }
 
-        public void CreateStatusReport(Models.Register register)
+        public void CreateStatusReport(Models.Register register, bool latestSavedDataReport = false)
         {
-            var statusReport = new StatusReport();
+            if (latestSavedDataReport) 
+            {
+                var mareanoRegistryId = Guid.Parse(GlobalVariables.MareanoRegistryId);
+                var currentReport = _dbContext.StatusReports.Where(s => s.Register.systemId == mareanoRegistryId && s.LatestSavedDataReport).FirstOrDefault();
+                if(currentReport != null) 
+                {
+                    _dbContext.Database.ExecuteSqlCommand("DELETE FROM RegisterItemStatusReports Where StatusReport_Id ='" + currentReport.Id + "'; DELETE FROM StatusReports WHERE Id = '" + currentReport.Id + "'");
+                }
+            }
+
+            var statusReport = new StatusReport(latestSavedDataReport);
             statusReport.Register = register;
             foreach (var item in register.items)
             {

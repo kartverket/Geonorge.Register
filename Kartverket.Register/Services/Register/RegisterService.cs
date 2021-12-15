@@ -78,7 +78,7 @@ namespace Kartverket.Register.Services.Register
             }
 
             // Geodatalov, Inspire, 
-            else if (register.RegisterItems.Any())
+            else if (register.RegisterItems.ToList().Any())
             {
                 if (register.IsInspireStatusRegister())
                 {

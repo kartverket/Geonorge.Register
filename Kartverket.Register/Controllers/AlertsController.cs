@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using System;
+using Ganss.XSS;
 
 namespace Kartverket.Register.Controllers
 {
@@ -52,10 +53,13 @@ namespace Kartverket.Register.Controllers
         // POST: Alerts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [ValidateInput(false)]
         [HttpPost]
         [Authorize]
         public ActionResult Create(Alert alert, string parentRegister, string registerName, string[] tagslist, string[] departmentslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2, string category = Constants.AlertCategoryService)
         {
+            var sanitizer = new HtmlSanitizer();
+
             alert.register = _registerService.GetRegister(parentRegister, registerName);
             if (alert.register != null)
             {
@@ -63,6 +67,8 @@ namespace Kartverket.Register.Controllers
                 {
                     if (ModelState.IsValid)
                     {
+                        alert.Note = sanitizer.Sanitize(alert.Note);
+
                         var selectedStatusId = alert.statusId;
                         var alertTranslation = new AlertTypes(_registerService, category).GetAlertType(alert.AlertType);
                         alert.GetMetadataByUuid();
@@ -101,6 +107,7 @@ namespace Kartverket.Register.Controllers
                         {
                             var translation = alertTranslation.Value;
                             alert.Translations[t].AlertType = translation.Where(c => c.Culture.Equals(alert.Translations[t].CultureName)).Select(s => s.AlertType).FirstOrDefault();
+                            alert.Translations[t].Note = sanitizer.Sanitize(alert.Translations[t].Note);
                         }
                         alert.versioningId = _registerItemService.NewVersioningGroup(alert);
 
@@ -156,6 +163,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // POST: Alerts/Edit
+        [ValidateInput(false)]
         [HttpPost]
         [Authorize]
         public ActionResult Edit(Alert alert, string[] tagslist, string[] departmentslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2)
@@ -167,6 +175,8 @@ namespace Kartverket.Register.Controllers
                 return View(alert);
             }
 
+            var sanitizer = new HtmlSanitizer();
+
             Alert alertOriginal = _dbContext.Alerts.Where(a => a.systemId == alert.systemId).FirstOrDefault();
             if (alertOriginal.register != null)
             {
@@ -176,8 +186,8 @@ namespace Kartverket.Register.Controllers
                     alertOriginal.AlertType = alert.AlertType;
                     alertOriginal.AlertDate = alert.AlertDate;
                     alertOriginal.EffectiveDate = alert.EffectiveDate;
-                    alertOriginal.Note = alert.Note;
-                    alertOriginal.Translations[0].Note = alert.Translations[0].Note;
+                    alertOriginal.Note = sanitizer.Sanitize(alert.Note);
+                    alertOriginal.Translations[0].Note = sanitizer.Sanitize(alert.Translations[0].Note);
                     alertOriginal.departmentId = alert.departmentId;
                     alertOriginal.statusId = alert.statusId;
                     if (!string.IsNullOrEmpty(alert.StationName))

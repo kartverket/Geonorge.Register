@@ -196,7 +196,7 @@
                                     }
                                     foreach (var note in noteLines)
                                     {
-                                        @:'@note.Replace("\r", "")',
+                                        @:@Html.Raw(Json.Encode(note.Replace("\r",""))),
                                     }
                                 }
                                 ].join('\n');
@@ -247,7 +247,7 @@
                                     }
                                     foreach (var noteE in noteLinesE)
                                     {
-                                        @:'@noteE.Replace("\r", "")',
+                                        @:@Html.Raw(Json.Encode(noteE.Replace("\r",""))),
                                     }
                                 }
                                 ].join('\n');

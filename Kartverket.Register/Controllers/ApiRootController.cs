@@ -745,6 +745,10 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeMareanoStatusregister()
         {
             new MareanoDatasetService(db).SynchronizeMareanoDatasets();
+
+            var register = _registerService.GetRegisterByName("mareano-statusregister");
+            _statusReportService.CreateStatusReport(register, true);
+
             return Ok();
         }
 

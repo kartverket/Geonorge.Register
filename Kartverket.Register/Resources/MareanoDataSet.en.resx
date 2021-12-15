@@ -165,6 +165,9 @@
   <data name="Delivery_Status_Useable" xml:space="preserve">
     <value>Useable</value>
   </data>
+  <data name="DownloadRequirements" xml:space="preserve">
+    <value>Download requirements</value>
+  </data>
   <data name="F1_a_Criteria" xml:space="preserve">
     <value>It is checked that there is metadata in Geonorge. (All metadata in Geonorge have persistent and unique identifiers and are searchable on the web). The request returns metadata in a standardized form. (weight 25)</value>
   </data>
@@ -242,6 +245,9 @@
   </data>
   <data name="lesmindre" xml:space="preserve">
     <value>Read less</value>
+  </data>
+  <data name="Productspesification" xml:space="preserve">
+    <value>Productspesification</value>
   </data>
   <data name="R1_a_Criteria" xml:space="preserve">
     <value>Licenses in the Geonorge register meet this requirement (weight 30)</value>

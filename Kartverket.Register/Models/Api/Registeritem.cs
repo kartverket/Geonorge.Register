@@ -381,6 +381,8 @@ namespace Kartverket.Register.Models.Api
         [IgnoreDataMember]
         [XmlIgnore]
         public DateTime DefaultDate { get; set; } = new DateTime(1, 1, 1, 0, 0, 0) ;
+        public string ProductSheetStatus { get; set; }
+        public string PresentationRulesStatus { get; set; }
 
         public Registeritem(Object item, string baseUrl, FilterParameters filter = null)
         {
@@ -562,6 +564,14 @@ namespace Kartverket.Register.Models.Api
                 if (mareanoDataset.ProductSpesificationStatus?.Status != null)
                 {
                     ProductspesificationStatus = mareanoDataset.ProductSpesificationStatus.Status.value;
+                }
+                if (mareanoDataset.ProductSheetStatus?.Status != null)
+                {
+                    ProductSheetStatus = mareanoDataset.ProductSheetStatus.Status.value;
+                }
+                if (mareanoDataset.PresentationRulesStatus?.Status != null)
+                {
+                    PresentationRulesStatus = mareanoDataset.PresentationRulesStatus.Status.value;
                 }
                 if (mareanoDataset.SosiDataStatus?.Status != null)
                 {

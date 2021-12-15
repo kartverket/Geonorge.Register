@@ -9,17 +9,23 @@ namespace Kartverket.Register.Models
 {
     public class StatusReport
     {
-        public StatusReport()
+        public StatusReport(bool latestSavedDataReport = false)
         {
             Id = Guid.NewGuid();
             Date = DateTime.Now;
             StatusRegisterItems = new List<RegisterItemStatusReport>();
+            LatestSavedDataReport = latestSavedDataReport;
+        }
+
+        public StatusReport()
+        {
         }
 
 
         [Key]
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
+        public bool LatestSavedDataReport { get; set; }
         public virtual Register Register { get; set; }
         public virtual ICollection<RegisterItemStatusReport> StatusRegisterItems { get; set; }
 

@@ -336,4 +336,10 @@
   <data name="sedetaljer" xml:space="preserve">
     <value>Se detaljer</value>
   </data>
+  <data name="DownloadRequirements" xml:space="preserve">
+    <value>Nedlastingskrav</value>
+  </data>
+  <data name="Productspesification" xml:space="preserve">
+    <value>Produktspesifikasjon</value>
+  </data>
 </root>

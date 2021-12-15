@@ -1000,10 +1000,7 @@ namespace Kartverket.Register.Formatter
             {
                 text = item.label + ";" +
                        item.owner + ";" +
-                       item.dokStatus + ";" +
-                       (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") : "") + ";" +
-                       (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") +
-                       (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") : "") + ";" +
+                       item.lastUpdated.ToString("dd/MM/yyyy") + ";" +
                        item.versionNumber + ";" +
                        item.description + ";" +
                        item.id + ";" +
@@ -1083,6 +1080,8 @@ namespace Kartverket.Register.Formatter
                     item.ReUsableStatus + ";" +
                     item.MetadataStatus + ";" +
                    item.ProductspesificationStatus + ";" +
+                   item.ProductSheetStatus + ";" +
+                   item.PresentationRulesStatus + ";" +
                    item.SosiStatus + ";" +
                    item.GmlStatus + ";" +
                    item.WmsStatus + ";" +
@@ -1193,9 +1192,8 @@ namespace Kartverket.Register.Formatter
             if (containedItemClass == "MareanoDataset")
             {
                 return Registers.Name + ";" +
-                       Registers.Owner + "; DOK-status;" +
-                       DataSet.DOK_StatusDateAccepted + ";" +
-                       DataSet.DOK_Kandidatdato + (isAdmin ? ";" + Registers.Updated : "") + ";" +
+                       Registers.Owner + ";" +
+                       Registers.Updated + ";" +
                        Registers.VersionNumber + ";" +
                        Registers.Description + "; ID" + ";" +
                        MareanoDataSet.Findable_Label + ";" +
@@ -1204,6 +1202,8 @@ namespace Kartverket.Register.Formatter
                        MareanoDataSet.ReUseable_Label + ";" +
                        DataSet.DOK_Delivery_Metadata + ";" +
                        DataSet.DOK_Delivery_ProductSpesification + ";" +
+                       DataSet.DOK_Delivery_ProductSheet + ";" +
+                       DataSet.DOK_Delivery_PresentationRules + ";" +
                        DataSet.DOK_Delivery_SosiRequirements + ";" +
                        DataSet.DOK_Delivery_GmlRequirements + ";" +
                        DataSet.DOK_Delivery_Wms + ";" +

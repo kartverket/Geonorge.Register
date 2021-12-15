@@ -448,21 +448,20 @@ namespace Kartverket.Register.Controllers
 
         public ActionResult DetailsRegisterItemFramework(string versionnumber, string registername, string codevalue)
         {
-            Guid registerId = new Guid("BF51645E-EFED-4FCE-B53F-404622003B50");
-            if (registername == "krav")
-                registername = "rammeverksdokumentet-krav";
-            else if (registername == "anbefaling") { 
-                registername = "rammeverksdokumentet-anbefalinger";
-                registerId = new Guid("DE8C76C0-875A-4D10-A914-0A1317CE19BE");
-            }
+            string path = $"styrendedokumenter/nasjonalt-rammeverk-for-geografisk-informasjon/{versionnumber}/{registername}";
 
-            var registerItem = _db.CodelistValues.Where(x => x.registerId == registerId && x.value == codevalue).FirstOrDefault();
+            var registerFromPath = _db.Registers.Where(p => p.path == path).FirstOrDefault();
+
+            if(registerFromPath == null)
+                return HttpNotFound();
+
+            var registerItem = _db.CodelistValues.Where(x => x.registerId == registerFromPath.systemId && x.value == codevalue).FirstOrDefault();
             if (registerItem == null)
             {
                 return HttpNotFound();
             }
 
-            var register = _registerService.GetRegisterBySystemId(registerId);
+            var register = _registerService.GetRegisterBySystemId(registerFromPath.systemId);
 
             RegisterItemV2ViewModel viewModel = GetRegisterItemById(register, registerItem.systemId.ToString(), null);
 

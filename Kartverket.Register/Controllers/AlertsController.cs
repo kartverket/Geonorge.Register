@@ -190,6 +190,19 @@ namespace Kartverket.Register.Controllers
                     alertOriginal.Summary = alert.Summary;
                     alertOriginal.Link = alert.Link;
 
+                    if (alert.submitterId != Guid.Empty)
+                        alertOriginal.submitterId = alert.submitterId;
+
+                    if (!string.IsNullOrEmpty(alert.Owner)) { 
+                        alertOriginal.Owner = alert.Owner;
+                        if (alertOriginal.Translations.Count == 0)
+                            alertOriginal.Translations.Add(new AlertTranslation());
+                        var translations = _dbContext.Organizations.Where(o => o.name == alert.Owner).Select(s => s.Translations).ToList();
+                        if(translations != null && translations.Count > 0)
+                            alertOriginal.Translations[0].Name = translations[0].Select(s => s.Name).FirstOrDefault();
+                           
+                    }
+
                     alertOriginal.Tags = new List<Tag>();
                     if (tagslist != null)
                     {
@@ -274,6 +287,10 @@ namespace Kartverket.Register.Controllers
             ViewBag.UuidExternal = new SelectList(items, "Key", "Value", operation);
             if (category == Constants.AlertCategoryService || category == Constants.AlertCategoryDataset)
                 ViewBag.UuidExternal = new SelectList(GetServicesFromKartkatalogen(category), "Key", "Value", alert.UuidExternal);
+
+
+            ViewBag.submitterId = _registerItemService.GetSubmitterSelectList(alert.submitterId);
+            ViewBag.Owner = new SelectList(_dbContext.Organizations.OrderBy(s => s.name), "name", "name", alert.Owner);
         }
 
         public Dictionary<string, string> GetServicesFromKartkatalogen(string category)

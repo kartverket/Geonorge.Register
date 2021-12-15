@@ -7,7 +7,7 @@ namespace Kartverket.Register.Services
 {
     public interface IStatusReportService
     {
-        void CreateStatusReport(Models.Register register);
+        void CreateStatusReport(Models.Register register, bool latestSavedDataReport = false);
         ICollection<DatasetStatusHistory> GetStatusHistoriesByDataset(Dataset dataset);
         StatusReport GetLatestReport();
         List<StatusReport> GetStatusReports(int numberOfReports = 0);

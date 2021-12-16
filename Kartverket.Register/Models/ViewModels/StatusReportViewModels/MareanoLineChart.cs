@@ -12,6 +12,8 @@ namespace Kartverket.Register.Models.ViewModels.StatusReportViewModels
 
         public List<int> Metadata { get; set; }
         public List<int> ProductSpecification { get; set; }
+        public List<int> ProductSheet { get; set; }
+        public List<int> PresentationRules { get; set; }
         public List<int> SosiRequirements { get; set; }
         public List<int> GmlRequirements { get; set; }
         public List<int> Wms { get; set; }
@@ -31,6 +33,8 @@ namespace Kartverket.Register.Models.ViewModels.StatusReportViewModels
         {
             Metadata = new List<int>();
             ProductSpecification = new List<int>();
+            ProductSheet = new List<int>();
+            PresentationRules = new List<int>();
             SosiRequirements = new List<int>();
             GmlRequirements = new List<int>();
             Wms = new List<int>();
@@ -56,6 +60,8 @@ namespace Kartverket.Register.Models.ViewModels.StatusReportViewModels
                     Labels.Add(xName);
                     Metadata.Add(statusReport.NumberOfMareanoDatasetsWithMetadata("good"));
                     ProductSpecification.Add(statusReport.NumberOfMareanoDatasetsWithProductSpecification("good"));
+                    ProductSheet.Add(statusReport.NumberOfMareanoDatasetsWithProductSheet("good"));
+                    PresentationRules.Add(statusReport.NumberOfMareanoDatasetsWithPresentationRules("good"));
                     SosiRequirements.Add(statusReport.NumberOfMareanoDatasetsWithSosiRequirements("good"));
                     GmlRequirements.Add(statusReport.NumberOfMareanoDatasetsWithGmlRequirements("good"));
                     Wms.Add(statusReport.NumberOfMareanoDatasetsWithWms("good"));

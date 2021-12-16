@@ -168,6 +168,26 @@
                     lineTension: 0
                 },
                 {
+                    label: "@DataSet.DOK_Delivery_ProductSheet",
+                    backgroundColor: "rgb(241, 249, 70)",
+                    fill: false,
+                    borderColor: 'rgb(241, 249, 70)',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.ProductSheet))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
+                },
+                {
+                    label: "@DataSet.DOK_Delivery_PresentationRules",
+                    backgroundColor: "rgb(255,192,203)",
+                    fill: false,
+                    borderColor: 'rgb(255,192,203)',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PresentationRules))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
+                },
+                {
                     label: "@DataSet.DOK_Delivery_SosiRequirements",
                     backgroundColor: "rgb(54, 197, 69)",
                     fill: false,

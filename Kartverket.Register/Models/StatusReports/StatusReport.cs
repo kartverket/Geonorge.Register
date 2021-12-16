@@ -193,6 +193,38 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfMareanoDatasetsWithProductSheet(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.ProductSheetMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfMareanoDatasetsWithPresentationRules(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.PresentationRulesMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfMareanoDatasetsWithReUsable(string status)
         {
             int number = 0;

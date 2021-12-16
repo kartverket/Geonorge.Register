@@ -434,6 +434,35 @@
             ]
     };
 
+    var dataProductSheet = {
+            labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+            datasets: [
+                {
+                    fill: true,
+                    backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
+                    data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSheet.Good))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSheet.Useable))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSheet.Deficient))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSheet.Notset)))],
+                }
+            ]
+    };
+
+    var dataPresentationRules = {
+            labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+            datasets: [
+                {
+                    fill: true,
+                    backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
+                    data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRules.Good))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRules.Useable))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRules.Deficient))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRules.Notset)))],
+                }
+            ]
+    };
+
+
     var dataSosiRequirements = {
         labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
@@ -615,6 +644,36 @@
             title: {
                 display: true,
                 text: '@DataSet.DOK_Delivery_ProductSpesification',
+                fontSize: 20
+            }
+        }
+    });
+
+    var ctx = document.getElementById("productSheetChart").getContext('2d');
+    var productSheetChart = new Chart(ctx, {
+        type: 'pie',
+        data: dataProductSheet,
+        options: {
+            responsive: true,
+            legend: legendPie,
+            title: {
+                display: true,
+                text: '@DataSet.DOK_Delivery_ProductSheet',
+                fontSize: 20
+            }
+        }
+    });
+
+    var ctx = document.getElementById("presentationRulesChart").getContext('2d');
+    var presentationRulesChart = new Chart(ctx, {
+        type: 'pie',
+        data: dataPresentationRules,
+        options: {
+            responsive: true,
+            legend: legendPie,
+            title: {
+                display: true,
+                text: '@DataSet.DOK_Delivery_PresentationRules',
                 fontSize: 20
             }
         }

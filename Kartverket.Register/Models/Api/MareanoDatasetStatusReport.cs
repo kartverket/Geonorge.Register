@@ -23,6 +23,8 @@ namespace Kartverket.Register.Models.Api
         public NumberOfStatuses NumberOfItemsWithReUseable { get; set; }
         public NumberOfStatuses NumberOfItemsWithMetadata { get; set; }
         public NumberOfStatuses NumberOfItemsWithProductSpecification { get; set; }
+        public NumberOfStatuses NumberOfItemsWithProductSheet { get; set; }
+        public NumberOfStatuses NumberOfItemsWithPresentationRules { get; set; }
         public NumberOfStatuses NumberOfItemsWithSosiRequirements { get; set; }
         public NumberOfStatuses NumberOfItemsWithGmlRequirements { get; set; }
         public NumberOfStatuses NumberOfItemsWithWms { get; set; }
@@ -79,6 +81,20 @@ namespace Kartverket.Register.Models.Api
                 statusReport.NumberOfMareanoDatasetsWithProductSpecification(Deficient),
                 statusReport.NumberOfMareanoDatasetsWithProductSpecification(Notset),
                 statusReport.NumberOfMareanoDatasetsWithProductSpecification(Satisfactory));
+
+            NumberOfItemsWithProductSheet = new NumberOfStatuses(
+                statusReport.NumberOfMareanoDatasetsWithProductSheet(Good),
+                statusReport.NumberOfMareanoDatasetsWithProductSheet(Useable),
+                statusReport.NumberOfMareanoDatasetsWithProductSheet(Deficient),
+                statusReport.NumberOfMareanoDatasetsWithProductSheet(Notset),
+                statusReport.NumberOfMareanoDatasetsWithProductSheet(Satisfactory));
+
+            NumberOfItemsWithPresentationRules = new NumberOfStatuses(
+                statusReport.NumberOfMareanoDatasetsWithPresentationRules(Good),
+                statusReport.NumberOfMareanoDatasetsWithPresentationRules(Useable),
+                statusReport.NumberOfMareanoDatasetsWithPresentationRules(Deficient),
+                statusReport.NumberOfMareanoDatasetsWithPresentationRules(Notset),
+                statusReport.NumberOfMareanoDatasetsWithPresentationRules(Satisfactory));
 
             NumberOfItemsWithSosiRequirements = new NumberOfStatuses(
                 statusReport.NumberOfMareanoDatasetsWithSosiRequirements(Good),

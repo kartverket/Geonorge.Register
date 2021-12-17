@@ -134,6 +134,8 @@ namespace Kartverket.Register.Models.ViewModels
             items.Add(new SelectListItem() { Text = MareanoDataSet.Interoperable_Label, Value = "Interoperable" });
             items.Add(new SelectListItem() { Text = MareanoDataSet.ReUseable_Label, Value = "ReUseable" });
             items.Add(new SelectListItem() { Text = InspireDataSet.Metadata, Value = "Metadata" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_ProductSheet, Value = "Produktark" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_PresentationRules, Value = "Tegneregler" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_ProductSpecificationStatus, Value = "ProductSpecification" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_SosiRequirements, Value = "SosiRequirements" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_GmlRequirements, Value = "GmlRequirements" });

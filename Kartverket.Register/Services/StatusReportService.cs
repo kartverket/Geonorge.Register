@@ -133,6 +133,8 @@ namespace Kartverket.Register.Services
                 }
             }
 
+            dokStatusReports = dokStatusReports.OrderBy(d => d.Date).ToList();
+
             return dokStatusReports;
         }
 

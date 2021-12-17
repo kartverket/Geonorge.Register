@@ -112,6 +112,24 @@ else
                     </tr>
 
                     <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithProductSheet)</td>
+                        <td>@Model.NumberOfItemsWithProductSheet.Good</td>
+                        <td></td>
+                        <td>@Model.NumberOfItemsWithProductSheet.Useable</td>
+                        <td>@Model.NumberOfItemsWithProductSheet.Deficient</td>
+                        <td>@Model.NumberOfItemsWithProductSheet.Notset</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NumberOfItemsWithPresentationRules)</td>
+                        <td>@Model.NumberOfItemsWithPresentationRules.Good</td>
+                        <td></td>
+                        <td>@Model.NumberOfItemsWithPresentationRules.Useable</td>
+                        <td>@Model.NumberOfItemsWithPresentationRules.Deficient</td>
+                        <td>@Model.NumberOfItemsWithPresentationRules.Notset</td>
+                    </tr>
+
+                    <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithSosiRequirements)</td>
                         <td>@Model.NumberOfItemsWithSosiRequirements.Good</td>
                         <td></td>
@@ -206,6 +224,14 @@ else
 
                 <div class="col-md-6 col-sm-1">
                     <canvas id="productSpecificationChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="presentationRulesChart"></canvas>
+                </div>
+
+                <div class="col-md-6 col-sm-1">
+                    <canvas id="productSheetChart"></canvas>
                 </div>
 
                 <div class="col-md-6 col-sm-1">

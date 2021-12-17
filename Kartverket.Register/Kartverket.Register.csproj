@@ -1194,6 +1194,10 @@
     <Compile Include="Migrations\202112131503467_AddLatestSavedDataReport.designer.cs">
       <DependentUpon>202112131503467_AddLatestSavedDataReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112161407178_AddMareanoProductSheetAndPresentationRule.cs" />
+    <Compile Include="Migrations\202112161407178_AddMareanoProductSheetAndPresentationRule.designer.cs">
+      <DependentUpon>202112161407178_AddMareanoProductSheetAndPresentationRule.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3157,6 +3161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112131503467_AddLatestSavedDataReport.resx">
       <DependentUpon>202112131503467_AddLatestSavedDataReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112161407178_AddMareanoProductSheetAndPresentationRule.resx">
+      <DependentUpon>202112161407178_AddMareanoProductSheetAndPresentationRule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

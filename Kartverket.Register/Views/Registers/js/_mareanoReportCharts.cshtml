@@ -168,6 +168,26 @@
                     lineTension: 0
                 },
                 {
+                    label: "@DataSet.DOK_Delivery_ProductSheet",
+                    backgroundColor: "rgb(241, 249, 70)",
+                    fill: false,
+                    borderColor: 'rgb(241, 249, 70)',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.ProductSheet))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
+                },
+                {
+                    label: "@DataSet.DOK_Delivery_PresentationRules",
+                    backgroundColor: "rgb(255,192,203)",
+                    fill: false,
+                    borderColor: 'rgb(255,192,203)',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PresentationRules))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    lineTension: 0
+                },
+                {
                     label: "@DataSet.DOK_Delivery_SosiRequirements",
                     backgroundColor: "rgb(54, 197, 69)",
                     fill: false,
@@ -434,6 +454,35 @@
             ]
     };
 
+    var dataProductSheet = {
+            labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+            datasets: [
+                {
+                    fill: true,
+                    backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
+                    data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSheet.Good))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSheet.Useable))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSheet.Deficient))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSheet.Notset)))],
+                }
+            ]
+    };
+
+    var dataPresentationRules = {
+            labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+            datasets: [
+                {
+                    fill: true,
+                    backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
+                    data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRules.Good))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRules.Useable))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRules.Deficient))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRules.Notset)))],
+                }
+            ]
+    };
+
+
     var dataSosiRequirements = {
         labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
         datasets: [
@@ -620,6 +669,36 @@
         }
     });
 
+    var ctx = document.getElementById("productSheetChart").getContext('2d');
+    var productSheetChart = new Chart(ctx, {
+        type: 'pie',
+        data: dataProductSheet,
+        options: {
+            responsive: true,
+            legend: legendPie,
+            title: {
+                display: true,
+                text: '@DataSet.DOK_Delivery_ProductSheet',
+                fontSize: 20
+            }
+        }
+    });
+
+    var ctx = document.getElementById("presentationRulesChart").getContext('2d');
+    var presentationRulesChart = new Chart(ctx, {
+        type: 'pie',
+        data: dataPresentationRules,
+        options: {
+            responsive: true,
+            legend: legendPie,
+            title: {
+                display: true,
+                text: '@DataSet.DOK_Delivery_PresentationRules',
+                fontSize: 20
+            }
+        }
+    });
+
     var ctx = document.getElementById("sosiRequirementsChart").getContext('2d');
     var sosiRequirementsChart = new Chart(ctx, {
         type: 'pie',
@@ -730,6 +809,8 @@
                 '@MareanoDataSet.ReUseable_Label',
                 '@DataSet.DOK_Delivery_Metadata',
                 '@DataSet.DOK_Delivery_ProductSpesification',
+                '@DataSet.DOK_Delivery_ProductSheet',
+                '@DataSet.DOK_Delivery_PresentationRules',
                 '@DataSet.DOK_Delivery_SosiRequirements',
                 '@DataSet.DOK_Delivery_GmlRequirements',
                 '@DataSet.DOK_Delivery_Wms',
@@ -747,6 +828,8 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Good)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Good)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirements.Good)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Good)))),
@@ -766,6 +849,8 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Satisfactory)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Satisfactory)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirements.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Satisfactory)))),
@@ -785,6 +870,8 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Useable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Useable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirements.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Useable)))),
@@ -804,6 +891,8 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Deficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Deficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirements.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Deficient)))),
@@ -822,6 +911,8 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Notset)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Notset)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirements.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Notset)))),
@@ -848,12 +939,16 @@
                         0,
                         0,
                         0,
+                        0,
+                        0,
                     ],
                     backgroundColor: '#36c545',
                 },
                 {
                     label: '@Shared.No',
                     data: [
+                        0,
+                        0,
                         0,
                         0,
                         0,

@@ -15,13 +15,14 @@ namespace Kartverket.Register.Models.StatusReports
         public string MetadataMareanoDataset { get; set; }
         public string ReUsableMareanoDataset { get; set; }
         public string ProductSpesificationMareanoDataset { get; set; }
+        public string ProductSheetMareanoDataset { get; set; }
+        public string PresentationRulesMareanoDataset { get; set; }
         public string SosiDataMareanoDataset { get; set; }
         public string GmlDataMareanoDataset { get; set; }
         public string WmsMareanoDataset { get; set; }
         public string WfsMareanoDataset { get; set; }
         public string AtomFeedMareanoDataset { get; set; }
         public string CommonStatusMareanoDataset { get; set; }
-
 
         public MareanoDatasetStatusReport()
         {
@@ -45,6 +46,10 @@ namespace Kartverket.Register.Models.StatusReports
                     MetadataMareanoDataset = MareanoDataset.MetadataStatus.StatusId;
                 if (MareanoDataset.ProductSpesificationStatus != null)
                     ProductSpesificationMareanoDataset = MareanoDataset.ProductSpesificationStatus.StatusId;
+                if (MareanoDataset.ProductSheetStatus != null)
+                    ProductSheetMareanoDataset = MareanoDataset.ProductSheetStatus.StatusId;
+                if (MareanoDataset.PresentationRulesStatus != null)
+                    PresentationRulesMareanoDataset = MareanoDataset.PresentationRulesStatus.StatusId;
                 if (MareanoDataset.SosiDataStatus != null)
                     SosiDataMareanoDataset = MareanoDataset.SosiDataStatus.StatusId;
                 if (MareanoDataset.GmlDataStatus != null)

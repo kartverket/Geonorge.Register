@@ -221,6 +221,18 @@ namespace Kartverket.Register.Formatter
                    report.NumberOfItemsWithProductSpecification.Notset + ";" +
                    report.NumberOfItemsWithProductSpecification.Satisfactory + ";" +
 
+                   report.NumberOfItemsWithProductSheet.Good + ";" +
+                   report.NumberOfItemsWithProductSheet.Useable + ";" +
+                   report.NumberOfItemsWithProductSheet.Deficient + ";" +
+                   report.NumberOfItemsWithProductSheet.Notset + ";" +
+                   report.NumberOfItemsWithProductSheet.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithPresentationRules.Good + ";" +
+                   report.NumberOfItemsWithPresentationRules.Useable + ";" +
+                   report.NumberOfItemsWithPresentationRules.Deficient + ";" +
+                   report.NumberOfItemsWithPresentationRules.Notset + ";" +
+                   report.NumberOfItemsWithPresentationRules.Satisfactory + ";" +
+
                    report.NumberOfItemsWithSosiRequirements.Good + ";" +
                    report.NumberOfItemsWithSosiRequirements.Useable + ";" +
                    report.NumberOfItemsWithSosiRequirements.Deficient + ";" +
@@ -288,6 +300,8 @@ namespace Kartverket.Register.Formatter
             return Registers.Date + ";" +
                DataSet.DOK_Delivery_Metadata + ";" + ";" + ";" + ";" + ";" +
                DataSet.DOK_Delivery_ProductSpesification + ";" + ";" + ";" + ";" + ";" +
+               DataSet.DOK_Delivery_ProductSheet + ";" + ";" + ";" + ";" + ";" +
+               DataSet.DOK_Delivery_PresentationRules + ";" + ";" + ";" + ";" + ";" +
                DataSet.DOK_Delivery_SosiRequirements + ";" + ";" + ";" + ";" + ";" +
                DataSet.DOK_Delivery_GmlRequirements + ";" + ";" + ";" + ";" + ";" +
                DataSet.DOK_Delivery_Wms + ";" + ";" + ";" + ";" + ";" +
@@ -348,6 +362,20 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithProductSpecification.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithProductSpecification.Notset, 
                 mareanoDatasetStatusReport.NumberOfItemsWithMetadata.Satisfactory));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_ProductSheet,
+                mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Good,
+                mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Useable,
+                mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Deficient,
+                mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Notset,
+                mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Satisfactory));
+
+            streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_PresentationRules,
+                mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Good,
+                mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Useable,
+                mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Deficient,
+                mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Notset,
+                mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Satisfactory));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_GmlRequirements,
                 mareanoDatasetStatusReport.NumberOfItemsWithGmlRequirements.Good,

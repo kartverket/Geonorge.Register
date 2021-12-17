@@ -42,6 +42,14 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "Metadata", ResourceType = typeof(InspireDataSet))]
         public NumberOfStatuses NumberOfItemsWithMetadata { get; set; }
 
+        // Productspecification
+        [Display(Name = "DOK_ProductSheetStatus", ResourceType = typeof(DataSet))]
+        public NumberOfStatuses NumberOfItemsWithProductSheet { get; set; }
+
+        // Productspecification
+        [Display(Name = "DOK_PresentationRulesStatus", ResourceType = typeof(DataSet))]
+        public NumberOfStatuses NumberOfItemsWithPresentationRules { get; set; }
+
 
         // Productspecification
         [Display(Name = "DOK_ProductSpecificationStatus", ResourceType = typeof(DataSet))]
@@ -98,6 +106,8 @@ namespace Kartverket.Register.Models.ViewModels
                 NumberOfItemsWithReUseable = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithReUsable(Good), statusReport.NumberOfMareanoDatasetsWithReUsable(Useable), statusReport.NumberOfMareanoDatasetsWithReUsable(Deficient), statusReport.NumberOfMareanoDatasetsWithReUsable(Notset), statusReport.NumberOfMareanoDatasetsWithReUsable(Satisfactory));
 
                 NumberOfItemsWithMetadata = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithMetadata(Good), statusReport.NumberOfMareanoDatasetsWithMetadata(Useable), statusReport.NumberOfMareanoDatasetsWithMetadata(Deficient), statusReport.NumberOfMareanoDatasetsWithMetadata(Notset));
+                NumberOfItemsWithProductSheet = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithProductSheet(Good), statusReport.NumberOfMareanoDatasetsWithProductSheet(Useable), statusReport.NumberOfMareanoDatasetsWithProductSheet(Deficient), statusReport.NumberOfMareanoDatasetsWithProductSheet(Notset));
+                NumberOfItemsWithPresentationRules = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithPresentationRules(Good), statusReport.NumberOfMareanoDatasetsWithPresentationRules(Useable), statusReport.NumberOfMareanoDatasetsWithPresentationRules(Deficient), statusReport.NumberOfMareanoDatasetsWithPresentationRules(Notset));
                 NumberOfItemsWithProductSpecification = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithProductSpecification(Good), statusReport.NumberOfMareanoDatasetsWithProductSpecification(Useable), statusReport.NumberOfMareanoDatasetsWithProductSpecification(Deficient), statusReport.NumberOfMareanoDatasetsWithProductSpecification(Notset));
                 NumberOfItemsWithSosiRequirements = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithSosiRequirements(Good), statusReport.NumberOfMareanoDatasetsWithSosiRequirements(Useable), statusReport.NumberOfMareanoDatasetsWithSosiRequirements(Deficient), statusReport.NumberOfMareanoDatasetsWithSosiRequirements(Notset));
                 NumberOfItemsWithGmlRequirements = new NumberOfStatuses(statusReport.NumberOfMareanoDatasetsWithGmlRequirements(Good), statusReport.NumberOfMareanoDatasetsWithGmlRequirements(Useable), statusReport.NumberOfMareanoDatasetsWithGmlRequirements(Deficient), statusReport.NumberOfMareanoDatasetsWithGmlRequirements(Notset));

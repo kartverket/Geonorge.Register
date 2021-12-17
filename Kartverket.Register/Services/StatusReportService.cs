@@ -158,6 +158,8 @@ namespace Kartverket.Register.Services
                 }
             }
 
+            inpsireStatusReports = inpsireStatusReports.OrderBy(d => d.Date).ToList();
+
             return inpsireStatusReports;
         }
 
@@ -180,6 +182,8 @@ namespace Kartverket.Register.Services
                     }
                 }
             }
+
+            geodatalovStatusReports = geodatalovStatusReports.OrderBy(d => d.Date).ToList();
 
             return geodatalovStatusReports;
         }

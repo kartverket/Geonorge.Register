@@ -1105,6 +1105,16 @@ namespace Kartverket.Register.Services.RegisterItem
                             var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.CommonStatus.sortorder).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
+                    case "mareano_status":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.Grade).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "mareano_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderByDescending(o => o.Grade).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     // GeodatalovDataset
                     case "geodatalov_metadata_status":
                         {

@@ -221,54 +221,66 @@ namespace Kartverket.Register.Services
             float gradeGood = 1;
             float gradeUseable = 0.5F;
 
-            if (dataset.MetadataStatus != null && dataset.MetadataStatus.IsGood())
+            var MetadataStatus = _dbContext.DatasetDeliveries.Where(s => s.DatasetDeliveryId == dataset.MetadataStatusId).FirstOrDefault();
+            var ProductSpesificationStatus = _dbContext.DatasetDeliveries.Where(s => s.DatasetDeliveryId == dataset.ProductSpesificationStatusId).FirstOrDefault();
+            var ProductSheetStatus = _dbContext.DatasetDeliveries.Where(s => s.DatasetDeliveryId == dataset.ProductSheetStatusId).FirstOrDefault();
+            var PresentationRulesStatus = _dbContext.DatasetDeliveries.Where(s => s.DatasetDeliveryId == dataset.PresentationRulesStatusId).FirstOrDefault();
+            var SosiDataStatus = _dbContext.DatasetDeliveries.Where(s => s.DatasetDeliveryId == dataset.SosiDataStatusId).FirstOrDefault();
+            var GmlDataStatus = _dbContext.DatasetDeliveries.Where(s => s.DatasetDeliveryId == dataset.GmlDataStatusId).FirstOrDefault();
+            var WmsStatus = _dbContext.DatasetDeliveries.Where(s => s.DatasetDeliveryId == dataset.WmsStatusId).FirstOrDefault();
+            var WfsStatus = _dbContext.DatasetDeliveries.Where(s => s.DatasetDeliveryId == dataset.WfsStatusId).FirstOrDefault();
+            var AtomFeedStatus = _dbContext.DatasetDeliveries.Where(s => s.DatasetDeliveryId == dataset.AtomFeedStatusId).FirstOrDefault();
+            var CommonStatus = _dbContext.DatasetDeliveries.Where(s => s.DatasetDeliveryId == dataset.CommonStatusId).FirstOrDefault();
+
+
+            if (MetadataStatus != null && MetadataStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.MetadataStatus != null && dataset.MetadataStatus.IsGoodOrUseable())
+            else if (MetadataStatus != null && MetadataStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.ProductSpesificationStatus != null && dataset.ProductSpesificationStatus.IsGood())
+            if (ProductSpesificationStatus != null && dataset.ProductSpesificationStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.ProductSpesificationStatus != null && dataset.ProductSpesificationStatus.IsGoodOrUseable())
+            else if (ProductSpesificationStatus != null && dataset.ProductSpesificationStatus.IsGoodOrUseable())
                     grade = grade + gradeUseable;
 
-            if (dataset.ProductSheetStatus != null && dataset.ProductSheetStatus.IsGood())
+            if (ProductSheetStatus != null && ProductSheetStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.ProductSheetStatus != null && dataset.ProductSheetStatus.IsGoodOrUseable())
+            else if (ProductSheetStatus != null && ProductSheetStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.PresentationRulesStatus != null && dataset.PresentationRulesStatus.IsGood())
+            if (PresentationRulesStatus != null && PresentationRulesStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.PresentationRulesStatus != null && dataset.PresentationRulesStatus.IsGoodOrUseable())
+            else if (PresentationRulesStatus != null && PresentationRulesStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.SosiDataStatus != null && dataset.SosiDataStatus.IsGood())
+            if (SosiDataStatus != null && SosiDataStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.SosiDataStatus != null && dataset.SosiDataStatus.IsGoodOrUseable())
+            else if (SosiDataStatus != null && SosiDataStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.GmlDataStatus != null && dataset.GmlDataStatus.IsGood())
+            if (GmlDataStatus != null && GmlDataStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.GmlDataStatus != null && dataset.GmlDataStatus.IsGoodOrUseable())
+            else if (GmlDataStatus != null && GmlDataStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.WmsStatus != null && dataset.WmsStatus.IsGood())
+            if (WmsStatus != null && WmsStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.WmsStatus != null && dataset.WmsStatus.IsGoodOrUseable())
+            else if (WmsStatus != null && WmsStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.WfsStatus != null && dataset.WfsStatus.IsGood())
+            if (WfsStatus != null && WfsStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.WfsStatus != null && dataset.WfsStatus.IsGoodOrUseable())
+            else if (WfsStatus != null && WfsStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.AtomFeedStatus != null && dataset.AtomFeedStatus.IsGood())
+            if (AtomFeedStatus != null && AtomFeedStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.AtomFeedStatus != null && dataset.AtomFeedStatus.IsGoodOrUseable())
+            else if (AtomFeedStatus != null && AtomFeedStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.CommonStatus != null && dataset.CommonStatus.IsGood())
+            if (CommonStatus != null && CommonStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.CommonStatus != null && dataset.CommonStatus.IsGoodOrUseable())
+            else if (CommonStatus != null && CommonStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
             return grade;

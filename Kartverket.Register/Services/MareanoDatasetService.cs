@@ -221,54 +221,54 @@ namespace Kartverket.Register.Services
             float gradeGood = 1;
             float gradeUseable = 0.5F;
 
-            if (dataset.MetadataStatus.IsGood())
+            if (dataset.MetadataStatus != null && dataset.MetadataStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.MetadataStatus.IsGoodOrUseable())
+            else if (dataset.MetadataStatus != null && dataset.MetadataStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.ProductSpesificationStatus.IsGood())
+            if (dataset.ProductSpesificationStatus != null && dataset.ProductSpesificationStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.ProductSpesificationStatus.IsGoodOrUseable())
+            else if (dataset.ProductSpesificationStatus != null && dataset.ProductSpesificationStatus.IsGoodOrUseable())
                     grade = grade + gradeUseable;
 
-            if (dataset.ProductSheetStatus.IsGood())
+            if (dataset.ProductSheetStatus != null && dataset.ProductSheetStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.ProductSheetStatus.IsGoodOrUseable())
+            else if (dataset.ProductSheetStatus != null && dataset.ProductSheetStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.PresentationRulesStatus.IsGood())
+            if (dataset.PresentationRulesStatus != null && dataset.PresentationRulesStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.PresentationRulesStatus.IsGoodOrUseable())
+            else if (dataset.PresentationRulesStatus != null && dataset.PresentationRulesStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.SosiDataStatus.IsGood())
+            if (dataset.SosiDataStatus != null && dataset.SosiDataStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.SosiDataStatus.IsGoodOrUseable())
+            else if (dataset.SosiDataStatus != null && dataset.SosiDataStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.GmlDataStatus.IsGood())
+            if (dataset.GmlDataStatus != null && dataset.GmlDataStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.GmlDataStatus.IsGoodOrUseable())
+            else if (dataset.GmlDataStatus != null && dataset.GmlDataStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.WmsStatus.IsGood())
+            if (dataset.WmsStatus != null && dataset.WmsStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.WmsStatus.IsGoodOrUseable())
+            else if (dataset.WmsStatus != null && dataset.WmsStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.WfsStatus.IsGood())
+            if (dataset.WfsStatus != null && dataset.WfsStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.WfsStatus.IsGoodOrUseable())
+            else if (dataset.WfsStatus != null && dataset.WfsStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.AtomFeedStatus.IsGood())
+            if (dataset.AtomFeedStatus != null && dataset.AtomFeedStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.AtomFeedStatus.IsGoodOrUseable())
+            else if (dataset.AtomFeedStatus != null && dataset.AtomFeedStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (dataset.CommonStatus.IsGood())
+            if (dataset.CommonStatus != null && dataset.CommonStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (dataset.CommonStatus.IsGoodOrUseable())
+            else if (dataset.CommonStatus != null && dataset.CommonStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
             return grade;

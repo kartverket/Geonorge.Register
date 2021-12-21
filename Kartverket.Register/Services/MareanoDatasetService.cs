@@ -94,6 +94,7 @@ namespace Kartverket.Register.Services
             MareanoDataset.WfsStatusId = _datasetDeliveryService.CreateDatasetDelivery(MareanoViewModel.WfsStatusId, MareanoViewModel.WfsNote);
             MareanoDataset.AtomFeedStatusId = _datasetDeliveryService.CreateDatasetDelivery(MareanoViewModel.AtomFeedStatusId, MareanoViewModel.AtomFeedNote);
             MareanoDataset.CommonStatusId = _datasetDeliveryService.CreateDatasetDelivery(MareanoViewModel.WmsStatusId, MareanoViewModel.WmsNote);
+            MareanoDataset.Grade = GetGrade(MareanoDataset);
             _dbContext.MareanoDatasets.Add(MareanoDataset);
             _dbContext.SaveChanges();
 
@@ -112,6 +113,8 @@ namespace Kartverket.Register.Services
             MareanoDatasetViewModel.WfsStatusId = _datasetDeliveryService.GetWfsStatus(MareanoDataset.Uuid, true, MareanoDatasetViewModel.WfsStatusId);
             MareanoDatasetViewModel.AtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(MareanoDataset.Uuid, true, MareanoDatasetViewModel.AtomFeedStatusId);
             MareanoDatasetViewModel.CommonStatusId = _datasetDeliveryService.GetDownloadRequirementsStatus(MareanoDatasetViewModel.WfsStatusId, MareanoDatasetViewModel.AtomFeedStatusId);
+            if(MareanoDataset.Grade.HasValue)
+                MareanoDatasetViewModel.Grade = MareanoDataset.Grade.Value;
         }
 
         public MareanoDataset UpdateMareanoDatasetFromKartkatalogen(MareanoDataset originalDataset)
@@ -209,6 +212,66 @@ namespace Kartverket.Register.Services
             _dbContext.SaveChanges();
 
             return MareanoDataset;
+        }
+
+        private float GetGrade(MareanoDataset dataset)
+        {
+            float grade = 0;
+
+            float gradeGood = 1;
+            float gradeUseable = 0.5F;
+
+            if (dataset.MetadataStatus.IsGood())
+                grade = grade + gradeGood;
+            else if (dataset.MetadataStatus.IsGoodOrUseable())
+                grade = grade + gradeUseable;
+
+            if (dataset.ProductSpesificationStatus.IsGood())
+                grade = grade + gradeGood;
+            else if (dataset.ProductSpesificationStatus.IsGoodOrUseable())
+                    grade = grade + gradeUseable;
+
+            if (dataset.ProductSheetStatus.IsGood())
+                grade = grade + gradeGood;
+            else if (dataset.ProductSheetStatus.IsGoodOrUseable())
+                grade = grade + gradeUseable;
+
+            if (dataset.PresentationRulesStatus.IsGood())
+                grade = grade + gradeGood;
+            else if (dataset.PresentationRulesStatus.IsGoodOrUseable())
+                grade = grade + gradeUseable;
+
+            if (dataset.SosiDataStatus.IsGood())
+                grade = grade + gradeGood;
+            else if (dataset.SosiDataStatus.IsGoodOrUseable())
+                grade = grade + gradeUseable;
+
+            if (dataset.GmlDataStatus.IsGood())
+                grade = grade + gradeGood;
+            else if (dataset.GmlDataStatus.IsGoodOrUseable())
+                grade = grade + gradeUseable;
+
+            if (dataset.WmsStatus.IsGood())
+                grade = grade + gradeGood;
+            else if (dataset.WmsStatus.IsGoodOrUseable())
+                grade = grade + gradeUseable;
+
+            if (dataset.WfsStatus.IsGood())
+                grade = grade + gradeGood;
+            else if (dataset.WfsStatus.IsGoodOrUseable())
+                grade = grade + gradeUseable;
+
+            if (dataset.AtomFeedStatus.IsGood())
+                grade = grade + gradeGood;
+            else if (dataset.AtomFeedStatus.IsGoodOrUseable())
+                grade = grade + gradeUseable;
+
+            if (dataset.CommonStatus.IsGood())
+                grade = grade + gradeGood;
+            else if (dataset.CommonStatus.IsGoodOrUseable())
+                grade = grade + gradeUseable;
+
+            return grade;
         }
 
         public void DeleteMareanoDataset(MareanoDataset MareanoDataset)
@@ -313,6 +376,7 @@ namespace Kartverket.Register.Services
             MareanoDataset.WfsStatusId = _datasetDeliveryService.CreateDatasetDelivery(wfsStatusId);
             MareanoDataset.AtomFeedStatusId = _datasetDeliveryService.CreateDatasetDelivery(atomFeedStatusId);
             MareanoDataset.CommonStatusId = _datasetDeliveryService.CreateDatasetDelivery(commonStatusId);
+            MareanoDataset.Grade = GetGrade(MareanoDataset);
 
             SetFAIR(ref MareanoDataset);
 
@@ -621,6 +685,8 @@ namespace Kartverket.Register.Services
             {
                 originalDataset.CommonStatus.StatusId = _datasetDeliveryService.GetDownloadRequirementsStatus(originalDataset.WfsStatus?.StatusId, originalDataset.AtomFeedStatus?.StatusId);
             }
+
+            originalDataset.Grade = GetGrade(originalDataset);
 
             SetFAIR(ref originalDataset);
 

@@ -196,8 +196,10 @@ namespace Kartverket.Register.Models
         public Guid CommonStatusId { get; set; }
         public virtual DatasetDelivery CommonStatus { get; set; }
 
+        public float? Grade { get; set; }
 
-        public string DetailPageUrl()
+
+    public string DetailPageUrl()
         {
             return Register.GetObjectUrl() + "/" + Seoname + "/" + Uuid;
         }

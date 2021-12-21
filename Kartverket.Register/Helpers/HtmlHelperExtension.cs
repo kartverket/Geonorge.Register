@@ -466,7 +466,7 @@ namespace Kartverket.Register.Helpers
 
             else if (sortingParam == "mareano_status" || sortingParam == "mareano_status_desc")
             {
-                sortTitle = "";
+                sortTitle = "Antall oppfylte kriterier";
                 statusIcon = "statusIcon-Accepted";
             }
 

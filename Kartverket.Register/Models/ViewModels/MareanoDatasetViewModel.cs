@@ -130,6 +130,7 @@ namespace Kartverket.Register.Models.ViewModels
         public virtual DokDeliveryStatus CommonStatus { get; set; }
         public string CommonNote { get; set; }
         public bool CommonAutoUpdate { get; set; }
+        public float? Grade { get; set; }
 
         public MareanoDatasetViewModel(MareanoDataset item)
         {
@@ -287,6 +288,9 @@ namespace Kartverket.Register.Models.ViewModels
                     CommonNote = mareanoDataset.CommonStatus.Note;
                     CommonAutoUpdate = mareanoDataset.CommonStatus.AutoUpdate;
                 }
+
+                if (mareanoDataset.Grade.HasValue)
+                    Grade = mareanoDataset.Grade.Value;
 
                 UpdateDataset(mareanoDataset);
             }

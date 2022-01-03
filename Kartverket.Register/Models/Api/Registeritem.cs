@@ -10,6 +10,7 @@ using Kartverket.Register.Helpers;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using System.Web.Configuration;
+using Newtonsoft.Json;
 
 namespace Kartverket.Register.Models.Api
 {
@@ -33,14 +34,17 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public Guid uuid { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string status { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string description { get; set; }
         [DataMemberAttribute]
         public string seoname { get; set; }
         [DataMemberAttribute]
         public string owner { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string versionName { get; set; }
         [DataMemberAttribute]
         public int versionNumber { get; set; }
@@ -62,86 +66,119 @@ namespace Kartverket.Register.Models.Api
             return dateAccepted != null && dateAccepted != DefaultDate;
         }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ApplicationSchema { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string GMLApplicationSchema { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string CartographyFile { get; set; }
 
         // Organization
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string number { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string OrganizationNumber { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string LogoFilename { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string LogoLargeFilename { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ContactPerson { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Email { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool? NorgeDigitaltMember { get; set; }
         public bool ShouldSerializeNorgeDigitaltMember()
         {
             return NorgeDigitaltMember.HasValue;
         }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? AgreementYear { get; set; }
         public bool ShouldSerializeAgreementYear()
         {
             return AgreementYear.HasValue;
         }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string AgreementDocumentUrl { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string PriceFormDocument { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ShortName { get; set; }
         public string OrganizationType { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string MunicipalityCode { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string GeographicCenterX { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string GeographicCenterY { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string BoundingBoxNorth { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string BoundingBoxSouth { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string BoundingBoxEast { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string BoundingBoxWest { get; set; }
 
 
         // EPSG
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string documentreference { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string epsgcode { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string sosiReferencesystem { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string inspireRequirement { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string nationalRequirement { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string nationalSeasRequirement { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string verticalReferenceSystem { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string horizontalReferenceSystem { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dimension { get; set; }
 
         // CodelistValue
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string codevalue { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string broader { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<string> narrower { get; set; }
         public bool ShouldSerializenarrower()
         {
@@ -157,6 +194,7 @@ namespace Kartverket.Register.Models.Api
         }
 
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ValidFrom { get; set; }
         public bool ShouldSerializeValidFrom()
@@ -165,6 +203,7 @@ namespace Kartverket.Register.Models.Api
         }
 
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ValidTo { get; set; }
         public bool ShouldSerializeValidTo()
@@ -174,103 +213,136 @@ namespace Kartverket.Register.Models.Api
 
         //NameSpace
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string serviceUrl { get; set; }
 
         // Dataset
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string theme { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? dokStatusDateAccepted { get; set; }
         public bool ShouldSerializedokStatusDateAccepted()
         {
             return dokStatusDateAccepted.HasValue;
         }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? Kandidatdato { get; set; }
         public bool ShouldSerializeKandidatdato()
         {
             return Kandidatdato.HasValue;
         }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokDeliveryMetadataStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokDeliveryProductSheetStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokDeliveryPresentationRulesStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokDeliveryProductSpecificationStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokDeliveryWmsStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokDeliveryWfsStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokDeliverySosiRequirementsStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokDeliveryDistributionStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokDeliveryGmlRequirementsStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string dokDeliveryAtomFeedStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool? restricted { get; set; }
         public bool ShouldSerializerestricted()
         {
             return restricted.HasValue;
         }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string DatasetType { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string UuidMetadata { get; set; }
 
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Suitability Suitability { get; set; }
 
 
         //MunicipalDataset
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ConfirmedDok { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Coverage { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string NoteMunicipal { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Measure { get; set; }
 
         // Alert
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string MetadataUrl { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public DateTime AlertDate { get; set; }
         public bool ShouldSerializeAlertDate()
         {
             return AlertDate != null && AlertDate != DefaultDate;
         }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string AlertType { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ServiceType { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public DateTime EffectiveDate { get; set; }
         public bool ShouldSerializeEffectiveDate()
         {
             return EffectiveDate != null && EffectiveDate != DefaultDate;
         }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Note { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ServiceUuid { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string AlertCategory { get; set; }
 
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Departements { get; set; }
         public bool ShouldSerializeDepartement()
         {
             return Departements != null && Departements.Count > 0;
         }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Station { get; set; }
         public bool ShouldSerializeStation()
         {
@@ -278,6 +350,7 @@ namespace Kartverket.Register.Models.Api
         }
 
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string StationName { get; set; }
         public bool ShouldSerializeStationName()
         {
@@ -285,6 +358,7 @@ namespace Kartverket.Register.Models.Api
         }
 
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string StationType { get; set; }
         public bool ShouldSerializeStationType()
         {
@@ -292,6 +366,7 @@ namespace Kartverket.Register.Models.Api
         }
 
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Tags { get; set; }
         public bool ShouldSerializeTags()
         {
@@ -299,6 +374,7 @@ namespace Kartverket.Register.Models.Api
         }
 
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? DateResolved { get; set; }
         public bool ShouldSerializeDateResolved()
         {
@@ -306,6 +382,7 @@ namespace Kartverket.Register.Models.Api
         }
 
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Summary { get; set; }
         public bool ShouldSerializeSummary()
         {
@@ -314,26 +391,36 @@ namespace Kartverket.Register.Models.Api
 
         // InspireDataset
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string MetadataStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string MetadataServiceStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string DistributionStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string WmsStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string WfsStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string AtomFeedStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string WfsOrAtomStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string HarmonizedDataStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string SpatialDataServiceStatus { get; set; }
 
         // InspireDataService
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string InspireDataType { get; set; }
         public string MetadataInSearchServiceStatus { get; set; }
         public string ServiceStatus { get; set; }
@@ -344,6 +431,7 @@ namespace Kartverket.Register.Models.Api
         }
         public string ServiceUrl { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string InspireTheme { get; set; }
         public bool? NetworkService { get; set; }
         public bool ShouldSerializeNetworkService()
@@ -356,26 +444,35 @@ namespace Kartverket.Register.Models.Api
             return Sds.HasValue;
         }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string InspireStatus { get; set; }
 
         // GeodatalovDataset
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string CommonStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string GmlStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string SosiStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ProductspesificationStatus { get; set; }
 
         //Mareano
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string FindableStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string AccesibleStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string InteroperableStatus { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ReUsableStatus { get; set; }
 
         [IgnoreDataMember]

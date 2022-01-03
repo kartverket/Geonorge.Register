@@ -1,4 +1,5 @@
 ﻿using Kartverket.Register.Models.Translations;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string lang { get; set; } = Culture.NorwegianCode;
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string contentsummary { get; set; }
         [DataMemberAttribute]
         public string owner { get; set; }
@@ -28,6 +30,7 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string manager { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string controlbody { get; set; }
         [DataMemberAttribute]
         public string containedItemClass { get; set; }
@@ -40,9 +43,15 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public DateTime lastUpdated { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string targetNamespace { get; set; }
         [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string SelectedDOKMunicipality { get; set; }
+        public bool ShouldSerializeSelectedDOKMunicipality()
+        {
+            return !string.IsNullOrEmpty(SelectedDOKMunicipality);
+        }
 
         public Register(Models.Register item, string baseUrl, string selectedDOKMunicipality = null, string cultureName = Culture.NorwegianCode) 
         {

@@ -197,6 +197,11 @@ namespace Kartverket.Register.Services.Register
 
             }
 
+            if (filter.effectivedate_from.HasValue)
+            {
+                alerts = alerts.Where(d => d.EffectiveDate >= filter.effectivedate_from.Value);
+            }
+
             if (!string.IsNullOrEmpty(filter.Category) && !string.IsNullOrEmpty(filter.filterOrganization))
                 foreach (Alert item in alerts.Where(a => a.AlertCategory.ToLower() == filter.Category.ToLower() && a.Owner.ToLower() == filter.filterOrganization.ToLower()).OrderByDescending(o => o.AlertDate))
                     registerItems.Add(item);

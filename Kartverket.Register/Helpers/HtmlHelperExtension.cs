@@ -466,7 +466,7 @@ namespace Kartverket.Register.Helpers
 
             else if (sortingParam == "mareano_status" || sortingParam == "mareano_status_desc")
             {
-                sortTitle = "";
+                sortTitle = "Antall oppfylte kriterier";
                 statusIcon = "statusIcon-Accepted";
             }
 
@@ -709,7 +709,10 @@ namespace Kartverket.Register.Helpers
                 || sortingParam == "mareano_common_status" || sortingParam == "mareano_common_status_desc")
             {
                 sortTitle = GeodatalovDataSet.Common;
-                statusIcon += "custom-icon-info";
+                if(sortingParam.StartsWith("mareano_common_status"))
+                    statusIcon += "custom-icon-lastned";
+                else
+                    statusIcon += "custom-icon-info";
             }
 
             var linkSort = "<a data-toggle='tooltip' class='show-loading-animation' data-loading-message='Sorterer innhold' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;

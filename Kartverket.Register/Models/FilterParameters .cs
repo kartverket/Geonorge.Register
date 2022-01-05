@@ -51,8 +51,9 @@ namespace Kartverket.Register.Models
         public string[] department { get; set; }
         public string stationName { get; set; }
         public string stationType { get; set; }
+        public DateTime? effectivedate_from { get; set; }
 
-        public bool InspireRegistertTypeIsDataset()
+    public bool InspireRegistertTypeIsDataset()
         {
             return InspireRegisteryType == Dataset;
         }

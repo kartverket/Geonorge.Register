@@ -769,12 +769,33 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfMareanoDatasetsItemsWithCommon(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.CommonStatusMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
 
         public int NumberOfItemsByType(string statusType, string status)
         {
             if (IsGeodatalovDatasetReport())
             {
                 return NumberOfGeodatalovDatasetByType(statusType, status);
+            }
+
+            if (IsMareanoDataserviceReport())
+            {
+                return NumberOfMareanoDatasetByType(statusType, status);
             }
 
             switch (statusType)
@@ -842,6 +863,43 @@ namespace Kartverket.Register.Models
 
 
 
+        }
+
+        private int NumberOfMareanoDatasetByType(string statusType, string status)
+        {
+            switch (statusType)
+            {
+                case "Findable":
+                    return NumberOfMareanoDatasetsWithFindable(status);
+                case "Accesible":
+                    return NumberOfMareanoDatasetsWithAccesible(status);
+                case "Interoperable":
+                    return NumberOfMareanoDatasetsWithInteroperable(status);
+                case "ReUseable":
+                    return NumberOfMareanoDatasetsWithReUsable(status);
+                case "Metadata":
+                    return NumberOfMareanoDatasetsWithMetadata(status);
+                case "ProductSheet":
+                    return NumberOfMareanoDatasetsWithProductSheet(status);
+                case "PresentationRules":
+                    return NumberOfMareanoDatasetsWithPresentationRules(status);
+                case "ProductSpecification":
+                    return NumberOfMareanoDatasetsWithProductSpecification(status);
+                case "Wms":
+                    return NumberOfMareanoDatasetsWithWms(status);
+                case "Wfs":
+                    return NumberOfMareanoDatasetsWithWfs(status);
+                case "SosiRequirements":
+                    return NumberOfMareanoDatasetsWithSosiRequirements(status);
+                case "GmlRequirements":
+                    return NumberOfMareanoDatasetsWithGmlRequirements(status);
+                case "AtomFeed":
+                    return NumberOfMareanoDatasetsWithAtomFeed(status);
+                case "Common":
+                    return NumberOfMareanoDatasetsItemsWithCommon(status);
+            }
+
+            return 0;
         }
 
         private int NumberOfGeodatalovDatasetByType(string statusType, string status)

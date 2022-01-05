@@ -46,7 +46,7 @@
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatusId, false, "wfs")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatusId, false, "atom")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.CommonStatusId, false, MareanoDataSet.DownloadRequirements)
-            <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>
+            <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@(item.Grade.HasValue ? item.Grade.Value.ToString().Replace(".",",") + " av 10" : "")'>
                 <i class="statusIcon-@item.DokStatusId"></i>
             </span>
         </div>

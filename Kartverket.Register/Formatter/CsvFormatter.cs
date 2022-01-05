@@ -818,8 +818,9 @@ namespace Kartverket.Register.Formatter
 
         private string SingelStatusReportHeadingOK()
         {
-            return ";" + Shared.Yes + ";" +
-                   Shared.No;
+            return "";
+            //return ";" + Shared.Yes + ";" +
+            //       Shared.No;
         }
 
         private string WriteDokStatusReport(DokStatusReport dokStatusReport)

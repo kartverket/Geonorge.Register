@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -89,7 +89,7 @@ namespace Kartverket.Register.Models.ViewModels
         public MareanoDatasetStatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
         {
             ReportsSelectList = CreateSelectList(statusReports);
-            StatusTypeSelectList = CreateStatusTypeSelectList();  // TODO
+            StatusTypeSelectList = CreateStatusTypeSelectList();
             MareanoLineChart = new MareanoLineChart(statusReports, statusReport, statusType);
             StatusChart = new StatusLineChart(statusReports, statusReport, statusType);
 
@@ -134,6 +134,8 @@ namespace Kartverket.Register.Models.ViewModels
             items.Add(new SelectListItem() { Text = MareanoDataSet.Interoperable_Label, Value = "Interoperable" });
             items.Add(new SelectListItem() { Text = MareanoDataSet.ReUseable_Label, Value = "ReUseable" });
             items.Add(new SelectListItem() { Text = InspireDataSet.Metadata, Value = "Metadata" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_ProductSheet, Value = "ProductSheet" });
+            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_PresentationRules, Value = "PresentationRules" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_ProductSpecificationStatus, Value = "ProductSpecification" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_SosiRequirements, Value = "SosiRequirements" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_GmlRequirements, Value = "GmlRequirements" });

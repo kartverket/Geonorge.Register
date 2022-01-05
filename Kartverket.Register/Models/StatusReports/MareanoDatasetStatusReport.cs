@@ -23,6 +23,7 @@ namespace Kartverket.Register.Models.StatusReports
         public string WfsMareanoDataset { get; set; }
         public string AtomFeedMareanoDataset { get; set; }
         public string CommonStatusMareanoDataset { get; set; }
+        public float? Grade { get; set; }
 
         public MareanoDatasetStatusReport()
         {
@@ -60,6 +61,9 @@ namespace Kartverket.Register.Models.StatusReports
                     AtomFeedMareanoDataset = MareanoDataset.AtomFeedStatus.StatusId;
                 if (MareanoDataset.CommonStatus != null)
                     CommonStatusMareanoDataset = MareanoDataset.CommonStatus.StatusId;
+
+                if (MareanoDataset.Grade.HasValue)
+                    Grade = MareanoDataset.Grade.Value;
             }
         }
     }

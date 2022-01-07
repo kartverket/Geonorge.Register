@@ -150,7 +150,7 @@ namespace Kartverket.Register.Controllers
         {
             var totalNumberOfItems = 0;
 
-            if (register.IsInspireStatusRegister())
+            if (register.IsInspireStatusRegister() || register.IsMareanoStatusRegister() || register.IsGeodatalovStatusRegister())
             { 
                 if (!string.IsNullOrEmpty(filter.filterOrganization))
                   return register.RegisterItems.Where(o => o.Owner.seoname.ToLower() == filter.filterOrganization.ToLower()).Count();
@@ -977,7 +977,7 @@ namespace Kartverket.Register.Controllers
             {
                 tmp.containedSubRegisters = new List<Models.Api.Register>();
                 var subregisters = _registerService.GetSubregisters(item);
-                if (subregisters != null)
+                if (subregisters != null && subregisters.Count > 0)
                 {
                     count = subregisters.Count;
                     foreach (var reg in subregisters)

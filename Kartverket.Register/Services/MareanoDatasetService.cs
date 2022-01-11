@@ -238,9 +238,9 @@ namespace Kartverket.Register.Services
             else if (MetadataStatus != null && MetadataStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (ProductSpesificationStatus != null && dataset.ProductSpesificationStatus.IsGood())
+            if (ProductSpesificationStatus != null && ProductSpesificationStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (ProductSpesificationStatus != null && dataset.ProductSpesificationStatus.IsGoodOrUseable())
+            else if (ProductSpesificationStatus != null && ProductSpesificationStatus.IsGoodOrUseable())
                     grade = grade + gradeUseable;
 
             if (ProductSheetStatus != null && ProductSheetStatus.IsGood())

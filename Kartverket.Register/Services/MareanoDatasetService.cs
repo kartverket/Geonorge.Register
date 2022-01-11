@@ -238,9 +238,9 @@ namespace Kartverket.Register.Services
             else if (MetadataStatus != null && MetadataStatus.IsGoodOrUseable())
                 grade = grade + gradeUseable;
 
-            if (ProductSpesificationStatus != null && dataset.ProductSpesificationStatus.IsGood())
+            if (ProductSpesificationStatus != null && ProductSpesificationStatus.IsGood())
                 grade = grade + gradeGood;
-            else if (ProductSpesificationStatus != null && dataset.ProductSpesificationStatus.IsGoodOrUseable())
+            else if (ProductSpesificationStatus != null && ProductSpesificationStatus.IsGoodOrUseable())
                     grade = grade + gradeUseable;
 
             if (ProductSheetStatus != null && ProductSheetStatus.IsGood())
@@ -452,7 +452,7 @@ namespace Kartverket.Register.Services
 
             if (spatialRepresentation != "grid") 
                 mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null 
-                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Responsible == "uml-gml" && r.Result.HasValue && r.Result.Value == true).Any() : false;
+                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Explanation.StartsWith("GML-filer er i henhold")).Any() : false;
             mareanoDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
             mareanoDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
             if (spatialRepresentation != "grid") { 

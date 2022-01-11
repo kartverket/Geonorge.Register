@@ -452,7 +452,7 @@ namespace Kartverket.Register.Services
 
             if (spatialRepresentation != "grid") 
                 mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null 
-                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Responsible == "uml-gml" && r.Result.HasValue && r.Result.Value == true).Any() : false;
+                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Explanation.StartsWith("GML-filer er i henhold")).Any() : false;
             mareanoDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
             mareanoDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
             if (spatialRepresentation != "grid") { 
@@ -755,7 +755,7 @@ namespace Kartverket.Register.Services
         {
             var MareanoDatasetsFromKartkatalogen = new List<MareanoDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=6000&mediatype=json";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=6000&mediatype=json&text=ffb4ad9b-64d4-4387-a01a-1a8137f9dc84";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

@@ -1282,7 +1282,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
                     var diff = registerItems.OfType<CodelistValue>().Where(n => n.name != n.value).ToList();
 
-                    if (diff.Count() == 0)
+                    if (diff.Count() == 0 && notValidIntegers.Count() == 0)
                     {
                         orderByNameNumeric = true;
                     }

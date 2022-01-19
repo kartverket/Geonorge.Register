@@ -451,8 +451,8 @@ namespace Kartverket.Register.Services
                 mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000").Any();
 
             if (spatialRepresentation != "grid") 
-                mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null 
-                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => r.Explanation.StartsWith("GML-filer er i henhold")).Any() : false;
+                mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
+                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.StartsWith("GML-filer er i henhold")).Any() : false;
             mareanoDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
             mareanoDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
             if (spatialRepresentation != "grid") { 

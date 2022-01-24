@@ -54,7 +54,7 @@ namespace Kartverket.Register.Models
         public string UuidExternal { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Alerts), ErrorMessageResourceName = "NoteErrorMessage")]
-        [StringLength(500, MinimumLength = 3)]
+        [StringLength(1000, MinimumLength = 3)]
         [Display(Name = "Note", ResourceType = typeof(Alerts))]
         public string Note { get; set; }
 

@@ -41,9 +41,9 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
         //[Route("kodeliste/{registername}/ny/import")]
-        public ActionResult Import(string registername, string parentregister)
+        public ActionResult Import(string systemid)
         {
-            var register = _registerService.GetRegister(parentregister, registername);
+            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (register != null)
             {
                 if (_accessControlService.HasAccessTo(register))
@@ -61,9 +61,9 @@ namespace Kartverket.Register.Controllers
         //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
         //[Route("kodeliste/{registername}/ny/import")]
         [Authorize]
-        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner, string parentregister, bool hierarchy = false, string codelistforhierarchy = null)
+        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner, string systemId, bool hierarchy = false, string codelistforhierarchy = null)
         {
-            var register = _registerService.GetRegister(parentregister, registername);
+            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemId));
             if (register == null) return HttpNotFound();
             if (_accessControlService.HasAccessTo(register))
             {
@@ -97,11 +97,11 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("kodeliste/{registername}/ny")]
         //[Route("/*kodeliste/{parentregister}/{registerowner}/{registername}/ny"*/)]
-        public ActionResult Create(string registername, string parentregister)
+        public ActionResult Create(string systemid)
         {
             var codeListValue = new CodelistValue();
             codeListValue.AddMissingTranslations();
-            codeListValue.register = _registerService.GetRegister(parentregister, registername);
+            codeListValue.register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (codeListValue.register != null)
             {
                 if (_accessControlService.HasAccessTo(codeListValue.register))
@@ -121,9 +121,9 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
         //[Route("kodeliste/{registername}/ny")]
-        public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister, string registerowner, List<Guid> narrower, Guid? broader)
+        public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister, string parentRegisterId, string registerowner, List<Guid> narrower, Guid? broader)
         {
-            codelistValue.register = _registerService.GetRegister(parentregister, registername);
+            codelistValue.register = _registerService.GetRegisterBySystemId(Guid.Parse(parentRegisterId));
             if (codelistValue.register != null)
             {
                 codelistValue.registerId = codelistValue.register.systemId;

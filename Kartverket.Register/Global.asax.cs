@@ -98,7 +98,7 @@ namespace Kartverket.Register
 
             if (cookie == null)
             {
-                var cultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ?
+                var cultureName = userAgent != null && !userAgent.StartsWith("Mozilla") && Request.UserLanguages != null && Request.UserLanguages.Length > 0 ?
                     Request.UserLanguages[0] : null;
 
                 if (!string.IsNullOrEmpty(lang))

@@ -43,7 +43,10 @@ namespace Kartverket.Register.Controllers
         //[Route("kodeliste/{registername}/ny/import")]
         public ActionResult Import(string systemid)
         {
-            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+            Guid systemId = Guid.Empty;
+            if (!string.IsNullOrEmpty(systemid))
+                systemId = Guid.Parse(systemid);
+            var register = _registerService.GetRegisterBySystemId(systemId);
             if (register != null)
             {
                 if (_accessControlService.HasAccessTo(register))
@@ -61,9 +64,13 @@ namespace Kartverket.Register.Controllers
         //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
         //[Route("kodeliste/{registername}/ny/import")]
         [Authorize]
-        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner, string systemId, bool hierarchy = false, string codelistforhierarchy = null)
+        public ActionResult Import(HttpPostedFileBase csvfile, string systemid, bool hierarchy = false, string codelistforhierarchy = null)
         {
-            var register = _registerService.GetRegisterBySystemId(Guid.Parse(systemId));
+            Guid systemId = Guid.Empty;
+            if (!string.IsNullOrEmpty(systemid))
+                systemId = Guid.Parse(systemid);
+
+            var register = _registerService.GetRegisterBySystemId(systemId);
             if (register == null) return HttpNotFound();
             if (_accessControlService.HasAccessTo(register))
             {

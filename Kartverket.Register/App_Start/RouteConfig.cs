@@ -56,7 +56,7 @@ namespace Kartverket.Register
 
             // Document
             routes.MapRoute("CreateDocumentSub", "dokument/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "Documents", action = "Create" });
-            routes.MapRoute("CreateDocument", "dokument/{registername}/ny", new { controller = "Documents", action = "Create" });
+            routes.MapRoute("CreateDocument", "dokument/{systemid}/ny", new { controller = "Documents", action = "Create" });
             routes.MapRoute("CreateNewVersionDocumentSub", "dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny", new { controller = "Documents", action = "CreateNewVersion" });
             routes.MapRoute("CreateNewVersionDocument", "dokument/versjon/{registername}/{itemOwner}/{itemname}/ny", new { controller = "Documents", action = "CreateNewVersion" });
             routes.MapRoute("EditDocumentSub", "dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger", new { controller = "Documents", action = "Edit" });

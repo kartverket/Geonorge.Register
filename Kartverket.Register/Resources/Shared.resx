@@ -283,4 +283,7 @@
   <data name="DeleteCodeValues" xml:space="preserve">
     <value>Slett kodeverdier</value>
   </data>
+  <data name="DisplayDocument" xml:space="preserve">
+    <value>Vis dokument</value>
+  </data>
 </root>

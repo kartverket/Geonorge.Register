@@ -280,4 +280,7 @@
   <data name="DeleteCodeValues" xml:space="preserve">
     <value>Delete code values</value>
   </data>
+  <data name="DisplayDocument" xml:space="preserve">
+    <value>Display document</value>
+  </data>
 </root>

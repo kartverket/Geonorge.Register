@@ -4922,6 +4922,11 @@
               Looks up a localized string similar to Dokument url.
             </summary>
         </member>
+        <member name="P:Resources.Registers.DocumentUrl2">
+            <summary>
+              Looks up a localized string similar to Sti/url til dokumentet.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.DOKCoverageContent">
             <summary>
               Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
@@ -5241,6 +5246,11 @@
         <member name="P:Resources.Shared.Details">
             <summary>
               Looks up a localized string similar to Vis.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.DisplayDocument">
+            <summary>
+              Looks up a localized string similar to Vis dokument.
             </summary>
         </member>
         <member name="P:Resources.Shared.DisplayMoreInfo">

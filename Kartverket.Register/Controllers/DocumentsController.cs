@@ -497,6 +497,7 @@ namespace Kartverket.Register.Controllers
                 document.documentUrl = "";
                 return document;
             }
+            document.documentUrl2 = inputDocument.documentUrl2;
             document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
             document.versioningId = GetVersioningId(document, inputDocument.versioningId);
 

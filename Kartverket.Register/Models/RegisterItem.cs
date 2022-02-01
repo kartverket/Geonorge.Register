@@ -80,6 +80,8 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "DocumentUrl", ResourceType = typeof(Registers))]
         public string documentUrl { get; set; }
+        [Display(Name = "DocumentUrl2", ResourceType = typeof(Registers))]
+        public string documentUrl2 { get; set; }
 
         [Display(Name = "ApprovalDocument", ResourceType = typeof(Registers))]
         public string approvalDocument { get; set; }

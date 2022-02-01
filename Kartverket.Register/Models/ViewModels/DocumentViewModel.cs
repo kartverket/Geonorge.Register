@@ -11,6 +11,7 @@ namespace Kartverket.Register.Models.ViewModels
             if (document != null)
             {
                 DocumentUrl = document.documentUrl;
+                DocumentUrl2 = document.documentUrl2;
                 ApplicationSchema = document.ApplicationSchema;
                 GmlApplicationSchema = document.GMLApplicationSchema;
                 CartographyFile = document.CartographyFile;
@@ -53,6 +54,7 @@ namespace Kartverket.Register.Models.ViewModels
         }
 
         public string DocumentUrl { get; set; }
+        public string DocumentUrl2 { get; set; }
 
         public string ApplicationSchema { get; set; }
         public string GmlApplicationSchema { get; set; }

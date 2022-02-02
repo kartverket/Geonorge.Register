@@ -330,4 +330,7 @@
   <data name="Definition" xml:space="preserve">
     <value>Definisjon</value>
   </data>
+  <data name="DocumentUrl2" xml:space="preserve">
+    <value>Sti/url til dokumentet</value>
+  </data>
 </root>

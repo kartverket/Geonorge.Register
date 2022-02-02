@@ -282,9 +282,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string GetObjectCreateUrl()
         {
-            var url = ParentRegister == null
-                    ? Seoname + "/ny"
-                    : ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/ny";
+            var url = SystemId + "/ny";
 
             var urlFixed = SystemId + "/ny";
 
@@ -332,14 +330,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string GetImportUrl()
         {
-            if (_register.parentRegister != null)
-            {
-                return "/kodeliste/" + _register.parentRegister.seoname + "/" + _register.owner.seoname + "/" + _register.seoname + "/ny/import";
-            }
-            else
-            {
-                return "/kodeliste/" + _register.seoname + "/ny/import";
-            }
+                return "/kodeliste/" + SystemId + "/ny/import";
         }
 
 

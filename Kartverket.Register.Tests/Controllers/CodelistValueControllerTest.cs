@@ -38,17 +38,17 @@ namespace Kartverket.Register.Tests.Controllers
             RegisterService.Setup(r => r.GetRegister(null, "null")).Returns(Register);
 
             var controller = new CodelistValuesController(null, RegisterService.Object, null, null, null);
-            var result = controller.Import("", null) as HttpNotFoundResult;
+            var result = controller.Import("") as HttpNotFoundResult;
             result.StatusCode.Should().Be(404);
         }
 
         [Fact]
         public void GetImportViewIfRegisterIsNotNull()
         {
-            RegisterService.Setup(r => r.GetRegister(null, "testregister")).Returns(Register);
+            RegisterService.Setup(r => r.GetRegisterBySystemId(System.Guid.Parse("25CC9CF7-2190-4A58-B4D2-3378DE295A12"))).Returns(Register);
 
             var controller = new CodelistValuesController(null, RegisterService.Object, AccessControlService.Object, null, null);
-            var result = controller.Import("testregister", null) as ViewResult;
+            var result = controller.Import("25CC9CF7-2190-4A58-B4D2-3378DE295A12") as ViewResult;
             result.Should().NotBeNull();
         }
 
@@ -56,7 +56,7 @@ namespace Kartverket.Register.Tests.Controllers
         public void ImportCodelistShouldReturnHttpNotFoundIfRegisterIsNull()
         {
             var controller = new CodelistValuesController(null, RegisterService.Object, AccessControlService.Object, null, null);
-            var result = controller.Import(null, null, null, null) as HttpNotFoundResult;
+            var result = controller.Import(null, null) as HttpNotFoundResult;
             result.StatusCode.Should().Be(404);
         }
 
@@ -64,7 +64,7 @@ namespace Kartverket.Register.Tests.Controllers
         public void ImportCodelistShouldReturnToViewIfCsvFileIsNull()
         {
             var controller = new CodelistValuesController(RegisterItemService.Object, RegisterService.Object, AccessControlService.Object, null, null);
-            var result = controller.Import(null, "testregister", null, null) as ViewResult;
+            var result = controller.Import(null, "25CC9CF7-2190-4A58-B4D2-3378DE295A12") as ViewResult;
             result.Should().NotBeNull();
         }
 
@@ -74,7 +74,7 @@ namespace Kartverket.Register.Tests.Controllers
             var file = new Mock<HttpPostedFileBase>();
             file.Setup(f => f.ContentType).Returns("WrongContentType");
             var controller = new CodelistValuesController(RegisterItemService.Object, RegisterService.Object, AccessControlService.Object, null, null);
-            controller.Import(file.Object, "testregister", null, null);
+            controller.Import(file.Object, "25CC9CF7-2190-4A58-B4D2-3378DE295A12");
             var modelstate = controller.ModelState;
             modelstate.IsValid.Should().BeFalse();
         }
@@ -85,7 +85,7 @@ namespace Kartverket.Register.Tests.Controllers
             var file = new Mock<HttpPostedFileBase>();
             file.Setup(f => f.ContentType).Returns("text/csv");
             var controller = new CodelistValuesController(RegisterItemService.Object, RegisterService.Object, AccessControlService.Object, null, null);
-            var result = controller.Import(file.Object, "testregister", null, null) as RedirectResult;
+            var result = controller.Import(file.Object, "25CC9CF7-2190-4A58-B4D2-3378DE295A12") as RedirectResult;
             result.Url.Should().Be(Register.GetObjectUrl());
         }
 
@@ -104,7 +104,7 @@ namespace Kartverket.Register.Tests.Controllers
         private Mock<IRegisterService> CreateRegisterServiceMock()
         {
             var registerServiceMock = new Mock<IRegisterService>();
-            registerServiceMock.Setup(r => r.GetRegister(null, "testregister")).Returns(Register);
+            registerServiceMock.Setup(r => r.GetRegisterBySystemId(System.Guid.Parse("25CC9CF7-2190-4A58-B4D2-3378DE295A12"))).Returns(Register);
             return registerServiceMock;
         }
 

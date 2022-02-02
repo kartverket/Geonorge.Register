@@ -1,4 +1,4 @@
-﻿@font-face {
+@font-face {
     font-family: 'FontAwesome';
     font-style: normal;
     font-weight: 400;
@@ -513,6 +513,14 @@ a.link-unstyled {
     background-image: url("/Content/img/satisfactory.svg");
 }
 
+.custom-icon.bullseye-icon {
+    padding: 3px;
+    border: 3px solid #EE432A;
+    border-radius: 50%;
+    background-color: #EE432A;
+    background-clip: content-box;
+    display: inline-block;
+}
 .arrow-icon {
     background-image: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-right.svg);
     width: 11px;

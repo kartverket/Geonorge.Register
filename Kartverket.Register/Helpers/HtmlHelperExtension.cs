@@ -461,13 +461,13 @@ namespace Kartverket.Register.Helpers
                 else
                     sortTitle = "DOK-status";
 
-                statusIcon = "statusIcon-Accepted";
+                statusIcon += "bullseye-icon";
             }
 
             else if (sortingParam == "mareano_status" || sortingParam == "mareano_status_desc")
             {
                 sortTitle = "Antall oppfylte kriterier";
-                statusIcon = "statusIcon-Accepted";
+                statusIcon += "bullseye-icon";
             }
 
 

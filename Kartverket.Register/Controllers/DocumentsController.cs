@@ -54,11 +54,11 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("dokument/{registername}/ny")]
-        public ActionResult Create(string registername, string parentRegister)
+        public ActionResult Create(string systemid)
         {
             Document document = new Document();
             document.AddMissingTranslations();
-            document.register = _registerService.GetRegister(parentRegister, registername);
+            document.register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             Viewbags(document);
             if (document.register != null)
             {
@@ -79,9 +79,9 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("dokument/{registername}/ny")]
-        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerowner)
+        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerId)
         {
-            document.register = _registerService.GetRegister(parentRegister, registername);
+            document.register = _registerService.GetRegisterBySystemId(Guid.Parse(registerId));
             if (_accessControlService.AddToRegister(document.register))
             {
                 if (!NameIsValid(document))
@@ -497,6 +497,7 @@ namespace Kartverket.Register.Controllers
                 document.documentUrl = "";
                 return document;
             }
+            document.documentUrl2 = inputDocument.documentUrl2;
             document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
             document.versioningId = GetVersioningId(document, inputDocument.versioningId);
 

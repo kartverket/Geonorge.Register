@@ -1202,6 +1202,14 @@
     <Compile Include="Migrations\202112211112105_AddGradeForMareanoReport.designer.cs">
       <DependentUpon>202112211112105_AddGradeForMareanoReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201241203505_UpdateNoteLengthTo1000.cs" />
+    <Compile Include="Migrations\202201241203505_UpdateNoteLengthTo1000.designer.cs">
+      <DependentUpon>202201241203505_UpdateNoteLengthTo1000.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202010935472_AddDocumentUrl2.cs" />
+    <Compile Include="Migrations\202202010935472_AddDocumentUrl2.designer.cs">
+      <DependentUpon>202202010935472_AddDocumentUrl2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3171,6 +3179,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112211112105_AddGradeForMareanoReport.resx">
       <DependentUpon>202112211112105_AddGradeForMareanoReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201241203505_UpdateNoteLengthTo1000.resx">
+      <DependentUpon>202201241203505_UpdateNoteLengthTo1000.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202010935472_AddDocumentUrl2.resx">
+      <DependentUpon>202202010935472_AddDocumentUrl2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

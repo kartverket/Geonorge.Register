@@ -91,7 +91,7 @@ Broader;Narrower
         <label for="narrower" class="control-label col-md-4">Velg kodeliste du ønsker å danne hierarki med:</label>
         <div class="col-md-8">
             <div>
-                <select name="codelistforhierarchy"  class="chosen-select form-control">
+                <select name="codelistforhierarchy" class="chosen-select form-control">
                     <option value="">Velg kodeliste</option>
                     @foreach (var register in HtmlHelperExtensions.CodelistRegister().OrderBy(o => o.name))
                     {

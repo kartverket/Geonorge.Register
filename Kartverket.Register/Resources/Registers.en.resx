@@ -330,4 +330,7 @@
   <data name="Definition" xml:space="preserve">
     <value>Definition</value>
   </data>
+  <data name="DocumentUrl2" xml:space="preserve">
+    <value>Url to document</value>
+  </data>
 </root>

@@ -129,6 +129,7 @@ namespace Kartverket.Register.Models
             submitterId = document.submitterId;
             versioningId = document.versioningId;
             documentUrl = document.documentUrl;
+            documentUrl2 = document.documentUrl2;
             if(!string.IsNullOrEmpty(document.thumbnail))
                 thumbnail = document.thumbnail;
 

@@ -34,10 +34,9 @@ namespace Kartverket.Register
             routes.MapRoute("DeleteEPSG", "epsg/{registername}/{organization}/{epsgname}/slett", new { controller = "EPSGs", action = "Delete"});
 
             // CodelistValue
-            routes.MapRoute("ImportCodelistValueSub", "kodeliste/{parentregister}/{registerowner}/{registername}/ny/import", new { controller = "CodelistValues", action = "Import" });
-            routes.MapRoute("ImportCodelistValue", "kodeliste/{registername}/ny/import", new { controller = "CodelistValues", action = "Import" });
+            routes.MapRoute("ImportCodelistValueSub", "kodeliste/{systemid}/ny/import", new { controller = "CodelistValues", action = "Import" });
             routes.MapRoute("CreateCodelistValuesub", "kodeliste/{parentregister}/{registerowner}/{registername}/ny", new { controller = "CodelistValues", action = "Create"});
-            routes.MapRoute("CreateCodelistValue", "kodeliste/{registername}/ny", new { controller = "CodelistValues", action = "Create"});
+            routes.MapRoute("CreateCodelistValue", "kodeliste/{systemid}/ny", new { controller = "CodelistValues", action = "Create"});
             routes.MapRoute("EditCodelistValuesub", "kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", new { controller = "CodelistValues", action = "Edit"});
             routes.MapRoute("EditCodelistValue", "kodeliste/{registername}/{submitter}/{itemname}/rediger", new { controller = "CodelistValues", action = "Edit"});
             routes.MapRoute("DeleteCodelistValuesub", "kodeliste/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
@@ -57,7 +56,7 @@ namespace Kartverket.Register
 
             // Document
             routes.MapRoute("CreateDocumentSub", "dokument/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "Documents", action = "Create" });
-            routes.MapRoute("CreateDocument", "dokument/{registername}/ny", new { controller = "Documents", action = "Create" });
+            routes.MapRoute("CreateDocument", "dokument/{systemid}/ny", new { controller = "Documents", action = "Create" });
             routes.MapRoute("CreateNewVersionDocumentSub", "dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny", new { controller = "Documents", action = "CreateNewVersion" });
             routes.MapRoute("CreateNewVersionDocument", "dokument/versjon/{registername}/{itemOwner}/{itemname}/ny", new { controller = "Documents", action = "CreateNewVersion" });
             routes.MapRoute("EditDocumentSub", "dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger", new { controller = "Documents", action = "Edit" });

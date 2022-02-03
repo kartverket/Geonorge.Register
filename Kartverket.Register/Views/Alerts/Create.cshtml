@@ -36,6 +36,7 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(false, Shared.ValidationSummary, new { @class = "alert alert-danger" })
         @Html.Hidden("name", "navn")
+        @Html.Hidden("systemid",Model.register.systemId)
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="radio" name="category" value="@Constants.AlertCategoryService" onclick="location.href='?category=@Constants.AlertCategoryService'" @(ViewBag.Category == Constants.AlertCategoryService || string.IsNullOrEmpty(ViewBag.Category) ? "checked" : "") /> @Resource.AlertCategory(Constants.AlertCategoryService)

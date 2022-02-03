@@ -102,7 +102,7 @@ namespace Kartverket.Register
 
             // Alerts
             routes.MapRoute("CreateAlertSub", "varsler/{parentregister}/{registerowner}/{registerName}/ny", new { controller = "Alerts", action = "Create" });
-            routes.MapRoute("CreateAlert", "varsler/{registerName}/ny", new { controller = "Alerts", action = "Create" });
+            routes.MapRoute("CreateAlert", "varsler/{systemid}/ny", new { controller = "Alerts", action = "Create" });
             routes.MapRoute("UpdateAlert", "varsler/rediger/{systemid}", new { controller = "Alerts", action = "Edit" });
 
             // Subregister

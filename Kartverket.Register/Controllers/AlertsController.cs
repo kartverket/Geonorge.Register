@@ -33,11 +33,11 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
         //[Route("tjenestevarsler/{registerName}/ny")]
-        public ActionResult Create(string parentRegister, string registerName, string category = Constants.AlertCategoryService)
+        public ActionResult Create(string systemid, string category = Constants.AlertCategoryService)
         {
             Alert alert = new Alert(category);
             alert.AddMissingTranslations();
-            alert.register = _registerService.GetRegister(parentRegister, registerName);
+            alert.register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             ViewBags(alert, category);
 
             if (alert.register != null)
@@ -56,11 +56,11 @@ namespace Kartverket.Register.Controllers
         [ValidateInput(false)]
         [HttpPost]
         [Authorize]
-        public ActionResult Create(Alert alert, string parentRegister, string registerName, string[] tagslist, string[] departmentslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2, string category = Constants.AlertCategoryService)
+        public ActionResult Create(Alert alert, string systemid, string[] tagslist, string[] departmentslist, HttpPostedFileBase imagefile1, HttpPostedFileBase imagefile2, string category = Constants.AlertCategoryService)
         {
             var sanitizer = new HtmlSanitizer();
 
-            alert.register = _registerService.GetRegister(parentRegister, registerName);
+            alert.register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (alert.register != null)
             {
                 if (_accessControlService.AddToRegister(alert.register))

@@ -103,11 +103,11 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("organisasjoner/{registername}/ny")]
-        public ActionResult Create(string registername, string parentRegister)
+        public ActionResult Create(string systemid)
         {
             Organization organisasjon = new Organization();
             organisasjon.AddMissingTranslations();
-            organisasjon.register = _registerService.GetRegister(parentRegister, registername);
+            organisasjon.register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (organisasjon.register != null)
             {
                 if (_accessControlService.HasAccessTo(organisasjon.register))
@@ -126,9 +126,9 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("organisasjoner/{registername}/ny")]
-        public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string parentRegister, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument, string registerOwner)
+        public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string systemid, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument, string registerOwner)
         {
-            organization.register = _registerService.GetRegister(parentRegister, registername);
+            organization.register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (organization.register != null)
             {
                 if (_accessControlService.HasAccessTo(organization.register))

@@ -94,7 +94,7 @@ namespace Kartverket.Register
 
             // Organization
             routes.MapRoute("CreateOrganizationSub", "organisasjoner/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "Organizations", action = "Create" });
-            routes.MapRoute("CreateOrganization", "organisasjoner/{registername}/ny", new { controller = "Organizations", action = "Create" });
+            routes.MapRoute("CreateOrganization", "organisasjoner/{systemid}/ny", new { controller = "Organizations", action = "Create" });
             routes.MapRoute("EditOrganizationSub", "organisasjoner/{registerParent}/{registerowner}/{registername}/{itemowner}/{organisasjon}/rediger", new { controller = "Organizations", action = "Edit" });
             routes.MapRoute("EditOrganization", "organisasjoner/{registername}/{innsender}/{organisasjon}/rediger", new { controller = "Organizations", action = "Edit" });
             routes.MapRoute("DeleteOrganizationSub", "organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett", new { controller = "Organizations", action = "Delete" });

@@ -477,6 +477,7 @@ namespace Kartverket.Register.Controllers
             document.description = inputDocument.description;
             document.approvalDocument = inputDocument.approvalDocument;
             document.approvalReference = inputDocument.approvalReference;
+            document.UmlModelTreeStructureLink = inputDocument.UmlModelTreeStructureLink;
             document.ApplicationSchema = inputDocument.ApplicationSchema;
             document.GMLApplicationSchema = inputDocument.GMLApplicationSchema;
             document.CartographyFile = inputDocument.CartographyFile;

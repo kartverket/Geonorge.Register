@@ -95,6 +95,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "UML-modell i objektregister")]
         public string ApplicationSchema { get; set; }
 
+        [Display(Name = "UML-modell - trestruktur")]
+        public string UmlModelTreeStructureLink { get; set; }       
+
         [Display(Name = "GML-applikasjonsskjema")]
         public string GMLApplicationSchema { get; set; }
 

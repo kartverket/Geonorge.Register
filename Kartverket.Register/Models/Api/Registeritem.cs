@@ -70,6 +70,9 @@ namespace Kartverket.Register.Models.Api
         public string ApplicationSchema { get; set; }
         [DataMemberAttribute]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string UmlModelTreeStructureLink { get; set; }
+        [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string GMLApplicationSchema { get; set; }
         [DataMemberAttribute]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -758,6 +761,7 @@ namespace Kartverket.Register.Models.Api
                 if (d.description != null) description = GetDescriptionLocale(d);
                 if (d.documentowner != null) owner = d.documentowner.NameTranslated();
                 documentreference = d.documentUrl;
+                UmlModelTreeStructureLink = d.UmlModelTreeStructureLink;
                 ApplicationSchema = d.ApplicationSchema;
                 GMLApplicationSchema = d.GMLApplicationSchema;
                 CartographyFile = d.CartographyFile;

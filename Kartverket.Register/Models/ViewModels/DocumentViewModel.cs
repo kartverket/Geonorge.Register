@@ -12,6 +12,7 @@ namespace Kartverket.Register.Models.ViewModels
             {
                 DocumentUrl = document.documentUrl;
                 DocumentUrl2 = document.documentUrl2;
+                UmlModelTreeStructureLink = document.UmlModelTreeStructureLink;
                 ApplicationSchema = document.ApplicationSchema;
                 GmlApplicationSchema = document.GMLApplicationSchema;
                 CartographyFile = document.CartographyFile;
@@ -57,6 +58,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string DocumentUrl2 { get; set; }
 
         public string ApplicationSchema { get; set; }
+        public string UmlModelTreeStructureLink { get; set; }
         public string GmlApplicationSchema { get; set; }
         public string CartographyFile { get; set; }
         public string CartographyDetailsUrl { get; set; }

@@ -118,6 +118,7 @@ namespace Kartverket.Register.Models
             description = document.description;
             approvalDocument = document.approvalDocument;
             approvalReference = document.approvalReference;
+            UmlModelTreeStructureLink = document.UmlModelTreeStructureLink;
             ApplicationSchema = document.ApplicationSchema;
             GMLApplicationSchema = document.GMLApplicationSchema;
             CartographyFile = document.CartographyFile;

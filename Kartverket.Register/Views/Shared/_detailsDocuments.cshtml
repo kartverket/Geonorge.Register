@@ -51,10 +51,16 @@
                         </a><br />
                     }
                 }
+                @if (!string.IsNullOrEmpty(Model.UmlModelTreeStructureLink))
+                {
+                    <a href="@Html.DisplayFor(modelItem => Model.UmlModelTreeStructureLink)" class="btn btn-block" title="Vis datamodell for @Model.Name" target="_blank">
+                        <span class="custom-icon custom-icon-eksternlink"> </span> Vis UML-modell
+                    </a><br />
+                }
                 @if (!string.IsNullOrEmpty(Model.ApplicationSchema))
                 {
                     <a href="@Html.DisplayFor(modelItem => Model.ApplicationSchema)" class="btn btn-block" title="Vis datamodell for @Model.Name" target="_blank">
-                        <span class="custom-icon custom-icon-eksternlink"> </span> Vis UML-modell
+                        <span class="custom-icon custom-icon-eksternlink"> </span> Vis datamodell
                     </a><br />
                 }
                 @if (!string.IsNullOrEmpty(Model.GmlApplicationSchema))

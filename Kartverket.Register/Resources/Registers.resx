@@ -331,6 +331,6 @@
     <value>Definisjon</value>
   </data>
   <data name="DocumentUrl2" xml:space="preserve">
-    <value>Sti/url til dokumentet</value>
+    <value>Sti/url til HTML-versjon</value>
   </data>
 </root>

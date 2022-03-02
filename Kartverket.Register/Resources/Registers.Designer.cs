@@ -250,7 +250,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sti/url til dokumentet.
+        ///   Looks up a localized string similar to Sti/url til HTML-versjon.
         /// </summary>
         public static string DocumentUrl2 {
             get {

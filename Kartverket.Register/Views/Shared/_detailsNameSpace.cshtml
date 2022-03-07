@@ -8,7 +8,7 @@
     }
     else
     {
-        <p title="@Namespace.LinkToContentOf @Model.name"><strong>@Namespace.Content: </strong><a href="@Model.description">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+<p title="@Namespace.LinkToContentOf @Model.name"><strong>@Namespace.Content: </strong>@Model.description <a href="@Model.name">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
     }
 
     @if (Model.serviceUrl == null)

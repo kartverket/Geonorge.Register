@@ -1,4 +1,4 @@
-﻿using Kartverket.Register.Resources;
+using Kartverket.Register.Resources;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -86,11 +86,11 @@ namespace Kartverket.Register
 
             // Namespace 
             routes.MapRoute("CreateNamespaceSub", "navnerom/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "NameSpaces", action = "Create" });
-            routes.MapRoute("CreateNamespace", "navnerom/{registername}/ny", new { controller = "NameSpaces", action = "Create" });
+            routes.MapRoute("CreateNamespace", "navnerom/{systemid}/ny", new { controller = "NameSpaces", action = "Create" });
             routes.MapRoute("EditNamespaceSub", "navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", new { controller = "NameSpaces", action = "Edit" });
-            routes.MapRoute("EditNamespace", "navnerom/{registername}/{itemowner}/{itemname}/rediger", new { controller = "NameSpaces", action = "Edit" });
+            routes.MapRoute("EditNamespace", "navnerom/{systemid}/rediger", new { controller = "NameSpaces", action = "Edit" });
             routes.MapRoute("DeleteNamespaceSub", "navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "NameSpaces", action = "Delete" });
-            routes.MapRoute("DeleteNamespace", "navnerom/{registername}/{itemowner}/{itemname}/slett", new { controller = "NameSpaces", action = "Delete" });
+            routes.MapRoute("DeleteNamespace", "navnerom/{systemid}/slett", new { controller = "NameSpaces", action = "Delete" });
 
             // Organization
             routes.MapRoute("CreateOrganizationSub", "organisasjoner/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "Organizations", action = "Create" });

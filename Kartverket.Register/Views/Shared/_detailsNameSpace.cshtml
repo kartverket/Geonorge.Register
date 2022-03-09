@@ -10,9 +10,13 @@
     }
 }
 <article class="col-md-12">
-    @if (Model.description == null)
+    @if (Model.description != null && Model.serviceUrl == null)
     {
-        <p title="@Namespace.NoContentFor @Model.name."><strong>@Namespace.Service: </strong>@Registers.NotSet</p>
+    <p title="@Namespace.LinkToContentOf @Model.name"><strong>@Namespace.Content: </strong>@Model.description</p>
+    }
+    else if (Model.description == null || Model.serviceUrl == null)
+    {
+        <p title="@Namespace.NoContentFor @Model.name."><strong>@Namespace.Content: </strong>@Registers.NotSet</p>
     }
     else
     {

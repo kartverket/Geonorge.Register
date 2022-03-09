@@ -23,7 +23,11 @@
                 @Html.DisplayFor(modelItem => item.submitter.name)
             </div>
             <div class="col-md-2 col-sm-12 col">
-                @if (item.description == null)
+                @if (item.description != null && item.serviceUrl == null)
+                {
+                    <p title="@item.name">@item.description</p>
+                }
+                else if (item.description == null || item.serviceUrl == null)
                 {
                     <p title="@Namespace.NoContentFor @item.name.">@Registers.NotSet</p>
                 }

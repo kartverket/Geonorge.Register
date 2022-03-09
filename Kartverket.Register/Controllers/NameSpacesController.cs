@@ -128,11 +128,11 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                if (nameSpace.name != null) originalNameSpace.name = nameSpace.name; originalNameSpace.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalNameSpace.name);
-                if (nameSpace.description != null) originalNameSpace.description = nameSpace.description;
-                if (nameSpace.submitterId != null) originalNameSpace.submitterId = nameSpace.submitterId;
-                if (nameSpace.statusId != null) originalNameSpace.statusId = nameSpace.statusId;
-                if (nameSpace.serviceUrl != null) originalNameSpace.serviceUrl = nameSpace.serviceUrl;
+                originalNameSpace.name = nameSpace.name; originalNameSpace.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalNameSpace.name);
+                originalNameSpace.description = nameSpace.description;
+                originalNameSpace.submitterId = nameSpace.submitterId;
+                originalNameSpace.statusId = nameSpace.statusId;
+                originalNameSpace.serviceUrl = nameSpace.serviceUrl;
            
                 if (nameSpace.statusId != null)
                 {

@@ -92,8 +92,11 @@ namespace Kartverket.Register.Models
         [Display(Name = "Accepted", ResourceType = typeof(Registers))]
         public bool? Accepted { get; set; }
 
-        [Display(Name = "UML-modell")]
+        [Display(Name = "UML-modell i objektregister")]
         public string ApplicationSchema { get; set; }
+
+        [Display(Name = "UML-modell - trestruktur")]
+        public string UmlModelTreeStructureLink { get; set; }       
 
         [Display(Name = "GML-applikasjonsskjema")]
         public string GMLApplicationSchema { get; set; }

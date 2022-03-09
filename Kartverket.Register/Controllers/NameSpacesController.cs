@@ -27,11 +27,11 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("navnerom/{registername}/ny")]
-        public ActionResult Create(string registername, string parentRegister)
+        public ActionResult Create(string systemId)
         {
             NameSpace nameSpace = new NameSpace();
             nameSpace.AddMissingTranslations();
-            Models.Register register = GetRegister(registername, parentRegister);
+            Models.Register register = GetRegister(systemId);
 
             nameSpace.register = register;
             if (register.parentRegisterId != null)
@@ -52,9 +52,9 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("navnerom/{registername}/ny")]
-        public ActionResult Create(NameSpace nameSpace, string registername, string parentRegister)
+        public ActionResult Create(NameSpace nameSpace, string systemId)
         {
-            nameSpace.register = GetRegister(registername, parentRegister);
+            nameSpace.register = GetRegister(systemId);
 
             string parentRegisterOwner = null;
             if (nameSpace.register.parentRegisterId != null)
@@ -97,9 +97,9 @@ namespace Kartverket.Register.Controllers
         // GET: NameSpaces/Edit/5
         //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
         //[Route("navnerom/{registername}/{itemowner}/{itemname}/rediger")]
-        public ActionResult Edit(string registername, string itemname, string parentRegister)
+        public ActionResult Edit(string systemId)
         {
-            NameSpace nameSpace = GetRegisterItem(registername, itemname, parentRegister);
+            NameSpace nameSpace = GetRegisterItem(systemId);
 
             if (nameSpace == null)
             {
@@ -120,10 +120,10 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
         //[Route("navnerom/{registername}/{itemowner}/{itemname}/rediger")]
-        public ActionResult Edit(NameSpace nameSpace, string registername, string itemname, string parentRegister)
+        public ActionResult Edit(NameSpace nameSpace, string registerId, string systemId)
         {
-            NameSpace originalNameSpace = GetRegisterItem(registername, itemname, parentRegister);
-            Models.Register register = GetRegister(registername, parentRegister);
+            NameSpace originalNameSpace = GetRegisterItem(systemId);
+            Models.Register register = GetRegister(registerId);
             ValidationName(nameSpace, register);
 
             if (ModelState.IsValid)
@@ -163,9 +163,9 @@ namespace Kartverket.Register.Controllers
         // GET: NameSpaces/Delete/5
         //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
         //[Route("navnerom/{registername}/{itemowner}/{itemname}/slett")]
-        public ActionResult Delete(string itemname, string registername, string parentRegister)
+        public ActionResult Delete(string systemId)
         {
-            NameSpace nameSpace = GetRegisterItem(registername, itemname, parentRegister);
+            NameSpace nameSpace = GetRegisterItem(systemId);
 
             if (nameSpace == null)
             {
@@ -183,9 +183,9 @@ namespace Kartverket.Register.Controllers
         [HttpPost, ActionName("Delete")]
         //[Route("navnerom/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
         //[Route("navnerom/{registername}/{itemowner}/{itemname}/slett")]
-        public ActionResult DeleteConfirmed(string itemname, string registername, string parentRegister, string registerowner)
+        public ActionResult DeleteConfirmed(string systemId)
         {
-            NameSpace nameSpace = GetRegisterItem(registername, itemname, parentRegister);
+            NameSpace nameSpace = GetRegisterItem(systemId);
 
             if (nameSpace != null)
             {
@@ -206,10 +206,11 @@ namespace Kartverket.Register.Controllers
             base.Dispose(disposing);
         }
 
-        private Models.Register GetRegister(string registername, string parentRegister)
+        private Models.Register GetRegister(string systemId)
         {
+            Guid systemid = Guid.Parse(systemId);
             var queryResultsRegister = from o in _db.Registers
-                                       where o.seoname == registername && o.parentRegister.seoname == parentRegister
+                                       where o.systemId == systemid
                                        select o;
 
             Models.Register register = queryResultsRegister.FirstOrDefault();
@@ -226,13 +227,12 @@ namespace Kartverket.Register.Controllers
             return queryResults.FirstOrDefault();
         }
 
-        private NameSpace GetRegisterItem(string registername, string itemname, string parentRegister)
+        private NameSpace GetRegisterItem(string systemId)
         {
+            Guid systemid = Guid.Parse(systemId);
             var query = from o in _db.NameSpases
-                                 where o.seoname == itemname &&
-                                 o.register.seoname == registername &&
-                                 o.register.parentRegister.seoname == parentRegister
-                                 select o;
+                                 where o.systemId == systemid
+                        select o;
 
             return query.FirstOrDefault();
         }

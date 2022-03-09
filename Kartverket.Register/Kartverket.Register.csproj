@@ -1210,6 +1210,10 @@
     <Compile Include="Migrations\202202010935472_AddDocumentUrl2.designer.cs">
       <DependentUpon>202202010935472_AddDocumentUrl2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203011133463_AddUmlModelTreeStructureLink.cs" />
+    <Compile Include="Migrations\202203011133463_AddUmlModelTreeStructureLink.designer.cs">
+      <DependentUpon>202203011133463_AddUmlModelTreeStructureLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3185,6 +3189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202010935472_AddDocumentUrl2.resx">
       <DependentUpon>202202010935472_AddDocumentUrl2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203011133463_AddUmlModelTreeStructureLink.resx">
+      <DependentUpon>202203011133463_AddUmlModelTreeStructureLink.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

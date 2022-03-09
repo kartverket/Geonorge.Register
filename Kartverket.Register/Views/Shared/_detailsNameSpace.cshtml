@@ -1,6 +1,14 @@
 ﻿@using Kartverket.Register.Helpers;
+@using System.Web.Configuration;
 @model Kartverket.Register.Models.NameSpace
-
+@{
+    var url = Model.name;
+    var environment = WebConfigurationManager.AppSettings["EnvironmentName"];
+    if (!string.IsNullOrEmpty(environment))
+    {
+        url = url.Replace("https://data", "https://data." + environment);
+    }
+}
 <article class="col-md-12">
     @if (Model.description == null)
     {
@@ -8,7 +16,7 @@
     }
     else
     {
-        <p title="@Namespace.LinkToContentOf @Model.name"><strong>@Namespace.Content: </strong><a href="@Model.description">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+        <p title="@Namespace.LinkToContentOf @Model.name"><strong>@Namespace.Content: </strong>@Model.description <a href="@url">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
     }
 
     @if (Model.serviceUrl == null)

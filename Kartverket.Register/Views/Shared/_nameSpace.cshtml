@@ -1,7 +1,10 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
 @using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
-
+@using System.Web.Configuration;
+@{
+    var environment = WebConfigurationManager.AppSettings["EnvironmentName"];
+}
 <div class="table-view">
     <div class="table-heading search-results-table-heading col-md-12">
         <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Namespace.NamespaceName, "name")</div>
@@ -26,7 +29,13 @@
                 }
                 else
                 {
-                    <p title="@Namespace.LinkToContentOf @item.name"><a href="@item.description">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                    var url = item.name;
+                    if (!string.IsNullOrEmpty(environment))
+                    {
+                        url = url.Replace("https://data", "https://data." + environment);
+                    }
+
+                    <p title="@Namespace.LinkToContentOf @item.name"><a href="@url">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                 }
             </div>
             <div class="col-md-2 col-sm-12 col">

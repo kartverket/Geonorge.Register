@@ -178,6 +178,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="schematronfile" class="control-label col-md-2">Schematron-fil</label>
+                    <div class="col-md-10">
+                        <input type="file" name="schematronfile" id="schematronfile" onchange="checkDocumentApproval($('#documentfile').val())" />@(!string.IsNullOrEmpty(Model.documentUrl) ? Model.documentUrl.Replace(".xsd",".sch") : "")
+                        @Html.ValidationMessageFor(model => model.documentUrl, "", new { @class = "text-danger" })
+                        @Html.ValidationMessage("ErrorMessageFileName")
+                    </div>
+                </div>
+                <div class="form-group">
                     @Html.LabelFor(model => model.documentUrl2, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.documentUrl2, new { htmlAttributes = new { @class = "form-control" } })
@@ -317,7 +325,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.UmlModelTreeStructureLink, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.UmlModelTreeStructureLink, new { htmlAttributes = new { @class = "form-control"} })
+                            @Html.EditorFor(model => model.UmlModelTreeStructureLink, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.UmlModelTreeStructureLink, "", new { @class = "text-danger" })
                         </div>
                     </div>

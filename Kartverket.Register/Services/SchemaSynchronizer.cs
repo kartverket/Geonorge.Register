@@ -51,7 +51,7 @@ namespace Kartverket.Register.Services
         string SchemaPasswordTest = WebConfigurationManager.AppSettings["SchemaFtpPasswordTest"];
         string SchemaFtpWorkingDirectoryTest = WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectoryTest"];
 
-        public string Synchronize(HttpPostedFileBase file)
+        public string Synchronize(HttpPostedFileBase file, HttpPostedFileBase schematronfile = null)
         {
             string syncFile = "";
             if (file != null && file.ContentLength > 0 && (file.ContentType == "text/xml" || file.ContentType == "application/xml"))
@@ -63,7 +63,7 @@ namespace Kartverket.Register.Services
                 if (ValidTargetNamespace(targetNamespace))
                 {
                     string path = GetFilePath(targetNamespace.Value);
-                    syncFile = UploadFile(file, path);
+                    syncFile = UploadFile(file, path, schematronfile);
                 }
                 else 
                 {
@@ -122,7 +122,7 @@ namespace Kartverket.Register.Services
             return node != null && (node.Value.Contains(TargetNamespace) || node.Value.Contains(TargetNamespaceTest)) ;
         }
 
-        string UploadFile(HttpPostedFileBase file, string path)
+        string UploadFile(HttpPostedFileBase file, string path, HttpPostedFileBase schematronfile = null)
         {
             try
             {
@@ -154,6 +154,16 @@ namespace Kartverket.Register.Services
                     fileStream.Position = 0;
 
                     sftp.UploadFile(fileStream, filePath, true);
+
+                    if(schematronfile != null) 
+                    {
+                        filePath = currentDir + "/" + schematronfile.FileName;
+                        fileStream = schematronfile.InputStream;
+                        fileStream.Position = 0;
+
+                        sftp.UploadFile(fileStream, filePath, true);
+                    }
+
                     sftp.Disconnect();
                 }
             }
@@ -174,12 +184,24 @@ namespace Kartverket.Register.Services
                 User user = GetUser();
 
                 MemoryStream stream = new MemoryStream();
+                MemoryStream streamSchematron = new MemoryStream();
+                bool schematronFile;
 
                 using (var sftp = new SftpClient(SchemaFtpSiteTest, SchemaUsernameTest, SchemaPasswordTest))
                 {
+                    var filePath = SchemaFtpWorkingDirectoryTest + "/" + path + "/" + filename;
                     sftp.Connect();
 
-                    sftp.DownloadFile(SchemaFtpWorkingDirectoryTest + "/" + path + "/" + filename, stream);
+                    sftp.DownloadFile(filePath, stream);
+
+                    filePath = filePath.Replace(".xsd", ".sch");
+
+                    schematronFile = sftp.Exists(filePath);
+
+                    if (schematronFile) {
+                        sftp.DownloadFile(filePath, streamSchematron);
+                    }
+
                     sftp.Disconnect();
                 }
 
@@ -208,6 +230,14 @@ namespace Kartverket.Register.Services
 
                     var filePath = currentDir + "/" + filename;
                     sftp.UploadFile(stream, filePath, true);
+
+                    if (schematronFile) 
+                    {
+                        streamSchematron.Position = 0;
+                        filePath = currentDir + "/" + filename.Replace(".xsd", ".sch");
+                        sftp.UploadFile(streamSchematron, filePath, true);
+                    }
+
                     sftp.Disconnect();
                 }
             }

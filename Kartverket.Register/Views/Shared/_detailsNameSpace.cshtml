@@ -13,10 +13,10 @@
 
         public string FixProtocol(string url)
         {
-            if (Request.IsSecureConnection && !url.StartsWith("https://"))
-            {
-                url = url.Replace("http://", "https://");
-            }
+            //if (Request.IsSecureConnection && !url.StartsWith("https://"))
+            //{
+            url = url.Replace("http://", "https://");
+            //}
 
             return url;
         }

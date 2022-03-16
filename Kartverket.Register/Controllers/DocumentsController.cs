@@ -243,6 +243,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber, string parentregister, string parentregisterowner)
         {
             Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, versionNumber);
+
             string registerUrl = document.register.GetObjectUrl();
             if (DocumentIsCurrentVersion(document))
             {
@@ -266,7 +267,25 @@ namespace Kartverket.Register.Controllers
             }
             db.SaveChanges();
 
+            RemoveFiles(document);
+
             return Redirect(registerUrl);
+        }
+
+        private void RemoveFiles(Document document)
+        {
+            if (document != null && !string.IsNullOrEmpty(document.documentUrl) && document.documentUrl.EndsWith(".xsd")) 
+            { 
+                try 
+                {
+                    new SchemaSynchronizer().RemoveFiles(document);
+                }
+                catch(Exception ex) 
+                {
+                    Log.Error("Error deleting document file: ", ex);
+                }
+            }
+
         }
 
 

@@ -9,6 +9,7 @@ using Kartverket.Register.Services.Translation;
 using System.Collections.Generic;
 using System.Web.Configuration;
 using System.Net;
+using System.Data.SqlClient;
 
 namespace Kartverket.Register.Controllers
 {
@@ -111,7 +112,7 @@ namespace Kartverket.Register.Controllers
 
             if (UserHasAccess(nameSpace, "Edit"))
             {
-                nameSpace.NameSpaceDatasets = GetNameSpaceDatasets(nameSpace);
+                GetNameSpaceDatasets(nameSpace);
                 Viewbags(nameSpace);
                 return View(nameSpace);
             }
@@ -127,16 +128,19 @@ namespace Kartverket.Register.Controllers
 
             foreach(var dataset in datasets.Results) 
             {
-                var metadataUuid = dataset.Uuid.Value;
-                if(nameSpace.NameSpaceDatasets.Where(n => n.MetadataUuid == metadataUuid).Any()) 
+                string metadataUuid = dataset.Uuid.Value;
+
+                var nameSpaceDataset = nameSpace.NameSpaceDatasets.Where(n => n.MetadataUuid == metadataUuid).FirstOrDefault(); 
+
+                if (nameSpaceDataset != null) 
                 {
                     var title = dataset.Title;
                     var organization = dataset.Organization;
                     var datasetId = dataset.DatasetName;
-                    nameSpace.NameSpaceDatasets = nameSpace.NameSpaceDatasets
-                    .Where(d => d.MetadataUuid == metadataUuid)
-                    .Select(d => { d.MetadataNavn = title; d.Organisasjon = organization; d.DatasettId = datasetId;  return d; })
-                    .ToList();
+
+                    nameSpaceDataset.MetadataNavn = title;
+                    nameSpaceDataset.Organisasjon = organization;
+                    nameSpaceDataset.DatasettId = datasetId;
                 }
                 else 
                 {
@@ -187,6 +191,12 @@ namespace Kartverket.Register.Controllers
                     originalNameSpace.statusId = nameSpace.statusId;
                 }
 
+                var namespaceDatasets = GetNameSpaceDatasets(originalNameSpace);
+                
+                if (namespaceDatasets != null) {
+                    UpdateNamespaceDatasets(namespaceDatasets, nameSpace.NameSpaceDatasets, originalNameSpace);
+                }
+
                 originalNameSpace.modified = DateTime.Now;
                 _db.Entry(originalNameSpace).State = EntityState.Modified;
                 _translationService.UpdateTranslations(nameSpace, originalNameSpace);
@@ -198,6 +208,22 @@ namespace Kartverket.Register.Controllers
             }
             Viewbags(originalNameSpace);
             return View(originalNameSpace);
+        }
+
+        private void UpdateNamespaceDatasets(ICollection<NamespaceDataset> namespaceDatasets, ICollection<NamespaceDataset> updatedNamespaceDatasets, NameSpace originalNameSpace)
+        {
+
+            for (int d = 0; d < namespaceDatasets.Count; d++ ) 
+            {
+                var namespaceDataset = namespaceDatasets.ElementAt(d);
+                var updatedNamespaceDataset = updatedNamespaceDatasets.Where(u => u.MetadataUuid == namespaceDataset.MetadataUuid).FirstOrDefault();
+                if (updatedNamespaceDataset != null) 
+                {
+                    namespaceDatasets.ElementAt(d).RedirectUrl = updatedNamespaceDataset.RedirectUrl;
+                }
+            }
+
+            originalNameSpace.NameSpaceDatasets = namespaceDatasets;
         }
 
         // GET: NameSpaces/Delete/5

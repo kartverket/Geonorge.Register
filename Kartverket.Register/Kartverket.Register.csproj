@@ -1214,6 +1214,10 @@
     <Compile Include="Migrations\202203011133463_AddUmlModelTreeStructureLink.designer.cs">
       <DependentUpon>202203011133463_AddUmlModelTreeStructureLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203170900101_AddNamespaceDataset.cs" />
+    <Compile Include="Migrations\202203170900101_AddNamespaceDataset.designer.cs">
+      <DependentUpon>202203170900101_AddNamespaceDataset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1252,6 +1256,7 @@
     <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
     <Compile Include="Models\MareanoDataset.cs" />
+    <Compile Include="Models\NamespaceDataset.cs" />
     <Compile Include="Models\Station.cs" />
     <Compile Include="Models\StatusReports\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
@@ -3192,6 +3197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203011133463_AddUmlModelTreeStructureLink.resx">
       <DependentUpon>202203011133463_AddUmlModelTreeStructureLink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203170900101_AddNamespaceDataset.resx">
+      <DependentUpon>202203170900101_AddNamespaceDataset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

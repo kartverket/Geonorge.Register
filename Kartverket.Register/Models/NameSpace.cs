@@ -18,6 +18,8 @@ namespace Kartverket.Register.Models
         [Display(Name = "ServiceUrl", ResourceType = typeof(Namespace))]
         public string serviceUrl { get; set; }
 
+        public virtual ICollection<NamespaceDataset> NameSpaceDatasets { get; set; }
+
         public virtual string GetNameSpaceEditUrl()
         {
             if (register.parentRegister == null)

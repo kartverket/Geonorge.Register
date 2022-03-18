@@ -23,7 +23,7 @@
     }
 
 }
-<article class="col-md-12">
+@*<article class="col-md-12">
     @if (Model.description != null && Model.serviceUrl == null)
     {
         <p title="@Namespace.LinkToContentOf @Model.name"><strong>@Namespace.Content: </strong>@Model.description</p>
@@ -47,7 +47,7 @@
     }
 
 
-</article>
+</article>*@
 
 <h3>@DataSet.Dataset</h3>
 <div class="container">
@@ -62,7 +62,16 @@
         <div class="row resultItemRow">
             <div class="col-sm-5">@Model.NameSpaceDatasets.ElementAt(d).MetadataNavn</div>
             <div class="col-sm-2">@Model.NameSpaceDatasets.ElementAt(d).Organisasjon</div>
-            <div class="col-sm-5"><a href="@url/@Model.NameSpaceDatasets.ElementAt(d).DatasettId" target="_blank">@Model.name/@Model.NameSpaceDatasets.ElementAt(d).DatasettId</a></div>
+            <div class="col-sm-5">
+                @if (!string.IsNullOrEmpty(Model.NameSpaceDatasets.ElementAt(d).RedirectUrl))
+                {
+                <a href="@url/@Model.NameSpaceDatasets.ElementAt(d).DatasettId" target="_blank">@Model.name/@Model.NameSpaceDatasets.ElementAt(d).DatasettId</a>
+                }
+                else
+                {
+                <span>@Model.name/@Model.NameSpaceDatasets.ElementAt(d).DatasettId</span>
+                }
+            </div>
         </div>
         
     }

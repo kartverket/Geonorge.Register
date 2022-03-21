@@ -43,11 +43,11 @@ namespace Kartverket.Register.Controllers
         [System.Web.Mvc.Authorize]
         //[Route("epsg/{registername}/ny")]
         //[Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
-        public ActionResult Create(string registername, string parentRegister)
+        public ActionResult Create(string systemid)
         {
             EPSG ePSg = new EPSG();
             ePSg.AddMissingTranslations();
-            ePSg.register = _registerService.GetRegister(parentRegister, registername);
+            ePSg.register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (ePSg.register != null)
             {
                 if (_accessControlService.HasAccessTo(ePSg.register))
@@ -67,9 +67,9 @@ namespace Kartverket.Register.Controllers
         [System.Web.Mvc.HttpPost]
         //[Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("epsg/{registername}/ny")]
-        public ActionResult Create(EPSG epsgKode, string registername, string parentRegister, string registerowner)
+        public ActionResult Create(EPSG epsgKode, string systemid)
         {
-            epsgKode.register = _registerService.GetRegister(parentRegister, registername);
+            epsgKode.register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (epsgKode.register != null)
             {
                 if (_accessControlService.HasAccessTo(epsgKode.register))
@@ -103,14 +103,12 @@ namespace Kartverket.Register.Controllers
         [System.Web.Mvc.Authorize]
         //[Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
         //[Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
-        public ActionResult Edit(string registername, string epsgname, int? vnr, string parentRegister)
+        public ActionResult Edit(string systemId)
         {
             string currentUserOrganizationName = CurrentUserOrganizationName();
-
+            var systemid = Guid.Parse(systemId);
             var queryResultsEpsg = from o in db.EPSGs
-                                   where o.seoname == epsgname &&
-                                   o.register.seoname == registername &&
-                                   o.register.parentRegister.seoname == parentRegister
+                                   where o.systemId == systemid
                                    select o.systemId;
             Guid systId = queryResultsEpsg.FirstOrDefault();
 
@@ -140,19 +138,19 @@ namespace Kartverket.Register.Controllers
         //[Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
         //[Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
         //public ActionResult Edit(EPSG ePSG, string name, string id)
-        public ActionResult Edit(EPSG ePSG, string epsgname, string parentRegister, string registername)
+        public ActionResult Edit(EPSG ePSG, string systemid)
         {
+            var systemId = Guid.Parse(systemid);
+
             var queryResultsOrganisasjon = from o in db.EPSGs
-                                           where o.seoname == epsgname
-                                           && o.register.seoname == registername
-                                           && o.register.parentRegister.seoname == parentRegister
+                                           where o.systemId == systemId
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.FirstOrDefault();
             EPSG epsg = db.EPSGs.Find(systId);
 
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && o.parentRegister.seoname == parentRegister
+                                       where o.systemId == epsg.register.systemId
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.FirstOrDefault();
@@ -198,14 +196,14 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
 
                 Viewbags(ePSG);
-                if (!String.IsNullOrWhiteSpace(parentRegister))
-                {
-                    return Redirect("/subregister/" + originalEPSG.register.parentRegister.seoname + "/" + originalEPSG.register.parentRegister.owner.seoname + "/" + registername + "/" + "/" + originalEPSG.submitter.seoname + "/" + originalEPSG.seoname);
-                }
-                else
-                {
+                //if (!String.IsNullOrWhiteSpace(parentRegister))
+                //{
+                //    return Redirect("/subregister/" + originalEPSG.register.parentRegister.seoname + "/" + originalEPSG.register.parentRegister.owner.seoname + "/" + registername + "/" + "/" + originalEPSG.submitter.seoname + "/" + originalEPSG.seoname);
+                //}
+                //else
+                //{
                     return Redirect("/" + register.path + "/" + originalEPSG.seoname + "/" + systId);
-                }
+                //}
 
             }
             Viewbags(ePSG);
@@ -217,12 +215,12 @@ namespace Kartverket.Register.Controllers
         [System.Web.Mvc.Authorize]
         //[Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
         //[Route("epsg/{registername}/{organization}/{epsgname}/slett")]
-        public ActionResult Delete(string epsgname, string registername, string parentregister)
+        public ActionResult Delete(string systemid)
         {
+            var systemId = Guid.Parse(systemid);
+
             var queryResultsOrganisasjon = from o in db.EPSGs
-                                           where o.seoname == epsgname
-                                           && o.register.seoname == registername
-                                           && o.register.parentRegister.seoname == parentregister
+                                           where o.systemId == systemId
                                            select o.systemId;
             Guid systId = queryResultsOrganisasjon.FirstOrDefault();
 
@@ -253,12 +251,12 @@ namespace Kartverket.Register.Controllers
         [System.Web.Mvc.HttpPost, System.Web.Mvc.ActionName("Delete")]
         //[Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
         //[Route("epsg/{registername}/{organization}/{epsgname}/slett")]
-        public ActionResult DeleteConfirmed(string epsgname, string registername, string parentregister, string parentregisterowner)
+        public ActionResult DeleteConfirmed(string systemid)
         {
+            var systemId = Guid.Parse(systemid);
+
             var queryResultsOrganisasjon = from o in db.EPSGs
-                                           where o.seoname == epsgname
-                                           && o.register.seoname == registername
-                                           && o.register.parentRegister.seoname == parentregister
+                                           where o.systemId == systemId
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.FirstOrDefault();
@@ -276,11 +274,11 @@ namespace Kartverket.Register.Controllers
             db.RegisterItems.Remove(ePSG);
             db.SaveChanges();
 
-            if (parent != null)
-            {
-                return Redirect("/subregister/" + parentregister + "/" + parentregisterowner + "/" + registername);
-            }
-            return Redirect("/register/" + registername);
+            //if (parent != null)
+            //{
+            //    return Redirect("/subregister/" + parentregister + "/" + parentregisterowner + "/" + registername);
+            //}
+            return Redirect("/epsg-koder");
         }
 
         protected override void Dispose(bool disposing)

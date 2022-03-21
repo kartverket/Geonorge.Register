@@ -24,10 +24,8 @@
 
 @using (Html.BeginForm("Create", "EPSGs", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    if (Model.register.parentRegister != null)
-    {
-        <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
-    }
+
+    <input type="hidden" value="@Model.systemId" id="parentRegisterId" name="parentRegisterId" />
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

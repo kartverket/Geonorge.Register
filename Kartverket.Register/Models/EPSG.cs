@@ -92,7 +92,7 @@ namespace Kartverket.Register.Models
         {
             if (register.parentRegister == null)
             {
-                return "/epsg/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
+                return "/epsg/" + systemId + "/rediger";
             }
             else {
                 return "/epsg/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
@@ -103,7 +103,7 @@ namespace Kartverket.Register.Models
         {
             if (register.parentRegister == null)
             {
-                return "/epsg/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
+                return "/epsg/" + systemId + "/slett";
             }
             else {
                 return "/epsg/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";

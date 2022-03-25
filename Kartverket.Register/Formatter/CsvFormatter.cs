@@ -990,7 +990,15 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "Dataset")
             {
-                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") : "") + ";" + (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") : "") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item) + (isAdmin ? ";" + item.uuid : "") + ";" + item.MetadataUrl;
+                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") : "") + ";" + (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") : "") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item) + (isAdmin ? ";" + item.uuid : "") + ";" + item.MetadataUrl
+                    + ";" + item.Suitability.RegionalPlan
+                    + ";" + item.Suitability.MunicipalSocialPlan
+                    + ";" + item.Suitability.MunicipalLandUseElementPlan
+                    + ";" + item.Suitability.ZoningPlan
+                    + ";" + item.Suitability.BuildingMatter
+                    + ";" + item.Suitability.ImpactAssessmentPlanningBuildingAct
+                    + ";" + item.Suitability.RiskVulnerabilityAnalysisPlanningBuildingAct
+                    ;
             }
             else if (item.itemclass == "InspireDataset" || item.itemclass == "InspireDataService")
             {
@@ -1170,7 +1178,15 @@ namespace Kartverket.Register.Formatter
                 return DataSet.DOK_Delivery_Theme + ";" + Registers.Name + ";" + Registers.Owner + ";DOK-status;" + DataSet.DOK_StatusDateAccepted + ";" + DataSet.DOK_Kandidatdato + (isAdmin ? ";" + Registers.Updated : "") + ";" + Registers.VersionNumber + ";" + Registers.Description + ";ID" + ";" + DataSet.DOK_Delivery_Metadata + ";"
                     + DataSet.DOK_Delivery_ProductSheet + ";" + DataSet.DOK_Delivery_PresentationRules + ";" + DataSet.DOK_Delivery_ProductSpesification + ";"
                     + DataSet.DOK_Delivery_Wms + ";" + DataSet.DOK_Delivery_Wfs + ";" + DataSet.DOK_Delivery_SosiRequirements + ";"
-                    + DataSet.DOK_Delivery_Distribution + ";" + DataSet.DOK_Delivery_GmlRequirements + ";" + DataSet.DOK_Delivery_AtomFeed + (isAdmin ? ";Uuid" : "") + ";" + DataSet.DisplayKartkatalogen;
+                    + DataSet.DOK_Delivery_Distribution + ";" + DataSet.DOK_Delivery_GmlRequirements + ";" + DataSet.DOK_Delivery_AtomFeed + (isAdmin ? ";Uuid" : "") + ";" + DataSet.DisplayKartkatalogen
+                    + ";" + DataSet.SuitabilityRegionsplanleggingText
+                    + ";" + DataSet.SuitabilitySamfunnText
+                    + ";" + DataSet.SuitabilityArealText
+                    + ";" + DataSet.SuitabilityZoningPlan
+                    + ";" + DataSet.SuitabilityByggesakText
+                    + ";" + DataSet.SuitabilityKUText
+                    + ";" + DataSet.SuitabilityROSText
+                    ;
             }
             if (containedItemClass == "InspireDataset")
             {

@@ -19,7 +19,7 @@ namespace Kartverket.Register.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class GeodataCollection {
@@ -304,7 +304,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mottaksordning - beskrivelse.
+        ///   Looks up a localized string similar to Mottaksordningens beskrivelse.
         /// </summary>
         public static string Methodology {
             get {
@@ -412,7 +412,7 @@ namespace Kartverket.Register.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mottaksordning formål.
+        ///   Looks up a localized string similar to Mottaksordningens formål.
         /// </summary>
         public static string Purpose {
             get {

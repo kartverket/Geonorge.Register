@@ -38,9 +38,9 @@ namespace Kartverket.Register
             routes.MapRoute("CreateCodelistValuesub", "kodeliste/{parentregister}/{registerowner}/{registername}/ny", new { controller = "CodelistValues", action = "Create"});
             routes.MapRoute("CreateCodelistValue", "kodeliste/{systemid}/ny", new { controller = "CodelistValues", action = "Create"});
             routes.MapRoute("EditCodelistValuesub", "kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", new { controller = "CodelistValues", action = "Edit"});
-            routes.MapRoute("EditCodelistValue", "kodeliste/{registername}/{submitter}/{itemname}/rediger", new { controller = "CodelistValues", action = "Edit"});
+            routes.MapRoute("EditCodelistValue", "kodeliste/{systemid}/rediger", new { controller = "CodelistValues", action = "Edit"});
             routes.MapRoute("DeleteCodelistValuesub", "kodeliste/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
-            routes.MapRoute("DeleteCodelistValue", "kodeliste/{registername}/{organization}/{itemname}/slett", new { controller = "CodelistValues", action = "Delete"});
+            routes.MapRoute("DeleteCodelistValue", "kodeliste/{systemid}/slett", new { controller = "CodelistValues", action = "Delete"});
 
             routes.MapRoute("GetFramework", "rammeverk/{versionnumber}/{registername}/{codevalue}", new { controller = "Registers", action = "DetailsRegisterItemFramework" });
 

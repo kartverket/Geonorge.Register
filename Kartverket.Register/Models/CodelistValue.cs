@@ -79,7 +79,7 @@ namespace Kartverket.Register.Models
                 return "/kodeliste/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
             }
             else {
-                return "/kodeliste/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
+                return "/kodeliste/" + systemId + "/rediger";
             }
         }
 
@@ -90,7 +90,7 @@ namespace Kartverket.Register.Models
                 return "/kodeliste/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
             }
             else {
-                return "/kodeliste/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
+                return "/kodeliste/" + systemId + "/slett";
             }
         }
 

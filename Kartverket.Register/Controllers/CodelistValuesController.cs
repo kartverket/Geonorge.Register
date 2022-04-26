@@ -174,9 +174,11 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", Name = "editCodelist")]
         //[Route("kodeliste/{registername}/{submitter}/{itemname}/rediger")]
-        public ActionResult Edit(string registername, string itemname, string parentregister)
+        public ActionResult Edit(string systemid)
         {
-            var codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
+            var systemId = Guid.Parse(systemid);
+            
+            var codelistValue = (CodelistValue)_registerItemService.GetRegisterItemBySystemId(systemId);
             if (codelistValue != null)
             {
                 if (_accessControlService.HasAccessTo(codelistValue))
@@ -200,7 +202,7 @@ namespace Kartverket.Register.Controllers
         //[Route("kodeliste/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(CodelistValue codelistValue, string itemowner, string registername, string itemname, string parentregister, List<Guid> narrower, Guid? broader, string registerowner)
         {
-            var originalCodelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
+            var originalCodelistValue = (CodelistValue)_registerItemService.GetRegisterItemBySystemId(codelistValue.systemId);
             if (originalCodelistValue != null)
             {
                 if (_accessControlService.HasAccessTo(originalCodelistValue))
@@ -234,12 +236,14 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
         //[Route("kodeliste/{registername}/{submitter}/{itemname}/slett")]
-        public ActionResult Delete(string registername, string itemname, string parentregister)
+        public ActionResult Delete(string systemid)
         {
             string currentUserOrganizationName = CurrentUserOrganizationName();
 
+            var systemId = Guid.Parse(systemid);
+
             var queryResults = from o in _db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
+                               where o.systemId == systemId
                                select o.systemId;
 
             Guid systId = queryResults.FirstOrDefault();
@@ -272,16 +276,19 @@ namespace Kartverket.Register.Controllers
         //[Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
         //[Route("kodeliste/{registername}/{submitter}/{itemname}/slett")]
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(string registername, string itemname, string itemowner, string parentregister)
+        public ActionResult DeleteConfirmed(string systemid)
         {
+            var systemId = Guid.Parse(systemid);
+
             var queryResults = from o in _db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
+                               where o.systemId == systemId
                                select o.systemId;
 
             Guid systId = queryResults.FirstOrDefault();
 
             CodelistValue codelistValue = _db.CodelistValues.Find(systId);
             string parent = null;
+            string codelistRegister = codelistValue.register.path;
             if (codelistValue.register.parentRegisterId != null)
             {
                 parent = codelistValue.register.parentRegister.path;
@@ -297,11 +304,16 @@ namespace Kartverket.Register.Controllers
 
             _db.RegisterItems.Remove(codelistValue);
             _db.SaveChanges();
+            if (!string.IsNullOrEmpty(codelistRegister)) 
+            {
+                return Redirect("/" + codelistRegister);
+            }
             if (parent != null)
             {
                 return Redirect("/" + parent);
             }
-            return Redirect("/register/" + registername);
+
+            return Redirect("/");
         }
 
 

@@ -497,6 +497,25 @@ namespace Kartverket.Register.Services.RegisterItem
 
         private bool ValidateNameRegisterItem(object model)
         {
+            if(model is CodelistValue) 
+            {
+                Models.CodelistValue registeritem = (Models.CodelistValue)model;
+                if (!string.IsNullOrWhiteSpace(registeritem.value))
+                {
+                    var registerId = registeritem.register?.systemId ?? registeritem.registerId;
+
+
+                    var queryResults = from o in _dbContext.CodelistValues
+                                       where (o.value == registeritem.value )
+                                             && o.systemId != registeritem.systemId
+                                             && o.registerId == registerId
+                                       select o;
+
+                    return !queryResults.ToList().Any();
+                }
+            }
+            else 
+            { 
             Models.RegisterItem registeritem = (Models.RegisterItem)model;
             if (!string.IsNullOrWhiteSpace(registeritem.name))
             {
@@ -512,6 +531,7 @@ namespace Kartverket.Register.Services.RegisterItem
                     select o;
 
                 return !queryResults.ToList().Any();
+            }
             }
 
             return false;

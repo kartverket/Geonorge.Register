@@ -112,50 +112,11 @@ namespace Kartverket.Register.Controllers
 
             if (UserHasAccess(nameSpace, "Edit"))
             {
-                GetNameSpaceDatasets(nameSpace);
+                _registerItemService.GetNameSpaceDatasets(nameSpace);
                 Viewbags(nameSpace);
                 return View(nameSpace);
             }
             return HttpNotFound("Ingen tilgang");
-        }
-
-        private ICollection<NamespaceDataset> GetNameSpaceDatasets(NameSpace nameSpace)
-        {
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets-namespace?namespace=" + nameSpace.name;
-            var client = new WebClient { Encoding = System.Text.Encoding.UTF8 };
-            var json = client.DownloadString(url);
-            dynamic datasets = Newtonsoft.Json.Linq.JObject.Parse(json);
-
-            foreach(var dataset in datasets.Results) 
-            {
-                string metadataUuid = dataset.Uuid.Value;
-
-                var nameSpaceDataset = nameSpace.NameSpaceDatasets.Where(n => n.MetadataUuid == metadataUuid).FirstOrDefault(); 
-
-                if (nameSpaceDataset != null) 
-                {
-                    var title = dataset.Title;
-                    var organization = dataset.Organization;
-                    var datasetId = dataset.DatasetName;
-
-                    nameSpaceDataset.MetadataNavn = title;
-                    nameSpaceDataset.Organisasjon = organization;
-                    nameSpaceDataset.DatasettId = datasetId;
-                }
-                else 
-                {
-                    NamespaceDataset ds = new NamespaceDataset();
-                    ds.MetadataUuid = metadataUuid;
-                    ds.MetadataNavn = dataset.Title;
-                    ds.Organisasjon = dataset.Organization;
-                    ds.DatasettId = dataset.DatasetName;
-                    ds.SystemId =  Guid.NewGuid();
-                    ds.NameSpaceId = nameSpace.systemId;
-                    nameSpace.NameSpaceDatasets.Add(ds);
-                }
-            }
-
-            return nameSpace.NameSpaceDatasets;
         }
 
         // POST: NameSpaces/Edit/5
@@ -191,7 +152,7 @@ namespace Kartverket.Register.Controllers
                     originalNameSpace.statusId = nameSpace.statusId;
                 }
 
-                var namespaceDatasets = GetNameSpaceDatasets(originalNameSpace);
+                var namespaceDatasets = _registerItemService.GetNameSpaceDatasets(originalNameSpace);
                 
                 if (namespaceDatasets != null) {
                     UpdateNamespaceDatasets(namespaceDatasets, nameSpace.NameSpaceDatasets, originalNameSpace);

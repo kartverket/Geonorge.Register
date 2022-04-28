@@ -28,9 +28,9 @@ namespace Kartverket.Register.Services.RegisterItem
             var codelistValue = new CodelistValue();
             switch (codelistValueImport.Length)
             {
-                case 3:
-                    break;
                 case 6:
+                    break;
+                case 9:
                     codelistValue.Translations.Add(Translation(codelistValueImport, codelistValue));
                     break;
                 case 10:
@@ -56,7 +56,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
             codelistValue.name = codelistValueImport[0];
             codelistValue.value = codelistValueImport[2];
-            if(codelistValueImport.Length == 6)
+            if(codelistValueImport.Length == 9 && codelistValueImport.Length == 6)
                 codelistValue.valueEnglish = codelistValueImport[5];
             codelistValue.description = codelistValueImport[1];
             codelistValue.registerId = register.systemId;
@@ -66,8 +66,49 @@ namespace Kartverket.Register.Services.RegisterItem
             codelistValue.modified = DateTime.Now;
             codelistValue.dateSubmitted = DateTime.Now;
             codelistValue.statusId = "Submitted";
+
+            if(codelistValueImport.Length == 6) 
+            { 
+                codelistValue.statusId = GetStatus(codelistValueImport[3]);
+                codelistValue.ValidFromDate = GetDate(codelistValueImport[4]);
+                codelistValue.ValidToDate = GetDate(codelistValueImport[5]);
+            }
+            else if (codelistValueImport.Length == 9)
+            {
+                 codelistValue.statusId = GetStatus(codelistValueImport[6]);
+                 codelistValue.ValidFromDate = GetDate(codelistValueImport[7]);
+                 codelistValue.ValidToDate = GetDate(codelistValueImport[8]);
+            }
+
             codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name, register.TransliterNorwegian);
             return codelistValue;
+        }
+
+        private DateTime? GetDate(string date)
+        {
+            if (!string.IsNullOrEmpty(date))
+            {
+                try {
+                   DateTime? dateTime = DateTime.Parse(date);
+                    return dateTime;
+                }
+                catch (Exception ex) { }
+            }
+
+            return null;
+        }
+
+        private string GetStatus(string status)
+        {
+            if (!string.IsNullOrEmpty(status)) {
+                if (status.ToLower() == "gyldig")
+                    return "Valid";
+                else if (status.ToLower() == "utgått")
+                    return "Retired";
+                else if (status.ToLower() == "utkast")
+                    return "Draft";
+            }
+            return "Submitted";
         }
 
         private static CodelistValueTranslation Translation(string[] codeListValue, CodelistValue codelistValue)

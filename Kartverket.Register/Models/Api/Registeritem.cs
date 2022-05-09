@@ -77,6 +77,13 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string CartographyFile { get; set; }
+        [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? draftDate { get; set; }
+        public bool ShouldSerializedraftDate()
+        {
+            return draftDate != null && draftDate != DefaultDate;
+        }
 
         // Organization
         [DataMemberAttribute]
@@ -771,6 +778,7 @@ namespace Kartverket.Register.Models.Api
                 ApplicationSchema = d.ApplicationSchema;
                 GMLApplicationSchema = d.GMLApplicationSchema;
                 CartographyFile = d.CartographyFile;
+                draftDate = d.dateNotAccepted;
             }
 
             else if (item is Dataset)

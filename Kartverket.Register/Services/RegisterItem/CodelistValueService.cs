@@ -88,6 +88,7 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             if (!string.IsNullOrEmpty(date))
             {
+                date = date.Replace(" 00.00.00", "");
                 try {
                    DateTime? dateTime = DateTime.Parse(date);
                     return dateTime;

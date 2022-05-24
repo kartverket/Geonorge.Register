@@ -37,6 +37,8 @@ namespace Kartverket.Register.Services
 
         static string TargetNamespace = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/";
         static string TargetNamespaceTest = "http://skjema.test.geonorge.no/SOSI/produktspesifikasjon/";
+        static string TargetNamespaceSecure = "https://skjema.geonorge.no/SOSI/produktspesifikasjon/";
+        static string TargetNamespaceTestSecure = "https://skjema.test.geonorge.no/SOSI/produktspesifikasjon/";
         string SchemaRemoteUrl = WebConfigurationManager.AppSettings["SchemaRemoteUrl"];
         string SchemaRemoteUrlTest = WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
 
@@ -114,12 +116,15 @@ namespace Kartverket.Register.Services
         {
             path = path.Replace(TargetNamespace, "");
             path = path.Replace(TargetNamespaceTest, "");
+            path = path.Replace(TargetNamespaceSecure, "");
+            path = path.Replace(TargetNamespaceTestSecure, "");
             return path;
         }
 
         bool ValidTargetNamespace(XmlNode node)
         {
-            return node != null && (node.Value.Contains(TargetNamespace) || node.Value.Contains(TargetNamespaceTest)) ;
+            return node != null && ((node.Value.Contains(TargetNamespace) || node.Value.Contains(TargetNamespaceTest))
+                || (node.Value.Contains(TargetNamespaceSecure) || node.Value.Contains(TargetNamespaceTestSecure))) ;
         }
 
         string UploadFile(HttpPostedFileBase file, string path)

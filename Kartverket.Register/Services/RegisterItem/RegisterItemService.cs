@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;
 using System.Text;
+using System.Web.Configuration;
+using System.Net;
 
 namespace Kartverket.Register.Services.RegisterItem
 {
@@ -401,6 +403,56 @@ namespace Kartverket.Register.Services.RegisterItem
             return false;
         }
 
+        public void UpdateNameSpaceDatasets() 
+        {
+            var namespaces = _dbContext.NameSpases.ToList();
+            foreach(var nameSpace in namespaces) 
+            {
+                nameSpace.NameSpaceDatasets = GetNameSpaceDatasets(nameSpace);
+                _dbContext.Entry(nameSpace).State = EntityState.Modified;
+                _dbContext.SaveChanges();
+            }
+        }
+
+        public ICollection<NamespaceDataset> GetNameSpaceDatasets(NameSpace nameSpace)
+        {
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets-namespace?namespace=" + nameSpace.name;
+            var client = new WebClient { Encoding = System.Text.Encoding.UTF8 };
+            var json = client.DownloadString(url);
+            dynamic datasets = Newtonsoft.Json.Linq.JObject.Parse(json);
+
+            foreach (var dataset in datasets.Results)
+            {
+                string metadataUuid = dataset.Uuid.Value;
+
+                var nameSpaceDataset = nameSpace.NameSpaceDatasets.Where(n => n.MetadataUuid == metadataUuid).FirstOrDefault();
+
+                if (nameSpaceDataset != null)
+                {
+                    var title = dataset.Title;
+                    var organization = dataset.Organization;
+                    var datasetId = dataset.DatasetName;
+
+                    nameSpaceDataset.MetadataNavn = title;
+                    nameSpaceDataset.Organisasjon = organization;
+                    nameSpaceDataset.DatasettId = datasetId;
+                }
+                else
+                {
+                    NamespaceDataset ds = new NamespaceDataset();
+                    ds.MetadataUuid = metadataUuid;
+                    ds.MetadataNavn = dataset.Title;
+                    ds.Organisasjon = dataset.Organization;
+                    ds.DatasettId = dataset.DatasetName;
+                    ds.SystemId = Guid.NewGuid();
+                    ds.NameSpaceId = nameSpace.systemId;
+                    nameSpace.NameSpaceDatasets.Add(ds);
+                }
+            }
+
+            return nameSpace.NameSpaceDatasets;
+        }
+
         private bool GeodatalovDatasetNameAlreadyExist(GeodatalovDataset geodatalovDataset)
         {
             if (string.IsNullOrWhiteSpace(geodatalovDataset.Name))
@@ -497,6 +549,25 @@ namespace Kartverket.Register.Services.RegisterItem
 
         private bool ValidateNameRegisterItem(object model)
         {
+            if(model is CodelistValue) 
+            {
+                Models.CodelistValue registeritem = (Models.CodelistValue)model;
+                if (!string.IsNullOrWhiteSpace(registeritem.value))
+                {
+                    var registerId = registeritem.register?.systemId ?? registeritem.registerId;
+
+
+                    var queryResults = from o in _dbContext.CodelistValues
+                                       where (o.value == registeritem.value )
+                                             && o.systemId != registeritem.systemId
+                                             && o.registerId == registerId
+                                       select o;
+
+                    return !queryResults.ToList().Any();
+                }
+            }
+            else 
+            { 
             Models.RegisterItem registeritem = (Models.RegisterItem)model;
             if (!string.IsNullOrWhiteSpace(registeritem.name))
             {
@@ -512,6 +583,7 @@ namespace Kartverket.Register.Services.RegisterItem
                     select o;
 
                 return !queryResults.ToList().Any();
+            }
             }
 
             return false;

@@ -160,7 +160,7 @@
     <value>Metode for kartlegging</value>
   </data>
   <data name="Methodology" xml:space="preserve">
-    <value>Mottaksordning - beskrivelse</value>
+    <value>Mottaksordningens beskrivelse</value>
   </data>
   <data name="MethodologyDocumentLink" xml:space="preserve">
     <value>Lenke til metodikk-dokument</value>
@@ -184,7 +184,7 @@
     <value>Metodikk for avlevering</value>
   </data>
   <data name="Purpose" xml:space="preserve">
-    <value>Mottaksordning formål</value>
+    <value>Mottaksordningens formål</value>
   </data>
   <data name="RegisterDescription" xml:space="preserve">
     <value>Inneholder informasjon om og lenker til kartleggingsmetodikk, krav til data og hvordan du kan avlevere data til mottaksordninger for geografiske data. Kommuner, konsulenter og profesjonelle kartleggingsfirma får her en samlet oversikt.</value>

@@ -79,7 +79,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("dokument/{registername}/ny")]
-        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerId)
+        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerId, HttpPostedFileBase schematronfile = null)
         {
             document.register = _registerService.GetRegisterBySystemId(Guid.Parse(registerId));
             if (_accessControlService.AddToRegister(document.register))
@@ -90,7 +90,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    document = initialisationDocument(document, documentfile, thumbnail);
+                    document = initialisationDocument(document, documentfile, thumbnail,false, false, null, schematronfile);
                     if (ModelState.IsValid)
                         return Redirect(document.GetObjectUrl());
                 }
@@ -178,7 +178,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         //[Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
-        public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired, bool sosi)
+        public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired, bool sosi, HttpPostedFileBase schematronfile = null)
         {
             var originalDocument = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, document.versionNumber);
             if (originalDocument != null)
@@ -190,7 +190,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     var url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-                    document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString());
+                    document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString(), schematronfile);
                     if (document.documentUrl == "IllegalSchemaLocation")
                     {
                         ModelState.AddModelError("ErrorMessageFileName", ErrorMessageIllegalSchemaLocation);
@@ -243,6 +243,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber, string parentregister, string parentregisterowner)
         {
             Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, versionNumber);
+
             string registerUrl = document.register.GetObjectUrl();
             if (DocumentIsCurrentVersion(document))
             {
@@ -266,7 +267,25 @@ namespace Kartverket.Register.Controllers
             }
             db.SaveChanges();
 
+            RemoveFiles(document);
+
             return Redirect(registerUrl);
+        }
+
+        private void RemoveFiles(Document document)
+        {
+            if (document != null && !string.IsNullOrEmpty(document.documentUrl) && document.documentUrl.EndsWith(".xsd")) 
+            { 
+                try 
+                {
+                    new SchemaSynchronizer().RemoveFiles(document);
+                }
+                catch(Exception ex) 
+                {
+                    Log.Error("Error deleting document file: ", ex);
+                }
+            }
+
         }
 
 
@@ -467,7 +486,7 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        private Document initialisationDocument(Document inputDocument, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired = false, bool sosi = false, Document originalDocument = null)
+        private Document initialisationDocument(Document inputDocument, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired = false, bool sosi = false, Document originalDocument = null, HttpPostedFileBase schematronfile = null)
         {
             Document document = GetDocument(originalDocument);
             document.systemId = GetSystemId(document.systemId);
@@ -491,7 +510,7 @@ namespace Kartverket.Register.Controllers
                 document.documentowner = db.Organizations.Where(o => o.systemId == document.documentownerId).FirstOrDefault();
             document.submitterId = GetSubmitterId(inputDocument.submitterId);
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-            document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber, document?.status?.value, originalDocument?.status?.value);
+            document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber, document?.status?.value, originalDocument?.status?.value, schematronfile);
             if (document.documentUrl == "IllegalSchemaLocation")
             {
                 ModelState.AddModelError("ErrorMessageFileName", ErrorMessageIllegalSchemaLocation);
@@ -941,7 +960,7 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private string documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr, string status, string previousStatus)
+        private string documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr, string status, string previousStatus, HttpPostedFileBase schematronfile = null)
         {
             if (documentfile != null)
             {
@@ -951,7 +970,7 @@ namespace Kartverket.Register.Controllers
 
                 if (registername == "GML applikasjonsskjema" && schemaRemoteSynchEnabled)
                 {
-                    string syncUrl = new SchemaSynchronizer().Synchronize(documentfile);
+                    string syncUrl = new SchemaSynchronizer().Synchronize(documentfile, schematronfile);
 
                     if (!string.IsNullOrEmpty(syncUrl))
                         return syncUrl;

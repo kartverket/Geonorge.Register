@@ -8,11 +8,29 @@
     {
         url = url.Replace("https://data", "https://data." + environment);
     }
+
+    @functions {
+
+        public string FixProtocol(string url)
+        {
+            //if (Request.IsSecureConnection && !url.StartsWith("https://"))
+            //{
+            url = url.Replace("http://", "https://");
+            //}
+
+            return url;
+        }
+    }
+
 }
-<article class="col-md-12">
-    @if (Model.description == null)
+@*<article class="col-md-12">
+    @if (Model.description != null && Model.serviceUrl == null)
     {
-        <p title="@Namespace.NoContentFor @Model.name."><strong>@Namespace.Service: </strong>@Registers.NotSet</p>
+        <p title="@Namespace.LinkToContentOf @Model.name"><strong>@Namespace.Content: </strong>@Model.description</p>
+    }
+    else if (Model.description == null || Model.serviceUrl == null)
+    {
+        <p title="@Namespace.NoContentFor @Model.name."><strong>@Namespace.Content: </strong>@Registers.NotSet</p>
     }
     else
     {
@@ -29,184 +47,32 @@
     }
 
 
-</article>
-<script src="/Scripts/vue.js"></script>
-<script src="/Scripts/axios.js"></script>
-<div id="app">
-    <div class="container">
-        <div class="section data-search-filter-container">
-            <input v-model="searchInput" v-bind:placeholder="getSearchInputPlaceholder()" class="data-search-filter" />
-            <img src="/dist/images/search_icon-01.svg" alt="search">
-        </div>
-        <div class="section" is="metadata" v-bind:load-all-api-data="loadAllApiData"></div>
-    </div>
-</div>
+</article>*@
 
-<script type="text/x-template" id="metadata-template">
-    <div>
-        <div v-if="items && filteredItems.length" class="list">
-            <h3 v-on:click="expanded = !expanded" class="section-title clickable">
-                <span class="expand-arrow clickable" style="vertical-align: middle;" v-bind:class="{active: expanded}"></span>
-                Dataset ({{ getCounter() }})
-            </h3>
-            <div v-show="expanded">
-                <div class="list-header d-none d-md-block">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <b>Metadatanavn</b>
-                        </div>
-                        <div class="col-md-4">
-                            <b>Organisasjon</b>
-                        </div>
-                        <div class="col-md-4">
-                            <b>Datasett-id</b>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-content" v-bind:class="{'loading-data': loadingData}">
-                    <div v-for="item in filteredItems" class="list-item">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <a v-bind:href="item.ShowDetailsUrl" v-bind:title="'Vis detaljer for ' + item.DatasetName">{{item.Title}}</a>
-                            </div>
-                            <div class="col-md-4">
-                                {{item.Organization}}
-                            </div>
-                            <div class="col-md-4">
-                                {{item.DatasetName}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <button v-show="moreItemsAvailable" v-on:click="getItems()" class="icon-button add-more-button" v-bind:class="loadingData ? 'fas fa-spinner fa-pulse' : 'fa fa-plus'"></button>
-                </div>
+<h3>@DataSet.Dataset</h3>
+<div class="container">
+    <div class="row resultItemRow">
+        <div class="col-sm-5"><b>Metadatanavn</b></div>
+        <div class="col-sm-2"><b>Organisasjon</b></div>
+        <div class="col-sm-5"><b>Link</b></div>
+    </div>
+    <div class="w-100"></div>
+    @for (int d = 0; d < Model.NameSpaceDatasets.Count; d++)
+    {
+        <div class="row resultItemRow">
+            <div class="col-sm-5">@Model.NameSpaceDatasets.ElementAt(d).MetadataNavn</div>
+            <div class="col-sm-2">@Model.NameSpaceDatasets.ElementAt(d).Organisasjon</div>
+            <div class="col-sm-5">
+                @if (!string.IsNullOrEmpty(Model.NameSpaceDatasets.ElementAt(d).RedirectUrl))
+                {
+                <a href="@url/@Model.NameSpaceDatasets.ElementAt(d).DatasettId" target="_blank">@Model.name/@Model.NameSpaceDatasets.ElementAt(d).DatasettId</a>
+                }
+                else
+                {
+                <span>@Model.name/@Model.NameSpaceDatasets.ElementAt(d).DatasettId</span>
+                }
             </div>
         </div>
-    </div>
-</script>
-
-<script>
-    var Metadata = {
-        name: "Metadata",
-        template: "#metadata-template",
-        props: ['loadAllApiData'],
-        data: function () {
-            return {
-                loadingData: false,
-                expanded: true,
-                items: null,
-                numberOfVisibleItems: 0,
-                filterProperties: [
-                    'DatasetName',
-                ]
-            }
-        },
-        computed: {
-            moreItemsAvailable: function () {
-                if (this.loadAllApiData) {
-                    return false;
-                } else {
-                    return this.items && this.items.NumFound > this.numberOfVisibleItems;
-                }
-            },
-            filteredItems: function () {
-                var filteredItems = [];
-                if (this.loadAllApiData && this.$root.searchInput) {
-                    this.items.Results.forEach(function (item) {
-                        var itemHasMatch = false;
-                        this.filterProperties.forEach(function (filterProperty) {
-                            if (item[filterProperty].toUpperCase().indexOf(this.$root.searchInput.toUpperCase()) > -1) {
-                                itemHasMatch = true;
-                            }
-                        }.bind(this));
-                        if (itemHasMatch) {
-                            filteredItems.push(item);
-                        }
-                    }.bind(this))
-                } else {
-                    filteredItems = this.items.Results;
-                }
-                return filteredItems;
-            }
-        },
-        methods: {
-            getItems: function () {
-                var itemsPerRequest = 10;
-                var offsetParameter = this.numberOfVisibleItems ? "&offset=" + (this.numberOfVisibleItems + 1) : "";
-                var namespaceNameParameter = '?namespace=' + this.$root.Namespace;
-
-                if (this.loadAllApiData && this.items) {
-                    itemsPerRequest = this.items.NumFound;
-                }
-                var apiURL = this.loadAllApiData
-                    ? "@Html.KartkatalogenUrl()api/datasets-namespace" + namespaceNameParameter + "&limit=" + itemsPerRequest
-                    : "@Html.KartkatalogenUrl()api/datasets-namespace" + namespaceNameParameter + "&limit=" + itemsPerRequest + offsetParameter
-
-                this.loadingData = true;
-                Promise.resolve(this.$root.getApiData(apiURL))
-                    .then((apiData) => {
-                        this.loadingData = false;
-                        if (!this.items || this.loadAllApiData) {
-                            this.items = apiData;
-                        }
-                        else {
-                            this.items.Results = this.items.Results.concat(apiData.Results);
-                        }
-                        this.numberOfVisibleItems += itemsPerRequest;
-                    });
-            },
-            getCounter: function () {
-                return this.loadAllApiData && this.$root.searchInput ? this.filteredItems.length : this.items.NumFound;
-            }
-        },
-        mounted: function () {
-            this.getItems();
-        },
-        watch: {
-            loadAllApiData: function () {
-                this.getItems();
-            }
-        }
-    };
-
-        var app = new Vue({
-            el: '#app',
-            components: {
-                Metadata: Metadata,
-            },
-            data: function() {
-                return {
-                    Namespace: '@Server.UrlEncode(Model.name)',
-                    ViewTitle: 'Dataset',
-                    activeLanguage: this.getActiveLanguage(),
-                    searchInput: '',
-                    searchInputPlaceholder: {
-                        en: 'Search dataset',
-                        no: 'Søk i datasett her'
-                    },
-                    loadAllApiData: false
-                }
-            },
-            methods: {
-                getApiData: function (url) {
-                    return axios.get(url, { headers: { 'Accept-Language': this.activeLanguage } })
-                        .then(response => { return response.data; })
-                        .catch(error => { throw error; });
-                },
-                getActiveLanguage: function () {
-                    return Cookies.get('_culture') ? Cookies.get('_culture') : 'no';
-                },
-                getSearchInputPlaceholder: function () {
-                    return this.searchInputPlaceholder[this.activeLanguage];
-                }
-            },
-            watch: {
-                searchInput: function (value) {
-                    if (value) {
-                        this.loadAllApiData = true;
-                    }
-                }
-            }
-        })
-</script>
+        
+    }
+</div>

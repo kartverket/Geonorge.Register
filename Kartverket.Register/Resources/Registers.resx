@@ -241,7 +241,7 @@
     <value>Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!</value>
   </data>
   <data name="ErrorMessageValidationName" xml:space="preserve">
-    <value>Navnet finnes fra før!</value>
+    <value>Verdien finnes fra før!</value>
   </data>
   <data name="ContainedItemClassErrorMessage" xml:space="preserve">
     <value>Det må settes lovlig innhold for registeret</value>

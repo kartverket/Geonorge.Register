@@ -648,6 +648,7 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult SynchronizeDokMetadata()
         {
+            _registerItemService.UpdateNameSpaceDatasets();
             new CoverageService(db).UpdateDatasetsWithCoverage();
             new DOK.Service.MetadataService(db).UpdateDatasetsWithMetadata();
             _registerService.UpdateDOKStatus();

@@ -29,9 +29,10 @@
 @using (Html.BeginForm())
 {
 
-    <div class="form-actions no-color">
-        <input type="submit" value="@Shared.Delete" class="btn btn-default pull-right" />
-        <a href="@Model.GetObjectUrl()">@Shared.Back</a>
-    </div>
+<div class="form-actions no-color">
+    <input type="hidden" name="systemid" value="@Model.systemId" />
+    <input type="submit" value="@Shared.Delete" class="btn btn-default pull-right" />
+    <a href="@Model.GetObjectUrl()">@Shared.Back</a>
+</div>
 }
 

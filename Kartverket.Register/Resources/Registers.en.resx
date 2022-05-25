@@ -244,7 +244,7 @@
     <value>The registry can not be deleted because it contains items that need to be deleted first!</value>
   </data>
   <data name="ErrorMessageValidationName" xml:space="preserve">
-    <value>The name already exists!</value>
+    <value>The value already exists!</value>
   </data>
   <data name="Publish" xml:space="preserve">
     <value>Publish</value>

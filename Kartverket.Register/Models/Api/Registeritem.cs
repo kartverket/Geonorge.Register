@@ -77,6 +77,13 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string CartographyFile { get; set; }
+        [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? draftDate { get; set; }
+        public bool ShouldSerializedraftDate()
+        {
+            return draftDate != null && draftDate != DefaultDate;
+        }
 
         // Organization
         [DataMemberAttribute]
@@ -483,6 +490,12 @@ namespace Kartverket.Register.Models.Api
         public DateTime DefaultDate { get; set; } = new DateTime(1, 1, 1, 0, 0, 0) ;
         public string ProductSheetStatus { get; set; }
         public string PresentationRulesStatus { get; set; }
+        [DataMemberAttribute]
+        public List<NameSpaceDatasetUrl> NameSpaceDatasetUrls { get; set; }
+        public bool ShouldSerializeNameSpaceDatasetUrls()
+        {
+            return NameSpaceDatasetUrls != null && NameSpaceDatasetUrls.Count() > 0;
+        }
 
         public Registeritem(Object item, string baseUrl, FilterParameters filter = null)
         {
@@ -765,6 +778,7 @@ namespace Kartverket.Register.Models.Api
                 ApplicationSchema = d.ApplicationSchema;
                 GMLApplicationSchema = d.GMLApplicationSchema;
                 CartographyFile = d.CartographyFile;
+                draftDate = d.dateNotAccepted;
             }
 
             else if (item is Dataset)
@@ -843,6 +857,20 @@ namespace Kartverket.Register.Models.Api
                 if (n.submitter != null) owner = n.submitter.NameTranslated();
                 if (n.description != null) description = GetDescriptionLocale(n);
                 serviceUrl = n.serviceUrl;
+
+                if(n.NameSpaceDatasets != null) 
+                {
+                    NameSpaceDatasetUrls = new List<NameSpaceDatasetUrl>();
+                    foreach (var dataset in n.NameSpaceDatasets) 
+                    {
+                        NameSpaceDatasetUrls.Add(new NameSpaceDatasetUrl
+                        {
+                            DatasettId = dataset.DatasettId,
+                            RedirectUrl = !string.IsNullOrEmpty(dataset.RedirectUrl) ? dataset.RedirectUrl : ""
+                        });
+                    }
+                }
+
             }
             else if (item is Models.Organization)
             {
@@ -1108,5 +1136,11 @@ namespace Kartverket.Register.Models.Api
 
         public int RiskVulnerabilityAnalysisPlanningBuildingAct { get; set; }
         public string RiskVulnerabilityAnalysisPlanningBuildingActNote { get; set; }
+    }
+
+    public class NameSpaceDatasetUrl 
+    {
+        public string DatasettId { get; set; }
+        public string RedirectUrl { get; set; }
     }
 }

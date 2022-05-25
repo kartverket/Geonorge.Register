@@ -1419,7 +1419,7 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Methodology">
             <summary>
-              Looks up a localized string similar to Mottaksordning - beskrivelse.
+              Looks up a localized string similar to Mottaksordningens beskrivelse.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.MethodologyDocumentLink">
@@ -1479,7 +1479,7 @@
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.Purpose">
             <summary>
-              Looks up a localized string similar to Mottaksordning formål.
+              Looks up a localized string similar to Mottaksordningens formål.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Resources.GeodataCollection.RegisterDescription">
@@ -4949,7 +4949,7 @@
         </member>
         <member name="P:Resources.Registers.ErrorMessageValidationName">
             <summary>
-              Looks up a localized string similar to Navnet finnes fra før!.
+              Looks up a localized string similar to Verdien finnes fra før!.
             </summary>
         </member>
         <member name="P:Resources.Registers.Etat">

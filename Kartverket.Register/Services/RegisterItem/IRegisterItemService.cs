@@ -74,5 +74,7 @@ namespace Kartverket.Register.Services.RegisterItem
         void MakeAllRegisterItemsRetired(Models.Register originalRegister);
         List<Models.RegisterItem> GetAllVersionsOfRegisterItem(Models.Register register, string itemSystemId);
         void MakeAllRegisterItemsDraft(Models.Register originalRegister);
+        void UpdateNameSpaceDatasets();
+        ICollection<NamespaceDataset> GetNameSpaceDatasets(NameSpace nameSpace);
     }
 }

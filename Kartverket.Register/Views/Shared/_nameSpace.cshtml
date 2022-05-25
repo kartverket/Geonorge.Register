@@ -7,23 +7,27 @@
 }
 <div class="table-view">
     <div class="table-heading search-results-table-heading col-md-12">
-        <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Namespace.NamespaceName, "name")</div>
-        <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "submitter")</div>
-        <div class="col-md-2 col-sm-12 col">@Namespace.Content</div>
-        <div class="col-md-2 col-sm-12 col">@Namespace.Service</div>
+        <div class="col-md-6 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Namespace.NamespaceName, "name")</div>
+        <div class="col-md-6 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "submitter")</div>
+        @*<div class="col-md-2 col-sm-12 col">@Namespace.Content</div>
+        <div class="col-md-2 col-sm-12 col">@Namespace.Service</div>*@
     </div>
 
     @foreach (NameSpace item in Model)
     {
         <div class="resultItemRow col-md-12 ">
-            <div class="col-md-4 col-sm-12 col">
+            <div class="col-md-6 col-sm-12 col">
                 <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
             </div>
-            <div class="col-md-4 col-sm-12 col">
+            <div class="col-md-6 col-sm-12 col">
                 @Html.DisplayFor(modelItem => item.submitter.name)
             </div>
-            <div class="col-md-2 col-sm-12 col">
-                @if (item.description == null)
+            @*<div class="col-md-2 col-sm-12 col">
+                @if (item.description != null && item.serviceUrl == null)
+                {
+                    <p title="@item.name">@item.description</p>
+                }
+                else if (item.description == null || item.serviceUrl == null)
                 {
                     <p title="@Namespace.NoContentFor @item.name.">@Registers.NotSet</p>
                 }
@@ -47,7 +51,7 @@
                 {
                     <p title="@Namespace.URLForServiceInNamespace @item.name"><a href="@item.serviceUrl">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                 }
-            </div>
+            </div>*@
         </div>
     }
 </div>

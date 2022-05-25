@@ -1,5 +1,6 @@
 ﻿@model Kartverket.Register.Models.NameSpace
 @using Kartverket.Register.Helpers
+@using System.Collections.Generic;
 
 @{
     ViewBag.Title = Shared.Edit + " " + Model.name;
@@ -37,7 +38,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group hidden">
             @Html.LabelFor(model => model.description, Namespace.Content, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
@@ -79,12 +80,29 @@
             }
         }
 
-        <div class="form-group">
+        <div class="form-group hidden">
             @Html.LabelFor(model => model.serviceUrl, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.serviceUrl, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.serviceUrl, "", new { @class = "text-danger" })
             </div>
+        </div>
+        <div class="container">
+            <div class="row resultItemRow">
+                <div class="col-sm-5"><b>@DataSet.Dataset</b></div>
+                <div class="col-sm-2"><b>Datasett-id</b></div>
+                <div class="col-sm-5"><b>ServiceUrl (RedirectUrl)</b></div>
+            </div> 
+            <div class="w-100"></div>
+        @for(int d = 0; d < Model.NameSpaceDatasets.Count; d++) 
+        {
+           <div class="row resultItemRow">
+               <div class="col-sm-5">@Model.NameSpaceDatasets.ElementAt(d).MetadataNavn</div>
+               <div class="col-sm-2">@Model.NameSpaceDatasets.ElementAt(d).DatasettId</div>
+               <div class="col-sm-5"><input type="text" name="NameSpaceDatasets[@d].RedirectUrl" value="@Model.NameSpaceDatasets.ElementAt(d).RedirectUrl" /></div>
+           </div> 
+           <input type="hidden" name="NameSpaceDatasets[@d].MetadataUuid" value="@Model.NameSpaceDatasets.ElementAt(d).MetadataUuid" />
+        }
         </div>
     </div>
     <div class="form-group">

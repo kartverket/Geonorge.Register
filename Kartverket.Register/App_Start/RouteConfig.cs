@@ -46,7 +46,7 @@ namespace Kartverket.Register
 
             // Datasett
             routes.MapRoute("CreateDatasetSub", "dataset/{parentRegister}/{registerowner}/{registername}/ny", new { controller = "Datasets", action = "Create" });
-            routes.MapRoute("CreateDataset", "dataset/{registername}/ny", new { controller = "Datasets", action = "Create" });
+            routes.MapRoute("CreateDataset", "dataset/{systemid}/ny", new { controller = "Datasets", action = "Create" });
             routes.MapRoute("CreateMunicipalDatasetSub", "dataset/{parentRegister}/{registerowner}/{registername}/{municipality}/ny", new { controller = "Datasets", action = "CreateMunicipalDataset" });
             routes.MapRoute("CreateMunicipalDataset", "dataset/{registername}/{municipality}/ny", new { controller = "Datasets", action = "CreateMunicipalDataset" });
             routes.MapRoute("EditDatasetSub", "dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", new { controller = "Datasets", action = "Edit" });

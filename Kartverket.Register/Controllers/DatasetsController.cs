@@ -46,11 +46,11 @@ namespace Kartverket.Register.Controllers
         // GET: Datasets/Create
         [Authorize]
         //[Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
-        //[Route("dataset/{registername}/ny")]
-        public ActionResult Create(string registername, string parentRegister)
+        //[Route("dataset/{systemid}/ny")]
+        public ActionResult Create(string systemid)
         {
             Dataset dataset = new Dataset();
-            dataset.register = _registerService.GetRegister(parentRegister, registername);
+            dataset.register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (dataset.register != null)
             {
                 dataset.DatasetType = GetDatasetType(dataset.register.name);
@@ -72,9 +72,9 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("dataset/{registername}/ny")]
-        public ActionResult Create(Dataset dataset, string registername, string metadataUuid, string parentRegister, string registerowner, string searchString)
+        public ActionResult Create(Dataset dataset, string systemid, string metadataUuid, string parentRegister, string searchString)
         {
-            dataset.register = _registerService.GetRegister(parentRegister, registername);
+            dataset.register = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             if (dataset.register != null)
             {
                 if (_accessControlService.HasAccessTo(dataset.register))

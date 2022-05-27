@@ -28,12 +28,12 @@ namespace Kartverket.Register.Tests.Controllers
             var registerService = new Mock<IRegisterService>();
             var accessControlService = new Mock<IAccessControlService>();
             var registerItemService = new Mock<IRegisterItemService>();
-            registerService.Setup(r => r.GetRegister(null, dataset.register.seoname)).Returns(dataset.register);
+            registerService.Setup(r => r.GetRegisterBySystemId(Guid.Parse("cd429e8b-2533-45d8-bcaa-86bc2cbdd0dd"))).Returns(dataset.register);
             accessControlService.Setup(a => a.HasAccessTo(It.IsAny<Models.Register>())).Returns(true);
             registerItemService.Setup(s => s.GetThemeGroupSelectList("ThemeGroup")).Returns(NewList());
 
             var controller = CreateController(null, registerService.Object, registerItemService.Object, accessControlService.Object, null, null, null);
-            var result = controller.Create(dataset.register.seoname, null) as ViewResult;
+            var result = controller.Create("cd429e8b-2533-45d8-bcaa-86bc2cbdd0dd") as ViewResult;
             Dataset resultDataset = (Dataset)result.Model;
 
             result.Should().NotBeNull();
@@ -49,7 +49,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerService.Setup(r => r.GetRegister(null, null)).Returns(dataset.register);
 
             var controller = CreateController(null, registerService.Object, null, null, null, null, null);
-            var result = controller.Create(null, null) as ViewResult;
+            var result = controller.Create("cd429e8b-2533-45d8-bcaa-86bc2cbdd0dd") as ViewResult;
 
             result.Should().BeNull();
         }
@@ -73,7 +73,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerService.Setup(o => o.GetOrganizationByUserName()).Returns(dataset.submitter);
 
             var controller = CreateController(null, registerService.Object, registerItemService.Object, accessControlService.Object, null, null, null);
-            var result = controller.Create(dataset.register.seoname, null) as ActionResult;
+            var result = controller.Create("cd429e8b-2533-45d8-bcaa-86bc2cbdd0dd") as ActionResult;
 
             result.Should().NotBeNull();
         }

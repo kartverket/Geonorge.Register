@@ -57,6 +57,7 @@
         <div class="col-sm-5"><b>Link</b></div>
     </div>
     <div class="w-100"></div>
+    @{Model.NameSpaceDatasets = Model.NameSpaceDatasets.OrderBy(o => o.MetadataNavn).ToList();}
     @for (int d = 0; d < Model.NameSpaceDatasets.Count; d++)
     {
         <div class="row resultItemRow">

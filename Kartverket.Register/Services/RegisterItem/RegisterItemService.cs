@@ -416,7 +416,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public ICollection<NamespaceDataset> GetNameSpaceDatasets(NameSpace nameSpace)
         {
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets-namespace?namespace=" + nameSpace.name;
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets-namespace?limit=2000&namespace=" + nameSpace.name;
             var client = new WebClient { Encoding = System.Text.Encoding.UTF8 };
             var json = client.DownloadString(url);
             dynamic datasets = Newtonsoft.Json.Linq.JObject.Parse(json);

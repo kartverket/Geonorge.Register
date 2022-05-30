@@ -60,7 +60,7 @@
     @for (int d = 0; d < Model.NameSpaceDatasets.Count; d++)
     {
         <div class="row resultItemRow">
-            <div class="col-sm-5">@Model.NameSpaceDatasets.ElementAt(d).MetadataNavn</div>
+            <div class="col-sm-5"><a href="@RegisterUrls.KartkatalogenUrl(this.Html)metadata/@Model.NameSpaceDatasets.ElementAt(d).MetadataUuid" target="_blank">@Model.NameSpaceDatasets.ElementAt(d).MetadataNavn</a></div>
             <div class="col-sm-2">@Model.NameSpaceDatasets.ElementAt(d).Organisasjon</div>
             <div class="col-sm-5">
                 @if (!string.IsNullOrEmpty(Model.NameSpaceDatasets.ElementAt(d).RedirectUrl))

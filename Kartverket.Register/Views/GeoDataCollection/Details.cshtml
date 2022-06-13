@@ -132,6 +132,8 @@
         {
             <p><strong>@GeodataCollection.RegistrationRequirements: </strong>@DisplayText(Model.RegistrationRequirements)</p>
         }
+        @if (!string.IsNullOrEmpty(Model.ProcessHistory) || !string.IsNullOrEmpty(Model.LinkToRequirementsForDelivery) || !string.IsNullOrEmpty(Model.LinkToMapSolution))
+        {
             <ul>
                 @if (!string.IsNullOrEmpty(Model.ProcessHistory))
                 {
@@ -153,9 +155,9 @@
                     <li><a href="@Model.LinkInfoPage" target="_blank">@Model.LinkInfoPageLabel</a></li>
                 }
             </ul>
+        }
 
-
-    </article>
+        </article>
 </div>
 
 <div class="row">
@@ -169,6 +171,8 @@
         {
             <p><strong>@GeodataCollection.MappingRequirements: </strong>@DisplayText(Model.MappingRequirements)</p>
         }
+        @if(!string.IsNullOrEmpty(Model.Link) || !string.IsNullOrEmpty(Model.OtherWebInfoAboutMappingMethodology) || !string.IsNullOrEmpty(Model.MappingRequirementsLink)) 
+        { 
             <ul>
                 @if (!string.IsNullOrEmpty(Model.Link))
                 {
@@ -184,6 +188,7 @@
 
                 }
             </ul>
+        }
         @if (!string.IsNullOrEmpty(Model.SupportSchemes))
         {
             <p><strong>@GeodataCollection.SupportSchemes: </strong>@DisplayText(Model.SupportSchemes)</p>

@@ -44,9 +44,8 @@ namespace Kartverket.Register.Services
         string SchemaRemoteUrlTest = WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
 
         string SchemaFtpSite = WebConfigurationManager.AppSettings["SchemaFtpSite"];
-        string SchemaUsernamesBaatMappings = WebConfigurationManager.AppSettings["SchemaUsernamesBaatMappings"];
-        string SchemaUsernames = WebConfigurationManager.AppSettings["SchemaFtpUsernames"];
-        string SchemaPasswords = WebConfigurationManager.AppSettings["SchemaFtpPasswords"];
+        string SchemaUsername = WebConfigurationManager.AppSettings["SchemaFtpUsername"];
+        string SchemaPassword = WebConfigurationManager.AppSettings["SchemaFtpPassword"];
         string SchemaFtpWorkingDirectory = WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectory"]; 
 
         string SchemaFtpSiteTest = WebConfigurationManager.AppSettings["SchemaFtpSiteTest"];
@@ -78,26 +77,8 @@ namespace Kartverket.Register.Services
             return syncFile;
         }
 
-        private bool UserHasAccess()
-        {
-            var user = ClaimsPrincipal.Current.GetUsername();
-            string[] users = SchemaUsernamesBaatMappings.Split(','); 
-
-            if (users.ToList().Contains(user))
-            {
-                return true;
-            }
-            else
-            {
-                Log.Warn("User " + user + " does not have ftp rights");
-                return false;
-            }
-        }
-
         public string Synchronize(string url)
         {
-            if (UserHasAccess())
-            { 
                 var uri = new Uri(url);
                 var filename = uri.Segments.Last();
                 string mainPath = "/SOSI/produktspesifikasjon/";
@@ -108,7 +89,6 @@ namespace Kartverket.Register.Services
                     string path = url.Substring(ix + mainPath.Length, url.Length - 1 - (ix + mainPath.Length + filename.Length));
                     url = UploadFileProd(path, filename);
                 }
-            }
 
             return url;
         }
@@ -260,22 +240,8 @@ namespace Kartverket.Register.Services
 
         private User GetUser()
         {
-            var user = ClaimsPrincipal.Current.GetUsername();
-            string[] usersBaat = SchemaUsernamesBaatMappings.Split(',');
-            string[] usersFtp = SchemaUsernames.Split(',');
-            string[] passwords = SchemaPasswords.Split(',');
-
-            for (int u = 0; u < usersBaat.Length; u++)
-            {
-                if(usersBaat[u] == user)
-                {
-                    return new User { Username = usersFtp[u], Password = passwords[u] };
-                }
-            }
-          
-            Log.Error("User " + user + " does not have sftp rights");
-            throw new Exception("Permission denied");
-
+           return new User { Username = SchemaUsername, Password = SchemaPassword };
+        
         }
 
         internal void RemoveFiles(Document document)

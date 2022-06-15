@@ -15,6 +15,8 @@ using System.Drawing;
 using GhostscriptSharp;
 using Kartverket.Register.Services.Notify;
 using Kartverket.Register.Services.Translation;
+using Kartverket.Geonorge.Utilities.LogEntry;
+using System.Web.Configuration;
 //ghostscriptsharp MIT license:
 //Copyright(c) 2009 Matthew Ephraim
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -36,6 +38,18 @@ namespace Kartverket.Register.Controllers
         private IAccessControlService _accessControlService;
         private INotificationService _notificationService;
         private ITranslationService _translationService;
+        private ILogEntryService _logEntryService;
+        public ILogEntryService LogEntryService
+        {
+            get
+            {
+                if (_logEntryService == null)
+                    _logEntryService = new LogEntryService(WebConfigurationManager.AppSettings["LogApi"], WebConfigurationManager.AppSettings["LogApiKey"], new Kartverket.Geonorge.Utilities.Organization.HttpClientFactory());
+
+                return _logEntryService;
+            }
+            set { _logEntryService = value; }
+        }
         string ErrorMessageIllegalSchemaLocation = "Beklager, skjemaet ble ikke lastet opp! Ugyldig skjemaplassering. Sjekk targetNamespace i XSD. Skal starte med «http(s)//skjema.geonorge.no» eller «http(s)://skjema.test.geonorge.no»";
 
         public DocumentsController(RegisterDbContext dbContext, INotificationService notificationService, ITranslationService translationService, IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService, IDocumentService documentService)
@@ -270,6 +284,27 @@ namespace Kartverket.Register.Controllers
             RemoveFiles(document);
 
             return Redirect(registerUrl);
+        }
+
+        [Authorize]
+        public ActionResult Logg(string systemid, int limit = 50, bool displayAllElements = false)
+        {
+            var document = (Document)_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemid));
+            if (document == null)
+                return HttpNotFound();
+
+            string elementid = "";
+
+            if (!displayAllElements) 
+            {
+                elementid = document.documentUrl?.Split('/').Last();
+            }
+
+            var log =  _logEntryService.GetGMLApplicationSchemasAsync(limit, elementid).Result;
+            ViewBag.LogEntries = log;
+            Viewbags(document);
+
+            return View(document);
         }
 
         private void RemoveFiles(Document document)

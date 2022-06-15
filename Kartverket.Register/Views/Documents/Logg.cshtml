@@ -1,0 +1,47 @@
+﻿@model Kartverket.Register.Models.Document
+﻿@using Kartverket.Register.Helpers
+@using System.Web.Configuration
+@using System.Web.UI.WebControls
+@using Kartverket.Register.Helpers
+@using Kartverket.Geonorge.Utilities.LogEntry;
+
+@{
+    ViewBag.Title = "Log " + Model.name;
+}
+
+
+@section breadcrumb {
+    <li><a href="@Model.GetObjectUrl()">@Model.NameTranslated()</a></li>
+    <li>Log</li>
+}
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                Log @Model.NameTranslated()
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+<p id="registerName">Register: @Model.register.NameTranslated()</p>
+<div class="row">
+    <div class="col-md-2"><b>Date</b></div>
+    <div class="col-md-2"><b>Application</b></div>
+    <div class="col-md-2"><b>User</b></div>
+    <div class="col-md-1"><b>Operation</b></div>
+    <div class="col-md-5"><b>Description</b></div>
+</div>
+@foreach (var entry in ViewBag.LogEntries as List<LogEntry>
+)
+{
+    <div class="row">
+        <div class="col-md-2">@entry.DateTime</div>
+        <div class="col-md-2">@entry.Application</div>
+        <div class="col-md-2">@entry.User</div>
+        <div class="col-md-1">@entry.Operation</div>
+        <div class="col-md-5"><span>@entry.Description</span><span>. UUID:&nbsp;@entry.ElementId</span></div>
+    </div>
+}

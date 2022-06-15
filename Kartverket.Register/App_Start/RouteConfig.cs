@@ -63,6 +63,7 @@ namespace Kartverket.Register
             routes.MapRoute("EditDocument", "dokument/{registername}/{itemowner}/{documentname}/rediger", new { controller = "Documents", action = "Edit" });
             routes.MapRoute("DeleteDocumentSub", "dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett", new { controller = "Documents", action = "Delete" });
             routes.MapRoute("DeleteDocument", "dokument/{registername}/{organization}/{documentname}/slett", new { controller = "Documents", action = "Delete" });
+            routes.MapRoute("LoggDocument", "dokument/{systemid}/logg", new { controller = "Documents", action = "Logg" });
 
             // Geodatalov
             routes.MapRoute("CreateGeodatalovDatasetSub", "geodatalov/{parentregister}/{registerowner}/{registername}/ny", new { controller = "GeodatalovDatasets", action = "Create" });

@@ -80,8 +80,9 @@
 
                 if (Model.CurrentVersion.AccessRegisterItem)
                 {
+                    <a href="/dokument/@Model.CurrentVersion.SystemId/logg" class="btn btn-default btn-space pull-right" id="logg-button" title="Log @Model.CurrentVersion.Name">Log</a>
                     <a href="@Model.CurrentVersion.EditVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" id="edit-button" title="Rediger @Model.CurrentVersion.Name">@Shared.Edit</a>
-                    <a href="@Model.CurrentVersion.DeleteVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" id="delete-button"  title="Slett @Model.CurrentVersion.Name">@Shared.Delete</a>
+                    <a href="@Model.CurrentVersion.DeleteVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" id="delete-button" title="Slett @Model.CurrentVersion.Name">@Shared.Delete</a>
                 }
             }
             <a href="@Model.CurrentVersion.Register.GetObjectUrl()">@Shared.Back</a>

@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Logg: @Model.NameTranslated()
+                Logg: @(Request["displayAllElements"] == "true" ? Model.register.NameTranslated() : Model.NameTranslated())
             </h2>
         </div>
         <div class="col-sm-12">
@@ -26,7 +26,14 @@
         </div>
     </div>
 </section>
-<p id="registerName">Register: @Model.register.NameTranslated()</p>
+@if (Request["displayAllElements"] == "true")
+{
+    <p><a href="?displayAllElements=false">Vis siste logghendelser for @Model.NameTranslated()</a></p>
+}
+else
+{
+    <p><a href="?displayAllElements=true">Vis alle siste logghendelser i @Model.register.NameTranslated()</a></p>
+}
 <div class="row">
     <div class="col-md-2"><b>Date</b></div>
     <div class="col-md-2"><b>User</b></div>

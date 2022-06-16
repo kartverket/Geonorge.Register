@@ -6,7 +6,7 @@
 @using Kartverket.Geonorge.Utilities.LogEntry;
 
 @{
-    ViewBag.Title = "Log " + Model.name;
+    ViewBag.Title = "Logg " + Model.name;
 }
 
 
@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Log @Model.NameTranslated()
+                Logg: @Model.NameTranslated()
             </h2>
         </div>
         <div class="col-sm-12">
@@ -29,7 +29,6 @@
 <p id="registerName">Register: @Model.register.NameTranslated()</p>
 <div class="row">
     <div class="col-md-2"><b>Date</b></div>
-    <div class="col-md-2"><b>Application</b></div>
     <div class="col-md-2"><b>User</b></div>
     <div class="col-md-1"><b>Operation</b></div>
     <div class="col-md-5"><b>Description</b></div>
@@ -39,7 +38,6 @@
 {
     <div class="row">
         <div class="col-md-2">@entry.DateTime</div>
-        <div class="col-md-2">@entry.Application</div>
         <div class="col-md-2">@entry.User</div>
         <div class="col-md-1">@entry.Operation</div>
         <div class="col-md-5"><span>@entry.Description</span><span>. UUID:&nbsp;@entry.ElementId</span></div>

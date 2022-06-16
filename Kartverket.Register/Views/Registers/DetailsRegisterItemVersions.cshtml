@@ -80,7 +80,9 @@
 
                 if (Model.CurrentVersion.AccessRegisterItem)
                 {
+                    if(Model.CurrentVersion.Register.systemId.ToString() == "e43b65c6-452f-489d-a2e6-a5262e5740d8") {
                     <a href="/dokument/@Model.CurrentVersion.SystemId/logg" class="btn btn-default btn-space pull-right" id="logg-button" title="Log @Model.CurrentVersion.Name">Logg</a>
+                    }
                     <a href="@Model.CurrentVersion.EditVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" id="edit-button" title="Rediger @Model.CurrentVersion.Name">@Shared.Edit</a>
                     <a href="@Model.CurrentVersion.DeleteVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" id="delete-button" title="Slett @Model.CurrentVersion.Name">@Shared.Delete</a>
                 }

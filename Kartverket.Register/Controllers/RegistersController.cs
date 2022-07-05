@@ -351,7 +351,31 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
             var register = _registerService.GetRegisterByPath(path);
-            if (register == null) return HttpNotFound();
+            if (register == null) 
+            {
+                var value = subregisters.Split('/').Last();
+                //check codevalue
+                var codevalue = _db.RegisterItems.OfType<CodelistValue>().Where(s => (s.value == value || s.seoname == value )  || s.register.path == path).FirstOrDefault();
+                if(codevalue != null)
+                {
+                    systemId = codevalue.systemId.ToString();
+                    register = codevalue.register;
+                }
+            }
+            if (register == null)
+            {
+                var value = subregisters.Split('/').Last();
+                //check register
+                var registerItem = _db.RegisterItems.Where(s => (s.seoname == value) || s.register.path == path).FirstOrDefault();
+                if (registerItem != null)
+                {
+                    systemId = registerItem.systemId.ToString();
+                    register = registerItem.register;
+                }
+            }
+
+            if (register == null)    
+                return HttpNotFound();
 
                
             register = FilterRegisterItems(register, filter);

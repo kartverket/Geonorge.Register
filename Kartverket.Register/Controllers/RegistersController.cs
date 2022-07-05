@@ -354,7 +354,8 @@ namespace Kartverket.Register.Controllers
             if (register == null) 
             {
                 var value = subregisters.Split('/').Last();
-                path = path.Substring(0, path.LastIndexOf('/'));
+                if(path.Contains('/'))
+                    path = path.Substring(0, path.LastIndexOf('/'));
                 //check codevalue
                 var codevalue = _db.RegisterItems.OfType<CodelistValue>().Where(s => (s.value == value || s.seoname == value )  && s.register.path == path).FirstOrDefault();
                 if(codevalue != null)
@@ -366,7 +367,8 @@ namespace Kartverket.Register.Controllers
             if (register == null)
             {
                 var value = subregisters.Split('/').Last();
-                path = path.Substring(0, path.LastIndexOf('/'));
+                if (path.Contains('/'))
+                    path = path.Substring(0, path.LastIndexOf('/'));
                 //check register
                 var registerItem = _db.RegisterItems.Where(s => (s.seoname == value) && s.register.path == path).FirstOrDefault();
                 if (registerItem != null)

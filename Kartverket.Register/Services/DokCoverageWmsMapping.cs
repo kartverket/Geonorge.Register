@@ -19,9 +19,9 @@ namespace Kartverket.Register.Services
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["CoverageApi"] + "datasett";
             System.Net.WebClient c = new System.Net.WebClient();
             c.Encoding = System.Text.Encoding.UTF8;
-            Log.Info("Connecting to url: " + url);
+            Log.Debug("Connecting to url: " + url);
             var data = c.DownloadString(url);
-            Log.Info("Data response: " + data);
+            Log.Debug("Data response: " + data);
             var response = Newtonsoft.Json.Linq.JObject.Parse(data);
 
             var codeList = response["datasets"];

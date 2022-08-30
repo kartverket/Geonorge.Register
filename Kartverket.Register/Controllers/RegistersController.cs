@@ -531,6 +531,8 @@ namespace Kartverket.Register.Controllers
 
             var versionsItem = _versioningService.Versions(registername, parentRegister, itemname);
             var model = new VersionsViewModel(versionsItem);
+            model.HistoricalVersions = model.HistoricalVersions.OrderByDescending(o => o.VersionNumber).ToList();
+            model.SuggestedVersions = model.SuggestedVersions.OrderBy(o => o.VersionNumber).ToList();
             model.AccessCreateNewVersions = _accessControlService.AccessCreateNewVersion(model.CurrentVersion);
             model.CurrentVersion.AccessRegisterItem = _accessControlService.HasAccessTo(model.CurrentVersion);
 

@@ -18,11 +18,6 @@ namespace Kartverket.Register
         {
             var container = DependencyConfig.Configure(new ContainerBuilder());
 
-            application.Use((context, next) => {
-                context.Request.Scheme = "https";
-                return next();
-            });
-
             application.UseAutofacMiddleware(container);
             application.UseAutofacMvc();
             application.UseGeonorgeAuthentication();

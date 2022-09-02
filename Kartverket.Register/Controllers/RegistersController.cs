@@ -1,4 +1,4 @@
-﻿using Kartverket.Register.Helpers;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services;
@@ -340,7 +340,9 @@ namespace Kartverket.Register.Controllers
         public ActionResult DetailsAll(string registername, string sorting, int? page, FilterParameters filter,string subregisters = null, string InspireRegisteryType = null)
         {
             var path = RegisterUrls.GetPath(registername, subregisters);
+            var originalPath = path;
             string systemId = RegisterUrls.GetSystemIdFromPath(registername + "/" + subregisters);
+            bool isCodeValue = false;
 
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
             var registerPath = registername;
@@ -351,6 +353,12 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
             var register = _registerService.GetRegisterByPath(path);
+
+            if (register == null && originalPath.Contains('/'))
+            {
+                register = _registerService.GetRegisterByPath(originalPath.Substring(0, originalPath.LastIndexOf('/')));
+            }
+
             if (register == null) 
             {
                 var value = subregisters.Split('/').Last();
@@ -362,8 +370,10 @@ namespace Kartverket.Register.Controllers
                 {
                     systemId = codevalue.systemId.ToString();
                     register = codevalue.register;
+                    isCodeValue = true;
                 }
             }
+
             if (register == null)
             {
                 var value = subregisters.Split('/').Last();
@@ -381,7 +391,12 @@ namespace Kartverket.Register.Controllers
             if (register == null)    
                 return HttpNotFound();
 
-            if (register.ContainedItemClassIsDocument() && !string.IsNullOrEmpty(subregisters)) 
+            if (register.ContainedItemClassIsDocument() && !register.items.Any()) 
+            {
+                register.items = _db.RegisterItems.Where(d => d.register.parentRegisterId == register.systemId).ToList();
+            }
+
+            if (register.ContainedItemClassIsDocument() && !string.IsNullOrEmpty(subregisters) && !subregisters.Contains('/') && isCodeValue) 
             {
                 return DetailsRegisterItemVersions(registername, null, subregisters, register.owner.seoname, format);
             }

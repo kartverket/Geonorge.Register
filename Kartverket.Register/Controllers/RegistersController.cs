@@ -342,7 +342,7 @@ namespace Kartverket.Register.Controllers
             var path = RegisterUrls.GetPath(registername, subregisters);
             var originalPath = path;
             string systemId = RegisterUrls.GetSystemIdFromPath(registername + "/" + subregisters);
-            bool isCodeValue = false;
+            bool isRegisterItem = false;
 
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
             var registerPath = registername;
@@ -353,11 +353,6 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
             var register = _registerService.GetRegisterByPath(path);
-
-            if (register == null && originalPath.Contains('/'))
-            {
-                register = _registerService.GetRegisterByPath(originalPath.Substring(0, originalPath.LastIndexOf('/')));
-            }
 
             if (register == null) 
             {
@@ -370,9 +365,25 @@ namespace Kartverket.Register.Controllers
                 {
                     systemId = codevalue.systemId.ToString();
                     register = codevalue.register;
-                    isCodeValue = true;
+                    isRegisterItem = true;
                 }
             }
+
+            if (register == null)
+            {
+                var value2 = subregisters.Split('/').Last();
+                if (path.Contains('/'))
+                    path = path.Substring(0, originalPath.LastIndexOf('/'));
+                //check value
+                var doc = _db.RegisterItems.OfType<Document>().Where(s => (s.seoname == value2) && s.register.path == path).FirstOrDefault();
+                if (doc != null)
+                {
+                    systemId = doc.systemId.ToString();
+                    register = doc.register;
+                    isRegisterItem = true;
+                }
+            }
+
 
             if (register == null)
             {
@@ -388,6 +399,11 @@ namespace Kartverket.Register.Controllers
                 }
             }
 
+            if (register == null && originalPath.Contains('/'))
+            {
+                register = _registerService.GetRegisterByPath(originalPath.Substring(0, originalPath.LastIndexOf('/')));
+            }
+
             if (register == null)    
                 return HttpNotFound();
 
@@ -396,9 +412,27 @@ namespace Kartverket.Register.Controllers
                 register.items = _db.RegisterItems.Where(d => d.register.parentRegisterId == register.systemId).ToList();
             }
 
-            if (register.ContainedItemClassIsDocument() && !string.IsNullOrEmpty(subregisters) && !subregisters.Contains('/') && isCodeValue) 
+            if (register.ContainedItemClassIsDocument() && !string.IsNullOrEmpty(subregisters) && isRegisterItem) 
             {
-                return DetailsRegisterItemVersions(registername, null, subregisters, register.owner.seoname, format);
+                string registerName = "";
+                string parentRegister = null;
+                string itemName = "";
+
+                var items = originalPath.Split('/');
+
+                if(items.Count() == 2) 
+                {
+                    registerName = items[0];
+                    itemName = items[1];
+                }
+                else
+                {
+                    registerName = items[items.Count()-2];
+                    parentRegister = items[items.Count() - 3];
+                    itemName = items[items.Count()-1];
+                }
+
+                return DetailsRegisterItemVersions(registerName, parentRegister, itemName, register.owner.seoname, format);
             }
 
                

@@ -381,6 +381,11 @@ namespace Kartverket.Register.Controllers
             if (register == null)    
                 return HttpNotFound();
 
+            if (register.ContainedItemClassIsDocument() && !string.IsNullOrEmpty(subregisters)) 
+            {
+                return DetailsRegisterItemVersions(registername, null, subregisters, register.owner.seoname, format);
+            }
+
                
             register = FilterRegisterItems(register, filter);
             RegisterV2ViewModel viewModel;
@@ -541,7 +546,7 @@ namespace Kartverket.Register.Controllers
             if (model.CurrentVersion?.Name == null)
                 return HttpNotFound();
 
-            return View(model);
+            return View("DetailsRegisterItemVersions", model);
         }
 
 

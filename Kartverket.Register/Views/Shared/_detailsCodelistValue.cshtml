@@ -10,8 +10,8 @@
     {
         <p><strong>@CodelistValues.ValidToDate:</strong> @Html.DisplayFor(c => c.ValidToDate)</p>
     }
-    </article>
-
+</article>
+@if(Model.broaderItemId != null || (Model.narrowerItems != null && Model.narrowerItems.Count > 0)) {
 <article class="col-sm-12">
     <h3 style="margin-top: 10px;">@CodelistValues.HierarchicalCodelists</h3>
     <div class="col-sm-12 col-md-6 col">
@@ -36,4 +36,5 @@
         }
     </div>
 </article>
+}
 

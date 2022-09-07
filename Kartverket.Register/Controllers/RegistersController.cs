@@ -11,7 +11,9 @@ using Resources;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Configuration;
@@ -404,6 +406,23 @@ namespace Kartverket.Register.Controllers
                 register = _registerService.GetRegisterByPath(originalPath.Substring(0, originalPath.LastIndexOf('/')));
             }
 
+            //check for file
+            if (subregisters != null && subregisters.Contains("/")) 
+            { 
+                var lastPath = subregisters.Split('/').Last();
+                if (lastPath.Contains(".")) 
+                {
+                    //todo check legal file extension?
+                    //what about versions?
+
+                    string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/documents/" + lastPath;
+                    string mimeType = GetMimeTypeFromUrl(url);
+                    Stream stream = DownloadImage(url);
+                    return new FileStreamResult(stream, mimeType);
+                }
+            }
+
+
             if (register == null)    
                 return HttpNotFound();
 
@@ -466,6 +485,44 @@ namespace Kartverket.Register.Controllers
             return View("Details", viewModel);
 
         }
+
+        private string GetMimeTypeFromUrl(string url)
+        {
+            int lastIndexOfDot = url.LastIndexOf('.');
+            string fileExtension = url.Substring(lastIndexOfDot + 1);
+            return "image/" + fileExtension.ToLower();
+        }
+
+        private Stream DownloadImage(string uri)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            Stream outputStream = null;
+            if ((response.StatusCode == HttpStatusCode.OK ||
+                 response.StatusCode == HttpStatusCode.Moved ||
+                 response.StatusCode == HttpStatusCode.Redirect))
+            {
+                Stream inputStream = response.GetResponseStream();
+                if (inputStream != null)
+                {
+                    outputStream = new MemoryStream();
+
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    do
+                    {
+                        bytesRead = inputStream.Read(buffer, 0, buffer.Length);
+                        outputStream.Write(buffer, 0, bytesRead);
+                    } while (bytesRead != 0);
+
+                    outputStream.Position = 0;
+                }
+
+            }
+            return outputStream;
+        }
+
 
         private string GetInspireRegistryType(string filter)
         {

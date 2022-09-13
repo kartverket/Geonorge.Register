@@ -394,6 +394,11 @@ namespace Kartverket.Register.Helpers
                 sortTitle = DataSet.DOK_Delivery_Title;
                 sortingParam = defaultSort;
             }
+            else if (sortingSelected == "name" && defaultSort == "mareano_status")
+            {
+                sortingClass = "sorted-desc";
+                sortingParam = "mareano_status_desc";
+            }
             else
             {
                 sortingClass = "";

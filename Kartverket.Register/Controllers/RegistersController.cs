@@ -349,6 +349,10 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrEmpty(subregisters))
                 registerPath = registerPath + "/" + subregisters;
             string format = RegisterUrls.GetFileExtension(registerPath);
+            if(string.IsNullOrEmpty(format) && Request.Headers["Accept"] == null) 
+            {
+                format = "json";
+            }
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 

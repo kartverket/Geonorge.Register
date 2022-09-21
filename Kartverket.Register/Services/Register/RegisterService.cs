@@ -974,8 +974,7 @@ namespace Kartverket.Register.Services.Register
                 return "xml";
             }
 
-            response.ContentType = "application/json";
-            return "json";
+            return null;
         }
 
         public Models.Register GetRegisterByName(string registerName)

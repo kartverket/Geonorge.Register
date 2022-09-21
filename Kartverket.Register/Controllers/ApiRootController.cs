@@ -468,6 +468,11 @@ namespace Kartverket.Register.Controllers
                 mediaType.Formatter = new XMLFormatter();
                 mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/xml");
             }
+            else if (extension == "skos")
+            {
+                mediaType.Formatter = new SKOSFormatter();
+                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/xml+rdf");
+            }
             else
             {
                 mediaType.Formatter = new JsonMediaTypeFormatter();

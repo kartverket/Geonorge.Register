@@ -173,7 +173,7 @@ namespace Kartverket.Register.Helpers
 
         public static bool AllowedExtension(string ext)
         {
-            string[] extensions = { "json", "xml", "csv", "gml", "gml", "rdf", "rss", "atom" };
+            string[] extensions = { "json", "xml", "csv", "gml", "rdf", "rss", "atom", "skos" };
             return extensions.Any(e => e == ext);
         }
 

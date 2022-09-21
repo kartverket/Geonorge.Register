@@ -942,9 +942,9 @@ namespace Kartverket.Register.Services.Register
                 response.ContentType = "application/json";
                 return "json";
             }
-            if (request.AcceptTypes.Contains("application/xml"))
+            if (request.AcceptTypes.Contains("application/gml+xml"))
             {
-                response.ContentType = "application/xml";
+                response.ContentType = "application/gml+xml";
                 return "gml";
             }
             if (request.AcceptTypes.Contains("application/rdf+xml"))
@@ -967,7 +967,15 @@ namespace Kartverket.Register.Services.Register
                 response.ContentType = "text/csv";
                 return "csv";
             }
-            return null;
+
+            if (request.AcceptTypes.Contains("application/xml"))
+            {
+                response.ContentType = "application/xml";
+                return "xml";
+            }
+
+            response.ContentType = "application/json";
+            return "json";
         }
 
         public Models.Register GetRegisterByName(string registerName)

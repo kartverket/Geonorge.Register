@@ -260,7 +260,7 @@ namespace Kartverket.Register.Models
         
         public virtual Guid GetSystemId()
         {
-            if (systemId == null || systemId == Guid.Empty)
+            if (systemId == null || systemId == Guid.Empty || (systemId == register.systemId))
             {
                 return Guid.NewGuid();
             }

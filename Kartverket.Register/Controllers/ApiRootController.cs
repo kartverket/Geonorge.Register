@@ -407,7 +407,8 @@ namespace Kartverket.Register.Controllers
             var path = RegisterUrls.GetPath(registerName, subregisters);
             string systemId = RegisterUrls.GetSystemIdFromPath(registerName + "/" + subregisters);
             string format = RegisterUrls.GetFileExtension(registerName + "/" + subregisters);
-            path = RegisterUrls.RemoveExtension(path);
+            if(!string.IsNullOrEmpty(format))
+                path = RegisterUrls.RemoveExtension(path);
 
             var mediatype = GetFormattingForMediaType(format);
 

@@ -53,9 +53,10 @@ namespace Kartverket.Register.Services
         string SchemaPasswordTest = WebConfigurationManager.AppSettings["SchemaFtpPasswordTest"];
         string SchemaFtpWorkingDirectoryTest = WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectoryTest"];
 
-        public string Synchronize(HttpPostedFileBase file, HttpPostedFileBase schematronfile = null)
+        public DocumentFile Synchronize(HttpPostedFileBase file, HttpPostedFileBase schematronfile = null)
         {
-            string syncFile = "";
+            DocumentFile syncFile = new DocumentFile();
+            syncFile.Url = "";
             if (file != null && file.ContentLength > 0 && (file.ContentType == "text/xml" || file.ContentType == "application/xml"))
             {
                 var document = new XmlDocument();
@@ -70,7 +71,8 @@ namespace Kartverket.Register.Services
                 else 
                 {
                     Log.Error("Ugyldig skjemaplassering:" + targetNamespace);
-                    return "IllegalSchemaLocation";
+                    syncFile.Url = "IllegalSchemaLocation";
+                    return syncFile;
                 }
             }
 
@@ -108,12 +110,12 @@ namespace Kartverket.Register.Services
                 || (node.Value.Contains(TargetNamespaceSecure) || node.Value.Contains(TargetNamespaceTestSecure))) ;
         }
 
-        string UploadFile(HttpPostedFileBase file, string path, HttpPostedFileBase schematronfile = null)
+        DocumentFile UploadFile(HttpPostedFileBase file, string path, HttpPostedFileBase schematronfile = null)
         {
-            try
-            {
+            DocumentFile documentFile = new DocumentFile();
 
-            
+            try
+            {          
                 using (var sftp = new SftpClient(SchemaFtpSiteTest, SchemaUsernameTest, SchemaPasswordTest))
                 {
                     sftp.Connect();
@@ -148,6 +150,8 @@ namespace Kartverket.Register.Services
                         fileStream.Position = 0;
 
                         sftp.UploadFile(fileStream, filePath, true);
+
+                        documentFile.UrlSchematron = SchemaRemoteUrlTest + path + "/" + schematronfile.FileName; ;
                     }
 
                     sftp.Disconnect();
@@ -160,7 +164,9 @@ namespace Kartverket.Register.Services
 
             Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = path + "/" + file.FileName, Operation = Operation.Added, User = ClaimsPrincipal.Current.GetUsername(), Description = "Ftp gml-skjema til test" }));
 
-            return SchemaRemoteUrlTest + path + "/" + file.FileName;
+            documentFile.Url = SchemaRemoteUrlTest + path + "/" + file.FileName;
+
+            return documentFile;
         }
 
         private string UploadFileProd(string path, string filename)

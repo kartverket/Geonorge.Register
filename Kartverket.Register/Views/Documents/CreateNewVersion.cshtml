@@ -101,6 +101,14 @@
                     <input type="file" name="documentfile" />
                 </div>
             </div>
+            <div class="form-group@(Model.register.seoname != "gml-applikasjonsskjema" ? " hidden" :"")">
+                <label class="control-label col-md-2" for="schematronfile">Schematron-fil:</label>
+                <div class="col-md-10">
+                    <input type="file" name="schematronfile" id="schematronfile" />
+                    @Html.ValidationMessage("FileName", new { @class = "text-danger" })
+                    @Html.ValidationMessage("ErrorMessageFileName")
+                </div>
+            </div>
 
            <div class="form-group">
                 @Html.LabelFor(model => model.documentUrl2, htmlAttributes: new { @class = "control-label col-md-2" })

@@ -82,6 +82,8 @@ namespace Kartverket.Register.Models
         public string documentUrl { get; set; }
         [Display(Name = "DocumentUrl2", ResourceType = typeof(Registers))]
         public string documentUrl2 { get; set; }
+        [Display(Name = "Schematron-file", ResourceType = typeof(Registers))]
+        public string documentUrlSchematron { get; set; }
 
         [Display(Name = "ApprovalDocument", ResourceType = typeof(Registers))]
         public string approvalDocument { get; set; }

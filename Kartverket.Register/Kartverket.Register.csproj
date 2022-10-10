@@ -24,7 +24,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -1225,6 +1225,10 @@
     <Compile Include="Migrations\202203170900101_AddNamespaceDataset.designer.cs">
       <DependentUpon>202203170900101_AddNamespaceDataset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202210101305133_AddSchematronFile.cs" />
+    <Compile Include="Migrations\202210101305133_AddSchematronFile.designer.cs">
+      <DependentUpon>202210101305133_AddSchematronFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1258,6 +1262,7 @@
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DocumentFile.cs" />
     <Compile Include="Models\DokMeasureStatus.cs" />
     <Compile Include="Models\FAIR\FAIRDelivery.cs" />
     <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
@@ -3208,6 +3213,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203170900101_AddNamespaceDataset.resx">
       <DependentUpon>202203170900101_AddNamespaceDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210101305133_AddSchematronFile.resx">
+      <DependentUpon>202210101305133_AddSchematronFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

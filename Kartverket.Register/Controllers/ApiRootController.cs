@@ -378,12 +378,22 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}.{ext}")]
         [System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}")]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetSubregisterByName(string parentregister, string register, string systemid = null)
+        public IHttpActionResult GetSubregisterByName(string parentregister, string register, string systemid = null, string ext = "json")
         {
             var it = _registerService.GetRegister(parentregister, register);
 
             if(it == null && !string.IsNullOrEmpty(systemid))
                it = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+
+            if (it == null)
+            {
+                var currentVersion = ConvertCurrentAndVersions(null, parentregister, RegisterUrls.GetItemFromPath(parentregister + "/" + register));
+
+                var mediatype = GetFormattingForMediaType(ext);
+
+                if (currentVersion != null)
+                    return Content(HttpStatusCode.OK, currentVersion, mediatype.Formatter, mediatype.MediaTypeHeader);
+            }
 
             if (it == null)
             {

@@ -59,7 +59,7 @@ namespace Kartverket.Register.Models
                 if (documentowner == null && seoname == null)
                     return "/register/versjoner/" + register.seoname;
                 else
-                    return "/register/versjoner/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
+                    return "/" + register.seoname + "/" + seoname;
             }
             else
             {

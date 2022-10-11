@@ -413,6 +413,21 @@ namespace Kartverket.Register.Controllers
             var mediatype = GetFormattingForMediaType(format);
 
             var register = _registerService.GetRegisterByPath(path);
+
+            if (register == null)
+            {
+                var value = path.Split('/').Last();
+                if (path.Contains('/'))
+                    path = path.Substring(0, path.LastIndexOf('/'));
+                //check codevalue
+                var codevalue = db.RegisterItems.OfType<CodelistValue>().Where(s => (s.value == value || s.seoname == value) && s.register.path == path).FirstOrDefault();
+                if (codevalue != null)
+                {
+                    systemId = codevalue.systemId.ToString();
+                    register = codevalue.register;
+                }
+            }
+
             if (register == null)
             {
                 var currentVersion = ConvertCurrentAndVersions(null, registerName, RegisterUrls.GetItemFromPath(subregisters));

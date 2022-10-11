@@ -252,8 +252,13 @@ namespace Kartverket.Register.Models
                 return alert.GetAlertUrl();
             }
             else {
-                if(submitter!=null && !string.IsNullOrEmpty(seoname))
-                    return register.GetObjectUrl() + "/" + seoname + "/" + systemId;
+                if (submitter != null && !string.IsNullOrEmpty(seoname)) { 
+                    var item = seoname;
+                    CodelistValue codelistValue = (CodelistValue)this;
+                    if (codelistValue != null && !string.IsNullOrEmpty(codelistValue.value))
+                        item = codelistValue.value;
+                    return register.GetObjectUrl() + "/" + item;
+                }
                 else
                     return register.GetObjectUrl();
             }

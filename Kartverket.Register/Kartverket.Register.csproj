@@ -1597,6 +1597,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="bin\gsdll32.dll">
     </Content>
+    <Content Include="CodeListStatusUpdate.sql" />
     <Content Include="Content\bower_components\chart.js\dist\Chart.bundle.js" />
     <Content Include="Content\bower_components\chart.js\dist\Chart.bundle.min.js" />
     <Content Include="Content\bower_components\chart.js\dist\Chart.js" />

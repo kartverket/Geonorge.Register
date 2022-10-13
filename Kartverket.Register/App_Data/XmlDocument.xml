@@ -586,6 +586,11 @@
             Update alert status
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.UpdateCodelistStatus">
+            <summary>
+            Update code value status
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.ConvertCurrentAndVersions(Kartverket.Register.Models.Register,System.String)">
             <summary>
             Get all Geolett

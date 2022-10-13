@@ -25,6 +25,7 @@ using StatusReport = Kartverket.Register.Models.StatusReport;
 using Swashbuckle.Examples;
 using System.Net;
 using System.Net.Http.Formatting;
+using System.IO;
 
 namespace Kartverket.Register.Controllers
 {
@@ -813,6 +814,31 @@ namespace Kartverket.Register.Controllers
             Log.Info("Stop alert-set-status-retired");
             return Ok();
         }
+
+        /// <summary>
+        /// Update code value status
+        /// </summary>
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/codelist/update-status")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult UpdateCodelistStatus()
+        {
+            try
+            {
+                Log.Info("Start UpdateCodelistStatus");
+
+                string script = File.ReadAllText(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "CodeListStatusUpdate.sql"));
+
+                db.Database.ExecuteSqlCommand(script);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Feil UpdateCodelistStatus: ", ex);
+            }
+            Log.Info("Stop UpdateCodelistStatus");
+            return Ok();
+        }
+
 
         //[System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         //[ApiExplorerSettings(IgnoreApi = true)]

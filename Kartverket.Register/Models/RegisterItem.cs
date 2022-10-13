@@ -254,7 +254,7 @@ namespace Kartverket.Register.Models
             else {
                 if (submitter != null && !string.IsNullOrEmpty(seoname)) { 
                     var item = seoname;
-                    CodelistValue codelistValue = (CodelistValue)this;
+                    CodelistValue codelistValue =  this as CodelistValue;
                     if (codelistValue != null && !string.IsNullOrEmpty(codelistValue.value))
                         item = codelistValue.value;
                     return register.GetObjectUrl() + "/" + item;

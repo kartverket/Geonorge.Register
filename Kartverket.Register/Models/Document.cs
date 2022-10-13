@@ -63,7 +63,7 @@ namespace Kartverket.Register.Models
             }
             else
             {
-                return "/subregister/versjoner/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
+                return "/" + register.path + "/" + seoname;
             }
         }
 

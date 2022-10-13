@@ -416,6 +416,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterItemByName(string registerName, string subregisters = null)
         {
             var path = RegisterUrls.GetPath(registerName, subregisters);
+            var originalPath = path;
             string systemId = RegisterUrls.GetSystemIdFromPath(registerName + "/" + subregisters);
             string format = RegisterUrls.GetFileExtension(registerName + "/" + subregisters);
             if(!string.IsNullOrEmpty(format))
@@ -436,6 +437,21 @@ namespace Kartverket.Register.Controllers
                 {
                     systemId = codevalue.systemId.ToString();
                     register = codevalue.register;
+                }
+            }
+
+            if (register == null)
+            {
+                subregisters = RegisterUrls.RemoveExtension(subregisters);
+                var value2 = subregisters.Split('/').Last();
+                if (path.Contains('/'))
+                    path = path.Substring(0, originalPath.LastIndexOf('/'));
+                //check value
+                var doc = db.RegisterItems.OfType<Document>().Where(s => (s.seoname == value2) && s.register.path == path).FirstOrDefault();
+                if (doc != null)
+                {
+                    systemId = doc.systemId.ToString();
+                    register = doc.register;
                 }
             }
 

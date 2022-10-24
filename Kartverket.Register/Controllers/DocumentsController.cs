@@ -203,8 +203,8 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    var url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-                    DocumentFile documentFile = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString(), schematronfile);
+                    string url = GetUrlForRegister(originalDocument, document);
+                    DocumentFile documentFile = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString(), originalDocument,document, schematronfile);
                     document.documentUrl = documentFile.Url;
                     document.documentUrlSchematron = documentFile.UrlSchematron;
                     if (document.documentUrl == "IllegalSchemaLocation")
@@ -215,7 +215,7 @@ namespace Kartverket.Register.Controllers
                     else { 
                     if (document.register == null)
                         document.register = originalDocument.register;
-                    document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
+                    document.thumbnail = GetThumbnail(document, originalDocument, documentfile, url, thumbnail);
                     originalDocument = _documentService.UpdateDocument(originalDocument, document, documentfile,thumbnail, retired, sosi);
 
 
@@ -418,16 +418,25 @@ namespace Kartverket.Register.Controllers
         /// <param name="documentfile"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        private string GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url)
+        private string GenerateThumbnail(Document document, Document originalDocument, HttpPostedFileBase documentfile, string url)
         {
             if (document.documentUrl.Contains(".pdf"))
             {
-                string filtype;
-                string seofilename = MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
-                string documentNameSeo = RegisterUrls.MakeSeoFriendlyString(document.name);
+                string filtype, name;
+                string seofilename = MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename) + Path.GetExtension(documentfile.FileName) ;
+                name = RegisterUrls.MakeSeoFriendlyString(document.name);
 
-                string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.seoname + "_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
-                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.seoname + "_thumbnail_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + ".jpg");
+                var originalPath = document != null && document.register != null ? document.register.path : originalDocument.register.path;
+                var registerPath = originalPath + "/" + name + "/" + document.versionName;
+                var directory = Constants.DataDirectory + Document.DataDirectory + registerPath;
+                var path = Server.MapPath(directory);
+                //System.IO.Directory.CreateDirectory(path);
+
+                path = Path.Combine(path, seofilename);
+
+                string input = path;
+                string thumbFileName = seofilename.Replace(".pdf", ".jpg");
+                string output = path.Replace(".pdf", ".jpg");
                 GhostscriptWrapper.GenerateOutput(input, output, GsSettings());
 
                 ImageResizer.ImageJob newImage =
@@ -436,7 +445,10 @@ namespace Kartverket.Register.Controllers
 
                 newImage.Build();
 
-                return url + document.register.seoname + "_thumbnail_" + documentNameSeo + "_v" + document.versionNumber + "_" + seofilename + ".jpg";
+                //remove standarder from path
+                if (registerPath.StartsWith("standarder/"))
+                    registerPath = registerPath.Replace("standarder/", "");
+                return url + registerPath + "/" + thumbFileName;
 
             }
             else if (document.documentUrl.Contains(".xsd")) 
@@ -474,16 +486,27 @@ namespace Kartverket.Register.Controllers
             return gsSettings;
         }
 
-        private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr)
+        private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr,
+            Document originalDocument, Document document)
         {
             string filtype;
-            string seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
+            string seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename) + Path.GetExtension(file.FileName);
             name = RegisterUrls.MakeSeoFriendlyString(name);
-            register = RegisterUrls.MakeSeoFriendlyString(register);
-            string filename = register + "_" + name + "_v" + vnr + "_" + seofilename + "." + filtype;
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
+
+            var originalPath = document != null && document.register != null  ? document.register.path : originalDocument.register.path;
+            var registerPath = originalPath + "/" + name + "/" + document.versionName;
+            var directory = Constants.DataDirectory + Document.DataDirectory + registerPath;
+            var path = Server.MapPath(directory);
+            System.IO.Directory.CreateDirectory(path);
+
+            path = Path.Combine(path, seofilename);
             file.SaveAs(path);
-            return filename;
+
+            //remove standarder from path
+            if(registerPath.StartsWith("standarder/"))
+                registerPath = registerPath.Replace("standarder/","");
+
+            return registerPath + "/" + seofilename;
         }
 
         /// <summary>
@@ -503,7 +526,7 @@ namespace Kartverket.Register.Controllers
                 {
                     break;
                 }
-                seofilename += RegisterUrls.MakeSeoFriendlyString(item) + "_";
+                seofilename += RegisterUrls.MakeSeoFriendlyString(item);
             }
             return seofilename;
         }
@@ -546,8 +569,8 @@ namespace Kartverket.Register.Controllers
             if (document.documentownerId != Guid.Empty)
                 document.documentowner = db.Organizations.Where(o => o.systemId == document.documentownerId).FirstOrDefault();
             document.submitterId = GetSubmitterId(inputDocument.submitterId);
-            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-            DocumentFile documentFiles = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber, document?.status?.value, originalDocument?.status?.value, schematronfile);
+            string url = GetUrlForRegister(document, originalDocument); 
+            DocumentFile documentFiles = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber, document?.status?.value, originalDocument?.status?.value, originalDocument, document, schematronfile);
             document.documentUrl = documentFiles.Url;
             document.documentUrlSchematron = documentFiles.UrlSchematron;
             if (document.documentUrl == "IllegalSchemaLocation")
@@ -557,7 +580,7 @@ namespace Kartverket.Register.Controllers
                 return document;
             }
             document.documentUrl2 = inputDocument.documentUrl2;
-            document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
+            document.thumbnail = GetThumbnail(document, originalDocument, documentfile, url, thumbnail);
             document.versioningId = GetVersioningId(document, inputDocument.versioningId);
 
             bool sendNotification = false;
@@ -586,6 +609,24 @@ namespace Kartverket.Register.Controllers
                 _notificationService.SendSubmittedNotification(document);
 
             return document;
+        }
+
+        private string GetUrlForRegister(Document originalDocument, Document document)
+        {
+            if(document != null && document.register != null) 
+            { 
+                if (document.IsStandard())
+                    return WebConfigurationManager.AppSettings["StandardsUrl"];
+                else
+                    return WebConfigurationManager.AppSettings["DocumentsUrl"];
+            }
+            else
+            {
+                if (originalDocument.IsStandard())
+                    return WebConfigurationManager.AppSettings["StandardsUrl"];
+                else
+                    return WebConfigurationManager.AppSettings["DocumentsUrl"];
+            }
         }
 
         /// <summary>
@@ -889,16 +930,16 @@ namespace Kartverket.Register.Controllers
             return versions.Count > 1;
         }
 
-        private string GetThumbnail(Document document, HttpPostedFileBase documentfile, string url, HttpPostedFileBase thumbnail)
+        private string GetThumbnail(Document document, Document originalDocument, HttpPostedFileBase documentfile, string url, HttpPostedFileBase thumbnail)
         {
             if (documentfile != null)
             {
-                document.thumbnail = GenerateThumbnail(document, documentfile, url);
+                document.thumbnail = GenerateThumbnail(document,originalDocument, documentfile, url);
             }
 
             if (thumbnail != null /*&& document.thumbnail.Contains(thumbnail.FileName)*/)
             {
-                document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, document.register.seoname, document.versionNumber);
+                document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, document.register.seoname, document.versionNumber, originalDocument, document);
             }
             return document.thumbnail;
         }
@@ -999,25 +1040,25 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private DocumentFile documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr, string status, string previousStatus, HttpPostedFileBase schematronfile = null)
+        private DocumentFile documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr, string status, string previousStatus, Document originalDocument, Document document,  HttpPostedFileBase schematronfile = null)
         {
             DocumentFile documentUrl = new DocumentFile();
 
             if (documentfile != null)
             {
-                string fileName = SaveFileToDisk(documentfile, documentname, registername, versionNr);
-
                 var schemaRemoteSynchEnabled = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true;
 
                 if (registername == "GML applikasjonsskjema" && schemaRemoteSynchEnabled)
                 {
                     documentUrl = new SchemaSynchronizer().Synchronize(documentfile, schematronfile);
-
-                    if (!string.IsNullOrEmpty(documentUrl.Url))
-                        return documentUrl;
+                    return documentUrl;
                 }
-                documentUrl.Url = url + fileName;
-                return documentUrl;
+                else 
+                {
+                    string fileName = SaveFileToDisk(documentfile, documentname, registername, versionNr, originalDocument, document);
+                    documentUrl.Url = url + fileName;
+                    return documentUrl;
+                }
             }
             else if (documenturl != null)
             {

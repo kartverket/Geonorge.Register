@@ -675,7 +675,7 @@
             </summary>
             <param name="document"></param>
         </member>
-        <member name="M:Kartverket.Register.Controllers.DocumentsController.GenerateThumbnail(Kartverket.Register.Models.Document,System.Web.HttpPostedFileBase,System.String)">
+        <member name="M:Kartverket.Register.Controllers.DocumentsController.GenerateThumbnail(Kartverket.Register.Models.Document,Kartverket.Register.Models.Document,System.Web.HttpPostedFileBase,System.String)">
             <summary>
             Generate a thumbnail from frontpage of a PDF document.
             </summary>

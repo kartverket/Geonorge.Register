@@ -204,5 +204,10 @@ namespace Kartverket.Register.Models
         {
             return statusId == "Valid" || statusId == "Sosi-valid";
         }
+
+        public bool IsStandard()
+        {
+            return register.seoname == "standarder" || register.path.StartsWith("standarder");
+        }
     }//end Document
 }//end namespace Datamodell

@@ -2116,6 +2116,7 @@
     <Content Include="Content\bower_components\vue\dist\vue.runtime.js" />
     <Content Include="Content\bower_components\vue\dist\vue.runtime.min.js" />
     <Content Include="Content\custom.css" />
+    <Content Include="Content\html.png" />
     <Content Include="Content\img\accesible.svg" />
     <Content Include="Content\img\arrow-down.svg" />
     <Content Include="Content\img\arrow-up.svg" />

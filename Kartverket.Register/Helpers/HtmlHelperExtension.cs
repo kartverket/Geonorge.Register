@@ -904,6 +904,8 @@ namespace Kartverket.Register.Helpers
             var thumb = thumbnailSrc ?? "/Content/pdf.jpg";
             if(!string.IsNullOrEmpty(documentUrl) && documentUrl.EndsWith(".xsd"))
                 thumb = "/Content/xsd.svg";
+            else if (!string.IsNullOrEmpty(documentUrl) && documentUrl.EndsWith(".html"))
+                thumb = "/Content/html.png";
             return thumb;
         }
 

@@ -407,6 +407,18 @@ namespace Kartverket.Register.Controllers
             {
                 register = _registerService.GetRegisterByPath(originalPath.Substring(0, originalPath.LastIndexOf('/')));
             }
+            if (register == null)
+            {
+                var itemArray = subregisters.Split('/');
+                var itemName = itemArray[0];
+                var itemVersion= itemArray[1];
+
+                RegisterItemV2ViewModel view = new DocumentViewModel((Document)_registerItemService.GetRegisterItemByPath(path, itemName, itemVersion));
+                if (view != null) { 
+                    view.AccessRegisterItem = _accessControlService.HasAccessTo(view);
+                    return View("DetailsRegisterItem", view);
+                }
+            }
 
             if (register == null)    
                 return HttpNotFound();

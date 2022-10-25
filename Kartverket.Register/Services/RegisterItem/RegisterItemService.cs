@@ -328,6 +328,28 @@ namespace Kartverket.Register.Services.RegisterItem
             return registerItems.FirstOrDefault();
         }
 
+        public virtual Models.RegisterItem GetRegisterItemByPath(string path, string itemName, string vnr)
+        {
+            var registerItems = new List<Models.RegisterItem>();
+
+            int vnrInt = 0;
+            if (int.TryParse(vnr, out int result))
+            {
+                vnrInt = result;
+            }
+
+            var queryResults = from o in _dbContext.RegisterItems
+                                where (o.register.path == path || o.register.pathOld == path) &&
+                                o.seoname == itemName &&
+                                (o.versionName == vnr || o.versionNumber == vnrInt)
+                                select o;
+
+            registerItems = queryResults.ToList();
+           
+            return registerItems.FirstOrDefault();
+        }
+
+
         private int? getVnr(string parentregister, string register, string item, int? vnr)
         {
             if (vnr == null)

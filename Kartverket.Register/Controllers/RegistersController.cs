@@ -410,8 +410,8 @@ namespace Kartverket.Register.Controllers
             if (register == null)
             {
                 var itemArray = subregisters.Split('/');
-                var itemName = itemArray[0];
-                var itemVersion= itemArray[1];
+                var itemName = itemArray[itemArray.Length - 2];
+                var itemVersion= itemArray[itemArray.Length -1 ];
 
                 RegisterItemV2ViewModel view = new DocumentViewModel((Document)_registerItemService.GetRegisterItemByPath(path, itemName, itemVersion));
                 if (view != null) { 

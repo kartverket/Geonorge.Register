@@ -457,6 +457,22 @@ namespace Kartverket.Register.Controllers
 
             if (register == null)
             {
+                originalPath = RegisterUrls.RemoveExtension(originalPath);
+                var itemArray = originalPath.Split('/');
+                var pathRegister = itemArray.ToList().GetRange(0, itemArray.Length - 2);
+                var pathString = String.Join("/", pathRegister.ToArray());
+                var itemName = itemArray[itemArray.Length - 2];
+                var itemVersion = itemArray[itemArray.Length - 1];
+                var regItem = _registerItemService.GetRegisterItemByPath(pathString, itemName, itemVersion);
+                
+                if(regItem != null) 
+                {
+                    return Content(HttpStatusCode.OK, ConvertRegisterItem(regItem), mediatype.Formatter, mediatype.MediaTypeHeader);
+                }
+            }
+
+            if (register == null)
+            {
                 var currentVersion = ConvertCurrentAndVersions(null, registerName, RegisterUrls.GetItemFromPath(subregisters));
 
                 if (currentVersion != null)

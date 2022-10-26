@@ -5,7 +5,7 @@
 @if (!string.IsNullOrEmpty(Model.SpecificUsage))
 {
     <article class="col-md-12">
-        <heading-text><h2 size="3">@Html.DisplayNameFor(model => Model.SpecificUsage)</h2></heading-text>
+        <heading-text><h2>@Html.DisplayNameFor(model => Model.SpecificUsage)</h2></heading-text>
         <p> @Model.SpecificUsage</p>
     </article>
 }
@@ -16,7 +16,7 @@
 
 
 <article class="col-md-12">
-    <h3>Areal</h3>
+    <heading-text><h3>Areal</h3></heading-text>
     <p><strong>Areal: </strong>@Model.Area</p>
     <p><strong>Relevant areal: </strong>@Model.RelevantArea</p>
 </article>

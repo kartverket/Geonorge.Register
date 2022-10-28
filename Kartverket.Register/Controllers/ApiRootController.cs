@@ -216,7 +216,7 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.Route("api/register/{registerName}/report/{id}.{ext}")]
         [System.Web.Http.Route("api/register/{registerName}/report/{id}")]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult StatusReport(string id, string ext, bool dataset = true, bool service = true)
+        public IHttpActionResult StatusReport(string id, string ext, [FromUri] FilterParameters filter, bool dataset = true, bool service = true)
         {
             var statusReport = _statusReportService.GetStatusReportById(id);
             if (statusReport == null)
@@ -253,6 +253,21 @@ namespace Kartverket.Register.Controllers
 
             if (statusReport.IsMareanoDatasetReport())
             {
+                if (!string.IsNullOrEmpty(filter.filterOrganization))
+                {
+                    List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
+                    foreach (Kartverket.Register.Models.StatusReports.MareanoDatasetStatusReport item in statusReport.StatusRegisterItems)
+                    {
+
+                        if (db.MareanoDatasets.Where(d => d.Uuid == item.UuidMareanoDataset && d.Owner.seoname == filter.filterOrganization).Any())
+                            reportItems.Add(item);
+                    }
+
+                    statusReport.StatusRegisterItems = reportItems;
+                }
+
+
+
                 return Ok(new MareanoDatasetStatusReport(statusReport));
             }
 

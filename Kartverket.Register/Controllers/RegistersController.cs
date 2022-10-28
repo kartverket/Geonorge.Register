@@ -1,5 +1,6 @@
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
+using Kartverket.Register.Models.StatusReports;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
@@ -266,6 +267,18 @@ namespace Kartverket.Register.Controllers
 
             List<StatusReport> mareanoStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
             StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : mareanoStatusReports.OrderByDescending(o => o.Date).FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(filter.filterOrganization)) 
+            {
+                List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
+                foreach(MareanoDatasetStatusReport item in statusReport.StatusRegisterItems) 
+                {
+                    if(_db.MareanoDatasets.Where(d => d.Uuid == item.UuidMareanoDataset && d.Owner.seoname == filter.filterOrganization).Any())
+                        reportItems.Add(item);
+                }
+
+                statusReport.StatusRegisterItems = reportItems;
+            }
 
             var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, mareanoStatusReports);
             viewModel.SelectedMareanoTab = filter.MareanoSelectedTab;

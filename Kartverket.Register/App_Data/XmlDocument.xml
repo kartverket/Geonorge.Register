@@ -4070,6 +4070,11 @@
               Looks up a localized string similar to Datasettet finnes fra før!.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.FilterOrganization">
+            <summary>
+              Looks up a localized string similar to Filtrer organisasjon.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.GetInfoKartkatalog">
             <summary>
               Looks up a localized string similar to Hent informasjon fra kartkatalogen.

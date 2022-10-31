@@ -263,6 +263,8 @@ namespace Kartverket.Register.Controllers
                 return RedirectPermanent(register.GetObjectUrl());
             }
 
+            var orgList = register.RegisterItems.OrderBy(o => o.Owner.name).Select(s => new { name = s.Owner.name, seoname = s.Owner.seoname }).Distinct().ToList();
+
             register = FilterRegisterItems(register, filter);
 
             List<StatusReport> mareanoStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
@@ -282,6 +284,9 @@ namespace Kartverket.Register.Controllers
 
             var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, mareanoStatusReports);
             viewModel.SelectedMareanoTab = filter.MareanoSelectedTab;
+            var organizations = orgList.Select(s => new { name = s.name, seoname = s.seoname });
+            organizations = organizations.Prepend(new { name = "Alle", seoname = "" });
+            ViewBag.filterOrganization = organizations;
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
 
             ItemsOrderBy(sorting, viewModel);

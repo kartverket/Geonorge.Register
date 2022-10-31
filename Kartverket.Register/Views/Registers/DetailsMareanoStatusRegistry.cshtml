@@ -68,21 +68,22 @@
                 @Model.Description
             </p>
         </div>
-
+        <div class="col-sm-12 col-md-10 text-left" id="organization-list">
+        </div>
         <div class="col-sm-12 col-md-2 text-right">
             <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span><br />
         </div>
-            <div class="col-sm-12 col-md-12 ">
-                <ul id="tabs" class="nav nav-tabs">
+        <div class="col-sm-12 col-md-12 ">
+            <ul id="tabs" class="nav nav-tabs">
 
-                    <li id="dataset-Tab" class="tab active">
-                        @Html.ActionLink(DataSet.Dataset, "DetailsMareanoStatusRegistry", Request.QueryString.ToRouteValueDictionary("MareanoSelectedTab", "dataset"))
-                    </li>
-                    <li id="report-Tab" class="tab">
-                        @Html.ActionLink(InspireDataSet.Reports, "DetailsMareanoStatusRegistry", Request.QueryString.ToRouteValueDictionary("MareanoSelectedTab", "report"))
-                    </li>
-                </ul>
-            </div>
+                <li id="dataset-Tab" class="tab active">
+                    @Html.ActionLink(DataSet.Dataset, "DetailsMareanoStatusRegistry", Request.QueryString.ToRouteValueDictionary("MareanoSelectedTab", "dataset"))
+                </li>
+                <li id="report-Tab" class="tab">
+                    @Html.ActionLink(InspireDataSet.Reports, "DetailsMareanoStatusRegistry", Request.QueryString.ToRouteValueDictionary("MareanoSelectedTab", "report"))
+                </li>
+            </ul>
+        </div>
     </div>
 </section>
 
@@ -125,7 +126,18 @@ else
 {
     @Html.Partial("_mareanoDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
 }
+<script>
+    var dropdown = '@Html.Raw(Html.DropDownList("filterOrganization", new SelectList(ViewBag.filterOrganization, "seoname", "name"), new { @class = "form-control", onchange = "this.form.submit()" }).ToString().Replace("\n", "").Replace("\r", "").Trim())';
+    var htmlBlock = '<div style="margin-left: -13px;" class="col-sm-6">';
+    htmlBlock += '<form action="@Request.Url.LocalPath" name="FilterForm" method="get"">';
+    htmlBlock += '<input type="hidden" name="MareanoSelectedTab" value="@Request["MareanoSelectedTab"]" >';
+    htmlBlock += '<span>@DataSet.FilterOrganization:</span>';
+    htmlBlock += '<div class="custom-select">' + dropdown + '</div>';
+    htmlBlock += '</form></div><div class="col-sm-6"></div>';
+    htmlBlock += '<div class="clearfix"></div>';
 
+    $("#organization-list").prepend(htmlBlock);
+</script>
 
 @if (!Model.SelectedMareanoTabIsReport())
 {<div class="clearfix"></div>

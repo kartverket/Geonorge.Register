@@ -523,4 +523,7 @@ Metode baserer seg på intervjuer av planleggere og GIS-folk fra kommuner, fylke
   <data name="DOK_Coverage_Measure" xml:space="preserve">
     <value>Tiltak</value>
   </data>
+  <data name="FilterOrganization" xml:space="preserve">
+    <value>Filtrer organisasjon</value>
+  </data>
 </root>

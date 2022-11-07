@@ -12,7 +12,7 @@ SET RegisterItems.statusId = 'Retired'
 FROM     Registers INNER JOIN
                   RegisterItems ON Registers.systemId = RegisterItems.registerId
 WHERE  (Registers.containedItemClass = 'CodelistValue') AND (Registers.statusId = 'Valid')
-AND GETDATE() > ValidToDate and RegisterItems.statusId = 'Valid'
+AND GETDATE() > ValidToDate and RegisterItems.statusId <> 'Retired'
 
 -- Set valid if date between ValidFromDate and ValidToDate
 update RegisterItems

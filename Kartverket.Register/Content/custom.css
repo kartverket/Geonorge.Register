@@ -172,7 +172,9 @@
 
 }
 
-
+ul.nav-tabs > li.tab > a {
+    background-color: #4c7aa9;
+}
 
 .search-results.table-view .btn {
     color: #3867c8;

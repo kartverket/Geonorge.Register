@@ -78,26 +78,27 @@
         </div>
 
         <div class="col-sm-12 col-md-12 ">
-            <ul id="tabs" class="nav nav-tabs">
-                <li id="dataset-Tab" class="tab active">
+
+            <navigation-tabs>
+                <navigation-tab-heading slot="tab-heading" active> 
                     @Html.ActionLink(InspireDataSet.DataSet, "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "dataset"))
-                </li>
-                <li id="service-Tab" class="tab">
-                    @Html.ActionLink(InspireDataSet.Service, "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "service"))
-                </li>
-                @if (HtmlHelperExtensions.IsAdmin())
+                    </navigation-tab-heading>                
+                    <navigation-tab-heading slot="tab-heading">
+                        @Html.ActionLink(InspireDataSet.Service, "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "service"))
+                    </navigation-tab-heading>
+ @if (HtmlHelperExtensions.IsAdmin())
                 {
-                    <li id="inspirereport-Tab" class="tab">
+                    <navigation-tab-heading slot="tab-heading">
                         @Html.ActionLink(InspireDataSet.InspireReport, "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "inspirereport"))
-                    </li>
-                    <li id="synchronizations-Tab" class="tab">
+                    </navigation-tab-heading>
+                    <navigation-tab-heading slot="tab-heading">
                         @Html.ActionLink(InspireDataSet.Synchronization, "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "synchronizations"))
-                    </li>
-                    <li id="report-Tab" class="tab">
-                        @Html.ActionLink(InspireDataSet.Reports, "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "report"))
-                    </li>
+                    </navigation-tab-heading>
+                    <navigation-tab-heading slot="tab-heading">
+                       @Html.ActionLink(InspireDataSet.Reports, "DetailsInspireStatusRegistry", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "report"))
+                    </navigation-tab-heading>
                 }
-            </ul>
+                </navigation-tabs>                
         </div>
     </div>
 </section>

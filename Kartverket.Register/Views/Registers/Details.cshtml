@@ -103,20 +103,22 @@
                     </div>
                 }
                 <div class="col-sm-12 col-md-12 ">
-                    <ul id="tabs" class="nav nav-tabs">
-                        <li id="dataset-Tab" class="tab active">
+                    <navigation-tabs>
+                        <navigation-tab-heading slot="tab-heading">
                             @Html.ActionLink("Dataset", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "dataset"))
-                        </li>
-                        <li id="service-Tab" class="tab">
+                        </navigation-tab-heading>
+                       
+                        <navigation-tab-heading slot="tab-heading">
                             @Html.ActionLink("Tjenester", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "service"))
-                        </li>
-                        @if (HtmlHelperExtensions.IsAdmin())
+                        </navigation-tab-heading>  
+                         @if (HtmlHelperExtensions.IsAdmin())
                         {
-                            <li id="report-Tab" class="tab">
+                            <navigation-tab-heading slot="tab-heading">
                                 @Html.ActionLink("Rapport", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "report"))
-                            </li>
-                        }
-                    </ul>
+                           </navigation-tab-heading> 
+                        }                     
+                    </navigation-tabs>
+                   
 
                 </div>
             }

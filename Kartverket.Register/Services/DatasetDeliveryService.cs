@@ -436,9 +436,16 @@ namespace Kartverket.Register.Services
                 {
                     foreach (var service in metadata)
                     {
+                        if (service.Protocol == "Atom Feed" || service.Protocol == "W3C:AtomFeed")
+                        {
+                            statusValue = Notset;
+                        }
+                    }
+                    foreach (var service in metadata)
+                    {
                         if (service.Protocol == "WFS-tjeneste" || service.Protocol == "OGC:WFS"
                           || service.Protocol == "WCS-tjeneste" || service.Protocol == "OGC:WCS"
-                          || service.Protocol == "Atom Feed" || service.Protocol == "W3C:AtomFeed")
+                          )
                         { statusValue = Good;
                             serviceUuid = service.Uuid;
                         }

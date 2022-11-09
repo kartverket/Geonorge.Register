@@ -268,6 +268,7 @@ namespace Kartverket.Register.Controllers
             register = FilterRegisterItems(register, filter);
 
             List<StatusReport> mareanoStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+            mareanoStatusReports = mareanoStatusReports.OrderBy(o => o.Date).ToList();
             StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : mareanoStatusReports.OrderByDescending(o => o.Date).FirstOrDefault();
 
             if (!string.IsNullOrEmpty(filter.filterOrganization)) 

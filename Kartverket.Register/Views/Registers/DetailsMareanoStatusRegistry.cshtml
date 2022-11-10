@@ -131,6 +131,7 @@ else
     var htmlBlock = '<div style="margin-left: -13px;" class="col-sm-6">';
     htmlBlock += '<form action="@Request.Url.LocalPath" name="FilterForm" method="get"">';
     htmlBlock += '<input type="hidden" name="MareanoSelectedTab" value="@Request["MareanoSelectedTab"]" >';
+    htmlBlock += '<input type="hidden" name="StatusType" value="@Request["StatusType"]" >';
     htmlBlock += '<span>@DataSet.FilterOrganization:</span>';
     htmlBlock += '<div class="custom-select">' + dropdown + '</div>';
     htmlBlock += '</form></div><div class="col-sm-6"></div>';

@@ -1,8 +1,23 @@
 ﻿@model Kartverket.Register.Models.ViewModels.MareanoDatasetStatusReportViewModel
+
+@{var javaScriptSerializer = new System.Web.Script.Serialization.JavaScriptSerializer(); }
+
 @helper RawText(string s)
 {
     @(new HtmlString(s))
 }
+
+@functions {
+
+    string formatLabel(string label, int numberOfItems)
+    {
+
+        label = Html.Raw(label) + " : " + Model.Percent(numberOfItems) + "%";
+
+        return label;
+    }
+}
+
 <script>
 
     $(document).ready(function () {
@@ -87,8 +102,6 @@
         chartStatus.style.display = "block";
     }
 
-
-    @{var javaScriptSerializer = new System.Web.Script.Serialization.JavaScriptSerializer(); }
 
 
     // ********** LINE CHART ****************
@@ -339,13 +352,8 @@
                         var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
                         var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
 
-                        // We get the value of the current label
-                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
-
                         return {
-                            // Instead of `text: label,`
-                            // We add the value to the string
-                            text: label + " : " + value,
+                            text: label,
                             fillStyle: fill,
                             strokeStyle: stroke,
                             lineWidth: bw,
@@ -361,7 +369,7 @@
     }
 
     var dataFindable = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@MareanoDataSet.Delivery_Status_Satisfactory" , "@RawText(MareanoDataSet.Delivery_Status_Useable)", "@RawText(MareanoDataSet.Delivery_Status_Deficient)", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithFindable.Good))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithFindable.Satisfactory))" , "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithFindable.Useable))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithFindable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithFindable.Notset))"],
         datasets: [
             {
                 fill: true,
@@ -377,7 +385,7 @@
     };
 
     var dataAccesible = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@MareanoDataSet.Delivery_Status_Satisfactory" , "@RawText(MareanoDataSet.Delivery_Status_Useable)", "@RawText(MareanoDataSet.Delivery_Status_Deficient)", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithAccesible.Good))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Satisfactory,Model.NumberOfItemsWithAccesible.Satisfactory))" , "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithAccesible.Useable))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithAccesible.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithAccesible.Notset))"],
         datasets: [
             {
                 fill: true,
@@ -393,10 +401,10 @@
     };
 
     var dataInteroperable = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@MareanoDataSet.Delivery_Status_Satisfactory" , "@RawText(MareanoDataSet.Delivery_Status_Useable)", "@RawText(MareanoDataSet.Delivery_Status_Deficient)", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithInteroperable.Good))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithInteroperable.Satisfactory))" , "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithInteroperable.Useable))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithInteroperable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithInteroperable.Notset)) "],
         datasets: [
             {
-                fill: true,
+                    fill: true,
                 backgroundColor: ['#36c545', '#abeb34', '#fed633', '#ee432a', '#d8d8d8'],
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithInteroperable.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithInteroperable.Satisfactory))),
@@ -408,8 +416,8 @@
         ]
     };
 
-    var dataReUseable = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@MareanoDataSet.Delivery_Status_Satisfactory" , "@RawText(MareanoDataSet.Delivery_Status_Useable)", "@RawText(MareanoDataSet.Delivery_Status_Deficient)", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+                var dataReUseable = {
+                    labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithReUseable.Good)) ", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithReUseable.Satisfactory))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithReUseable.Useable))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithReUseable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithReUseable.Notset))"],
         datasets: [
             {
                 fill: true,
@@ -424,11 +432,11 @@
         ]
     };
 
-    var dataMetadata = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        var dataMetadata = {
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithMetadata.Good))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithMetadata.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithMetadata.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithMetadata.Notset))"],
         datasets: [
             {
-                fill: true,
+        fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithMetadata.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithMetadata.Useable))),
@@ -440,11 +448,11 @@
     };
 
 
-    var dataProductSpecification = {
-            labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        var dataProductSpecification = {
+            labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithProductSpecification.Good))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithProductSpecification.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithProductSpecification.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithProductSpecification.Notset))"],
             datasets: [
                 {
-                    fill: true,
+        fill: true,
                     backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                     data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSpecification.Good))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSpecification.Useable))),
@@ -454,11 +462,11 @@
             ]
     };
 
-    var dataProductSheet = {
-            labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        var dataProductSheet = {
+            labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithProductSheet.Good))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithProductSheet.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithProductSheet.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithProductSheet.Notset))"],
             datasets: [
                 {
-                    fill: true,
+        fill: true,
                     backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                     data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSheet.Good))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithProductSheet.Useable))),
@@ -468,11 +476,11 @@
             ]
     };
 
-    var dataPresentationRules = {
-            labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        var dataPresentationRules = {
+            labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithPresentationRules.Good))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithPresentationRules.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithPresentationRules.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithPresentationRules.Notset))"],
             datasets: [
                 {
-                    fill: true,
+        fill: true,
                     backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                     data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRules.Good))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithPresentationRules.Useable))),
@@ -483,11 +491,11 @@
     };
 
 
-    var dataSosiRequirements = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        var dataSosiRequirements = {
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithSosiRequirements.Good)))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithSosiRequirements.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithSosiRequirements.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithSosiRequirements.Notset))"],
         datasets: [
             {
-                fill: true,
+        fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithSosiRequirements.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithSosiRequirements.Useable))),
@@ -497,11 +505,11 @@
         ]
     };
 
-    var dataGmlRequirements = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        var dataGmlRequirements = {
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithGmlRequirements.Good))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithGmlRequirements.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithGmlRequirements.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithGmlRequirements.Notset))"],
         datasets: [
             {
-                fill: true,
+        fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithGmlRequirements.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithGmlRequirements.Useable))),
@@ -511,11 +519,11 @@
         ]
     };
 
-    var dataWms = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        var dataWms = {
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithWms.Good))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithWms.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithWms.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithWms.Notset))"],
         datasets: [
             {
-                fill: true,
+        fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWms.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWms.Useable))),
@@ -525,11 +533,11 @@
         ]
     };
 
-    var dataWfs = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        var dataWfs = {
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithWfs.Good))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithWfs.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithWfs.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithWfs.Notset))"],
         datasets: [
             {
-                fill: true,
+        fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWfs.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithWfs.Useable))),
@@ -540,11 +548,11 @@
     };
 
 
-    var dataAtomFeed = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        var dataAtomFeed = {
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithAtomFeed.Good))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithAtomFeed.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithAtomFeed.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithAtomFeed.Notset))"],
         datasets: [
             {
-                fill: true,
+        fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAtomFeed.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAtomFeed.Useable))),
@@ -554,11 +562,11 @@
         ]
     };
 
-    var dataCommon = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSetShort"],
+        var dataCommon = {
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithCommon.Good))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithCommon.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithCommon.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithCommon.Notset))"],
         datasets: [
             {
-                fill: true,
+        fill: true,
                 backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithCommon.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithCommon.Useable))),
@@ -568,225 +576,373 @@
         ]
     };
 
-    var ctx = document.getElementById("findableChart").getContext('2d');
-    var findableChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataFindable,
-        options: {
-            responsive: true,
-            legend: legendPie
-            ,
-            title: {
-                display: true,
-                text: '@RawText(MareanoDataSet.Findable_Label)',
-                fontSize: 20
-            },
+        function formatToolTip(tooltipItems, data) {
+            var labelData = data.labels[tooltipItems.index].split(":");
+            var label = labelData[0];
 
+            return label +
+                ": " +
+                data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] +
+                ' datasett';
         }
-    });
-
-    var ctx = document.getElementById("accesibleChart").getContext('2d');
-    var accesibleChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataAccesible,
-        options: {
-            responsive: true,
-            legend: legendPie
-            ,
-            title: {
-                display: true,
-                text: '@MareanoDataSet.Accesible_Label',
-                fontSize: 20
-            },
-
-        }
-    });
-
-    var ctx = document.getElementById("interoperableChart").getContext('2d');
-    var interoperableChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataInteroperable,
-        options: {
-            responsive: true,
-            legend: legendPie
-            ,
-            title: {
-                display: true,
-                text: '@MareanoDataSet.Interoperable_Label',
-                fontSize: 20
-            },
-
-        }
-    });
-
-    var ctx = document.getElementById("reUseableChart").getContext('2d');
-    var reUseableChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataReUseable,
-        options: {
-            responsive: true,
-            legend: legendPie
-            ,
-            title: {
-                display: true,
-                text: '@MareanoDataSet.ReUseable_Label',
-                fontSize: 20
-            },
-
-        }
-    });
-
-    var ctx = document.getElementById("metadataChart").getContext('2d');
-    var metadataChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataMetadata,
-        options: {
-            responsive: true,
-            legend: legendPie
-            ,
-            title: {
-                display: true,
-                text: '@DataSet.DOK_Delivery_Metadata',
-                fontSize: 20
-            },
-
-        }
-    });
 
 
-    var ctx = document.getElementById("productSpecificationChart").getContext('2d');
-    var productSpecificationChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataProductSpecification,
-        options: {
-            responsive: true,
-            legend: legendPie,
-            title: {
-                display: true,
-                text: '@DataSet.DOK_Delivery_ProductSpesification',
-                fontSize: 20
-            }
-        }
-    });
+        var ctx = document.getElementById("findableChart").getContext('2d');
+        var findableChart = new Chart(ctx, {
 
-    var ctx = document.getElementById("productSheetChart").getContext('2d');
-    var productSheetChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataProductSheet,
-        options: {
-            responsive: true,
-            legend: legendPie,
-            title: {
-                display: true,
-                text: '@DataSet.DOK_Delivery_ProductSheet',
-                fontSize: 20
-            }
-        }
-    });
-
-    var ctx = document.getElementById("presentationRulesChart").getContext('2d');
-    var presentationRulesChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataPresentationRules,
-        options: {
-            responsive: true,
-            legend: legendPie,
-            title: {
-                display: true,
-                text: '@DataSet.DOK_Delivery_PresentationRules',
-                fontSize: 20
-            }
-        }
-    });
-
-    var ctx = document.getElementById("sosiRequirementsChart").getContext('2d');
-    var sosiRequirementsChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataSosiRequirements,
-        options: {
-            responsive: true,
-            legend: legendPie,
-            title: {
-                display: true,
-                text: '@DataSet.DOK_Delivery_SosiRequirements',
-                fontSize: 20
-            }
-        }
-    });
-
-    var ctx = document.getElementById("gmlRequirementsChart").getContext('2d');
-    var gmlRequirementsChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataGmlRequirements,
-        options: {
-            responsive: true,
-            legend: legendPie,
-            title: {
-                display: true,
-                text: '@DataSet.DOK_Delivery_GmlRequirements',
-                fontSize: 20
-            }
-        }
-    });
-
-    var ctx = document.getElementById("wmsChart").getContext('2d');
-    var wmsChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataWms,
-        options: {
-            responsive: true,
-            legend: legendPie,
-            title: {
-                display: true,
-                text: '@DataSet.DOK_Delivery_Wms',
-                fontSize: 20
-            }
-        }
-    });
-
-    var ctx = document.getElementById("wfsChart").getContext('2d');
-    var wfsChart = new Chart(ctx, {
-        type: 'pie',
-        data: dataWfs,
-        options: {
-            responsive: true,
-            legend: legendPie,
-            title: {
-                display: true,
-                text: '@DataSet.DOK_Delivery_Wfs',
-                fontSize: 20
-            }
-        }
-    });
-
-
-    var ctx = document.getElementById("atomFeedChart").getContext('2d');
-    var atomFeedChart = new Chart(ctx, {
             type: 'pie',
-        data: dataAtomFeed,
+            data: dataFindable,
             options: {
+
+                responsive: true,
+                legend: legendPie
+                ,
+                title: {
+
+                    display: true,
+                    text: '@RawText(MareanoDataSet.Findable_Label)',
+                    fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+        }
+    });
+
+        var ctx = document.getElementById("accesibleChart").getContext('2d');
+        var accesibleChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: dataAccesible,
+            options: {
+
+                responsive: true,
+                legend: legendPie
+                ,
+                title: {
+
+                    display: true,
+                    text: '@MareanoDataSet.Accesible_Label',
+                    fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+
+        }
+    });
+
+        var ctx = document.getElementById("interoperableChart").getContext('2d');
+        var interoperableChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: dataInteroperable,
+            options: {
+
+                responsive: true,
+                legend: legendPie
+                ,
+                title: {
+
+                    display: true,
+                    text: '@MareanoDataSet.Interoperable_Label',
+                    fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+
+        }
+    });
+
+        var ctx = document.getElementById("reUseableChart").getContext('2d');
+        var reUseableChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: dataReUseable,
+            options: {
+
+                responsive: true,
+                legend: legendPie
+                ,
+                title: {
+
+                    display: true,
+                    text: '@MareanoDataSet.ReUseable_Label',
+                    fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+        }
+    });
+
+        var ctx = document.getElementById("metadataChart").getContext('2d');
+        var metadataChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: dataMetadata,
+            options: {
+
+                responsive: true,
+                legend: legendPie
+                ,
+                title: {
+
+                    display: true,
+                    text: '@DataSet.DOK_Delivery_Metadata',
+                    fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+        }
+    });
+
+
+        var ctx = document.getElementById("productSpecificationChart").getContext('2d');
+        var productSpecificationChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: dataProductSpecification,
+            options: {
+
                 responsive: true,
                 legend: legendPie,
                 title: {
+
                     display: true,
-                    text: '@DataSet.DOK_Delivery_AtomFeed',
+                    text: '@DataSet.DOK_Delivery_ProductSpesification',
                     fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
                 }
             }
+        }
+        }
     });
 
-    var ctx = document.getElementById("commonChart").getContext('2d');
-    var commonChart = new Chart(ctx, {
+        var ctx = document.getElementById("productSheetChart").getContext('2d');
+        var productSheetChart = new Chart(ctx, {
+
             type: 'pie',
-        data: dataCommon,
+            data: dataProductSheet,
             options: {
+
                 responsive: true,
                 legend: legendPie,
                 title: {
+
                     display: true,
-                    text: '@MareanoDataSet.Common',
+                    text: '@DataSet.DOK_Delivery_ProductSheet',
                     fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
                 }
+            }
+        }
+        }
+    });
+
+        var ctx = document.getElementById("presentationRulesChart").getContext('2d');
+        var presentationRulesChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: dataPresentationRules,
+            options: {
+
+                responsive: true,
+                legend: legendPie,
+                title: {
+
+                    display: true,
+                    text: '@DataSet.DOK_Delivery_PresentationRules',
+                    fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+        }
+    });
+
+        var ctx = document.getElementById("sosiRequirementsChart").getContext('2d');
+        var sosiRequirementsChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: dataSosiRequirements,
+            options: {
+
+                responsive: true,
+                legend: legendPie,
+                title: {
+
+                    display: true,
+                    text: '@DataSet.DOK_Delivery_SosiRequirements',
+                    fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+        }
+    });
+
+        var ctx = document.getElementById("gmlRequirementsChart").getContext('2d');
+        var gmlRequirementsChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: dataGmlRequirements,
+            options: {
+
+                responsive: true,
+                legend: legendPie,
+                title: {
+
+                    display: true,
+                    text: '@DataSet.DOK_Delivery_GmlRequirements',
+                    fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+        }
+    });
+
+        var ctx = document.getElementById("wmsChart").getContext('2d');
+        var wmsChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: dataWms,
+            options: {
+
+                responsive: true,
+                legend: legendPie,
+                title: {
+
+                    display: true,
+                    text: '@DataSet.DOK_Delivery_Wms',
+                    fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+        }
+    });
+
+        var ctx = document.getElementById("wfsChart").getContext('2d');
+        var wfsChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: dataWfs,
+            options: {
+
+                responsive: true,
+                legend: legendPie,
+                title: {
+
+                    display: true,
+                    text: '@DataSet.DOK_Delivery_Wfs',
+                    fontSize: 20
+            },
+            tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+        }
+    });
+
+
+        var ctx = document.getElementById("atomFeedChart").getContext('2d');
+        var atomFeedChart = new Chart(ctx, {
+
+                type: 'pie',
+            data: dataAtomFeed,
+                options: {
+
+                    responsive: true,
+                    legend: legendPie,
+                    title: {
+
+                        display: true,
+                        text: '@DataSet.DOK_Delivery_AtomFeed',
+                        fontSize: 20
+                },
+                tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
+            }
+    });
+
+        var ctx = document.getElementById("commonChart").getContext('2d');
+        var commonChart = new Chart(ctx, {
+
+                type: 'pie',
+            data: dataCommon,
+                options: {
+
+                    responsive: true,
+                    legend: legendPie,
+                    title: {
+
+                        display: true,
+                        text: '@MareanoDataSet.Common',
+                        fontSize: 20
+                },
+                tooltips: {
+        callbacks: {
+            label: function (tooltipItems, data) {
+                    return formatToolTip(tooltipItems, data);
+                }
+            }
+        }
             }
     });
 
@@ -794,54 +950,56 @@
 
 
 
-    // BAR CHART
+        // BAR CHART
 
 
-    var ctx = document.getElementById("statusBarChart").getContext('2d');
+        var ctx = document.getElementById("statusBarChart").getContext('2d');
 
-    var statusBarChart = new Chart(ctx, {
-        type: 'horizontalBar',
-        data: {
-            labels: [
-                '@RawText(MareanoDataSet.Findable_Label)',
-                '@MareanoDataSet.Accesible_Label',
-                '@MareanoDataSet.Interoperable_Label',
-                '@MareanoDataSet.ReUseable_Label',
-                '@DataSet.DOK_Delivery_Metadata',
-                '@DataSet.DOK_Delivery_ProductSpesification',
-                '@DataSet.DOK_Delivery_ProductSheet',
-                '@DataSet.DOK_Delivery_PresentationRules',
-                '@DataSet.DOK_Delivery_SosiRequirements',
-                '@DataSet.DOK_Delivery_GmlRequirements',
-                '@DataSet.DOK_Delivery_Wms',
-                '@DataSet.DOK_Delivery_Wfs',
-                '@DataSet.DOK_Delivery_AtomFeed',
-                '@MareanoDataSet.Common'
-            ],
-            datasets: [
+        var statusBarChart = new Chart(ctx, {
+
+            type: 'horizontalBar',
+            data: {
+
+                labels: [
+                    '@RawText(MareanoDataSet.Findable_Label)',
+                    '@MareanoDataSet.Accesible_Label',
+                    '@MareanoDataSet.Interoperable_Label',
+                    '@MareanoDataSet.ReUseable_Label',
+                    '@DataSet.DOK_Delivery_Metadata',
+                    '@DataSet.DOK_Delivery_ProductSpesification',
+                    '@DataSet.DOK_Delivery_ProductSheet',
+                    '@DataSet.DOK_Delivery_PresentationRules',
+                    '@DataSet.DOK_Delivery_SosiRequirements',
+                    '@DataSet.DOK_Delivery_GmlRequirements',
+                    '@DataSet.DOK_Delivery_Wms',
+                    '@DataSet.DOK_Delivery_Wfs',
+                    '@DataSet.DOK_Delivery_AtomFeed',
+                    '@MareanoDataSet.Common'
+                ],
+                datasets: [
                 {
                     label: '@DataSet.DOK_Delivery_Status_Good',
-                    data: [
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirements.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Good)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Good)))),
-                        0,0
-                    ],
-                    backgroundColor: '#36c545',
+                        data: [
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirements.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Good)))),
+                            0,0
+                        ],
+                        backgroundColor: '#36c545',
                 },
                 {
-                    label: '@MareanoDataSet.Delivery_Status_Satisfactory',
+        label: '@MareanoDataSet.Delivery_Status_Satisfactory',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Satisfactory)))),
@@ -862,7 +1020,7 @@
                     backgroundColor: '#abeb34',
                 },
                 {
-                    label: '@RawText(MareanoDataSet.Delivery_Status_Useable)',
+        label: '@RawText(MareanoDataSet.Delivery_Status_Useable)',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Useable)))),
@@ -883,7 +1041,7 @@
                     backgroundColor: '#fed633',
                 },
                 {
-                    label: '@RawText(MareanoDataSet.Delivery_Status_Deficient)',
+        label: '@RawText(MareanoDataSet.Delivery_Status_Deficient)',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Deficient)))),
@@ -904,7 +1062,7 @@
                     backgroundColor: '#ee432a',
                 },
                 {
-                    label: '@DataSet.DOK_Delivery_Status_NotSet',
+        label: '@DataSet.DOK_Delivery_Status_NotSet',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Notset)))),
@@ -927,30 +1085,30 @@
             ]
         },
         options: {
-            scales: {
-                xAxes: [
+        scales: {
+            xAxes: [
                     {
-                        ticks: {
-                            beginAtZero: true,
+                ticks: {
+                    beginAtZero: true,
                             steps: 10,
                             stepValue: 5,
                             max: 100,
                             callback: function(value, index, values) {
-                                return value + " %";
-                            }
-                        },
+                            return value + " %";
+                        }
+                    },
                         scaleLabel: {
-                            display: true,
+                    display: true,
                         },
                         stacked: true,
                     }],
                 yAxes: [{ stacked: true }]
             },
             tooltips: {
-                enabled: true,
+            enabled: true,
                 mode: 'single',
                 callbacks: {
-                    label: function (tooltipItems, data) {
+                label: function (tooltipItems, data) {
                         return tooltipItems.yLabel + ': ' + tooltipItems.xLabel + ' %';
                     }
                 }

@@ -1553,6 +1553,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsRegisterManager">
+            <summary>
+            Check if current user is RegisterManager
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Services.AccessControlService.IsEditor">
             <summary>
             Check if user has metadata editor role.
@@ -1623,6 +1629,12 @@
         <member name="M:Kartverket.Register.Services.UserAuthorization.IsAdmin">
             <summary>
             Check if user has metadata admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsRegisterManager">
+            <summary>
+            Check if user has register manager role.
             </summary>
             <returns></returns>
         </member>

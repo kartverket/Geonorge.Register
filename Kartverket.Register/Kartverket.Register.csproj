@@ -24,7 +24,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -96,6 +96,9 @@
     <Reference Include="CommonServiceLocator.SolrNet, Version=1.0.19.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SolrNet.1.0.19\lib\net46\CommonServiceLocator.SolrNet.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetZip, Version=1.16.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.16.0\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -112,10 +115,10 @@
       <HintPath>..\packages\ExpressiveAnnotations.2.9.6\lib\net45\ExpressiveAnnotations.MvcUnobtrusive.dll</HintPath>
     </Reference>
     <Reference Include="Geonorge.AuthLib.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Geonorge.AuthLib.Common.1.0.50\lib\netstandard2.0\Geonorge.AuthLib.Common.dll</HintPath>
+      <HintPath>..\packages\Geonorge.AuthLib.Common.1.0.60\lib\netstandard2.0\Geonorge.AuthLib.Common.dll</HintPath>
     </Reference>
     <Reference Include="Geonorge.AuthLib.NetFull, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Geonorge.AuthLib.NetFull.1.0.50\lib\net472\Geonorge.AuthLib.NetFull.dll</HintPath>
+      <HintPath>..\packages\Geonorge.AuthLib.NetFull.1.0.60\lib\net472\Geonorge.AuthLib.NetFull.dll</HintPath>
     </Reference>
     <Reference Include="GeoNorgeAPI, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GeoNorgeAPI.3.3.0\lib\net461\GeoNorgeAPI.dll</HintPath>
@@ -131,7 +134,7 @@
       <HintPath>..\packages\ImageResizer.4.2.5\lib\net45\ImageResizer.dll</HintPath>
     </Reference>
     <Reference Include="Kartverket.Geonorge.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.49\lib\net45\Kartverket.Geonorge.Utilities.dll</HintPath>
+      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.54\lib\net45\Kartverket.Geonorge.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Kartverket.ReportApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Kartverket.ReportApi.13.7.299\lib\net472\Kartverket.ReportApi.dll</HintPath>
@@ -257,7 +260,7 @@
     </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.49\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.54\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -1223,6 +1226,10 @@
     <Compile Include="Migrations\202203170900101_AddNamespaceDataset.designer.cs">
       <DependentUpon>202203170900101_AddNamespaceDataset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202210101305133_AddSchematronFile.cs" />
+    <Compile Include="Migrations\202210101305133_AddSchematronFile.designer.cs">
+      <DependentUpon>202210101305133_AddSchematronFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1256,6 +1263,7 @@
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DocumentFile.cs" />
     <Compile Include="Models\DokMeasureStatus.cs" />
     <Compile Include="Models\FAIR\FAIRDelivery.cs" />
     <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
@@ -1590,6 +1598,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="bin\gsdll32.dll">
     </Content>
+    <Content Include="CodeListStatusUpdate.sql" />
     <Content Include="Content\bower_components\chart.js\dist\Chart.bundle.js" />
     <Content Include="Content\bower_components\chart.js\dist\Chart.bundle.min.js" />
     <Content Include="Content\bower_components\chart.js\dist\Chart.js" />
@@ -2105,6 +2114,7 @@
     <Content Include="Content\bower_components\vue\dist\vue.runtime.js" />
     <Content Include="Content\bower_components\vue\dist\vue.runtime.min.js" />
     <Content Include="Content\custom.css" />
+    <Content Include="Content\html.png" />
     <Content Include="Content\img\accesible.svg" />
     <Content Include="Content\img\arrow-down.svg" />
     <Content Include="Content\img\arrow-up.svg" />
@@ -2611,6 +2621,7 @@
     <Content Include="Views\Shared\_detailsMareanoDataset.cshtml" />
     <Content Include="Views\Alerts\Edit.cshtml" />
     <Content Include="Views\Subregister\DeleteAll.cshtml" />
+    <Content Include="Views\Documents\Logg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -3205,6 +3216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203170900101_AddNamespaceDataset.resx">
       <DependentUpon>202203170900101_AddNamespaceDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210101305133_AddSchematronFile.resx">
+      <DependentUpon>202210101305133_AddSchematronFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

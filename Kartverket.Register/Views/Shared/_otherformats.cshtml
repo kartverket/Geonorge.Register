@@ -8,10 +8,10 @@
 </script>
 
 <div class="save-as-menu pull-right">
-    <label>@Shared.SaveAs:</label>
+    <label for="formats_header">@Shared.SaveAs:</label>
     <div class="no-padding-bottom save-as-dropdown">
         <div class="custom-select">
-            <select onchange="additionalView(this.value)" class="form-control">
+            <select id="formats_header"onchange="additionalView(this.value)" class="form-control">
                 <option value="atomUrl">ATOM</option>
                 @if (ViewBag.Title != "Tjenestevarsler")
     {

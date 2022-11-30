@@ -1,5 +1,6 @@
-﻿using Kartverket.Register.Helpers;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
+using Kartverket.Register.Models.StatusReports;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
@@ -262,13 +263,31 @@ namespace Kartverket.Register.Controllers
                 return RedirectPermanent(register.GetObjectUrl());
             }
 
+            var orgList = register.RegisterItems.OrderBy(o => o.Owner.name).Select(s => new { name = s.Owner.name, seoname = s.Owner.seoname }).Distinct().ToList();
+
             register = FilterRegisterItems(register, filter);
 
             List<StatusReport> mareanoStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+            mareanoStatusReports = mareanoStatusReports.OrderBy(o => o.Date).ToList();
             StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : mareanoStatusReports.OrderByDescending(o => o.Date).FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(filter.filterOrganization)) 
+            {
+                List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
+                foreach(MareanoDatasetStatusReport item in statusReport.StatusRegisterItems) 
+                {
+                    if(_db.MareanoDatasets.Where(d => d.Uuid == item.UuidMareanoDataset && d.Owner.seoname == filter.filterOrganization).Any())
+                        reportItems.Add(item);
+                }
+
+                statusReport.StatusRegisterItems = reportItems;
+            }
 
             var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, mareanoStatusReports);
             viewModel.SelectedMareanoTab = filter.MareanoSelectedTab;
+            var organizations = orgList.Select(s => new { name = s.name, seoname = s.seoname });
+            organizations = organizations.Prepend(new { name = "Alle", seoname = "" });
+            ViewBag.filterOrganization = organizations;
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
 
             ItemsOrderBy(sorting, viewModel);
@@ -340,18 +359,116 @@ namespace Kartverket.Register.Controllers
         public ActionResult DetailsAll(string registername, string sorting, int? page, FilterParameters filter,string subregisters = null, string InspireRegisteryType = null)
         {
             var path = RegisterUrls.GetPath(registername, subregisters);
+            var originalPath = path;
             string systemId = RegisterUrls.GetSystemIdFromPath(registername + "/" + subregisters);
+            bool isRegisterItem = false;
 
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
             var registerPath = registername;
             if (!string.IsNullOrEmpty(subregisters))
                 registerPath = registerPath + "/" + subregisters;
             string format = RegisterUrls.GetFileExtension(registerPath);
+            if(string.IsNullOrEmpty(format) && Request.Headers["Accept"] == null || Request.Headers["Accept"] == "*/*") 
+            {
+                format = "json";
+            }
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
             var register = _registerService.GetRegisterByPath(path);
-            if (register == null) return HttpNotFound();
+
+            if (register == null) 
+            {
+                var value = subregisters.Split('/').Last();
+                if(path.Contains('/'))
+                    path = path.Substring(0, path.LastIndexOf('/'));
+                //check codevalue
+                var codevalue = _db.RegisterItems.OfType<CodelistValue>().Where(s => (s.value == value || s.seoname == value )  && s.register.path == path).FirstOrDefault();
+                if(codevalue != null)
+                {
+                    systemId = codevalue.systemId.ToString();
+                    register = codevalue.register;
+                    isRegisterItem = true;
+                }
+            }
+
+            if (register == null)
+            {
+                var value2 = subregisters.Split('/').Last();
+                if (path.Contains('/'))
+                    path = path.Substring(0, originalPath.LastIndexOf('/'));
+                //check value
+                var doc = _db.RegisterItems.OfType<Document>().Where(s => (s.seoname == value2) && s.register.path == path).FirstOrDefault();
+                if (doc != null)
+                {
+                    systemId = doc.systemId.ToString();
+                    register = doc.register;
+                    isRegisterItem = true;
+                }
+            }
+
+
+            if (register == null)
+            {
+                var value = subregisters.Split('/').Last();
+                if (path.Contains('/'))
+                    path = path.Substring(0, path.LastIndexOf('/'));
+                //check register
+                var registerItem = _db.RegisterItems.Where(s => (s.seoname == value) && s.register.path == path).FirstOrDefault();
+                if (registerItem != null)
+                {
+                    systemId = registerItem.systemId.ToString();
+                    register = registerItem.register;
+                }
+            }
+
+            if (register == null && originalPath.Contains('/'))
+            {
+                register = _registerService.GetRegisterByPath(originalPath.Substring(0, originalPath.LastIndexOf('/')));
+            }
+            if (register == null)
+            {
+                var itemArray = subregisters.Split('/');
+                var itemName = itemArray[itemArray.Length - 2];
+                var itemVersion= itemArray[itemArray.Length -1 ];
+
+                RegisterItemV2ViewModel view = new DocumentViewModel((Document)_registerItemService.GetRegisterItemByPath(path, itemName, itemVersion));
+                if (view != null) { 
+                    view.AccessRegisterItem = _accessControlService.HasAccessTo(view);
+                    return View("DetailsRegisterItem", view);
+                }
+            }
+
+            if (register == null)    
+                return HttpNotFound();
+
+            if (register.ContainedItemClassIsDocument() && !register.items.Any()) 
+            {
+                register.items = _db.RegisterItems.Where(d => d.register.parentRegisterId == register.systemId).ToList();
+            }
+
+            if (register.ContainedItemClassIsDocument() && !string.IsNullOrEmpty(subregisters) && isRegisterItem) 
+            {
+                string registerName = "";
+                string parentRegister = null;
+                string itemName = "";
+
+                var items = originalPath.Split('/');
+
+                if(items.Count() == 2) 
+                {
+                    registerName = items[0];
+                    itemName = items[1];
+                }
+                else
+                {
+                    registerName = items[items.Count()-2];
+                    parentRegister = items[items.Count() - 3];
+                    itemName = items[items.Count()-1];
+                }
+
+                return DetailsRegisterItemVersions(registerName, parentRegister, itemName, register.owner.seoname, format);
+            }
 
                
             register = FilterRegisterItems(register, filter);
@@ -503,6 +620,8 @@ namespace Kartverket.Register.Controllers
 
             var versionsItem = _versioningService.Versions(registername, parentRegister, itemname);
             var model = new VersionsViewModel(versionsItem);
+            model.HistoricalVersions = model.HistoricalVersions.OrderByDescending(o => o.VersionNumber).ToList();
+            model.SuggestedVersions = model.SuggestedVersions.OrderBy(o => o.VersionNumber).ToList();
             model.AccessCreateNewVersions = _accessControlService.AccessCreateNewVersion(model.CurrentVersion);
             model.CurrentVersion.AccessRegisterItem = _accessControlService.HasAccessTo(model.CurrentVersion);
 
@@ -511,7 +630,7 @@ namespace Kartverket.Register.Controllers
             if (model.CurrentVersion?.Name == null)
                 return HttpNotFound();
 
-            return View(model);
+            return View("DetailsRegisterItemVersions", model);
         }
 
 

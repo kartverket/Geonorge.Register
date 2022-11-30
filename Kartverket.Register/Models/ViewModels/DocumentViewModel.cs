@@ -33,15 +33,9 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string VersionUrl()
         {
-            if (Register.parentRegister == null)
-            {                
-                return "/register/versjoner/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/" + VersionNumber + "/no";
-            }
-            else
-            {
-                return "/subregister/versjoner/" + Register.parentRegister.seoname + "/" + Register.parentRegister.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/" + VersionNumber + "/no";
-
-            }
+            string version = !string.IsNullOrEmpty(VersionName) ? VersionName : VersionNumber.ToString();
+                   
+            return "/" + Register.path + "/" + Seoname + "/" + version;         
         }
 
         public string EditVersionOfDocumentUrl()

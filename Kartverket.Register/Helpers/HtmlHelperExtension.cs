@@ -394,6 +394,11 @@ namespace Kartverket.Register.Helpers
                 sortTitle = DataSet.DOK_Delivery_Title;
                 sortingParam = defaultSort;
             }
+            else if (sortingSelected == "name" && defaultSort == "mareano_status")
+            {
+                sortingClass = "sorted-desc";
+                sortingParam = "mareano_status_desc";
+            }
             else
             {
                 sortingClass = "";
@@ -899,6 +904,8 @@ namespace Kartverket.Register.Helpers
             var thumb = thumbnailSrc ?? "/Content/pdf.jpg";
             if(!string.IsNullOrEmpty(documentUrl) && documentUrl.EndsWith(".xsd"))
                 thumb = "/Content/xsd.svg";
+            else if (!string.IsNullOrEmpty(documentUrl) && documentUrl.EndsWith(".html"))
+                thumb = "/Content/html.png";
             return thumb;
         }
 

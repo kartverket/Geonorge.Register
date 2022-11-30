@@ -25,6 +25,7 @@ using StatusReport = Kartverket.Register.Models.StatusReport;
 using Swashbuckle.Examples;
 using System.Net;
 using System.Net.Http.Formatting;
+using System.IO;
 
 namespace Kartverket.Register.Controllers
 {
@@ -215,7 +216,7 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.Route("api/register/{registerName}/report/{id}.{ext}")]
         [System.Web.Http.Route("api/register/{registerName}/report/{id}")]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult StatusReport(string id, string ext, bool dataset = true, bool service = true)
+        public IHttpActionResult StatusReport(string id, string ext, [FromUri] FilterParameters filter, bool dataset = true, bool service = true)
         {
             var statusReport = _statusReportService.GetStatusReportById(id);
             if (statusReport == null)
@@ -252,6 +253,21 @@ namespace Kartverket.Register.Controllers
 
             if (statusReport.IsMareanoDatasetReport())
             {
+                if (!string.IsNullOrEmpty(filter.filterOrganization))
+                {
+                    List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
+                    foreach (Kartverket.Register.Models.StatusReports.MareanoDatasetStatusReport item in statusReport.StatusRegisterItems)
+                    {
+
+                        if (db.MareanoDatasets.Where(d => d.Uuid == item.UuidMareanoDataset && d.Owner.seoname == filter.filterOrganization).Any())
+                            reportItems.Add(item);
+                    }
+
+                    statusReport.StatusRegisterItems = reportItems;
+                }
+
+
+
                 return Ok(new MareanoDatasetStatusReport(statusReport));
             }
 
@@ -378,12 +394,22 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}.{ext}")]
         [System.Web.Http.Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}")]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetSubregisterByName(string parentregister, string register, string systemid = null)
+        public IHttpActionResult GetSubregisterByName(string parentregister, string register, string systemid = null, string ext = "json")
         {
             var it = _registerService.GetRegister(parentregister, register);
 
             if(it == null && !string.IsNullOrEmpty(systemid))
                it = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
+
+            if (it == null)
+            {
+                var currentVersion = ConvertCurrentAndVersions(null, parentregister, RegisterUrls.GetItemFromPath(parentregister + "/" + register));
+
+                var mediatype = GetFormattingForMediaType(ext);
+
+                if (currentVersion != null)
+                    return Content(HttpStatusCode.OK, currentVersion, mediatype.Formatter, mediatype.MediaTypeHeader);
+            }
 
             if (it == null)
             {
@@ -405,13 +431,61 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterItemByName(string registerName, string subregisters = null)
         {
             var path = RegisterUrls.GetPath(registerName, subregisters);
+            var originalPath = path;
             string systemId = RegisterUrls.GetSystemIdFromPath(registerName + "/" + subregisters);
             string format = RegisterUrls.GetFileExtension(registerName + "/" + subregisters);
-            path = RegisterUrls.RemoveExtension(path);
+            if(!string.IsNullOrEmpty(format))
+                path = RegisterUrls.RemoveExtension(path);
 
             var mediatype = GetFormattingForMediaType(format);
 
             var register = _registerService.GetRegisterByPath(path);
+
+            if (register == null)
+            {
+                var value = path.Split('/').Last();
+                if (path.Contains('/'))
+                    path = path.Substring(0, path.LastIndexOf('/'));
+                //check codevalue
+                var codevalue = db.RegisterItems.OfType<CodelistValue>().Where(s => (s.value == value || s.seoname == value) && s.register.path == path).FirstOrDefault();
+                if (codevalue != null)
+                {
+                    systemId = codevalue.systemId.ToString();
+                    register = codevalue.register;
+                }
+            }
+
+            if (register == null)
+            {
+                subregisters = RegisterUrls.RemoveExtension(subregisters);
+                var value2 = subregisters.Split('/').Last();
+                if (path.Contains('/'))
+                    path = path.Substring(0, originalPath.LastIndexOf('/'));
+                //check value
+                var doc = db.RegisterItems.OfType<Document>().Where(s => (s.seoname == value2) && s.register.path == path).FirstOrDefault();
+                if (doc != null)
+                {
+                    systemId = doc.systemId.ToString();
+                    register = doc.register;
+                }
+            }
+
+            if (register == null)
+            {
+                originalPath = RegisterUrls.RemoveExtension(originalPath);
+                var itemArray = originalPath.Split('/');
+                var pathRegister = itemArray.ToList().GetRange(0, itemArray.Length - 2);
+                var pathString = String.Join("/", pathRegister.ToArray());
+                var itemName = itemArray[itemArray.Length - 2];
+                var itemVersion = itemArray[itemArray.Length - 1];
+                var regItem = _registerItemService.GetRegisterItemByPath(pathString, itemName, itemVersion);
+                
+                if(regItem != null) 
+                {
+                    return Content(HttpStatusCode.OK, ConvertRegisterItem(regItem), mediatype.Formatter, mediatype.MediaTypeHeader);
+                }
+            }
+
             if (register == null)
             {
                 var currentVersion = ConvertCurrentAndVersions(null, registerName, RegisterUrls.GetItemFromPath(subregisters));
@@ -467,6 +541,11 @@ namespace Kartverket.Register.Controllers
             {
                 mediaType.Formatter = new XMLFormatter();
                 mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/xml");
+            }
+            else if (extension == "skos")
+            {
+                mediaType.Formatter = new SKOSFormatter();
+                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/xml+rdf");
             }
             else
             {
@@ -782,6 +861,31 @@ namespace Kartverket.Register.Controllers
             Log.Info("Stop alert-set-status-retired");
             return Ok();
         }
+
+        /// <summary>
+        /// Update code value status
+        /// </summary>
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/codelist/update-status")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult UpdateCodelistStatus()
+        {
+            try
+            {
+                Log.Info("Start UpdateCodelistStatus");
+
+                string script = File.ReadAllText(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "CodeListStatusUpdate.sql"));
+
+                db.Database.ExecuteSqlCommand(script);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Feil UpdateCodelistStatus: ", ex);
+            }
+            Log.Info("Stop UpdateCodelistStatus");
+            return Ok();
+        }
+
 
         //[System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         //[ApiExplorerSettings(IgnoreApi = true)]

@@ -5,8 +5,8 @@
 @if (!string.IsNullOrEmpty(Model.SpecificUsage))
 {
     <article class="col-md-12">
-        <h3>@Html.DisplayNameFor(model => Model.SpecificUsage)</h3>
-        <p> @Model.SpecificUsage</p>
+        <heading-text><h2>@Html.DisplayNameFor(model => Model.SpecificUsage)</h2></heading-text>
+        <body-text> @Model.SpecificUsage</body-text>
     </article>
 }
 
@@ -16,13 +16,13 @@
 
 
 <article class="col-md-12">
-    <h3>Areal</h3>
+    <heading-text><h3>Areal</h3></heading-text>
     <p><strong>Areal: </strong>@Model.Area</p>
     <p><strong>Relevant areal: </strong>@Model.RelevantArea</p>
 </article>
 
 <article class="col-md-12">
-    <h3>Inspire status</h3>
+    <heading-text><h3>Inspire status</h3></heading-text>
  
     <div class="table-heading col-md-12">
         <div class="col-md-3 col">@DataSet.DOK_AssessmentPoint.ToUpper()</div>
@@ -80,7 +80,7 @@
 @if (!string.IsNullOrWhiteSpace(Model.MetadataUrl))
 {
     <article class="col-md-12">
-        <h3>@DataSet.ProductInformation</h3>
-        <p><a href="@Model.MetadataUrl" class="btn btn-fresh-green"><span class="glyphicon glyphicon-globe"></span> @DataSet.DisplayKartkatalogen</a></p>
+        <heading-text><h3>@DataSet.ProductInformation</h3></heading-text>
+        <body-text><a href="@Model.MetadataUrl" class="btn btn-fresh-green"><span class="glyphicon glyphicon-globe"></span> @DataSet.DisplayKartkatalogen</a><body-text>
     </article>
 }

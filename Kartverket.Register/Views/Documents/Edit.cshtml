@@ -177,11 +177,11 @@
                         @Html.ValidationMessage("ErrorMessageFileName")
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group@(Model.register.seoname != "gml-applikasjonsskjema" ? " hidden" :"")">
                     <label for="schematronfile" class="control-label col-md-2">Schematron-fil</label>
                     <div class="col-md-10">
-                        <input type="file" name="schematronfile" id="schematronfile" onchange="checkDocumentApproval($('#documentfile').val())" />@(!string.IsNullOrEmpty(Model.documentUrl) ? Model.documentUrl.Replace(".xsd",".sch") : "")
-                        @Html.ValidationMessageFor(model => model.documentUrl, "", new { @class = "text-danger" })
+                        <input type="file" name="schematronfile" id="schematronfile" onchange="checkDocumentApproval($('#documentfile').val())" />@Model.documentUrlSchematron
+                        @Html.ValidationMessageFor(model => model.documentUrlSchematron, "", new { @class = "text-danger" })
                         @Html.ValidationMessage("ErrorMessageFileName")
                     </div>
                 </div>

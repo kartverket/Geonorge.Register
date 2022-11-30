@@ -18,6 +18,15 @@ namespace Kartverket.Register.Services
             return GetCurrentUser().IsInRole(GeonorgeRoles.MetadataAdmin);
         }
 
+        /// <summary>
+        /// Check if user has register manager role.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRegisterManager()
+        {
+            return GetCurrentUser().IsInRole(GeonorgeRoles.RegisterManager);
+        }
+
         public string GetOrganizationNumber()
         {
             return GetCurrentUser().GetOrganizationOrgnr();

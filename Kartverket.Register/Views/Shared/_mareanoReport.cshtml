@@ -1,6 +1,20 @@
 ﻿@model Kartverket.Register.Models.ViewModels.MareanoDatasetStatusReportViewModel
 @using Kartverket.Register.Helpers
-
+@{ 
+    string filterOrganization = "", StatusType = "", SelectedReport="";
+    if(Request["filterOrganization"] != null)
+    {
+        filterOrganization = Request["filterOrganization"].ToString();
+    }
+    if (Request["StatusType"] != null)
+    {
+        StatusType = Request["StatusType"].ToString();
+    }
+    if (Request["SelectedReport"] != null)
+    {
+        SelectedReport = Request["SelectedReport"].ToString();
+    }
+}
 @if (Model.ReportNotExists)
 {
     <p>Ingen rapporter enda...</p>
@@ -13,6 +27,8 @@ else
             {
 
                 @Html.Hidden("MareanoSelectedTab", "report")
+                @Html.Hidden("filterOrganization", filterOrganization)
+                @Html.Hidden("StatusType", StatusType)
                 @Html.DropDownList("SelectedReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
             }
         </div>
@@ -287,6 +303,8 @@ else
                 {
 
                     @Html.Hidden("MareanoSelectedTab", "report")
+                    @Html.Hidden("SelectedReport", SelectedReport)
+                    @Html.Hidden("filterOrganization", filterOrganization)
                     @Html.DropDownList("StatusType", Model.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
                 }
             </div>

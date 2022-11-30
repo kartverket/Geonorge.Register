@@ -44,9 +44,8 @@ namespace Kartverket.Register.Services
         string SchemaRemoteUrlTest = WebConfigurationManager.AppSettings["SchemaRemoteUrlTest"];
 
         string SchemaFtpSite = WebConfigurationManager.AppSettings["SchemaFtpSite"];
-        string SchemaUsernamesBaatMappings = WebConfigurationManager.AppSettings["SchemaUsernamesBaatMappings"];
-        string SchemaUsernames = WebConfigurationManager.AppSettings["SchemaFtpUsernames"];
-        string SchemaPasswords = WebConfigurationManager.AppSettings["SchemaFtpPasswords"];
+        string SchemaUsername = WebConfigurationManager.AppSettings["SchemaFtpUsername"];
+        string SchemaPassword = WebConfigurationManager.AppSettings["SchemaFtpPassword"];
         string SchemaFtpWorkingDirectory = WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectory"]; 
 
         string SchemaFtpSiteTest = WebConfigurationManager.AppSettings["SchemaFtpSiteTest"];
@@ -54,9 +53,10 @@ namespace Kartverket.Register.Services
         string SchemaPasswordTest = WebConfigurationManager.AppSettings["SchemaFtpPasswordTest"];
         string SchemaFtpWorkingDirectoryTest = WebConfigurationManager.AppSettings["SchemaFtpWorkingDirectoryTest"];
 
-        public string Synchronize(HttpPostedFileBase file, HttpPostedFileBase schematronfile = null)
+        public DocumentFile Synchronize(HttpPostedFileBase file, HttpPostedFileBase schematronfile = null)
         {
-            string syncFile = "";
+            DocumentFile syncFile = new DocumentFile();
+            syncFile.Url = "";
             if (file != null && file.ContentLength > 0 && (file.ContentType == "text/xml" || file.ContentType == "application/xml"))
             {
                 var document = new XmlDocument();
@@ -71,33 +71,16 @@ namespace Kartverket.Register.Services
                 else 
                 {
                     Log.Error("Ugyldig skjemaplassering:" + targetNamespace);
-                    return "IllegalSchemaLocation";
+                    syncFile.Url = "IllegalSchemaLocation";
+                    return syncFile;
                 }
             }
 
             return syncFile;
         }
 
-        private bool UserHasAccess()
-        {
-            var user = ClaimsPrincipal.Current.GetUsername();
-            string[] users = SchemaUsernamesBaatMappings.Split(','); 
-
-            if (users.ToList().Contains(user))
-            {
-                return true;
-            }
-            else
-            {
-                Log.Warn("User " + user + " does not have ftp rights");
-                return false;
-            }
-        }
-
         public string Synchronize(string url)
         {
-            if (UserHasAccess())
-            { 
                 var uri = new Uri(url);
                 var filename = uri.Segments.Last();
                 string mainPath = "/SOSI/produktspesifikasjon/";
@@ -108,7 +91,6 @@ namespace Kartverket.Register.Services
                     string path = url.Substring(ix + mainPath.Length, url.Length - 1 - (ix + mainPath.Length + filename.Length));
                     url = UploadFileProd(path, filename);
                 }
-            }
 
             return url;
         }
@@ -128,12 +110,12 @@ namespace Kartverket.Register.Services
                 || (node.Value.Contains(TargetNamespaceSecure) || node.Value.Contains(TargetNamespaceTestSecure))) ;
         }
 
-        string UploadFile(HttpPostedFileBase file, string path, HttpPostedFileBase schematronfile = null)
+        DocumentFile UploadFile(HttpPostedFileBase file, string path, HttpPostedFileBase schematronfile = null)
         {
-            try
-            {
+            DocumentFile documentFile = new DocumentFile();
 
-            
+            try
+            {          
                 using (var sftp = new SftpClient(SchemaFtpSiteTest, SchemaUsernameTest, SchemaPasswordTest))
                 {
                     sftp.Connect();
@@ -168,6 +150,8 @@ namespace Kartverket.Register.Services
                         fileStream.Position = 0;
 
                         sftp.UploadFile(fileStream, filePath, true);
+
+                        documentFile.UrlSchematron = SchemaRemoteUrlTest + path + "/" + schematronfile.FileName; ;
                     }
 
                     sftp.Disconnect();
@@ -180,7 +164,9 @@ namespace Kartverket.Register.Services
 
             Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = path + "/" + file.FileName, Operation = Operation.Added, User = ClaimsPrincipal.Current.GetUsername(), Description = "Ftp gml-skjema til test" }));
 
-            return SchemaRemoteUrlTest + path + "/" + file.FileName;
+            documentFile.Url = SchemaRemoteUrlTest + path + "/" + file.FileName;
+
+            return documentFile;
         }
 
         private string UploadFileProd(string path, string filename)
@@ -260,22 +246,8 @@ namespace Kartverket.Register.Services
 
         private User GetUser()
         {
-            var user = ClaimsPrincipal.Current.GetUsername();
-            string[] usersBaat = SchemaUsernamesBaatMappings.Split(',');
-            string[] usersFtp = SchemaUsernames.Split(',');
-            string[] passwords = SchemaPasswords.Split(',');
-
-            for (int u = 0; u < usersBaat.Length; u++)
-            {
-                if(usersBaat[u] == user)
-                {
-                    return new User { Username = usersFtp[u], Password = passwords[u] };
-                }
-            }
-          
-            Log.Error("User " + user + " does not have sftp rights");
-            throw new Exception("Permission denied");
-
+           return new User { Username = SchemaUsername, Password = SchemaPassword };
+        
         }
 
         internal void RemoveFiles(Document document)

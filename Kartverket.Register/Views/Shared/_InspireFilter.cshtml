@@ -7,7 +7,7 @@
         <div class="col-md-2">
             <label for="SelectedOrganizationType">Filtrer Annex</label>
             <div class="form-group custom-select">
-                <select name="InspireAnnex" class="form-control" onchange="form.submit();">
+                <select id="SelectedOrganizationType" name="InspireAnnex" class="form-control" onchange="form.submit();">
                     <option value="">Annex-type</option>
                     <option value="@Inspire.AnnexI" @(Request.QueryString["InspireAnnex"] == Inspire.AnnexI ? "selected" : "" )>@Inspire.AnnexI</option>
                     <option value="@Inspire.AnnexII" @(Request.QueryString["InspireAnnex"] == Inspire.AnnexII ? "selected" : "" )>@Inspire.AnnexII</option>

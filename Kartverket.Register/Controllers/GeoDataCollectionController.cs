@@ -192,6 +192,15 @@ namespace Kartverket.Register.Controllers
                 if(responsible != null)
                     geodataCollection.Responsible = responsible;
 
+                ViewBag.ownerId = new SelectList(_dbContext.Organizations.ToList().Select(s => new { s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", geodataCollection.Organization.systemId);
+                ViewBag.responsibleId = new SelectList(_dbContext.Organizations.ToList().Select(s => new { s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", geodataCollection.Responsible != null ? geodataCollection.Responsible.systemId : geodataCollection.Organization.systemId);
+
+                if (imagefile != null && !(imagefile.ContentType == "image/jpeg" || imagefile.ContentType == "image/gif" || imagefile.ContentType == "image/png"))
+                {
+                    ModelState.AddModelError("ImageFileName", "Bilde må være jpeg, gif eller png");
+                    return View(collection);
+                }
+
                 if (imagefile != null && imagefile.ContentLength > 0)
                 {
                     geodataCollection.ThumbnailFileName = SaveImageOptimizedToDisk(imagefile, geodataCollection.SeoName);
@@ -209,7 +218,7 @@ namespace Kartverket.Register.Controllers
             }
             catch
             {
-                return View();
+                return View(collection);
             }
         }
 

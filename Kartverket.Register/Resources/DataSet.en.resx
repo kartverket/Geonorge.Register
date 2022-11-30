@@ -513,4 +513,7 @@ Method is based on interviews of planners and GIS people from municipalities, co
   <data name="DOK_Coverage_Measure" xml:space="preserve">
     <value>Measure</value>
   </data>
+  <data name="FilterOrganization" xml:space="preserve">
+    <value>Filter organization</value>
+  </data>
 </root>

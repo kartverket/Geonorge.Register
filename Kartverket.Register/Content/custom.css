@@ -172,7 +172,9 @@
 
 }
 
-
+ul.nav-tabs > li.tab > a {
+    background-color: #4c7aa9;
+}
 
 .search-results.table-view .btn {
     color: #3867c8;
@@ -186,7 +188,7 @@
 .nav-pills > li > a {
     background-color: #FFF;
     transition: all .35s linear 0s;
-    color: #7da1c4;
+    color: #4c7aa9;
     border: none;
     font-style: normal;
     font-family: "Open Sans",sans-serif;
@@ -198,7 +200,7 @@
 }
 
     .nav-pills > li > a.active {
-        background-color: #7da1c4;
+        background-color: #4c7aa9;
         color: #fff;
     }
 

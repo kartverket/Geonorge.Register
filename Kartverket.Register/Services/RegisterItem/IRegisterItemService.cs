@@ -76,5 +76,6 @@ namespace Kartverket.Register.Services.RegisterItem
         void MakeAllRegisterItemsDraft(Models.Register originalRegister);
         void UpdateNameSpaceDatasets();
         ICollection<NamespaceDataset> GetNameSpaceDatasets(NameSpace nameSpace);
+        Models.RegisterItem GetRegisterItemByPath(string path, string itemName, string vnr);
     }
 }

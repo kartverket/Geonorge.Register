@@ -120,7 +120,7 @@ namespace Kartverket.Register.Services
 
         private bool AccessRegister(RegisterV2ViewModel registerViewModel)
         {
-            if (IsAdmin()) return true;
+            if (IsAdmin() || IsRegisterManager() ) return true;
             if (registerViewModel.AccessId == 2)
             {
                 if (IsEditor())
@@ -204,6 +204,15 @@ namespace Kartverket.Register.Services
         public bool IsAdmin()
         {
             return _userAuthorization.IsAdmin();
+        }
+
+        /// <summary>
+        /// Check if current user is RegisterManager
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRegisterManager()
+        {
+            return _userAuthorization.IsRegisterManager();
         }
 
         /// <summary>
@@ -323,7 +332,7 @@ namespace Kartverket.Register.Services
 
         public bool AccessEditOrCreateDOKMunicipalBySelectedMunicipality(string municipalityCode)
         {
-            return IsAdmin() || UserIsSelectedMunicipality(municipalityCode) || IsDokAdmin();
+            return IsAdmin() || IsRegisterManager() || UserIsSelectedMunicipality(municipalityCode) || IsDokAdmin();
         }
 
         public bool UserIsSelectedMunicipality(string municipalityCode)

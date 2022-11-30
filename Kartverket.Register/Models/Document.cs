@@ -59,11 +59,11 @@ namespace Kartverket.Register.Models
                 if (documentowner == null && seoname == null)
                     return "/register/versjoner/" + register.seoname;
                 else
-                    return "/register/versjoner/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
+                    return "/" + register.seoname + "/" + seoname;
             }
             else
             {
-                return "/subregister/versjoner/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
+                return "/" + register.path + "/" + seoname;
             }
         }
 
@@ -131,6 +131,7 @@ namespace Kartverket.Register.Models
             versioningId = document.versioningId;
             documentUrl = document.documentUrl;
             documentUrl2 = document.documentUrl2;
+            documentUrlSchematron = document.documentUrlSchematron;
             if(!string.IsNullOrEmpty(document.thumbnail))
                 thumbnail = document.thumbnail;
 
@@ -202,6 +203,11 @@ namespace Kartverket.Register.Models
         public bool StatusIsValidOrSosiValid()
         {
             return statusId == "Valid" || statusId == "Sosi-valid";
+        }
+
+        public bool IsStandard()
+        {
+            return register.seoname == "standarder" || register.path.StartsWith("standarder");
         }
     }//end Document
 }//end namespace Datamodell

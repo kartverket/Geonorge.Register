@@ -82,6 +82,8 @@ namespace Kartverket.Register.Models
         public string documentUrl { get; set; }
         [Display(Name = "DocumentUrl2", ResourceType = typeof(Registers))]
         public string documentUrl2 { get; set; }
+        [Display(Name = "Schematron-file", ResourceType = typeof(Registers))]
+        public string documentUrlSchematron { get; set; }
 
         [Display(Name = "ApprovalDocument", ResourceType = typeof(Registers))]
         public string approvalDocument { get; set; }
@@ -250,8 +252,13 @@ namespace Kartverket.Register.Models
                 return alert.GetAlertUrl();
             }
             else {
-                if(submitter!=null && !string.IsNullOrEmpty(seoname))
-                    return register.GetObjectUrl() + "/" + seoname + "/" + systemId;
+                if (submitter != null && !string.IsNullOrEmpty(seoname)) { 
+                    var item = seoname;
+                    CodelistValue codelistValue =  this as CodelistValue;
+                    if (codelistValue != null && !string.IsNullOrEmpty(codelistValue.value))
+                        item = codelistValue.value;
+                    return register.GetObjectUrl() + "/" + item;
+                }
                 else
                     return register.GetObjectUrl();
             }

@@ -509,7 +509,7 @@
             Save dok status report to db
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.StatusReport(System.String,System.String,System.Boolean,System.Boolean)">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.StatusReport(System.String,System.String,Kartverket.Register.Models.FilterParameters,System.Boolean,System.Boolean)">
             <summary>
             Gets selected status report
             </summary>
@@ -524,7 +524,7 @@
             Save inspire monitoring report data to database.
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterByName(System.String,System.String,System.String)">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterByName(System.String,System.String,System.String,System.String)">
             <summary>
             Gets subregister by name
             </summary>
@@ -584,6 +584,11 @@
         <member name="M:Kartverket.Register.Controllers.ApiRootController.SetStatusRetired">
             <summary>
             Update alert status
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.UpdateCodelistStatus">
+            <summary>
+            Update code value status
             </summary>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.ConvertCurrentAndVersions(Kartverket.Register.Models.Register,System.String)">
@@ -670,7 +675,7 @@
             </summary>
             <param name="document"></param>
         </member>
-        <member name="M:Kartverket.Register.Controllers.DocumentsController.GenerateThumbnail(Kartverket.Register.Models.Document,System.Web.HttpPostedFileBase,System.String)">
+        <member name="M:Kartverket.Register.Controllers.DocumentsController.GenerateThumbnail(Kartverket.Register.Models.Document,Kartverket.Register.Models.Document,System.Web.HttpPostedFileBase,System.String)">
             <summary>
             Generate a thumbnail from frontpage of a PDF document.
             </summary>
@@ -1548,6 +1553,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Kartverket.Register.Services.AccessControlService.IsRegisterManager">
+            <summary>
+            Check if current user is RegisterManager
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Services.AccessControlService.IsEditor">
             <summary>
             Check if user has metadata editor role.
@@ -1618,6 +1629,12 @@
         <member name="M:Kartverket.Register.Services.UserAuthorization.IsAdmin">
             <summary>
             Check if user has metadata admin role.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.UserAuthorization.IsRegisterManager">
+            <summary>
+            Check if user has register manager role.
             </summary>
             <returns></returns>
         </member>
@@ -4063,6 +4080,11 @@
         <member name="P:Resources.DataSet.ErrorMessageValidationDataset">
             <summary>
               Looks up a localized string similar to Datasettet finnes fra før!.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.FilterOrganization">
+            <summary>
+              Looks up a localized string similar to Filtrer organisasjon.
             </summary>
         </member>
         <member name="P:Resources.DataSet.GetInfoKartkatalog">

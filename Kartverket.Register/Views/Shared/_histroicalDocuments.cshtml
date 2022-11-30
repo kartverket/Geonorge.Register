@@ -1,5 +1,6 @@
 ﻿@model ICollection<RegisterItemV2ViewModel>
 @using Kartverket.Register.Models.ViewModels
+@using System.Globalization
 
 @if (Model.Any())
 {
@@ -9,7 +10,7 @@
         <div class="col-md-2 col">@Registers.VersionName</div>
         <div class="col-md-2 col">Status</div>
         <div class="col-md-1 col">@Registers.Accepted</div>
-        <div class="col-md-2 col text-right">@Registers.DateAccepted</div>
+        <div class="col-md-2 col text-right">@Registers.Date</div>
     </div>
 
     foreach (DocumentViewModel historicalDocument in Model)
@@ -24,7 +25,14 @@
                 @historicalDocument.Status.DescriptionTranslated() <i class="statusIcon-@historicalDocument.StatusId"></i>
             </div>
             <div class="col-md-1 col">@historicalDocument.Accepted</div>
+            @if((historicalDocument.Accepted == "Utkast" || historicalDocument.Accepted == "Draft") && historicalDocument.DateNotAccepted.HasValue)
+            {
+                <div class="col-md-2 col text-right">@Html.DisplayFor(modelItem => historicalDocument.DateNotAccepted)</div>
+            }
+            else
+            {
             <div class="col-md-2 col text-right">@Html.DisplayFor(modelItem => historicalDocument.DateAccepted)</div>
+            }
         </div>
     }
 }

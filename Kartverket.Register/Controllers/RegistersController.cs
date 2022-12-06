@@ -281,6 +281,26 @@ namespace Kartverket.Register.Controllers
                 }
 
                 statusReport.StatusRegisterItems = reportItems;
+
+                List<StatusReport> mareanoStatusReportsOrganization = new List<StatusReport>();
+
+                foreach (var mareanoStatusReport in mareanoStatusReports) 
+                {
+                    StatusReport statusReportOrg = mareanoStatusReport;
+                    List<RegisterItemStatusReport> reportItemsOrg = new List<RegisterItemStatusReport>();
+                    foreach (MareanoDatasetStatusReport itemOrg in mareanoStatusReport.StatusRegisterItems)
+                    {
+                        if (_db.MareanoDatasets.Where(d => d.Uuid == itemOrg.UuidMareanoDataset && d.Owner.seoname == filter.filterOrganization).Any())
+                            reportItemsOrg.Add(itemOrg);
+                    }
+
+                    statusReportOrg.StatusRegisterItems = reportItemsOrg;
+
+                    mareanoStatusReportsOrganization.Add(statusReportOrg);
+                }
+
+                mareanoStatusReports = mareanoStatusReportsOrganization;
+
             }
 
             var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, mareanoStatusReports);

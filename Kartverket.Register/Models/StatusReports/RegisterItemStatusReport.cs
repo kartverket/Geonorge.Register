@@ -15,5 +15,7 @@ namespace Kartverket.Register.Models
 
         [Key]
         public Guid Id { get; set; }
+        [MaxLength(255)]
+        public string OrganizationSeoName { get; set; }
     }
 }

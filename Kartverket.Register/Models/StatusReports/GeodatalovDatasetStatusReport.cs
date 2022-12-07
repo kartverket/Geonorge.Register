@@ -34,6 +34,7 @@ namespace Kartverket.Register.Models.StatusReports
             if (geodatalovDataset != null)
             {
                 UuidGeodatalovDataset = geodatalovDataset.Uuid;
+                OrganizationSeoName = geodatalovDataset.Owner.seoname;
                 InspireTheme = geodatalovDataset.InspireTheme;
                 Dok = geodatalovDataset.Dok;
                 NationalDataset = geodatalovDataset.NationalDataset;

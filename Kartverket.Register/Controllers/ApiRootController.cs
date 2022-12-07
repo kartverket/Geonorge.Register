@@ -259,7 +259,7 @@ namespace Kartverket.Register.Controllers
                     foreach (Kartverket.Register.Models.StatusReports.MareanoDatasetStatusReport item in statusReport.StatusRegisterItems)
                     {
 
-                        if (db.MareanoDatasets.Where(d => d.Uuid == item.UuidMareanoDataset && d.Owner.seoname == filter.filterOrganization).Any())
+                        if (item.OrganizationSeoName == filter.filterOrganization)
                             reportItems.Add(item);
                     }
 

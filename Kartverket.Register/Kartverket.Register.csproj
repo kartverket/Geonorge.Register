@@ -24,7 +24,8 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -1229,6 +1230,10 @@
     <Compile Include="Migrations\202210101305133_AddSchematronFile.cs" />
     <Compile Include="Migrations\202210101305133_AddSchematronFile.designer.cs">
       <DependentUpon>202210101305133_AddSchematronFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.cs" />
+    <Compile Include="Migrations\202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.designer.cs">
+      <DependentUpon>202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -3219,6 +3224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202210101305133_AddSchematronFile.resx">
       <DependentUpon>202210101305133_AddSchematronFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.resx">
+      <DependentUpon>202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

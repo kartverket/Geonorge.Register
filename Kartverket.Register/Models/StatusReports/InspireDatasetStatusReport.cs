@@ -15,6 +15,7 @@ namespace Kartverket.Register.Models
         {
             //InspireDataset = inspireDataset;
             UuidInspireDataset = inspireDataset.Uuid;
+            OrganizationSeoName = inspireDataset.Owner.seoname;
             MetadataInspireDataset = inspireDataset.InspireDeliveryMetadata.StatusId;
             MetadataServiceInspireDataset = inspireDataset.InspireDeliveryMetadataService.StatusId;
             DistributionInspireDataset = inspireDataset.InspireDeliveryDistribution.StatusId;

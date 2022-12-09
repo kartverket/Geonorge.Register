@@ -259,7 +259,7 @@ namespace Kartverket.Register.Controllers
                     foreach (Kartverket.Register.Models.StatusReports.MareanoDatasetStatusReport item in statusReport.StatusRegisterItems)
                     {
 
-                        if (db.MareanoDatasets.Where(d => d.Uuid == item.UuidMareanoDataset && d.Owner.seoname == filter.filterOrganization).Any())
+                        if (item.OrganizationSeoName == filter.filterOrganization)
                             reportItems.Add(item);
                     }
 
@@ -831,6 +831,75 @@ namespace Kartverket.Register.Controllers
 
             return Ok();
         }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/metadata/mareano-update-statusreport")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult UpdateMareanoStatusReport()
+        {
+            Log.Info("UpdateMareanoStatusReport start");
+
+            var mareano = Guid.Parse("3D9114F6-FAAB-4521-BDF8-19EF6211E7D3");
+            var statusreports = db.StatusReports.Where(r => r.Register.systemId == mareano).ToList();
+
+            foreach (var statusreport in statusreports)
+            {
+                var itemReports = statusreport.StatusRegisterItems.ToList();
+
+                foreach (var item in itemReports.Cast<Kartverket.Register.Models.StatusReports.MareanoDatasetStatusReport>().ToList())
+                {
+                    var uuid = item.UuidMareanoDataset;
+                    var org = item.OrganizationSeoName;
+                    var itemId = item.Id;
+                    if (org == null)
+                    {
+                        //get organization
+                        var url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+                        var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+                        try
+                        {
+                            var json = c.DownloadString(url);
+
+                            dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                            if (data != null)
+                            {
+                                var organizationName = data.ContactOwner.Organization;
+                                string seoNameOrganization = "";
+                                //Map Organization to seo
+                                if (organizationName == "Havforskningsinstituttet")
+                                    seoNameOrganization = "havforskningsinstituttet";
+                                else if (organizationName == "Kartverket")
+                                    seoNameOrganization = "kartverket";
+                                else if (organizationName == "Norges geologiske undersøkelse")
+                                    seoNameOrganization = "norges-geologiske-undersøkelse";
+
+                                if(!string.IsNullOrEmpty(seoNameOrganization))
+                                {
+                                    var sql = $"Update RegisterItemStatusReports SET OrganizationSeoName = '{seoNameOrganization}' where id = '{itemId}'";
+                                    db.Database.ExecuteSqlCommand(sql);
+                                }
+                                else 
+                                {
+                                    Log.Warn($"Update statusreport, organization not found for metadata uuid: {uuid}");
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            System.Diagnostics.Debug.WriteLine(e);
+                            System.Diagnostics.Debug.WriteLine(url);
+                            Log.Error($"Update RegisterItemStatusReports failed for id: {itemId}, metadata uuid: {uuid}", e);
+                        }
+                    }
+                }
+
+            }
+
+            Log.Info("UpdateMareanoStatusReport end");
+
+            return Ok();
+        }
+
 
         /// <summary>
         /// DokCoverageMapping

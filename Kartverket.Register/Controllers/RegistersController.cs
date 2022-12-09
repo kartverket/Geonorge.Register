@@ -276,7 +276,7 @@ namespace Kartverket.Register.Controllers
                 List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
                 foreach(MareanoDatasetStatusReport item in statusReport.StatusRegisterItems) 
                 {
-                    if(_db.MareanoDatasets.Where(d => d.Uuid == item.UuidMareanoDataset && d.Owner.seoname == filter.filterOrganization).Any())
+                    if(item.OrganizationSeoName == filter.filterOrganization)
                         reportItems.Add(item);
                 }
 
@@ -290,7 +290,7 @@ namespace Kartverket.Register.Controllers
                     List<RegisterItemStatusReport> reportItemsOrg = new List<RegisterItemStatusReport>();
                     foreach (MareanoDatasetStatusReport itemOrg in mareanoStatusReport.StatusRegisterItems)
                     {
-                        if (_db.MareanoDatasets.Where(d => d.Uuid == itemOrg.UuidMareanoDataset && d.Owner.seoname == filter.filterOrganization).Any())
+                        if (itemOrg.OrganizationSeoName == filter.filterOrganization)
                             reportItemsOrg.Add(itemOrg);
                     }
 

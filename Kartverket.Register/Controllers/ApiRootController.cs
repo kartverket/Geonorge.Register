@@ -545,7 +545,7 @@ namespace Kartverket.Register.Controllers
             else if (extension == "skos")
             {
                 mediaType.Formatter = new SKOSFormatter();
-                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/xml+rdf");
+                mediaType.MediaTypeHeader = new MediaTypeHeaderValue("application/rdf+xml");
             }
             else
             {

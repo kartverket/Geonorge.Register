@@ -947,9 +947,9 @@ namespace Kartverket.Register.Services.Register
                 response.ContentType = "application/gml+xml";
                 return "gml";
             }
-            if (request.AcceptTypes.Contains("application/xml+rdf"))
+            if (request.AcceptTypes.Contains("application/rdf+xml"))
             {
-                response.ContentType = "application/xml+rdf";
+                response.ContentType = "application/rdf+xml";
                 return "skos";
             }
             if (request.AcceptTypes.Contains("application/atom+xml"))

@@ -27,9 +27,9 @@
 <section class="heading">
     <article class="row">
         <div class="col-sm-12">
-            <h1 class="small-h1">
+             <heading-text><h1>
                 @Model.Title
-            </h1>
+            </h1></heading-text>
         </div>
     </article>
 </section>
@@ -84,7 +84,7 @@
 
 
 
-        <h2 class="small-h2">@GeodataCollection.Roles</h2>
+        <heading-text><h2>@GeodataCollection.Roles</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.Mapper))
         {
             <p><strong>@GeodataCollection.Mapper: </strong>@Model.Mapper</p>
@@ -110,7 +110,7 @@
 </div>
 <div>
     <article>
-        <h2 class="small-h2">@GeodataCollection.DeliverySolution</h2>
+        <heading-text><h2>@GeodataCollection.DeliverySolution</h2></heading-text>
 
         @if (!string.IsNullOrEmpty(Model.Purpose))
         {
@@ -163,7 +163,7 @@
 
 <div>
     <article>
-        <h2 class="small-h2">@GeodataCollection.MapSolutionTitle</h2>
+        <heading-text><h2>@GeodataCollection.MapSolutionTitle</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.MethodForMappingShort))
         {
             <p><strong>@GeodataCollection.MethodForMappingShort: </strong>@Model.MethodForMappingShort</p>
@@ -201,7 +201,7 @@
 
 <div>
     <article>
-        <h2 class="small-h2">@GeodataCollection.OtherInformation</h2>
+       <heading-text> <h2>@GeodataCollection.OtherInformation</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.AidAndSubsidies))
         {
             <p><strong>@GeodataCollection.AidAndSubsidies: </strong>@DisplayText(Model.AidAndSubsidies)</p>
@@ -220,7 +220,7 @@
 </div>
 
     <article>
-        <h2 class="small-h2">@GeodataCollection.ContactInformation</h2>
+        <heading-text><h2>@GeodataCollection.ContactInformation</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.OrganizationInfo))
         {
             <p><strong>@GeodataCollection.OrganizationInfo: </strong>@Model.OrganizationInfo</p>

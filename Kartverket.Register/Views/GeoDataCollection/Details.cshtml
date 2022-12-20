@@ -27,7 +27,7 @@
 <section class="heading">
     <article class="row">
         <div class="col-sm-12">
-             <heading-text><h1 size="2" underline>
+             <heading-text><h1 underline>
                 @Model.Title
             </h1></heading-text>
         </div>
@@ -58,7 +58,7 @@
         }
     </div>
 <div>
-    <article>
+    <div>
         <p><strong>@GeodataCollection.Title: </strong>@Model.Title</p>
         <p><strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle</p>
         @if (!string.IsNullOrEmpty(Model.DatasetLink))
@@ -76,9 +76,9 @@
         {
             <p><strong>@GeodataCollection.OtherOrganizationsInvolved: </strong>@Model.OtherOrganizationsInvolved</p>
         }
-    </article>
+    </div>
    
-    <article>
+    <div>
 
 
 
@@ -106,11 +106,11 @@
 
 
 
-    </article>
+    </div>
 </div>
 <div>
-    <article>
-        <heading-text><h2 size="3" underline>@GeodataCollection.DeliverySolution</h2></heading-text>
+    <div>
+        <heading-text><h2 underline>@GeodataCollection.DeliverySolution</h2></heading-text>
 
         @if (!string.IsNullOrEmpty(Model.Purpose))
         {
@@ -158,12 +158,12 @@
             </ul>
         }
 
-        </article>
+        </div>
 </div>
 
 <div>
-    <article>
-        <heading-text><h2 size="3" underline>@GeodataCollection.MapSolutionTitle</h2></heading-text>
+    <div>
+        <heading-text><h2 underline>@GeodataCollection.MapSolutionTitle</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.MethodForMappingShort))
         {
             <p><strong>@GeodataCollection.MethodForMappingShort: </strong>@Model.MethodForMappingShort</p>
@@ -196,12 +196,12 @@
         }
 
 
-    </article>
+    </div>
 </div>
 
 <div>
-    <article>
-       <heading-text> <h2  size="3" underline>@GeodataCollection.OtherInformation</h2></heading-text>
+    <div>
+       <heading-text> <h2 underline>@GeodataCollection.OtherInformation</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.AidAndSubsidies))
         {
             <p><strong>@GeodataCollection.AidAndSubsidies: </strong>@DisplayText(Model.AidAndSubsidies)</p>
@@ -216,11 +216,11 @@
             <p><strong>@GeodataCollection.LinkOtherInfo: </strong><a href="@Model.LinkOtherInfo" target="_blank">@GeodataCollection.LinkOtherInfo</a></p>
 
         }
-    </article>
+    </div>
 </div>
 
-    <article>
-        <heading-text><h2 size="3" underline>@GeodataCollection.ContactInformation</h2></heading-text>
+    <div>
+        <heading-text><h2 underline>@GeodataCollection.ContactInformation</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.OrganizationInfo))
         {
             <p><strong>@GeodataCollection.OrganizationInfo: </strong>@Model.OrganizationInfo</p>
@@ -232,7 +232,7 @@
 
 
 
-    </article>
+    </div>
 
 <div class="hidden-print">
     <hr />

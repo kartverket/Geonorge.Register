@@ -27,33 +27,13 @@
 <section class="heading">
     <article class="row">
         <div class="col-sm-12">
-            <h2>
+            <h1 class="small-h1">
                 @Model.Title
-            </h2>
+            </h1>
         </div>
     </article>
 </section>
-<div class="row">
-    <article class="col-md-6">
-        <p><strong>@GeodataCollection.Title: </strong>@Model.Title</p>
-        <p><strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle</p>
-        @if (!string.IsNullOrEmpty(Model.DatasetLink))
-        {
-
-            <p>
-                <strong>
-                    @GeodataCollection.DatasetLink:
-                </strong>  <a href="@Model.DatasetLink" target="_blank">@GeodataCollection.DatasetLink</a>
-            </p>
-        }
-
-        <p><strong>@GeodataCollection.Organization: </strong>@Model.Organization.NameTranslated()</p>
-        @if (!string.IsNullOrEmpty(Model.OtherOrganizationsInvolved))
-        {
-            <p><strong>@GeodataCollection.OtherOrganizationsInvolved: </strong>@Model.OtherOrganizationsInvolved</p>
-        }
-    </article>
-    <div class="col-md-6">
+ <div class="col-md-6 pull-right">
         @if (!string.IsNullOrEmpty(Model.ThumbnailFileName))
         {<p>
                 <img class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal" style="cursor: pointer;" src="/data/img/@Model.ImageFileName" alt="@Model.ImageFileName" />
@@ -77,13 +57,34 @@
             </p>
         }
     </div>
-    <article class="col-md-12">
+<div>
+    <article>
+        <p><strong>@GeodataCollection.Title: </strong>@Model.Title</p>
+        <p><strong>@GeodataCollection.DatasetTitle: </strong>@Model.DatasetTitle</p>
+        @if (!string.IsNullOrEmpty(Model.DatasetLink))
+        {
+
+            <p>
+                <strong>
+                    @GeodataCollection.DatasetLink:
+                </strong>  <a href="@Model.DatasetLink" target="_blank">@GeodataCollection.DatasetLink</a>
+            </p>
+        }
+
+        <p><strong>@GeodataCollection.Organization: </strong>@Model.Organization.NameTranslated()</p>
+        @if (!string.IsNullOrEmpty(Model.OtherOrganizationsInvolved))
+        {
+            <p><strong>@GeodataCollection.OtherOrganizationsInvolved: </strong>@Model.OtherOrganizationsInvolved</p>
+        }
+    </article>
+   
+    <article>
 
 
 
 
 
-        <h3>@GeodataCollection.Roles</h3>
+        <h2 class="small-h2">@GeodataCollection.Roles</h2>
         @if (!string.IsNullOrEmpty(Model.Mapper))
         {
             <p><strong>@GeodataCollection.Mapper: </strong>@Model.Mapper</p>
@@ -107,9 +108,9 @@
 
     </article>
 </div>
-<div class="row">
-    <article class="col-md-12">
-        <h3>@GeodataCollection.DeliverySolution</h3>
+<div>
+    <article>
+        <h2 class="small-h2">@GeodataCollection.DeliverySolution</h2>
 
         @if (!string.IsNullOrEmpty(Model.Purpose))
         {
@@ -160,9 +161,9 @@
         </article>
 </div>
 
-<div class="row">
-    <article class="col-md-12">
-        <h3>@GeodataCollection.MapSolutionTitle</h3>
+<div>
+    <article>
+        <h2 class="small-h2">@GeodataCollection.MapSolutionTitle</h2>
         @if (!string.IsNullOrEmpty(Model.MethodForMappingShort))
         {
             <p><strong>@GeodataCollection.MethodForMappingShort: </strong>@Model.MethodForMappingShort</p>
@@ -198,9 +199,9 @@
     </article>
 </div>
 
-<div class="row">
-    <article class="col-md-12">
-        <h3>@GeodataCollection.OtherInformation</h3>
+<div>
+    <article>
+        <h2 class="small-h2">@GeodataCollection.OtherInformation</h2>
         @if (!string.IsNullOrEmpty(Model.AidAndSubsidies))
         {
             <p><strong>@GeodataCollection.AidAndSubsidies: </strong>@DisplayText(Model.AidAndSubsidies)</p>
@@ -217,9 +218,9 @@
         }
     </article>
 </div>
-<div class="row">
-    <article class="col-md-12">
-        <h3>@GeodataCollection.ContactInformation</h3>
+
+    <article>
+        <h2 class="small-h2">@GeodataCollection.ContactInformation</h2>
         @if (!string.IsNullOrEmpty(Model.OrganizationInfo))
         {
             <p><strong>@GeodataCollection.OrganizationInfo: </strong>@Model.OrganizationInfo</p>
@@ -232,7 +233,7 @@
 
 
     </article>
-</div>
+
 <div class="hidden-print">
     <hr />
     @if (User.Identity.IsAuthenticated && User.IsInRole(GeonorgeRoles.MetadataAdmin) || (User.IsInRole(GeonorgeRoles.MetadataEditor) && Model.Owner == ClaimsPrincipal.Current.GetOrganizationName()) )

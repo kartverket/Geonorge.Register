@@ -27,7 +27,7 @@
 <section class="heading">
     <article class="row">
         <div class="col-sm-12">
-             <heading-text><h1>
+             <heading-text><h1 size="2" underline>
                 @Model.Title
             </h1></heading-text>
         </div>
@@ -84,7 +84,7 @@
 
 
 
-        <heading-text><h2>@GeodataCollection.Roles</h2></heading-text>
+        <heading-text><h2 size="3" underline>@GeodataCollection.Roles</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.Mapper))
         {
             <p><strong>@GeodataCollection.Mapper: </strong>@Model.Mapper</p>
@@ -110,7 +110,7 @@
 </div>
 <div>
     <article>
-        <heading-text><h2>@GeodataCollection.DeliverySolution</h2></heading-text>
+        <heading-text><h2 size="3" underline>@GeodataCollection.DeliverySolution</h2></heading-text>
 
         @if (!string.IsNullOrEmpty(Model.Purpose))
         {
@@ -163,7 +163,7 @@
 
 <div>
     <article>
-        <heading-text><h2>@GeodataCollection.MapSolutionTitle</h2></heading-text>
+        <heading-text><h2 size="3" underline>@GeodataCollection.MapSolutionTitle</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.MethodForMappingShort))
         {
             <p><strong>@GeodataCollection.MethodForMappingShort: </strong>@Model.MethodForMappingShort</p>
@@ -201,7 +201,7 @@
 
 <div>
     <article>
-       <heading-text> <h2>@GeodataCollection.OtherInformation</h2></heading-text>
+       <heading-text> <h2  size="3" underline>@GeodataCollection.OtherInformation</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.AidAndSubsidies))
         {
             <p><strong>@GeodataCollection.AidAndSubsidies: </strong>@DisplayText(Model.AidAndSubsidies)</p>
@@ -220,7 +220,7 @@
 </div>
 
     <article>
-        <heading-text><h2>@GeodataCollection.ContactInformation</h2></heading-text>
+        <heading-text><h2 size="3" underline>@GeodataCollection.ContactInformation</h2></heading-text>
         @if (!string.IsNullOrEmpty(Model.OrganizationInfo))
         {
             <p><strong>@GeodataCollection.OrganizationInfo: </strong>@Model.OrganizationInfo</p>

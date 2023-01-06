@@ -381,7 +381,7 @@ namespace Kartverket.Register.Services
         public void SynchronizeInspireDatasets(Synchronize synchronizationJob)
         {
             var inspireDatasetsFromKartkatalogen = FetchInspireDatasetsFromKartkatalogen(synchronizationJob);
-           if (inspireDatasetsFromKartkatalogen != null)
+           if (inspireDatasetsFromKartkatalogen != null && inspireDatasetsFromKartkatalogen.Count > 0)
             {
                 synchronizationJob.NumberOfItems = inspireDatasetsFromKartkatalogen.Count;
                 RemoveInspireDatasets(inspireDatasetsFromKartkatalogen, synchronizationJob);

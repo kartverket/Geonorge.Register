@@ -73,7 +73,7 @@ namespace Kartverket.Register.Services
                     _synchronizationJob.FailCount++;
                     _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av metadatastatus"));
                 }
-                return currentStatus;
+                return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
             }
         }
 
@@ -145,7 +145,7 @@ namespace Kartverket.Register.Services
         public string GetDokDeliveryServiceStatus(string metadataUuid, bool autoupdate, string currentStatus, string serviceUuid)
         {
             var hasServiceUrl = false;
-            var status = Deficient;
+            var status = !string.IsNullOrEmpty(currentStatus)? currentStatus : Deficient;
 
             if (!autoupdate) return currentStatus;
             try
@@ -450,10 +450,13 @@ namespace Kartverket.Register.Services
                             serviceUuid = service.Uuid;
                         }
                     }
+
+                    if (statusValue != Notset || statusValue != Good)
+                        statusValue = Deficient;
                 }
                 else
                 {
-                    return Deficient;
+                    return !string.IsNullOrEmpty(currentStatus) ? currentStatus : Deficient;
                 }
             }
 
@@ -464,7 +467,10 @@ namespace Kartverket.Register.Services
                     _synchronizationJob.FailCount++;
                     _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av WFS status"));
                 }
-                return Notset;
+                if(!string.IsNullOrEmpty(currentStatus))
+                    return currentStatus;
+                else
+                    return Notset;
             }
 
             //Todo check service status
@@ -534,7 +540,7 @@ namespace Kartverket.Register.Services
             if (!autoUpdate) return statusValue;
             try
             {
-                statusValue = Deficient;
+                statusValue = !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
 
                 var metadata = GetDistributions(metadataUuid);
 
@@ -557,7 +563,10 @@ namespace Kartverket.Register.Services
                     _synchronizationJob.FailCount++;
                     _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av AtomFeed status"));
                 }
-                return Notset;
+                if (!string.IsNullOrEmpty(currentStatus))
+                    return currentStatus;
+                else
+                    return Notset;
             }
 
             return statusValue;

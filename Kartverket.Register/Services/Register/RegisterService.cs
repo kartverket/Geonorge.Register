@@ -481,7 +481,7 @@ namespace Kartverket.Register.Services.Register
                 }
                 catch (Exception)
                 {
-                    return "deficient";
+                    return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
                 }
 
             }
@@ -523,7 +523,7 @@ namespace Kartverket.Register.Services.Register
                 }
                 catch (Exception)
                 {
-                    return "deficient";
+                    return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
                 }
 
             }
@@ -740,7 +740,7 @@ namespace Kartverket.Register.Services.Register
 
             catch (Exception)
             {
-                return "deficient";
+                return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
             }
 
 
@@ -817,7 +817,7 @@ namespace Kartverket.Register.Services.Register
 
                 catch (Exception)
                 {
-                    return "deficient";
+                    return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
                 }
             }
 
@@ -894,7 +894,7 @@ namespace Kartverket.Register.Services.Register
 
                 catch (Exception ex)
                 {
-                    return "deficient";
+                    return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
                 }
             }
 

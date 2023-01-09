@@ -122,7 +122,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    document = initialisationDocument(document, documentfile, thumbnail,false, false, null, schematronfile);
+                    document = initialisationDocument(document, documentfile, thumbnail,false, false, null, schematronfile, zipIsAsciiDoc);
                     if (ModelState.IsValid)
                         return Redirect(document.GetObjectUrl());
                 }
@@ -348,8 +348,17 @@ namespace Kartverket.Register.Controllers
                 if (url.AbsoluteUri.Contains("standarder"))
                     directory = Constants.DataDirectory + Document.DataDirectory + "standarder/" + filePath;
 
-                var path = Server.MapPath(directory);
-                System.IO.File.Delete(path);
+                if (directory.EndsWith(".html")) 
+                {
+                   directory = Path.GetDirectoryName(directory);
+                   var path = Server.MapPath(directory);
+                   Directory.Delete(path, true);
+                }
+                else 
+                { 
+                    var path = Server.MapPath(directory);
+                    System.IO.File.Delete(path);
+                }
             }
             catch (Exception ex)
             {

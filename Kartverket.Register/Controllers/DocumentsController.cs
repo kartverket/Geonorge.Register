@@ -340,6 +340,19 @@ namespace Kartverket.Register.Controllers
                     Log.Error("Error deleting document file: ", ex);
                 }
             }
+            try
+            {
+                var url = new Uri(document.documentUrl);
+                var filePath = url.LocalPath;
+                var directory = Constants.DataDirectory + Document.DataDirectory + filePath;
+                var path = Server.MapPath(directory);
+                System.IO.File.Delete(path);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error deleting document file: ", ex);
+            }
+
 
         }
 

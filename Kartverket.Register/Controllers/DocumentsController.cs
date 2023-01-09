@@ -345,6 +345,9 @@ namespace Kartverket.Register.Controllers
                 var url = new Uri(document.documentUrl);
                 var filePath = url.LocalPath;
                 var directory = Constants.DataDirectory + Document.DataDirectory + filePath;
+                if (url.AbsoluteUri.Contains("standarder"))
+                    directory = Constants.DataDirectory + Document.DataDirectory + "standarder/" + filePath;
+
                 var path = Server.MapPath(directory);
                 System.IO.File.Delete(path);
             }

@@ -175,6 +175,7 @@
                         <input type="file" name="documentfile" id="documentfile" onchange="checkDocumentApproval($('#documentfile').val())" />@Model.documentUrl
                         @Html.ValidationMessageFor(model => model.documentUrl, "", new { @class = "text-danger" })
                         @Html.ValidationMessage("ErrorMessageFileName")
+                        <input type="checkbox" name="zipIsAsciiDoc" id="zipIsAsciiDoc" value="1" /><label for="zipIsAsciiDoc">&nbsp;Zip er AsciiDoc</label>
                     </div>
                 </div>
                 <div class="form-group@(Model.register.seoname != "gml-applikasjonsskjema" ? " hidden" :"")">

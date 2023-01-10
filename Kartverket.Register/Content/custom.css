@@ -185,7 +185,8 @@ ul.nav-tabs > li.tab > a {
     cursor: pointer;
 }
 ul.pagination > li.active > a {
-    font-size: 16pt;    
+    
+    background-color: #4c7aa9; 
 }
 
 .nav-pills > li > a {

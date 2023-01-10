@@ -184,6 +184,9 @@ ul.nav-tabs > li.tab > a {
 .nav-pills > li:hover, .view-navigation .pagination > li:hover {
     cursor: pointer;
 }
+ul.pagination > li.active > a {
+    font-size: 14pt;    
+}
 
 .nav-pills > li > a {
     background-color: #FFF;
@@ -200,12 +203,12 @@ ul.nav-tabs > li.tab > a {
 }
 
     .nav-pills > li > a.active {
-        background-color: #4c7aa9;
+        background-color: #fe5000;
         color: #fff;
     }
 
     .nav-pills > li > a:hover {
-        background-color: #fe5000;
+        background-color: #4c7aa9;
         color: #FFF;
     }
 

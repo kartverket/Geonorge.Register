@@ -69,7 +69,7 @@ namespace Kartverket.Register
         {
             if (Context.Request.Form["access_token"] != null)
             {
-                var cookieToken = new HttpCookie("oidcAccessToken", Context.Request.Form["access_token"]) { SameSite = SameSiteMode.None };
+                var cookieToken = new HttpCookie("oidcAccessToken", Context.Request.Form["access_token"]) { /*SameSite = SameSiteMode.Lax*/ };
 
                 cookieToken.Domain = null;
 

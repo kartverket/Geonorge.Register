@@ -98,7 +98,7 @@
 
     <geonorge-footer language="@CultureHelper.GetCurrentCulture()" version="@Html.ApplicationVersionNumber()" environment="@Html.EnvironmentName()" />
     <script>
-        searchOption.loginUrl = '@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url }))';
+        searchOption.loginUrl = '@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url.ToString().Replace("http://","https://") }))';
         searchOption.logoutUrl = '@Html.Raw(Url.Action("SignOut", "Home"))';
         searchOption.loggedIn = @Request.IsAuthenticated.ToString().ToLower();
         searchOption.epiBaseUrl = '@Html.GeonorgeUrl()';

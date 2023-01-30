@@ -184,6 +184,10 @@ ul.nav-tabs > li.tab > a {
 .nav-pills > li:hover, .view-navigation .pagination > li:hover {
     cursor: pointer;
 }
+ul.pagination > li.active > a {
+    
+    background-color: #4c7aa9; 
+}
 
 .nav-pills > li > a {
     background-color: #FFF;
@@ -200,12 +204,12 @@ ul.nav-tabs > li.tab > a {
 }
 
     .nav-pills > li > a.active {
-        background-color: #4c7aa9;
+        background-color: #fe5000;
         color: #fff;
     }
 
     .nav-pills > li > a:hover {
-        background-color: #fe5000;
+        background-color: #4c7aa9;
         color: #FFF;
     }
 
@@ -635,4 +639,7 @@ a.link-unstyled {
 }
 .criteria-list i.fa {
     margin-left: -23px;
+}
+h2.small-h2 {
+    font-size: 24pt;
 }

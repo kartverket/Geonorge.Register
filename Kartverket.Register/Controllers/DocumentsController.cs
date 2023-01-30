@@ -18,11 +18,28 @@ using Kartverket.Register.Services.Translation;
 using Kartverket.Geonorge.Utilities.LogEntry;
 using System.Web.Configuration;
 using Ionic.Zip;
+using Ghostscript.NET.Rasterizer;
+using System.Drawing.Imaging;
 //ghostscriptsharp MIT license:
 //Copyright(c) 2009 Matthew Ephraim
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 //The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+//ghostscript GNU Affero General Public License:
+//<Register for documents, generate thumbnail>
+//Copyright (C) 2022, Norwegian Mapping Authority
+//This program is free software: you can redistribute it and/or modify
+//it under the terms of the GNU Affero General Public License as
+//published by the Free Software Foundation, either version 3 of the
+//License, or (at your option) any later version.
+//This program is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU Affero General Public License for more details.
+//You should have received a copy of the GNU Affero General Public License
+//along with this program.  If not, see https://www.gnu.org/licenses/.
+
 
 namespace Kartverket.Register.Controllers
 {
@@ -94,7 +111,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("dokument/{registername}/ny")]
-        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerId, HttpPostedFileBase schematronfile = null)
+        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerId, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null)
         {
             document.register = _registerService.GetRegisterBySystemId(Guid.Parse(registerId));
             if (_accessControlService.AddToRegister(document.register))
@@ -105,7 +122,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    document = initialisationDocument(document, documentfile, thumbnail,false, false, null, schematronfile);
+                    document = initialisationDocument(document, documentfile, thumbnail,false, false, null, schematronfile, zipIsAsciiDoc);
                     if (ModelState.IsValid)
                         return Redirect(document.GetObjectUrl());
                 }
@@ -145,7 +162,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny")]
         //[Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
-        public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentRegisterOwner, string parentRegister, string registername, string itemname, HttpPostedFileBase schematronfile = null)
+        public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentRegisterOwner, string parentRegister, string registername, string itemname, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null)
         {
             document.register = _registerService.GetSubregisterByName(parentRegister, registername);
             if (_accessControlService.AddToRegister(document.register))
@@ -156,7 +173,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    document = initialisationDocument(document, documentfile, thumbnail, false, false, null, schematronfile);
+                    document = initialisationDocument(document, documentfile, thumbnail, false, false, null, schematronfile, zipIsAsciiDoc);
                     if (ModelState.IsValid)
                         return Redirect(document.GetObjectUrl());
                 }
@@ -193,7 +210,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         //[Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
-        public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired, bool sosi, HttpPostedFileBase schematronfile = null)
+        public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired, bool sosi, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null)
         {
             var originalDocument = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, document.versionNumber);
             if (originalDocument != null)
@@ -205,7 +222,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     string url = GetUrlForRegister(originalDocument, document);
-                    DocumentFile documentFile = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString(), originalDocument,document, schematronfile);
+                    DocumentFile documentFile = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString(), originalDocument,document, schematronfile, zipIsAsciiDoc);
                     document.documentUrl = documentFile.Url;
                     document.documentUrlSchematron = documentFile.UrlSchematron;
                     if (document.documentUrl == "IllegalSchemaLocation")
@@ -323,6 +340,31 @@ namespace Kartverket.Register.Controllers
                     Log.Error("Error deleting document file: ", ex);
                 }
             }
+            try
+            {
+                var url = new Uri(document.documentUrl);
+                var filePath = url.LocalPath;
+                var directory = Constants.DataDirectory + Document.DataDirectory + filePath;
+                if (url.AbsoluteUri.Contains("standarder"))
+                    directory = Constants.DataDirectory + Document.DataDirectory + "standarder/" + filePath;
+
+                if (directory.EndsWith(".html")) 
+                {
+                   directory = Path.GetDirectoryName(directory);
+                   var path = Server.MapPath(directory);
+                   Directory.Delete(path, true);
+                }
+                else 
+                { 
+                    var path = Server.MapPath(directory);
+                    System.IO.File.Delete(path);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error deleting document file: ", ex);
+            }
+
 
         }
 
@@ -438,7 +480,15 @@ namespace Kartverket.Register.Controllers
                 string input = path;
                 string thumbFileName = seofilename.Replace(".pdf", ".jpg");
                 string output = path.Replace(".pdf", ".jpg");
-                GhostscriptWrapper.GenerateOutput(input, output, GsSettings());
+                //GhostscriptWrapper.GenerateOutput(input, output, GsSettings());
+                var rasterizer = new GhostscriptRasterizer();
+                var fileStream = System.IO.File.OpenRead(input);
+                rasterizer.Open(fileStream); //opens the PDF file for rasterizing
+                var pdf2PNG = rasterizer.GetPage(100, 1);
+                pdf2PNG.Save(output, ImageFormat.Png);
+                pdf2PNG.Dispose();
+                rasterizer.Close();
+                fileStream.Close();
 
                 ImageResizer.ImageJob newImage =
                                 new ImageResizer.ImageJob(output, output,
@@ -488,7 +538,7 @@ namespace Kartverket.Register.Controllers
         }
 
         private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr,
-            Document originalDocument, Document document)
+            Document originalDocument, Document document, string zipIsAsciiDoc = null)
         {
             string filtype;
             string seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename) + Path.GetExtension(file.FileName);
@@ -500,7 +550,7 @@ namespace Kartverket.Register.Controllers
             var path = Server.MapPath(directory);
             System.IO.Directory.CreateDirectory(path);
 
-            if(Path.GetExtension(file.FileName) == ".zip")
+            if(!string.IsNullOrEmpty(zipIsAsciiDoc) && Path.GetExtension(file.FileName) == ".zip")
             {
                 using (ZipFile zip = ZipFile.Read(file.InputStream))
                 {
@@ -559,7 +609,7 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        private Document initialisationDocument(Document inputDocument, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired = false, bool sosi = false, Document originalDocument = null, HttpPostedFileBase schematronfile = null)
+        private Document initialisationDocument(Document inputDocument, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired = false, bool sosi = false, Document originalDocument = null, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null)
         {
             Document document = GetDocument(originalDocument);
             document.systemId = GetSystemId(document.systemId);
@@ -583,7 +633,7 @@ namespace Kartverket.Register.Controllers
                 document.documentowner = db.Organizations.Where(o => o.systemId == document.documentownerId).FirstOrDefault();
             document.submitterId = GetSubmitterId(inputDocument.submitterId);
             string url = GetUrlForRegister(document, originalDocument); 
-            DocumentFile documentFiles = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber, document?.status?.value, originalDocument?.status?.value, originalDocument, document, schematronfile);
+            DocumentFile documentFiles = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber, document?.status?.value, originalDocument?.status?.value, originalDocument, document, schematronfile, zipIsAsciiDoc);
             document.documentUrl = documentFiles.Url;
             document.documentUrlSchematron = documentFiles.UrlSchematron;
             if (document.documentUrl == "IllegalSchemaLocation")
@@ -1053,7 +1103,7 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private DocumentFile documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr, string status, string previousStatus, Document originalDocument, Document document,  HttpPostedFileBase schematronfile = null)
+        private DocumentFile documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr, string status, string previousStatus, Document originalDocument, Document document,  HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null)
         {
             DocumentFile documentUrl = new DocumentFile();
 
@@ -1068,7 +1118,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else 
                 {
-                    string fileName = SaveFileToDisk(documentfile, documentname, registername, versionNr, originalDocument, document);
+                    string fileName = SaveFileToDisk(documentfile, documentname, registername, versionNr, originalDocument, document, zipIsAsciiDoc);
                     documentUrl.Url = url + fileName;
                     return documentUrl;
                 }

@@ -701,19 +701,34 @@ namespace Kartverket.Register.Migrations
 
             //context.Database.ExecuteSqlCommand("UPDATE Registers SET parentRegisterId = 'b2e5f822-994d-47f5-ac52-cd4153d55198'  WHERE  systemid='3A95CA12-4BD4-40E2-9E23-3875B68E83CD'");
 
+            //Register standarder = new Register
+            //{
+            //    systemId = Guid.Parse("b2e5f829-994d-47f9-ac59-cd4153d55199"),
+            //    dateSubmitted = DateTime.Now,
+            //    modified = DateTime.Now,
+            //    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+            //    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+            //    name = "Standarder",
+            //    seoname = "standarder",
+            //    containedItemClass = "Register",
+            //    accessId = 1,
+            //    path = "standarder",
+            //    description = "Registret inneholder nasjonale standarder og veildningdokumenter for geografisk informasjon i Norge"
+            //};
+
             Register standarder = new Register
             {
-                systemId = Guid.Parse("b2e5f829-994d-47f9-ac59-cd4153d55199"),
+                systemId = Guid.Parse("b2e5f829-994d-47f9-ac59-cd4153d55177"),
                 dateSubmitted = DateTime.Now,
                 modified = DateTime.Now,
                 ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
                 managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
-                name = "Standarder",
-                seoname = "standarder",
+                name = "Filer",
+                seoname = "filer",
                 containedItemClass = "Register",
                 accessId = 1,
-                path = "standarder",
-                description = "Registret inneholder nasjonale standarder og veildningdokumenter for geografisk informasjon i Norge"
+                path = "filer",
+                description = "Registret inneholder filer av ulike typer."
             };
 
             context.Registers.AddOrUpdate(

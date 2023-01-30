@@ -481,7 +481,7 @@ namespace Kartverket.Register.Services.Register
                 }
                 catch (Exception)
                 {
-                    return "deficient";
+                    return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
                 }
 
             }
@@ -523,7 +523,7 @@ namespace Kartverket.Register.Services.Register
                 }
                 catch (Exception)
                 {
-                    return "deficient";
+                    return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
                 }
 
             }
@@ -740,7 +740,7 @@ namespace Kartverket.Register.Services.Register
 
             catch (Exception)
             {
-                return "deficient";
+                return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
             }
 
 
@@ -817,7 +817,7 @@ namespace Kartverket.Register.Services.Register
 
                 catch (Exception)
                 {
-                    return "deficient";
+                    return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
                 }
             }
 
@@ -894,7 +894,7 @@ namespace Kartverket.Register.Services.Register
 
                 catch (Exception ex)
                 {
-                    return "deficient";
+                    return !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
                 }
             }
 
@@ -949,7 +949,7 @@ namespace Kartverket.Register.Services.Register
             }
             if (request.AcceptTypes.Contains("application/rdf+xml"))
             {
-                response.ContentType = "application/xml+rdf";
+                response.ContentType = "application/rdf+xml";
                 return "skos";
             }
             if (request.AcceptTypes.Contains("application/atom+xml"))
@@ -1370,6 +1370,7 @@ namespace Kartverket.Register.Services.Register
             registers = new List<Models.ViewModels.RegisterView>();
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("A42BC2B3-2314-4B7E-8007-71D9B10F2C04"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("8E726684-F216-4497-91BE-6AB2496A84D3"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("b2e5f829-994d-47f9-ac59-cd4153d55177"))));
 
             register.Items.Add(new Group
             {

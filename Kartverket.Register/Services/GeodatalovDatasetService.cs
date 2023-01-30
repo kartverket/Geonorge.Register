@@ -241,11 +241,13 @@ namespace Kartverket.Register.Services
         public void SynchronizeGeodatalovDatasets()
         {
             var geodatalovDatasetsFromKartkatalogen = FetchGeodatalovDatasetsFromKartkatalogen();
-            RemoveGeodatalovDatasets(geodatalovDatasetsFromKartkatalogen);
-            UpdateGeodatalovDataset(geodatalovDatasetsFromKartkatalogen);
+            if(geodatalovDatasetsFromKartkatalogen != null && geodatalovDatasetsFromKartkatalogen.Count > 0) 
+            { 
+                RemoveGeodatalovDatasets(geodatalovDatasetsFromKartkatalogen);
+                UpdateGeodatalovDataset(geodatalovDatasetsFromKartkatalogen);
             
-
             _dbContext.SaveChanges();
+            }
         }
 
         private void UpdateGeodatalovDataset(List<GeodatalovDataset> geodatalovDatasetsFromKartkatalogen)

@@ -318,11 +318,12 @@ namespace Kartverket.Register.Services
         public void SynchronizeMareanoDatasets()
         {
             var MareanoDatasetsFromKartkatalogen = FetchMareanoDatasetsFromKartkatalogen();
-            RemoveMareanoDatasets(MareanoDatasetsFromKartkatalogen);
-            UpdateMareanoDataset(MareanoDatasetsFromKartkatalogen);
-
-
+            if(MareanoDatasetsFromKartkatalogen != null && MareanoDatasetsFromKartkatalogen.Count > 0) 
+            { 
+                RemoveMareanoDatasets(MareanoDatasetsFromKartkatalogen);
+                UpdateMareanoDataset(MareanoDatasetsFromKartkatalogen);
             _dbContext.SaveChanges();
+            }
         }
 
         private void UpdateMareanoDataset(List<MareanoDataset> MareanoDatasetsFromKartkatalogen)

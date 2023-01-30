@@ -42,7 +42,7 @@
 </head>
 
 <body class="geonorge-container prototype  geonorge">
-    <main-navigation environment="@Html.EnvironmentName()" signinurl="@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url }))"
+    <main-navigation environment="@Html.EnvironmentName()" signinurl="@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url.ToString().Replace("http://","https://") }))"
                      signouturl="@Html.Raw(Url.Action("SignOut", "Home"))"
                      isLoggedIn="@Request.IsAuthenticated.ToString().ToLower()"
                      norwegianurl="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))"

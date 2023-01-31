@@ -96,7 +96,7 @@
 
     </div>
 
-    <geonorge-footer language="@CultureHelper.GetCurrentCulture()" version="@Html.ApplicationVersionNumber()" environment="@Html.EnvironmentName()" />
+    <geonorge-footer language="@CultureHelper.GetCurrentCulture()" version="@Html.ApplicationVersionNumber()" environment="@Html.EnvironmentName()" accessibilitystatementurl="@Html.Accessibilitystatementurl()" />
     <script>
         searchOption.loginUrl = '@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url }))';
         searchOption.logoutUrl = '@Html.Raw(Url.Action("SignOut", "Home"))';
@@ -154,10 +154,10 @@
             <!-- @role.Value-->
             }
             }
-            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.2.16/MainNavigation.js")"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.2.16/GeonorgeFooter.js")"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.2.16/HeadingText.js")"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.2.16/BodyText.js")"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.2.16/NavigationTabs.js")"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.4.0/MainNavigation.js")"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.4.0/GeonorgeFooter.js")"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.4.0/HeadingText.js")"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.4.0/BodyText.js")"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.4.0/NavigationTabs.js")"></script>
         </body>
 </html>

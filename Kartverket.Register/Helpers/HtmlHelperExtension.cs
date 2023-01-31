@@ -28,6 +28,11 @@ namespace Kartverket.Register.Helpers
             return WebConfigurationManager.AppSettings["EnvironmentName"];
         }
 
+        public static string Accessibilitystatementurl(this HtmlHelper helper)
+        {
+            return WebConfigurationManager.AppSettings["Accessibilitystatementurl"];
+        }
+
         public static string WebmasterEmail(this HtmlHelper helper)
         {
             return WebConfigurationManager.AppSettings["WebmasterEmail"];

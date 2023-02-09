@@ -450,9 +450,6 @@ namespace Kartverket.Register.Services
                             serviceUuid = service.Uuid;
                         }
                     }
-
-                    if (statusValue != Notset || statusValue != Good)
-                        statusValue = Deficient;
                 }
                 else
                 {

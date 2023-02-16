@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Alerts {
@@ -277,7 +277,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Her legger du inn dato og klokkeslett for tidspunkt løsningen er oppe igjen. Hvis varselet gjelder forhåndsdefinert nedetid, så kan dette tidspunktet settes med en gang. Status vil da endres til &quot;Utgått&quot; etter at tidspunktet er passert.
+        ///   Looks up a localized string similar to Her legger du inn dato og klokkeslett for tidspunkt løsningen er oppe igjen. Hvis varselet gjelder forhåndsdefinert nedetid, så kan dette tidspunktet settes med en gang. Status vil da endres til &quot;Tilbaketrukket&quot; etter at tidspunktet er passert.
         /// </summary>
         public static string HelpTextDateResolved {
             get {
@@ -432,7 +432,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;utgått&quot;. Hvis &quot;Løst dato&quot; er passert så vil &quot;status&quot; automatisk settes til &quot;utgått&quot;.
+        ///   Looks up a localized string similar to Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;Tilbaketrukket&quot;. Hvis &quot;Løst dato&quot; er passert så vil &quot;status&quot; automatisk settes til &quot;Tilbaketrukket&quot;.
         /// </summary>
         public static string StatusHelp {
             get {

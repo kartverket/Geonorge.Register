@@ -93,7 +93,7 @@
             <p>@item.EffectiveDate.ToString("dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture)</p>
         </div>
         <div class="col-md-1 text-right">
-            <span class="statusIcon-@(item.statusId == "Retired" ? "avvist" : "Accepted")" title="@(item.statusId == "Retired" ? "Utgått" : "Gyldig")"></span>
+            <span class="statusIcon-@(item.statusId == "Retired" ? "avvist" : "Accepted")" title="@(item.statusId == "Retired" ? "Tilbaketrukket" : "Gyldig")"></span>
         </div>
     </div>
     }

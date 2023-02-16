@@ -187,7 +187,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dato utgått.
+        ///   Looks up a localized string similar to Dato Tilbaketrukket.
         /// </summary>
         public static string DateRetired {
             get {
@@ -439,7 +439,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sett status &quot;Utgått&quot; på alle kodeverdier.
+        ///   Looks up a localized string similar to Sett status &quot;Tilbaketrukket&quot; på alle kodeverdier.
         /// </summary>
         public static string MakeAllItemsRetired {
             get {
@@ -574,7 +574,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Utgått.
+        ///   Looks up a localized string similar to Tilbaketrukket.
         /// </summary>
         public static string Retired {
             get {

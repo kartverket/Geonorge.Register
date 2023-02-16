@@ -106,7 +106,7 @@ namespace Kartverket.Register.Models.Api
         {
             {"Draft", "Utkast"},
             {"NotAccepted", "Ikke godkjent"},
-            {"Retired", "Utgått"},
+            {"Retired", "Tilbaketrukket"},
             {"Sosi-valid", "SOSI godkjent"},
             {"Submitted", "Sendt inn"},
             {"Superseded", "Erstattet"},

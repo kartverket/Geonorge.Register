@@ -139,7 +139,7 @@
     <value>Last ned</value>
   </data>
   <data name="Expired" xml:space="preserve">
-    <value>Utgått</value>
+    <value>Tilbaketrukket</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>Nei</value>

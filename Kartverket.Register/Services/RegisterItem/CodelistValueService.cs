@@ -104,7 +104,7 @@ namespace Kartverket.Register.Services.RegisterItem
             if (!string.IsNullOrEmpty(status)) {
                 if (status.ToLower() == "gyldig")
                     return "Valid";
-                else if (status.ToLower() == "utgått")
+                else if (status.ToLower() == "tilbaketrukket")
                     return "Retired";
                 else if (status.ToLower() == "utkast")
                     return "Draft";

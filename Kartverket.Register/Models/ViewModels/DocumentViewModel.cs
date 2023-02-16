@@ -11,6 +11,7 @@ namespace Kartverket.Register.Models.ViewModels
             if (document != null)
             {
                 DocumentUrl = document.documentUrl;
+                DocumentUrlEnglish = document.documentUrlEnglish;
                 DocumentUrl2 = document.documentUrl2;
                 UmlModelTreeStructureLink = document.UmlModelTreeStructureLink;
                 ApplicationSchema = document.ApplicationSchema;
@@ -49,6 +50,7 @@ namespace Kartverket.Register.Models.ViewModels
         }
 
         public string DocumentUrl { get; set; }
+        public string DocumentUrlEnglish { get; set; }
         public string DocumentUrl2 { get; set; }
 
         public string ApplicationSchema { get; set; }

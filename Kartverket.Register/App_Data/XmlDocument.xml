@@ -3248,6 +3248,11 @@
               Looks up a localized string similar to Dokument-fil.
             </summary>
         </member>
+        <member name="P:Resources.Documents.DocumentFileEnglish">
+            <summary>
+              Looks up a localized string similar to Dokument-fil engelsk.
+            </summary>
+        </member>
         <member name="P:Resources.Documents.DocumentOwner">
             <summary>
               Looks up a localized string similar to Dokumenteier.

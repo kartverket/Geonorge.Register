@@ -110,6 +110,15 @@
                 <input type="checkbox" name="zipIsAsciiDoc" id="zipIsAsciiDoc" value="1"/><label for="zipIsAsciiDoc">&nbsp;Zip er AsciiDoc</label>
             </div>
         </div>
+        <div class="form-group@(Model.register.seoname == "gml-applikasjonsskjema" ? " hidden" :"")">
+            <label class="control-label col-md-2" for="documentfileEnglish">@Documents.DocumentFileEnglish:</label>
+            <div class="col-md-10">
+                <input type="file" name="documentfileEnglish" id="documentfileEnglish" />
+                @Html.ValidationMessage("FileNameEnglish", new { @class = "text-danger" })
+                @Html.ValidationMessage("ErrorMessageFileNameEnglish")
+                <input type="checkbox" name="zipIsAsciiDocEnglish" id="zipIsAsciiDocEnglish" value="1"/><label for="zipIsAsciiDocEnglish">&nbsp;Zip er AsciiDoc</label>
+            </div>
+        </div>
         <div class="form-group@(Model.register.seoname != "gml-applikasjonsskjema" ? " hidden" :"")"">
             <label class="control-label col-md-2" for="schematronfile">Schematron-fil:</label>
             <div class="col-md-10">

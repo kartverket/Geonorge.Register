@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dokument-fil engelsk.
+        /// </summary>
+        public static string DocumentFileEnglish {
+            get {
+                return ResourceManager.GetString("DocumentFileEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dokumenteier.
         /// </summary>
         public static string DocumentOwner {

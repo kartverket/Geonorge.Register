@@ -1237,6 +1237,10 @@
     <Compile Include="Migrations\202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.designer.cs">
       <DependentUpon>202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202302161044211_AddDocumentUrlEnglish.cs" />
+    <Compile Include="Migrations\202302161044211_AddDocumentUrlEnglish.designer.cs">
+      <DependentUpon>202302161044211_AddDocumentUrlEnglish.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3229,6 +3233,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.resx">
       <DependentUpon>202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302161044211_AddDocumentUrlEnglish.resx">
+      <DependentUpon>202302161044211_AddDocumentUrlEnglish.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

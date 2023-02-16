@@ -88,6 +88,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vedlegg.
+        /// </summary>
+        public static string Attachment {
+            get {
+                return ResourceManager.GetString("Attachment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tilbake.
         /// </summary>
         public static string Back {

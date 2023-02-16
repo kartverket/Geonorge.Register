@@ -13,6 +13,7 @@ namespace Kartverket.Register.Models.ViewModels
                 DocumentUrl = document.documentUrl;
                 DocumentUrlEnglish = document.documentUrlEnglish;
                 DocumentUrl2 = document.documentUrl2;
+                DocumentUrlAttachment = document.documentUrlAttachment;
                 UmlModelTreeStructureLink = document.UmlModelTreeStructureLink;
                 ApplicationSchema = document.ApplicationSchema;
                 GmlApplicationSchema = document.GMLApplicationSchema;
@@ -52,7 +53,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string DocumentUrl { get; set; }
         public string DocumentUrlEnglish { get; set; }
         public string DocumentUrl2 { get; set; }
-
+        public string DocumentUrlAttachment { get; set; }
         public string ApplicationSchema { get; set; }
         public string UmlModelTreeStructureLink { get; set; }
         public string GmlApplicationSchema { get; set; }

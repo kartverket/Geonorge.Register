@@ -24,7 +24,8 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -1240,6 +1241,10 @@
     <Compile Include="Migrations\202302161044211_AddDocumentUrlEnglish.cs" />
     <Compile Include="Migrations\202302161044211_AddDocumentUrlEnglish.designer.cs">
       <DependentUpon>202302161044211_AddDocumentUrlEnglish.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202302161611154_AddDocumentUrlAttachment.cs" />
+    <Compile Include="Migrations\202302161611154_AddDocumentUrlAttachment.designer.cs">
+      <DependentUpon>202302161611154_AddDocumentUrlAttachment.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -3236,6 +3241,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202302161044211_AddDocumentUrlEnglish.resx">
       <DependentUpon>202302161044211_AddDocumentUrlEnglish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302161611154_AddDocumentUrlAttachment.resx">
+      <DependentUpon>202302161611154_AddDocumentUrlAttachment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

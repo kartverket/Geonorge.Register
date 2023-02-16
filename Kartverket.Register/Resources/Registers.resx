@@ -336,4 +336,7 @@
   <data name="DocumentUrlEnglish" xml:space="preserve">
     <value>Dokument url engelsk</value>
   </data>
+  <data name="DocumentUrlAttachment" xml:space="preserve">
+    <value>Url til vedlegg</value>
+  </data>
 </root>

@@ -568,7 +568,10 @@ namespace Kartverket.Register.Controllers
             DocumentFile documentFile = new DocumentFile();
 
             string filtype;
-            string seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename) + Path.GetExtension(file.FileName);
+            string seofilename = null;
+
+            if(file != null)
+                seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename) + Path.GetExtension(file.FileName);
 
             string filtypeEnglish;
             string seofilenameEnglish = null;
@@ -584,7 +587,7 @@ namespace Kartverket.Register.Controllers
             var path = Server.MapPath(directory);
             System.IO.Directory.CreateDirectory(path);
 
-            if(!string.IsNullOrEmpty(zipIsAsciiDoc) && Path.GetExtension(file.FileName) == ".zip")
+            if(file != null && !string.IsNullOrEmpty(zipIsAsciiDoc) && Path.GetExtension(file.FileName) == ".zip")
             {
                 using (ZipFile zip = ZipFile.Read(file.InputStream))
                 {
@@ -605,8 +608,11 @@ namespace Kartverket.Register.Controllers
             else 
             {
                 var pathOriginal = path;
-                path = Path.Combine(path, seofilename);
-                file.SaveAs(path);
+                if (!string.IsNullOrEmpty(seofilename)) 
+                { 
+                    path = Path.Combine(path, seofilename);
+                    file.SaveAs(path);
+                }
 
                 if (!string.IsNullOrEmpty(seofilenameEnglish)) 
                 {
@@ -698,6 +704,7 @@ namespace Kartverket.Register.Controllers
                 return document;
             }
             document.documentUrl2 = inputDocument.documentUrl2;
+            document.documentUrlAttachment = inputDocument.documentUrlAttachment;
             document.thumbnail = GetThumbnail(document, originalDocument, documentfile, url, thumbnail);
             document.versioningId = GetVersioningId(document, inputDocument.versioningId);
 
@@ -1164,7 +1171,7 @@ namespace Kartverket.Register.Controllers
         {
             DocumentFile documentUrl = new DocumentFile();
 
-            if (documentfile != null)
+            if (documentfile != null || documentfileEnglish != null)
             {
                 var schemaRemoteSynchEnabled = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true;
 
@@ -1176,8 +1183,10 @@ namespace Kartverket.Register.Controllers
                 else 
                 {
                     var documentFile = SaveFileToDisk(documentfile, documentname, registername, versionNr, originalDocument, document, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
-                    documentUrl.Url = url + documentFile.Filename;
-                    documentUrl.UrlEnglish = url + documentFile.FilenameEnglish;
+                    if(!string.IsNullOrEmpty(documentFile.Filename))
+                        documentUrl.Url = url + documentFile.Filename;
+                    if (!string.IsNullOrEmpty(documentFile.FilenameEnglish))
+                        documentUrl.UrlEnglish = url + documentFile.FilenameEnglish;
                     return documentUrl;
                 }
             }

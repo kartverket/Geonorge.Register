@@ -259,6 +259,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Url til vedlegg.
+        /// </summary>
+        public static string DocumentUrlAttachment {
+            get {
+                return ResourceManager.GetString("DocumentUrlAttachment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dokument url engelsk.
         /// </summary>
         public static string DocumentUrlEnglish {

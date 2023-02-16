@@ -55,6 +55,12 @@
                                 <span class="glyphicon glyphicon-download-alt"> </span>@Shared.DownloadEnglish
                             </a><br />
                         }
+                        if (!string.IsNullOrEmpty(Model.DocumentUrlAttachment))
+                        {
+                            <a href="@Html.DisplayFor(modelItem => Model.DocumentUrlAttachment)" class="btn btn-block" title="Last ned dokument for @Model.Name">
+                                <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Attachment
+                            </a><br />
+                        }
                     }
                 }
                 @if (!string.IsNullOrEmpty(Model.UmlModelTreeStructureLink))

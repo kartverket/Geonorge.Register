@@ -283,6 +283,9 @@
   <data name="DisplayDocument" xml:space="preserve">
     <value>Display document</value>
   </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment</value>
+  </data>
   <data name="DownloadEnglish" xml:space="preserve">
     <value>English version</value>
   </data>

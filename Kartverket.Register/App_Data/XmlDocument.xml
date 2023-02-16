@@ -4954,6 +4954,11 @@
               Looks up a localized string similar to Sti/url til HTML-versjon.
             </summary>
         </member>
+        <member name="P:Resources.Registers.DocumentUrlAttachment">
+            <summary>
+              Looks up a localized string similar to Url til vedlegg.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.DocumentUrlEnglish">
             <summary>
               Looks up a localized string similar to Dokument url engelsk.
@@ -5238,6 +5243,11 @@
         <member name="P:Resources.Shared.AppPageTitle">
             <summary>
               Looks up a localized string similar to Geonorge Register.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Attachment">
+            <summary>
+              Looks up a localized string similar to Vedlegg.
             </summary>
         </member>
         <member name="P:Resources.Shared.Back">

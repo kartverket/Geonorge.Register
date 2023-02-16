@@ -221,9 +221,13 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
+                    document.documentUrl = originalDocument.documentUrl;
+                    document.documentUrlEnglish = originalDocument.documentUrlEnglish;
+
                     string url = GetUrlForRegister(originalDocument, document);
                     DocumentFile documentFile = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString(), originalDocument,document, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
-                    document.documentUrl = documentFile.Url;
+                    if (!string.IsNullOrEmpty(documentFile.Url))
+                        document.documentUrl = documentFile.Url;
                     if(!string.IsNullOrEmpty(documentFile.UrlEnglish))
                         document.documentUrlEnglish = documentFile.UrlEnglish;
                     document.documentUrlSchematron = documentFile.UrlSchematron;

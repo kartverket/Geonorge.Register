@@ -5300,6 +5300,11 @@
               Looks up a localized string similar to Last ned.
             </summary>
         </member>
+        <member name="P:Resources.Shared.DownloadEnglish">
+            <summary>
+              Looks up a localized string similar to Engelsk versjon.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Edit">
             <summary>
               Looks up a localized string similar to Rediger.

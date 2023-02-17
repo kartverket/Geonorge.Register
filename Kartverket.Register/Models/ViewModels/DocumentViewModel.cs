@@ -13,7 +13,7 @@ namespace Kartverket.Register.Models.ViewModels
                 DocumentUrl = document.documentUrl;
                 DocumentUrlEnglish = document.documentUrlEnglish;
                 DocumentUrl2 = document.documentUrl2;
-                DocumentUrlAttachment = document.documentUrlAttachment;
+                //DocumentUrlAttachment = document.documentUrlAttachment; //todo
                 UmlModelTreeStructureLink = document.UmlModelTreeStructureLink;
                 ApplicationSchema = document.ApplicationSchema;
                 GmlApplicationSchema = document.GMLApplicationSchema;

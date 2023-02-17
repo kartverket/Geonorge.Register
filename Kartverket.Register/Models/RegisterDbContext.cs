@@ -157,6 +157,8 @@ namespace Kartverket.Register.Models
                    cs.ToTable("AlertDepartments");
                });
 
+            modelBuilder.Entity<Document>().HasMany(i => i.DocumentUrlAttachments);
+
         }
 
         public override int SaveChanges()

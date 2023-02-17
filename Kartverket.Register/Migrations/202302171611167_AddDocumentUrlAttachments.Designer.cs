@@ -7,13 +7,13 @@ namespace Kartverket.Register.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddDocumentUrlAttachment : IMigrationMetadata
+    public sealed partial class AddDocumentUrlAttachments : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddDocumentUrlAttachment));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddDocumentUrlAttachments));
         
         string IMigrationMetadata.Id
         {
-            get { return "202302161611154_AddDocumentUrlAttachment"; }
+            get { return "202302171611167_AddDocumentUrlAttachments"; }
         }
         
         string IMigrationMetadata.Source

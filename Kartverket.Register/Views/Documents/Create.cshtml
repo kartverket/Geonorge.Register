@@ -135,10 +135,16 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.documentUrlAttachment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.documentUrlAttachment, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.documentUrlAttachment, "", new { @class = "text-danger" })
+            <label class="control-label col-md-2">@Registers.DocumentUrlAttachment</label>
+        </div>
+        <div class="form-group">
+            <label for="DocumentUrlAttachments[0].Url" class="control-label col-md-2">Url</label>
+            <div class="col-md-4">
+                <input type="text" name="DocumentUrlAttachments[0].Url" id="DocumentUrlAttachments[0].Url" />
+            </div>
+            <label for="DocumentUrlAttachments[0].Text" class="control-label col-md-2">@Shared.Title</label>
+            <div class="col-md-4">
+                <input type="text" name="DocumentUrlAttachments[0].Text" id="DocumentUrlAttachments[0].Text" />
             </div>
         </div>
         <div class="form-group">

@@ -132,7 +132,6 @@ namespace Kartverket.Register.Models
             documentUrl = document.documentUrl;
             documentUrlEnglish = document.documentUrlEnglish;
             documentUrl2 = document.documentUrl2;
-            documentUrlAttachment = document.documentUrlAttachment;
             documentUrlSchematron = document.documentUrlSchematron;
             if(!string.IsNullOrEmpty(document.thumbnail))
                 thumbnail = document.thumbnail;

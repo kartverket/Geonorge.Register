@@ -4,6 +4,7 @@ using Kartverket.Register.Models;
 using System.Data.Entity;
 using System.Web;
 using Kartverket.Register.Services.Versioning;
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Services
 {
@@ -23,6 +24,21 @@ namespace Kartverket.Register.Services
         {
             originalDocument.Update(document);
             originalDocument = ApprovalProcess(originalDocument, document, retired, sosi);
+
+            originalDocument.DocumentUrlAttachments.Clear();
+            _dbContext.SaveChanges();
+
+            foreach (var link in document.DocumentUrlAttachments)
+            {
+                if (!string.IsNullOrEmpty(link.Url))
+                {
+                    document.DocumentUrlAttachments = new List<Link>();
+                    var attachment = new Link { Url = link.Url, Text = link.Text };
+                    originalDocument.DocumentUrlAttachments.Add(attachment);
+                    _dbContext.Entry(attachment).State = EntityState.Added;
+                    _dbContext.SaveChanges();
+                }
+            }
             _dbContext.SaveChanges();
 
             return originalDocument;

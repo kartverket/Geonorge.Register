@@ -2,6 +2,15 @@
 
 @{
     ViewBag.Title = Registers.SuggestNewVersionOf + " " + Model.NameTranslated();
+
+    string DocumentUrlAttachmentsUrl = "";
+    string DocumentUrlAttachmentsText = "";
+
+    if (Model.DocumentUrlAttachments != null && Model.DocumentUrlAttachments.Count > 0)
+    {
+        DocumentUrlAttachmentsUrl = Model.DocumentUrlAttachments.FirstOrDefault().Url;
+        DocumentUrlAttachmentsText = Model.DocumentUrlAttachments.FirstOrDefault().Text;
+    }
 }
 
 @section breadcrumb {
@@ -127,7 +136,57 @@
                    @Html.ValidationMessageFor(model => model.documentUrl2, "", new { @class = "text-danger" })
                </div>
             </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">@Registers.DocumentUrlAttachment</label>
+                </div>
+                <div class="form-group">
+                    <label for="DocumentUrlAttachments[0].Url" class="control-label col-md-2">Url</label>
+                    <div class="col-md-4">
+                        <input type="text" value="@DocumentUrlAttachmentsUrl" name="DocumentUrlAttachments[0].Url" id="DocumentUrlAttachments[0].Url" />
+                    </div>
+                    <label for="DocumentUrlAttachments[0].Text" class="control-label col-md-2">@Shared.Title</label>
+                    <div class="col-md-4">
+                        <input type="text" value="@DocumentUrlAttachmentsText" name="DocumentUrlAttachments[0].Text" id="DocumentUrlAttachments[0].Text" />
+                    </div>
+                </div>
+                @for (int a = 1; a < Model.DocumentUrlAttachments.Count; a++)
+                {
+                    <div class="form-group">
+                        <label for="DocumentUrlAttachments[@a].Url" class="control-label col-md-2">Url</label>
+                        <div class="col-md-4">
+                            <input type="text" value="@Model.DocumentUrlAttachments.ToArray()[a].Url" name="DocumentUrlAttachments[@a].Url" id="DocumentUrlAttachments[@a].Url" />
+                        </div>
+                        <label for="DocumentUrlAttachments[@a].Text" class="control-label col-md-2">@Shared.Title</label>
+                        <div class="col-md-4">
+                            <input type="text" value="@Model.DocumentUrlAttachments.ToArray()[a].Text" name="DocumentUrlAttachments[@a].Text" id="DocumentUrlAttachments[@a].Text" />
+                        </div>
+                    </div>
+                }
+                <div id="new-attachments">
+                </div>
+                <div>
+                    <div class="form-group">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2"> <input type="button" value="Nytt vedlegg" onclick="addAttachment();" /></div>
+                    </div>
+                </div>
+                <script>
+                    var counter = @(Model.DocumentUrlAttachments != null ? Model.DocumentUrlAttachments.Count() : 1);
+                    function addAttachment() {
+                        document.getElementById("new-attachments").innerHTML +=
+                            '<div class="form-group">' +
+                        '<label for="DocumentUrlAttachments['+counter+'].Url" class="control-label col-md-2">Url</label>' +
+                        '<div class="col-md-4">' +
+                        '<input type="text" name="DocumentUrlAttachments[' + counter + '].Url" id="DocumentUrlAttachments[' + counter + '].Url" />' +
+                        '</div > ' +
+                            '<label for= "DocumentUrlAttachments['+counter+'].Text" class= "control-label col-md-2" >@Shared.Title</label > ' +
+                            '<div class="col-md-4" > ' +
+                            '<input type = "text" name = "DocumentUrlAttachments['+counter+'].Text" id = "DocumentUrlAttachments['+counter+'].Text" /> ' +
+                        '</div > ' +
+                    '</div>';
 
+                    }
+                </script>
             <div class="form-group">
                 @Html.LabelFor(model => model.thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">

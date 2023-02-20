@@ -55,11 +55,14 @@
                                 <span class="glyphicon glyphicon-download-alt"> </span>@Shared.DownloadEnglish
                             </a><br />
                         }
-                        if (!string.IsNullOrEmpty(Model.DocumentUrlAttachment))
+                        if (Model.DocumentUrlAttachments != null)
                         {
-                            <a href="@Html.DisplayFor(modelItem => Model.DocumentUrlAttachment)" class="btn btn-block" title="Last ned dokument for @Model.Name">
-                                <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Attachment
-                            </a><br />
+                            foreach (var attachment in Model.DocumentUrlAttachments)
+                            {
+                        <a href="@Html.DisplayFor(modelItem => attachment.Url)" class="btn btn-block" title="@(!string.IsNullOrEmpty(attachment.Text) ? attachment.Text : attachment.Url)">
+                            <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Attachment
+                        </a><br />
+                            }
                         }
                     }
                 }

@@ -709,8 +709,6 @@ namespace Kartverket.Register.Controllers
                 return document;
             }
             document.documentUrl2 = inputDocument.documentUrl2;
-            document.DocumentUrlAttachments = new List<Link>();
-            document.DocumentUrlAttachments.Add(new Link { Url = inputDocument.DocumentUrlAttachments.ToArray()[0].Url }); 
             document.thumbnail = GetThumbnail(document, originalDocument, documentfile, url, thumbnail);
             document.versioningId = GetVersioningId(document, inputDocument.versioningId);
 
@@ -736,6 +734,20 @@ namespace Kartverket.Register.Controllers
             _translationService.UpdateTranslations(inputDocument, document);
 
             db.SaveChanges();
+
+            document.DocumentUrlAttachments = new List<Link>();
+
+            foreach (var link in inputDocument.DocumentUrlAttachments)
+            {
+                if (!string.IsNullOrEmpty(link.Url)) 
+                { 
+                    var attachment = new Link { Url = link.Url, Text = link.Text };
+                    document.DocumentUrlAttachments.Add(attachment);
+                    db.Entry(attachment).State = EntityState.Added;
+                    db.SaveChanges();
+                }
+            }
+
             if (sendNotification)
                 _notificationService.SendSubmittedNotification(document);
 

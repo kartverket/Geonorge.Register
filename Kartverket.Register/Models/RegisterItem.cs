@@ -9,6 +9,7 @@
 using Kartverket.Register.Helpers;
 using Resources;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -80,8 +81,12 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "DocumentUrl", ResourceType = typeof(Registers))]
         public string documentUrl { get; set; }
+        [Display(Name = "DocumentUrlEnglish", ResourceType = typeof(Registers))]
+        public string documentUrlEnglish { get; set; }
         [Display(Name = "DocumentUrl2", ResourceType = typeof(Registers))]
         public string documentUrl2 { get; set; }
+        [Display(Name = "DocumentUrlAttachment", ResourceType = typeof(Registers))]
+        public virtual ICollection<Link> DocumentUrlAttachments { get; set; }
         [Display(Name = "Schematron-file", ResourceType = typeof(Registers))]
         public string documentUrlSchematron { get; set; }
 

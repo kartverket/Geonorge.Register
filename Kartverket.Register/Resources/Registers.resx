@@ -193,7 +193,7 @@
     <value>Dato utkast</value>
   </data>
   <data name="DateRetired" xml:space="preserve">
-    <value>Dato utgått</value>
+    <value>Dato Tilbaketrukket</value>
   </data>
   <data name="DateSuperseded" xml:space="preserve">
     <value>Dato erstattet</value>
@@ -226,7 +226,7 @@
     <value>Forslag</value>
   </data>
   <data name="Retired" xml:space="preserve">
-    <value>Utgått</value>
+    <value>Tilbaketrukket</value>
   </data>
   <data name="Superseded" xml:space="preserve">
     <value>Erstattet</value>
@@ -313,7 +313,7 @@
     <value>Dato</value>
   </data>
   <data name="MakeAllItemsRetired" xml:space="preserve">
-    <value>Sett status "Utgått" på alle kodeverdier</value>
+    <value>Sett status "Tilbaketrukket" på alle kodeverdier</value>
   </data>
   <data name="MakeAllItemsRetiredMessage" xml:space="preserve">
     <value>Sett status for alle verdier i kodelista. Individuelle verdier kan fortsatt settes</value>
@@ -332,5 +332,11 @@
   </data>
   <data name="DocumentUrl2" xml:space="preserve">
     <value>Sti/url til HTML-versjon</value>
+  </data>
+  <data name="DocumentUrlEnglish" xml:space="preserve">
+    <value>Dokument url engelsk</value>
+  </data>
+  <data name="DocumentUrlAttachment" xml:space="preserve">
+    <value>Url til vedlegg</value>
   </data>
 </root>

@@ -187,7 +187,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dato utgått.
+        ///   Looks up a localized string similar to Dato Tilbaketrukket.
         /// </summary>
         public static string DateRetired {
             get {
@@ -255,6 +255,24 @@ namespace Resources {
         public static string DocumentUrl2 {
             get {
                 return ResourceManager.GetString("DocumentUrl2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url til vedlegg.
+        /// </summary>
+        public static string DocumentUrlAttachment {
+            get {
+                return ResourceManager.GetString("DocumentUrlAttachment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dokument url engelsk.
+        /// </summary>
+        public static string DocumentUrlEnglish {
+            get {
+                return ResourceManager.GetString("DocumentUrlEnglish", resourceCulture);
             }
         }
         
@@ -439,7 +457,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sett status &quot;Utgått&quot; på alle kodeverdier.
+        ///   Looks up a localized string similar to Sett status &quot;Tilbaketrukket&quot; på alle kodeverdier.
         /// </summary>
         public static string MakeAllItemsRetired {
             get {
@@ -574,7 +592,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Utgått.
+        ///   Looks up a localized string similar to Tilbaketrukket.
         /// </summary>
         public static string Retired {
             get {

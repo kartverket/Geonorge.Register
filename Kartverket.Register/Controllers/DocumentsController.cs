@@ -20,6 +20,7 @@ using System.Web.Configuration;
 using Ionic.Zip;
 using Ghostscript.NET.Rasterizer;
 using System.Drawing.Imaging;
+using System.Collections.Generic;
 //ghostscriptsharp MIT license:
 //Copyright(c) 2009 Matthew Ephraim
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -111,7 +112,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         //[Route("dokument/{registername}/ny")]
-        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerId, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null)
+        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerId, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null, HttpPostedFileBase documentfileEnglish = null, string zipIsAsciiDocEnglish = null)
         {
             document.register = _registerService.GetRegisterBySystemId(Guid.Parse(registerId));
             if (_accessControlService.AddToRegister(document.register))
@@ -122,7 +123,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    document = initialisationDocument(document, documentfile, thumbnail,false, false, null, schematronfile, zipIsAsciiDoc);
+                    document = initialisationDocument(document, documentfile, thumbnail, false, false, null, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
                     if (ModelState.IsValid)
                         return Redirect(document.GetObjectUrl());
                 }
@@ -162,7 +163,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny")]
         //[Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
-        public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentRegisterOwner, string parentRegister, string registername, string itemname, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null)
+        public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentRegisterOwner, string parentRegister, string registername, string itemname, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null, HttpPostedFileBase documentfileEnglish = null, string zipIsAsciiDocEnglish = null)
         {
             document.register = _registerService.GetSubregisterByName(parentRegister, registername);
             if (_accessControlService.AddToRegister(document.register))
@@ -173,7 +174,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    document = initialisationDocument(document, documentfile, thumbnail, false, false, null, schematronfile, zipIsAsciiDoc);
+                    document = initialisationDocument(document, documentfile, thumbnail, false, false, null, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
                     if (ModelState.IsValid)
                         return Redirect(document.GetObjectUrl());
                 }
@@ -210,7 +211,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         //[Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         //[Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
-        public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired, bool sosi, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null)
+        public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired, bool sosi, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null, HttpPostedFileBase documentfileEnglish = null, string zipIsAsciiDocEnglish = null)
         {
             var originalDocument = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, document.versionNumber);
             if (originalDocument != null)
@@ -221,24 +222,30 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
+                    document.documentUrl = originalDocument.documentUrl;
+                    document.documentUrlEnglish = originalDocument.documentUrlEnglish;
+
                     string url = GetUrlForRegister(originalDocument, document);
-                    DocumentFile documentFile = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString(), originalDocument,document, schematronfile, zipIsAsciiDoc);
-                    document.documentUrl = documentFile.Url;
+                    DocumentFile documentFile = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString(), originalDocument, document, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
+                    if (!string.IsNullOrEmpty(documentFile.Url))
+                        document.documentUrl = documentFile.Url;
+                    if (!string.IsNullOrEmpty(documentFile.UrlEnglish))
+                        document.documentUrlEnglish = documentFile.UrlEnglish;
                     document.documentUrlSchematron = documentFile.UrlSchematron;
                     if (document.documentUrl == "IllegalSchemaLocation")
                     {
                         ModelState.AddModelError("ErrorMessageFileName", ErrorMessageIllegalSchemaLocation);
                         document.documentUrl = "";
                     }
-                    else { 
-                    if (document.register == null)
-                        document.register = originalDocument.register;
-                    document.thumbnail = GetThumbnail(document, originalDocument, documentfile, url, thumbnail);
-                    originalDocument = _documentService.UpdateDocument(originalDocument, document, documentfile,thumbnail, retired, sosi);
+                    else {
+                        if (document.register == null)
+                            document.register = originalDocument.register;
+                        document.thumbnail = GetThumbnail(document, originalDocument, documentfile, url, thumbnail);
+                        originalDocument = _documentService.UpdateDocument(originalDocument, document, documentfile, thumbnail, retired, sosi);
 
 
-                    //document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
-                    return Redirect(originalDocument.GetObjectUrl());
+                        //document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
+                        return Redirect(originalDocument.GetObjectUrl());
                     }
                 }
             }
@@ -315,12 +322,12 @@ namespace Kartverket.Register.Controllers
 
             string elementid = "";
 
-            if (!displayAllElements) 
+            if (!displayAllElements)
             {
                 elementid = document.documentUrl?.Split('/').Last();
             }
 
-            var log =  _logEntryService.GetGMLApplicationSchemasAsync(limit, elementid).Result;
+            var log = _logEntryService.GetGMLApplicationSchemasAsync(limit, elementid).Result;
             ViewBag.LogEntries = log;
             Viewbags(document);
 
@@ -329,13 +336,13 @@ namespace Kartverket.Register.Controllers
 
         private void RemoveFiles(Document document)
         {
-            if (document != null && !string.IsNullOrEmpty(document.documentUrl) && document.documentUrl.EndsWith(".xsd")) 
-            { 
-                try 
+            if (document != null && !string.IsNullOrEmpty(document.documentUrl) && document.documentUrl.EndsWith(".xsd"))
+            {
+                try
                 {
                     new SchemaSynchronizer().RemoveFiles(document);
                 }
-                catch(Exception ex) 
+                catch (Exception ex)
                 {
                     Log.Error("Error deleting document file: ", ex);
                 }
@@ -345,20 +352,42 @@ namespace Kartverket.Register.Controllers
                 var url = new Uri(document.documentUrl);
                 var filePath = url.LocalPath;
                 var directory = Constants.DataDirectory + Document.DataDirectory + filePath;
-                if (url.AbsoluteUri.Contains("standarder"))
+                if (url.Host.Contains("standarder"))
                     directory = Constants.DataDirectory + Document.DataDirectory + "standarder/" + filePath;
 
-                if (directory.EndsWith(".html")) 
+                if (directory.EndsWith(".html"))
                 {
-                   directory = Path.GetDirectoryName(directory);
-                   var path = Server.MapPath(directory);
-                   Directory.Delete(path, true);
+                    directory = Path.GetDirectoryName(directory);
+                    var path = Server.MapPath(directory);
+                    Directory.Delete(path, true);
                 }
-                else 
-                { 
+                else
+                {
                     var path = Server.MapPath(directory);
                     System.IO.File.Delete(path);
                 }
+
+                if (!string.IsNullOrEmpty(document.documentUrlEnglish))
+                {
+                    url = new Uri(document.documentUrlEnglish);
+                    filePath = url.LocalPath;
+                    directory = Constants.DataDirectory + Document.DataDirectory + filePath;
+                    if (url.Host.Contains("standarder"))
+                        directory = Constants.DataDirectory + Document.DataDirectory + "standarder/" + filePath;
+
+                    if (directory.EndsWith(".html"))
+                    {
+                        directory = Path.GetDirectoryName(directory);
+                        var path = Server.MapPath(directory);
+                        Directory.Delete(path, true);
+                    }
+                    else
+                    {
+                        var path = Server.MapPath(directory);
+                        System.IO.File.Delete(path);
+                    }
+                }
+
             }
             catch (Exception ex)
             {
@@ -466,7 +495,7 @@ namespace Kartverket.Register.Controllers
             if (document.documentUrl.Contains(".pdf"))
             {
                 string filtype, name;
-                string seofilename = MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename) + Path.GetExtension(documentfile.FileName) ;
+                string seofilename = MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename) + Path.GetExtension(documentfile.FileName);
                 name = RegisterUrls.MakeSeoFriendlyString(document.name);
 
                 var originalPath = document != null && document.register != null ? document.register.path : originalDocument.register.path;
@@ -502,7 +531,7 @@ namespace Kartverket.Register.Controllers
                 return url + registerPath + "/" + thumbFileName;
 
             }
-            else if (document.documentUrl.Contains(".xsd")) 
+            else if (document.documentUrl.Contains(".xsd"))
             {
                 return "/Content/xsd.svg";
             }
@@ -537,39 +566,75 @@ namespace Kartverket.Register.Controllers
             return gsSettings;
         }
 
-        private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr,
-            Document originalDocument, Document document, string zipIsAsciiDoc = null)
+        private DocumentFile SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr,
+            Document originalDocument, Document document, string zipIsAsciiDoc = null, HttpPostedFileBase fileEnglish = null, string zipIsAsciiDocEnglish = null)
         {
+
+            DocumentFile documentFile = new DocumentFile();
+
             string filtype;
-            string seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename) + Path.GetExtension(file.FileName);
+            string seofilename = null;
+
+            if (file != null)
+                seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename) + Path.GetExtension(file.FileName);
+
+            string filtypeEnglish;
+            string seofilenameEnglish = null;
+
+            if (fileEnglish != null)
+                seofilenameEnglish = MakeSeoFriendlyDocumentName(fileEnglish, out filtypeEnglish, out seofilenameEnglish) + Path.GetExtension(fileEnglish.FileName);
+
             name = RegisterUrls.MakeSeoFriendlyString(name);
 
-            var originalPath = document != null && document.register != null  ? document.register.path : originalDocument.register.path;
+            var originalPath = document != null && document.register != null ? document.register.path : originalDocument.register.path;
             var registerPath = originalPath + "/" + name + "/" + document.versionName;
             var directory = Constants.DataDirectory + Document.DataDirectory + registerPath;
             var path = Server.MapPath(directory);
             System.IO.Directory.CreateDirectory(path);
 
-            if(!string.IsNullOrEmpty(zipIsAsciiDoc) && Path.GetExtension(file.FileName) == ".zip")
+            if (file != null && !string.IsNullOrEmpty(zipIsAsciiDoc) && Path.GetExtension(file.FileName) == ".zip")
             {
                 using (ZipFile zip = ZipFile.Read(file.InputStream))
                 {
                     seofilename = zip.EntryFileNames.Where(f => f.EndsWith(".html")).FirstOrDefault();
 
                     zip.ExtractAll(path);
-                } 
+                }
             }
-            else 
-            { 
-                path = Path.Combine(path, seofilename);
-                file.SaveAs(path);
+            else if (!string.IsNullOrEmpty(zipIsAsciiDocEnglish) && Path.GetExtension(fileEnglish.FileName) == ".zip")
+            {
+                using (ZipFile zip = ZipFile.Read(fileEnglish.InputStream))
+                {
+                    seofilenameEnglish = zip.EntryFileNames.Where(f => f.EndsWith(".html")).FirstOrDefault();
+
+                    zip.ExtractAll(path);
+                }
+            }
+            else
+            {
+                var pathOriginal = path;
+                if (!string.IsNullOrEmpty(seofilename))
+                {
+                    path = Path.Combine(path, seofilename);
+                    file.SaveAs(path);
+                }
+
+                if (!string.IsNullOrEmpty(seofilenameEnglish))
+                {
+                    path = Path.Combine(pathOriginal, seofilenameEnglish);
+                    fileEnglish.SaveAs(path);
+                }
             }
 
             //remove standarder from path
             if (registerPath.StartsWith("standarder/"))
-                registerPath = registerPath.Replace("standarder/","");
+                registerPath = registerPath.Replace("standarder/", "");
 
-            return registerPath + "/" + seofilename;
+            documentFile.Filename = registerPath + "/" + seofilename;
+            if (!string.IsNullOrEmpty(seofilenameEnglish))
+                documentFile.FilenameEnglish = registerPath + "/" + seofilenameEnglish;
+
+            return documentFile;
         }
 
         /// <summary>
@@ -609,7 +674,7 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        private Document initialisationDocument(Document inputDocument, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired = false, bool sosi = false, Document originalDocument = null, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null)
+        private Document initialisationDocument(Document inputDocument, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired = false, bool sosi = false, Document originalDocument = null, HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null, HttpPostedFileBase documentfileEnglish = null, string zipIsAsciiDocEnglish = null)
         {
             Document document = GetDocument(originalDocument);
             document.systemId = GetSystemId(document.systemId);
@@ -632,9 +697,10 @@ namespace Kartverket.Register.Controllers
             if (document.documentownerId != Guid.Empty)
                 document.documentowner = db.Organizations.Where(o => o.systemId == document.documentownerId).FirstOrDefault();
             document.submitterId = GetSubmitterId(inputDocument.submitterId);
-            string url = GetUrlForRegister(document, originalDocument); 
-            DocumentFile documentFiles = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber, document?.status?.value, originalDocument?.status?.value, originalDocument, document, schematronfile, zipIsAsciiDoc);
+            string url = GetUrlForRegister(document, originalDocument);
+            DocumentFile documentFiles = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber, document?.status?.value, originalDocument?.status?.value, originalDocument, document, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
             document.documentUrl = documentFiles.Url;
+            document.documentUrlEnglish = documentFiles.UrlEnglish;
             document.documentUrlSchematron = documentFiles.UrlSchematron;
             if (document.documentUrl == "IllegalSchemaLocation")
             {
@@ -668,6 +734,20 @@ namespace Kartverket.Register.Controllers
             _translationService.UpdateTranslations(inputDocument, document);
 
             db.SaveChanges();
+
+            document.DocumentUrlAttachments = new List<Link>();
+
+            foreach (var link in inputDocument.DocumentUrlAttachments)
+            {
+                if (!string.IsNullOrEmpty(link.Url)) 
+                { 
+                    var attachment = new Link { Url = link.Url, Text = link.Text };
+                    document.DocumentUrlAttachments.Add(attachment);
+                    db.Entry(attachment).State = EntityState.Added;
+                    db.SaveChanges();
+                }
+            }
+
             if (sendNotification)
                 _notificationService.SendSubmittedNotification(document);
 
@@ -1002,7 +1082,9 @@ namespace Kartverket.Register.Controllers
 
             if (thumbnail != null /*&& document.thumbnail.Contains(thumbnail.FileName)*/)
             {
-                document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, document.register.seoname, document.versionNumber, originalDocument, document);
+                var file = SaveFileToDisk(thumbnail, document.name, document.register.seoname, document.versionNumber, originalDocument, document);
+                document.thumbnail = url + file.Filename;
+
             }
             return document.thumbnail;
         }
@@ -1103,11 +1185,11 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private DocumentFile documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr, string status, string previousStatus, Document originalDocument, Document document,  HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null)
+        private DocumentFile documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr, string status, string previousStatus, Document originalDocument, Document document,  HttpPostedFileBase schematronfile = null, string zipIsAsciiDoc = null, HttpPostedFileBase documentfileEnglish = null, string zipIsAsciiDocEnglish = null)
         {
             DocumentFile documentUrl = new DocumentFile();
 
-            if (documentfile != null)
+            if (documentfile != null || documentfileEnglish != null)
             {
                 var schemaRemoteSynchEnabled = System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true;
 
@@ -1118,8 +1200,11 @@ namespace Kartverket.Register.Controllers
                 }
                 else 
                 {
-                    string fileName = SaveFileToDisk(documentfile, documentname, registername, versionNr, originalDocument, document, zipIsAsciiDoc);
-                    documentUrl.Url = url + fileName;
+                    var documentFile = SaveFileToDisk(documentfile, documentname, registername, versionNr, originalDocument, document, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
+                    if(!string.IsNullOrEmpty(documentFile.Filename))
+                        documentUrl.Url = url + documentFile.Filename;
+                    if (!string.IsNullOrEmpty(documentFile.FilenameEnglish))
+                        documentUrl.UrlEnglish = url + documentFile.FilenameEnglish;
                     return documentUrl;
                 }
             }

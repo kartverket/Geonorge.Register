@@ -8,6 +8,9 @@ namespace Kartverket.Register.Models
     public class DocumentFile
     {
         public string Url { get; set; }
+        public string UrlEnglish { get; set; }
         public string UrlSchematron { get; set; }
+        public string Filename { get; set; }
+        public string FilenameEnglish { get; set; }
     }
 }

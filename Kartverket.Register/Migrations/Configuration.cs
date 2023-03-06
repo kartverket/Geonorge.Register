@@ -103,7 +103,7 @@ namespace Kartverket.Register.Migrations
                 new Status { value = "Valid", description = "Gyldig", group = "current" },
                 new Status { value = "Sosi-valid", description = "SOSI godkjent", group = "current" },
                 new Status { value = "Superseded", description = "Erstattet", group = "historical" },
-                new Status { value = "Retired", description = "Utgått", group = "historical" }
+                new Status { value = "Retired", description = "Tilbaketrukket", group = "historical" }
             );
 
             context.DokStatuses.AddOrUpdate(

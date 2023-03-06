@@ -286,4 +286,10 @@
   <data name="DisplayDocument" xml:space="preserve">
     <value>Vis dokument</value>
   </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Vedlegg</value>
+  </data>
+  <data name="DownloadEnglish" xml:space="preserve">
+    <value>Engelsk versjon</value>
+  </data>
 </root>

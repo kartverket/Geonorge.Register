@@ -3248,6 +3248,11 @@
               Looks up a localized string similar to Dokument-fil.
             </summary>
         </member>
+        <member name="P:Resources.Documents.DocumentFileEnglish">
+            <summary>
+              Looks up a localized string similar to Dokument-fil engelsk.
+            </summary>
+        </member>
         <member name="P:Resources.Documents.DocumentOwner">
             <summary>
               Looks up a localized string similar to Dokumenteier.
@@ -3260,7 +3265,7 @@
         </member>
         <member name="P:Resources.Documents.Expired">
             <summary>
-              Looks up a localized string similar to Utgått.
+              Looks up a localized string similar to Tilbaketrukket.
             </summary>
         </member>
         <member name="P:Resources.Documents.No">
@@ -3502,7 +3507,7 @@
         </member>
         <member name="P:Resources.Alerts.HelpTextDateResolved">
             <summary>
-              Looks up a localized string similar to Her legger du inn dato og klokkeslett for tidspunkt løsningen er oppe igjen. Hvis varselet gjelder forhåndsdefinert nedetid, så kan dette tidspunktet settes med en gang. Status vil da endres til &quot;Utgått&quot; etter at tidspunktet er passert.
+              Looks up a localized string similar to Her legger du inn dato og klokkeslett for tidspunkt løsningen er oppe igjen. Hvis varselet gjelder forhåndsdefinert nedetid, så kan dette tidspunktet settes med en gang. Status vil da endres til &quot;Tilbaketrukket&quot; etter at tidspunktet er passert.
             </summary>
         </member>
         <member name="P:Resources.Alerts.HelpTextEffectivedate">
@@ -3589,7 +3594,7 @@
         </member>
         <member name="P:Resources.Alerts.StatusHelp">
             <summary>
-              Looks up a localized string similar to Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;utgått&quot;. Hvis &quot;Løst dato&quot; er passert så vil &quot;status&quot; automatisk settes til &quot;utgått&quot;.
+              Looks up a localized string similar to Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes &quot;gyldig&quot;. Hvis meldingen referer til noe som er overstått skal den merkes &quot;Tilbaketrukket&quot;. Hvis &quot;Løst dato&quot; er passert så vil &quot;status&quot; automatisk settes til &quot;Tilbaketrukket&quot;.
             </summary>
         </member>
         <member name="P:Resources.Alerts.SubscribeServiceAlert">
@@ -4911,7 +4916,7 @@
         </member>
         <member name="P:Resources.Registers.DateRetired">
             <summary>
-              Looks up a localized string similar to Dato utgått.
+              Looks up a localized string similar to Dato Tilbaketrukket.
             </summary>
         </member>
         <member name="P:Resources.Registers.DateSubmitted">
@@ -4947,6 +4952,16 @@
         <member name="P:Resources.Registers.DocumentUrl2">
             <summary>
               Looks up a localized string similar to Sti/url til HTML-versjon.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.DocumentUrlAttachment">
+            <summary>
+              Looks up a localized string similar to Url til vedlegg.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.DocumentUrlEnglish">
+            <summary>
+              Looks up a localized string similar to Dokument url engelsk.
             </summary>
         </member>
         <member name="P:Resources.Registers.DOKCoverageContent">
@@ -5051,7 +5066,7 @@
         </member>
         <member name="P:Resources.Registers.MakeAllItemsRetired">
             <summary>
-              Looks up a localized string similar to Sett status &quot;Utgått&quot; på alle kodeverdier.
+              Looks up a localized string similar to Sett status &quot;Tilbaketrukket&quot; på alle kodeverdier.
             </summary>
         </member>
         <member name="P:Resources.Registers.MakeAllItemsRetiredMessage">
@@ -5126,7 +5141,7 @@
         </member>
         <member name="P:Resources.Registers.Retired">
             <summary>
-              Looks up a localized string similar to Utgått.
+              Looks up a localized string similar to Tilbaketrukket.
             </summary>
         </member>
         <member name="P:Resources.Registers.SavingContentMessage">
@@ -5230,6 +5245,11 @@
               Looks up a localized string similar to Geonorge Register.
             </summary>
         </member>
+        <member name="P:Resources.Shared.Attachment">
+            <summary>
+              Looks up a localized string similar to Vedlegg.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Back">
             <summary>
               Looks up a localized string similar to Tilbake.
@@ -5288,6 +5308,11 @@
         <member name="P:Resources.Shared.Download">
             <summary>
               Looks up a localized string similar to Last ned.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.DownloadEnglish">
+            <summary>
+              Looks up a localized string similar to Engelsk versjon.
             </summary>
         </member>
         <member name="P:Resources.Shared.Edit">

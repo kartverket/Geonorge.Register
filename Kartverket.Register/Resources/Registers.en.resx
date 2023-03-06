@@ -333,4 +333,10 @@
   <data name="DocumentUrl2" xml:space="preserve">
     <value>Url to document</value>
   </data>
+  <data name="DocumentUrlEnglish" xml:space="preserve">
+    <value>Document url english</value>
+  </data>
+  <data name="DocumentUrlAttachment" xml:space="preserve">
+    <value>Url attachment</value>
+  </data>
 </root>

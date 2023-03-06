@@ -132,6 +132,9 @@
   <data name="DocumentFile" xml:space="preserve">
     <value>Document file</value>
   </data>
+  <data name="DocumentFileEnglish" xml:space="preserve">
+    <value>Document file english</value>
+  </data>
   <data name="DocumentOwner" xml:space="preserve">
     <value>Document owner</value>
   </data>

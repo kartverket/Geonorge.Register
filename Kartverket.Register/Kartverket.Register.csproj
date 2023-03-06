@@ -24,7 +24,8 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -1237,6 +1238,14 @@
     <Compile Include="Migrations\202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.designer.cs">
       <DependentUpon>202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202302161044211_AddDocumentUrlEnglish.cs" />
+    <Compile Include="Migrations\202302161044211_AddDocumentUrlEnglish.designer.cs">
+      <DependentUpon>202302161044211_AddDocumentUrlEnglish.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202302171611167_AddDocumentUrlAttachments.cs" />
+    <Compile Include="Migrations\202302171611167_AddDocumentUrlAttachments.designer.cs">
+      <DependentUpon>202302171611167_AddDocumentUrlAttachments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1275,6 +1284,7 @@
     <Compile Include="Models\FAIR\FAIRDelivery.cs" />
     <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
+    <Compile Include="Models\Link.cs" />
     <Compile Include="Models\MareanoDataset.cs" />
     <Compile Include="Models\NamespaceDataset.cs" />
     <Compile Include="Models\Station.cs" />
@@ -3229,6 +3239,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.resx">
       <DependentUpon>202212071537172_AddOrganizationSeoNameRegisterItemStatusReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302161044211_AddDocumentUrlEnglish.resx">
+      <DependentUpon>202302161044211_AddDocumentUrlEnglish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302171611167_AddDocumentUrlAttachments.resx">
+      <DependentUpon>202302171611167_AddDocumentUrlAttachments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

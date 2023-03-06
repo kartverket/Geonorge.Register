@@ -257,7 +257,7 @@ namespace Kartverket.Register.Controllers
             //}
             ////System.Diagnostics.Debug.WriteLine("--------------------------");
 
-            ////System.Diagnostics.Debug.WriteLine("Utgåtte kommuner");
+            ////System.Diagnostics.Debug.WriteLine("Tilbaketrukket kommuner");
             //foreach (var municipality in SupersededOrganizations)
             //{
             //    //System.Diagnostics.Debug.WriteLine(municipality);
@@ -279,7 +279,7 @@ namespace Kartverket.Register.Controllers
             //    System.Diagnostics.Debug.WriteLine(sqlCoverage);
             //    var sql = "DELETE FROM [kartverket_register].[dbo].[RegisterItems] WHERE MunicipalityCode='" + municipality.MunicipalityCodeOld + "'";
             //    System.Diagnostics.Debug.WriteLine(sql);
-            //    //System.Diagnostics.Debug.WriteLine(municipality.MunicipalityCode + "," + municipality.Name + "," + municipality.MunicipalityCodeOld + "," + municipality.NameOld + "," + municipality.Number + ",utgått");
+            //    //System.Diagnostics.Debug.WriteLine(municipality.MunicipalityCode + "," + municipality.Name + "," + municipality.MunicipalityCodeOld + "," + municipality.NameOld + "," + municipality.Number + ",Tilbaketrukket");
             //}
         }
 

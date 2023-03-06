@@ -130,6 +130,7 @@ namespace Kartverket.Register.Models
             submitterId = document.submitterId;
             versioningId = document.versioningId;
             documentUrl = document.documentUrl;
+            documentUrlEnglish = document.documentUrlEnglish;
             documentUrl2 = document.documentUrl2;
             documentUrlSchematron = document.documentUrlSchematron;
             if(!string.IsNullOrEmpty(document.thumbnail))

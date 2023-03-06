@@ -132,6 +132,9 @@
   <data name="DocumentFile" xml:space="preserve">
     <value>Dokument-fil</value>
   </data>
+  <data name="DocumentFileEnglish" xml:space="preserve">
+    <value>Dokument-fil engelsk</value>
+  </data>
   <data name="DocumentOwner" xml:space="preserve">
     <value>Dokumenteier</value>
   </data>
@@ -139,7 +142,7 @@
     <value>Last ned</value>
   </data>
   <data name="Expired" xml:space="preserve">
-    <value>Utgått</value>
+    <value>Tilbaketrukket</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>Nei</value>

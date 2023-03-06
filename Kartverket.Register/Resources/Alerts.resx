@@ -190,7 +190,7 @@
     <value>Velg en type varsel fra nedtrekkslisten. Dersom du ikke finner en passende type varsel kan du sende en epost til &lt;a href="mailto:post@norgedigitalt.no"&gt;post@norgedigitalt.no&lt;/a&gt; og fremme ditt ønske om nye typer varsler. Men husk at for brukerne som mottar varslene så må varseltype være så konkret og presis som mulig, samtidig som det kan være forvirrende med altfor mange ulike typer varsel. Ofte er det godt nok med en varseltype som dekker et litt større emne. Forsøk derfor å bruke de foreslåtte varseltypene og gi heller en utdypende forklaring i feltet for "Varselet gjelder".</value>
   </data>
   <data name="HelpTextDateResolved" xml:space="preserve">
-    <value>Her legger du inn dato og klokkeslett for tidspunkt løsningen er oppe igjen. Hvis varselet gjelder forhåndsdefinert nedetid, så kan dette tidspunktet settes med en gang. Status vil da endres til "Utgått" etter at tidspunktet er passert</value>
+    <value>Her legger du inn dato og klokkeslett for tidspunkt løsningen er oppe igjen. Hvis varselet gjelder forhåndsdefinert nedetid, så kan dette tidspunktet settes med en gang. Status vil da endres til "Tilbaketrukket" etter at tidspunktet er passert</value>
   </data>
   <data name="HelpTextEffectivedate" xml:space="preserve">
     <value>Her velger du den datoen hvor endringen vil tre i kraft.</value>
@@ -243,7 +243,7 @@ I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden bruke
     <value>Stasjon: Brukes kun for SATREF og Vanstandsmåler-stasjoner. Vannstandsmålerstasjoner er listet på bunn av listen.</value>
   </data>
   <data name="StatusHelp" xml:space="preserve">
-    <value>Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes "gyldig". Hvis meldingen referer til noe som er overstått skal den merkes "utgått". Hvis "Løst dato" er passert så vil "status" automatisk settes til "utgått"</value>
+    <value>Angir om en driftsmeling er aktiv /relevant lenger. Da skal den merkes "gyldig". Hvis meldingen referer til noe som er overstått skal den merkes "Tilbaketrukket". Hvis "Løst dato" er passert så vil "status" automatisk settes til "Tilbaketrukket"</value>
   </data>
   <data name="SubscribeServiceAlert" xml:space="preserve">
     <value>Abonnere på varsler</value>

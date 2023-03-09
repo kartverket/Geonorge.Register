@@ -107,7 +107,7 @@
                 <input type="file" name="documentfile" id="documentfile" />
                 @Html.ValidationMessage("FileName", new { @class = "text-danger" })
                 @Html.ValidationMessage("ErrorMessageFileName")
-                <input type="checkbox" name="zipIsAsciiDoc" id="zipIsAsciiDoc" value="1"/><label for="zipIsAsciiDoc">&nbsp;Zip er AsciiDoc</label>
+                <input type="checkbox" name="zipIsAsciiDoc" id="zipIsAsciiDoc" value="1"/><label for="zipIsAsciiDoc">&nbsp;Zip er AsciiDoc med eventuelt pdf-dokument i folder-navn pdf</label>
             </div>
         </div>
         <div class="form-group@(Model.register.seoname == "gml-applikasjonsskjema" ? " hidden" :"")">

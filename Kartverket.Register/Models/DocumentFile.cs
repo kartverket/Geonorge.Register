@@ -11,6 +11,7 @@ namespace Kartverket.Register.Models
         public string UrlEnglish { get; set; }
         public string UrlSchematron { get; set; }
         public string Filename { get; set; }
+        public string Filename2AsciiDoc { get; set; }
         public string FilenameEnglish { get; set; }
     }
 }

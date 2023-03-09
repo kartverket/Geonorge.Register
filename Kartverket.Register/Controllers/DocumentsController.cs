@@ -229,6 +229,8 @@ namespace Kartverket.Register.Controllers
                     DocumentFile documentFile = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString(), originalDocument, document, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
                     if (!string.IsNullOrEmpty(documentFile.Url))
                         document.documentUrl = documentFile.Url;
+                    if (!string.IsNullOrEmpty(documentFile.Filename2AsciiDoc))
+                        document.documentUrl2 = documentFile.Filename2AsciiDoc;
                     if (!string.IsNullOrEmpty(documentFile.UrlEnglish))
                         document.documentUrlEnglish = documentFile.UrlEnglish;
                     document.documentUrlSchematron = documentFile.UrlSchematron;
@@ -575,6 +577,8 @@ namespace Kartverket.Register.Controllers
             string filtype;
             string seofilename = null;
 
+            string seofilenameToAsciiDoc = null;
+
             if (file != null)
                 seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename) + Path.GetExtension(file.FileName);
 
@@ -598,6 +602,13 @@ namespace Kartverket.Register.Controllers
                 {
                     seofilename = zip.EntryFileNames.Where(f => f.EndsWith(".html")).FirstOrDefault();
 
+                    var pdf = zip.EntryFileNames.Where(f => f.EndsWith(".pdf")).FirstOrDefault();
+
+                    if (!string.IsNullOrEmpty(pdf)) {
+                        seofilenameToAsciiDoc = seofilename;
+                        seofilename = pdf;
+                    }
+
                     zip.ExtractAll(path);
                 }
             }
@@ -615,6 +626,9 @@ namespace Kartverket.Register.Controllers
                 var pathOriginal = path;
                 if (!string.IsNullOrEmpty(seofilename))
                 {
+                    if(seofilename.StartsWith("pdf/"))
+                        System.IO.Directory.CreateDirectory(path + "\\pdf");
+
                     path = Path.Combine(path, seofilename);
                     file.SaveAs(path);
                 }
@@ -633,6 +647,9 @@ namespace Kartverket.Register.Controllers
             documentFile.Filename = registerPath + "/" + seofilename;
             if (!string.IsNullOrEmpty(seofilenameEnglish))
                 documentFile.FilenameEnglish = registerPath + "/" + seofilenameEnglish;
+
+            if(!string.IsNullOrEmpty(seofilenameToAsciiDoc))
+                documentFile.Filename2AsciiDoc = registerPath + "/" + seofilenameToAsciiDoc;
 
             return documentFile;
         }
@@ -1203,6 +1220,8 @@ namespace Kartverket.Register.Controllers
                     var documentFile = SaveFileToDisk(documentfile, documentname, registername, versionNr, originalDocument, document, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
                     if(!string.IsNullOrEmpty(documentFile.Filename))
                         documentUrl.Url = url + documentFile.Filename;
+                    if (!string.IsNullOrEmpty(documentFile.Filename2AsciiDoc))
+                        documentUrl.Filename2AsciiDoc = url + documentFile.Filename2AsciiDoc;
                     if (!string.IsNullOrEmpty(documentFile.FilenameEnglish))
                         documentUrl.UrlEnglish = url + documentFile.FilenameEnglish;
                     return documentUrl;

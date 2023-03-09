@@ -184,7 +184,7 @@
                         <input type="file" name="documentfile" id="documentfile" onchange="checkDocumentApproval($('#documentfile').val())" />@Model.documentUrl
                         @Html.ValidationMessageFor(model => model.documentUrl, "", new { @class = "text-danger" })
                         @Html.ValidationMessage("ErrorMessageFileName")
-                        <input type="checkbox" name="zipIsAsciiDoc" id="zipIsAsciiDoc" value="1" /><label for="zipIsAsciiDoc">&nbsp;Zip er AsciiDoc med eventuelt pdf-dokument i folder-navn pdf</label>
+                        <br /><input type="checkbox" name="zipIsAsciiDoc" id="zipIsAsciiDoc" value="1" /><label for="zipIsAsciiDoc">&nbsp;Zip er AsciiDoc med eventuelt pdf-dokument i folder-navn pdf</label>
                     </div>
                 </div>
 

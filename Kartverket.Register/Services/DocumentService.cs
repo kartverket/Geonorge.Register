@@ -27,7 +27,8 @@ namespace Kartverket.Register.Services
 
             originalDocument.DocumentUrlAttachments.Clear();
             _dbContext.SaveChanges();
-
+            if (document.DocumentUrlAttachments == null)
+                document.DocumentUrlAttachments = new List<Link>();
             foreach (var link in document.DocumentUrlAttachments)
             {
                 if (!string.IsNullOrEmpty(link.Url))

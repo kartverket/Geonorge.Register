@@ -174,7 +174,7 @@ namespace Kartverket.Register.Formatter
             var item = new SyndicationItem()
             {
                 Title = new TextSyndicationContent(u.label),
-                BaseUri = new Uri(u.id),
+                BaseUri = new Uri(GetBaseUri(u.id)),
                 LastUpdatedTime = u.lastUpdated,
                 Content = new TextSyndicationContent(content, TextSyndicationContentKind.Html),
                 Id = FixSpecialCharacters(u.id)
@@ -186,6 +186,17 @@ namespace Kartverket.Register.Formatter
             //if (u.itemclass == "Alert" && !string.IsNullOrEmpty(u.ServiceUuid))
             //    item.ElementExtensions.Add(new XElement("uuid", u.ServiceUuid));
             return item;
+        }
+
+        private string GetBaseUri(string id)
+        {
+            if (!string.IsNullOrEmpty(id)) 
+            {
+                var url = new Uri(id);
+                var host = url.Host;
+                return $"https://{host}/varsler"; 
+            }
+            return id;
         }
 
         private string FixSpecialCharacters(string id)

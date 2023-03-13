@@ -190,9 +190,9 @@ namespace Kartverket.Register.Formatter
 
         private string FixSpecialCharacters(string id)
         {
-            id = id.Replace("æ","ae");
-            id = id.Replace("ø", "o");
-            id = id.Replace("å", "aa");
+            id = id.Replace("æ", "%C3%A6");
+            id = id.Replace("ø", "%C3%B8");
+            id = id.Replace("å", "%C3%A5");
 
             return id;
         }

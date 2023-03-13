@@ -144,6 +144,12 @@ namespace Kartverket.Register.Formatter
                 if (string.Equals(contenttype, atom))
                 {
                     Atom10FeedFormatter atomformatter = new Atom10FeedFormatter(feed);
+                    XNamespace atom = "http://www.w3.org/2005/Atom";
+                    feed.ElementExtensions.Add(
+                        new XElement(atom + "link",
+                        new XAttribute("href", ((Models.Api.Register)models).id.Replace("/varsler", "/api/varsler.atom?")),
+                        new XAttribute("rel", "self"),
+                        new XAttribute("type", "application/atom+xml")));
                     atomformatter.WriteTo(writer);
                 }
                 else
@@ -171,7 +177,7 @@ namespace Kartverket.Register.Formatter
                 BaseUri = new Uri(u.id),
                 LastUpdatedTime = u.lastUpdated,
                 Content = new TextSyndicationContent(content, TextSyndicationContentKind.Html),
-                Id = u.id
+                Id = FixSpecialCharacters(u.id)
             };
             item.Links.Add(new SyndicationLink() { Title = u.label, Uri = new Uri((u.id)) });
             item.Authors.Add(new SyndicationPerson() { Name = u.owner });
@@ -180,6 +186,15 @@ namespace Kartverket.Register.Formatter
             //if (u.itemclass == "Alert" && !string.IsNullOrEmpty(u.ServiceUuid))
             //    item.ElementExtensions.Add(new XElement("uuid", u.ServiceUuid));
             return item;
+        }
+
+        private string FixSpecialCharacters(string id)
+        {
+            id = id.Replace("æ","ae");
+            id = id.Replace("ø", "o");
+            id = id.Replace("å", "aa");
+
+            return id;
         }
 
         private string GetContent(Registeritem u)

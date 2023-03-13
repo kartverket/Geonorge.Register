@@ -148,7 +148,16 @@ namespace Kartverket.Register.Formatter
                 }
                 else
                 {
-                    Rss20FeedFormatter rssformatter = new Rss20FeedFormatter(feed);
+                    Rss20FeedFormatter rssformatter = new Rss20FeedFormatter(feed, false);
+                    XNamespace atom = "http://www.w3.org/2005/Atom";
+                    feed.ElementExtensions.Add(
+                        new XElement(atom + "link",
+                        new XAttribute("href", ((Models.Api.Register)models).id),
+                        new XAttribute("rel", "self"),
+                        new XAttribute("type", "application/rss+xml")));
+
+                    feed.ElementExtensions.Add(
+                         new XElement("link", ((Models.Api.Register)models).id));
                     rssformatter.WriteTo(writer);
                 }
             }
@@ -168,8 +177,8 @@ namespace Kartverket.Register.Formatter
             item.Authors.Add(new SyndicationPerson() { Name = u.owner });
             item.Categories.Add(new SyndicationCategory() { Name = u.status });
             item.Categories.Add(new SyndicationCategory() { Name = u.owner });
-            if (u.itemclass == "Alert" && !string.IsNullOrEmpty(u.ServiceUuid))
-                item.ElementExtensions.Add(new XElement("uuid", u.ServiceUuid));
+            //if (u.itemclass == "Alert" && !string.IsNullOrEmpty(u.ServiceUuid))
+            //    item.ElementExtensions.Add(new XElement("uuid", u.ServiceUuid));
             return item;
         }
 
@@ -215,6 +224,9 @@ namespace Kartverket.Register.Formatter
                 if (u.Station != null)
                     content = content + "Station: " + u.Station + "<br>";
             }
+
+            if (content != null)
+                content = System.Web.HttpUtility.HtmlEncode(content);
 
             return content;
         }

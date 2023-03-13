@@ -152,7 +152,7 @@ namespace Kartverket.Register.Formatter
                     XNamespace atom = "http://www.w3.org/2005/Atom";
                     feed.ElementExtensions.Add(
                         new XElement(atom + "link",
-                        new XAttribute("href", ((Models.Api.Register)models).id),
+                        new XAttribute("href", ((Models.Api.Register)models).id.Replace("/varsler", "/api/varsler.rss?")),
                         new XAttribute("rel", "self"),
                         new XAttribute("type", "application/rss+xml")));
 

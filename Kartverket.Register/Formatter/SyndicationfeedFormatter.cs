@@ -184,8 +184,8 @@ namespace Kartverket.Register.Formatter
             item.Authors.Add(new SyndicationPerson() { Name = u.owner });
             item.Categories.Add(new SyndicationCategory() { Name = u.status });
             item.Categories.Add(new SyndicationCategory() { Name = u.owner });
-            //if (u.itemclass == "Alert" && !string.IsNullOrEmpty(u.ServiceUuid))
-            //    item.ElementExtensions.Add(new XElement("uuid", u.ServiceUuid));
+            if (u.itemclass == "Alert" && !string.IsNullOrEmpty(u.ServiceUuid))
+                item.ElementExtensions.Add(new XElement("uuid", u.ServiceUuid));
             return item;
         }
 

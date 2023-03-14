@@ -176,6 +176,7 @@ namespace Kartverket.Register.Formatter
                 Title = new TextSyndicationContent(u.label),
                 BaseUri = new Uri(GetBaseUri(u.id)),
                 LastUpdatedTime = u.lastUpdated,
+                PublishDate = u.dateSubmitted,
                 Content = new TextSyndicationContent(content, TextSyndicationContentKind.Html),
                 Id = FixSpecialCharacters(u.id)
             };

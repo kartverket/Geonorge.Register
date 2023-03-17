@@ -58,7 +58,7 @@
             {
                 foreach (var attachment in Model.DocumentUrlAttachments)
                 {
-                <a href="@Html.DisplayFor(modelItem => attachment.Url)" class="btn btn-block" title="@Html.DisplayFor(modelItem => !string.IsNullOrEmpty(attachment.Text) ? attachment.Text : attachment.Url)">
+                <a href="@attachment.Url" class="btn btn-block" title="@(!string.IsNullOrEmpty(attachment.Text) ? attachment.Text : attachment.Url)">
                     <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Attachment
                 </a><br />
                 }

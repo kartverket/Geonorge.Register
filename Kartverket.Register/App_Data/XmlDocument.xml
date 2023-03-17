@@ -591,6 +591,12 @@
             Update code value status
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetFAIR(System.String)">
+            <summary>
+            Gets FAIR by metadata-uuid
+            </summary>
+            <param name="uuid">The metadata uuid</param>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.ConvertCurrentAndVersions(Kartverket.Register.Models.Register,System.String)">
             <summary>
             Get all Geolett

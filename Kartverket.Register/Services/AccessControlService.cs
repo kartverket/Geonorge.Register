@@ -240,7 +240,7 @@ namespace Kartverket.Register.Services
         /// <returns></returns>
         public bool IsDokEditor()
         {
-            return _userAuthorization.IsDokEditor();
+            return _userAuthorization.IsDokEditor() || _userAuthorization.IsEditor();
         }
 
         public bool IsMunicipalUser()

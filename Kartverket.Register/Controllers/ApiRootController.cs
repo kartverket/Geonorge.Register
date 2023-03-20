@@ -987,6 +987,8 @@ namespace Kartverket.Register.Controllers
             fair.ReUseableStatus = fairData.ReUseableStatus.StatusId.ToString();
             fair.ReUseableStatusPerCent = fairData.ReUseableStatusPerCent;
 
+            fair.DetailsPage = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + fairData.Register.seoname + "/" + fairData.Seoname + "/" + fairData.SystemId + "#fair";
+
             return Ok(fair);
         }
 
@@ -1279,6 +1281,7 @@ namespace Kartverket.Register.Controllers
         public double InteroperableStatusPerCent { get; internal set; }
         public string ReUseableStatus { get; internal set; }
         public double ReUseableStatusPerCent { get; internal set; }
+        public string DetailsPage { get; internal set; }
     }
 
     public class GeoLettModelExample : IExamplesProvider

@@ -295,10 +295,12 @@ namespace Kartverket.Register.Controllers
                 if (versionsOfDocument.Count() > 1)
                 {
                     GetNewCurrentVersion(document);
+                    RemoveLinks(document);
                     db.RegisterItems.Remove(document);
                 }
                 else
                 {
+                    RemoveLinks(document);
                     db.RegisterItems.Remove(document);
                     db.SaveChanges();
                     db.Versions.Remove(versjonsgruppe);
@@ -306,6 +308,7 @@ namespace Kartverket.Register.Controllers
             }
             else
             {
+                RemoveLinks(document);
                 db.RegisterItems.Remove(document);
             }
             db.SaveChanges();
@@ -313,6 +316,15 @@ namespace Kartverket.Register.Controllers
             RemoveFiles(document);
 
             return Redirect(registerUrl);
+        }
+
+        private static void RemoveLinks(Document document)
+        {
+            var documentUrlAttachments = document.DocumentUrlAttachments.ToList();
+            foreach (var attachment in documentUrlAttachments)
+            {
+                document.DocumentUrlAttachments.Remove(attachment);
+            }
         }
 
         [Authorize]

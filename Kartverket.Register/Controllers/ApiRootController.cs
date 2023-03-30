@@ -965,12 +965,12 @@ namespace Kartverket.Register.Controllers
         {
             var fairData = db.MareanoDatasets.Where(f => f.Uuid == uuid).FirstOrDefault();
 
-            var fair = new FAIR();
-
-            if (fair == null)
+            if (fairData == null)
             {
                 return NotFound();
             }
+
+            var fair = new FAIR();
 
             fair.FairStatus = fairData.FAIRStatus.StatusId;
             fair.FAIRStatusPerCent = fairData.FAIRStatusPerCent;

@@ -45,7 +45,7 @@
         <p> @Model.SpecificUsage</p>
     </article>
 }
-<article class="col-md-12 nested">
+<article id="fair" class="col-md-12 nested">
     <h3 onclick="ToogleContent(this)">@MareanoDataSet.RatingLabel</h3>
     <p>@MareanoDataSet.RatingDescription</p>
     <div class="dataset-list metadata">
@@ -76,7 +76,7 @@
     </div>
 </article>
 <article class="col-md-12 nested">
-    <section id="fair">
+    <section>
     <h3>FAIR-status: @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.FAIRStatus.value, null, Model.FAIRStatusPerCent + "%", "fair") @Model.FAIRStatusPerCent%</h3>
     <div class="dataset-list metadata">
         <div class="row">

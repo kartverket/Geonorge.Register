@@ -1,7 +1,10 @@
 ﻿@using Kartverket.Register.Helpers
 @model Kartverket.Register.Models.ViewModels.DokDatasetViewModel
 @*@Html.Partial("Js/_datasetCharts")*@
-
+@helper RawText(string s)
+{
+    @(new HtmlString(s))
+}
 @if (!string.IsNullOrEmpty(Model.SpecificUsage))
 {
     <article class="col-md-12">
@@ -23,91 +26,105 @@
     <p><strong>@Registers.Updated: </strong>@Html.DisplayFor(model => model.Modified)</p>
 </article>
 
-<article class="col-md-12">
-    <h3>@DataSet.DOK_DeliveryStatusHeading</h3>
-    <div class="row">
-        <div class="col-md-12"><p><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">@DataSet.DOK_EvaluationCriteria</a></p></div>
-    </div>
-    <div class="table-heading col-md-12">
-        <div class="col-md-3 col">@DataSet.DOK_AssessmentPoint.ToUpper()</div>
-        <div class="col-md-2 col">@DataSet.DOK_StatusValueHeader.ToUpper()</div>
-        <div class="col-md-7 col">@DataSet.Comment.ToUpper()</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.DokDeliveryMetadataStatus)</div>
-        <div class="col-md-2 col"> @Model.DokDeliveryMetadataStatus</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliveryMetadataStatusNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.DokDeliveryProductSheetStatus)</div>
-        <div class="col-md-2 col">@Model.DokDeliveryProductSheetStatus</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliveryProductSheetStatusNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.DokDeliveryPresentationRulesStatus) </div>
-        <div class="col-md-2 col">@Model.DokDeliveryPresentationRulesStatus</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliveryPresentationRulesStatusNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.DokDeliveryProductSpecificationStatus)</div>
-        <div class="col-md-2 col">@Model.DokDeliveryProductSpecificationStatus</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliveryProductSpecificationStatusNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.DokDeliveryWmsStatus)</div>
-        <div class="col-md-2 col">
-            @if (Model.Restricted == true)
-            {
-                <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
-            }
-            else
-            {
-                @Model.DokDeliveryWmsStatus
-            }
+<article class="col-md-12 nested">
+    <div class="metadata">
+        <div class="status-list">
+            <ul>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.DokDeliveryMetadataStatusId, null, null, "metadata") <span>@Model.DokDeliveryMetadataStatus</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.DokDeliveryMetadataStatus)
+                        @RawText(Registers.RequirementsMetadata)
+                    </div>
+
+
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.DokDeliveryProductSpecificationStatusId, null, null, "metadata")<span> @Model.DokDeliveryProductSpecificationStatus</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.DokDeliveryProductSpecificationStatus) @RawText(Registers.RequirementsProductSpesifications)
+                    </div>
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.DokDeliveryProductSheetStatusId, null, null, "metadata")<span> @Model.DokDeliveryProductSheetStatus</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.DokDeliveryProductSheetStatus) @RawText(Registers.RequirementsProductSheetStatus)
+                    </div>
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.DokDeliveryPresentationRulesStatusId, null, null, "metadata")<span> @Model.DokDeliveryPresentationRulesStatus</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.DokDeliveryPresentationRulesStatus) @RawText(Registers.RequirementsPresentationRulesStatus)
+                    </div>
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.DokDeliverySosiRequirementsStatusId, null, null, "metadata")<span> @Model.DokDeliverySosiRequirementsStatus</span></div>
+                    <div class="col-md-11">
+                        @Html.DisplayNameFor(model => Model.DokDeliverySosiRequirementsStatus) @RawText(Registers.RequirementsSosi)
+                    </div>
+
+                </li>
+                <li>
+                    <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.DokDeliveryGmlRequirementsStatusId, null, null, "metadata")<span> @Model.DokDeliveryGmlRequirementsStatus</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.DokDeliveryGmlRequirementsStatus) @RawText(Registers.RequirementsGml)</div>
+
+                </li>
+                <li>
+                    @if (Model.Restricted == true)
+                    {
+                        <div class="col-md-1"><span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span></div>
+                        <div class="col-md-11">@Html.DisplayNameFor(model => Model.DokDeliveryWmsStatus) @RawText(Registers.RequirementsWms)</div>
+                    }
+                    else
+                    {
+                        <div class="col-md-1"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.DokDeliveryWmsStatusId, null, null, "metadata")<span> @Model.DokDeliveryWmsStatus</span></div>
+                        <div class="col-md-11">@Html.DisplayNameFor(model => Model.DokDeliveryWmsStatus) @RawText(Registers.RequirementsWms)</div>
+                    }
+                </li>
+                <li>
+                    @if (Model.Restricted == true)
+                    {
+                        <div class="col-md-1"><span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span></div>
+                        <div class="col-md-11">@Html.DisplayNameFor(model => Model.DokDeliveryWfsStatus) @RawText(Registers.RequirementsWfs)</div>
+                    }
+                    else
+                    {
+                        <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.DokDeliveryWfsStatusId, null, null, "metadata")<span> @Model.DokDeliveryWfsStatus</span></div>
+                        <div class="col-md-11">@Html.DisplayNameFor(model => Model.DokDeliveryWfsStatus) @RawText(Registers.RequirementsWfs)</div>
+                    }
+                </li>
+                <li>
+                    @if (Model.Restricted == true)
+                    {
+                        <div class="col-md-1"><span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span></div>
+                        <div class="col-md-11">@Html.DisplayNameFor(model => Model.DokDeliveryAtomFeedStatus) @RawText(Registers.RequirementsAtom)</div>
+                    }
+                    else
+                    {
+                        <div class="col-md-1">@HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.DokDeliveryAtomFeedStatusId, null, null, "metadata")<span> @Model.DokDeliveryAtomFeedStatus</span></div>
+                        <div class="col-md-11">@Html.DisplayNameFor(model => Model.DokDeliveryAtomFeedStatus) @RawText(Registers.RequirementsAtom)</div>
+                    }
+                </li>
+                <li>
+                    <div class="col-md-1"> @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(Model.DokDeliveryDistributionStatusId, null, null, "metadata") <span>@Model.DokDeliveryDistributionStatus</span></div>
+                    <div class="col-md-11">@Html.DisplayNameFor(model => Model.DokDeliveryDistributionStatus) @RawText(Registers.RequirementsDownload)</div>
+
+                </li>
+            </ul>
         </div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliveryWmsStatusNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.DokDeliveryWfsStatus)</div>
-        <div class="col-md-2 col">
-            @if (Model.Restricted == true)
-            {
-                <span data-toggle='tooltip' data-placement='bottom' title="@DataSet.RestrictedData" class="custom-icon custom-icon-hengelaas-closed-red"></span>
-            }
-            else
-            {
-                @Model.DokDeliveryWfsStatus
-            }
-        </div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliveryWfsStatusNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.DokDeliverySosiRequirementsStatus)</div>
-        <div class="col-md-2 col">@Model.DokDeliverySosiRequirementsStatus</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliverySosiRequirementsStatusNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.DokDeliveryDistributionStatus)</div>
-        <div class="col-md-2 col">@Model.DokDeliveryDistributionStatus</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliveryDistributionStatusNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.DokDeliveryGmlRequirementsStatus)</div>
-        <div class="col-md-2 col">@Model.DokDeliveryGmlRequirementsStatus</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliveryGmlRequirementsStatusNote)</div>
-    </div>
-    <div class="resultItemRow col-md-12">
-        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.DokDeliveryAtomFeedStatus)</div>
-        <div class="col-md-2 col">@Model.DokDeliveryAtomFeedStatus</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliveryAtomFeedStatusNote)</div>
     </div>
 </article>
 
+
+
+
+
+
 @*<article>
-    <div class="col-md-12">
-        <canvas id="lineChart" height="200" chart-colors="colors"></canvas>
-    </div>
-</article>*@
+        <div class="col-md-12">
+            <canvas id="lineChart" height="200" chart-colors="colors"></canvas>
+        </div>
+    </article>*@
 
 
 @if (!string.IsNullOrWhiteSpace(Model.MetadataUrl))

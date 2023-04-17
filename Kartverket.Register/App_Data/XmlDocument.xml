@@ -5145,6 +5145,59 @@
               Looks up a localized string similar to Publiser.
             </summary>
         </member>
+        <member name="P:Resources.Registers.RequirementsAtom">
+            <summary>
+              Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må datasettet være tilgjengelig gjennom en atom feed-tjeneste som er registrert i Geonorge. Ellers blir status &lt;b&gt;ikke levert&lt;/&gt;.&lt;/p&gt;.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.RequirementsDownload">
+            <summary>
+              Looks up a localized string similar to &lt;p&gt;Hvis datasettet er levert som atom feed eller WFS-krav er godt oppfylt vil dette kvalifisere til god oppfyllelse av krav. Hvis datasettet kun er tilgjengelig som WFS med brukbar oppfyllelse av krav, kvalifiserer dette til karakteren &lt;b&gt;brukbar&lt;/b&gt;. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.RequirementsGml">
+            <summary>
+              Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må nedlastbare GML-filer validere mot UML-modell i produktspesifikasjonen. Det vil gå fram av metadata om GML-filer er konforme med produktspesifikasjonen. Hvis det finnes nedlastbare GML-filer, så vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.RequirementsMetadata">
+            <summary>
+              Looks up a localized string similar to &lt;p&gt;For at metadatakvaliteten skal bli &lt;b&gt;god&lt;/b&gt;, må metadata validere i Geonorge sin metadataeditor. Det vil si at alle påkrevde felt skal være utfylt. Ellers blir metadata vurdert til &lt;b&gt;brukbar&lt;/b&gt; hvis de finnes. Ellers blir status &lt;b&gt;ikke angitt&lt;/b&gt;.&lt;/p&gt;.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.RequirementsPresentationRulesStatus">
+             <summary>
+               Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfylleles av krav må dokumentasjonen være laget på ND-malen. Dokumentasjonen må være meningsfullt utfylt for alle felt.
+            Må være tilgjengelig som SLD.
+            &lt;b&gt;Brukbar:&lt;/b&gt; Dokumentasjonen er laget iht. annen mal enn ND-malen. Dokument eller SLD er tilgjengelig.&lt;/p&gt;.
+             </summary>
+        </member>
+        <member name="P:Resources.Registers.RequirementsProductSheetStatus">
+             <summary>
+               Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfylleles av krav må dokumentasjonen må være laget på ND-malen (Wordmal eller produktarkgenerator). Meningsfullt utfylt for alle felt.
+            &lt;b&gt;Brukbar:&lt;/b&gt;  Dokumentasjonen er laget iht. annen mal enn ND-malen&lt;/p&gt;.
+             </summary>
+        </member>
+        <member name="P:Resources.Registers.RequirementsProductSpesifications">
+            <summary>
+              Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må det refereres til godkjent SOSI produktspesifikasjon i metadata. Annen referert produktspesifikasjon vil kunne gi &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Ellers blir status &lt;b&gt;ikke angitt&lt;/b&gt;.&lt;/p&gt;.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.RequirementsSosi">
+            <summary>
+              Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må nedlastbare SOSI-filer validere mot UML-modell i produktspesifikasjonen. Det vil gå fram av metadata om SOSI-filer er konforme med produktspesifikasjonen. Hvis det finnes nedlastbare SOSI-filer, så vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.RequirementsWfs">
+            <summary>
+              Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må tjenesten innfri de viktigste krav i Geonorges applikasjon over &lt;a href=&apos;https://status.geonorge.no/wfs/&apos;&gt;tjenestestatus&lt;/a&gt;. Hvis det finnes en WFS-tjeneste, vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Metadata må i begge tilfeller koples mot metadata til datasettet. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.RequirementsWms">
+            <summary>
+              Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må tjenesten innfri de viktigste krav i Geonorges applikasjon over &lt;a href=&apos;https://status.geonorge.no/wms/&apos;&gt;tjenestestatus&lt;/a&gt;. Hvis det finnes en WMS-tjeneste, vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Metadata må i begge tilfeller koples mot metadata til datasettet. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Retired">
             <summary>
               Looks up a localized string similar to Tilbaketrukket.

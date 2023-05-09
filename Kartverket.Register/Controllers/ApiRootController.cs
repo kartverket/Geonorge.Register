@@ -955,6 +955,43 @@ namespace Kartverket.Register.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Gets FAIR by metadata-uuid
+        /// </summary>
+        /// <param name="uuid">The metadata uuid</param>
+        [System.Web.Http.Route("api/fair/{uuid}")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetFAIR(string uuid)
+        {
+            var fairData = db.MareanoDatasets.Where(f => f.Uuid == uuid).FirstOrDefault();
+
+            if (fairData == null)
+            {
+                return NotFound();
+            }
+
+            var fair = new FAIR();
+
+            fair.FairStatus = fairData.FAIRStatus.StatusId;
+            fair.FAIRStatusPerCent = fairData.FAIRStatusPerCent;
+
+            fair.FindableStatus = fairData.FindableStatus.StatusId.ToString();
+            fair.FindableStatusPerCent = fairData.FindableStatusPerCent;
+
+            fair.AccesibleStatus = fairData.AccesibleStatus.StatusId.ToString();
+            fair.AccesibleStatusPerCent = fairData.AccesibleStatusPerCent;
+
+            fair.InteroperableStatus = fairData.InteroperableStatus.StatusId.ToString();
+            fair.InteroperableStatusPerCent = fairData.InteroperableStatusPerCent;
+
+            fair.ReUseableStatus = fairData.ReUseableStatus.StatusId.ToString();
+            fair.ReUseableStatusPerCent = fairData.ReUseableStatusPerCent;
+
+            fair.DetailsPage = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + fairData.Register.seoname + "/" + fairData.Seoname + "/" + fairData.SystemId + "#fair";
+
+            return Ok(fair);
+        }
+
 
         //[System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         //[ApiExplorerSettings(IgnoreApi = true)]
@@ -1226,6 +1263,25 @@ namespace Kartverket.Register.Controllers
 
             return tmp;
         }
+    }
+
+    internal class FAIR
+    {
+        public FAIR()
+        {
+        }
+
+        public string FairStatus { get; internal set; }
+        public double FAIRStatusPerCent { get; internal set; }
+        public string FindableStatus { get; internal set; }
+        public double FindableStatusPerCent { get; internal set; }
+        public string AccesibleStatus { get; internal set; }
+        public double AccesibleStatusPerCent { get; internal set; }
+        public string InteroperableStatus { get; internal set; }
+        public double InteroperableStatusPerCent { get; internal set; }
+        public string ReUseableStatus { get; internal set; }
+        public double ReUseableStatusPerCent { get; internal set; }
+        public string DetailsPage { get; internal set; }
     }
 
     public class GeoLettModelExample : IExamplesProvider

@@ -400,7 +400,31 @@ namespace Kartverket.Register.Controllers
             if (register == null) 
             {
                 var value = subregisters.Split('/').Last();
-                if(path.Contains('/'))
+
+                bool urlInSubregister = false;
+
+                if(subregisters.Contains("/http:/") || subregisters.Contains("/https:/")) 
+                {
+                    var pathArray = subregisters.Split(':'); 
+                    var pathNew = pathArray[0];
+                    if (subregisters.Contains("/http:/"))
+                        pathNew = pathNew.Replace("/http", "");
+                    if (subregisters.Contains("/https:/"))
+                        pathNew = pathNew.Replace("/https", "");
+                    path = pathNew;
+
+                    value = pathArray[1];
+                    if (subregisters.Contains("/http:/"))
+                        value = "http:/" + value;
+                    if (subregisters.Contains("/https:/"))
+                        value = "https:/" + value;
+
+                    path = registername + "/" + path;
+
+                    urlInSubregister = true;
+                }
+
+                    if (path.Contains('/') && !urlInSubregister)
                     path = path.Substring(0, path.LastIndexOf('/'));
                 //check codevalue
                 var codevalue = _db.RegisterItems.OfType<CodelistValue>().Where(s => (s.value == value || s.seoname == value )  && s.register.path == path).FirstOrDefault();

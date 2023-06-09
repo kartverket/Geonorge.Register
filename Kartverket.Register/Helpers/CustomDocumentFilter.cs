@@ -27,6 +27,12 @@ namespace Kartverket.Register.Helpers
 
             foreach(var api in apiExplorer.ApiDescriptions)
             {
+                if(api.ID.Contains("POSTapi/AlertApi"))
+                    removeDescriptions.Add(api);
+
+                if (api.ID.Contains("PUTapi/AlertApi"))
+                    removeDescriptions.Add(api);
+
                 if (api.ID.Contains("GETapi/AlertApi") || api.ID == "GETapi/ApiSearch" || api.ID == "GETapi/OrganizationsApi" || api.ID.Contains("ApiRoot")
                     || api.ID.Contains("report") || api.ID.Contains(".{ext}"))
                     removeDescriptions.Add(api);

@@ -13,6 +13,7 @@ using Kartverket.Register.Models.Api;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.App_Start;
+using Swashbuckle.Swagger.Annotations;
 
 namespace Kartverket.Register.Controllers
 {
@@ -36,6 +37,7 @@ namespace Kartverket.Register.Controllers
         [ResponseType(typeof(AlertAdd))]
         [ApiExplorerSettings(IgnoreApi = false)]
         [System.Web.Http.HttpPost]
+        [SwaggerOperation(OperationId = "AlertApi_Post_ServiceAlert")]
         public IHttpActionResult PostServiceAlert(AlertAdd alertService)
         {
             if (!ModelState.IsValid)
@@ -156,6 +158,7 @@ namespace Kartverket.Register.Controllers
         [ApiExplorerSettings(IgnoreApi = false)]
         [ResponseType(typeof(void))]
         [System.Web.Http.HttpPut]
+        [SwaggerOperation(OperationId = "AlertApi_Put_ServiceAlert")]
         public IHttpActionResult PutServiceAlert(string id, AlertUpdate alert)
         {
             var originalAlert = _dbContext.Alerts.Where(a => a.systemId.ToString() == id).FirstOrDefault();

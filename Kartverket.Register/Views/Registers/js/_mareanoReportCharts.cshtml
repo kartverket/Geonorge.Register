@@ -274,7 +274,7 @@
 
     var ctx = document.getElementById("LineChart").getContext('2d');
     var LineChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         fill: false,
         data: {
             labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Labels))),
@@ -330,6 +330,16 @@
                     lineTension: 0
                 }
             ]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
         }
     });
 

@@ -70,6 +70,9 @@ namespace Kartverket.Register.Models.Api
         public string ApplicationSchema { get; set; }
         [DataMemberAttribute]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string DatasetUuid { get; set; }
+        [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string UmlModelTreeStructureLink { get; set; }
         [DataMemberAttribute]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -779,6 +782,8 @@ namespace Kartverket.Register.Models.Api
                 GMLApplicationSchema = d.GMLApplicationSchema;
                 CartographyFile = d.CartographyFile;
                 draftDate = d.dateNotAccepted;
+                if (!string.IsNullOrEmpty(d.DatasetUuid))
+                    DatasetUuid = d.DatasetUuid;
             }
 
             else if (item is Dataset)

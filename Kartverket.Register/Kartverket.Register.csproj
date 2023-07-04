@@ -1245,6 +1245,10 @@
     <Compile Include="Migrations\202302171611167_AddDocumentUrlAttachments.designer.cs">
       <DependentUpon>202302171611167_AddDocumentUrlAttachments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202307040954088_AddDocumentDatasetUuid.cs" />
+    <Compile Include="Migrations\202307040954088_AddDocumentDatasetUuid.designer.cs">
+      <DependentUpon>202307040954088_AddDocumentDatasetUuid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3251,6 +3255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202302171611167_AddDocumentUrlAttachments.resx">
       <DependentUpon>202302171611167_AddDocumentUrlAttachments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307040954088_AddDocumentDatasetUuid.resx">
+      <DependentUpon>202307040954088_AddDocumentDatasetUuid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

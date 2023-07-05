@@ -780,6 +780,7 @@ namespace Kartverket.Register.Controllers
             document.ApplicationSchema = inputDocument.ApplicationSchema;
             document.GMLApplicationSchema = inputDocument.GMLApplicationSchema;
             document.CartographyFile = inputDocument.CartographyFile;
+            document.DatasetUuid = inputDocument.DatasetUuid;
             document.CartographyDetailsUrl = inputDocument.CartographyDetailsUrl;
             document.versionName = inputDocument.versionName;
             document.versionNumber = GetVersionNr(inputDocument.versionNumber, originalDocument, inputDocument);

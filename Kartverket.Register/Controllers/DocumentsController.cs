@@ -22,6 +22,7 @@ using Ghostscript.NET.Rasterizer;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
 using System.Net;
+using System.Runtime.Caching;
 //ghostscriptsharp MIT license:
 //Copyright(c) 2009 Matthew Ephraim
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -715,28 +716,46 @@ namespace Kartverket.Register.Controllers
 
         public Dictionary<string, string> GetDatasetsFromKartkatalogen()
         {
+
+            MemoryCache memCacher = MemoryCache.Default;
+
             Dictionary<string, string> datasetList = new Dictionary<string, string>();
-            var urlToKartkatalogenApi = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"];
-            string url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title";
-           
-            WebClient c = new WebClient();
-            c.Encoding = System.Text.Encoding.UTF8;
-            var data = c.DownloadString(url);
-            var response = Newtonsoft.Json.Linq.JObject.Parse(data);
 
-            var result = response["Results"];
+            var cache = memCacher.Get("Datasets");
 
-            foreach (var dataset in result)
+            if (cache != null)
             {
-                var uuid = dataset["Uuid"].ToString();
+                datasetList = cache as Dictionary<string, string>;
+            }
+            else
+            {
 
-                if (!datasetList.ContainsKey(uuid))
+                var urlToKartkatalogenApi = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"];
+                string url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title";
+
+                WebClient c = new WebClient();
+                c.Encoding = System.Text.Encoding.UTF8;
+                var data = c.DownloadString(url);
+                var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+
+                var result = response["Results"];
+
+                foreach (var dataset in result)
                 {
-                    
-                    if (!dataset["Title"].ToString().StartsWith("Høydedata") && !dataset["Title"].ToString().StartsWith("Ortofoto"))
-                        datasetList.Add(uuid, dataset["Title"].ToString());
+                    var uuid = dataset["Uuid"].ToString();
 
+                    if (!datasetList.ContainsKey(uuid))
+                    {
+
+                        if (!dataset["Title"].ToString().StartsWith("Høydedata") && !dataset["Title"].ToString().StartsWith("Ortofoto"))
+                            datasetList.Add(uuid, dataset["Title"].ToString());
+
+                    }
                 }
+
+                CacheItemPolicy policy = new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1)), Priority = CacheItemPriority.Default };
+                MemoryCache memoryCache = MemoryCache.Default;
+                memoryCache.Set("Datasets", datasetList, policy);
             }
             return datasetList;
         }

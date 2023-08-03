@@ -1043,6 +1043,8 @@ namespace Kartverket.Register.Controllers
             {
                 CreateUrlElement(doc, root, urlRoot, item);
 
+                CreateRegisterItems(doc, root, urlRoot, item);
+
                 GetSubregisters(doc, root, urlRoot, item);
 
             }

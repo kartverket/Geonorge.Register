@@ -26,6 +26,8 @@ using Swashbuckle.Examples;
 using System.Net;
 using System.Net.Http.Formatting;
 using System.IO;
+using System.Xml;
+using System.Web.Configuration;
 
 namespace Kartverket.Register.Controllers
 {
@@ -990,6 +992,106 @@ namespace Kartverket.Register.Controllers
             fair.DetailsPage = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + fairData.Register.seoname + "/" + fairData.Seoname + "/" + fairData.SystemId + "#fair";
 
             return Ok(fair);
+        }
+
+        /// <summary>
+        /// Create sitemap
+        /// </summary>
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/create-sitemap")]
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage CreateSiteMap()
+        {
+            try
+            {
+                var results = db.Registers.Where(p => p.parentRegisterId == null).OrderBy(o => o.name).ToList();
+
+                var xml = CreateSiteMap(results);
+
+                return new HttpResponseMessage
+                {
+                    Content = new StringContent(xml.OuterXml, System.Text.Encoding.UTF8, "application/xml")
+                };
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error API", ex);
+                return null;
+            }
+
+        }
+
+        private System.Xml.XmlDocument CreateSiteMap(List<Models.Register> results)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlDeclaration dec = doc.CreateXmlDeclaration("1.0", null, null);
+            doc.AppendChild(dec);
+
+            XmlElement root = doc.CreateElement("urlset");
+            root.SetAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
+            doc.AppendChild(root);
+
+            string urlRoot = "https://register.geonorge.no";
+            var environment = WebConfigurationManager.AppSettings["EnvironmentName"];
+            if (!string.IsNullOrEmpty(environment))
+            {
+                urlRoot = $"https://register.{environment}.geonorge.no";
+            }
+
+            foreach (var item in results)
+            {
+                CreateUrlElement(doc, root, urlRoot, item);
+
+                GetSubregisters(doc, root, urlRoot, item);
+
+            }
+
+            doc.Save(System.Web.HttpContext.Current.Request.MapPath("~\\sitemap.xml"));
+
+            return doc;
+        }
+
+        private void GetSubregisters(XmlDocument doc, XmlElement root, string urlRoot, Models.Register item)
+        {
+            var registers = db.Registers.Where(r => r.parentRegisterId == item.systemId).ToList();
+            foreach (var item2 in registers)
+            {
+                CreateUrlElement(doc, root, urlRoot, item2);
+                CreateRegisterItems(doc, root, urlRoot, item2);
+                GetSubregisters(doc, root, urlRoot, item2);
+            }
+        }
+
+        private void CreateRegisterItems(XmlDocument doc, XmlElement root, string urlRoot, Models.Register item)
+        {
+            var items = item.items;
+            foreach(var registerItem in items) 
+            {
+                CreateUrlElement(doc, root, urlRoot, registerItem);
+            }
+        }
+
+        private static void CreateUrlElement(XmlDocument doc, XmlElement root, string urlRoot, Models.Register item)
+        {
+            XmlElement url = doc.CreateElement("url");
+
+            XmlElement loc = doc.CreateElement("loc");
+            loc.InnerText = urlRoot + item.GetObjectUrl();
+            url.AppendChild(loc);
+
+            root.AppendChild(url);
+        }
+
+        private static void CreateUrlElement(XmlDocument doc, XmlElement root, string urlRoot, Models.RegisterItem item)
+        {
+            XmlElement url = doc.CreateElement("url");
+
+            XmlElement loc = doc.CreateElement("loc");
+            loc.InnerText = urlRoot + item.GetObjectUrl();
+            url.AppendChild(loc);
+
+            root.AppendChild(url);
         }
 
 

@@ -171,3 +171,5 @@ $RECYCLE.BIN/
 
 # npm packages  
 node_modules/
+
+Kartverket.Register/sitemap.xml

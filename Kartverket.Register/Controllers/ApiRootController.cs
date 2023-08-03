@@ -1065,7 +1065,7 @@ namespace Kartverket.Register.Controllers
 
         private void CreateRegisterItems(XmlDocument doc, XmlElement root, string urlRoot, Models.Register item)
         {
-            var items = item.items;
+            var items = item.items.Where(i => i.statusId != "Superseded");
             foreach(var registerItem in items) 
             {
                 CreateUrlElement(doc, root, urlRoot, registerItem);

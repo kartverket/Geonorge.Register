@@ -1043,7 +1043,8 @@ namespace Kartverket.Register.Controllers
             {
                 CreateUrlElement(doc, root, urlRoot, item);
 
-                CreateRegisterItems(doc, root, urlRoot, item);
+                if(item.name != "Det offentlige kartgrunnlaget - Kommunalt")
+                    CreateRegisterItems(doc, root, urlRoot, item);
 
                 GetSubregisters(doc, root, urlRoot, item);
 

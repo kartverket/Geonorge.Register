@@ -40,6 +40,7 @@ namespace Kartverket.Register.Services
                     _dbContext.SaveChanges();
                 }
             }
+
             _dbContext.SaveChanges();
 
             return originalDocument;

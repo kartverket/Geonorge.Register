@@ -246,7 +246,8 @@ namespace Kartverket.Register.Controllers
                             document.register = originalDocument.register;
                         document.thumbnail = GetThumbnail(document, originalDocument, documentfile, url, thumbnail);
                         originalDocument = _documentService.UpdateDocument(originalDocument, document, documentfile, thumbnail, retired, sosi);
-
+                        _translationService.UpdateTranslations(document, originalDocument);
+                        db.SaveChanges();
 
                         //document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
                         return Redirect(originalDocument.GetObjectUrl());

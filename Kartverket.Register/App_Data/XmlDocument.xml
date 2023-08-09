@@ -5268,9 +5268,14 @@
               Looks up a localized string similar to Gyldig.
             </summary>
         </member>
+        <member name="P:Resources.Registers.Version">
+            <summary>
+              Looks up a localized string similar to Versjon.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.VersionName">
             <summary>
-              Looks up a localized string similar to Utgave.
+              Looks up a localized string similar to Versjon.
             </summary>
         </member>
         <member name="P:Resources.Registers.VersionNumber">

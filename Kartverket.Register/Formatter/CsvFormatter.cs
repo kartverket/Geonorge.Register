@@ -978,7 +978,7 @@ namespace Kartverket.Register.Formatter
             string text = null;
             if (item.itemclass == "Document")
             {
-                text = item.label + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.documentreference + ";" + item.id;
+                text = item.label + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionName + ";" + item.description + ";" + item.documentreference + ";" + item.id;
             }
             else if (item.itemclass == "CodelistValue")
             {
@@ -1163,7 +1163,7 @@ namespace Kartverket.Register.Formatter
 
             if (containedItemClass == "Document")
             {
-                return Registers.Name + ";" + Documents.DocumentOwner + ";Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + Registers.DocumentUrl + ";ID";
+                return Registers.Name + ";" + Documents.DocumentOwner + ";Status;" + Registers.Updated + ";" + Registers.VersionName + ";" + Registers.Description + ";" + Registers.DocumentUrl + ";ID";
             }
             if (containedItemClass == "CodelistValue")
             {

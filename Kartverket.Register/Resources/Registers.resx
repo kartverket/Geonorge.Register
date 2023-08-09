@@ -199,7 +199,7 @@
     <value>Dato erstattet</value>
   </data>
   <data name="VersionName" xml:space="preserve">
-    <value>Utgave</value>
+    <value>Versjon</value>
   </data>
   <data name="Accepted" xml:space="preserve">
     <value>Godkjent</value>
@@ -371,5 +371,8 @@ Må være tilgjengelig som SLD.
   </data>
   <data name="RequirementsWms" xml:space="preserve">
     <value>&lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må tjenesten innfri de viktigste krav i Geonorges applikasjon over &lt;a href='https://status.geonorge.no/wms/'&gt;tjenestestatus&lt;/a&gt;. Hvis det finnes en WMS-tjeneste, vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Metadata må i begge tilfeller koples mot metadata til datasettet. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Versjon</value>
   </data>
 </root>

@@ -229,7 +229,7 @@
     <value>Superseded</value>
   </data>
   <data name="VersionName" xml:space="preserve">
-    <value>Version name</value>
+    <value>Version</value>
   </data>
   <data name="SuggestNewRegister" xml:space="preserve">
     <value>Suggest a new register</value>
@@ -338,5 +338,8 @@
   </data>
   <data name="DocumentUrlAttachment" xml:space="preserve">
     <value>Url attachment</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
   </data>
 </root>

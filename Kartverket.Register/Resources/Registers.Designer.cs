@@ -802,7 +802,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Utgave.
+        ///   Looks up a localized string similar to Versjon.
+        /// </summary>
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Versjon.
         /// </summary>
         public static string VersionName {
             get {

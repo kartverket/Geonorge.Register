@@ -373,7 +373,14 @@
                             @Html.RadioButtonFor(m => m.Accepted, "false", htmlAttributes: new { @onclick = "disable()", @id = "not-accepted" }) @Documents.No
                         </div>
                         <div class="col-md-2" id="cbRetired">
-                            <b>@Documents.But</b><span class="pull-right">@Html.CheckBox("retired", false, new { htmlAttributes = new { @class = "pull-right" } }) @Documents.Expired</span>
+                            <b>@Documents.But</b><span class="pull-right">@Html.CheckBox("retired", Model.statusId == "Retired" ? true : false, new { htmlAttributes = new { @class = "pull-right" } }) @Documents.Expired</span>
+                        </div>
+                        <div class="form-group" id="approvalDate">
+                            @Html.LabelFor(model => model.DateRetired, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.DateRetired, new { cssClass = "date" })
+                                @Html.ValidationMessageFor(model => model.DateRetired, "", new { @class = "text-danger" })
+                            </div>
                         </div>
                     </div>
                 </div>

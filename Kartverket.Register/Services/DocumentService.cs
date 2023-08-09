@@ -48,6 +48,9 @@ namespace Kartverket.Register.Services
 
         private Document ApprovalProcess(Document originalDocument, Document document, bool retired, bool sosi)
         {
+            if(document.DateRetired.HasValue)
+                originalDocument.DateRetired = document.DateRetired.Value;
+
             if (document.IsAccepted())
             {
                 originalDocument = SetStatusIdWhenOriginalDocumentIsAccepted(originalDocument, document, retired, sosi);

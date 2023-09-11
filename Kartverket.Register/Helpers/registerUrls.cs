@@ -152,6 +152,9 @@ namespace Kartverket.Register.Helpers
             // trim leading & trailing characters
             encodedUrl = encodedUrl.Trim('-');
 
+            if(encodedUrl.Length > 0 && encodedUrl.EndsWith("."))
+                encodedUrl = encodedUrl.Remove(encodedUrl.Length - 1, 1);
+
             return encodedUrl;
         }
 

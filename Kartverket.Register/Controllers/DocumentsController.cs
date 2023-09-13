@@ -21,6 +21,8 @@ using Ionic.Zip;
 using Ghostscript.NET.Rasterizer;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
+using System.Net;
+using System.Runtime.Caching;
 //ghostscriptsharp MIT license:
 //Copyright(c) 2009 Matthew Ephraim
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -244,7 +246,8 @@ namespace Kartverket.Register.Controllers
                             document.register = originalDocument.register;
                         document.thumbnail = GetThumbnail(document, originalDocument, documentfile, url, thumbnail);
                         originalDocument = _documentService.UpdateDocument(originalDocument, document, documentfile, thumbnail, retired, sosi);
-
+                        _translationService.UpdateTranslations(document, originalDocument);
+                        db.SaveChanges();
 
                         //document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
                         return Redirect(originalDocument.GetObjectUrl());
@@ -709,6 +712,53 @@ namespace Kartverket.Register.Controllers
             if (document.documentownerId == Guid.Empty)
                 document.documentownerId = GetDocumentOwnerId(document.documentownerId);
             ViewBag.documentownerId = _registerItemService.GetOwnerSelectList(document.documentownerId);
+            ViewBag.DatasetUuid = new SelectList(GetDatasetsFromKartkatalogen(), "Key", "Value", document.DatasetUuid);
+        }
+
+        public Dictionary<string, string> GetDatasetsFromKartkatalogen()
+        {
+
+            MemoryCache memCacher = MemoryCache.Default;
+
+            Dictionary<string, string> datasetList = new Dictionary<string, string>();
+
+            var cache = memCacher.Get("Datasets");
+
+            if (cache != null)
+            {
+                datasetList = cache as Dictionary<string, string>;
+            }
+            else
+            {
+
+                var urlToKartkatalogenApi = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"];
+                string url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title";
+
+                WebClient c = new WebClient();
+                c.Encoding = System.Text.Encoding.UTF8;
+                var data = c.DownloadString(url);
+                var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+
+                var result = response["Results"];
+
+                foreach (var dataset in result)
+                {
+                    var uuid = dataset["Uuid"].ToString();
+
+                    if (!datasetList.ContainsKey(uuid))
+                    {
+
+                        if (!dataset["Title"].ToString().StartsWith("Høydedata") && !dataset["Title"].ToString().StartsWith("Ortofoto"))
+                            datasetList.Add(uuid, dataset["Title"].ToString());
+
+                    }
+                }
+
+                CacheItemPolicy policy = new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1)), Priority = CacheItemPriority.Default };
+                MemoryCache memoryCache = MemoryCache.Default;
+                memoryCache.Set("Datasets", datasetList, policy);
+            }
+            return datasetList;
         }
 
         protected override void OnException(ExceptionContext filterContext)
@@ -731,6 +781,7 @@ namespace Kartverket.Register.Controllers
             document.ApplicationSchema = inputDocument.ApplicationSchema;
             document.GMLApplicationSchema = inputDocument.GMLApplicationSchema;
             document.CartographyFile = inputDocument.CartographyFile;
+            document.DatasetUuid = inputDocument.DatasetUuid;
             document.CartographyDetailsUrl = inputDocument.CartographyDetailsUrl;
             document.versionName = inputDocument.versionName;
             document.versionNumber = GetVersionNr(inputDocument.versionNumber, originalDocument, inputDocument);

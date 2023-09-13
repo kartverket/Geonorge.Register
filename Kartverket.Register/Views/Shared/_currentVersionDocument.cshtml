@@ -32,8 +32,7 @@
     <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))">
         <strong>Status: </strong>@Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i>
     </p>
-    <p><strong>@Html.DisplayNameFor(i => Model.VersionNumber) : </strong>@Model.VersionNumber</p>
-    <p><strong>@Registers.VersionName: </strong>@Model.VersionName</p>
+    <p><strong>@Registers.Version: </strong>@Model.VersionName</p>
 </div>
 <div class="col-sm-12 col-md-2 col">
 

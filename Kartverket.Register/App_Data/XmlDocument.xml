@@ -597,6 +597,11 @@
             </summary>
             <param name="uuid">The metadata uuid</param>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.CreateSiteMap">
+            <summary>
+            Create sitemap
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.ConvertCurrentAndVersions(Kartverket.Register.Models.Register,System.String)">
             <summary>
             Get all Geolett
@@ -5263,9 +5268,14 @@
               Looks up a localized string similar to Gyldig.
             </summary>
         </member>
+        <member name="P:Resources.Registers.Version">
+            <summary>
+              Looks up a localized string similar to Versjon.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.VersionName">
             <summary>
-              Looks up a localized string similar to Utgave.
+              Looks up a localized string similar to Versjon.
             </summary>
         </member>
         <member name="P:Resources.Registers.VersionNumber">

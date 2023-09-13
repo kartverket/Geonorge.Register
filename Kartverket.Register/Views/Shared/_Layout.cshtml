@@ -7,11 +7,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="geonorge-version" content="@Html.ApplicationVersionNumber()" />
+    <meta name="google-site-verification" content="Gv_-Z_5SYE2-XDK4fJXmPgjpKB_cV--ztCb8oswGVTA" />
     @if (ViewBag.MetaDescription != null)
     {
         <meta name="description" content="@ViewBag.MetaDescription" />
     }
-    <link rel="shortcut icon" type="image/x-icon" href="@Html.KartkatalogenUrl()Content/img/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="@Html.KartkatalogenUrl()favicon.ico" />
 
     <title>
         @ViewBag.Title
@@ -27,7 +28,7 @@
     @RenderSection("head", false)
 
     @Html.Partial("_Resources")
-
+    <script>var environmentIsProduction = @(Html.EnvironmentName() == "" ? "true" : "false");</script>
     <script>
         var applicationVersionNumber = '@Html.ApplicationVersionNumber()';
         var applicationEnvironment = '@Html.EnvironmentName()';
@@ -39,6 +40,7 @@
             };
     </script>
     @Scripts.Render("~/shared-partials-scripts")
+    @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Analytics.min.cshtml")
 </head>
 
 <body class="geonorge-container prototype  geonorge">
@@ -111,7 +113,6 @@
 
     @Scripts.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/js/scripts")
     @Scripts.Render("~/Scripts/local-scripts")
-    @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Analytics.min.cshtml")
 
 
     @RenderSection("scripts", false)
@@ -159,5 +160,9 @@
             <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.4.0/HeadingText.js")"></script>
             <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.4.0/BodyText.js")"></script>
             <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.4.0/NavigationTabs.js")"></script>
-        </body>
+            @if (Html.EnvironmentName() == "")
+            {
+                <noscript><p><img src="https://analyse.kartverket.no/analyse/matomo.php?idsite=16&rec=1" style="border:0" alt="" /></p></noscript>
+            }
+     </body>
 </html>

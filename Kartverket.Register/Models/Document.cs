@@ -35,6 +35,8 @@ namespace Kartverket.Register.Models
         [ForeignKey("documentowner")]
         public Guid documentownerId { get; set; }
         public virtual Organization documentowner { get; set; }
+        [Display(Name = "Dataset", ResourceType = typeof(DataSet))]
+        public string DatasetUuid { get; set; }
 
         public virtual TranslationCollection<DocumentTranslation> Translations { get; set; }
         public void AddMissingTranslations()
@@ -135,6 +137,8 @@ namespace Kartverket.Register.Models
             documentUrlSchematron = document.documentUrlSchematron;
             if(!string.IsNullOrEmpty(document.thumbnail))
                 thumbnail = document.thumbnail;
+            if (!string.IsNullOrEmpty(document.DatasetUuid))
+                DatasetUuid = document.DatasetUuid;
 
         }
 

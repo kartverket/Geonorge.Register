@@ -6,6 +6,7 @@
 
 @{
     ViewBag.Title = @Model.Name;
+    ViewBag.MetaDescription = @Model.Description;
 }
 
 @section breadcrumb {
@@ -71,9 +72,8 @@
             }
             @if (Model.Register.containedItemClass != "MareanoDataset" && Model.Register.containedItemClass != "Alert")
             {
-                <br /><span class="small"><strong>@Html.DisplayNameFor(m => m.VersionNumber)</strong> @Model.VersionNumber</span>
                 if (Model.VersionName != null)
-                {<br /><span class="small"><strong>@Html.DisplayNameFor(model => model.VersionName):</strong> @Model.VersionName</span>}
+                {<br /><span class="small"><strong>@Registers.Version:</strong> @Model.VersionName</span>}
         }
         </div>
     </article>

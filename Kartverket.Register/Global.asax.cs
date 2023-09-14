@@ -67,6 +67,8 @@ namespace Kartverket.Register
 
         protected void Application_BeginRequest()
         {
+            Context.Items["IIS_WasUrlRewritten"] = false;
+
             if (Context.Request.Form["access_token"] != null)
             {
                 var cookieToken = new HttpCookie("oidcAccessToken", Context.Request.Form["access_token"]) { /*SameSite = SameSiteMode.Lax*/ };

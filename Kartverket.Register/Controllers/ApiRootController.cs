@@ -28,6 +28,7 @@ using System.Net.Http.Formatting;
 using System.IO;
 using System.Xml;
 using System.Web.Configuration;
+using System.Web;
 
 namespace Kartverket.Register.Controllers
 {
@@ -995,6 +996,21 @@ namespace Kartverket.Register.Controllers
         }
 
         /// <summary>
+        ///     sitemap for search engine
+        /// </summary>
+        [System.Web.Http.Route("api/sitemap")]
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage SiteMap()
+        {
+            var doc = new System.Xml.XmlDocument();
+            doc.Load(HttpContext.Current.Request.MapPath("~\\sitemap\\sitemap.xml"));
+            return new HttpResponseMessage
+            {
+                Content = new StringContent(doc.OuterXml, System.Text.Encoding.UTF8, "application/xml")
+            };
+        }
+
+        /// <summary>
         /// Create sitemap
         /// </summary>
         [ApiExplorerSettings(IgnoreApi = true)]
@@ -1050,7 +1066,7 @@ namespace Kartverket.Register.Controllers
 
             }
 
-            doc.Save(System.Web.HttpContext.Current.Request.MapPath("~\\sitemap.xml"));
+            doc.Save(System.Web.HttpContext.Current.Request.MapPath("~\\sitemap\\sitemap.xml"));
 
             return doc;
         }

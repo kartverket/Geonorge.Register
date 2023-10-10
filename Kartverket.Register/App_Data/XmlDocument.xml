@@ -597,6 +597,11 @@
             </summary>
             <param name="uuid">The metadata uuid</param>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.SiteMap">
+            <summary>
+                sitemap for search engine
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.CreateSiteMap">
             <summary>
             Create sitemap

@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery-ui-1.12.1.js" />
+﻿/// <reference path="jquery-ui-1.13.2.js" />
 /// <reference path="jquery-3.4.1.js" />
 /// <autosync enabled="true" />
 /// <reference path="../content/bower_components/tablesorter/jquery.metadata.js" />

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using System;
-using Ganss.XSS;
+using Ganss.Xss;
 
 namespace Kartverket.Register.Controllers
 {

@@ -14,17 +14,17 @@
     }
     else if (Model.DocumentUrl.Contains("ikke angitt"))
     {
-        <img src="@HtmlHelperExtensions.GetThumbnail(Model.Thumbnail, Model.DocumentUrl)" class="img-thumbnail img-responsive pull-left" alt="forside" />
+        <img src="@HtmlHelperExtensions.GetThumbnail(Model.Thumbnail, Model.DocumentUrl)" class="img-thumbnail img-responsive pull-left" alt="@Model.Name" />
     }
     else
     {
         if(!string.IsNullOrEmpty(Model.DocumentUrl2))
         {
-            <a href="@Html.DisplayFor(model => Model.DocumentUrl2)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside" /></a>
+            <a href="@Html.DisplayFor(model => Model.DocumentUrl2)" title="@Model.Name"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="@Model.Name" /></a>
         }
         else 
         {
-            <a href="@Html.DisplayFor(model => Model.DocumentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside" /></a>
+            <a href="@Html.DisplayFor(model => Model.DocumentUrl)" title="@Model.Name"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="@Model.Name" /></a>
         }
     }
 </div>

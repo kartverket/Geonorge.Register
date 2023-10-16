@@ -18,7 +18,7 @@
                 }
                 else
                 {
-                    <a href="@Html.DisplayFor(model => Model.DocumentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+                    <a href="@Html.DisplayFor(model => Model.DocumentUrl)" title="@Model.Name"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="@Model.Name" /></a>
                 }
             </div>
             <div class="col-sm-12 col-md-2 col">

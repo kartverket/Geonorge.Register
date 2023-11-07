@@ -399,6 +399,37 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetSubregisterByName(string parentregister, string register, string systemid = null, string ext = "json")
         {
+            if (parentregister == "sosi-kodelister" && (register == "kommunenummer" || (!string.IsNullOrEmpty(register) && register.StartsWith("kommunenummer."))))
+            {
+
+                if (!string.IsNullOrEmpty(register) && register.StartsWith("kommunenummer."))
+                {
+                    var fileExt = register.Split('.').Last();
+                    register = "inndelinger/inndelingsbase/kommunenummer";
+                    register = register + "." + fileExt;
+                }
+                else
+                {
+                    register = "inndelinger/inndelingsbase/kommunenummer." + ext;
+                }
+                return GetRegisterItemByName("sosi-kodelister", register);
+            }
+            if (parentregister == "sosi-kodelister" && (register == "fylkesnummer" || (!string.IsNullOrEmpty(register) && register.StartsWith("fylkesnummer."))))
+            {
+
+                if (!string.IsNullOrEmpty(register) && register.StartsWith("fylkesnummer."))
+                {
+                    var fileExt = register.Split('.').Last();
+                    register = "inndelinger/inndelingsbase/fylkesnummer";
+                    register = register + "." + fileExt;
+                }
+                else
+                {
+                    register = "inndelinger/inndelingsbase/fylkesnummer." + ext;
+                }
+                return GetRegisterItemByName("sosi-kodelister", register);
+            }
+
             var it = _registerService.GetRegister(parentregister, register);
 
             if(it == null && !string.IsNullOrEmpty(systemid))
@@ -433,6 +464,12 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetRegisterItemByName(string registerName, string subregisters = null)
         {
+            if (registerName == "sosi-kodelister" && subregisters == "kommunenummer")
+                subregisters = "inndelinger/inndelingsbase/kommunenummer";
+
+            if (registerName == "sosi-kodelister" && subregisters == "fylkesnummer")
+                subregisters = "inndelinger/inndelingsbase/fylkesnummer";
+
             var path = RegisterUrls.GetPath(registerName, subregisters);
             var originalPath = path;
             string systemId = RegisterUrls.GetSystemIdFromPath(registerName + "/" + subregisters);

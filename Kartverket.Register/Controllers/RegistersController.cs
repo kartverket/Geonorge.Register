@@ -381,6 +381,34 @@ namespace Kartverket.Register.Controllers
         [Route("{registername}/{*subregisters}")]
         public ActionResult DetailsAll(string registername, string sorting, int? page, FilterParameters filter,string subregisters = null, string InspireRegisteryType = null)
         {
+            if (registername == "sosi-kodelister" && (subregisters == "kommunenummer" || (!string.IsNullOrEmpty(subregisters) && subregisters.StartsWith("kommunenummer.")))) { 
+                            
+                if (!string.IsNullOrEmpty(subregisters) && subregisters.StartsWith("kommunenummer."))
+                {
+                    var fileExt = subregisters.Split('.').Last();
+                    subregisters = "inndelinger/inndelingsbase/kommunenummer";
+                    subregisters = subregisters + "." + fileExt;
+                }
+                else
+                {
+                    subregisters = "inndelinger/inndelingsbase/kommunenummer";
+                }
+            }
+            if (registername == "sosi-kodelister" && (subregisters == "fylkesnummer" || (!string.IsNullOrEmpty(subregisters) && subregisters.StartsWith("fylkesnummer."))))
+            {
+                
+                if (!string.IsNullOrEmpty(subregisters) && subregisters.StartsWith("fylkesnummer."))
+                {
+                    var fileExt = subregisters.Split('.').Last();
+                    subregisters = "inndelinger/inndelingsbase/fylkesnummer";
+                    subregisters = subregisters + "." + fileExt;
+                }
+                else
+                {
+                    subregisters = "inndelinger/inndelingsbase/fylkesnummer";
+                }
+            }
+
             var path = RegisterUrls.GetPath(registername, subregisters);
             var originalPath = path;
             string systemId = RegisterUrls.GetSystemIdFromPath(registername + "/" + subregisters);

@@ -46,7 +46,14 @@ namespace Kartverket.Register.Controllers
             {"54", new BoundingBoxViewModel("68.356014", "15.592542", "71.384879", "31.761485")},
             {"38", new BoundingBoxViewModel("58.603311", "7.096288", "60.188272", "10.67502")},
             {"46", new BoundingBoxViewModel("59.475421", "4.184771", "62.382396", "8.322053")},
-            {"30", new BoundingBoxViewModel("58.76096", "7.438842", "61.09172", "11.946004")}
+            {"30", new BoundingBoxViewModel("58.76096", "7.438842", "61.09172", "11.946004")},
+            {"32", new BoundingBoxViewModel("59.471882","10.328467","60.605148","11.926978")},
+            {"33", new BoundingBoxViewModel("59.407871","7.438842","61.09172" ,"10.634994")},
+            {"31", new BoundingBoxViewModel("58.76096","10.536679","59.790586","11.946004")},
+            {"55", new BoundingBoxViewModel("68.356014","15.592542","70.703616","22.894466")},
+            {"56", new BoundingBoxViewModel("68.554592","20.479733","71.384879","31.761485")},
+            {"40", new BoundingBoxViewModel("58.603311","7.096288","60.188272","9.969765")},
+            {"39", new BoundingBoxViewModel("58.720455","9.755336","59.701938","10.67502")}
         };
 
         private readonly IRegisterService _registerService;
@@ -103,9 +110,10 @@ namespace Kartverket.Register.Controllers
 
         private IEnumerable<CodelistValue> GetListOfStates()
         {
-            Models.Register register = _registerService.GetRegisterByName("Fylkesnummer");
+            //Models.Register register = _registerService.GetRegisterByName("Fylkesnummer");
+            Models.Register register = _registerService.GetRegisterBySystemId(Guid.Parse("152EE358-CE3D-40F7-B7EE-85195B40A35A"));
 
-            IEnumerable<CodelistValue> states = register.items.Cast<CodelistValue>();
+            IEnumerable<CodelistValue> states = register.items.Where(s => s.statusId == "Valid").Cast<CodelistValue>();
             states = states.Where(i => i.value != "23"); // remove "Kontinentalsokkelen" not relevant in this context
             states = states.OrderBy(i => i.name);
             return states;

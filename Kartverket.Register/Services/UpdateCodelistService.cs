@@ -117,7 +117,7 @@ namespace Kartverket.Register.Controllers
 
         internal void UpdateOrganizationsAll()
         {
-            var path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/organisasjoner2020.sql");
+            var path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/organisasjoner2024.sql");
             var sql = System.IO.File.ReadAllText(path);
             db.Configuration.EnsureTransactionsForFunctionsAndCommands = false;
             db.Database.ExecuteSqlCommand(sql);
@@ -307,7 +307,15 @@ namespace Kartverket.Register.Controllers
 
         internal void UpdateMunicipalities()
         {
-            var path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/kommuner2020.sql");
+            var path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/kommuner2024.sql");
+            var sql = System.IO.File.ReadAllText(path);
+            db.Configuration.EnsureTransactionsForFunctionsAndCommands = false;
+            db.Database.ExecuteSqlCommand(sql);
+        }
+
+        internal void UpdateCounties()
+        {
+            var path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/fylker2024.sql");
             var sql = System.IO.File.ReadAllText(path);
             db.Configuration.EnsureTransactionsForFunctionsAndCommands = false;
             db.Database.ExecuteSqlCommand(sql);

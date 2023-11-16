@@ -1151,35 +1151,36 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        //[System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
-        //[ApiExplorerSettings(IgnoreApi = true)]
-        //[System.Web.Http.Route("api/codelist/update/kommunereform-2020")]
-        //[System.Web.Http.HttpGet]
-        //public IHttpActionResult UpdateMunicipalities()
-        //{
-        //    try
-        //    {
-        //        new UpdateCodelistService(db).UpdateMunicipalitiesAllStatus();
-        //        new UpdateCodelistService(db).UpdateCountiesAllStatus();
-        //        new UpdateCodelistService(db).UpdateMunicipalities();
-        //        try
-        //        {
-        //            new UpdateCodelistService(db).UpdateOrganizationsAll();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Log.Error(ex);
-        //        }
+        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/codelist/update/kommunereform-2024")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult UpdateMunicipalities()
+        {
+            try
+            {
+                //new UpdateCodelistService(db).UpdateMunicipalitiesAllStatus();
+                new UpdateCodelistService(db).UpdateCounties();
+                new UpdateCodelistService(db).UpdateMunicipalities();
+                try
+                {
+                    new UpdateCodelistService(db).UpdateOrganizationsAll();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
 
-        //        new UpdateCodelistService(db).UpdateCenterPoint();
-        //        new UpdateCodelistService(db).UpdateBbox();
-        //    }
-        //    catch (Exception ex){
-        //        Log.Error(ex);
-        //    }
+                //new UpdateCodelistService(db).UpdateCenterPoint();
+                //new UpdateCodelistService(db).UpdateBbox();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
 
         //[System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         //[ApiExplorerSettings(IgnoreApi = true)]

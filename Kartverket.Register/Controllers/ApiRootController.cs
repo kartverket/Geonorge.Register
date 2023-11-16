@@ -1159,20 +1159,24 @@ namespace Kartverket.Register.Controllers
         {
             try
             {
-                //new UpdateCodelistService(db).UpdateMunicipalitiesAllStatus();
-                new UpdateCodelistService(db).UpdateCounties();
-                new UpdateCodelistService(db).UpdateMunicipalities();
+                var environment = WebConfigurationManager.AppSettings["EnvironmentName"];
+                if (System.DateTime.Today >= System.DateTime.Parse("1/1/2024 00:00:00") || !string.IsNullOrEmpty(environment)) 
+                { 
+                    //new UpdateCodelistService(db).UpdateMunicipalitiesAllStatus();
+                    new UpdateCodelistService(db).UpdateCounties();
+                    new UpdateCodelistService(db).UpdateMunicipalities();
                 try
                 {
-                    new UpdateCodelistService(db).UpdateOrganizationsAll();
+                      new UpdateCodelistService(db).UpdateOrganizationsAll();
                 }
                 catch (Exception ex)
                 {
                     Log.Error(ex);
                 }
 
-                //new UpdateCodelistService(db).UpdateCenterPoint();
-                //new UpdateCodelistService(db).UpdateBbox();
+                    //new UpdateCodelistService(db).UpdateCenterPoint();
+                    //new UpdateCodelistService(db).UpdateBbox();
+                }
             }
             catch (Exception ex)
             {

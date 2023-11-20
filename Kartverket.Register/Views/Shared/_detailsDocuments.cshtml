@@ -8,11 +8,11 @@
 <article>
         <div class="col-md-12">
             <div class="col-sm-12 col-md-2 col">
-                @if (Model.DocumentUrl.Contains("ikke angitt") && !string.IsNullOrEmpty(Model.ApplicationSchema))
+                @if (!string.IsNullOrEmpty(Model.DocumentUrl) && Model.DocumentUrl.Contains("ikke angitt") && !string.IsNullOrEmpty(Model.ApplicationSchema))
                 {
                     <span class="custom-icon custom-icon-l custom-icon-file-xml"></span>
                 }
-                else if (Model.DocumentUrl.Contains("ikke angitt"))
+                else if (!string.IsNullOrEmpty(Model.DocumentUrl) && Model.DocumentUrl.Contains("ikke angitt"))
                 {
                     <img src="@HtmlHelperExtensions.GetThumbnail(Model.Thumbnail)" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
                 }
@@ -38,7 +38,7 @@
 
                 else
                 {
-                    if (Model.DocumentUrl.Contains("ikke angitt"))
+                    if (!string.IsNullOrEmpty(Model.DocumentUrl) && Model.DocumentUrl.Contains("ikke angitt"))
                     {
                         <a href="@Html.DisplayFor(modelItem => Model.DocumentUrl)" class="btn disabled btn-block" title="@Documents.NoDocumentFor @Model.Name">
                             <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download

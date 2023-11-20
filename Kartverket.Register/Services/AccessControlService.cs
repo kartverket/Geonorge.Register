@@ -194,7 +194,7 @@ namespace Kartverket.Register.Services
 
         public bool AccessCreateNewVersion(RegisterItemV2ViewModel registerItemViewModel)
         {
-            return (IsDokEditor() && IsItemOwner(registerItemViewModel.Owner.name, UserName())) || IsAdmin();
+            return (IsDokEditor() && IsItemOwner(registerItemViewModel.Owner.name, UserName())  || IsEditor() && IsItemOwner(registerItemViewModel.Owner.name, UserName())) || IsAdmin();
         }
 
         /// <summary>

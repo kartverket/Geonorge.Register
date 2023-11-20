@@ -18,7 +18,7 @@
             <h1 class="small-h1">
                 @Model.Name
             </h1>
-            @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset" && Model.Register.containedItemClass != "MareanoDataset" && Model.Status != null)
+            @if (Model.Register != null && Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset" && Model.Register.containedItemClass != "MareanoDataset" && Model.Status != null)
             {<div class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></div>}
         </div>
         <div class="col-sm-12">
@@ -33,12 +33,12 @@
             {
                 <span title="" data-toggle="tooltip" data-placement="bottom" class="label label-dataset" style="width: auto;" data-original-title="Tilgjengelig som datasett">@InspireDataSet.DataSet</span>
             }
-            @if (Model.Register.containedItemClass != "NameSpace" && !string.IsNullOrEmpty(Model.Description))
+            @if (Model.Register != null && Model.Register.containedItemClass != "NameSpace" && !string.IsNullOrEmpty(Model.Description))
             {<p><b>@Registers.Definition:</b> @Model.Description</p>}
         </div>
         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
             <span class="small"><b>@Registers.Updated:</b> @Model.Modified.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)</span>
-            @if (Model.Register.containedItemClass != "Dataset")
+            @if (Model.Register != null && Model.Register.containedItemClass != "Dataset")
             {
                 if (Model.DateAccepted != null)
                 {
@@ -58,9 +58,9 @@
                 }
             }
 
-            @if (Model.Register.containedItemClass == "NameSpace")
+            @if (Model.Register != null && Model.Register.containedItemClass == "NameSpace")
             {<br /><span class="small"><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</span>}
-        else if (Model.Register.containedItemClass != "MareanoDataset")
+        else if (Model.Register != null && Model.Register.containedItemClass != "MareanoDataset")
         {<br /><span class="small"><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</span>}
 
             @if (Model.Owner != null)
@@ -70,7 +70,7 @@
                     <br /><span class="small"><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</span>
                 }
             }
-            @if (Model.Register.containedItemClass != "MareanoDataset" && Model.Register.containedItemClass != "Alert")
+            @if (Model.Register != null && Model.Register.containedItemClass != "MareanoDataset" && Model.Register.containedItemClass != "Alert")
             {
                 if (Model.VersionName != null)
                 {<br /><span class="small"><strong>@Registers.Version:</strong> @Model.VersionName</span>}
@@ -140,6 +140,6 @@
         <a class="btn btn-default btn-space pull-right" href="/varsler/rediger/@Model.RegisterItem.systemId">@Shared.Edit</a>
     }
 
-    <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
+    <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@(Model.Register != null ? Model.Register.GetObjectUrl() : "")">@Shared.Back</a>
 
 </div>

@@ -5002,7 +5002,7 @@
         </member>
         <member name="P:Resources.Registers.ErrorMessageValidationName">
             <summary>
-              Looks up a localized string similar to Verdien finnes fra før!.
+              Looks up a localized string similar to Feil verdi.
             </summary>
         </member>
         <member name="P:Resources.Registers.Etat">

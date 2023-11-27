@@ -313,7 +313,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verdien finnes fra før!.
+        ///   Looks up a localized string similar to Feil verdi.
         /// </summary>
         public static string ErrorMessageValidationName {
             get {

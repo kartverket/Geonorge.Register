@@ -574,7 +574,20 @@ namespace Kartverket.Register.Services.RegisterItem
             if(model is CodelistValue) 
             {
                 Models.CodelistValue registeritem = (Models.CodelistValue)model;
-                if (!string.IsNullOrWhiteSpace(registeritem.value))
+
+                if (!string.IsNullOrWhiteSpace(registeritem.value) || !string.IsNullOrWhiteSpace(registeritem.name))
+                {
+                    if (!string.IsNullOrWhiteSpace(registeritem.value) && registeritem.value.Contains("/")) 
+                    {
+                        return false;
+                    }
+                    if (string.IsNullOrWhiteSpace(registeritem.value) && (!string.IsNullOrWhiteSpace(registeritem.name) &&  registeritem.name.Contains("/")))
+                    {
+                        return false;
+                    }
+                }
+
+                    if (!string.IsNullOrWhiteSpace(registeritem.value))
                 {
                     var registerId = registeritem.register?.systemId ?? registeritem.registerId;
 

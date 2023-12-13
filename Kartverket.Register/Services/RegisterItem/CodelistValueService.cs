@@ -56,7 +56,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
             codelistValue.name = codelistValueImport[0];
             codelistValue.value = codelistValueImport[2];
-            if(codelistValueImport.Length == 9 && codelistValueImport.Length == 6)
+            if(codelistValueImport.Length == 9 || codelistValueImport.Length == 6)
                 codelistValue.valueEnglish = codelistValueImport[5];
             codelistValue.description = codelistValueImport[1];
             codelistValue.registerId = register.systemId;

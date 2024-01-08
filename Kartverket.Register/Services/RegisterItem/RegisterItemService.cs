@@ -741,7 +741,8 @@ namespace Kartverket.Register.Services.RegisterItem
         public List<CodelistValue> GetMunicipalityList()
         {
             var queryresultMunicipality = from c in _dbContext.CodelistValues
-                                          where c.register.path == "sosi-kodelister/kommunenummer"
+                                          where c.register.path == "sosi-kodelister/inndelinger/inndelingsbase/kommunenummer"
+                                          && c.statusId == "Valid"
                                           && c.value != "2321"
                                           && c.value != "2311"
                                           && c.value != "2211"

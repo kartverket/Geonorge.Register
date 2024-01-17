@@ -307,17 +307,17 @@ namespace Kartverket.Register.Controllers
         {
             Dictionary<string, string> serviceList = new Dictionary<string, string>();
             var urlToKartkatalogenApi = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"];
-            string url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=service&limit=1000&orderby=title";
+            string url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=service&limit=2000&orderby=title";
             var currentUserOrganizationName = CurrentUserOrganizationName();
             
             // TODO - handle limit in API request
             if (category == Constants.AlertCategoryDataset) { 
                 if(_accessControlService.IsAdmin())
-                    url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=7000&orderby=title";
+                    url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title";
                 else if(currentUserOrganizationName.ToLower() == "kartverket")
-                    url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=7000&orderby=title&facets[1]name=organization&facets[1]value=Kartverket&facets[2]name=organization&facets[2]value=Geovekst";
+                    url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title&facets[1]name=organization&facets[1]value=Kartverket&facets[2]name=organization&facets[2]value=Geovekst";
                 else
-                    url= urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=7000&orderby=title&facets[1]name=organization&facets[1]value=" + currentUserOrganizationName;
+                    url= urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title&facets[1]name=organization&facets[1]value=" + currentUserOrganizationName;
             }
             WebClient c = new WebClient();
             c.Encoding = System.Text.Encoding.UTF8;

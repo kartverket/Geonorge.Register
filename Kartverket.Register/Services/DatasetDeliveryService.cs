@@ -526,7 +526,7 @@ namespace Kartverket.Register.Services
         {
             try
             {
-                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distribution-lists/" + metadataUuid;
+                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distributions/" + metadataUuid;
                 var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
 
                 var json = c.DownloadString(metadataUrl);

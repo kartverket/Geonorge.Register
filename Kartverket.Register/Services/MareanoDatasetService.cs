@@ -408,8 +408,8 @@ namespace Kartverket.Register.Services
             if (_metadata?.SimpleMetadata == null)
                 return;
 
-            mareanoDataset.F2_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, SimpleKeyword.TYPE_THEME, null).ToList().Count() >= 3;
-            mareanoDataset.F2_b_Criteria = _metadata.SimpleMetadata.Title.Count() <= 100;
+            mareanoDataset.F2_a_Criteria = _metadata.SimpleMetadata.Keywords.ToList().Count() >= 3;
+            mareanoDataset.F2_b_Criteria = _metadata.SimpleMetadata.Title.Count() <= 105;
             mareanoDataset.F2_c_Criteria = _metadata.SimpleMetadata.Abstract?.Count() >= 200 && _metadata.SimpleMetadata.Abstract?.Count() <= 600;
             mareanoDataset.F3_a_Criteria = _metadata.SimpleMetadata.ResourceReference != null ?_metadata.SimpleMetadata.ResourceReference?.Code != null && _metadata.SimpleMetadata.ResourceReference?.Codespace != null : false;
 
@@ -446,11 +446,16 @@ namespace Kartverket.Register.Services
             int interoperableWeight = 0;
 
             var spatialRepresentation = _metadata.SimpleMetadata.SpatialRepresentation;
-            if(spatialRepresentation == "vector")
+            if(spatialRepresentation == "vector") { 
                 mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
-            else if(spatialRepresentation == "grid") 
+                if(!mareanoDataset.I1_b_Criteria)
+                    mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "NetCDF-CF").Any();
+            }
+            else if(spatialRepresentation == "grid") { 
                 mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000").Any();
-
+                if (!mareanoDataset.I1_b_Criteria)
+                    mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "NetCDF-CF").Any();
+            }
             if (spatialRepresentation != "grid") 
                 mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
                                             ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.StartsWith("GML-filer er i henhold")).Any() : false;
@@ -579,17 +584,7 @@ namespace Kartverket.Register.Services
 
                 if (!string.IsNullOrEmpty(url) && (url.StartsWith("https://")))
                 {
-                    var downloadServiceUrl = url;
-                    try {
-                        downloadServiceUrl = downloadServiceUrl + uuid;
-                        var c = new System.Net.WebClient();
-
-                        var file = c.DownloadString(downloadServiceUrl);
-                        return true;
-                        }
-                    catch (Exception ex) {
-                        Log.Error("Error downloading " + downloadServiceUrl + " , error: " + ex.Message);
-                    }
+                    return true;                   
                 }
             }
 
@@ -681,7 +676,7 @@ namespace Kartverket.Register.Services
 
             if (originalDataset.WmsStatus != null)
             {
-                originalDataset.WmsStatus.StatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(MareanoDatasetFromKartkatalogen.Uuid, true, originalDataset.WmsStatus.StatusId, MareanoDatasetFromKartkatalogen.UuidService);
+                originalDataset.WmsStatus.StatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(MareanoDatasetFromKartkatalogen.Uuid, true, originalDataset.WmsStatus.StatusId, MareanoDatasetFromKartkatalogen.UuidService, MareanoDatasetFromKartkatalogen);
             }
 
             if (originalDataset.WfsStatus != null)

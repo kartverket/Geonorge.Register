@@ -178,7 +178,7 @@
     <value>At least three thematic keywords must be entered in the metadata (weight 10)</value>
   </data>
   <data name="F2_b_Criteria" xml:space="preserve">
-    <value>Title should be a maximum of 100 characters to provide a simple and consistent name that is easy searchable (weight 5)</value>
+    <value>Title should be a maximum of 105 characters to provide a simple and consistent name that is easy searchable (weight 5)</value>
   </data>
   <data name="F2_c_Criteria" xml:space="preserve">
     <value>The description should be at least 200 characters to be able to provide sufficient information about the dataset and not longer than 600 characters to obtain a good but concise and precise description of what the dataset contains. (There are specific metadata elements where you can enter supplementary information, lineage, quality, update frequency, possibly link to other documentation such as Data Product Specifications, Product sheets, etc). (weight 10)</value>
@@ -208,7 +208,7 @@
     <value>Metadata for geodata must be established in accordance with the metadata standard ISO19115. (Metadata in Geonorge is based on the mentioned standard.) (weight 20)</value>
   </data>
   <data name="I1_b_Criteria" xml:space="preserve">
-    <value>The dataset should be available in internationally known open formats. Check for GML for vector data or tiff / jpg for raster data (weight 10)</value>
+    <value>The dataset should be available in internationally known open formats. Check for GML for vector data or tiff / jpg for raster data and NetCDF (weight 10)</value>
   </data>
   <data name="I1_c_Criteria" xml:space="preserve">
     <value>If the dataset is offered as GML, the dataset must validat according to the Data Product Specification's UML model (weight 20)</value>

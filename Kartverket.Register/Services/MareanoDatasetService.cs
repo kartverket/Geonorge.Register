@@ -381,7 +381,7 @@ namespace Kartverket.Register.Services
             var presentationRulesStatusId = _registerService.GetDOKStatus(MareanoDataset.PresentationRulesUrl, true, "deficient");
             var sosiDataStatusId = _registerService.GetSosiRequirements(MareanoDataset.Uuid, "", true, "deficient");
             var gmlDataStatusId = _registerService.GetGmlRequirements(MareanoDataset.Uuid, true, "deficient");
-            var wmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(MareanoDataset.Uuid, true, "deficient", MareanoDataset.UuidService);
+            var wmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(MareanoDataset.Uuid, true, "deficient", MareanoDataset.UuidService, MareanoDataset);
             var wfsStatusId = _datasetDeliveryService.GetWfsStatus(MareanoDataset.Uuid);
             var atomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(MareanoDataset.Uuid);
             var commonStatusId = _datasetDeliveryService.GetDownloadRequirementsStatus(wfsStatusId, atomFeedStatusId);
@@ -760,7 +760,7 @@ namespace Kartverket.Register.Services
         {
             var MareanoDatasetsFromKartkatalogen = new List<MareanoDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=6000&mediatype=json&listhidden=true";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=6000&mediatype=json&listhidden=true&text=40f6dc76-9ceb-4450-9b34-24c7e7069348";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

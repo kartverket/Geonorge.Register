@@ -34,7 +34,8 @@ namespace Kartverket.Register.Models.StatusReports
             if (MareanoDataset != null)
             {
                 UuidMareanoDataset = MareanoDataset.Uuid;
-                OrganizationSeoName = MareanoDataset.Owner.seoname;
+                if(MareanoDataset.Owner != null)
+                    OrganizationSeoName = MareanoDataset.Owner.seoname;
 
                 if (MareanoDataset.FindableStatus != null)
                     FindableMareanoDataset = MareanoDataset.FindableStatus.StatusId;

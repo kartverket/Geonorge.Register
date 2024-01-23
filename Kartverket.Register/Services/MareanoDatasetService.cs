@@ -331,6 +331,8 @@ namespace Kartverket.Register.Services
             //Update register
             foreach (var MareanoDataset in MareanoDatasetsFromKartkatalogen)
             {
+                try { 
+                Log.Info("Start updating MareanoDataset: " + MareanoDataset.Uuid);
                 _metadata = GetMetadata(MareanoDataset);
 
                 var originalMareanoDataset = GetMareanoDatasetByUuid(MareanoDataset.Uuid);
@@ -342,6 +344,13 @@ namespace Kartverket.Register.Services
                 {
                     NewMareanoDatasetFromKartkatalogen(MareanoDataset);
                 }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Error updating MareanoDataset: " + MareanoDataset.Uuid, ex);
+                }
+
+                Log.Info("Finished updating MareanoDataset: " + MareanoDataset.Uuid);
             }
         }
 
@@ -751,7 +760,7 @@ namespace Kartverket.Register.Services
         {
             var MareanoDatasetsFromKartkatalogen = new List<MareanoDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=6000&mediatype=json&listhidden=true";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&limit=6000&mediatype=json&listhidden=true&text=40f6dc76-9ceb-4450-9b34-24c7e7069348";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {
@@ -774,6 +783,7 @@ namespace Kartverket.Register.Services
             }
             catch (Exception e)
             {
+                Log.Error("Error fetching Mareano datasets from Kartkatalogen, url " + url, e);
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);
                 return null;

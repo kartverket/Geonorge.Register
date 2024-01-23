@@ -864,11 +864,20 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult SynchronizeMareanoStatusregister()
         {
+            Log.Info("Start SynchronizeMareanoStatusregister");
+
+            try { 
             new MareanoDatasetService(db).SynchronizeMareanoDatasets();
 
             var register = _registerService.GetRegisterByName("mareano-statusregister");
             _statusReportService.CreateStatusReport(register, true);
+            }
+            catch(Exception ex)
+            {
+                Log.Error("Feil SynchronizeMareanoStatusregister: ", ex);
+            }
 
+            Log.Info("Stop SynchronizeMareanoStatusregister");
             return Ok();
         }
 

@@ -139,7 +139,7 @@
     <value>Minst tre tematiske søkeord skal legges inn i metadata (vekt 10)</value>
   </data>
   <data name="F2_b_Criteria" xml:space="preserve">
-    <value>Tittel bør maksimalt være på 100 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5)</value>
+    <value>Tittel bør maksimalt være på 105 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5)</value>
   </data>
   <data name="F2_c_Criteria" xml:space="preserve">
     <value>Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet og ikke lengre enn 600 tegn, da det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produktspesifikasjoner, produktark m.m. (vekt 10)</value>
@@ -208,7 +208,7 @@
     <value>Metadata for geodata skal etableres i henhold til metadatastandarden ISO19115. Metadata i Geonorge er basert på den nevnte standarden. (vekt 20)</value>
   </data>
   <data name="I1_b_Criteria" xml:space="preserve">
-    <value>Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata (vekt 10)</value>
+    <value>Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata i tillegg til NetCDF (vekt 10)</value>
   </data>
   <data name="I1_c_Criteria" xml:space="preserve">
     <value>Hvis datasettet tilbys som GML skal datasettet validere i henhold til produktspesifikasjonens UML-modell (vekt 20)</value>

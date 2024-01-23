@@ -142,7 +142,7 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-        public string GetDokDeliveryServiceStatus(string metadataUuid, bool autoupdate, string currentStatus, string serviceUuid)
+        public string GetDokDeliveryServiceStatus(string metadataUuid, bool autoupdate, string currentStatus, string serviceUuid, Models.MareanoDataset mareanoDataset = null)
         {
             var hasServiceUrl = false;
             var status = !string.IsNullOrEmpty(currentStatus)? currentStatus : Deficient;
@@ -160,6 +160,15 @@ namespace Kartverket.Register.Services
                         ) hasServiceUrl = true;
                     }
                 }
+
+                if(mareanoDataset!= null) 
+                {
+                    if(!string.IsNullOrEmpty(mareanoDataset.WmsUrl) && mareanoDataset.OwnerId == Guid.Parse("f8a8c0aa-2c61-4d23-a6b2-d5f4df8d84db"))
+                    {
+                        return "good";
+                    }              
+                }
+
             }
             catch (Exception)
             {
@@ -517,7 +526,7 @@ namespace Kartverket.Register.Services
         {
             try
             {
-                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distributions/" + metadataUuid;
+                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distribution-lists/" + metadataUuid;
                 var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
 
                 var json = c.DownloadString(metadataUrl);

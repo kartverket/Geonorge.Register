@@ -2668,7 +2668,7 @@
         </member>
         <member name="P:Resources.MareanoDataSet.F2_b_Criteria">
             <summary>
-              Looks up a localized string similar to Tittel bør maksimalt være på 100 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5).
+              Looks up a localized string similar to Tittel bør maksimalt være på 105 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5).
             </summary>
         </member>
         <member name="P:Resources.MareanoDataSet.F2_c_Criteria">
@@ -2718,7 +2718,7 @@
         </member>
         <member name="P:Resources.MareanoDataSet.I1_b_Criteria">
             <summary>
-              Looks up a localized string similar to Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata (vekt 10).
+              Looks up a localized string similar to Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata i tillegg til NetCDF (vekt 10).
             </summary>
         </member>
         <member name="P:Resources.MareanoDataSet.I1_c_Criteria">

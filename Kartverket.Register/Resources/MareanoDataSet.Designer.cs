@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class MareanoDataSet {
@@ -232,7 +232,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tittel bør maksimalt være på 100 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5).
+        ///   Looks up a localized string similar to Tittel bør maksimalt være på 105 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5).
         /// </summary>
         public static string F2_b_Criteria {
             get {
@@ -322,7 +322,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata (vekt 10).
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata i tillegg til NetCDF (vekt 10).
         /// </summary>
         public static string I1_b_Criteria {
             get {

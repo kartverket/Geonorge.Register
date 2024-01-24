@@ -223,6 +223,16 @@ namespace Kartverket.Register.Models
             return result;
         }
 
+        public void DetachAllEntities()
+        {
+            var undetachedEntriesCopy = this.ChangeTracker.Entries()
+                .Where(e => e.State != EntityState.Detached)
+                .ToList();
+
+            foreach (var entry in undetachedEntriesCopy)
+                entry.State = EntityState.Detached;
+        }
+
 
         void Index(System.Guid systemID)
         {

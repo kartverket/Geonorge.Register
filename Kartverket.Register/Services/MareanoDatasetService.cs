@@ -331,6 +331,8 @@ namespace Kartverket.Register.Services
             //Update register
             foreach (var MareanoDataset in MareanoDatasetsFromKartkatalogen)
             {
+                try { 
+                Log.Info("Start updating MareanoDataset: " + MareanoDataset.Uuid);
                 _metadata = GetMetadata(MareanoDataset);
 
                 var originalMareanoDataset = GetMareanoDatasetByUuid(MareanoDataset.Uuid);
@@ -342,6 +344,13 @@ namespace Kartverket.Register.Services
                 {
                     NewMareanoDatasetFromKartkatalogen(MareanoDataset);
                 }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Error updating MareanoDataset: " + MareanoDataset.Uuid, ex);
+                }
+
+                Log.Info("Finished updating MareanoDataset: " + MareanoDataset.Uuid);
             }
         }
 
@@ -372,7 +381,7 @@ namespace Kartverket.Register.Services
             var presentationRulesStatusId = _registerService.GetDOKStatus(MareanoDataset.PresentationRulesUrl, true, "deficient");
             var sosiDataStatusId = _registerService.GetSosiRequirements(MareanoDataset.Uuid, "", true, "deficient");
             var gmlDataStatusId = _registerService.GetGmlRequirements(MareanoDataset.Uuid, true, "deficient");
-            var wmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(MareanoDataset.Uuid, true, "deficient", MareanoDataset.UuidService);
+            var wmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(MareanoDataset.Uuid, true, "deficient", MareanoDataset.UuidService, MareanoDataset);
             var wfsStatusId = _datasetDeliveryService.GetWfsStatus(MareanoDataset.Uuid);
             var atomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(MareanoDataset.Uuid);
             var commonStatusId = _datasetDeliveryService.GetDownloadRequirementsStatus(wfsStatusId, atomFeedStatusId);
@@ -395,6 +404,7 @@ namespace Kartverket.Register.Services
 
             _dbContext.MareanoDatasets.Add(MareanoDataset);
             _dbContext.SaveChanges();
+            _dbContext.DetachAllEntities();
         }
 
         private void SetFAIR(ref MareanoDataset mareanoDataset)
@@ -700,6 +710,7 @@ namespace Kartverket.Register.Services
 
             _dbContext.Entry(originalDataset).State = EntityState.Modified;
             _dbContext.SaveChanges();
+            _dbContext.DetachAllEntities();
 
             return originalDataset;
         }
@@ -774,6 +785,7 @@ namespace Kartverket.Register.Services
             }
             catch (Exception e)
             {
+                Log.Error("Error fetching Mareano datasets from Kartkatalogen, url " + url, e);
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);
                 return null;

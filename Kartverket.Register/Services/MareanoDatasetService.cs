@@ -404,6 +404,7 @@ namespace Kartverket.Register.Services
 
             _dbContext.MareanoDatasets.Add(MareanoDataset);
             _dbContext.SaveChanges();
+            _dbContext.DetachAllEntities();
         }
 
         private void SetFAIR(ref MareanoDataset mareanoDataset)
@@ -709,6 +710,7 @@ namespace Kartverket.Register.Services
 
             _dbContext.Entry(originalDataset).State = EntityState.Modified;
             _dbContext.SaveChanges();
+            _dbContext.DetachAllEntities();
 
             return originalDataset;
         }

@@ -636,7 +636,7 @@ namespace Kartverket.Register.Controllers
                         seofilename = pdf;
                     }
                     try { 
-                    zip.ExtractAll(path);
+                    zip.ExtractAll(path, ExtractExistingFileAction.OverwriteSilently);
                     }
                     catch (Exception exx) { Log.Error(exx); }
                 }

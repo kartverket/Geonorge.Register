@@ -436,20 +436,17 @@ namespace Kartverket.Register.Models
 
         public string GetCoverageNoteByUser(Guid municipalityId)
         {
-            if (IsNationalDataset())
+            foreach (CoverageDataset coverage in Coverage)
             {
-                foreach (CoverageDataset coverage in Coverage)
+                if (coverage.MunicipalityId == municipalityId && coverage.DatasetId == systemId)
                 {
-                    if (coverage.MunicipalityId == municipalityId)
-                    {
+                    if(!string.IsNullOrEmpty(coverage.Note))
                         return coverage.Note;
-                    }
                 }
-                return null;
             }
-            else {
-                return Notes;
-            }
+
+            return "";
+
         }
 
         public string GetCoverageMeasureByUser(Guid municipalityId)

@@ -3,13 +3,14 @@
 <script>
     @{var javaScriptSerializer = new System.Web.Script.Serialization.JavaScriptSerializer(); }
 
-    var app = new Vue({
-        el: '#inspireMonitoringApp',
-        data: {
+    var app = Vue.createApp({
+        data() {
+            return {
             current: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.CurrentInspireMonitoring))),
             comparable: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.ComparableCandidate))),
-            compare: getParameterByName("compare") !== "" ? true : false
+                compare: getParameterByName("compare") !== "" ? true : false
+            }
         }
-    });
+    }).mount('#inspireMonitoringApp');
 
 </script>

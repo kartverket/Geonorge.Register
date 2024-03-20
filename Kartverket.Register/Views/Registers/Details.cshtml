@@ -265,6 +265,10 @@
                 <a class="btn btn-default btn-space pull-right" href="@Model.GetImportUrl()">@CodelistValues.Import</a>
             }
         }
+        else if(Model.SystemId == Guid.Parse("e807439b-2bfc-4da5-87c0-b40e7b0cdfb8"))
+        {
+            <span style="margin: 5px;" class="label-warning pull-right"><strong>For å redigere listen, vennligst velg "Logg inn" i menyen</strong></span>
+        }
         <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
     </div>
 

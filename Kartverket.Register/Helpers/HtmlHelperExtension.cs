@@ -238,7 +238,7 @@ namespace Kartverket.Register.Helpers
             {
                 foreach (CoverageDataset coverage in item.Coverage)
                 {
-                    if (municipality.systemId == coverage.MunicipalityId)
+                    if (municipality.systemId == coverage.MunicipalityId && coverage.DatasetId == item.systemId)
                     {
                         return coverage;
                     }
@@ -281,13 +281,11 @@ namespace Kartverket.Register.Helpers
 
         public static string GetNoteFromCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
-            if (item.register.IsDokMunicipal())
-            {
-                return item.Notes;
-            }
-
             var coverage = Coverage(item, selectedMunicipality);
-            return coverage?.Note;
+            if(!string.IsNullOrEmpty(coverage?.Note))
+                return coverage?.Note;
+
+            return "";
         }
 
         public static string GetMeasureFromCoverage(Dataset item, CodelistValue selectedMunicipality)

@@ -123,6 +123,13 @@
         </a><br />
     }
 
+    @if (!string.IsNullOrEmpty(Model.DocumentUrlSchematron))
+    {
+    <a href="@Html.DisplayFor(modelItem => Model.DocumentUrlSchematron)" class="btn btn-block" title="Last ned schematron-fil for @Model.Name" target="_blank">
+        <span class="glyphicon glyphicon-download-alt"> </span>Schematron-fil
+    </a><br />
+    }
+
     @if (!string.IsNullOrEmpty(Model.CartographyDetailsUrl))
     {
         <a href="@Html.DisplayFor(modelItem => Model.CartographyDetailsUrl)" class="btn btn-block" title="Vis kartografi-fil for @Model.Name" target="_blank">

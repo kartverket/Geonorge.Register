@@ -226,6 +226,7 @@ namespace Kartverket.Register.Controllers
                 {
                     document.documentUrl = originalDocument.documentUrl;
                     document.documentUrlEnglish = originalDocument.documentUrlEnglish;
+                    document.documentUrlSchematron = originalDocument.documentUrlSchematron;
 
                     string url = GetUrlForRegister(originalDocument, document);
                     DocumentFile documentFile = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber, document.Accepted?.ToString(), originalDocument?.Accepted.ToString(), originalDocument, document, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
@@ -235,7 +236,9 @@ namespace Kartverket.Register.Controllers
                         document.documentUrl2 = documentFile.Filename2AsciiDoc;
                     if (!string.IsNullOrEmpty(documentFile.UrlEnglish))
                         document.documentUrlEnglish = documentFile.UrlEnglish;
-                    document.documentUrlSchematron = documentFile.UrlSchematron;
+                    if(!string.IsNullOrEmpty(documentFile.UrlSchematron))
+                        document.documentUrlSchematron = documentFile.UrlSchematron;
+                    
                     if (document.documentUrl == "IllegalSchemaLocation")
                     {
                         ModelState.AddModelError("ErrorMessageFileName", ErrorMessageIllegalSchemaLocation);

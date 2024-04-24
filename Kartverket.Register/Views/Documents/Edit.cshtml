@@ -286,6 +286,7 @@
                 @Html.HiddenFor(model => model.thumbnail)
                 @Html.HiddenFor(model => model.documentUrl)
                 @Html.HiddenFor(model => model.documentUrl2)
+                @Html.HiddenFor(model => model.documentUrlSchematron)
                 <hr />
 
             }
@@ -295,6 +296,8 @@
                 @Html.HiddenFor(model => model.documentownerId)
                 @Html.HiddenFor(model => model.thumbnail)
                 @Html.HiddenFor(model => model.documentUrl)
+                @Html.HiddenFor(model => model.documentUrl2)
+                @Html.HiddenFor(model => model.documentUrlSchematron)
                 @Html.HiddenFor(model => model.submitterId)
 
                 if (HtmlHelperExtensions.IsAdmin())

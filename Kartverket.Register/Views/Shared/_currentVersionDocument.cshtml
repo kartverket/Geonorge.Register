@@ -78,12 +78,6 @@
             <a href="@Html.DisplayFor(modelItem => Model.DocumentUrl)" class="btn btn-block" title="Last ned dokument for @Model.Name">
                 <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
             </a><br />
-            if (!string.IsNullOrEmpty(Model.DocumentUrlSchematron))
-            {
-                <a href="@Html.DisplayFor(modelItem => Model.DocumentUrlSchematron)" class="btn btn-block" title="Last ned schematron-fil for @Model.Name" target="_blank">
-                    <span class="glyphicon glyphicon-download-alt"> </span>Schematron-fil
-                </a><br />
-            }
             if (!string.IsNullOrEmpty(Model.DocumentUrlEnglish))
             {
                 <a href="@Html.DisplayFor(modelItem => Model.DocumentUrlEnglish)" class="btn btn-block" title="Last ned dokument for @Model.Name">

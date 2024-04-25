@@ -286,7 +286,10 @@
                 @Html.HiddenFor(model => model.thumbnail)
                 @Html.HiddenFor(model => model.documentUrl)
                 @Html.HiddenFor(model => model.documentUrl2)
-                @Html.HiddenFor(model => model.documentUrlSchematron)
+                if (Model.register.seoname != "produktspesifikasjoner")
+                {
+                    @Html.HiddenFor(model => model.documentUrlSchematron)
+                }
                 <hr />
 
             }
@@ -297,7 +300,10 @@
                 @Html.HiddenFor(model => model.thumbnail)
                 @Html.HiddenFor(model => model.documentUrl)
                 @Html.HiddenFor(model => model.documentUrl2)
-                @Html.HiddenFor(model => model.documentUrlSchematron)
+                if (Model.register.seoname != "produktspesifikasjoner")
+                {
+                    @Html.HiddenFor(model => model.documentUrlSchematron)
+                }
                 @Html.HiddenFor(model => model.submitterId)
 
                 if (HtmlHelperExtensions.IsAdmin())
@@ -446,6 +452,15 @@
                             @Html.ValidationMessageFor(model => model.GMLApplicationSchema, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    if (Model.register.seoname == "produktspesifikasjoner")
+                    {
+                        <div class="form-group">
+                            <label for="documentUrlSchematron" class="control-label col-md-2">Schematron-url</label>
+                            <div class="col-md-10">
+                                <input type="text" value="@Model.documentUrlSchematron" name="documentUrlSchematron" id="documentUrlSchematron" class="form-control" />
+                            </div>
+                        </div>
+                    }
                 }
                 else
                 {

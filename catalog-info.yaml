@@ -1,0 +1,38 @@
+# nonk8s
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "Geonorge.Register"
+  tags:
+  - "public"
+spec:
+  type: "website"
+  lifecycle: "production"
+  owner: "datadeling_og_distribusjon"
+  system: "geonorge"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
+  name: "security_champion_Geonorge.Register"
+  title: "Security Champion Geonorge.Register"
+spec:
+  type: "security_champion"
+  parent: "land_security_champions"
+  members:
+  - "dagolav"
+  children:
+  - "resource:Geonorge.Register"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Resource"
+metadata:
+  name: "Geonorge.Register"
+  links:
+  - url: "https://github.com/kartverket/Geonorge.Register"
+    title: "Geonorge.Register på GitHub"
+spec:
+  type: "repo"
+  owner: "security_champion_Geonorge.Register"
+  dependencyOf:
+  - "component:Geonorge.Register"

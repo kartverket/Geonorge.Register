@@ -749,6 +749,7 @@ namespace Kartverket.Register.Services.RegisterItem
                                           && c.value != "2121"
                                           && c.value != "2131"
                                           && c.value != "2111"
+                                          && c.value != "2100"
                                           select c;
 
             return queryresultMunicipality.OrderBy(o => o.name).ToList();

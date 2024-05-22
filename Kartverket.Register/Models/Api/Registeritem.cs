@@ -189,6 +189,9 @@ namespace Kartverket.Register.Models.Api
         public string codevalue { get; set; }
         [DataMemberAttribute]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string externalId { get; set; }
+        [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string broader { get; set; }
         [DataMemberAttribute]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -756,6 +759,8 @@ namespace Kartverket.Register.Models.Api
                 codevalue = GetCodevalueLocale(c);
                 if (string.IsNullOrEmpty(codevalue))
                     codevalue = label;
+                if (!string.IsNullOrEmpty(c.externalId))
+                    externalId = c.externalId;
                 if (c.broaderItemId != null)
                     broader = baseUrl + c.broaderItem.GetObjectUrl();
                 foreach (var codelistvalue in c.narrowerItems)

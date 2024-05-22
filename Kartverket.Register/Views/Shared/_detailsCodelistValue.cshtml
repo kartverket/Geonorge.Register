@@ -2,6 +2,10 @@
 
 <article class="col-md-12">
     <p><strong>@CodelistValues.CodeValue:</strong> @Model.CodelistvalueTranslated()</p>
+    @if (!string.IsNullOrEmpty(Model.externalId))
+    {
+        <p><strong>@CodelistValues.ExternalId:</strong> @Html.DisplayFor(c => c.externalId)</p>
+    }
     @if (Model.ValidFromDate.HasValue)
     {
         <p><strong>@CodelistValues.ValidFromDate:</strong> @Html.DisplayFor(c => c.ValidFromDate)</p>

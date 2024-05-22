@@ -4407,6 +4407,11 @@
               Looks up a localized string similar to Filen har feil innhold!.
             </summary>
         </member>
+        <member name="P:Resources.CodelistValues.ExternalId">
+            <summary>
+              Looks up a localized string similar to Ekstern id.
+            </summary>
+        </member>
         <member name="P:Resources.CodelistValues.HierarchicalCodelists">
             <summary>
               Looks up a localized string similar to Hierarkiske kodelister.

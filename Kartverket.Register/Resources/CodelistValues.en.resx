@@ -165,4 +165,7 @@
   <data name="CodeValues" xml:space="preserve">
     <value>Code values</value>
   </data>
+  <data name="ExternalId" xml:space="preserve">
+    <value>External id</value>
+  </data>
 </root>

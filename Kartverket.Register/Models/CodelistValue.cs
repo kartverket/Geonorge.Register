@@ -31,6 +31,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "CodeValueEnglish", ResourceType = typeof(CodelistValues))]
         public string valueEnglish { get; set; }
 
+        [Display(Name = "ExternalId", ResourceType = typeof(CodelistValues))]
+        public string externalId { get; set; }
+
         [ForeignKey("broaderItem")]
         public Guid? broaderItemId { get; set; }
         [Display(Name = "BroaderItem", ResourceType = typeof(CodelistValues))]
@@ -117,6 +120,7 @@ namespace Kartverket.Register.Models
 
 	        value = codelistValue.value;
             valueEnglish = codelistValue.valueEnglish;
+            externalId = codelistValue.externalId;
             ValidFromDate = codelistValue.ValidFromDate;
 	        ValidToDate = codelistValue.ValidToDate;
             statusId = codelistValue.statusId;

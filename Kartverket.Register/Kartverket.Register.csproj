@@ -1267,6 +1267,10 @@
     <Compile Include="Migrations\202307040954088_AddDocumentDatasetUuid.designer.cs">
       <DependentUpon>202307040954088_AddDocumentDatasetUuid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202405221115160_AddCodeListExternalId.cs" />
+    <Compile Include="Migrations\202405221115160_AddCodeListExternalId.designer.cs">
+      <DependentUpon>202405221115160_AddCodeListExternalId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3285,6 +3289,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202307040954088_AddDocumentDatasetUuid.resx">
       <DependentUpon>202307040954088_AddDocumentDatasetUuid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405221115160_AddCodeListExternalId.resx">
+      <DependentUpon>202405221115160_AddCodeListExternalId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

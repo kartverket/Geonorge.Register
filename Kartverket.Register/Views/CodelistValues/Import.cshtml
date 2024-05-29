@@ -38,8 +38,8 @@
 </section>
 <h3>Importer kodeliste</h3>
 <p>@CodelistValues.ImportFileInfo...</p>
-<p>Må ha følgende kolonner, men «Status;Gyldig fra;Gyldig til» kan ha tomme verdier. Status får standard verdi «Sendt inn». Gyldige statuser er: "Gyldig" , "Tilbaketrukket" , "Utkast" :</p>
-<p><b>Navn;Beskrivelse;Kodeverdi;Status;Gyldig fra;Gyldig til</b> <br /> eller <br /> <b>Navn;Beskrivelse;Kodeverdi;Navn engelsk;beskrivelse engelsk;kodeverdi engelsk;Status;Gyldig fra;Gyldig til</b></p>
+<p>Må ha følgende kolonner, men «Status;Gyldig fra;Gyldig til;Ekstern id» kan ha tomme verdier. Status får standard verdi «Sendt inn». Gyldige statuser er: "Gyldig" , "Tilbaketrukket" , "Utkast" :</p>
+<p><b>Navn;Beskrivelse;Kodeverdi;Status;Gyldig fra;Gyldig til;Ekstern id</b> <br /> eller <br /> <b>Navn;Beskrivelse;Kodeverdi;Navn engelsk;beskrivelse engelsk;kodeverdi engelsk;Status;Gyldig fra;Gyldig til;Ekstern id</b></p>
 <form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
     @if (parentregister != null)
     {

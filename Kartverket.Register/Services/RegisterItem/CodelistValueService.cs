@@ -28,26 +28,26 @@ namespace Kartverket.Register.Services.RegisterItem
             var codelistValue = new CodelistValue();
             switch (codelistValueImport.Length)
             {
-                case 6:
-                    break;
-                case 9:
-                    codelistValue.Translations.Add(Translation(codelistValueImport, codelistValue));
+                case 7:
                     break;
                 case 10:
-                    codelistValue.systemId = Guid.NewGuid();
+                    codelistValue.Translations.Add(Translation(codelistValueImport, codelistValue));
+                    break;
+                //case 10:
+                //    codelistValue.systemId = Guid.NewGuid();
 
-                    codelistValue.name = codelistValueImport[0];
-                    codelistValue.value = codelistValueImport[2];
-                    codelistValue.description = codelistValueImport[6];
-                    codelistValue.registerId = register.systemId;
-                    codelistValue.register = register;
+                //    codelistValue.name = codelistValueImport[0];
+                //    codelistValue.value = codelistValueImport[2];
+                //    codelistValue.description = codelistValueImport[6];
+                //    codelistValue.registerId = register.systemId;
+                //    codelistValue.register = register;
 
-                    codelistValue.submitterId = _userService.GetUserOrganizationId();
-                    codelistValue.modified = DateTime.Now;
-                    codelistValue.dateSubmitted = DateTime.Now;
-                    codelistValue.statusId = "Submitted";
-                    codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name, register.TransliterNorwegian);
-                    return codelistValue;
+                //    codelistValue.submitterId = _userService.GetUserOrganizationId();
+                //    codelistValue.modified = DateTime.Now;
+                //    codelistValue.dateSubmitted = DateTime.Now;
+                //    codelistValue.statusId = "Submitted";
+                //    codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name, register.TransliterNorwegian);
+                //    return codelistValue;
                 default:
                     return null;
             }
@@ -56,7 +56,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
             codelistValue.name = codelistValueImport[0];
             codelistValue.value = codelistValueImport[2];
-            if(codelistValueImport.Length == 9 || codelistValueImport.Length == 6)
+            if(codelistValueImport.Length == 10)
                 codelistValue.valueEnglish = codelistValueImport[5];
             codelistValue.description = codelistValueImport[1];
             codelistValue.registerId = register.systemId;
@@ -67,17 +67,19 @@ namespace Kartverket.Register.Services.RegisterItem
             codelistValue.dateSubmitted = DateTime.Now;
             codelistValue.statusId = "Submitted";
 
-            if(codelistValueImport.Length == 6) 
+            if(codelistValueImport.Length == 7) 
             { 
                 codelistValue.statusId = GetStatus(codelistValueImport[3]);
                 codelistValue.ValidFromDate = GetDate(codelistValueImport[4]);
                 codelistValue.ValidToDate = GetDate(codelistValueImport[5]);
+                codelistValue.externalId = codelistValueImport[6];
             }
-            else if (codelistValueImport.Length == 9)
+            else if (codelistValueImport.Length == 10)
             {
                  codelistValue.statusId = GetStatus(codelistValueImport[6]);
                  codelistValue.ValidFromDate = GetDate(codelistValueImport[7]);
                  codelistValue.ValidToDate = GetDate(codelistValueImport[8]);
+                 codelistValue.externalId = codelistValueImport[9];
             }
 
             codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name, register.TransliterNorwegian);

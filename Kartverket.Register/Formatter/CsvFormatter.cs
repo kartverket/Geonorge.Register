@@ -982,7 +982,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "CodelistValue")
             {
-                text = item.label + ";" + item.codevalue + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.ValidFrom + ";" + item.ValidTo + ";" + item.id + ";" + item.broader;
+                text = item.label + ";" + item.codevalue + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.ValidFrom + ";" + item.ValidTo + ";" + item.id + ";" + item.broader + ";" + item.externalId;
             }
             else if (item.itemclass == "EPSG")
             {
@@ -1167,7 +1167,7 @@ namespace Kartverket.Register.Formatter
             }
             if (containedItemClass == "CodelistValue")
             {
-                return Registers.Name + ";" + CodelistValues.CodeValue + ";" + Registers.Owner + ";Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + CodelistValues.ValidFromDate + ";" + CodelistValues.ValidToDate + ";ID;" + CodelistValues.BroaderItem;
+                return Registers.Name + ";" + CodelistValues.CodeValue + ";" + Registers.Owner + ";Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + CodelistValues.ValidFromDate + ";" + CodelistValues.ValidToDate + ";ID;" + CodelistValues.BroaderItem + ";" + CodelistValues.ExternalId;
             }
             if (containedItemClass == "EPSG")
             {

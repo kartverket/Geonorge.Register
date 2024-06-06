@@ -90,6 +90,21 @@ namespace Kartverket.Register.Controllers
         }
 
         /// <summary>
+        /// Get  municipality by kommunenummer
+        /// </summary>
+        public IHttpActionResult GetOrganizationsByCodeV2(string kommunenummer)
+        {
+            Organization organizations = _organizationService.GetMunicipalityByNumber(kommunenummer);
+
+            if (organizations == null)
+                return NotFound();
+
+            Models.Api.OrganizationV2 apiModels = Models.Api.OrganizationV2.Convert(organizations);
+
+            return Ok(apiModels);
+        }
+
+        /// <summary>
         /// Get organization by name
         /// </summary>
         //[Route("api/v2/organisasjon/navn/{name}")]

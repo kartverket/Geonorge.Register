@@ -855,6 +855,11 @@
             Get list of municipalities
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationsByCodeV2(System.String)">
+            <summary>
+            Get  municipality by kommunenummer
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationByNameV2(System.String)">
             <summary>
             Get organization by name

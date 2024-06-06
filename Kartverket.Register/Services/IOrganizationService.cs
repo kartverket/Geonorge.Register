@@ -11,5 +11,6 @@ namespace Kartverket.Register.Services
         Organization GetOrganization(string organization);
         List<Organization> GetMunicipalityOrganizations();
         Organization GetOrganizationTranslatedByName(string name, string culture);
+        Organization GetMunicipalityByNumber(string number);
     }
 }

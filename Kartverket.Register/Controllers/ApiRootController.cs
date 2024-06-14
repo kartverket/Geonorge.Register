@@ -125,6 +125,10 @@ namespace Kartverket.Register.Controllers
                 if (filter != null && !string.IsNullOrEmpty(filter.filterOrganization))
                     filter.filterOrganization = RegisterUrls.MakeSeoFriendlyString(filter.filterOrganization);
 
+                if (filter != null && !string.IsNullOrEmpty(filter.filterOrganization) && register.IsInspireStatusRegister()) { 
+                    filter.filterOrganization = _registerItemService.GetOrganizationByFilterOrganizationParameter(filter.filterOrganization).seoname;
+                }
+
                 int totalNumberOfItems = GetTotalNumberOfCurrentItemsByOrganization(filter, register);
 
                 if (filter != null && !string.IsNullOrEmpty(filter.filterOrganization) && register.IsDokStatusRegister())

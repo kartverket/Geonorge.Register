@@ -60,6 +60,17 @@ namespace Kartverket.Register.Services
             return organizations;
         }
 
+        public Organization GetMunicipalityByNumber(string number)
+        {
+            var queryResults = from o in _dbContext.Organizations
+                               where o.OrganizationType == Models.OrganizationType.Municipality
+                               && o.MunicipalityCode == number
+                               select o;
+
+            Organization organizations = queryResults.FirstOrDefault();
+            return organizations;
+        }
+
         public Organization GetOrganizationTranslatedByName(string name, string culture)
         {
             var organization = _dbContext.Organizations.FirstOrDefault(o => o.name == name && o.Translations.Any(oo => oo.CultureName == culture));

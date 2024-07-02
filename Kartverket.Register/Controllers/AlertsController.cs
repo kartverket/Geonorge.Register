@@ -183,6 +183,7 @@ namespace Kartverket.Register.Controllers
                 if (_accessControlService.AddToRegister(alertOriginal.register))
                 {
                     alertOriginal.UuidExternal = alert.UuidExternal;
+                    alertOriginal.GetMetadataByUuid();
                     alertOriginal.AlertType = alert.AlertType;
                     alertOriginal.AlertDate = alert.AlertDate;
                     alertOriginal.EffectiveDate = alert.EffectiveDate;

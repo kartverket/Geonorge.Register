@@ -93,6 +93,10 @@ namespace Kartverket.Register.Helpers
         {
             return WebConfigurationManager.AppSettings["ObjektkatalogUrl"];
         }
+        public static string GeolettUrl(this HtmlHelper helper)
+        {
+            return WebConfigurationManager.AppSettings["GeolettUrl"];
+        }
         public static string KartkatalogenUrl(this HtmlHelper helper)
         {
             return WebConfigurationManager.AppSettings["KartkatalogenUrl"];

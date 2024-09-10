@@ -1139,7 +1139,70 @@ namespace Kartverket.Register.Services.Search
 
             }
 
+            IQueryable<SearchResultItem> queryResultsListGeolett = null;
+
+            //geolett
+            System.Net.WebClient c2 = new System.Net.WebClient();
+            c2.Encoding = System.Text.Encoding.UTF8;
+            var data2 = c2.DownloadString(System.Web.Configuration.WebConfigurationManager.AppSettings["GeolettUrl"] + "/api/search?text=" + parameters.Text + "&limit=1000");
+            var response2 = Newtonsoft.Json.Linq.JArray.Parse(data2);
+
+            List<SearchResultItem> objListGeolett = new List<SearchResultItem>();
+
+            foreach (var obj in response2.Root)
+            {
+
+                objListGeolett.Add(new SearchResultItem
+                {
+                    RegisterName = "Planguider",
+                    RegisterItemName = obj["title"] != null ? obj["title"].ToString() : null,
+                    RegisterItemNameEnglish = null,
+                    RegisterItemDescription = obj["description"] != null ? obj["description"].ToString() : null,
+                    Discriminator = "Planguider",
+                    GeolettUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["GeolettUrl"] +"/" + obj["id"].ToString()
+                });
+
+            }
+
+            var qObjListGeolett = objListGeolett.AsQueryable();
+
+            queryResultsListGeolett =
+            (from o in qObjListGeolett
+                select new SearchResultItem
+                {
+                    ParentRegisterId = null,
+                    ParentRegisterName = null,
+                    ParentRegisterDescription = null,
+                    ParentRegisterSeoname = null,
+                    ParentregisterOwner = null,
+                    RegisterName = o.RegisterName,
+                    RegisterDescription = null,
+                    RegisterItemName = o.RegisterItemName,
+                    RegisterItemNameEnglish = null,
+                    RegisterItemDescription = o.RegisterItemDescription,
+                    RegisterID = new Guid(),
+                    SystemID = new Guid(),
+                    Discriminator = o.Discriminator,
+                    RegisterSeoname = null,
+                    RegisterItemSeoname = null,
+                    DocumentOwner = null,
+                    DatasetOwner = null,
+                    RegisterItemUpdated = new System.DateTime(),
+                    RegisterItemStatus = null,
+                    Submitter = null,
+                    Shortname = null,
+                    CodelistValue = null,
+                    ObjektkatalogUrl = null,
+                    GeolettUrl = o.GeolettUrl,
+                    Type = "veiledningstekst",
+                    currentVersion = null,
+                    Path = o.Path
+                }
+            );
+
+
             var queryResultsListAll = queryResultsListObjektKat != null ? searchResultItem.Concat(queryResultsListObjektKat.ToList()).ToList() : searchResultItem.ToList();
+            queryResultsListAll = queryResultsListAll.Concat(queryResultsListGeolett).ToList();
             var queryResults = queryResultsListAll;
 
             int NumFound = queryResultsListAll.Count();
@@ -1180,6 +1243,7 @@ namespace Kartverket.Register.Services.Search
                     Shortname = register.Shortname,
                     CodelistValue = register.CodelistValue,
                     ObjektkatalogUrl = register.ObjektkatalogUrl,
+                    GeolettUrl = register.GeolettUrl,
                     Type = register.Type,
                     currentVersion = register.currentVersion,
                     Path = register.Path

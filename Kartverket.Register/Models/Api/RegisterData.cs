@@ -91,6 +91,8 @@ namespace Kartverket.Register.Models.Api
                         return item.RegisteItemUrlDataset;
                     case "Objektregister":
                         return item.ObjektkatalogUrl;
+                    case "Planguider":
+                        return item.GeolettUrl;
                 }
                 return item.RegisteItemUrl;
             }

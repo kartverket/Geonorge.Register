@@ -27,6 +27,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string RegisteItemUrlDocument { get; set; }
         public string RegisteItemUrlDataset { get; set; }
         public string ObjektkatalogUrl { get; set; }
+        public string GeolettUrl { get; set; }
         public string DatasetOwner { get; set; }
         public Guid? ParentRegisterId { get; set; }
         public string ParentRegisterName { get; set; }
@@ -60,6 +61,7 @@ namespace Kartverket.Register.Models.ViewModels
             RegisteItemUrlDataset = item.RegisteItemUrlDataset;
             RegisteItemUrlDocument = item.RegisteItemUrlDocument;
             ObjektkatalogUrl = item.ObjektkatalogUrl;
+            GeolettUrl = item.GeolettUrl;
             Type = item.Type;
             currentVersion = item.currentVersion;
 
@@ -88,6 +90,8 @@ namespace Kartverket.Register.Models.ViewModels
                         return RegisteItemUrlDataset;
                     case "Objektregister":
                         return ObjektkatalogUrl;
+                    case "Planguider":
+                        return GeolettUrl;
                 }
                 return RegisteItemUrl;
             }

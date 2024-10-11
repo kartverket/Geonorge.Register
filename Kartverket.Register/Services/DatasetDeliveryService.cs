@@ -219,98 +219,103 @@ namespace Kartverket.Register.Services
         public string GetServiceStatus(string serviceUuid, string status, bool hasServiceUrl = true)
         {
             if(hasServiceUrl)
-                status = Useable;
-            var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"];
-            statusUrl = statusUrl + serviceUuid;
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Accept.Clear();
-                try
-                {
-                    var response = client.GetAsync(new Uri(statusUrl)).Result;
+                status = Good;
+            else
+                status = Deficient;
 
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        var text = response.Content.ReadAsStringAsync().Result;
-                        dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
+            //Problem monitorApi https://status.kartverket.no/
 
-                        var responseTime = (double)data.svartid;
-                        var resposeGetCapabilities = false;
-                        var supportCors = false;
-                        var supportCorsNotAll = false;
-                        var epsgSupport = false;
-                        var featuresSupport = false;
-                        var hasLegend = false;
-                        var connectSoso = false;
-                        var hasCoverage = false;
-                        
-                        if (data.connect.vurdering == "yes")
-                            resposeGetCapabilities = true;
+            //var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"];
+            //statusUrl = statusUrl + serviceUuid;
+            //using (var client = new HttpClient())
+            //{
+            //    client.DefaultRequestHeaders.Accept.Clear();
+            //    try
+            //    {
+            //        var response = client.GetAsync(new Uri(statusUrl)).Result;
 
-                        if (data.connect.vurdering == "soso")
-                            connectSoso = true;
+            //        if (response.StatusCode == HttpStatusCode.OK)
+            //        {
+            //            var text = response.Content.ReadAsStringAsync().Result;
+            //            dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
 
-                        if (data.cors.vurdering == "yes")
-                            supportCors = true;
+            //            var responseTime = (double)data.svartid;
+            //            var resposeGetCapabilities = false;
+            //            var supportCors = false;
+            //            var supportCorsNotAll = false;
+            //            var epsgSupport = false;
+            //            var featuresSupport = false;
+            //            var hasLegend = false;
+            //            var connectSoso = false;
+            //            var hasCoverage = false;
 
-                        if (data.cors.svar == "not all")
-                            supportCorsNotAll = true;
-                        try
-                        { 
-                            if (data.epsgSupported.vurdering == "yes")
-                                epsgSupport = true; //Todo check epsg code
+            //            if (data.connect.vurdering == "yes")
+            //                resposeGetCapabilities = true;
 
-                            if (data.hasGFI.vurdering == "yes")
-                                featuresSupport = true;
+            //            if (data.connect.vurdering == "soso")
+            //                connectSoso = true;
 
-                            if (data.hasLegend.vurdering == "yes")
-                                hasLegend = true;
+            //            if (data.cors.vurdering == "yes")
+            //                supportCors = true;
 
-                            if (data.bbox.vurdering == "yes")
-                                hasCoverage = true;
-                        }
-                        catch (Exception ex) {Log.Info("Property does not exist, info: " + ex);}
+            //            if (data.cors.svar == "not all")
+            //                supportCorsNotAll = true;
+            //            try
+            //            { 
+            //                if (data.epsgSupported.vurdering == "yes")
+            //                    epsgSupport = true; //Todo check epsg code
 
-                        if (!hasServiceUrl)
-                            status = Deficient;
-                        //Grønn på WMS:
-                        //Respons fra GetCapabilities
-                        //Svartid innen 4 sekunder
-                        //Støtter CORS
-                        //EPSG: 25832, 25833, 25835
-                        //Støtter egenskapsspørringer
-                        //Støtter tegnforklaring
-                        //Oppgir dekningsområde
-                        else if ((resposeGetCapabilities && responseTime <= 4 && (supportCors || supportCorsNotAll)
-                            && epsgSupport && featuresSupport
-                                  && hasLegend) || connectSoso)
-                            status = Good;
-                        //Gul:
-                        //Respons fra GetCapabilities
-                        //Svartid innen 10 sekunder
-                        //Støtter CORS
-                        //EPSG: 25833, 25835 eller 32633
-                        //Støtter tegnforklaring
-                        //Oppgir dekningsområde
-                        else if ((resposeGetCapabilities
-                                  && epsgSupport && hasLegend))
-                            status = Useable;
-                        //Rød:
-                        //Feiler på en av testene til gul
-                        else
-                            status = Deficient;
-                    }
-                }
-                catch (Exception e)
-                {
-                    if (_synchronizationJob != null)
-                    {
-                        _synchronizationJob.FailCount++;
-                        _synchronizationJob.FailLog.Add(new SyncLogEntry(serviceUuid, "GetServiceStatus - " + e.Message));
-                    }
-                    Log.Error("GetServiceStatus for " + statusUrl + " failed with error: " + e);
-                }
-            }
+            //                if (data.hasGFI.vurdering == "yes")
+            //                    featuresSupport = true;
+
+            //                if (data.hasLegend.vurdering == "yes")
+            //                    hasLegend = true;
+
+            //                if (data.bbox.vurdering == "yes")
+            //                    hasCoverage = true;
+            //            }
+            //            catch (Exception ex) {Log.Info("Property does not exist, info: " + ex);}
+
+            //            if (!hasServiceUrl)
+            //                status = Deficient;
+            //            //Grønn på WMS:
+            //            //Respons fra GetCapabilities
+            //            //Svartid innen 4 sekunder
+            //            //Støtter CORS
+            //            //EPSG: 25832, 25833, 25835
+            //            //Støtter egenskapsspørringer
+            //            //Støtter tegnforklaring
+            //            //Oppgir dekningsområde
+            //            else if ((resposeGetCapabilities && responseTime <= 4 && (supportCors || supportCorsNotAll)
+            //                && epsgSupport && featuresSupport
+            //                      && hasLegend) || connectSoso)
+            //                status = Good;
+            //            //Gul:
+            //            //Respons fra GetCapabilities
+            //            //Svartid innen 10 sekunder
+            //            //Støtter CORS
+            //            //EPSG: 25833, 25835 eller 32633
+            //            //Støtter tegnforklaring
+            //            //Oppgir dekningsområde
+            //            else if ((resposeGetCapabilities
+            //                      && epsgSupport && hasLegend))
+            //                status = Useable;
+            //            //Rød:
+            //            //Feiler på en av testene til gul
+            //            else
+            //                status = Deficient;
+            //        }
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        if (_synchronizationJob != null)
+            //        {
+            //            _synchronizationJob.FailCount++;
+            //            _synchronizationJob.FailLog.Add(new SyncLogEntry(serviceUuid, "GetServiceStatus - " + e.Message));
+            //        }
+            //        Log.Error("GetServiceStatus for " + statusUrl + " failed with error: " + e);
+            //    }
+            //}
             return status;
         }
 

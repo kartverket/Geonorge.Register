@@ -493,7 +493,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Målestokkområde skal være oppgitt (vekt 5).
+        ///   Looks up a localized string similar to Målestokk eller posisjonsnøyaktighet (romlig oppløsning) er angitt (vekt 5).
         /// </summary>
         public static string R2_d_Criteria {
             get {

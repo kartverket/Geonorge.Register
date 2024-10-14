@@ -664,7 +664,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må tjenesten innfri de viktigste krav i Geonorges applikasjon over &lt;a href=&apos;https://status.geonorge.no/wfs/&apos;&gt;tjenestestatus&lt;/a&gt;. Hvis det finnes en WFS-tjeneste, vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Metadata må i begge tilfeller koples mot metadata til datasettet. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må det i metadata finnes en WMS-tjeneste. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
         /// </summary>
         public static string RequirementsWfs {
             get {
@@ -673,7 +673,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må tjenesten innfri de viktigste krav i Geonorges applikasjon over &lt;a href=&apos;https://status.geonorge.no/wms/&apos;&gt;tjenestestatus&lt;/a&gt;. Hvis det finnes en WMS-tjeneste, vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Metadata må i begge tilfeller koples mot metadata til datasettet. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må det i metadata finnes en WMS-tjeneste. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
         /// </summary>
         public static string RequirementsWms {
             get {

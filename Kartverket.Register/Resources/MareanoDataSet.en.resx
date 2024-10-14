@@ -322,10 +322,10 @@
     <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, downloadable SOSI files must validate against the UML model in the Data Product Specification. It will be clear from the metadata whether SOSI files conform to the data product specification. If there are downloadable SOSI files, then it will qualify for &lt;b&gt; usable &lt;/b&gt; fulfilment of requirements. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
   </data>
   <data name="RequirementsWfs" xml:space="preserve">
-    <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, the service must meet the most important requirements in Geonorge's application for service status. If there is a WFS service, it will qualify for &lt;b&gt; usable &lt;/b&gt; fulfilment of requirements. In both cases, metadata must be linked to metadata of the dataset. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
+    <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, the service must be linked to WFS service in metadata. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
   </data>
   <data name="RequirementsWms" xml:space="preserve">
-    <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, the service must meet the most important requirements in Geonorge's application for service status. If there is a WMS service, it will qualify for &lt;b&gt; usable &lt;/b&gt; fulfilment of requirements. In both cases, metadata must be linked to metadata of the dataset. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
+    <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, the service must be linked to WMS service in metadata. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
   </data>
   <data name="ReUseable_Description" xml:space="preserve">
     <value>The ultimate goal of FAIR is to optimise the reuse of data. To achieve this, metadata and data should be well-described so that they can be replicated and/or combined in different settings.</value>

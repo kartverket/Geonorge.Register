@@ -719,12 +719,15 @@ namespace Kartverket.Register.Services.Register
 
                 if (metadata != null)
                 {
-                    var distribution = metadata.DistributionDetails;
-                    if (distribution != null && distribution.Protocol != null && distribution.URL != null)
+                    var distributions = metadata.DistributionsFormats;
+                    foreach (var distribution in distributions)
                     {
-                        if (Uri.IsWellFormedUriString(distribution.URL.Value, UriKind.Absolute)
-                            && (distribution.Protocol.Value == "GEONORGE:DOWNLOAD"))
-                            hasDistributionUrl = true;
+                        if (distribution != null && distribution.Protocol != null && distribution.URL != null)
+                        {
+                            if (Uri.IsWellFormedUriString(distribution.URL.Value, UriKind.Absolute)
+                                && (distribution.Protocol.Value == "GEONORGE:DOWNLOAD"))
+                                hasDistributionUrl = true;
+                        }
                     }
 
                 }

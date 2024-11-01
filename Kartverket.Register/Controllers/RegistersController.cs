@@ -190,8 +190,8 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details DOK/5
-        [Route("det-offentlige-kartgrunnlaget")]
-        [Route("register/det-offentlige-kartgrunnlaget")]
+        [Route("dok-statusregisteret")]
+        [Route("register/dok-statusregisteret")]
         public ActionResult DetailsDokStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
         {
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();

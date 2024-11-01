@@ -117,7 +117,7 @@ namespace Kartverket.Register
             routes.MapRoute("SignIn", "SignIn", new { controller = "Home", action = "SignIn" });
             routes.MapRoute("SignOut", "SignOut", new { controller = "Home", action = "SignOut" });
             routes.MapRoute("Acs", "AuthServices/Acs", new { controller = "AuthServices", action = "Acs" });
-            routes.MapRoute("DokReport", "api/register/det-offentlige-kartgrunnlaget/rapport", new { controller = "ApiRoot", action = "GetDokStatusReport" });
+            routes.MapRoute("DokReport", "api/register/dok-statusregisteret/rapport", new { controller = "ApiRoot", action = "GetDokStatusReport" });
             routes.MapRoute("Dataset", "datasett", new { controller = "DisplayDataset", action = "Index" });
             routes.MapRoute("DokDekning", "register/det-offentlige-kartgrunnlaget/dekning", new { controller = "DokCoverage", action = "Index" });
             routes.MapRoute("InspireMonitoring", "api/register/inspire-statusregister/monitoring-report", new { controller = "ApiRoot", action = "InspireMonitoring" });

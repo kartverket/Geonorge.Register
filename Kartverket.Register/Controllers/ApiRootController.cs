@@ -886,6 +886,31 @@ namespace Kartverket.Register.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/metadata/synchronize/fair-statusregister")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult SynchronizeFairStatusregister()
+        {
+            Log.Info("Start SynchronizeFairStatusregister");
+
+            try
+            {
+                new FairDatasetService(db).SynchronizeFairDatasets();
+
+                var register = _registerService.GetRegisterByName("fair-register");
+                //todo create report
+                //_statusReportService.CreateStatusReport(register, true);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Feil SynchronizeFairStatusregister: ", ex);
+            }
+
+            Log.Info("Stop SynchronizeFairStatusregister");
+            return Ok();
+        }
+
+
+        [ApiExplorerSettings(IgnoreApi = true)]
         [System.Web.Http.Route("api/metadata/mareano-update-statusreport")]
         [System.Web.Http.HttpGet]
         public IHttpActionResult UpdateMareanoStatusReport()

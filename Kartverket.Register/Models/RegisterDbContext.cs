@@ -58,6 +58,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
         public virtual DbSet<GeodatalovDataset> GeodatalovDatasets { get; set; }
         public virtual DbSet<MareanoDataset> MareanoDatasets { get; set; }
+        public virtual DbSet<FairDataset> FairDatasets { get; set; }
         public virtual DbSet<FAIRDelivery> FAIRDeliveries { get; set; }
         public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
         public virtual DbSet<InspireDataService> InspireDataServices { get; set; }
@@ -114,6 +115,12 @@ namespace Kartverket.Register.Models
             {
                 m.MapInheritedProperties();
                 m.ToTable("MareanoDatasets");
+            });
+
+            modelBuilder.Entity<FairDataset>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("FairDatasets");
             });
 
             modelBuilder.Entity<InspireDataService>().Map(m =>

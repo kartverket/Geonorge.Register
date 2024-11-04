@@ -521,6 +521,19 @@ namespace Kartverket.Register.Migrations
             //    containedItemClass = "MareanoDataset",
             //    accessId = 1
             //    }
+            new Register
+            {
+                systemId = Guid.Parse(GlobalVariables.FairRegistryId),
+                ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                name = "FAIR-register",
+                seoname = "fair-register",
+                statusId = "Valid",
+                dateSubmitted = DateTime.Now,
+                modified = DateTime.Now,
+                containedItemClass = "FairDataset",
+                accessId = 1
+            }
             );
 
 

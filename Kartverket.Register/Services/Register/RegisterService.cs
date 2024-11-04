@@ -1282,6 +1282,15 @@ namespace Kartverket.Register.Services.Register
             return queryResults.FirstOrDefault();
         }
 
+        public Guid GetFairRegisterId()
+        {
+            var queryResults = from o in _dbContext.Registers
+                               where o.name == "Fair-register"
+                               select o.systemId;
+
+            return queryResults.FirstOrDefault();
+        }
+
         public List<Models.Register> GetCodelistRegisters()
         {
             var queryResults = from o in _dbContext.Registers

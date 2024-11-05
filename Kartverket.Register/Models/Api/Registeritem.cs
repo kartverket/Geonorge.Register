@@ -717,6 +717,65 @@ namespace Kartverket.Register.Models.Api
                     CommonStatus = mareanoDataset.CommonStatus.Status.value;
                 }
             }
+            if (item is FairDataset fairDataset)
+            {
+                if (fairDataset.FindableStatus?.Status != null)
+                {
+                    FindableStatus = fairDataset.FindableStatus.Status.value;
+                }
+                if (fairDataset.AccesibleStatus?.Status != null)
+                {
+                    AccesibleStatus = fairDataset.AccesibleStatus.Status.value;
+                }
+                if (fairDataset.InteroperableStatus?.Status != null)
+                {
+                    InteroperableStatus = fairDataset.InteroperableStatus.Status.value;
+                }
+                if (fairDataset.ReUseableStatus?.Status != null)
+                {
+                    ReUsableStatus = fairDataset.ReUseableStatus.Status.value;
+                }
+                if (fairDataset.MetadataStatus?.Status != null)
+                {
+                    MetadataStatus = fairDataset.MetadataStatus.Status.value;
+                }
+                if (fairDataset.ProductSpesificationStatus?.Status != null)
+                {
+                    ProductspesificationStatus = fairDataset.ProductSpesificationStatus.Status.value;
+                }
+                if (fairDataset.ProductSheetStatus?.Status != null)
+                {
+                    ProductSheetStatus = fairDataset.ProductSheetStatus.Status.value;
+                }
+                if (fairDataset.PresentationRulesStatus?.Status != null)
+                {
+                    PresentationRulesStatus = fairDataset.PresentationRulesStatus.Status.value;
+                }
+                if (fairDataset.SosiDataStatus?.Status != null)
+                {
+                    SosiStatus = fairDataset.SosiDataStatus.Status.value;
+                }
+                if (fairDataset.GmlDataStatus?.Status != null)
+                {
+                    GmlStatus = fairDataset.GmlDataStatus.Status.value;
+                }
+                if (fairDataset.WmsStatus?.Status != null)
+                {
+                    WmsStatus = fairDataset.WmsStatus.Status.value;
+                }
+                if (fairDataset.WfsStatus?.Status != null)
+                {
+                    WfsStatus = fairDataset.WfsStatus.Status.value;
+                }
+                if (fairDataset.AtomFeedStatus?.Status != null)
+                {
+                    AtomFeedStatus = fairDataset.AtomFeedStatus.Status.value;
+                }
+                if (fairDataset.CommonStatus?.Status != null)
+                {
+                    CommonStatus = fairDataset.CommonStatus.Status.value;
+                }
+            }
             if (item is EPSG epsg)
             {
                 itemclass = "EPSG";

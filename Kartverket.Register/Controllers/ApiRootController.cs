@@ -158,7 +158,7 @@ namespace Kartverket.Register.Controllers
         {
             var totalNumberOfItems = 0;
 
-            if (register.IsInspireStatusRegister() || register.IsMareanoStatusRegister() || register.IsGeodatalovStatusRegister())
+            if (register.IsInspireStatusRegister() || register.IsMareanoStatusRegister() || register.IsGeodatalovStatusRegister() || register.IsFairStatusRegister())
             { 
                 if (!string.IsNullOrEmpty(filter.filterOrganization))
                   return register.RegisterItems.Where(o => o.Owner.seoname.ToLower() == filter.filterOrganization.ToLower()).Count();

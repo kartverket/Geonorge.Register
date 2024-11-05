@@ -2700,6 +2700,7 @@
     <Content Include="Views\Documents\Logg.cshtml" />
     <Content Include="Views\Shared\_fairDataset.cshtml" />
     <Content Include="Views\Registers\DetailsFairStatusRegistry.cshtml" />
+    <Content Include="Views\Shared\_detailsFairDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

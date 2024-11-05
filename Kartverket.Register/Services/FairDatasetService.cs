@@ -766,7 +766,7 @@ namespace Kartverket.Register.Services
         {
             var FairDatasetsFromKartkatalogen = new List<FairDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Det%20offentlige%20kartgrunnlaget&facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=MarineGrunnkart&limit=6&mediatype=json&listhidden=true";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Det%20offentlige%20kartgrunnlaget&facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Mareano&facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=MarineGrunnkart&limit=6000&mediatype=json&listhidden=true";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

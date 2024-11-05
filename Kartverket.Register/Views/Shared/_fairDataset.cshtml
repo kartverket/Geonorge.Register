@@ -3,25 +3,16 @@
 @using Kartverket.Register.Helpers
 
 <div class="table-heading col-md-12">
-    <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])</div>
+    <div class="col-md-3 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])</div>
     <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])</div>
-    <div class="col-md-6 col-sm-12 status-icons first-four">
+    <div class="col-md-6 col-sm-5 status-icons first-four">
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "findable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "reusable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_productspecification_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_productsheet_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_presentationrules_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_sosi_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_gml_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_wms_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_wfs_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_atom_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_common_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "fair_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title="">
+            <span class="custom-icon">&nbsp;</span>
+        </span>
     </div>
 </div>
 
@@ -30,24 +21,13 @@
     <div class="resultItemRow col-md-12 ">
         <div class="col-md-3 col-sm-2 col"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
         <div class="col-md-3 col"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.NameTranslated()</a></div>
-        <div class="col-md-6 col-sm-5 status-icons pull-right first-four">
+        <div class="col-md-6 col-sm-5 status-icons first-four">
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.FindableStatusId, false, "findable")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AccesibleStatusId, false, "accesible")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InteroperableStatusId, false, "interoperable")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ReUseableStatusId, false, "reusable")
-
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, "metadata")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSpesificationStatusId, false, FairDataSet.Productspesification)
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSheetStatusId, false, "produktark")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.PresentationRulesStatusId, false, "tegneregler")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SosiDataStatusId, false, "sosi", "fair")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.GmlDataStatusId, false, "gml", "fair")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WmsStatusId, false, "wms")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatusId, false, "wfs")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatusId, false, "atom")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.CommonStatusId, false, FairDataSet.DownloadRequirements)
-            <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@(item.Grade.HasValue ? item.Grade.Value.ToString().Replace(".",",") + " av 10" : "")'>
-                <span class="custom-icon grade-status">@item.Grade.Value.ToString()</span>
+            <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@(item.FAIRStatusPerCent.ToString().Replace(".",",") + " %")'>
+                <span class="custom-icon">@item.FAIRStatusPerCent.ToString()&nbsp;%</span>
             </span>
         </div>
     </div>

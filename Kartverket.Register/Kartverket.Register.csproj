@@ -2698,6 +2698,8 @@
     <Content Include="Views\Alerts\Edit.cshtml" />
     <Content Include="Views\Subregister\DeleteAll.cshtml" />
     <Content Include="Views\Documents\Logg.cshtml" />
+    <Content Include="Views\Shared\_fairDataset.cshtml" />
+    <Content Include="Views\Registers\DetailsFairStatusRegistry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

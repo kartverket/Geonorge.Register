@@ -178,6 +178,11 @@ namespace Kartverket.Register.Models
             return systemId == Guid.Parse(GlobalVariables.MareanoRegistryId);
         }
 
+        public bool IsFairStatusRegister()
+        {
+            return systemId == Guid.Parse(GlobalVariables.FairRegistryId);
+        }
+
         public bool ContainedItemClassIsOrganization()
         {
             return containedItemClass == "Organization";

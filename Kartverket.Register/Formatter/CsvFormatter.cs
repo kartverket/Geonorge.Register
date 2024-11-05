@@ -1045,6 +1045,18 @@ namespace Kartverket.Register.Formatter
                        (isAdmin ? ";" + item.uuid : "") + ";" +
                        item.MetadataUrl;
             }
+            else if (item.itemclass == "FairDataset")
+            {
+                text = item.label + ";" +
+                       item.owner + ";" +
+                       item.lastUpdated.ToString("dd/MM/yyyy") + ";" +
+                       item.versionNumber + ";" +
+                       item.description + ";" +
+                       item.id + ";" +
+                       GetFairDeliveryStatus(item) +
+                       item.uuid + ";" +
+                       item.MetadataUrl;
+            }
             else if (item.itemclass == "Organization")
             {
                 text = $"{item.label};{item.number};{item.MunicipalityCode};{item.GeographicCenterX};{item.GeographicCenterY};{item.BoundingBoxNorth};{item.BoundingBoxWest};{item.BoundingBoxSouth};{item.BoundingBoxEast};{HtmlHelperExtensions.TranslateBool(item.NorgeDigitaltMember)}";
@@ -1125,6 +1137,14 @@ namespace Kartverket.Register.Formatter
                    item.WfsStatus + ";" +
                    item.AtomFeedStatus + ";" +
                    item.CommonStatus;
+        }
+
+        private static string GetFairDeliveryStatus(Registeritem item)
+        {
+            return item.FindableStatus + ";" +
+                    item.AccesibleStatus + ";" +
+                    item.InteroperableStatus + ";" +
+                    item.ReUsableStatus + ";";
         }
 
         private static void ConvertRegisterItemDokMunicipalToCSV(StreamWriter streamWriter, Registeritem item)
@@ -1255,6 +1275,20 @@ namespace Kartverket.Register.Formatter
                        DataSet.DOK_Delivery_Wfs + ";" +
                        DataSet.DOK_Delivery_AtomFeed + ";" +
                        DataSet.Delivery_Common + (isAdmin ? ";Uuid" : "") + ";" +
+                       DataSet.DisplayKartkatalogen;
+            }
+            if (containedItemClass == "FairDataset")
+            {
+                return Registers.Name + ";" +
+                       Registers.Owner + ";" +
+                       Registers.Updated + ";" +
+                       Registers.VersionNumber + ";" +
+                       Registers.Description + "; ID" + ";" +
+                       FairDataSet.Findable_Label + ";" +
+                       FairDataSet.Accesible_Label + ";" +
+                       FairDataSet.Interoperable_Label + ";" +
+                       FairDataSet.ReUseable_Label + ";" +
+                       "Uuid" + ";" +
                        DataSet.DisplayKartkatalogen;
             }
             if (containedItemClass == "Organization")

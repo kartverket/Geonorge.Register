@@ -1,0 +1,188 @@
+﻿@model RegisterV2ViewModel
+@using Kartverket.Register.Helpers
+@using PagedList
+@using Kartverket.Register.Models.ViewModels
+@{
+    ViewBag.Title = Model.Name;
+    ViewBag.MetaDescription = Model.Description;
+}
+
+@section breadcrumb {
+    <li>@Model.Name</li>
+}
+
+@{
+    var page = ViewBag.page;
+    int pageSize = 50;
+    int pageNumber = (page ?? 1);
+}
+
+@section Scripts {
+    @*@if (Model.StatusReport != null && !Model.StatusReport.ReportNotExists)
+        {
+            @Html.Partial("js/_FairReportCharts", (FairDatasetStatusReportViewModel)Model.StatusReport)
+        }*@
+
+    <script>
+
+        $(function () {
+
+            var tabs = document.querySelectorAll('.tab');
+
+            for (var i = 0; i < tabs.length; i++) {
+                var item = tabs[i]; // Calling myNodeList.item(i) isn't necessary in JavaScript
+                item.className = "tab";
+            }
+        });
+
+        var selectedTabParameter = getParameterByName("fairselectedtab");
+        var selectedTab = document.getElementById('dataset-Tab');
+        console.log(selectedTabParameter);
+        if (selectedTabParameter != "") {
+            selectedTab = document.getElementById(selectedTabParameter + '-Tab');
+            if (selectedTab == null) {
+                console.log(null);
+                selectedTab = document.getElementById('dataset-Tab');
+            }
+        }
+
+        selectedTab.className = "active";
+
+    </script>
+
+}
+
+@Html.Partial("_SearchBarPartial")
+
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="small-h1">
+                @Model.Name
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+        <div class="col-sm-12 col-md-10">
+            <p>
+                @Model.Description
+            </p>
+        </div>
+        <div class="col-sm-12 col-md-10 text-left" id="organization-list">
+        </div>
+        <div class="col-sm-12 col-md-2 text-right">
+            <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span><br />
+        </div>
+        <div class="col-sm-12 col-md-12 ">
+            <ul id="tabs" class="nav nav-tabs">
+
+                <li id="dataset-Tab" class="tab active">
+                    @Html.ActionLink(DataSet.Dataset, "DetailsFairStatusRegistry", Request.QueryString.ToRouteValueDictionary("FairSelectedTab", "dataset"))
+                </li>
+                @*<li id="report-Tab" class="tab">
+                    @Html.ActionLink(InspireDataSet.Reports, "DetailsFairStatusRegistry", Request.QueryString.ToRouteValueDictionary("FairSelectedTab", "report"))
+                </li>*@
+            </ul>
+        </div>
+    </div>
+</section>
+
+@if (!Model.SelectedFairTabIsReport())
+{
+    <div class="row search-result-navigation">
+        <div class="col-md-4">
+            @if (Model.ContainedItemClassIsRegister())
+            {
+                @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
+            }
+            else if (Model.RegisterItemsV2.Any())
+            {
+                @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+            }
+            else
+            {
+                @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+            }
+        </div>
+        <div class="col-md-4 pull-right">
+            @Html.Partial("_otherformats")
+        </div>
+    </div>
+
+
+    <div class="clearfix"></div>
+    <span class="separator-small margin-bottom-10"></span>
+}
+
+
+@*@if (Model.SelectedFairTabIsReport())
+{
+    if (Model.StatusReport is FairDatasetStatusReportViewModel)
+    {
+        @Html.Partial("_fairReport", (FairDatasetStatusReportViewModel)Model.StatusReport)
+    }
+}
+else
+{
+    @Html.Partial("_fairDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+}*@
+@Html.Partial("_fairDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+@*<script>
+    var dropdown = '@Html.Raw(Html.DropDownList("filterOrganization", new SelectList(ViewBag.filterOrganization, "seoname", "name"), new { @class = "form-control", onchange = "this.form.submit()" }).ToString().Replace("\n", "").Replace("\r", "").Trim())';
+    var htmlBlock = '<div style="margin-left: -13px;" class="col-sm-6">';
+    htmlBlock += '<form action="@Request.Url.LocalPath" name="FilterForm" method="get"">';
+    htmlBlock += '<input type="hidden" name="FairSelectedTab" value="@Request["FairSelectedTab"]" >';
+    htmlBlock += '<input type="hidden" name="StatusType" value="@Request["StatusType"]" >';
+    htmlBlock += '<span>@DataSet.FilterOrganization:</span>';
+    htmlBlock += '<div class="custom-select">' + dropdown + '</div>';
+    htmlBlock += '</form></div><div class="col-sm-6"></div>';
+    htmlBlock += '<div class="clearfix"></div>';
+
+    $("#organization-list").prepend(htmlBlock);
+</script>*@
+
+@if (!Model.SelectedFairTabIsReport())
+{<div class="clearfix"></div>
+    <div class="col-sm-12 row">
+        @if (Model.ContainedItemClassIsRegister())
+        {
+            @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
+        }
+        else if (Model.RegisterItemsV2.Any())
+        {
+            @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+        }
+        else
+        {
+            @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+        }
+    </div>
+}
+
+<div class="clearfix"></div>
+<div class="hidden-print navbar-bottom">
+    @if (!Model.SelectedFairTabIsReport())
+    {
+        if (Model.AccessRegister.EditListOfRegisterItems)
+        {
+            <a href="@Model.GetEditListUrl()" class="btn btn-default btn-space pull-right">@Registers.EditList</a>
+        }
+        if (Model.AccessRegister.Add)
+        {
+            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
+        }
+        if (Model.AccessRegister.Edit)
+        {
+            <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">@Shared.Edit</a>
+        }
+        if (Model.AccessRegister.Delete)
+        {
+            <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteObjectUrl()">@Shared.Delete</a>
+        }
+    }
+
+    <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
+</div>
+<script src="/Scripts/chart.js"></script>
+

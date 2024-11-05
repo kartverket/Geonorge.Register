@@ -422,6 +422,10 @@ namespace Kartverket.Register.Services.RegisterItem
             {
                 return MareanoDatasetNameAlreadyExist((MareanoDataset)model);
             }
+            if (model is FairDataset)
+            {
+                return FairDatasetNameAlreadyExist((FairDataset)model);
+            }
             return false;
         }
 
@@ -505,6 +509,24 @@ namespace Kartverket.Register.Services.RegisterItem
             var queryResults = from o in _dbContext.MareanoDatasets
                                where (o.Name == mareanoDataset.Name || o.Seoname == seoFriendlyName) &&
                                      o.SystemId != mareanoDataset.SystemId
+                                     && o.RegisterId == registerId
+                               select o.SystemId;
+
+            return !queryResults.Any();
+        }
+
+        private bool FairDatasetNameAlreadyExist(FairDataset fairDataset)
+        {
+            if (string.IsNullOrWhiteSpace(fairDataset.Name))
+            {
+                return false;
+            }
+            if (fairDataset == null) throw new ArgumentNullException(nameof(fairDataset));
+            var seoFriendlyName = RegisterUrls.MakeSeoFriendlyString(fairDataset.Name);
+            var registerId = fairDataset.Register?.systemId ?? fairDataset.RegisterId;
+            var queryResults = from o in _dbContext.FairDatasets
+                               where (o.Name == fairDataset.Name || o.Seoname == seoFriendlyName) &&
+                                     o.SystemId != fairDataset.SystemId
                                      && o.RegisterId == registerId
                                select o.SystemId;
 

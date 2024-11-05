@@ -1271,6 +1271,10 @@
     <Compile Include="Migrations\202405221115160_AddCodeListExternalId.designer.cs">
       <DependentUpon>202405221115160_AddCodeListExternalId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411041517503_AddFairRegister.cs" />
+    <Compile Include="Migrations\202411041517503_AddFairRegister.designer.cs">
+      <DependentUpon>202411041517503_AddFairRegister.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1306,6 +1310,7 @@
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DocumentFile.cs" />
     <Compile Include="Models\DokMeasureStatus.cs" />
+    <Compile Include="Models\FairDataset.cs" />
     <Compile Include="Models\FAIR\FAIRDelivery.cs" />
     <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
@@ -1317,6 +1322,7 @@
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
+    <Compile Include="Models\ViewModels\FairDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\MareanoDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoLineChart.cs" />
@@ -1429,6 +1435,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeodataCollection.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\FairDataSet.Designer.cs">
+      <DependentUpon>FairDataSet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\FairDataSet.en.Designer.cs">
+      <DependentUpon>FairDataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\MareanoDataSet.en.Designer.cs">
       <DependentUpon>MareanoDataSet.en.resx</DependentUpon>
@@ -1565,9 +1581,11 @@
     <Compile Include="Services\CoverageService.cs" />
     <Compile Include="Services\DatasetService.cs" />
     <Compile Include="Services\DokCoverageWmsMapping.cs" />
+    <Compile Include="Services\FairDatasetService.cs" />
     <Compile Include="Services\GeoLettService.cs" />
     <Compile Include="Services\IDatasetService.cs" />
     <Compile Include="Services\IDatasetDeliveryService.cs" />
+    <Compile Include="Services\IFairDatasetService.cs" />
     <Compile Include="Services\IGeodatalovDatasetService.cs" />
     <Compile Include="Services\IInspireMonitoringService.cs" />
     <Compile Include="Services\IMareanoDatasetService.cs" />
@@ -2680,6 +2698,9 @@
     <Content Include="Views\Alerts\Edit.cshtml" />
     <Content Include="Views\Subregister\DeleteAll.cshtml" />
     <Content Include="Views\Documents\Logg.cshtml" />
+    <Content Include="Views\Shared\_fairDataset.cshtml" />
+    <Content Include="Views\Registers\DetailsFairStatusRegistry.cshtml" />
+    <Content Include="Views\Shared\_detailsFairDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -3293,6 +3314,9 @@
     <EmbeddedResource Include="Migrations\202405221115160_AddCodeListExternalId.resx">
       <DependentUpon>202405221115160_AddCodeListExternalId.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411041517503_AddFairRegister.resx">
+      <DependentUpon>202411041517503_AddFairRegister.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodataCollection.en.Designer.cs</LastGenOutput>
@@ -3301,6 +3325,18 @@
     <EmbeddedResource Include="Resources\GeodataCollection.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodataCollection.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FairDataSet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FairDataSet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FairDataSet.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FairDataSet.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\MareanoDataSet.en.resx">

@@ -1,0 +1,34 @@
+﻿@model PagedList.IPagedList<RegisterItemV2ViewModel>
+@using Kartverket.Register.Models.ViewModels
+@using Kartverket.Register.Helpers
+
+<div class="table-heading col-md-12">
+    <div class="col-md-3 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])</div>
+    <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])</div>
+    <div class="col-md-6 col-sm-5 status-icons first-four">
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "findable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "reusable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title="">
+            <span class="custom-icon">&nbsp;</span>
+        </span>
+    </div>
+</div>
+
+@foreach (FairDatasetViewModel item in Model)
+{
+    <div class="resultItemRow col-md-12 ">
+        <div class="col-md-3 col-sm-2 col"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
+        <div class="col-md-3 col"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.NameTranslated()</a></div>
+        <div class="col-md-6 col-sm-5 status-icons first-four">
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.FindableStatusId, false, "findable")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AccesibleStatusId, false, "accesible")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InteroperableStatusId, false, "interoperable")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ReUseableStatusId, false, "reusable")
+            <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@(item.FAIRStatusPerCent.ToString().Replace(".",",") + " %")'>
+                <span class="custom-icon">@item.FAIRStatusPerCent.ToString()&nbsp;%</span>
+            </span>
+        </div>
+    </div>
+}

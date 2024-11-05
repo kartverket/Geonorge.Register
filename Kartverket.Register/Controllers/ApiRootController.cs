@@ -158,7 +158,7 @@ namespace Kartverket.Register.Controllers
         {
             var totalNumberOfItems = 0;
 
-            if (register.IsInspireStatusRegister() || register.IsMareanoStatusRegister() || register.IsGeodatalovStatusRegister())
+            if (register.IsInspireStatusRegister() || register.IsMareanoStatusRegister() || register.IsGeodatalovStatusRegister() || register.IsFairStatusRegister())
             { 
                 if (!string.IsNullOrEmpty(filter.filterOrganization))
                   return register.RegisterItems.Where(o => o.Owner.seoname.ToLower() == filter.filterOrganization.ToLower()).Count();
@@ -884,6 +884,31 @@ namespace Kartverket.Register.Controllers
             Log.Info("Stop SynchronizeMareanoStatusregister");
             return Ok();
         }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [System.Web.Http.Route("api/metadata/synchronize/fair-statusregister")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult SynchronizeFairStatusregister()
+        {
+            Log.Info("Start SynchronizeFairStatusregister");
+
+            try
+            {
+                new FairDatasetService(db).SynchronizeFairDatasets();
+
+                var register = _registerService.GetRegisterByName("fair-register");
+                //todo create report
+                //_statusReportService.CreateStatusReport(register, true);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Feil SynchronizeFairStatusregister: ", ex);
+            }
+
+            Log.Info("Stop SynchronizeFairStatusregister");
+            return Ok();
+        }
+
 
         [ApiExplorerSettings(IgnoreApi = true)]
         [System.Web.Http.Route("api/metadata/mareano-update-statusreport")]

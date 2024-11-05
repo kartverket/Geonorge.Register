@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="A1_a_Criteria" xml:space="preserve">
+    <value>It is checked whether the dataset has a "direct" download service (WFS or WCS) (weight 15)</value>
+  </data>
+  <data name="A1_b_Criteria" xml:space="preserve">
+    <value>It is checked whether the dataset has a view service (WMS or WMTS) (weight 15)</value>
+  </data>
+  <data name="A1_c_Criteria" xml:space="preserve">
+    <value>It is checked whether the dataset is available through the "Geonorge download api" (weight 15)</value>
+  </data>
+  <data name="A1_d_Criteria" xml:space="preserve">
+    <value>Checking if dataset is available as a download service for predefined datasets (Atom Feed) (weight 5)</value>
+  </data>
+  <data name="A1_e_Criteria" xml:space="preserve">
+    <value>It is checked whether the protocols that provide access to the datasets are openly accessible and readable with standard IT tools. Which we consider to be sufficient if one has provided a download URL with Https response (weight 40)</value>
+  </data>
+  <data name="A1_f_Criteria" xml:space="preserve">
+    <value>The protocol allows for an authentication and authorisation procedure, where necessary</value>
+  </data>
+  <data name="A1_Label" xml:space="preserve">
+    <value>A1: Datasets are available through standard web protocols and open standardised services</value>
+  </data>
+  <data name="A2_a_Criteria" xml:space="preserve">
+    <value>This requirement is not checked as all Mareano data should be available for download (weight 0)</value>
+  </data>
+  <data name="A2_Label" xml:space="preserve">
+    <value>A2: Metadata are accessible, even when the data are no longer available</value>
+  </data>
+  <data name="Accesible_Description" xml:space="preserve">
+    <value>Datasets must be accessible through standardized and open interfaces.</value>
+  </data>
+  <data name="Accesible_Label" xml:space="preserve">
+    <value>Accessible</value>
+  </data>
+  <data name="Common" xml:space="preserve">
+    <value>Download requirements status</value>
+  </data>
+  <data name="Delivery_Statusdeficient" xml:space="preserve">
+    <value>Bad</value>
+  </data>
+  <data name="Delivery_Status_Deficient" xml:space="preserve">
+    <value>Bad</value>
+  </data>
+  <data name="Delivery_Status_Satisfactory" xml:space="preserve">
+    <value>Satisfactory</value>
+  </data>
+  <data name="Delivery_Status_Useable" xml:space="preserve">
+    <value>Useable</value>
+  </data>
+  <data name="DownloadRequirements" xml:space="preserve">
+    <value>Download requirements</value>
+  </data>
+  <data name="F1_a_Criteria" xml:space="preserve">
+    <value>It is checked that there is metadata in Geonorge. (All metadata in Geonorge have persistent and unique identifiers and are searchable on the web). The request returns metadata in a standardized form. (weight 25)</value>
+  </data>
+  <data name="F1_Label" xml:space="preserve">
+    <value>F1: (Meta)data are assigned a globally unique and persistent identifier</value>
+  </data>
+  <data name="F2_a_Criteria" xml:space="preserve">
+    <value>At least three thematic keywords must be entered in the metadata (weight 10)</value>
+  </data>
+  <data name="F2_b_Criteria" xml:space="preserve">
+    <value>Title should be a maximum of 105 characters to provide a simple and consistent name that is easy searchable (weight 5)</value>
+  </data>
+  <data name="F2_c_Criteria" xml:space="preserve">
+    <value>The description should be at least 200 characters to be able to provide sufficient information about the dataset and not longer than 600 characters to obtain a good but concise and precise description of what the dataset contains. (There are specific metadata elements where you can enter supplementary information, lineage, quality, update frequency, possibly link to other documentation such as Data Product Specifications, Product sheets, etc). (weight 10)</value>
+  </data>
+  <data name="F2_Label" xml:space="preserve">
+    <value>F2: Data are described with rich metadata</value>
+  </data>
+  <data name="F3_a_Criteria" xml:space="preserve">
+    <value>Metadata should have a unique reference to the dataset. Datasets should not only be referred to by name, but also by the unique identifier (uuid) for the dataset. This must be entered in the metadata together with a namespace. (Datasets are defined with unique IDs in Geonorge's namespace register if they have entered dataset-IDs in metadata) (weight 25)</value>
+  </data>
+  <data name="F3_Label" xml:space="preserve">
+    <value>F3: Metadata clearly and explicitly include the identifier of the data they describe</value>
+  </data>
+  <data name="F4_a_Criteria" xml:space="preserve">
+    <value>Metadata located in Geonorge is searchable through CSW API (OGC) and DCAT API (W3C). This makes metadata searchable through standardized APIs for the geodata industry, research and science and "open data" industry both nationally and internationally. (weight 25)</value>
+  </data>
+  <data name="F4_Label" xml:space="preserve">
+    <value>F4: (Meta)data are registered or indexed in a searchable resource</value>
+  </data>
+  <data name="Findable_Description" xml:space="preserve">
+    <value>Metadata and data should be easy to find for both humans and computers. Machine-readable metadata are essential for automatic discovery of datasets and services</value>
+  </data>
+  <data name="Findable_Label" xml:space="preserve">
+    <value>Findable</value>
+  </data>
+  <data name="I1_a_Criteria" xml:space="preserve">
+    <value>Metadata for geodata must be established in accordance with the metadata standard ISO19115. (Metadata in Geonorge is based on the mentioned standard.) (weight 20)</value>
+  </data>
+  <data name="I1_b_Criteria" xml:space="preserve">
+    <value>The dataset should be available in internationally known open formats. Check for GML for vector data or tiff / jpg for raster data and NetCDF (weight 10)</value>
+  </data>
+  <data name="I1_c_Criteria" xml:space="preserve">
+    <value>If the dataset is offered as GML, the dataset must validat according to the Data Product Specification's UML model (weight 20)</value>
+  </data>
+  <data name="I1_Label" xml:space="preserve">
+    <value>I1: Metadata and datasets are represented through international, well-documented and accessible standards.</value>
+  </data>
+  <data name="I2_a_Criteria" xml:space="preserve">
+    <value>Topic category must be filled in metadata to categorize the dataset in an international context (weight 10)</value>
+  </data>
+  <data name="I2_b_Criteria" xml:space="preserve">
+    <value>National theme category must be filled in metadata to categorize the dataset in a national context (weight 10)</value>
+  </data>
+  <data name="I2_Label" xml:space="preserve">
+    <value>I2: Metadata and datasets shall use vocabularies, concepts and code lists and refer to searchable resources on the web that are managed with unique identifiers.</value>
+  </data>
+  <data name="I3_a_Criteria" xml:space="preserve">
+    <value>Metadata must refer to terms that are described / defined in the dataset's UML model in Geonorge's object catalog (SOSI model register) (weight 10)</value>
+  </data>
+  <data name="I3_b_Criteria" xml:space="preserve">
+    <value>The dataset must be modeled in UML and the metadata must refer to the UML model in Geonorge's object catalog (SOSI model register) (weight 20)</value>
+  </data>
+  <data name="I3_Label" xml:space="preserve">
+    <value>I3: (Meta)data include qualified references to other (meta)data</value>
+  </data>
+  <data name="Interoperable_Description" xml:space="preserve">
+    <value>The data usually need to be integrated with other data. In addition, the data need to interoperate with applications or workflows for analysis, storage, and processing.</value>
+  </data>
+  <data name="Interoperable_Label" xml:space="preserve">
+    <value>Interoperabel</value>
+  </data>
+  <data name="lesmer" xml:space="preserve">
+    <value>Read more</value>
+  </data>
+  <data name="lesmindre" xml:space="preserve">
+    <value>Read less</value>
+  </data>
+  <data name="Productspesification" xml:space="preserve">
+    <value>Productspesification</value>
+  </data>
+  <data name="R1_a_Criteria" xml:space="preserve">
+    <value>Licenses in the Geonorge register meet this requirement (weight 30)</value>
+  </data>
+  <data name="R1_Label" xml:space="preserve">
+    <value>R1.1: (Meta)data are released with a clear and accessible and resolvable data usage license</value>
+  </data>
+  <data name="R2_a_Criteria" xml:space="preserve">
+    <value>Lineage must be provided with more than 200 characters (weight 10)</value>
+  </data>
+  <data name="R2_b_Criteria" xml:space="preserve">
+    <value>Update frequency must be specified in metadata (weight 5)</value>
+  </data>
+  <data name="R2_c_Criteria" xml:space="preserve">
+    <value>Link to Data Product Specification must exist in metadata(weight 10)</value>
+  </data>
+  <data name="R2_d_Criteria" xml:space="preserve">
+    <value>Scale for the dataset must be provided in the metadata(weight 5)v</value>
+  </data>
+  <data name="R2_e_Criteria" xml:space="preserve">
+    <value>Coverage map must be provided in the metadata (by municipality or grid) (weight 5)</value>
+  </data>
+  <data name="R2_f_Criteria" xml:space="preserve">
+    <value>Purpose must be provided in the metadata (weight 5)</value>
+  </data>
+  <data name="R2_Label" xml:space="preserve">
+    <value>R1.2: Metadata about quality, coverage, processing, calculations, etc. must be provided.</value>
+  </data>
+  <data name="R3_a_Criteria" xml:space="preserve">
+    <value>Metadata must follow the standards: ISO19115 and DCAT-AP-NO (weight 15)</value>
+  </data>
+  <data name="R3_b_Criteria" xml:space="preserve">
+    <value>Datasets are delivered on international open vector formats such as GML or raster / gridded data such as TIFF / JPEG / NetCDF (weight 15)</value>
+  </data>
+  <data name="R3_Label" xml:space="preserve">
+    <value>R1.3 (Meta)data meet domain-relevant community standards</value>
+  </data>
+  <data name="RatingBad" xml:space="preserve">
+    <value>Poor (less than 50%): The dataset has major shortcomings in terms of meeting FAIR principles and needs to be improved in many areas</value>
+  </data>
+  <data name="RatingDescription" xml:space="preserve">
+    <value>There have made various tests to evaluate datasets in relation to the FAIR criteria. These are our interpretations, which then assess the criteria in relation to standards and protocols used for spatial data in Norway and Europe. For more information on which calculations we use for each indicator, look at the details of FAIR assessments for each specific dataset.</value>
+  </data>
+  <data name="RatingEmoprovements" xml:space="preserve">
+    <value>Needs improvement (50-75%): The dataset meets a few of the FAIR principles in a good way, and needs to be improved in several areas.</value>
+  </data>
+  <data name="RatingGood" xml:space="preserve">
+    <value>Good (over 90%): The dataset adheres to the FAIR principles in a good way. You must do qualitative research yourself to assess any measures to further improve conditions regarding re-use.</value>
+  </data>
+  <data name="RatingLabel" xml:space="preserve">
+    <value>Explanation of assessment of FAIR principles:</value>
+  </data>
+  <data name="RatingSatisfactory" xml:space="preserve">
+    <value>Satisfactory (75-90%): The dataset meets many of the FAIR principles, but should be improved in several areas to ensure reuse.</value>
+  </data>
+  <data name="RequirementsAtom" xml:space="preserve">
+    <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, the dataset must be available through an atomic feed service registered in Geonorge. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsDownload" xml:space="preserve">
+    <value>&lt;p&gt;If the dataset is provided through an atom feed or a WFS where requirements are well met, this will qualify for &lt;b&gt;good&lt;/b&gt; fulfilment of requirements. If the dataset is only available as WFS with &lt;b&gt; usable &lt;/b&gt; fulfilment of requirements, this qualifies for the grade &lt;b&gt; usable &lt;/b&gt;. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsGml" xml:space="preserve">
+    <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, downloadable GML files must validate against UML model in the Data Product Specification. (It will be clear from the metadata whether GML files comply with the data product specification.) If there are downloadable GML files, then it will qualify for &lt;b&gt; usable &lt;/b&gt; fulfilment of requirements. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsMetadata" xml:space="preserve">
+    <value>&lt;p&gt;For metadata quality to be &lt;b&gt;good&lt;/b&gt;, metadata must be validated in Geonorge's metadata editor. This means that all required fields must be filled in. Otherwise, metadata is considered as &lt;b&gt; usable &lt;/b&gt; if they exists.</value>
+  </data>
+  <data name="RequirementsProductSpesifications" xml:space="preserve">
+    <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, the metadata should link to an approved SOSI Data Product Specification for the dataset. Other referenced data product specifications may provide &lt;b&gt; usable &lt;/b&gt; fulfilment of requirements. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.</value>
+  </data>
+  <data name="RequirementsSosi" xml:space="preserve">
+    <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, downloadable SOSI files must validate against the UML model in the Data Product Specification. It will be clear from the metadata whether SOSI files conform to the data product specification. If there are downloadable SOSI files, then it will qualify for &lt;b&gt; usable &lt;/b&gt; fulfilment of requirements. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsWfs" xml:space="preserve">
+    <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, the service must be linked to WFS service in metadata. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsWms" xml:space="preserve">
+    <value>&lt;p&gt;In order to achieve &lt;b&gt;good&lt;/b&gt; fulfilment of requirements, the service must be linked to WMS service in metadata. Otherwise, status will be &lt;b&gt; deficient &lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="ReUseable_Description" xml:space="preserve">
+    <value>The ultimate goal of FAIR is to optimise the reuse of data. To achieve this, metadata and data should be well-described so that they can be replicated and/or combined in different settings.</value>
+  </data>
+  <data name="ReUseable_Label" xml:space="preserve">
+    <value>Reusable</value>
+  </data>
+  <data name="sedetaljer" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Smiley-Green-Description" xml:space="preserve">
+    <value>green</value>
+  </data>
+  <data name="Smiley-Red-Description" xml:space="preserve">
+    <value>red</value>
+  </data>
+  <data name="Smiley-Yellow-Description" xml:space="preserve">
+    <value>yellow</value>
+  </data>
+</root>

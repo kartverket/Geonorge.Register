@@ -96,6 +96,10 @@
     {
         @Html.Partial("_detailsMareanoDataset")
     }
+    else if (Model is FairDatasetViewModel)
+    {
+        @Html.Partial("_detailsFairDataset")
+    }
     else if (Model is DokDatasetViewModel)
     {
         @Html.Partial("_detailsDataset")

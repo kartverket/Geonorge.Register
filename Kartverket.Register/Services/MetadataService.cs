@@ -490,6 +490,71 @@ namespace Kartverket.DOK.Service
             return mareanoDataset;
         }
 
+        public FairDataset FetchFairDatasetFromKartkatalogen(string uuid)
+        {
+            var fairDataset = new FairDataset();
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    fairDataset.Name = data.Title;
+                    fairDataset.Description = data.Abstract;
+                    fairDataset.PresentationRulesUrl = data.LegendDescriptionUrl;
+                    fairDataset.ProductSheetUrl = data.ProductSheetUrl;
+                    fairDataset.ProductSpecificationUrl = data.ProductSpecificationUrl;
+                    fairDataset.SpecificUsage = data.SpecificUsage;
+                    fairDataset.Uuid = data.Uuid;
+                    fairDataset.MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + fairDataset.Uuid;
+                    var thumbnails = data.Thumbnails;
+                    if (thumbnails != null && thumbnails.Count > 0)
+                    {
+                        fairDataset.DatasetThumbnail = thumbnails[0].URL.Value;
+                    }
+
+                    fairDataset.OwnerId = mapOrganizationNameToId(
+                        data.ContactOwner != null && data.ContactOwner.Organization != null
+                            ? data.ContactOwner.Organization.Value
+                            : "Kartverket");
+                    fairDataset.ThemeGroupId =
+                        AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0
+                            ? data.KeywordsNationalTheme[0].KeywordValue.Value
+                            : "Annen");
+
+                    if (data.ServiceUuid != null) fairDataset.UuidService = data.ServiceUuid;
+                    if (data.ServiceDistributionUrlForDataset != null)
+                        fairDataset.WmsUrl = data.ServiceDistributionUrlForDataset;
+
+                    if (data.DistributionDetails != null)
+                        fairDataset.DistributionUrl = data.DistributionDetails.URL;
+
+                    if (data.UnitsOfDistribution != null)
+                        fairDataset.DistributionArea = data.UnitsOfDistribution.Value;
+
+                    var distributionFormat = data.DistributionFormat;
+                    if (distributionFormat != null)
+                    {
+                        if (distributionFormat.Name != null)
+                            fairDataset.DistributionFormat = distributionFormat.Name.Value;
+                    }
+
+                    //todo set list of registers for dataset: DOK, Mareano, MarineGrunnkart
+
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
+
+            return fairDataset;
+        }
 
         public SearchResultsType SearchMetadata(string searchString)
         {

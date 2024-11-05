@@ -40,10 +40,11 @@ namespace Kartverket.Register.Controllers
         private readonly ISynchronizationService _synchronizationService;
         private readonly IStatusReportService _statusReportService;
         private readonly IMareanoDatasetService _mareanoDatasetService;
+        private readonly IFairDatasetService _fairDatasetService;
 
         public RegistersController(ITranslationService translationService,
             RegisterDbContext dbContext, IRegisterItemService registerItemService, ISearchService searchService, IVersioningService versioningService,
-            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService, ISynchronizationService synchronizationService, IStatusReportService statusReportService, IMareanoDatasetService mareanoDatasetService)
+            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService, ISynchronizationService synchronizationService, IStatusReportService statusReportService, IMareanoDatasetService mareanoDatasetService, IFairDatasetService fairDatasetService)
         {
             _db = dbContext;
             _registerItemService = registerItemService;
@@ -58,6 +59,7 @@ namespace Kartverket.Register.Controllers
             _synchronizationService = synchronizationService;
             _statusReportService = statusReportService;
             _mareanoDatasetService = mareanoDatasetService;
+            _fairDatasetService = fairDatasetService;
         }
 
         // GET: Registers
@@ -318,6 +320,73 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
+        [Route("fair-register")]
+        public ActionResult DetailsFairStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
+        {
+            RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
+            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+
+            var register = _registerService.GetFairDatasetRegister();
+            if (register == null) return HttpNotFound();
+            if (register.RedirectToNewPath(HttpContext.Request.Path))
+            {
+                return RedirectPermanent(register.GetObjectUrl());
+            }
+
+            var orgList = register.RegisterItems.OrderBy(o => o.Owner.name).Select(s => new { name = s.Owner.name, seoname = s.Owner.seoname }).Distinct().ToList();
+
+            register = FilterRegisterItems(register, filter);
+
+            //todo report
+            //List<StatusReport> fairStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+            //fairStatusReports = fairStatusReports.OrderBy(o => o.Date).ToList();
+            //StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : fairStatusReports.OrderByDescending(o => o.Date).FirstOrDefault();
+
+            //if (!string.IsNullOrEmpty(filter.filterOrganization))
+            //{
+            //    List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
+            //    foreach (FairDatasetStatusReport item in statusReport.StatusRegisterItems)
+            //    {
+            //        if (item.OrganizationSeoName == filter.filterOrganization)
+            //            reportItems.Add(item);
+            //    }
+
+            //    statusReport.StatusRegisterItems = reportItems;
+
+            //    List<StatusReport> fairStatusReportsOrganization = new List<StatusReport>();
+
+            //    foreach (var mareanoStatusReport in fairStatusReports)
+            //    {
+            //        StatusReport statusReportOrg = fairStatusReport;
+            //        List<RegisterItemStatusReport> reportItemsOrg = new List<RegisterItemStatusReport>();
+            //        foreach (FairDatasetStatusReport itemOrg in fairStatusReport.StatusRegisterItems)
+            //        {
+            //            if (itemOrg.OrganizationSeoName == filter.filterOrganization)
+            //                reportItemsOrg.Add(itemOrg);
+            //        }
+
+            //        statusReportOrg.StatusRegisterItems = reportItemsOrg;
+
+            //        fairStatusReportsOrganization.Add(statusReportOrg);
+            //    }
+
+            //    fairStatusReports = fairStatusReportsOrganization;
+
+            //}
+
+            var viewModel = new RegisterV2ViewModel(register, filter, null, null, null);
+            //var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, fairStatusReports);
+            //viewModel.SelectedFairTab = filter.FairSelectedTab;
+            //var organizations = orgList.Select(s => new { name = s.name, seoname = s.seoname });
+            //organizations = organizations.Prepend(new { name = "Alle", seoname = "" });
+            //ViewBag.filterOrganization = organizations;
+            viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+
+            ItemsOrderBy(sorting, viewModel);
+            ViewbagsRegisterDetails(sorting, page, filter, viewModel);
+            return View(viewModel);
+        }
 
         private void StartSynchronizationDataset()
         {
@@ -1206,6 +1275,10 @@ namespace Kartverket.Register.Controllers
             if (register.IsMareanoStatusRegister())
             {
                 return new MareanoDatasetViewModel(_mareanoDatasetService.GetMareanoDatasetById(systemId));
+            }
+            if (register.IsFairStatusRegister())
+            {
+                return new FairDatasetViewModel(_fairDatasetService.GetFairDatasetById(systemId));
             }
             if (register.IsDokMunicipal())
             {

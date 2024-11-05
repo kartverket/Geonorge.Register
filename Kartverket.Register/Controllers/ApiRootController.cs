@@ -1041,7 +1041,7 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetFAIR(string uuid)
         {
-            var fairData = db.MareanoDatasets.Where(f => f.Uuid == uuid).FirstOrDefault();
+            var fairData = db.FairDatasets.Where(f => f.Uuid == uuid).FirstOrDefault();
 
             if (fairData == null)
             {

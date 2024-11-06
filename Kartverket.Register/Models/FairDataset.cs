@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Kartverket.Register.Models.FAIR;
 using Resources;
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Models
 {
@@ -198,7 +199,8 @@ namespace Kartverket.Register.Models
 
         public float? Grade { get; set; }
 
-        //todo set list of registers for dataset: DOK, Mareano, MarineGrunnkart
+        public ICollection<FairDatasetType> FairDatasetTypes { get; set; }
+
 
         public string DetailPageUrl()
         {

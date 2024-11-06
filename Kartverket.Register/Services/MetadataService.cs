@@ -542,7 +542,26 @@ namespace Kartverket.DOK.Service
                             fairDataset.DistributionFormat = distributionFormat.Name.Value;
                     }
 
-                    //todo set list of registers for dataset: DOK, Mareano, MarineGrunnkart
+                    fairDataset.FairDatasetTypes = new List<FairDatasetType>();
+
+                    if (data.KeywordsNationalInitiative != null)
+                    {
+                        foreach (var keyword in data.KeywordsNationalInitiative)
+                        {
+                            if (keyword.KeywordValue == "Det offentlige kartgrunnlaget")
+                            {
+                                fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "DOK", Description = "Det offentlige kartgrunnlaget" });
+                            }
+                            else if (keyword.KeywordValue == "Mareano")
+                            {
+                                fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "Mareano", Description = "Mareano" });
+                            }
+                            else if (keyword.KeywordValue == "MarineGrunnkart")
+                            {
+                                fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "MarineGrunnkart", Description = "Marine grunnkart" });
+                            }
+                        }
+                    }
 
                 }
             }

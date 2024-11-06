@@ -95,7 +95,17 @@ namespace Kartverket.Register.Services.Register
                         {
                             if (FilterOrganization(filter.filterOrganization, item.Owner))
                             {
-                                registerItemsv2.Add(item);
+                                if (filter.fairDatasetType != null)
+                                {
+                                    if (FilterFairDatasetType(filter.fairDatasetType, item))
+                                    {
+                                        registerItemsv2.Add(item);
+                                    }
+                                }
+                                else
+                                {
+                                    registerItemsv2.Add(item);
+                                }
                             }
                         }
                         else if (!string.IsNullOrEmpty(filter.GeodataType))
@@ -123,7 +133,16 @@ namespace Kartverket.Register.Services.Register
                         }
                         else
                         {
-                            registerItemsv2.Add(item);
+                            if (filter.fairDatasetType != null)
+                            {
+                                if(FilterFairDatasetType(filter.fairDatasetType, item))
+                                {
+                                    registerItemsv2.Add(item);
+                                }
+                            }
+                            else { 
+                                registerItemsv2.Add(item);
+                            }
                         }
                     }
                 }
@@ -132,6 +151,34 @@ namespace Kartverket.Register.Services.Register
             register.items = registerItems;
             register.RegisterItems = registerItemsv2;
             return register;
+        }
+
+        private bool FilterFairDatasetType(string fairDatasetType, RegisterItemV2 item)
+        {
+            var dataset = item as FairDataset;
+            var fairDataset = GetFairDataset(dataset.SystemId);
+            if(fairDataset != null && fairDataset.FairDatasetTypes != null)
+            {     
+                var fairDatasetTypes = fairDataset.FairDatasetTypes.ToList();
+                if(fairDatasetTypes.Count > 0)
+                {
+                    foreach(var type in fairDatasetTypes)
+                    {
+                        if (type.Label.ToLower() == fairDatasetType.ToLower())
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public FairDataset GetFairDataset(Guid systemid)
+        {
+            var queryResult = from i in _dbContext.FairDatasets.Include("FairDatasetTypes")
+                              where i.SystemId == systemid
+                              select i;
+
+            return queryResult.FirstOrDefault();
         }
 
         private void FilterAlert(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)

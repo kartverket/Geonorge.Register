@@ -709,6 +709,15 @@ namespace Kartverket.Register.Services
             }
 
             originalDataset.Grade = GetGrade(originalDataset);
+            if(originalDataset.FairDatasetTypes != null && originalDataset.FairDatasetTypes.Count > 0) {
+                foreach (var fairDatasetType in originalDataset.FairDatasetTypes.ToList())
+                {
+                    _dbContext.Entry(fairDatasetType).State = EntityState.Deleted;
+                }
+                originalDataset.FairDatasetTypes.Clear();
+                _dbContext.SaveChanges();
+            }
+            originalDataset.FairDatasetTypes = FairDatasetFromKartkatalogen.FairDatasetTypes;
 
             SetFAIR(ref originalDataset);
 
@@ -721,7 +730,7 @@ namespace Kartverket.Register.Services
 
         public FairDataset GetFairDatasetByUuid(string uuid)
         {
-            var queryResult = from i in _dbContext.FairDatasets
+            var queryResult = from i in _dbContext.FairDatasets.Include("FairDatasetTypes")
                               where i.Uuid == uuid
                               select i;
 

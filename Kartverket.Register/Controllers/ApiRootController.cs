@@ -897,8 +897,7 @@ namespace Kartverket.Register.Controllers
                 new FairDatasetService(db).SynchronizeFairDatasets();
 
                 var register = _registerService.GetRegisterByName("fair-register");
-                //todo create report
-                //_statusReportService.CreateStatusReport(register, true);
+                _statusReportService.CreateStatusReport(register, true);
             }
             catch (Exception ex)
             {

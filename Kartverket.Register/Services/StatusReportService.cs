@@ -19,15 +19,6 @@ namespace Kartverket.Register.Services
 
         public void CreateStatusReport(Models.Register register, bool latestSavedDataReport = false)
         {
-            if (latestSavedDataReport) 
-            {
-                var mareanoRegistryId = Guid.Parse(GlobalVariables.MareanoRegistryId);
-                var currentReport = _dbContext.StatusReports.Where(s => s.Register.systemId == mareanoRegistryId && s.LatestSavedDataReport).FirstOrDefault();
-                if(currentReport != null) 
-                {
-                    _dbContext.Database.ExecuteSqlCommand("DELETE FROM RegisterItemStatusReports Where StatusReport_Id ='" + currentReport.Id + "'; DELETE FROM StatusReports WHERE Id = '" + currentReport.Id + "'");
-                }
-            }
 
             var statusReport = new StatusReport(latestSavedDataReport);
             statusReport.Register = register;
@@ -61,8 +52,32 @@ namespace Kartverket.Register.Services
 
                 if (item is MareanoDataset mareanoDataset)
                 {
+                    if (latestSavedDataReport)
+                    {
+                        var mareanoRegistryId = Guid.Parse(GlobalVariables.MareanoRegistryId);
+                        var currentReport = _dbContext.StatusReports.Where(s => s.Register.systemId == mareanoRegistryId && s.LatestSavedDataReport).FirstOrDefault();
+                        if (currentReport != null)
+                        {
+                            _dbContext.Database.ExecuteSqlCommand("DELETE FROM RegisterItemStatusReports Where StatusReport_Id ='" + currentReport.Id + "'; DELETE FROM StatusReports WHERE Id = '" + currentReport.Id + "'");
+                        }
+                    }
                     var mareanoDatasetStatuses = new MareanoDatasetStatusReport(mareanoDataset);
                     statusReport.StatusRegisterItems.Add(mareanoDatasetStatuses);
+                }
+
+                if (item is FairDataset fairDataset)
+                {
+                    if (latestSavedDataReport)
+                    {
+                        var fairRegistryId = Guid.Parse(GlobalVariables.FairRegistryId);
+                        var currentReport = _dbContext.StatusReports.Where(s => s.Register.systemId == fairRegistryId && s.LatestSavedDataReport).FirstOrDefault();
+                        if (currentReport != null)
+                        {
+                            _dbContext.Database.ExecuteSqlCommand("DELETE FROM RegisterItemStatusReports Where StatusReport_Id ='" + currentReport.Id + "'; DELETE FROM StatusReports WHERE Id = '" + currentReport.Id + "'");
+                        }
+                    }
+                    var fairDatasetStatuses = new FairDatasetStatusReport(fairDataset);
+                    statusReport.StatusRegisterItems.Add(fairDatasetStatuses);
                 }
             }
 

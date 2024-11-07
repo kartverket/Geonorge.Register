@@ -6,19 +6,19 @@
     @if (Request.QueryString["fairDatasetType"] != "DOK")
     {<a href="?fairDatasetType=DOK">DOK</a>}
     else
-    { <span>DOK</span>}, @if (Request.QueryString["fairDatasetType"] != "Mareano")
+    { <mark>DOK</mark>}, @if (Request.QueryString["fairDatasetType"] != "Mareano")
     {<a href="?fairDatasetType=Mareano">Mareano</a>}
     else
-    { <span>Mareano</span>}, @if (Request.QueryString["fairDatasetType"] != "MarineGrunnkart")
+    { <mark>Mareano</mark>}, @if (Request.QueryString["fairDatasetType"] != "MarineGrunnkart")
     {<a href="?fairDatasetType=MarineGrunnkart">Marine grunnkart</a>}
     else
-    { <span>Marine grunnkart</span>}
+    { <mark>Marine grunnkart</mark>}
 </div>
 
 <div class="table-heading col-md-12">
-    <div class="col-md-3 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])</div>
+    <div class="col-md-5 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])</div>
     <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])</div>
-    <div class="col-md-6 col-sm-5 status-icons first-four">
+    <div class="col-md-4 col-sm-5 status-icons first-four">
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "findable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
@@ -31,10 +31,10 @@
 
 @foreach (FairDatasetViewModel item in Model)
 {
-    <div class="resultItemRow col-md-12 ">
-        <div class="col-md-3 col-sm-2 col"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-5 col-sm-2 col"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
         <div class="col-md-3 col"><a href="@item.ItemsByOwnerUrl()&fairDatasetType=@Request.QueryString["fairDatasetType"]" title="Datasett eier: @item.Owner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.NameTranslated()</a></div>
-        <div class="col-md-6 col-sm-5 status-icons first-four">
+        <div class="col-md-4 col-sm-5 status-icons first-four">
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.FindableStatusId, false, "findable")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AccesibleStatusId, false, "accesible")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InteroperableStatusId, false, "interoperable")

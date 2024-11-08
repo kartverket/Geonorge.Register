@@ -7,7 +7,6 @@
     {
         public override void Up()
         {
-            RenameColumn(table: "dbo.RegisterItemStatusReports", name: "Grade", newName: "Grade1");
             AddColumn("dbo.RegisterItemStatusReports", "UuidFairDataset", c => c.String());
             AddColumn("dbo.RegisterItemStatusReports", "FindableFairDataset", c => c.String());
             AddColumn("dbo.RegisterItemStatusReports", "AccesibleFairDataset", c => c.String());
@@ -42,7 +41,6 @@
             DropColumn("dbo.RegisterItemStatusReports", "AccesibleFairDataset");
             DropColumn("dbo.RegisterItemStatusReports", "FindableFairDataset");
             DropColumn("dbo.RegisterItemStatusReports", "UuidFairDataset");
-            RenameColumn(table: "dbo.RegisterItemStatusReports", name: "Grade1", newName: "Grade");
         }
     }
 }

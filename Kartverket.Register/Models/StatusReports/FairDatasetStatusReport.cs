@@ -23,7 +23,6 @@ namespace Kartverket.Register.Models.StatusReports
         public string WfsFairDataset { get; set; }
         public string AtomFeedFairDataset { get; set; }
         public string CommonStatusFairDataset { get; set; }
-        public float? Grade { get; set; }
 
         public FairDatasetStatusReport()
         {

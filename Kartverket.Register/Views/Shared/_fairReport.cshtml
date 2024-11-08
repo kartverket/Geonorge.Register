@@ -1,4 +1,4 @@
-﻿@model Kartverket.Register.Models.ViewModels.MareanoDatasetStatusReportViewModel
+﻿@model Kartverket.Register.Models.ViewModels.FairDatasetStatusReportViewModel
 @using Kartverket.Register.Helpers
 @{ 
     string filterOrganization = "", StatusType = "", SelectedReport="";
@@ -23,10 +23,10 @@ else
 {
     <div class="row margin-top-10">
         <div class="col-md-4 col-sm-12">
-            @using (Html.BeginForm("DetailsMareanoStatusRegistry", "Registers", FormMethod.Get))
+            @using (Html.BeginForm("DetailsFairStatusRegistry", "Registers", FormMethod.Get))
             {
 
-                @Html.Hidden("MareanoSelectedTab", "report")
+                @Html.Hidden("FairSelectedTab", "report")
                 @Html.Hidden("filterOrganization", filterOrganization)
                 @Html.Hidden("StatusType", StatusType)
                 @Html.DropDownList("SelectedReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
@@ -66,9 +66,9 @@ else
                     <tr>
                         <th></th>
                         <th>@DataSet.DOK_Delivery_Status_Good</th>
-                        <th>@MareanoDataSet.Delivery_Status_Satisfactory</th>
-                        <th>@MareanoDataSet.Delivery_Status_Useable</th>
-                        <th>@MareanoDataSet.Delivery_Status_Deficient</th>
+                        <th>@FairDataSet.Delivery_Status_Satisfactory</th>
+                        <th>@FairDataSet.Delivery_Status_Useable</th>
+                        <th>@FairDataSet.Delivery_Status_Deficient</th>
                         <th>@DataSet.DOK_Delivery_Status_NotSet</th>
                     </tr>
                 </thead>
@@ -109,7 +109,7 @@ else
                         <td>@Model.NumberOfItemsWithReUseable.Notset</td>
                     </tr>
 
-                    <tr>
+                    @*<tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithMetadata)</td>
                         <td>@Model.NumberOfItemsWithMetadata.Good</td>
                         <td></td>
@@ -197,7 +197,7 @@ else
                         <td>@Model.NumberOfItemsWithCommon.Useable</td>
                         <td>@Model.NumberOfItemsWithCommon.Deficient</td>
                         <td>@Model.NumberOfItemsWithCommon.Notset</td>
-                    </tr>
+                    </tr>*@
                 </tbody>
             </table>
         </div>
@@ -299,10 +299,10 @@ else
     <div id="lineChart" style="display: none" class="reportViewContent">
         <div class="row">
             <div class="col-md-4 col-sm-12 form-group">
-                @using (Html.BeginForm("DetailsMareanoStatusRegistry", "Registers", FormMethod.Get))
+                @using (Html.BeginForm("DetailsFairStatusRegistry", "Registers", FormMethod.Get))
                 {
 
-                    @Html.Hidden("MareanoSelectedTab", "report")
+                    @Html.Hidden("FairSelectedTab", "report")
                     @Html.Hidden("SelectedReport", SelectedReport)
                     @Html.Hidden("filterOrganization", filterOrganization)
                     @Html.DropDownList("StatusType", Model.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })

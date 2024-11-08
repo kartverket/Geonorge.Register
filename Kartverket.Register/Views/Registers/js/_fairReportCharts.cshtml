@@ -1,4 +1,4 @@
-﻿@model Kartverket.Register.Models.ViewModels.MareanoDatasetStatusReportViewModel
+﻿@model Kartverket.Register.Models.ViewModels.FairDatasetStatusReportViewModel
 
 @{var javaScriptSerializer = new System.Web.Script.Serialization.JavaScriptSerializer(); }
 
@@ -118,55 +118,55 @@
         type: 'line',
         fill: false,
         data: {
-            labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Labels))),
+            labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Labels))),
             datasets: [
                {
-                    label: "@RawText(MareanoDataSet.Findable_Label)",
+                    label: "@RawText(FairDataSet.Findable_Label)",
                     borderColor: 'rgb(171, 235, 52)',
-                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Findable))),
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Findable))),
                     backgroundColor: "rgb(171, 235, 52)",
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     fill: false,
                     lineTension: 0
                 },
                 {
-                    label: "@MareanoDataSet.Accesible_Label",
+                    label: "@FairDataSet.Accesible_Label",
                     borderColor: 'rgb(229, 52, 235)',
-                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Accesible))),
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Accesible))),
                     backgroundColor: "rgb(229, 52, 235)",
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     fill: false,
                     lineTension: 0
                 },
                 {
-                    label: "@MareanoDataSet.Interoperable_Label",
+                    label: "@FairDataSet.Interoperable_Label",
                     borderColor: 'rgb(161, 109, 67)',
-                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Interoperable))),
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Interoperable))),
                     backgroundColor: "rgb(161, 109, 67)",
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     fill: false,
                     lineTension: 0
                 },
                 {
-                    label: "@MareanoDataSet.ReUseable_Label",
+                    label: "@FairDataSet.ReUseable_Label",
                     borderColor: 'rgb(250, 114, 5)',
-                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.ReUsable))),
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.ReUsable))),
                     backgroundColor: "rgb(250, 114, 5)",
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     fill: false,
                     lineTension: 0
                 },
-                {
+                @*{
                     label: "@InspireDataSet.Metadata",
                     borderColor: 'rgb(255, 0, 0)',
-                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Metadata))),
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Metadata))),
                     backgroundColor: "rgb(255, 0, 0)",
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     fill: false,
                     lineTension: 0
                 },
@@ -175,9 +175,9 @@
                     backgroundColor: "rgb(93, 71, 119)",
                     fill: false,
                     borderColor: 'rgb(93, 71, 119)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.ProductSpecification))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.ProductSpecification))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     lineTension: 0
                 },
                 {
@@ -185,9 +185,9 @@
                     backgroundColor: "rgb(241, 249, 70)",
                     fill: false,
                     borderColor: 'rgb(241, 249, 70)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.ProductSheet))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.ProductSheet))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     lineTension: 0
                 },
                 {
@@ -195,9 +195,9 @@
                     backgroundColor: "rgb(255,192,203)",
                     fill: false,
                     borderColor: 'rgb(255,192,203)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PresentationRules))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PresentationRules))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     lineTension: 0
                 },
                 {
@@ -205,9 +205,9 @@
                     backgroundColor: "rgb(54, 197, 69)",
                     fill: false,
                     borderColor: 'rgb(54, 197, 69)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.SosiRequirements))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.SosiRequirements))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     lineTension: 0
                 },
                 {
@@ -215,9 +215,9 @@
                     backgroundColor: "rgb(101, 126, 224)",
                     fill: false,
                     borderColor: 'rgb(101, 126, 224)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.GmlRequirements))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.GmlRequirements))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     lineTension: 0
                 },
                 {
@@ -225,9 +225,9 @@
                     backgroundColor: "rgb(254, 80, 0)",
                     fill: false,
                     borderColor: 'rgb(254, 80, 0)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Wms))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Wms))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     lineTension: 0
                 },
                 {
@@ -235,9 +235,9 @@
                     backgroundColor: "rgb(125, 161, 196)",
                     fill: false,
                     borderColor: 'rgb(125, 161, 196)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Wfs))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Wfs))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     lineTension: 0
                 },
                 {
@@ -245,21 +245,21 @@
                     backgroundColor: 'rgb(102, 153, 102)',
                     fill: false,
                     borderColor: 'rgb(102, 153, 102)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.AtomFeed))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.AtomFeed))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     lineTension: 0
                 },
                 {
-                    label: "@MareanoDataSet.Common",
+                    label: "@FairDataSet.Common",
                     backgroundColor: "rgb(0, 26, 0)",
                     fill: false,
                     borderColor: 'rgb(0, 26, 0)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Common))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Common))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.PointSize))),
                     lineTension: 0
-                }
+                }*@
             ]
         },
 
@@ -290,7 +290,7 @@
                     lineTension: 0
                 },
                 {
-                    label: "@MareanoDataSet.Delivery_Status_Satisfactory",
+                    label: "@FairDataSet.Delivery_Status_Satisfactory",
                     fill: false,
                     backgroundColor: '#abeb34',
                     borderColor: '#abeb34',
@@ -300,7 +300,7 @@
                     lineTension: 0
                 },
                 {
-                    label: "@RawText(MareanoDataSet.Delivery_Status_Useable)",
+                    label: "@RawText(FairDataSet.Delivery_Status_Useable)",
                     fill: false,
                     backgroundColor: '#fed633',
                     borderColor: '#fed633',
@@ -310,7 +310,7 @@
                     lineTension: 0
                 },
                 {
-                    label: "@RawText(MareanoDataSet.Delivery_Status_Deficient)",
+                    label: "@RawText(FairDataSet.Delivery_Status_Deficient)",
                     backgroundColor: "#ee432a",
                     fill: false,
                     borderColor: '#ee432a',
@@ -379,7 +379,7 @@
     }
 
     var dataFindable = {
-        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithFindable.Good))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithFindable.Satisfactory))" , "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithFindable.Useable))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithFindable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithFindable.Notset))"],
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithFindable.Good))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithFindable.Satisfactory))" , "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithFindable.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithFindable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithFindable.Notset))"],
         datasets: [
             {
                 fill: true,
@@ -395,7 +395,7 @@
     };
 
     var dataAccesible = {
-        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithAccesible.Good))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Satisfactory,Model.NumberOfItemsWithAccesible.Satisfactory))" , "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithAccesible.Useable))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithAccesible.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithAccesible.Notset))"],
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithAccesible.Good))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory,Model.NumberOfItemsWithAccesible.Satisfactory))" , "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithAccesible.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithAccesible.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithAccesible.Notset))"],
         datasets: [
             {
                 fill: true,
@@ -411,7 +411,7 @@
     };
 
     var dataInteroperable = {
-        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithInteroperable.Good))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithInteroperable.Satisfactory))" , "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithInteroperable.Useable))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithInteroperable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithInteroperable.Notset)) "],
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithInteroperable.Good))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithInteroperable.Satisfactory))" , "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithInteroperable.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithInteroperable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithInteroperable.Notset)) "],
         datasets: [
             {
                     fill: true,
@@ -427,7 +427,7 @@
     };
 
                 var dataReUseable = {
-                    labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithReUseable.Good)) ", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithReUseable.Satisfactory))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithReUseable.Useable))", "@RawText(formatLabel(MareanoDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithReUseable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithReUseable.Notset))"],
+                    labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithReUseable.Good)) ", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithReUseable.Satisfactory))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithReUseable.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithReUseable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithReUseable.Notset))"],
         datasets: [
             {
                 fill: true,
@@ -442,7 +442,7 @@
         ]
     };
 
-        var dataMetadata = {
+        @*var dataMetadata = {
         labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithMetadata.Good))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Useable, Model.NumberOfItemsWithMetadata.Useable))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_Deficient, Model.NumberOfItemsWithMetadata.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithMetadata.Notset))"],
         datasets: [
             {
@@ -584,7 +584,7 @@
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithCommon.Notset)))],
             }
         ]
-    };
+    };*@
 
         function formatToolTip(tooltipItems, data) {
             var labelData = data.labels[tooltipItems.index].split(":");
@@ -610,7 +610,7 @@
                 title: {
 
                     display: true,
-                    text: '@RawText(MareanoDataSet.Findable_Label)',
+                    text: '@RawText(FairDataSet.Findable_Label)',
                     fontSize: 20
             },
             tooltips: {
@@ -636,7 +636,7 @@
                 title: {
 
                     display: true,
-                    text: '@MareanoDataSet.Accesible_Label',
+                    text: '@FairDataSet.Accesible_Label',
                     fontSize: 20
             },
             tooltips: {
@@ -663,7 +663,7 @@
                 title: {
 
                     display: true,
-                    text: '@MareanoDataSet.Interoperable_Label',
+                    text: '@FairDataSet.Interoperable_Label',
                     fontSize: 20
             },
             tooltips: {
@@ -690,7 +690,7 @@
                 title: {
 
                     display: true,
-                    text: '@MareanoDataSet.ReUseable_Label',
+                    text: '@FairDataSet.ReUseable_Label',
                     fontSize: 20
             },
             tooltips: {
@@ -703,7 +703,7 @@
         }
     });
 
-        var ctx = document.getElementById("metadataChart").getContext('2d');
+        @*var ctx = document.getElementById("metadataChart").getContext('2d');
         var metadataChart = new Chart(ctx, {
 
             type: 'pie',
@@ -943,7 +943,7 @@
                     title: {
 
                         display: true,
-                        text: '@MareanoDataSet.Common',
+                        text: '@FairDataSet.Common',
                         fontSize: 20
                 },
                 tooltips: {
@@ -954,7 +954,7 @@
             }
         }
             }
-    });
+    });*@
 
 
 
@@ -971,11 +971,11 @@
             data: {
 
                 labels: [
-                    '@RawText(MareanoDataSet.Findable_Label)',
-                    '@MareanoDataSet.Accesible_Label',
-                    '@MareanoDataSet.Interoperable_Label',
-                    '@MareanoDataSet.ReUseable_Label',
-                    '@DataSet.DOK_Delivery_Metadata',
+                    '@RawText(FairDataSet.Findable_Label)',
+                    '@FairDataSet.Accesible_Label',
+                    '@FairDataSet.Interoperable_Label',
+                    '@FairDataSet.ReUseable_Label',
+                    @*'@DataSet.DOK_Delivery_Metadata',
                     '@DataSet.DOK_Delivery_ProductSpesification',
                     '@DataSet.DOK_Delivery_ProductSheet',
                     '@DataSet.DOK_Delivery_PresentationRules',
@@ -984,7 +984,7 @@
                     '@DataSet.DOK_Delivery_Wms',
                     '@DataSet.DOK_Delivery_Wfs',
                     '@DataSet.DOK_Delivery_AtomFeed',
-                    '@MareanoDataSet.Common'
+                    '@FairDataSet.Common'*@
                 ],
                 datasets: [
                 {
@@ -994,7 +994,7 @@
                             @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Good)))),
                             @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Good)))),
                             @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Good)))),
-                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Good)))),
+                            @*@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Good)))),
                             @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Good)))),
                             @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Good)))),
                             @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Good)))),
@@ -1003,19 +1003,19 @@
                             @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Good)))),
                             @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Good)))),
                             @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Good)))),
-                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Good)))),
+                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Good)))),*@
                             0,0
                         ],
                         backgroundColor: '#36c545',
                 },
                 {
-        label: '@MareanoDataSet.Delivery_Status_Satisfactory',
+        label: '@FairDataSet.Delivery_Status_Satisfactory',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Satisfactory)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Satisfactory)))),
+                        @*@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Satisfactory)))),
@@ -1024,19 +1024,19 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Satisfactory)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Satisfactory)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Satisfactory)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Satisfactory)))),*@
                         0,0
                     ],
                     backgroundColor: '#abeb34',
                 },
                 {
-        label: '@RawText(MareanoDataSet.Delivery_Status_Useable)',
+        label: '@RawText(FairDataSet.Delivery_Status_Useable)',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Useable)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Useable)))),
+                        @*@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Useable)))),
@@ -1045,19 +1045,19 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Useable)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Useable)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Useable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Useable)))),*@
                         0, 0
                     ],
                     backgroundColor: '#fed633',
                 },
                 {
-        label: '@RawText(MareanoDataSet.Delivery_Status_Deficient)',
+        label: '@RawText(FairDataSet.Delivery_Status_Deficient)',
                     data: [
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Deficient)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Deficient)))),
+                        @*@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Deficient)))),
@@ -1066,7 +1066,7 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Deficient)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Deficient)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Deficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Deficient)))),*@
                         0, 0
                     ],
                     backgroundColor: '#ee432a',
@@ -1078,7 +1078,7 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Notset)))),
+                        @*@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Notset)))),
@@ -1087,7 +1087,7 @@
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Notset)))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Notset)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Notset)))),*@
                         0, 0, 0, 0, 0
                     ],
                     backgroundColor: '#d8d8d8',

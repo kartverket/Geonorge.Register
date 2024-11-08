@@ -1279,9 +1279,9 @@
     <Compile Include="Migrations\202411060840326_AddFairDatasetType.designer.cs">
       <DependentUpon>202411060840326_AddFairDatasetType.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202411071351472_AddFairReport.cs" />
-    <Compile Include="Migrations\202411071351472_AddFairReport.designer.cs">
-      <DependentUpon>202411071351472_AddFairReport.cs</DependentUpon>
+    <Compile Include="Migrations\202411080941025_AddFairReport.cs" />
+    <Compile Include="Migrations\202411080941025_AddFairReport.designer.cs">
+      <DependentUpon>202411080941025_AddFairReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -3334,8 +3334,8 @@
     <EmbeddedResource Include="Migrations\202411060840326_AddFairDatasetType.resx">
       <DependentUpon>202411060840326_AddFairDatasetType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411071351472_AddFairReport.resx">
-      <DependentUpon>202411071351472_AddFairReport.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202411080941025_AddFairReport.resx">
+      <DependentUpon>202411080941025_AddFairReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

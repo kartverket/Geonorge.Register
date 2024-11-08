@@ -13,7 +13,7 @@ namespace Kartverket.Register.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202411071351472_AddFairReport"; }
+            get { return "202411080941025_AddFairReport"; }
         }
         
         string IMigrationMetadata.Source

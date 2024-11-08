@@ -142,6 +142,11 @@ namespace Kartverket.Register.Models.ViewModels
                 {
                     return new MareanoDatasetStatusReportViewModel(statusReport, statusReports, filter.StatusType);
                 }
+
+                if (statusReport.IsFairDatasetReport())
+                {
+                    return new FairDatasetStatusReportViewModel(statusReport, statusReports, filter.StatusType);
+                }
             }
             return null;
         }

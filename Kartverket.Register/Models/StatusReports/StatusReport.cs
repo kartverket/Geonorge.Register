@@ -70,6 +70,11 @@ namespace Kartverket.Register.Models
             return StatusRegisterItems.FirstOrDefault() is MareanoDatasetStatusReport;
         }
 
+        public bool IsFairDatasetReport()
+        {
+            return StatusRegisterItems.FirstOrDefault() is FairDatasetStatusReport;
+        }
+
         public bool IsInspireDataserviceReport()
         {
             return StatusRegisterItems.FirstOrDefault() is InspireDataserviceStatusReport;

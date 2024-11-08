@@ -19,6 +19,27 @@ namespace Kartverket.Register.Services
 
         public void CreateStatusReport(Models.Register register, bool latestSavedDataReport = false)
         {
+            if (latestSavedDataReport)
+            {
+                if (register.IsMareanoStatusRegister())
+                {
+                    var mareanoRegistryId = Guid.Parse(GlobalVariables.MareanoRegistryId);
+                    var currentReport = _dbContext.StatusReports.Where(s => s.Register.systemId == mareanoRegistryId && s.LatestSavedDataReport).FirstOrDefault();
+                    if (currentReport != null)
+                    {
+                        _dbContext.Database.ExecuteSqlCommand("DELETE FROM RegisterItemStatusReports Where StatusReport_Id ='" + currentReport.Id + "'; DELETE FROM StatusReports WHERE Id = '" + currentReport.Id + "'");
+                    }
+                }
+                if (register.IsFairStatusRegister())
+                {
+                    var fairRegistryId = Guid.Parse(GlobalVariables.FairRegistryId);
+                    var currentReport = _dbContext.StatusReports.Where(s => s.Register.systemId == fairRegistryId && s.LatestSavedDataReport).FirstOrDefault();
+                    if (currentReport != null)
+                    {
+                        _dbContext.Database.ExecuteSqlCommand("DELETE FROM RegisterItemStatusReports Where StatusReport_Id ='" + currentReport.Id + "'; DELETE FROM StatusReports WHERE Id = '" + currentReport.Id + "'");
+                    }
+                }
+            }
 
             var statusReport = new StatusReport(latestSavedDataReport);
             statusReport.Register = register;
@@ -52,30 +73,12 @@ namespace Kartverket.Register.Services
 
                 if (item is MareanoDataset mareanoDataset)
                 {
-                    if (latestSavedDataReport)
-                    {
-                        var mareanoRegistryId = Guid.Parse(GlobalVariables.MareanoRegistryId);
-                        var currentReport = _dbContext.StatusReports.Where(s => s.Register.systemId == mareanoRegistryId && s.LatestSavedDataReport).FirstOrDefault();
-                        if (currentReport != null)
-                        {
-                            _dbContext.Database.ExecuteSqlCommand("DELETE FROM RegisterItemStatusReports Where StatusReport_Id ='" + currentReport.Id + "'; DELETE FROM StatusReports WHERE Id = '" + currentReport.Id + "'");
-                        }
-                    }
                     var mareanoDatasetStatuses = new MareanoDatasetStatusReport(mareanoDataset);
                     statusReport.StatusRegisterItems.Add(mareanoDatasetStatuses);
                 }
 
                 if (item is FairDataset fairDataset)
                 {
-                    if (latestSavedDataReport)
-                    {
-                        var fairRegistryId = Guid.Parse(GlobalVariables.FairRegistryId);
-                        var currentReport = _dbContext.StatusReports.Where(s => s.Register.systemId == fairRegistryId && s.LatestSavedDataReport).FirstOrDefault();
-                        if (currentReport != null)
-                        {
-                            _dbContext.Database.ExecuteSqlCommand("DELETE FROM RegisterItemStatusReports Where StatusReport_Id ='" + currentReport.Id + "'; DELETE FROM StatusReports WHERE Id = '" + currentReport.Id + "'");
-                        }
-                    }
                     var fairDatasetStatuses = new FairDatasetStatusReport(fairDataset);
                     statusReport.StatusRegisterItems.Add(fairDatasetStatuses);
                 }
@@ -227,6 +230,30 @@ namespace Kartverket.Register.Services
             return mareanoStatusReports;
         }
 
+        public List<StatusReport> GetFairStatusReports(int numberOfReports = 0)
+        {
+            List<StatusReport> statusReports = GetStatusReports();
+            statusReports = statusReports.OrderByDescending(d => d.Date).ToList();
+            List<StatusReport> fairStatusReports = new List<StatusReport>();
+
+            foreach (var report in statusReports)
+            {
+                if (report.IsFairDatasetReport())
+                {
+                    fairStatusReports.Add(report);
+                    if (numberOfReports != 0)
+                    {
+                        if (fairStatusReports.Count > numberOfReports)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return fairStatusReports;
+        }
+
         public List<StatusReport> GetStatusReportsByRegister(Models.Register register, int numberOfReports = 0)
         {
             if (register.IsDokStatusRegister())
@@ -247,6 +274,11 @@ namespace Kartverket.Register.Services
             if (register.IsMareanoStatusRegister())
             {
                 return GetMareanoStatusReports(numberOfReports);
+            }
+
+            if (register.IsFairStatusRegister())
+            {
+                return GetFairStatusReports(numberOfReports);
             }
 
             return new List<StatusReport>();

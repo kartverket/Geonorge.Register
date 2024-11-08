@@ -18,10 +18,10 @@
 }
 
 @section Scripts {
-    @*@if (Model.StatusReport != null && !Model.StatusReport.ReportNotExists)
+    @if (Model.StatusReport != null && !Model.StatusReport.ReportNotExists)
         {
             @Html.Partial("js/_FairReportCharts", (FairDatasetStatusReportViewModel)Model.StatusReport)
-        }*@
+        }
 
     <script>
 

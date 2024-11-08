@@ -278,6 +278,26 @@ namespace Kartverket.Register.Controllers
                 return Ok(new MareanoDatasetStatusReport(statusReport));
             }
 
+            if (statusReport.IsFairDatasetReport())
+            {
+                if (!string.IsNullOrEmpty(filter.filterOrganization))
+                {
+                    List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
+                    foreach (Kartverket.Register.Models.StatusReports.FairDatasetStatusReport item in statusReport.StatusRegisterItems)
+                    {
+
+                        if (item.OrganizationSeoName == filter.filterOrganization)
+                            reportItems.Add(item);
+                    }
+
+                    statusReport.StatusRegisterItems = reportItems;
+                }
+
+
+
+                return Ok(new FairDatasetStatusReport(statusReport));
+            }
+
             return Ok();
 
 

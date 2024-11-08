@@ -345,13 +345,16 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrEmpty(filter.filterOrganization))
             {
                 List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
-                foreach (FairDatasetStatusReport item in statusReport.StatusRegisterItems)
+                if(statusReport != null && statusReport.StatusRegisterItems != null)
                 {
-                    if (item.OrganizationSeoName == filter.filterOrganization)
-                        reportItems.Add(item);
-                }
+                    foreach (FairDatasetStatusReport item in statusReport.StatusRegisterItems)
+                    {
+                        if (item.OrganizationSeoName == filter.filterOrganization)
+                            reportItems.Add(item);
+                    }
 
-                statusReport.StatusRegisterItems = reportItems;
+                    statusReport.StatusRegisterItems = reportItems;
+                }
 
                 List<StatusReport> fairStatusReportsOrganization = new List<StatusReport>();
 

@@ -23,7 +23,6 @@ namespace Kartverket.Register.Models.StatusReports
         public string WfsMareanoDataset { get; set; }
         public string AtomFeedMareanoDataset { get; set; }
         public string CommonStatusMareanoDataset { get; set; }
-        public float? Grade { get; set; }
 
         public MareanoDatasetStatusReport()
         {

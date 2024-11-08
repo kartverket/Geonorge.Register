@@ -1279,6 +1279,10 @@
     <Compile Include="Migrations\202411060840326_AddFairDatasetType.designer.cs">
       <DependentUpon>202411060840326_AddFairDatasetType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411080941025_AddFairReport.cs" />
+    <Compile Include="Migrations\202411080941025_AddFairReport.designer.cs">
+      <DependentUpon>202411080941025_AddFairReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1323,6 +1327,7 @@
     <Compile Include="Models\MareanoDataset.cs" />
     <Compile Include="Models\NamespaceDataset.cs" />
     <Compile Include="Models\Station.cs" />
+    <Compile Include="Models\StatusReports\FairDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
     <Compile Include="Models\Tag.cs" />
@@ -1330,6 +1335,8 @@
     <Compile Include="Models\ViewModels\FairDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\MareanoDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\FairDatasetStatusReportViewModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\FairLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoDatasetStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\GeodatalovDatasetStatusReportViewModel.cs" />
@@ -2706,6 +2713,8 @@
     <Content Include="Views\Shared\_fairDataset.cshtml" />
     <Content Include="Views\Registers\DetailsFairStatusRegistry.cshtml" />
     <Content Include="Views\Shared\_detailsFairDataset.cshtml" />
+    <Content Include="Views\Shared\_fairReport.cshtml" />
+    <Content Include="Views\Registers\js\_fairReportCharts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -3324,6 +3333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411060840326_AddFairDatasetType.resx">
       <DependentUpon>202411060840326_AddFairDatasetType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411080941025_AddFairReport.resx">
+      <DependentUpon>202411080941025_AddFairReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

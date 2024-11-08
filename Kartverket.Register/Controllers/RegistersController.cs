@@ -338,49 +338,47 @@ namespace Kartverket.Register.Controllers
 
             register = FilterRegisterItems(register, filter);
 
-            //todo report
-            //List<StatusReport> fairStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
-            //fairStatusReports = fairStatusReports.OrderBy(o => o.Date).ToList();
-            //StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : fairStatusReports.OrderByDescending(o => o.Date).FirstOrDefault();
+            List<StatusReport> fairStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+            fairStatusReports = fairStatusReports.OrderBy(o => o.Date).ToList();
+            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : fairStatusReports.OrderByDescending(o => o.Date).FirstOrDefault();
 
-            //if (!string.IsNullOrEmpty(filter.filterOrganization))
-            //{
-            //    List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
-            //    foreach (FairDatasetStatusReport item in statusReport.StatusRegisterItems)
-            //    {
-            //        if (item.OrganizationSeoName == filter.filterOrganization)
-            //            reportItems.Add(item);
-            //    }
+            if (!string.IsNullOrEmpty(filter.filterOrganization))
+            {
+                List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
+                foreach (FairDatasetStatusReport item in statusReport.StatusRegisterItems)
+                {
+                    if (item.OrganizationSeoName == filter.filterOrganization)
+                        reportItems.Add(item);
+                }
 
-            //    statusReport.StatusRegisterItems = reportItems;
+                statusReport.StatusRegisterItems = reportItems;
 
-            //    List<StatusReport> fairStatusReportsOrganization = new List<StatusReport>();
+                List<StatusReport> fairStatusReportsOrganization = new List<StatusReport>();
 
-            //    foreach (var mareanoStatusReport in fairStatusReports)
-            //    {
-            //        StatusReport statusReportOrg = fairStatusReport;
-            //        List<RegisterItemStatusReport> reportItemsOrg = new List<RegisterItemStatusReport>();
-            //        foreach (FairDatasetStatusReport itemOrg in fairStatusReport.StatusRegisterItems)
-            //        {
-            //            if (itemOrg.OrganizationSeoName == filter.filterOrganization)
-            //                reportItemsOrg.Add(itemOrg);
-            //        }
+                foreach (var fairStatusReport in fairStatusReports)
+                {
+                    StatusReport statusReportOrg = fairStatusReport;
+                    List<RegisterItemStatusReport> reportItemsOrg = new List<RegisterItemStatusReport>();
+                    foreach (FairDatasetStatusReport itemOrg in fairStatusReport.StatusRegisterItems)
+                    {
+                        if (itemOrg.OrganizationSeoName == filter.filterOrganization)
+                            reportItemsOrg.Add(itemOrg);
+                    }
 
-            //        statusReportOrg.StatusRegisterItems = reportItemsOrg;
+                    statusReportOrg.StatusRegisterItems = reportItemsOrg;
 
-            //        fairStatusReportsOrganization.Add(statusReportOrg);
-            //    }
+                    fairStatusReportsOrganization.Add(statusReportOrg);
+                }
 
-            //    fairStatusReports = fairStatusReportsOrganization;
+                fairStatusReports = fairStatusReportsOrganization;
 
-            //}
+            }
 
-            var viewModel = new RegisterV2ViewModel(register, filter, null, null, null);
-            //var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, fairStatusReports);
-            //viewModel.SelectedFairTab = filter.FairSelectedTab;
-            //var organizations = orgList.Select(s => new { name = s.name, seoname = s.seoname });
-            //organizations = organizations.Prepend(new { name = "Alle", seoname = "" });
-            //ViewBag.filterOrganization = organizations;
+            var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, fairStatusReports);
+            viewModel.SelectedFairTab = filter.FairSelectedTab;
+            var organizations = orgList.Select(s => new { name = s.name, seoname = s.seoname });
+            organizations = organizations.Prepend(new { name = "Alle", seoname = "" });
+            ViewBag.filterOrganization = organizations;
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
 
             ItemsOrderBy(sorting, viewModel);

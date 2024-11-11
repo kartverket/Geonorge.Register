@@ -12,6 +12,7 @@ using Kartverket.Register.Services.RegisterItem;
 using GeoNorgeAPI;
 using Kartverket.Register.Models.FAIR;
 using System.Net;
+using Kartverket.Register.Models.Api;
 
 namespace Kartverket.Register.Services
 {
@@ -317,7 +318,7 @@ namespace Kartverket.Register.Services
 
         public void SynchronizeFairDatasets()
         {
-            var FairDatasetsFromKartkatalogen = FetchFairDatasetsFromKartkatalogen();
+            var FairDatasetsFromKartkatalogen = FetchFairDatasets();
             if (FairDatasetsFromKartkatalogen != null && FairDatasetsFromKartkatalogen.Count > 0)
             {
                 RemoveFairDatasets(FairDatasetsFromKartkatalogen);
@@ -771,11 +772,11 @@ namespace Kartverket.Register.Services
             return FairDatasets;
         }
 
-        private List<FairDataset> FetchFairDatasetsFromKartkatalogen()
+        private List<FairDataset> FetchFairDatasets()
         {
-            var FairDatasetsFromKartkatalogen = new List<FairDataset>();
+            var fairDatasetsFromKartkatalogen = new List<FairDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search?facets[0]name=nationalinitiative&facets[0]value=Det%20offentlige%20kartgrunnlaget&facets[1]name=nationalinitiative&facets[1]value=Mareano&facets[2]name=nationalinitiative&facets[2]value=MarineGrunnkart&facets[3]name=type&facets[3]value=dataset&limit=6000&mediatype=json&listhidden=true";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search?facets[0]name=nationalinitiative&facets[0]value=Mareano&facets[1]name=nationalinitiative&facets[1]value=MarineGrunnkart&facets[2]name=type&facets[2]value=dataset&limit=6000&mediatype=json&listhidden=true";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {
@@ -790,11 +791,23 @@ namespace Kartverket.Register.Services
                         var FairDataset = _metadataService.FetchFairDatasetFromKartkatalogen(item.Uuid.ToString());
                         if (FairDataset != null)
                         {
-                            FairDatasetsFromKartkatalogen.Add(FairDataset);
+                            fairDatasetsFromKartkatalogen.Add(FairDataset);
                         }
                     }
                 }
-                return FairDatasetsFromKartkatalogen;
+
+                var register = _registerService.GetDokStatusRegister();
+
+                foreach (var dataset in register.items.Cast<Dataset>().ToList())
+                {
+                    var fairDataset = _metadataService.FetchFairDatasetFromKartkatalogen(dataset.Uuid);
+                    if (fairDataset != null)
+                    {
+                        fairDatasetsFromKartkatalogen.Add(fairDataset);
+                    }
+                }
+
+                return fairDatasetsFromKartkatalogen;
             }
             catch (Exception e)
             {

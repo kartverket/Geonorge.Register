@@ -289,6 +289,16 @@ namespace Kartverket.Register.Services
 
         public void DeleteFairDataset(FairDataset FairDataset)
         {
+            if (FairDataset.FairDatasetTypes != null && FairDataset.FairDatasetTypes.Count > 0)
+            {
+                foreach (var fairDatasetType in FairDataset.FairDatasetTypes.ToList())
+                {
+                    _dbContext.Entry(fairDatasetType).State = EntityState.Deleted;
+                }
+                FairDataset.FairDatasetTypes.Clear();
+                _dbContext.SaveChanges();
+            }
+
             _dbContext.FairDatasets.Remove(FairDataset);
 
             //Todo, må slette deliveryDataset?
@@ -764,7 +774,7 @@ namespace Kartverket.Register.Services
 
         private List<FairDataset> GetFairDatasets()
         {
-            var queryResultsRegisterItem = from d in _dbContext.FairDatasets
+            var queryResultsRegisterItem = from d in _dbContext.FairDatasets.Include("FairDatasetTypes")
                                            where !string.IsNullOrEmpty(d.Uuid)
                                            select d;
 

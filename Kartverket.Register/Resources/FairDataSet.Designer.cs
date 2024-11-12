@@ -475,6 +475,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tilgangsrettigheter skal være oppgitt (vekt 10).
+        /// </summary>
+        public static string R1_b_Criteria {
+            get {
+                return ResourceManager.GetString("R1_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to R1: Lisens skal være oppgitt og oppslagbar..
         /// </summary>
         public static string R1_Label {
@@ -529,11 +538,29 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Formål skal være utfylt (vekt 5).
+        ///   Looks up a localized string similar to Bruksområde skal være utfylt (vekt 5).
         /// </summary>
         public static string R2_f_Criteria {
             get {
                 return ResourceManager.GetString("R2_f_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata kontakt skal være oppgitt (vekt 5).
+        /// </summary>
+        public static string R2_g_Criteria {
+            get {
+                return ResourceManager.GetString("R2_g_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teknisk kontakt skal være oppgitt (vekt 5).
+        /// </summary>
+        public static string R2_h_Criteria {
+            get {
+                return ResourceManager.GetString("R2_h_Criteria", resourceCulture);
             }
         }
         
@@ -547,7 +574,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata skal følge standardene: ISO19115 og DCAT-AP-NO (vekt 15).
+        ///   Looks up a localized string similar to Metadata skal følge standardene: ISO19115 og DCAT-AP-NO (vekt 5).
         /// </summary>
         public static string R3_a_Criteria {
             get {
@@ -556,7 +583,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett leveres på internasjonale åpne vektorformater som GML eller raster/griddede data som TIFF/JPEG/NetCDF (vekt 15).
+        ///   Looks up a localized string similar to Datasett leveres på internasjonale åpne vektorformater som GML eller raster/griddede data som TIFF/JPEG/NetCDF (vekt 5).
         /// </summary>
         public static string R3_b_Criteria {
             get {

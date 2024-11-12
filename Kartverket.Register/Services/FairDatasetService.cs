@@ -523,6 +523,7 @@ namespace Kartverket.Register.Services
             int reusableWeight = 0;
 
             FairDataset.R1_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.Constraints?.UseConstraintsLicenseLink);
+            FairDataset.R1_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.Constraints?.AccessConstraintsLink);
             FairDataset.R2_a_Criteria = _metadata.SimpleMetadata?.ProcessHistory.Count() > 200;
             FairDataset.R2_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.MaintenanceFrequency);
             FairDataset.R2_c_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ProductSpecificationUrl);
@@ -531,18 +532,25 @@ namespace Kartverket.Register.Services
                                            || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageGridUrl)
                                            || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageCellUrl);
 
-            FairDataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.Purpose);
+            FairDataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.SpecificUsage);
+
+            FairDataset.R2_g_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ContactMetadata?.Organization);
+            FairDataset.R2_h_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ContactPublisher?.Organization);
+
             FairDataset.R3_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML" || p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000" || p.FormatName == "NetCDF" || p.FormatName == "NetCDF-CF").Any();
 
             if (FairDataset.R1_a_Criteria) reusableWeight += 30;
+            if (FairDataset.R1_b_Criteria) reusableWeight += 10; 
             if (FairDataset.R2_a_Criteria) reusableWeight += 10;
             if (FairDataset.R2_b_Criteria) reusableWeight += 5;
             if (FairDataset.R2_c_Criteria) reusableWeight += 10;
             if (FairDataset.R2_d_Criteria) reusableWeight += 5;
             if (FairDataset.R2_e_Criteria) reusableWeight += 5;
             if (FairDataset.R2_f_Criteria) reusableWeight += 5;
-            if (FairDataset.R3_a_Criteria) reusableWeight += 15;
-            if (FairDataset.R3_b_Criteria) reusableWeight += 15;
+            if (FairDataset.R2_g_Criteria) reusableWeight += 5;
+            if (FairDataset.R2_h_Criteria) reusableWeight += 5;
+            if (FairDataset.R3_a_Criteria) reusableWeight += 5;
+            if (FairDataset.R3_b_Criteria) reusableWeight += 5;
 
             FairDataset.ReUseableStatusPerCent = reusableWeight;
             FairDataset.ReUseableStatusId = CreateFairDelivery(reusableWeight);

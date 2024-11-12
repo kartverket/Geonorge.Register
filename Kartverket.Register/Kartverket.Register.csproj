@@ -1287,6 +1287,10 @@
     <Compile Include="Migrations\202411120912139_AddPropertiesForFindable.designer.cs">
       <DependentUpon>202411120912139_AddPropertiesForFindable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411121658004_AddPropertiesForReusable.cs" />
+    <Compile Include="Migrations\202411121658004_AddPropertiesForReusable.designer.cs">
+      <DependentUpon>202411121658004_AddPropertiesForReusable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3344,6 +3348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411120912139_AddPropertiesForFindable.resx">
       <DependentUpon>202411120912139_AddPropertiesForFindable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411121658004_AddPropertiesForReusable.resx">
+      <DependentUpon>202411121658004_AddPropertiesForReusable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

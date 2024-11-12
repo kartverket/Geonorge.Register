@@ -2748,7 +2748,7 @@
         </member>
         <member name="P:Resources.FairDataSet.I2_a_Criteria">
             <summary>
-              Looks up a localized string similar to Tematisk hovedkategori må være utfylt i metadata for å kategorisere datasettet i en internasjonal kontekst (vekt 10).
+              Looks up a localized string similar to Nøkkelord fra minst ett vokabular (tesaurus) må være fylt ut. (vekt 10).
             </summary>
         </member>
         <member name="P:Resources.FairDataSet.I2_b_Criteria">
@@ -2806,6 +2806,11 @@
               Looks up a localized string similar to Lisenser som ligger i Geonorge-registeret tilfredsstiller dette kravet (vekt 30).
             </summary>
         </member>
+        <member name="P:Resources.FairDataSet.R1_b_Criteria">
+            <summary>
+              Looks up a localized string similar to Tilgangsrettigheter skal være oppgitt (vekt 10).
+            </summary>
+        </member>
         <member name="P:Resources.FairDataSet.R1_Label">
             <summary>
               Looks up a localized string similar to R1: Lisens skal være oppgitt og oppslagbar..
@@ -2838,7 +2843,17 @@
         </member>
         <member name="P:Resources.FairDataSet.R2_f_Criteria">
             <summary>
-              Looks up a localized string similar to Formål skal være utfylt (vekt 5).
+              Looks up a localized string similar to Bruksområde skal være utfylt (vekt 5).
+            </summary>
+        </member>
+        <member name="P:Resources.FairDataSet.R2_g_Criteria">
+            <summary>
+              Looks up a localized string similar to Metadata kontakt skal være oppgitt (vekt 5).
+            </summary>
+        </member>
+        <member name="P:Resources.FairDataSet.R2_h_Criteria">
+            <summary>
+              Looks up a localized string similar to Teknisk kontakt skal være oppgitt (vekt 5).
             </summary>
         </member>
         <member name="P:Resources.FairDataSet.R2_Label">
@@ -2848,12 +2863,12 @@
         </member>
         <member name="P:Resources.FairDataSet.R3_a_Criteria">
             <summary>
-              Looks up a localized string similar to Metadata skal følge standardene: ISO19115 og DCAT-AP-NO (vekt 15).
+              Looks up a localized string similar to Metadata skal følge standardene: ISO19115 og DCAT-AP-NO (vekt 5).
             </summary>
         </member>
         <member name="P:Resources.FairDataSet.R3_b_Criteria">
             <summary>
-              Looks up a localized string similar to Datasett leveres på internasjonale åpne vektorformater som GML eller raster/griddede data som TIFF/JPEG/NetCDF (vekt 15).
+              Looks up a localized string similar to Datasett leveres på internasjonale åpne vektorformater som GML eller raster/griddede data som TIFF/JPEG/NetCDF (vekt 5).
             </summary>
         </member>
         <member name="P:Resources.FairDataSet.R3_Label">

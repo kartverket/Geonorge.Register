@@ -258,6 +258,9 @@
   <data name="R1_a_Criteria" xml:space="preserve">
     <value>Licenses in the Geonorge register meet this requirement (weight 30)</value>
   </data>
+  <data name="R1_b_Criteria" xml:space="preserve">
+    <value>Access rights must be specified (weight 10)</value>
+  </data>
   <data name="R1_Label" xml:space="preserve">
     <value>R1.1: (Meta)data are released with a clear and accessible and resolvable data usage license</value>
   </data>
@@ -277,16 +280,22 @@
     <value>Coverage map must be provided in the metadata (by municipality or grid) (weight 5)</value>
   </data>
   <data name="R2_f_Criteria" xml:space="preserve">
-    <value>Purpose must be provided in the metadata (weight 5)</value>
+    <value>Specific usage must be provided in the metadata (weight 5)</value>
+  </data>
+  <data name="R2_g_Criteria" xml:space="preserve">
+    <value>Metadata contact must be provided  (weight 5)</value>
+  </data>
+  <data name="R2_h_Criteria" xml:space="preserve">
+    <value>Technical contact must be provided  (weight 5)</value>
   </data>
   <data name="R2_Label" xml:space="preserve">
     <value>R1.2: Metadata about quality, coverage, processing, calculations, etc. must be provided.</value>
   </data>
   <data name="R3_a_Criteria" xml:space="preserve">
-    <value>Metadata must follow the standards: ISO19115 and DCAT-AP-NO (weight 15)</value>
+    <value>Metadata must follow the standards: ISO19115 and DCAT-AP-NO (weight 5)</value>
   </data>
   <data name="R3_b_Criteria" xml:space="preserve">
-    <value>Datasets are delivered on international open vector formats such as GML or raster / gridded data such as TIFF / JPEG / NetCDF (weight 15)</value>
+    <value>Datasets are delivered on international open vector formats such as GML or raster / gridded data such as TIFF / JPEG / NetCDF (weight 5)</value>
   </data>
   <data name="R3_Label" xml:space="preserve">
     <value>R1.3 (Meta)data meet domain-relevant community standards</value>

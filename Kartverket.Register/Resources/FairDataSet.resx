@@ -193,10 +193,10 @@
     <value>Det sjekkes om datasett er tilgjengelig som en nedlastningstjeneste for forhåndsdefinerte geografiske områder (Atom Feed) (vekt 5)</value>
   </data>
   <data name="A1_e_Criteria" xml:space="preserve">
-    <value>Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons (vekt 40)</value>
+    <value>Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons (vekt 50)</value>
   </data>
   <data name="A1_f_Criteria" xml:space="preserve">
-    <value>Protokoller skal støtte autentisering og autorisasjon (vekt 10)</value>
+    <value>Protokoller skal støtte autentisering og autorisasjon</value>
   </data>
   <data name="A2_a_Criteria" xml:space="preserve">
     <value>Det sjekkes ikke på dette punktet da Mareano-data skal være tilgjengelige for nedlastning (vekt 0)</value>

@@ -14,6 +14,8 @@ using Kartverket.Register.Models.FAIR;
 using System.Net;
 using Kartverket.Register.Models.Api;
 using System.Runtime.Remoting.MetadataServices;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Kartverket.Register.Services
 {
@@ -26,6 +28,7 @@ namespace Kartverket.Register.Services
         private readonly MetadataService _metadataService;
         MetadataModel _metadata;
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly HttpClient _httpClient = new HttpClient();
 
         public FairDatasetService(RegisterDbContext dbContext)
         {
@@ -463,8 +466,8 @@ namespace Kartverket.Register.Services
             if (FairDataset.A1_b_Criteria) accesibleWeight += 15;
             if (FairDataset.A1_c_Criteria) accesibleWeight += 15;
             if (FairDataset.A1_d_Criteria) accesibleWeight += 5;
-            if (FairDataset.A1_e_Criteria) accesibleWeight += 40;
-            if (FairDataset.A1_f_Criteria) accesibleWeight += 10;
+            if (FairDataset.A1_e_Criteria) accesibleWeight += 50;
+            if (FairDataset.A1_f_Criteria) accesibleWeight += 0;
             if (FairDataset.A2_a_Criteria) accesibleWeight += 0;
 
             FairDataset.AccesibleStatusPerCent = accesibleWeight;
@@ -553,6 +556,12 @@ namespace Kartverket.Register.Services
                         string protocol = distro?.Protocol;
                         if (!string.IsNullOrEmpty(protocol) && protocol.Contains("WMTS"))
                             hasWMTS = true;
+                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Maps"))
+                            return true;
+                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Tiles"))
+                            return true;
+                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Styles"))
+                            return true;
                     }
 
                     if (hasWms || hasWMTS)
@@ -577,6 +586,14 @@ namespace Kartverket.Register.Services
                         string protocol = distro?.Protocol;
                         if (!string.IsNullOrEmpty(protocol) && protocol.Contains("WCS"))
                             hasWcs = true;
+                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Features"))
+                            return true;
+                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Coverages"))
+                            return true;
+                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("EDR"))
+                            return true;
+                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("OpenDAP"))
+                            return true;
                     }
 
                     if (hasWfs || hasWcs)
@@ -614,7 +631,18 @@ namespace Kartverket.Register.Services
 
                 if (!string.IsNullOrEmpty(url) && (url.StartsWith("https://")))
                 {
-                    return true;
+                    _httpClient.DefaultRequestHeaders.Accept.Clear();
+                    _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                    Log.Debug("Connecting to: " + url);
+
+                    HttpResponseMessage response = _httpClient.GetAsync(new Uri(url)).Result;
+
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        Log.Error("Url svarer ikke: " + url + " , statuskode: " + response.StatusCode);
+                    }
+                    else
+                        return true;
                 }
             }
 

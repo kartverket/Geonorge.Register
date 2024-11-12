@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons (vekt 40).
+        ///   Looks up a localized string similar to Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons (vekt 50).
         /// </summary>
         public static string A1_e_Criteria {
             get {
@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Protokoller skal støtte autentisering og autorisasjon (vekt 10).
+        ///   Looks up a localized string similar to Protokoller skal støtte autentisering og autorisasjon.
         /// </summary>
         public static string A1_f_Criteria {
             get {

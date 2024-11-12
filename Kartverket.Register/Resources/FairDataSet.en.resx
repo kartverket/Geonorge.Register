@@ -130,7 +130,7 @@
     <value>Checking if dataset is available as a download service for predefined datasets (Atom Feed) (weight 5)</value>
   </data>
   <data name="A1_e_Criteria" xml:space="preserve">
-    <value>It is checked whether the protocols that provide access to the datasets are openly accessible and readable with standard IT tools. Which we consider to be sufficient if one has provided a download URL with Https response (weight 40)</value>
+    <value>It is checked whether the protocols that provide access to the datasets are openly accessible and readable with standard IT tools. Which we consider to be sufficient if one has provided a download URL with Https response (weight 50)</value>
   </data>
   <data name="A1_f_Criteria" xml:space="preserve">
     <value>The protocol allows for an authentication and authorisation procedure, where necessary</value>

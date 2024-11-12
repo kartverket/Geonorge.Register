@@ -130,7 +130,7 @@
     <value>Tilfredsstillende</value>
   </data>
   <data name="F1_a_Criteria" xml:space="preserve">
-    <value>Det sjekkes at det finnes metadata i Geonorge. Alle metadata i Geonorge har stabile og unike identifikatorer som er oppslagbare og returnerer metadata på standardisert form. ( vekt 25 )</value>
+    <value>Det sjekkes at det finnes metadata i Geonorge. Alle metadata i Geonorge har stabile og unike identifikatorer som er oppslagbare og returnerer metadata på standardisert form. ( vekt 20 )</value>
   </data>
   <data name="F1_Label" xml:space="preserve">
     <value>F1: Metadata skal ha unik og stabil identifikator</value>
@@ -142,7 +142,7 @@
     <value>Tittel bør maksimalt være på 105 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5)</value>
   </data>
   <data name="F2_c_Criteria" xml:space="preserve">
-    <value>Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet og ikke lengre enn 600 tegn, da det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produktspesifikasjoner, produktark m.m. (vekt 10)</value>
+    <value>Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet. Det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produktspesifikasjoner, produktark m.m. (vekt 10)</value>
   </data>
   <data name="F2_Label" xml:space="preserve">
     <value>F2: Det skal finnes gode søkemetadata</value>
@@ -341,5 +341,11 @@
   </data>
   <data name="Productspesification" xml:space="preserve">
     <value>Produktspesifikasjon</value>
+  </data>
+  <data name="F2_d_Criteria" xml:space="preserve">
+    <value>Geo-søk. Geografisk utstrekning skal være angitt (vekt 10).</value>
+  </data>
+  <data name="F2_e_Criteria" xml:space="preserve">
+    <value>Tidsbasert søk. Opprettet dato skal være oppgitt i metadata (vekt 5).</value>
   </data>
 </root>

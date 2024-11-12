@@ -13,6 +13,7 @@ using GeoNorgeAPI;
 using Kartverket.Register.Models.FAIR;
 using System.Net;
 using Kartverket.Register.Models.Api;
+using System.Runtime.Remoting.MetadataServices;
 
 namespace Kartverket.Register.Services
 {
@@ -430,17 +431,21 @@ namespace Kartverket.Register.Services
             if (_metadata?.SimpleMetadata == null)
                 return;
 
-            FairDataset.F2_a_Criteria = _metadata.SimpleMetadata.Keywords.ToList().Count() >= 3;
+            FairDataset.F2_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords.ToList(), SimpleKeyword.TYPE_THEME, null)?.Count() >= 3;
             FairDataset.F2_b_Criteria = _metadata.SimpleMetadata.Title.Count() <= 105;
-            FairDataset.F2_c_Criteria = _metadata.SimpleMetadata.Abstract?.Count() >= 200 && _metadata.SimpleMetadata.Abstract?.Count() <= 600;
+            FairDataset.F2_c_Criteria = _metadata.SimpleMetadata.Abstract?.Count() >= 200;
+            FairDataset.F2_d_Criteria = _metadata.SimpleMetadata.BoundingBox != null;
+            FairDataset.F2_e_Criteria = _metadata.SimpleMetadata.DateCreated != null;
             FairDataset.F3_a_Criteria = _metadata.SimpleMetadata.ResourceReference != null ? _metadata.SimpleMetadata.ResourceReference?.Code != null && _metadata.SimpleMetadata.ResourceReference?.Codespace != null : false;
 
-            if (FairDataset.F1_a_Criteria) findableWeight += 25;
+            if (FairDataset.F1_a_Criteria) findableWeight += 20;
             if (FairDataset.F2_a_Criteria) findableWeight += 10;
             if (FairDataset.F2_b_Criteria) findableWeight += 5;
             if (FairDataset.F2_c_Criteria) findableWeight += 10;
-            if (FairDataset.F3_a_Criteria) findableWeight += 25;
-            if (FairDataset.F4_a_Criteria) findableWeight += 25;
+            if (FairDataset.F2_d_Criteria) findableWeight += 10;
+            if (FairDataset.F2_e_Criteria) findableWeight += 5; 
+            if (FairDataset.F3_a_Criteria) findableWeight += 20;
+            if (FairDataset.F4_a_Criteria) findableWeight += 20;
 
             FairDataset.FindableStatusPerCent = findableWeight;
             FairDataset.FindableStatusId = CreateFairDelivery(findableWeight);

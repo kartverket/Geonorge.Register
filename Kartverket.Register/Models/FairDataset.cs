@@ -56,6 +56,12 @@ namespace Kartverket.Register.Models
         [Display(Name = "F2_c_Criteria", ResourceType = typeof(FairDataSet))]
         public bool F2_c_Criteria { get; set; } = false;
 
+        [Display(Name = "F2_d_Criteria", ResourceType = typeof(FairDataSet))]
+        public bool F2_d_Criteria { get; set; } = false;
+
+        [Display(Name = "F2_e_Criteria", ResourceType = typeof(FairDataSet))]
+        public bool F2_e_Criteria { get; set; } = false;
+
         [Display(Name = "F3_a_Criteria", ResourceType = typeof(FairDataSet))]
         public bool F3_a_Criteria { get; set; } = false;
 

@@ -169,7 +169,7 @@
     <value>Download requirements</value>
   </data>
   <data name="F1_a_Criteria" xml:space="preserve">
-    <value>It is checked that there is metadata in Geonorge. (All metadata in Geonorge have persistent and unique identifiers and are searchable on the web). The request returns metadata in a standardized form. (weight 25)</value>
+    <value>It is checked that there is metadata in Geonorge. (All metadata in Geonorge have persistent and unique identifiers and are searchable on the web). The request returns metadata in a standardized form. (weight 20)</value>
   </data>
   <data name="F1_Label" xml:space="preserve">
     <value>F1: (Meta)data are assigned a globally unique and persistent identifier</value>
@@ -181,7 +181,13 @@
     <value>Title should be a maximum of 105 characters to provide a simple and consistent name that is easy searchable (weight 5)</value>
   </data>
   <data name="F2_c_Criteria" xml:space="preserve">
-    <value>The description should be at least 200 characters to be able to provide sufficient information about the dataset and not longer than 600 characters to obtain a good but concise and precise description of what the dataset contains. (There are specific metadata elements where you can enter supplementary information, lineage, quality, update frequency, possibly link to other documentation such as Data Product Specifications, Product sheets, etc). (weight 10)</value>
+    <value>The description should be at least 200 characters to be able to provide sufficient information about the dataset to obtain a good but concise and precise description of what the dataset contains. (There are specific metadata elements where you can enter supplementary information, lineage, quality, update frequency, possibly link to other documentation such as Data Product Specifications, Product sheets, etc). (weight 10)</value>
+  </data>
+  <data name="F2_d_Criteria" xml:space="preserve">
+    <value>Geo-search. Geographical extent must be specified.</value>
+  </data>
+  <data name="F2_e_Criteria" xml:space="preserve">
+    <value>Time-based search. Date of creation must be stated in metadata.</value>
   </data>
   <data name="F2_Label" xml:space="preserve">
     <value>F2: Data are described with rich metadata</value>

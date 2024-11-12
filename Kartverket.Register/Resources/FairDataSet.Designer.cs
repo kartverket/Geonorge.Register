@@ -205,7 +205,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det sjekkes at det finnes metadata i Geonorge. Alle metadata i Geonorge har stabile og unike identifikatorer som er oppslagbare og returnerer metadata på standardisert form. ( vekt 25 ).
+        ///   Looks up a localized string similar to Det sjekkes at det finnes metadata i Geonorge. Alle metadata i Geonorge har stabile og unike identifikatorer som er oppslagbare og returnerer metadata på standardisert form. ( vekt 20 ).
         /// </summary>
         public static string F1_a_Criteria {
             get {
@@ -241,11 +241,29 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet og ikke lengre enn 600 tegn, da det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produktspesifikasjoner, produktark m.m. (vekt 10).
+        ///   Looks up a localized string similar to Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet. Det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produktspesifikasjoner, produktark m.m. (vekt 10).
         /// </summary>
         public static string F2_c_Criteria {
             get {
                 return ResourceManager.GetString("F2_c_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geo-søk. Geografisk utstrekning skal være angitt (vekt 10)..
+        /// </summary>
+        public static string F2_d_Criteria {
+            get {
+                return ResourceManager.GetString("F2_d_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tidsbasert søk. Opprettet dato skal være oppgitt i metadata (vekt 5)..
+        /// </summary>
+        public static string F2_e_Criteria {
+            get {
+                return ResourceManager.GetString("F2_e_Criteria", resourceCulture);
             }
         }
         

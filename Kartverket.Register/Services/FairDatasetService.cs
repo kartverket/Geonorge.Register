@@ -478,13 +478,13 @@ namespace Kartverket.Register.Services
             var spatialRepresentation = _metadata.SimpleMetadata.SpatialRepresentation;
             if (spatialRepresentation == "vector")
             {
-                FairDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
+                FairDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML" || p.FormatName == "GeoJSON" || p.FormatName == "JSON-FG" || p.FormatName == "JSON-LD" || p.FormatName == "GeoPackage" || p.FormatName == "COPC" || p.FormatName == "GeoParquet" || p.FormatName == "Shape").Any();
                 if (!FairDataset.I1_b_Criteria)
                     FairDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "NetCDF-CF").Any();
             }
             else if (spatialRepresentation == "grid")
             {
-                FairDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000").Any();
+                FairDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000" || p.FormatName == "GeoPackage" || p.FormatName == "COG" || p.FormatName == "COPC").Any();
                 if (!FairDataset.I1_b_Criteria)
                     FairDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "NetCDF-CF").Any();
             }
@@ -493,10 +493,21 @@ namespace Kartverket.Register.Services
                                             ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.StartsWith("GML-filer er i henhold")).Any() : false;
             FairDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
             FairDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
-            if (spatialRepresentation != "grid")
+            if (spatialRepresentation == "vector")
             {
-                FairDataset.I3_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_CONCEPT).ToList().Count() >= 1;
-                FairDataset.I3_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
+                FairDataset.I3_a_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
+                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Title) && r.Title.Contains("SOSI produktspesifikasjon")).Any() : false;
+                if(!FairDataset.I3_a_Criteria.HasValue && !FairDataset.I3_a_Criteria.Value) 
+                { 
+                    FairDataset.I3_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
+                }
+                FairDataset.I3_b_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
+                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.Contains("er i henhold")).Any() : false;
+            }
+            else 
+            {
+                FairDataset.I3_a_Criteria = true;
+                FairDataset.I3_b_Criteria = true;
             }
             if (FairDataset.I1_a_Criteria) interoperableWeight += 20;
             if (FairDataset.I1_b_Criteria) interoperableWeight += 10;

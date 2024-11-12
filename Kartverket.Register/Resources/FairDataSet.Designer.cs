@@ -367,7 +367,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tematisk hovedkategori må være utfylt i metadata for å kategorisere datasettet i en internasjonal kontekst (vekt 10).
+        ///   Looks up a localized string similar to Nøkkelord fra minst ett vokabular (tesaurus) må være fylt ut. (vekt 10).
         /// </summary>
         public static string I2_a_Criteria {
             get {

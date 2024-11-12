@@ -491,7 +491,7 @@ namespace Kartverket.Register.Services
             if (spatialRepresentation != "grid")
                 FairDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
                                             ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.StartsWith("GML-filer er i henhold")).Any() : false;
-            FairDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
+            FairDataset.I2_a_Criteria = _metadata.SimpleMetadata.Keywords.Where(k => !string.IsNullOrEmpty(k.Thesaurus)).ToList().Count() >= 1;
             FairDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
             if (spatialRepresentation == "vector")
             {

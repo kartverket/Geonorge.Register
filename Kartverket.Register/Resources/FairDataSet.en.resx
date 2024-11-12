@@ -223,7 +223,7 @@
     <value>I1: Metadata and datasets are represented through international, well-documented and accessible standards.</value>
   </data>
   <data name="I2_a_Criteria" xml:space="preserve">
-    <value>Topic category must be filled in metadata to categorize the dataset in an international context (weight 10)</value>
+    <value>Keywords from at least one vocabulary (thesaurus) must be filled in. (weight 10)</value>
   </data>
   <data name="I2_b_Criteria" xml:space="preserve">
     <value>National theme category must be filled in metadata to categorize the dataset in a national context (weight 10)</value>

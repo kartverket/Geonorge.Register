@@ -217,7 +217,7 @@
     <value>I1: Metadata og datasett er representert gjennom internasjonale, godt dokumenterte og tilgjengelige standarder.</value>
   </data>
   <data name="I2_a_Criteria" xml:space="preserve">
-    <value>Tematisk hovedkategori må være utfylt i metadata for å kategorisere datasettet i en internasjonal kontekst (vekt 10)</value>
+    <value>Nøkkelord fra minst ett vokabular (tesaurus) må være fylt ut. (vekt 10)</value>
   </data>
   <data name="I2_b_Criteria" xml:space="preserve">
     <value>Nasjonal temakategori må være utfylt  i metadata for å kategorisere datasettet i en nasjonal kontekst (vekt 10)</value>

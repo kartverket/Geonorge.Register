@@ -14,6 +14,7 @@ namespace Kartverket.DOK.Service
 {
     public class MetadataService
     {
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly RegisterDbContext _dbContext;
         public MetadataService(RegisterDbContext dbContext)
         {
@@ -484,6 +485,7 @@ namespace Kartverket.DOK.Service
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);
+                Log.Error("Error fetching Mareano dataset from Kartkatalogen for url: url:" + url, e);
                 return null;
             }
 
@@ -577,6 +579,7 @@ namespace Kartverket.DOK.Service
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);
+                Log.Error("Error fetching Mareano dataset from Kartkatalogen for url: url:" + url, e);
                 return null;
             }
 

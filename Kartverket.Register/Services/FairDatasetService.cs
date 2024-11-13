@@ -850,7 +850,7 @@ namespace Kartverket.Register.Services
         {
             var fairDatasetsFromKartkatalogen = new List<FairDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search?facets[0]name=nationalinitiative&facets[0]value=Mareano&facets[1]name=nationalinitiative&facets[1]value=MarineGrunnkart&facets[2]name=type&facets[2]value=dataset&limit=6000&mediatype=json&listhidden=true";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets[0]name=nationalinitiative&facets[0]value=Mareano&facets[1]name=nationalinitiative&facets[1]value=MarineGrunnkart&limit=6000&mediatype=json&listhidden=true";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

@@ -485,7 +485,7 @@ namespace Kartverket.DOK.Service
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);
-                Log.Error("Error fetching Mareano dataset from Kartkatalogen for url: url:" + url, e);
+                Log.Error("Error fetching Mareano dataset from Kartkatalogen for url:" + url, e);
                 return null;
             }
 
@@ -579,7 +579,7 @@ namespace Kartverket.DOK.Service
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);
-                Log.Error("Error fetching Mareano dataset from Kartkatalogen for url: url:" + url, e);
+                Log.Error("Error fetching Fair dataset from Kartkatalogen for url:" + url, e);
                 return null;
             }
 

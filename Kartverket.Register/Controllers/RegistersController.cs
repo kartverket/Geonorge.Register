@@ -338,43 +338,49 @@ namespace Kartverket.Register.Controllers
 
             register = FilterRegisterItems(register, filter);
 
-            List<StatusReport> fairStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
-            fairStatusReports = fairStatusReports.OrderBy(o => o.Date).ToList();
-            StatusReport statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : fairStatusReports.OrderByDescending(o => o.Date).FirstOrDefault();
+            List<StatusReport> fairStatusReports = null;
+            StatusReport statusReport = null;
 
-            if (!string.IsNullOrEmpty(filter.filterOrganization))
-            {
-                List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
-                if(statusReport != null && statusReport.StatusRegisterItems != null)
+            if (filter.FairSelectedTab == "report") 
+            { 
+                fairStatusReports = _statusReportService.GetStatusReportsByRegister(register, 12);
+                fairStatusReports = fairStatusReports.OrderBy(o => o.Date).ToList();
+                statusReport = filter.SelectedReport != null ? _statusReportService.GetStatusReportById(filter.SelectedReport) : fairStatusReports.OrderByDescending(o => o.Date).FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(filter.filterOrganization))
                 {
-                    foreach (FairDatasetStatusReport item in statusReport.StatusRegisterItems)
+                    List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
+                    if(statusReport != null && statusReport.StatusRegisterItems != null)
                     {
-                        if (item.OrganizationSeoName == filter.filterOrganization)
-                            reportItems.Add(item);
+                        foreach (FairDatasetStatusReport item in statusReport.StatusRegisterItems)
+                        {
+                            if (item.OrganizationSeoName == filter.filterOrganization)
+                                reportItems.Add(item);
+                        }
+
+                        statusReport.StatusRegisterItems = reportItems;
                     }
 
-                    statusReport.StatusRegisterItems = reportItems;
-                }
+                    List<StatusReport> fairStatusReportsOrganization = new List<StatusReport>();
 
-                List<StatusReport> fairStatusReportsOrganization = new List<StatusReport>();
-
-                foreach (var fairStatusReport in fairStatusReports)
-                {
-                    StatusReport statusReportOrg = fairStatusReport;
-                    List<RegisterItemStatusReport> reportItemsOrg = new List<RegisterItemStatusReport>();
-                    foreach (FairDatasetStatusReport itemOrg in fairStatusReport.StatusRegisterItems)
+                    foreach (var fairStatusReport in fairStatusReports)
                     {
-                        if (itemOrg.OrganizationSeoName == filter.filterOrganization)
-                            reportItemsOrg.Add(itemOrg);
+                        StatusReport statusReportOrg = fairStatusReport;
+                        List<RegisterItemStatusReport> reportItemsOrg = new List<RegisterItemStatusReport>();
+                        foreach (FairDatasetStatusReport itemOrg in fairStatusReport.StatusRegisterItems)
+                        {
+                            if (itemOrg.OrganizationSeoName == filter.filterOrganization)
+                                reportItemsOrg.Add(itemOrg);
+                        }
+
+                        statusReportOrg.StatusRegisterItems = reportItemsOrg;
+
+                        fairStatusReportsOrganization.Add(statusReportOrg);
                     }
 
-                    statusReportOrg.StatusRegisterItems = reportItemsOrg;
+                    fairStatusReports = fairStatusReportsOrganization;
 
-                    fairStatusReportsOrganization.Add(statusReportOrg);
                 }
-
-                fairStatusReports = fairStatusReportsOrganization;
-
             }
 
             var viewModel = new RegisterV2ViewModel(register, filter, null, statusReport, fairStatusReports);

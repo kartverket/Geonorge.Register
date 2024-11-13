@@ -490,7 +490,7 @@ namespace Kartverket.DOK.Service
             return mareanoDataset;
         }
 
-        public FairDataset FetchFairDatasetFromKartkatalogen(string uuid)
+        public FairDataset FetchFairDatasetFromKartkatalogen(string uuid, string typeLabel = null, string typeDescription = null)
         {
             var fairDataset = new FairDataset();
             var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
@@ -544,21 +544,29 @@ namespace Kartverket.DOK.Service
 
                     fairDataset.FairDatasetTypes = new List<FairDatasetType>();
 
+                    if(!string.IsNullOrEmpty(typeLabel))
+                    {
+                        fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = typeLabel, Description = typeDescription });
+                    }
+
                     if (data.KeywordsNationalInitiative != null)
                     {
                         foreach (var keyword in data.KeywordsNationalInitiative)
                         {
                             if (keyword.KeywordValue == "Det offentlige kartgrunnlaget")
                             {
-                                fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "DOK", Description = "Det offentlige kartgrunnlaget" });
+                                if(fairDataset.FairDatasetTypes.Where(f => f.Description == keyword.KeywordValue.ToString()).Any() == false)
+                                    fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "DOK", Description = "Det offentlige kartgrunnlaget" });
                             }
                             else if (keyword.KeywordValue == "Mareano")
                             {
-                                fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "Mareano", Description = "Mareano" });
+                                if (fairDataset.FairDatasetTypes.Where(f => f.Label == keyword.KeywordValue.ToString()).Any() == false)
+                                    fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "Mareano", Description = "Mareano" });
                             }
                             else if (keyword.KeywordValue == "MarineGrunnkart")
                             {
-                                fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "MarineGrunnkart", Description = "Marine grunnkart" });
+                                if (fairDataset.FairDatasetTypes.Where(f => f.Label == keyword.KeywordValue.ToString()).Any() == false)
+                                    fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "MarineGrunnkart", Description = "Marine grunnkart" });
                             }
                         }
                     }

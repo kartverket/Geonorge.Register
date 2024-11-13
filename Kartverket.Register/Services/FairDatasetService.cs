@@ -650,18 +650,30 @@ namespace Kartverket.Register.Services
 
                 if (!string.IsNullOrEmpty(url) && (url.StartsWith("https://")))
                 {
-                    _httpClient.DefaultRequestHeaders.Accept.Clear();
-                    _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-                    Log.Debug("Connecting to: " + url);
-
-                    HttpResponseMessage response = _httpClient.GetAsync(new Uri(url)).Result;
-
-                    if (response.StatusCode != HttpStatusCode.OK)
+                    try
                     {
-                        Log.Error("Url svarer ikke: " + url + " , statuskode: " + response.StatusCode);
+                        if(protocol == "GEONORGE:DOWNLOAD")
+                            url = url + uuid;
+
+                        _httpClient.DefaultRequestHeaders.Accept.Clear();
+                        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                        Log.Debug("Connecting to: " + url);
+
+                        HttpResponseMessage response = _httpClient.GetAsync(new Uri(url)).Result;
+
+                        if (response.StatusCode != HttpStatusCode.OK)
+                        {
+                            Log.Error("Url svarer ikke: " + url + " , statuskode: " + response.StatusCode);
+                        }
+                        else
+                            return true;
+
                     }
-                    else
-                        return true;
+                    catch (Exception ex)
+                    {
+                        Log.Error("Url svarer ikke: " + url, ex);
+                        return false;
+                    }
                 }
             }
 
@@ -862,7 +874,7 @@ namespace Kartverket.Register.Services
 
                 foreach (var dataset in register.items.Cast<Dataset>().ToList())
                 {
-                    var fairDataset = _metadataService.FetchFairDatasetFromKartkatalogen(dataset.Uuid);
+                    var fairDataset = _metadataService.FetchFairDatasetFromKartkatalogen(dataset.Uuid, "DOK",  "Det offentlige kartgrunnlaget");
                     if (fairDataset != null)
                     {
                         fairDatasetsFromKartkatalogen.Add(fairDataset);

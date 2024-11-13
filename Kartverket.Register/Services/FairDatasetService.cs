@@ -16,6 +16,7 @@ using Kartverket.Register.Models.Api;
 using System.Runtime.Remoting.MetadataServices;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Web.Http.Results;
 
 namespace Kartverket.Register.Services
 {
@@ -848,13 +849,24 @@ namespace Kartverket.Register.Services
 
         private List<FairDataset> FetchFairDatasets()
         {
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets[0]name=nationalinitiative&facets[0]value=Mareano&facets[1]name=nationalinitiative&facets[1]value=MarineGrunnkart&limit=6000&mediatype=json&listhidden=true";
+            var client = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+
+            List<string> datasetUuids = new List<string>();
             var fairDatasetsFromKartkatalogen = new List<FairDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets[0]name=nationalinitiative&facets[0]value=Mareano&facets[1]name=nationalinitiative&facets[1]value=MarineGrunnkart&limit=6000&mediatype=json&listhidden=true";
-            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {
-                var json = c.DownloadString(url);
+                var dokRegister = _registerService.GetDokStatusRegister();
+
+                foreach (var dataset in dokRegister.items.Cast<Dataset>().ToList())
+                {
+                   datasetUuids.Add(dataset.Uuid);
+                }
+
+           
+
+                var json = client.DownloadString(url);
                 dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
                 if (data != null)
                 {
@@ -862,24 +874,21 @@ namespace Kartverket.Register.Services
 
                     foreach (var item in result)
                     {
-                        var FairDataset = _metadataService.FetchFairDatasetFromKartkatalogen(item.Uuid.ToString());
-                        if (FairDataset != null)
-                        {
-                            fairDatasetsFromKartkatalogen.Add(FairDataset);
-                        }
+                        datasetUuids.Add(item.Uuid.ToString());
                     }
                 }
 
-                var register = _registerService.GetDokStatusRegister();
+                var items = datasetUuids.Distinct().ToList();
 
-                foreach (var dataset in register.items.Cast<Dataset>().ToList())
+                foreach (var item in items)
                 {
-                    var fairDataset = _metadataService.FetchFairDatasetFromKartkatalogen(dataset.Uuid, "DOK",  "Det offentlige kartgrunnlaget");
-                    if (fairDataset != null)
+                    var FairDataset = _metadataService.FetchFairDatasetFromKartkatalogen(item);
+                    if (FairDataset != null)
                     {
-                        fairDatasetsFromKartkatalogen.Add(fairDataset);
+                        fairDatasetsFromKartkatalogen.Add(FairDataset);
                     }
                 }
+
 
                 return fairDatasetsFromKartkatalogen;
             }

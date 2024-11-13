@@ -492,8 +492,22 @@ namespace Kartverket.DOK.Service
             return mareanoDataset;
         }
 
-        public FairDataset FetchFairDatasetFromKartkatalogen(string uuid, string typeLabel = null, string typeDescription = null)
+        public FairDataset FetchFairDatasetFromKartkatalogen(string uuid)
         {
+            var dokId = Guid.Parse(GlobalVariables.DokRegistryId);
+
+            var queryResult = from r in _dbContext.Registers
+                              where r.systemId == dokId
+                              select r;
+            var dokRegister = queryResult.FirstOrDefault();
+
+            bool isDok = false;
+            var dataset = dokRegister.items.Cast<Dataset>().Where(d => d.Uuid == uuid).FirstOrDefault();
+            if(dataset != null)
+            {
+                isDok = true;
+            }
+
             var fairDataset = new FairDataset();
             var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
@@ -546,21 +560,19 @@ namespace Kartverket.DOK.Service
 
                     fairDataset.FairDatasetTypes = new List<FairDatasetType>();
 
-                    if(!string.IsNullOrEmpty(typeLabel))
-                    {
-                        fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = typeLabel, Description = typeDescription });
-                    }
+                    if(isDok)
+                        fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "DOK", Description = "Det offentlige kartgrunnlaget" });
 
                     if (data.KeywordsNationalInitiative != null)
                     {
                         foreach (var keyword in data.KeywordsNationalInitiative)
                         {
-                            if (keyword.KeywordValue == "Det offentlige kartgrunnlaget")
+                            /*if (keyword.KeywordValue == "Det offentlige kartgrunnlaget")
                             {
                                 if(fairDataset.FairDatasetTypes.Where(f => f.Description == keyword.KeywordValue.ToString()).Any() == false)
                                     fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "DOK", Description = "Det offentlige kartgrunnlaget" });
                             }
-                            else if (keyword.KeywordValue == "Mareano")
+                            else*/ if (keyword.KeywordValue == "Mareano")
                             {
                                 if (fairDataset.FairDatasetTypes.Where(f => f.Label == keyword.KeywordValue.ToString()).Any() == false)
                                     fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "Mareano", Description = "Mareano" });

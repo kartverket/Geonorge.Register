@@ -27,17 +27,19 @@ namespace Kartverket.Register.Services
         private readonly IDatasetDeliveryService _datasetDeliveryService;
         private readonly IRegisterItemService _registerItemService;
         private readonly MetadataService _metadataService;
+        private readonly IFairService _fairService;
         MetadataModel _metadata;
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private static readonly HttpClient _httpClient = new HttpClient();
 
-        public FairDatasetService(RegisterDbContext dbContext)
+        public FairDatasetService(RegisterDbContext dbContext, IFairService fairService)
         {
             _dbContext = dbContext;
             _registerService = new RegisterService(_dbContext);
             _datasetDeliveryService = new DatasetDeliveryService(_dbContext);
             _registerItemService = new RegisterItemService(_dbContext);
             _metadataService = new MetadataService(_dbContext);
+            _fairService = fairService;
         }
 
         public FairDataset GetFairDatasetByName(string registerSeoName, string itemSeoName)
@@ -424,141 +426,78 @@ namespace Kartverket.Register.Services
             _dbContext.DetachAllEntities();
         }
 
-        private void SetFAIR(ref FairDataset FairDataset)
+        private void SetFAIR(ref FairDataset fairDataset)
         {
-            FairDataset.I1_c_Criteria = null;
-            FairDataset.I3_a_Criteria = null;
-            FairDataset.I3_b_Criteria = null;
+            var dataset = _fairService.GetFair(_metadata, fairDataset.WfsStatus, fairDataset.WmsStatus, fairDataset.AtomFeedStatus);
 
-            int findableWeight = 0;
+            fairDataset.F2_a_Criteria = dataset.F2_a_Criteria;
+            fairDataset.F2_b_Criteria = dataset.F2_b_Criteria;
+            fairDataset.F2_c_Criteria = dataset.F2_b_Criteria;
+            fairDataset.F2_d_Criteria = dataset.F2_b_Criteria;
+            fairDataset.F2_e_Criteria = dataset.F2_b_Criteria;
+            fairDataset.F3_a_Criteria = dataset.F3_a_Criteria;
 
-            if (_metadata?.SimpleMetadata == null)
-                return;
+            fairDataset.FindableStatusPerCent = dataset.FindableStatusPerCent;
 
-            FairDataset.F2_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords.ToList(), SimpleKeyword.TYPE_THEME, null)?.Count() >= 3;
-            FairDataset.F2_b_Criteria = _metadata.SimpleMetadata.Title.Count() <= 105;
-            FairDataset.F2_c_Criteria = _metadata.SimpleMetadata.Abstract?.Count() >= 200;
-            FairDataset.F2_d_Criteria = _metadata.SimpleMetadata.BoundingBox != null;
-            FairDataset.F2_e_Criteria = _metadata.SimpleMetadata.DateCreated != null;
-            FairDataset.F3_a_Criteria = _metadata.SimpleMetadata.ResourceReference != null ? _metadata.SimpleMetadata.ResourceReference?.Code != null && _metadata.SimpleMetadata.ResourceReference?.Codespace != null : false;
+            var findableStatus = dataset.FindableStatus;
+            _dbContext.FAIRDeliveries.Add(findableStatus);
+            _dbContext.SaveChanges();
+            fairDataset.FindableStatusId = findableStatus.FAIRDeliveryId;
 
-            if (FairDataset.F1_a_Criteria) findableWeight += 20;
-            if (FairDataset.F2_a_Criteria) findableWeight += 10;
-            if (FairDataset.F2_b_Criteria) findableWeight += 5;
-            if (FairDataset.F2_c_Criteria) findableWeight += 10;
-            if (FairDataset.F2_d_Criteria) findableWeight += 10;
-            if (FairDataset.F2_e_Criteria) findableWeight += 5; 
-            if (FairDataset.F3_a_Criteria) findableWeight += 20;
-            if (FairDataset.F4_a_Criteria) findableWeight += 20;
+            fairDataset.A1_a_Criteria = dataset.A1_a_Criteria;
+            fairDataset.A1_b_Criteria = dataset.A1_b_Criteria;
+            fairDataset.A1_c_Criteria = dataset.A1_c_Criteria;
+            fairDataset.A1_d_Criteria = dataset.A1_d_Criteria;
+            fairDataset.A1_e_Criteria = dataset.A1_e_Criteria;
+            fairDataset.A1_f_Criteria = dataset.A1_f_Criteria;
 
-            FairDataset.FindableStatusPerCent = findableWeight;
-            FairDataset.FindableStatusId = CreateFairDelivery(findableWeight);
+            fairDataset.AccesibleStatusPerCent = dataset.AccesibleStatusPerCent;
+            var accesibleStatus = dataset.AccesibleStatus;
+            _dbContext.FAIRDeliveries.Add(accesibleStatus);
+            _dbContext.SaveChanges();
+            fairDataset.AccesibleStatusId = accesibleStatus.FAIRDeliveryId;
 
-            int accesibleWeight = 0;
 
-            FairDataset.A1_a_Criteria = CheckWfs(FairDataset.Uuid, FairDataset.WfsStatus);
-            FairDataset.A1_b_Criteria = CheckWms(FairDataset.Uuid, FairDataset.WmsStatus);
-            FairDataset.A1_c_Criteria = _metadata.SimpleMetadata?.DistributionsFormats != null ? _metadata.SimpleMetadata.DistributionsFormats.Where(p => !string.IsNullOrEmpty(p.Protocol) && p.Protocol.Contains("GEONORGE:DOWNLOAD")).Any() : false;
-            FairDataset.A1_d_Criteria = FairDataset.AtomFeedStatus != null ? FairDataset.AtomFeedStatus.IsGood() : false;
-            FairDataset.A1_e_Criteria = CheckDistributionUrl(FairDataset.Uuid, _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")));
-            FairDataset.A1_f_Criteria = true;
+            fairDataset.I1_a_Criteria = dataset.I1_a_Criteria;
+            fairDataset.I1_b_Criteria = dataset.I1_b_Criteria;
+            fairDataset.I1_c_Criteria = dataset.I1_c_Criteria;
+            fairDataset.I2_a_Criteria = dataset.I2_a_Criteria;
+            fairDataset.I2_b_Criteria = dataset.I2_b_Criteria;
+            fairDataset.I3_a_Criteria = dataset.I3_a_Criteria;
+            fairDataset.I3_b_Criteria = dataset.I3_a_Criteria;
 
-            if (FairDataset.A1_a_Criteria) accesibleWeight += 15;
-            if (FairDataset.A1_b_Criteria) accesibleWeight += 15;
-            if (FairDataset.A1_c_Criteria) accesibleWeight += 15;
-            if (FairDataset.A1_d_Criteria) accesibleWeight += 5;
-            if (FairDataset.A1_e_Criteria) accesibleWeight += 50;
-            if (FairDataset.A1_f_Criteria) accesibleWeight += 0;
-            if (FairDataset.A2_a_Criteria) accesibleWeight += 0;
 
-            FairDataset.AccesibleStatusPerCent = accesibleWeight;
-            FairDataset.AccesibleStatusId = CreateFairDelivery(accesibleWeight);
+            fairDataset.InteroperableStatusPerCent = dataset.InteroperableStatusPerCent;
+            var interoperableStatus = dataset.InteroperableStatus;
+            _dbContext.FAIRDeliveries.Add(interoperableStatus);
+            _dbContext.SaveChanges();
+            fairDataset.InteroperableStatusId = interoperableStatus.FAIRDeliveryId;
 
-            int interoperableWeight = 0;
 
-            var spatialRepresentation = _metadata.SimpleMetadata.SpatialRepresentation;
-            if (spatialRepresentation == "vector")
-            {
-                FairDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML" || p.FormatName == "GeoJSON" || p.FormatName == "JSON-FG" || p.FormatName == "JSON-LD" || p.FormatName == "GeoPackage" || p.FormatName == "COPC" || p.FormatName == "GeoParquet" || p.FormatName == "Shape").Any();
-                if (!FairDataset.I1_b_Criteria)
-                    FairDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "NetCDF-CF").Any();
-            }
-            else if (spatialRepresentation == "grid")
-            {
-                FairDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000" || p.FormatName == "GeoPackage" || p.FormatName == "COG" || p.FormatName == "COPC").Any();
-                if (!FairDataset.I1_b_Criteria)
-                    FairDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "NetCDF-CF").Any();
-            }
-            if (spatialRepresentation != "grid")
-                FairDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
-                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.StartsWith("GML-filer er i henhold")).Any() : false;
-            FairDataset.I2_a_Criteria = _metadata.SimpleMetadata.Keywords.Where(k => !string.IsNullOrEmpty(k.Thesaurus)).ToList().Count() >= 1;
-            FairDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
-            if (spatialRepresentation == "vector")
-            {
-                FairDataset.I3_a_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
-                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Title) && r.Title.Contains("SOSI produktspesifikasjon")).Any() : false;
-                if(!FairDataset.I3_a_Criteria.HasValue && !FairDataset.I3_a_Criteria.Value) 
-                { 
-                    FairDataset.I3_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
-                }
-                FairDataset.I3_b_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
-                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.Contains("er i henhold")).Any() : false;
-            }
-            else 
-            {
-                FairDataset.I3_a_Criteria = true;
-                FairDataset.I3_b_Criteria = true;
-            }
-            if (FairDataset.I1_a_Criteria) interoperableWeight += 20;
-            if (FairDataset.I1_b_Criteria) interoperableWeight += 10;
-            if (!FairDataset.I1_c_Criteria.HasValue || (FairDataset.I1_c_Criteria.HasValue && FairDataset.I1_c_Criteria.Value)) interoperableWeight += 20;
-            if (FairDataset.I2_a_Criteria) interoperableWeight += 10;
-            if (FairDataset.I2_b_Criteria) interoperableWeight += 10;
-            if (!FairDataset.I3_a_Criteria.HasValue || (FairDataset.I3_a_Criteria.HasValue && FairDataset.I3_a_Criteria.Value)) interoperableWeight += 10;
-            if (!FairDataset.I3_b_Criteria.HasValue || (FairDataset.I3_b_Criteria.HasValue && FairDataset.I3_b_Criteria.Value)) interoperableWeight += 20;
+            fairDataset.R1_a_Criteria = dataset.R1_a_Criteria;
+            fairDataset.R1_b_Criteria = dataset.R1_b_Criteria;
+            fairDataset.R2_a_Criteria = dataset.R2_a_Criteria;
+            fairDataset.R2_b_Criteria = dataset.R2_b_Criteria;
+            fairDataset.R2_c_Criteria = dataset.R2_c_Criteria;
+            fairDataset.R2_d_Criteria = dataset.R2_d_Criteria;
+            fairDataset.R2_e_Criteria = dataset.R2_e_Criteria;
+            fairDataset.R2_f_Criteria = dataset.R2_f_Criteria;
+            fairDataset.R2_g_Criteria = dataset.R2_g_Criteria;
+            fairDataset.R2_h_Criteria = dataset.R2_h_Criteria;
+            fairDataset.R3_b_Criteria = dataset.R3_b_Criteria;
 
-            FairDataset.InteroperableStatusPerCent = interoperableWeight;
-            FairDataset.InteroperableStatusId = CreateFairDelivery(interoperableWeight);
+            fairDataset.ReUseableStatusPerCent = dataset.ReUseableStatusPerCent;
+            var reusableStatus = dataset.ReUseableStatus;
+            _dbContext.FAIRDeliveries.Add(reusableStatus);
+            _dbContext.SaveChanges();
+            fairDataset.ReUseableStatusId = reusableStatus.FAIRDeliveryId;
 
-            int reusableWeight = 0;
 
-            FairDataset.R1_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.Constraints?.UseConstraintsLicenseLink);
-            FairDataset.R1_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.Constraints?.AccessConstraintsLink);
-            FairDataset.R2_a_Criteria = _metadata.SimpleMetadata?.ProcessHistory.Count() > 200;
-            FairDataset.R2_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.MaintenanceFrequency);
-            FairDataset.R2_c_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ProductSpecificationUrl);
-            FairDataset.R2_d_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ResolutionScale);
-            FairDataset.R2_e_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageUrl)
-                                           || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageGridUrl)
-                                           || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageCellUrl);
-
-            FairDataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.SpecificUsage);
-
-            FairDataset.R2_g_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ContactMetadata?.Organization);
-            FairDataset.R2_h_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ContactPublisher?.Organization);
-
-            FairDataset.R3_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML" || p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000" || p.FormatName == "NetCDF" || p.FormatName == "NetCDF-CF").Any();
-
-            if (FairDataset.R1_a_Criteria) reusableWeight += 30;
-            if (FairDataset.R1_b_Criteria) reusableWeight += 10; 
-            if (FairDataset.R2_a_Criteria) reusableWeight += 10;
-            if (FairDataset.R2_b_Criteria) reusableWeight += 5;
-            if (FairDataset.R2_c_Criteria) reusableWeight += 10;
-            if (FairDataset.R2_d_Criteria) reusableWeight += 5;
-            if (FairDataset.R2_e_Criteria) reusableWeight += 5;
-            if (FairDataset.R2_f_Criteria) reusableWeight += 5;
-            if (FairDataset.R2_g_Criteria) reusableWeight += 5;
-            if (FairDataset.R2_h_Criteria) reusableWeight += 5;
-            if (FairDataset.R3_a_Criteria) reusableWeight += 5;
-            if (FairDataset.R3_b_Criteria) reusableWeight += 5;
-
-            FairDataset.ReUseableStatusPerCent = reusableWeight;
-            FairDataset.ReUseableStatusId = CreateFairDelivery(reusableWeight);
-
-            int fairWeight = (findableWeight + accesibleWeight + interoperableWeight + reusableWeight) / 4;
-            FairDataset.FAIRStatusPerCent = fairWeight;
-            FairDataset.FAIRStatusId = CreateFairDelivery(fairWeight);
+            fairDataset.FAIRStatusPerCent = dataset.FAIRStatusPerCent;
+            var fairStatus = dataset.FAIRStatus;
+            _dbContext.FAIRDeliveries.Add(fairStatus);
+            _dbContext.SaveChanges();
+            fairDataset.FAIRStatusId = fairStatus.FAIRDeliveryId;
 
         }
 
@@ -857,12 +796,12 @@ namespace Kartverket.Register.Services
 
             try
             {
-                var dokRegister = _registerService.GetDokStatusRegister();
+                //var dokRegister = _registerService.GetDokStatusRegister();
 
-                foreach (var dataset in dokRegister.items.Cast<Dataset>().ToList())
-                {
-                   datasetUuids.Add(dataset.Uuid);
-                }
+                //foreach (var dataset in dokRegister.items.Cast<Dataset>().ToList())
+                //{
+                //   datasetUuids.Add(dataset.Uuid);
+                //}
 
            
 

@@ -799,7 +799,7 @@ namespace Kartverket.Register.Services
         }
     }
 
-    internal class MetadataModel
+    public class MetadataModel
     {
         public GeoNorgeAPI.SimpleMetadata SimpleMetadata { get; set; }
     }

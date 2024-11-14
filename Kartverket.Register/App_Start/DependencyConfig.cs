@@ -70,6 +70,7 @@ namespace Kartverket.Register
             builder.RegisterType<GeodatalovDatasetService>().As<IGeodatalovDatasetService>();
             builder.RegisterType<MareanoDatasetService>().As<IMareanoDatasetService>();
             builder.RegisterType<FairDatasetService>().As<IFairDatasetService>();
+            builder.RegisterType<FairService>().As<IFairService>();
             builder.RegisterType<DocumentService>().As<IDocumentService>();
             builder.RegisterType<InspireMonitoringService>().As<IInspireMonitoringService>();
             builder.RegisterType<InspireMonitoring>().As<IInspireMonitoring>();

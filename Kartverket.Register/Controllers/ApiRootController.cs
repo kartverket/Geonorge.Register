@@ -45,8 +45,9 @@ namespace Kartverket.Register.Controllers
         private readonly IAccessControlService _accessControlService;
         private readonly ISynchronizationService _synchronizationService;
         private readonly IStatusReportService _statusReportService;
+        private readonly IFairService _fairService;
 
-        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService, IAccessControlService accessControlService, ISynchronizationService synchronizationService, IStatusReportService statusReportService)
+        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService, IAccessControlService accessControlService, ISynchronizationService synchronizationService, IStatusReportService statusReportService, IFairService fairService)
         {
             _registerItemService = registerItemService;
             _inspireDatasetService = inspireDatasetService;
@@ -57,6 +58,7 @@ namespace Kartverket.Register.Controllers
             _synchronizationService = synchronizationService;
             _statusReportService = statusReportService;
             db = dbContext;
+            _fairService = fairService;
         }
 
         /// <summary>
@@ -914,7 +916,7 @@ namespace Kartverket.Register.Controllers
 
             try
             {
-                new FairDatasetService(db).SynchronizeFairDatasets();
+                new FairDatasetService(db, _fairService).SynchronizeFairDatasets();
 
                 var register = _registerService.GetRegisterByName("fair-register");
                 _statusReportService.CreateStatusReport(register, true);

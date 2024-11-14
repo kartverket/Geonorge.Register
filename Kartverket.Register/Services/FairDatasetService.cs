@@ -501,145 +501,6 @@ namespace Kartverket.Register.Services
 
         }
 
-        private bool CheckWms(string uuid, DatasetDelivery datasetDelivery)
-        {
-            if (datasetDelivery != null)
-            {
-                bool hasWms = datasetDelivery.IsGoodOrUseable();
-                bool hasWMTS = false;
-                var distros = GetDistributions(uuid);
-                if (distros != null)
-                {
-                    foreach (var distro in distros)
-                    {
-                        string protocol = distro?.Protocol;
-                        if (!string.IsNullOrEmpty(protocol) && protocol.Contains("WMTS"))
-                            hasWMTS = true;
-                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Maps"))
-                            return true;
-                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Tiles"))
-                            return true;
-                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Styles"))
-                            return true;
-                    }
-
-                    if (hasWms || hasWMTS)
-                        return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool CheckWfs(string uuid, DatasetDelivery datasetDelivery)
-        {
-            if (datasetDelivery != null)
-            {
-                bool hasWfs = datasetDelivery.IsGoodOrUseable();
-                bool hasWcs = false;
-                var distros = GetDistributions(uuid);
-                if (distros != null)
-                {
-                    foreach (var distro in distros)
-                    {
-                        string protocol = distro?.Protocol;
-                        if (!string.IsNullOrEmpty(protocol) && protocol.Contains("WCS"))
-                            hasWcs = true;
-                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Features"))
-                            return true;
-                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Coverages"))
-                            return true;
-                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("EDR"))
-                            return true;
-                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("OpenDAP"))
-                            return true;
-                    }
-
-                    if (hasWfs || hasWcs)
-                        return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static dynamic GetDistributions(string metadataUuid)
-        {
-            try
-            {
-                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distributions/" + metadataUuid;
-                var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
-
-                var json = c.DownloadString(metadataUrl);
-
-                dynamic metadata = Newtonsoft.Json.Linq.JArray.Parse(json);
-                return metadata;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        private bool CheckDistributionUrl(string uuid, IEnumerable<SimpleDistribution> distributions)
-        {
-            if (distributions != null && distributions.Count() > 0)
-            {
-                var url = distributions.FirstOrDefault().URL;
-                var protocol = distributions.FirstOrDefault().Protocol;
-
-                if (!string.IsNullOrEmpty(url) && (url.StartsWith("https://")))
-                {
-                    try
-                    {
-                        if(protocol == "GEONORGE:DOWNLOAD")
-                            url = url + uuid;
-
-                        _httpClient.DefaultRequestHeaders.Accept.Clear();
-                        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-                        Log.Debug("Connecting to: " + url);
-
-                        HttpResponseMessage response = _httpClient.GetAsync(new Uri(url)).Result;
-
-                        if (response.StatusCode != HttpStatusCode.OK)
-                        {
-                            Log.Error("Url svarer ikke: " + url + " , statuskode: " + response.StatusCode);
-                        }
-                        else
-                            return true;
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error("Url svarer ikke: " + url, ex);
-                        return false;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        public Guid CreateFairDelivery(int weight, string fairStatusId = null, string note = "", bool autoupdate = true)
-        {
-            if (string.IsNullOrEmpty(fairStatusId))
-            {
-                if (weight > 90)
-                    fairStatusId = FAIRDelivery.Good;
-                else if (weight >= 75 && weight <= 90)
-                    fairStatusId = FAIRDelivery.Satisfactory;
-                else if (weight < 75 && weight >= 50)
-                    fairStatusId = FAIRDelivery.Useable;
-                else
-                    fairStatusId = FAIRDelivery.Deficient;
-            }
-
-            var fairDelivery = new FAIRDelivery(fairStatusId, note, autoupdate);
-            _dbContext.FAIRDeliveries.Add(fairDelivery);
-            _dbContext.SaveChanges();
-            return fairDelivery.FAIRDeliveryId;
-        }
-
         private FairDataset UpdateFairDataset(FairDataset originalDataset, FairDataset FairDatasetFromKartkatalogen)
         {
             originalDataset.Name = FairDatasetFromKartkatalogen.Name;
@@ -796,14 +657,12 @@ namespace Kartverket.Register.Services
 
             try
             {
-                //var dokRegister = _registerService.GetDokStatusRegister();
+                var dokRegister = _registerService.GetDokStatusRegister();
 
-                //foreach (var dataset in dokRegister.items.Cast<Dataset>().ToList())
-                //{
-                //   datasetUuids.Add(dataset.Uuid);
-                //}
-
-           
+                foreach (var dataset in dokRegister.items.Cast<Dataset>().ToList())
+                {
+                    datasetUuids.Add(dataset.Uuid);
+                }
 
                 var json = client.DownloadString(url);
                 dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);

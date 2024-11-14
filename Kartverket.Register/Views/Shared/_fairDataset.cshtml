@@ -19,10 +19,10 @@
     <div class="col-md-5 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])</div>
     <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])</div>
     <div class="col-md-4 col-sm-5 status-icons first-four">
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "findable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "reusable_metadata_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "findable_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "reusable_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
         <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title="">
             <span class="custom-icon">&nbsp;</span>
         </span>

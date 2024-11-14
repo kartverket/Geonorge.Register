@@ -657,6 +657,26 @@ namespace Kartverket.Register.Helpers
                 sortTitle = DataSet.DOK_Delivery_Metadata;
                 statusIcon += "custom-icon-info";
             }
+            else if (sortingParam == "findable_status" || sortingParam == "findable_status_desc")
+            {
+                sortTitle = FairDataSet.Findable_Label;
+                statusIcon += "custom-icon-findable";
+            }
+            else if (sortingParam == "accesible_status" || sortingParam == "accesible_status_desc")
+            {
+                sortTitle = FairDataSet.Accesible_Label;
+                statusIcon += "custom-icon-accesible";
+            }
+            else if (sortingParam == "interoperable_status" || sortingParam == "interoperable_status_desc")
+            {
+                sortTitle = FairDataSet.Interoperable_Label;
+                statusIcon += "custom-icon-interoperable";
+            }
+            else if (sortingParam == "reusable_status" || sortingParam == "reusable_status_desc")
+            {
+                sortTitle = FairDataSet.ReUseable_Label;
+                statusIcon += "custom-icon-re-useable";
+            }
             else if (sortingParam == "findable_metadata_status" || sortingParam == "findable_metadata_status_desc")
             {
                 sortTitle = MareanoDataSet.Findable_Label;

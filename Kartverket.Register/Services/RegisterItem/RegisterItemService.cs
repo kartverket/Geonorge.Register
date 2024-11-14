@@ -1095,6 +1095,47 @@ namespace Kartverket.Register.Services.RegisterItem
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     //FAIR
+                    case "findable_status":
+                        {
+                            var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderBy(o => o.FindableStatus.sortorder).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "findable_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderByDescending(o => o.FindableStatus.sortorder).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "accesible_status":
+                        {
+                            var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderBy(o => o.AccesibleStatus.sortorder).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "accesible_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderByDescending(o => o.AccesibleStatus.sortorder).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "interoperable_status":
+                        {
+                            var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderBy(o => o.InteroperableStatus.sortorder).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "interoperable_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderByDescending(o => o.InteroperableStatus.sortorder).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "reusable_status":
+                        {
+                            var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderBy(o => o.ReUseableStatus.sortorder).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "reusable_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderByDescending(o => o.ReUseableStatus.sortorder).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    //FAIR mareano
                     case "findable_metadata_status":
                         {
                             var sortedList = registerItems.OfType<MareanoDatasetViewModel>().OrderBy(o => o.FindableStatus.sortorder).ToList();

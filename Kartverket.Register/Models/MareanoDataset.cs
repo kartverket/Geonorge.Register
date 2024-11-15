@@ -55,6 +55,12 @@ namespace Kartverket.Register.Models
         [Display(Name = "F2_c_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool F2_c_Criteria { get; set; } = false;
 
+        [Display(Name = "F2_d_Criteria", ResourceType = typeof(FairDataSet))]
+        public bool F2_d_Criteria { get; set; } = false;
+
+        [Display(Name = "F2_e_Criteria", ResourceType = typeof(FairDataSet))]
+        public bool F2_e_Criteria { get; set; } = false;
+
         [Display(Name = "F3_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool F3_a_Criteria { get; set; } = false;
 
@@ -118,6 +124,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "R1_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R1_a_Criteria { get; set; } = false;
 
+        [Display(Name = "R1_b_Criteria", ResourceType = typeof(FairDataSet))]
+        public bool R1_b_Criteria { get; set; } = false;
+
         [Display(Name = "R2_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R2_a_Criteria { get; set; } = false;
 
@@ -135,6 +144,12 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "R2_f_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R2_f_Criteria { get; set; } = false;
+
+        [Display(Name = "R2_g_Criteria", ResourceType = typeof(FairDataSet))]
+        public bool R2_g_Criteria { get; set; } = false;
+
+        [Display(Name = "R2_h_Criteria", ResourceType = typeof(FairDataSet))]
+        public bool R2_h_Criteria { get; set; } = false;
 
         [Display(Name = "R3_a_Criteria", ResourceType = typeof(MareanoDataSet))]
         public bool R3_a_Criteria { get; set; } = true;

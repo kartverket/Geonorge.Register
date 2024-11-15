@@ -43,6 +43,8 @@ namespace Kartverket.Register.Models.ViewModels
         public bool F2_a_Criteria { get; set; }
         public bool F2_b_Criteria { get; set; }
         public bool F2_c_Criteria { get; set; }
+        public bool F2_d_Criteria { get; set; }
+        public bool F2_e_Criteria { get; set; }
         public bool F3_a_Criteria { get; set; }
         public bool F4_a_Criteria { get; set; }
         public bool A1_a_Criteria { get; set; }
@@ -60,12 +62,15 @@ namespace Kartverket.Register.Models.ViewModels
         public bool? I3_a_Criteria { get; set; }
         public bool? I3_b_Criteria { get; set; }
         public bool R1_a_Criteria { get; set; }
+        public bool R1_b_Criteria { get; set; }
         public bool R2_a_Criteria { get; set; }
         public bool R2_b_Criteria { get; set; }
         public bool R2_c_Criteria { get; set; }
         public bool R2_d_Criteria { get; set; }
         public bool R2_e_Criteria { get; set; }
         public bool R2_f_Criteria { get; set; }
+        public bool R2_g_Criteria { get; set; }
+        public bool R2_h_Criteria { get; set; }
         public bool R3_a_Criteria { get; set; }
         public bool R3_b_Criteria { get; set; }
 
@@ -149,6 +154,8 @@ namespace Kartverket.Register.Models.ViewModels
                 F2_a_Criteria = mareanoDataset.F2_a_Criteria;
                 F2_b_Criteria = mareanoDataset.F2_b_Criteria;
                 F2_c_Criteria = mareanoDataset.F2_c_Criteria;
+                F2_d_Criteria = mareanoDataset.F2_d_Criteria;
+                F2_e_Criteria = mareanoDataset.F2_e_Criteria;
                 F3_a_Criteria = mareanoDataset.F3_a_Criteria;
                 F4_a_Criteria = mareanoDataset.F4_a_Criteria;
                 A1_a_Criteria = mareanoDataset.A1_a_Criteria;
@@ -169,12 +176,15 @@ namespace Kartverket.Register.Models.ViewModels
                 if(mareanoDataset.I3_b_Criteria.HasValue)
                     I3_b_Criteria = mareanoDataset.I3_b_Criteria.Value;
                 R1_a_Criteria = mareanoDataset.R1_a_Criteria;
+                R1_b_Criteria = mareanoDataset.R1_b_Criteria;
                 R2_a_Criteria = mareanoDataset.R2_a_Criteria;
                 R2_b_Criteria = mareanoDataset.R2_b_Criteria;
                 R2_c_Criteria = mareanoDataset.R2_c_Criteria;
                 R2_d_Criteria = mareanoDataset.R2_d_Criteria;
                 R2_e_Criteria = mareanoDataset.R2_e_Criteria;
                 R2_f_Criteria = mareanoDataset.R2_f_Criteria;
+                R2_g_Criteria = mareanoDataset.R2_g_Criteria;
+                R2_h_Criteria = mareanoDataset.R2_h_Criteria;
                 R3_a_Criteria = mareanoDataset.R3_a_Criteria;
                 R3_b_Criteria = mareanoDataset.R3_b_Criteria;
 

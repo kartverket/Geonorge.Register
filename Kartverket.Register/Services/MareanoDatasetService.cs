@@ -12,6 +12,8 @@ using Kartverket.Register.Services.RegisterItem;
 using GeoNorgeAPI;
 using Kartverket.Register.Models.FAIR;
 using System.Net;
+using System.Net.Http;
+using Resources;
 
 namespace Kartverket.Register.Services
 {
@@ -22,16 +24,19 @@ namespace Kartverket.Register.Services
         private readonly IDatasetDeliveryService _datasetDeliveryService;
         private readonly IRegisterItemService _registerItemService;
         private readonly MetadataService _metadataService;
+        private readonly IFairService _fairService;
         MetadataModel _metadata;
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly HttpClient _httpClient = new HttpClient();
 
-        public MareanoDatasetService(RegisterDbContext dbContext)
+        public MareanoDatasetService(RegisterDbContext dbContext, IFairService fairService)
         {
             _dbContext = dbContext;
             _registerService = new RegisterService(_dbContext);
             _datasetDeliveryService = new DatasetDeliveryService(_dbContext);
             _registerItemService = new RegisterItemService(_dbContext);
             _metadataService = new MetadataService(_dbContext);
+            _fairService = fairService;
         }
 
         public MareanoDataset GetMareanoDatasetByName(string registerSeoName, string itemSeoName)
@@ -407,218 +412,79 @@ namespace Kartverket.Register.Services
             _dbContext.DetachAllEntities();
         }
 
-        private void SetFAIR(ref MareanoDataset mareanoDataset)
+        private void SetFAIR(ref MareanoDataset fairDataset)
         {
-            mareanoDataset.I1_c_Criteria = null;
-            mareanoDataset.I3_a_Criteria = null;
-            mareanoDataset.I3_b_Criteria = null;
+            var dataset = _fairService.GetFair(_metadata, fairDataset.WfsStatus, fairDataset.WmsStatus, fairDataset.AtomFeedStatus);
 
-            int findableWeight = 0;
+            fairDataset.F2_a_Criteria = dataset.F2_a_Criteria;
+            fairDataset.F2_b_Criteria = dataset.F2_b_Criteria;
+            fairDataset.F2_c_Criteria = dataset.F2_b_Criteria;
+            fairDataset.F2_d_Criteria = dataset.F2_b_Criteria;
+            fairDataset.F2_e_Criteria = dataset.F2_b_Criteria;
+            fairDataset.F3_a_Criteria = dataset.F3_a_Criteria;
 
-            if (_metadata?.SimpleMetadata == null)
-                return;
+            fairDataset.FindableStatusPerCent = dataset.FindableStatusPerCent;
 
-            mareanoDataset.F2_a_Criteria = _metadata.SimpleMetadata.Keywords.ToList().Count() >= 3;
-            mareanoDataset.F2_b_Criteria = _metadata.SimpleMetadata.Title.Count() <= 105;
-            mareanoDataset.F2_c_Criteria = _metadata.SimpleMetadata.Abstract?.Count() >= 200 && _metadata.SimpleMetadata.Abstract?.Count() <= 600;
-            mareanoDataset.F3_a_Criteria = _metadata.SimpleMetadata.ResourceReference != null ?_metadata.SimpleMetadata.ResourceReference?.Code != null && _metadata.SimpleMetadata.ResourceReference?.Codespace != null : false;
-
-            if (mareanoDataset.F1_a_Criteria) findableWeight += 25;
-            if (mareanoDataset.F2_a_Criteria) findableWeight += 10;
-            if (mareanoDataset.F2_b_Criteria) findableWeight += 5;
-            if (mareanoDataset.F2_c_Criteria) findableWeight += 10;
-            if (mareanoDataset.F3_a_Criteria) findableWeight += 25;
-            if (mareanoDataset.F4_a_Criteria) findableWeight += 25;
-
-            mareanoDataset.FindableStatusPerCent = findableWeight;
-            mareanoDataset.FindableStatusId = CreateFairDelivery(findableWeight);
-
-            int accesibleWeight = 0;
-
-            mareanoDataset.A1_a_Criteria = CheckWfs(mareanoDataset.Uuid, mareanoDataset.WfsStatus);
-            mareanoDataset.A1_b_Criteria = CheckWms(mareanoDataset.Uuid, mareanoDataset.WmsStatus);
-            mareanoDataset.A1_c_Criteria = _metadata.SimpleMetadata?.DistributionsFormats != null ? _metadata.SimpleMetadata.DistributionsFormats.Where(p => !string.IsNullOrEmpty(p.Protocol) && p.Protocol.Contains("GEONORGE:DOWNLOAD")).Any() : false;
-            mareanoDataset.A1_d_Criteria = mareanoDataset.AtomFeedStatus != null ? mareanoDataset.AtomFeedStatus.IsGood() : false;
-            mareanoDataset.A1_e_Criteria = CheckDistributionUrl(mareanoDataset.Uuid, _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")));
-            mareanoDataset.A1_f_Criteria = true;
-
-            if (mareanoDataset.A1_a_Criteria) accesibleWeight += 15;
-            if (mareanoDataset.A1_b_Criteria) accesibleWeight += 15;
-            if (mareanoDataset.A1_c_Criteria) accesibleWeight += 15;
-            if (mareanoDataset.A1_d_Criteria) accesibleWeight += 5;
-            if (mareanoDataset.A1_e_Criteria) accesibleWeight += 40;
-            if (mareanoDataset.A1_f_Criteria) accesibleWeight += 10;
-            if (mareanoDataset.A2_a_Criteria) accesibleWeight += 0;
-
-            mareanoDataset.AccesibleStatusPerCent = accesibleWeight;
-            mareanoDataset.AccesibleStatusId = CreateFairDelivery(accesibleWeight);
-
-            int interoperableWeight = 0;
-
-            var spatialRepresentation = _metadata.SimpleMetadata.SpatialRepresentation;
-            if(spatialRepresentation == "vector") { 
-                mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML").Any();
-                if(!mareanoDataset.I1_b_Criteria)
-                    mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "NetCDF-CF").Any();
-            }
-            else if(spatialRepresentation == "grid") { 
-                mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000").Any();
-                if (!mareanoDataset.I1_b_Criteria)
-                    mareanoDataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "NetCDF-CF").Any();
-            }
-            if (spatialRepresentation != "grid") 
-                mareanoDataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
-                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.StartsWith("GML-filer er i henhold")).Any() : false;
-            mareanoDataset.I2_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.TopicCategory);
-            mareanoDataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
-            if (spatialRepresentation != "grid") { 
-                mareanoDataset.I3_a_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_CONCEPT).ToList().Count() >= 1;
-                mareanoDataset.I3_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
-            }
-            if (mareanoDataset.I1_a_Criteria) interoperableWeight += 20;
-            if (mareanoDataset.I1_b_Criteria) interoperableWeight += 10;
-            if (!mareanoDataset.I1_c_Criteria.HasValue || (mareanoDataset.I1_c_Criteria.HasValue && mareanoDataset.I1_c_Criteria.Value)) interoperableWeight += 20;
-            if (mareanoDataset.I2_a_Criteria) interoperableWeight += 10;
-            if (mareanoDataset.I2_b_Criteria) interoperableWeight += 10;
-            if (!mareanoDataset.I3_a_Criteria.HasValue || (mareanoDataset.I3_a_Criteria.HasValue && mareanoDataset.I3_a_Criteria.Value)) interoperableWeight += 10;
-            if (!mareanoDataset.I3_b_Criteria.HasValue || (mareanoDataset.I3_b_Criteria.HasValue && mareanoDataset.I3_b_Criteria.Value)) interoperableWeight += 20;
-
-            mareanoDataset.InteroperableStatusPerCent = interoperableWeight;
-            mareanoDataset.InteroperableStatusId = CreateFairDelivery(interoperableWeight);
-
-            int reusableWeight = 0;
-
-            mareanoDataset.R1_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.Constraints?.UseConstraintsLicenseLink);
-            mareanoDataset.R2_a_Criteria = _metadata.SimpleMetadata?.ProcessHistory.Count() > 200;
-            mareanoDataset.R2_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.MaintenanceFrequency);
-            mareanoDataset.R2_c_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ProductSpecificationUrl);
-            mareanoDataset.R2_d_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ResolutionScale);
-            mareanoDataset.R2_e_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageUrl) 
-                                           || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageGridUrl) 
-                                           || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageCellUrl);
-
-            mareanoDataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.Purpose);
-            mareanoDataset.R3_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML" || p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000" || p.FormatName == "NetCDF" || p.FormatName == "NetCDF-CF").Any();
-
-            if (mareanoDataset.R1_a_Criteria) reusableWeight += 30;
-            if (mareanoDataset.R2_a_Criteria) reusableWeight += 10;
-            if (mareanoDataset.R2_b_Criteria) reusableWeight += 5;
-            if (mareanoDataset.R2_c_Criteria) reusableWeight += 10;
-            if (mareanoDataset.R2_d_Criteria) reusableWeight += 5;
-            if (mareanoDataset.R2_e_Criteria) reusableWeight += 5;
-            if (mareanoDataset.R2_f_Criteria) reusableWeight += 5;
-            if (mareanoDataset.R3_a_Criteria) reusableWeight += 15;
-            if (mareanoDataset.R3_b_Criteria) reusableWeight += 15;
-
-            mareanoDataset.ReUseableStatusPerCent = reusableWeight;
-            mareanoDataset.ReUseableStatusId = CreateFairDelivery(reusableWeight);
-
-            int fairWeight = (findableWeight + accesibleWeight + interoperableWeight + reusableWeight) / 4;
-            mareanoDataset.FAIRStatusPerCent = fairWeight;
-            mareanoDataset.FAIRStatusId = CreateFairDelivery(fairWeight);
-
-        }
-
-        private bool CheckWms(string uuid, DatasetDelivery datasetDelivery)
-        {
-            if (datasetDelivery != null)
-            {
-                bool hasWms = datasetDelivery.IsGoodOrUseable();
-                bool hasWMTS = false;
-                var distros = GetDistributions(uuid);
-                if (distros != null)
-                {
-                    foreach (var distro in distros)
-                    {
-                        string protocol = distro?.Protocol;
-                        if (!string.IsNullOrEmpty(protocol) && protocol.Contains("WMTS"))
-                            hasWMTS = true;
-                    }
-
-                    if (hasWms || hasWMTS)
-                        return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool CheckWfs(string uuid, DatasetDelivery datasetDelivery)
-        {
-            if(datasetDelivery != null)
-            {
-                bool hasWfs = datasetDelivery.IsGoodOrUseable();
-                bool hasWcs = false;
-                var distros = GetDistributions(uuid);
-                if(distros != null)
-                {
-                    foreach(var distro in distros)
-                    {
-                        string protocol = distro?.Protocol;
-                        if (!string.IsNullOrEmpty(protocol) && protocol.Contains("WCS"))
-                            hasWcs = true;
-                    }
-
-                    if (hasWfs || hasWcs)
-                        return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static dynamic GetDistributions(string metadataUuid)
-        {
-            try
-            {
-                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distributions/" + metadataUuid;
-                var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
-
-                var json = c.DownloadString(metadataUrl);
-
-                dynamic metadata = Newtonsoft.Json.Linq.JArray.Parse(json);
-                return metadata;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        private bool CheckDistributionUrl(string uuid, IEnumerable<SimpleDistribution> distributions)
-        {
-            if(distributions != null && distributions.Count() > 0)
-            {
-                var url = distributions.FirstOrDefault().URL;
-                var protocol = distributions.FirstOrDefault().Protocol;
-
-                if (!string.IsNullOrEmpty(url) && (url.StartsWith("https://")))
-                {
-                    return true;                   
-                }
-            }
-
-            return false;
-        }
-
-        public Guid CreateFairDelivery(int weight, string fairStatusId = null, string note = "", bool autoupdate = true)
-        {
-            if (string.IsNullOrEmpty(fairStatusId))
-            {
-                if (weight > 90)
-                    fairStatusId = FAIRDelivery.Good;
-                else if (weight >= 75 && weight <= 90)
-                    fairStatusId = FAIRDelivery.Satisfactory;
-                else if (weight < 75 && weight >= 50)
-                    fairStatusId = FAIRDelivery.Useable;
-                else
-                    fairStatusId = FAIRDelivery.Deficient;
-            }
-
-            var fairDelivery = new FAIRDelivery(fairStatusId, note, autoupdate);
-            _dbContext.FAIRDeliveries.Add(fairDelivery);
+            var findableStatus = dataset.FindableStatus;
+            _dbContext.FAIRDeliveries.Add(findableStatus);
             _dbContext.SaveChanges();
-            return fairDelivery.FAIRDeliveryId;
+            fairDataset.FindableStatusId = findableStatus.FAIRDeliveryId;
+
+            fairDataset.A1_a_Criteria = dataset.A1_a_Criteria;
+            fairDataset.A1_b_Criteria = dataset.A1_b_Criteria;
+            fairDataset.A1_c_Criteria = dataset.A1_c_Criteria;
+            fairDataset.A1_d_Criteria = dataset.A1_d_Criteria;
+            fairDataset.A1_e_Criteria = dataset.A1_e_Criteria;
+            fairDataset.A1_f_Criteria = dataset.A1_f_Criteria;
+
+            fairDataset.AccesibleStatusPerCent = dataset.AccesibleStatusPerCent;
+            var accesibleStatus = dataset.AccesibleStatus;
+            _dbContext.FAIRDeliveries.Add(accesibleStatus);
+            _dbContext.SaveChanges();
+            fairDataset.AccesibleStatusId = accesibleStatus.FAIRDeliveryId;
+
+
+            fairDataset.I1_a_Criteria = dataset.I1_a_Criteria;
+            fairDataset.I1_b_Criteria = dataset.I1_b_Criteria;
+            fairDataset.I1_c_Criteria = dataset.I1_c_Criteria;
+            fairDataset.I2_a_Criteria = dataset.I2_a_Criteria;
+            fairDataset.I2_b_Criteria = dataset.I2_b_Criteria;
+            fairDataset.I3_a_Criteria = dataset.I3_a_Criteria;
+            fairDataset.I3_b_Criteria = dataset.I3_a_Criteria;
+
+
+            fairDataset.InteroperableStatusPerCent = dataset.InteroperableStatusPerCent;
+            var interoperableStatus = dataset.InteroperableStatus;
+            _dbContext.FAIRDeliveries.Add(interoperableStatus);
+            _dbContext.SaveChanges();
+            fairDataset.InteroperableStatusId = interoperableStatus.FAIRDeliveryId;
+
+
+            fairDataset.R1_a_Criteria = dataset.R1_a_Criteria;
+            fairDataset.R1_b_Criteria = dataset.R1_b_Criteria;
+            fairDataset.R2_a_Criteria = dataset.R2_a_Criteria;
+            fairDataset.R2_b_Criteria = dataset.R2_b_Criteria;
+            fairDataset.R2_c_Criteria = dataset.R2_c_Criteria;
+            fairDataset.R2_d_Criteria = dataset.R2_d_Criteria;
+            fairDataset.R2_e_Criteria = dataset.R2_e_Criteria;
+            fairDataset.R2_f_Criteria = dataset.R2_f_Criteria;
+            fairDataset.R2_g_Criteria = dataset.R2_g_Criteria;
+            fairDataset.R2_h_Criteria = dataset.R2_h_Criteria;
+            fairDataset.R3_b_Criteria = dataset.R3_b_Criteria;
+
+            fairDataset.ReUseableStatusPerCent = dataset.ReUseableStatusPerCent;
+            var reusableStatus = dataset.ReUseableStatus;
+            _dbContext.FAIRDeliveries.Add(reusableStatus);
+            _dbContext.SaveChanges();
+            fairDataset.ReUseableStatusId = reusableStatus.FAIRDeliveryId;
+
+
+            fairDataset.FAIRStatusPerCent = dataset.FAIRStatusPerCent;
+            var fairStatus = dataset.FAIRStatus;
+            _dbContext.FAIRDeliveries.Add(fairStatus);
+            _dbContext.SaveChanges();
+            fairDataset.FAIRStatusId = fairStatus.FAIRDeliveryId;
+
         }
 
         private MareanoDataset UpdateMareanoDataset(MareanoDataset originalDataset, MareanoDataset MareanoDatasetFromKartkatalogen)

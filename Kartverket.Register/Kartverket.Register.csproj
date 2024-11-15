@@ -1291,6 +1291,10 @@
     <Compile Include="Migrations\202411121658004_AddPropertiesForReusable.designer.cs">
       <DependentUpon>202411121658004_AddPropertiesForReusable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411142055025_AddMareanoProperties.cs" />
+    <Compile Include="Migrations\202411142055025_AddMareanoProperties.designer.cs">
+      <DependentUpon>202411142055025_AddMareanoProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3353,6 +3357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411121658004_AddPropertiesForReusable.resx">
       <DependentUpon>202411121658004_AddPropertiesForReusable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411142055025_AddMareanoProperties.resx">
+      <DependentUpon>202411142055025_AddMareanoProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

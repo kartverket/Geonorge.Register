@@ -893,7 +893,7 @@ namespace Kartverket.Register.Controllers
             Log.Info("Start SynchronizeMareanoStatusregister");
 
             try { 
-            new MareanoDatasetService(db).SynchronizeMareanoDatasets();
+            new MareanoDatasetService(db, _fairService).SynchronizeMareanoDatasets();
 
             var register = _registerService.GetRegisterByName("mareano-statusregister");
             _statusReportService.CreateStatusReport(register, true);

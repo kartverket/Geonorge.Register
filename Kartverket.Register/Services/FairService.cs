@@ -177,9 +177,6 @@ namespace Kartverket.Register.Services
             }
 
             var fairDelivery = new FAIRDelivery(fairStatusId, note, autoupdate);
-            //todo move
-            //_dbContext.FAIRDeliveries.Add(fairDelivery);
-            //_dbContext.SaveChanges();
             return fairDelivery;
         }
 

@@ -13,6 +13,7 @@ using System.Web;
 using Geonorge.AuthLib.Common;
 using Resources;
 using Kartverket.Register.Helpers;
+using Kartverket.Register.Models;
 
 namespace Kartverket.Register.Formatter
 {
@@ -381,24 +382,24 @@ namespace Kartverket.Register.Formatter
                DataSet.DOK_Delivery_Wfs + ";" + ";" + ";" + ";" + ";" +
                DataSet.DOK_Delivery_AtomFeed + ";" + ";" + ";" + ";" + ";" +
                GeodatalovDataSet.Common + ";" + ";" + ";" + ";" + ";" +
-               MareanoDataSet.Findable_Label + ";" + ";" + ";" + ";" + ";" +
-               MareanoDataSet.Accesible_Label + ";" + ";" + ";" + ";" + ";" +
-               MareanoDataSet.Interoperable_Label + ";" + ";" + ";" + ";" +";" +
-               MareanoDataSet.ReUseable_Label + ";" + ";" + ";" + ";" + ";";
+               FairDataSet.Findable_Label + ";" + ";" + ";" + ";" + ";" +
+               FairDataSet.Accesible_Label + ";" + ";" + ";" + ";" + ";" +
+               FairDataSet.Interoperable_Label + ";" + ";" + ";" + ";" +";" +
+               FairDataSet.ReUseable_Label + ";" + ";" + ";" + ";" + ";";
         }
 
         private string FairStatusReportHeading()
         {
-            return Registers.Date + ";" +      
-               MareanoDataSet.Findable_Label + ";" + ";" + ";" + ";" + ";" +
-               MareanoDataSet.Accesible_Label + ";" + ";" + ";" + ";" + ";" +
-               MareanoDataSet.Interoperable_Label + ";" + ";" + ";" + ";" + ";" +
-               MareanoDataSet.ReUseable_Label + ";" + ";" + ";" + ";" + ";";
+            return Registers.Date + ";" +
+               FairDataSet.Findable_Label + ";" + ";" + ";" + ";" + ";" +
+               FairDataSet.Accesible_Label + ";" + ";" + ";" + ";" + ";" +
+               FairDataSet.Interoperable_Label + ";" + ";" + ";" + ";" + ";" +
+               FairDataSet.ReUseable_Label + ";" + ";" + ";" + ";" + ";";
         }
 
         private void WriteMareanoStatusesInTable(StreamWriter streamWriter, MareanoDatasetStatusReport mareanoDatasetStatusReport)
         {
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.Findable_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.Findable_Label,
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Deficient,
@@ -406,7 +407,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Satisfactory
                 ));
 
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.Accesible_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.Accesible_Label,
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Deficient,
@@ -414,7 +415,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Satisfactory
                 ));
 
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.Interoperable_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.Interoperable_Label,
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Deficient,
@@ -422,7 +423,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Satisfactory
                 ));
 
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.ReUseable_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.ReUseable_Label,
                 mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Deficient,
@@ -506,7 +507,7 @@ namespace Kartverket.Register.Formatter
 
         private void WriteFairStatusesInTable(StreamWriter streamWriter, FairDatasetStatusReport fairDatasetStatusReport)
         {
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.Findable_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.Findable_Label,
                 fairDatasetStatusReport.NumberOfItemsWithFindable.Good,
                 fairDatasetStatusReport.NumberOfItemsWithFindable.Useable,
                 fairDatasetStatusReport.NumberOfItemsWithFindable.Deficient,
@@ -514,7 +515,7 @@ namespace Kartverket.Register.Formatter
                 fairDatasetStatusReport.NumberOfItemsWithFindable.Satisfactory
                 ));
 
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.Accesible_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.Accesible_Label,
                 fairDatasetStatusReport.NumberOfItemsWithAccesible.Good,
                 fairDatasetStatusReport.NumberOfItemsWithAccesible.Useable,
                 fairDatasetStatusReport.NumberOfItemsWithAccesible.Deficient,
@@ -522,7 +523,7 @@ namespace Kartverket.Register.Formatter
                 fairDatasetStatusReport.NumberOfItemsWithAccesible.Satisfactory
                 ));
 
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.Interoperable_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.Interoperable_Label,
                 fairDatasetStatusReport.NumberOfItemsWithInteroperable.Good,
                 fairDatasetStatusReport.NumberOfItemsWithInteroperable.Useable,
                 fairDatasetStatusReport.NumberOfItemsWithInteroperable.Deficient,
@@ -530,7 +531,7 @@ namespace Kartverket.Register.Formatter
                 fairDatasetStatusReport.NumberOfItemsWithInteroperable.Satisfactory
                 ));
 
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.ReUseable_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.ReUseable_Label,
                 fairDatasetStatusReport.NumberOfItemsWithReUseable.Good,
                 fairDatasetStatusReport.NumberOfItemsWithReUseable.Useable,
                 fairDatasetStatusReport.NumberOfItemsWithReUseable.Deficient,
@@ -1380,10 +1381,10 @@ namespace Kartverket.Register.Formatter
                        Registers.Updated + ";" +
                        Registers.VersionNumber + ";" +
                        Registers.Description + "; ID" + ";" +
-                       MareanoDataSet.Findable_Label + ";" +
-                       MareanoDataSet.Accesible_Label + ";" +
-                       MareanoDataSet.Interoperable_Label + ";" +
-                       MareanoDataSet.ReUseable_Label + ";" +
+                       FairDataSet.Findable_Label + ";" +
+                       FairDataSet.Accesible_Label + ";" +
+                       FairDataSet.Interoperable_Label + ";" +
+                       FairDataSet.ReUseable_Label + ";" +
                        DataSet.DOK_Delivery_Metadata + ";" +
                        DataSet.DOK_Delivery_ProductSpesification + ";" +
                        DataSet.DOK_Delivery_ProductSheet + ";" +

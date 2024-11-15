@@ -679,22 +679,22 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingParam == "findable_metadata_status" || sortingParam == "findable_metadata_status_desc")
             {
-                sortTitle = MareanoDataSet.Findable_Label;
+                sortTitle = FairDataSet.Findable_Label;
                 statusIcon += "custom-icon-findable";
             }
             else if (sortingParam == "accesible_metadata_status" || sortingParam == "accesible_metadata_status_desc")
             {
-                sortTitle = MareanoDataSet.Accesible_Label;
+                sortTitle = FairDataSet.Accesible_Label;
                 statusIcon += "custom-icon-accesible";
             }
             else if (sortingParam == "interoperable_metadata_status" || sortingParam == "interoperable_metadata_status_desc")
             {
-                sortTitle = MareanoDataSet.Interoperable_Label;
+                sortTitle = FairDataSet.Interoperable_Label;
                 statusIcon += "custom-icon-interoperable";
             }
             else if (sortingParam == "reusable_metadata_status" || sortingParam == "reusable_metadata_status_desc")
             {
-                sortTitle = MareanoDataSet.ReUseable_Label;
+                sortTitle = FairDataSet.ReUseable_Label;
                 statusIcon += "custom-icon-re-useable";
             }
             else if (sortingParam == "geodatalov_productspecification_status" || sortingParam == "geodatalov_productspecification_status_desc"

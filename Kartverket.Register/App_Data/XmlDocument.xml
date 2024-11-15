@@ -2992,61 +2992,6 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
-        <member name="P:Resources.MareanoDataSet.A1_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Det sjekkes om datasettet har en &quot;direkte&quot; nedlastningstjeneste (WFS eller WCS) (vekt 15).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.A1_b_Criteria">
-            <summary>
-              Looks up a localized string similar to Det sjekkes om datasettet har en visningstjeneste (WMS eller WMTS) (vekt 15).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.A1_c_Criteria">
-            <summary>
-              Looks up a localized string similar to Det sjekkes om datasettet er tilgjengelig gjennom &quot;Geonorge nedlastnings-api&quot; (vekt 15).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.A1_d_Criteria">
-            <summary>
-              Looks up a localized string similar to Det sjekkes om datasett er tilgjengelig som en nedlastningstjeneste for forhåndsdefinerte geografiske områder (Atom Feed) (vekt 5).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.A1_e_Criteria">
-            <summary>
-              Looks up a localized string similar to Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons (vekt 40).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.A1_f_Criteria">
-            <summary>
-              Looks up a localized string similar to Protokoller skal støtte autentisering og autorisasjon (vekt 10).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.A1_Label">
-            <summary>
-              Looks up a localized string similar to A1: Datasett er tilgjengelige gjennom standard web-protokoller.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.A2_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Det sjekkes ikke på dette punktet da Mareano-data skal være tilgjengelige for nedlastning (vekt 0).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.A2_Label">
-            <summary>
-              Looks up a localized string similar to A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.Accesible_Description">
-            <summary>
-              Looks up a localized string similar to Datasett skal være tilgjengelige gjennom standardiserte og åpne grensesnitt..
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.Accesible_Label">
-            <summary>
-              Looks up a localized string similar to Tilgjengelighet (Accessible).
-            </summary>
-        </member>
         <member name="P:Resources.MareanoDataSet.Common">
             <summary>
               Looks up a localized string similar to Nedlastingskrav status.
@@ -3072,126 +3017,6 @@
               Looks up a localized string similar to Nedlastingskrav.
             </summary>
         </member>
-        <member name="P:Resources.MareanoDataSet.F1_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Det sjekkes at det finnes metadata i Geonorge. Alle metadata i Geonorge har stabile og unike identifikatorer som er oppslagbare og returnerer metadata på standardisert form. ( vekt 25 ).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.F1_Label">
-            <summary>
-              Looks up a localized string similar to F1: Metadata skal ha unik og stabil identifikator.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.F2_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Minst tre tematiske søkeord skal legges inn i metadata (vekt 10).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.F2_b_Criteria">
-            <summary>
-              Looks up a localized string similar to Tittel bør maksimalt være på 105 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.F2_c_Criteria">
-            <summary>
-              Looks up a localized string similar to Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet og ikke lengre enn 600 tegn, da det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produktspesifikasjoner, produktark m.m. (vekt 10).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.F2_Label">
-            <summary>
-              Looks up a localized string similar to F2: Det skal finnes gode søkemetadata.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.F3_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Metadata skal ha en unik referanse til datasettet. Datasett skal ikke bare refereres til ved navn, men også ved en unik identifikator. Denne skal legges inn i metadata sammen med et navnerom. Datasett er definert med unike id-er i Geonorges navneromsregister hvis de har fått lagt inn datasett-id i metadata (vekt 25).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.F3_Label">
-            <summary>
-              Looks up a localized string similar to F3: Metadata har datasett-id.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.F4_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Metadata som ligger i Geonorge er søkbare gjennom CSW-api (OGC) og DCAT-api (W3C). Dette gjør metadata søkbare gjennom standardiserte api-er både for geodatabransjen, forskningsmiljøer og &quot;open data&quot;-miljøer både nasjonalt og internasjonalt. (vekt 25).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.F4_Label">
-            <summary>
-              Looks up a localized string similar to F4: Metadata skal være søkbare gjennom åpne og standardiserte api-er.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.Findable_Description">
-            <summary>
-              Looks up a localized string similar to Beskrivelser av datasett (metadata) og datasett skal være enkle å finne for både mennesker og datamaskiner. Maskinlesbare metadata er avgjørende for automatisk oppdagelse av datasett og tjenester.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.Findable_Label">
-            <summary>
-              Looks up a localized string similar to Søkbarhet (Findable).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.I1_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Metadata for geodata skal etableres i henhold til metadatastandarden ISO19115. Metadata i Geonorge er basert på den nevnte standarden. (vekt 20).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.I1_b_Criteria">
-            <summary>
-              Looks up a localized string similar to Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata i tillegg til NetCDF (vekt 10).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.I1_c_Criteria">
-            <summary>
-              Looks up a localized string similar to Hvis datasettet tilbys som GML skal datasettet validere i henhold til produktspesifikasjonens UML-modell (vekt 20).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.I1_Label">
-            <summary>
-              Looks up a localized string similar to I1: Metadata og datasett er representert gjennom internasjonale, godt dokumenterte og tilgjengelige standarder..
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.I2_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Tematisk hovedkategori må være utfylt i metadata for å kategorisere datasettet i en internasjonal kontekst (vekt 10).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.I2_b_Criteria">
-            <summary>
-              Looks up a localized string similar to Nasjonal temakategori må være utfylt  i metadata for å kategorisere datasettet i en nasjonal kontekst (vekt 10).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.I2_Label">
-            <summary>
-              Looks up a localized string similar to I2: Metadata og datasett skal benytte vokabularer, kodeverk og referere til oppslagsbare ressurser på nett som forvaltes med unike identifikatorer.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.I3_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Metadata skal referere til begreper som er beskrevet/definert i datasett UML-modell i Geonorges objektkatalog (vekt 10).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.I3_b_Criteria">
-            <summary>
-              Looks up a localized string similar to Datasettet skal modelleres i UML og metadataene skal referere til UML-modellen i Geonorges objektkatalog (vekt 20).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.I3_Label">
-            <summary>
-              Looks up a localized string similar to I3: Relasjoner mellom (meta)data er beskrevet.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.Interoperable_Description">
-            <summary>
-              Looks up a localized string similar to Dataene må ha samvirkningsevne og kunne integreres i ulike løsninger..
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.Interoperable_Label">
-            <summary>
-              Looks up a localized string similar to Interoperabilitet (Interoperabel).
-            </summary>
-        </member>
         <member name="P:Resources.MareanoDataSet.lesmer">
             <summary>
               Looks up a localized string similar to Les mer.
@@ -3205,66 +3030,6 @@
         <member name="P:Resources.MareanoDataSet.Productspesification">
             <summary>
               Looks up a localized string similar to Produktspesifikasjon.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R1_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Lisenser som ligger i Geonorge-registeret tilfredsstiller dette kravet (vekt 30).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R1_Label">
-            <summary>
-              Looks up a localized string similar to R1: Lisens skal være oppgitt og oppslagbar..
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R2_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Prosesshistorie (produksjonshistorie) skal være utfylt med mer enn 200 tegn (vekt 10).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R2_b_Criteria">
-            <summary>
-              Looks up a localized string similar to Status for oppdateringsfrekvens skal være oppgitt i metadata (vekt 5).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R2_c_Criteria">
-            <summary>
-              Looks up a localized string similar to Lenke til produktspesifikasjon (vekt 10).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R2_d_Criteria">
-            <summary>
-              Looks up a localized string similar to Målestokk eller posisjonsnøyaktighet (romlig oppløsning) er angitt (vekt 5).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R2_e_Criteria">
-            <summary>
-              Looks up a localized string similar to Dekningskart skal være oppgitt (kommunevis eller rutenett) (vekt 5).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R2_f_Criteria">
-            <summary>
-              Looks up a localized string similar to Formål skal være utfylt (vekt 5).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R2_Label">
-            <summary>
-              Looks up a localized string similar to R2: Metadata om kvalitet, dekning, bearbeiding, beregninger etc. skal være oppgitt..
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R3_a_Criteria">
-            <summary>
-              Looks up a localized string similar to Metadata skal følge standardene: ISO19115 og DCAT-AP-NO (vekt 15).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R3_b_Criteria">
-            <summary>
-              Looks up a localized string similar to Datasett leveres på internasjonale åpne vektorformater som GML eller raster/griddede data som TIFF/JPEG/NetCDF (vekt 15).
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.R3_Label">
-            <summary>
-              Looks up a localized string similar to R3: Metadata og datasett følger internasjonale standarder.
             </summary>
         </member>
         <member name="P:Resources.MareanoDataSet.RatingBad">
@@ -3335,16 +3100,6 @@
         <member name="P:Resources.MareanoDataSet.RequirementsWms">
             <summary>
               Looks up a localized string similar to &lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må det i metadata finnes en WMS-tjeneste. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;.
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.ReUseable_Description">
-            <summary>
-              Looks up a localized string similar to  For å optimalisere gjenbruk av data bør datasett beskrives godt slik at de kan tas i bruk i andre brukerløsninger..
-            </summary>
-        </member>
-        <member name="P:Resources.MareanoDataSet.ReUseable_Label">
-            <summary>
-              Looks up a localized string similar to Gjenbrukbar (Reusable).
             </summary>
         </member>
         <member name="P:Resources.MareanoDataSet.sedetaljer">

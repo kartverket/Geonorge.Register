@@ -81,7 +81,7 @@
                     <input type="hidden" name="FairSelectedTab" value="@Request["FairSelectedTab"]">
                     <input type="hidden" name="StatusType" value="@Request["StatusType"]">
                     <span>@DataSet.FilterOrganization:</span>
-                    <div class="custom-select">@Html.Raw(Html.DropDownList("filterOrganization", new SelectList(ViewBag.filterOrganization, "seoname", "name"), new { @class = "form-control", onchange = "this.form.submit()" }).ToString().Replace("\n", "").Replace("\r", "").Trim())</div>
+                    <div class="custom-select">@Html.Raw(Html.DropDownList("filterOrganization", new SelectList(ViewBag.filterOrganization, "seoname", "name"), new { @class = "form-control", onchange = "this.form.submit()" }))</div>
 
             </div><div class="col-sm-6"></div>
 
@@ -116,7 +116,6 @@
                 <input id="dok-data" type="checkbox" name="fairDatasetType" value="MarineGrunnkart" onchange="filterData();" />
             }
             <label for="dok-data">Marine grunnkart</label>
-            <input type="hidden" name="filterOrganization" value="@Request.QueryString["filterOrganization"]" />
             </form>
         </div>
         <div class="col-sm-12 col-md-2 text-right">

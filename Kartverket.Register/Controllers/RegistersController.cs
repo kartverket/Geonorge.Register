@@ -10,6 +10,7 @@ using Kartverket.Register.Services.Translation;
 using Kartverket.Register.Services.Versioning;
 using Resources;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -380,6 +381,37 @@ namespace Kartverket.Register.Controllers
 
                     fairStatusReports = fairStatusReportsOrganization;
 
+                }
+
+                if (filter.fairDatasetType != null ) 
+                {
+                    List<StatusReport> fairStatusReportsType = new List<StatusReport>();
+
+                    foreach (var fairStatusReport in fairStatusReports) 
+                    {
+                        List<RegisterItemStatusReport> reportItems = new List<RegisterItemStatusReport>();
+                        foreach (FairDatasetStatusReport item in fairStatusReport.StatusRegisterItems)
+                        {
+                            var fairDataset = _fairDatasetService.GetFairDatasetById(item.UuidFairDataset);
+                            var fairDatasetTypes = fairDataset.FairDatasetTypes.Select(s => s.Label).ToArray();
+                            
+                            bool matchType = false;
+
+                            foreach (var fairDatasetType in filter.fairDatasetType)
+                            {
+                                if (fairDatasetTypes.Contains(fairDatasetType))
+                                    matchType = true;
+                            }
+
+                            if(matchType)
+                                reportItems.Add(item);
+                        }
+
+                        fairStatusReport.StatusRegisterItems = reportItems;
+                        fairStatusReportsType.Add(fairStatusReport);
+                    }
+
+                    fairStatusReports = fairStatusReportsType;
                 }
             }
 

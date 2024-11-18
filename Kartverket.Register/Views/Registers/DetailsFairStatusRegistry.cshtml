@@ -5,6 +5,18 @@
 @{
     ViewBag.Title = Model.Name;
     ViewBag.MetaDescription = Model.Description;
+
+    string filter = "?";
+    string filterOrganization = Request.QueryString["filterOrganization"];
+    filter = filter + "filterOrganization=" + filterOrganization;
+    string[] fairDatasetTypesRoute = Request.QueryString["fairDatasetType"] != null ? Request.QueryString["fairDatasetType"].Split(',') : null;
+    string fairDatasetTypesParameters = "";
+    foreach (var fairDatasetType in fairDatasetTypesRoute)
+    {
+        fairDatasetTypesParameters += "&fairDatasetType=" + fairDatasetType;
+    }
+
+    filter = filter + fairDatasetTypesParameters;
 }
 
 @section breadcrumb {
@@ -125,10 +137,10 @@
             <ul id="tabs" class="nav nav-tabs">
 
                 <li id="dataset-Tab" class="tab active">
-                    @Html.ActionLink(DataSet.Dataset, "DetailsFairStatusRegistry", Request.QueryString.ToRouteValueDictionary("FairSelectedTab", "dataset"))
+                    <a href="@filter&FairSelectedTab=dataset">@DataSet.Dataset</a>
                 </li>
                 <li id="report-Tab" class="tab">
-                    @Html.ActionLink(InspireDataSet.Reports, "DetailsFairStatusRegistry", Request.QueryString.ToRouteValueDictionary("FairSelectedTab", "report"))
+                    <a href="@filter&FairSelectedTab=report">@InspireDataSet.Reports</a>
                 </li>
             </ul>
         </div>

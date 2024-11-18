@@ -374,7 +374,7 @@ namespace Kartverket.Register.Helpers
             return 0;
         }
 
-        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryType = null, string filterOrganization = null, string category = null, string GeodataType = null, string InspireAnnex = null, string fairDatasetType = null)
+        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryType = null, string filterOrganization = null, string category = null, string GeodataType = null, string InspireAnnex = null, string[] fairDatasetType = null)
         {
 
             var sortingClass = "";
@@ -777,7 +777,8 @@ namespace Kartverket.Register.Helpers
 
             if (fairDatasetType != null)
             {
-                linkSort += "&fairDatasetType=" + fairDatasetType;
+                foreach(var type in fairDatasetType)
+                    linkSort += "&fairDatasetType=" + type;
             }
 
             if (text != null)

@@ -2,6 +2,10 @@
 @using Kartverket.Register.Models.ViewModels
 @using Kartverket.Register.Helpers
 
+@{
+    string[] fairDatasetTypes = Request.QueryString["fairDatasetType"] != null ? Request.QueryString["fairDatasetType"].Split(',') : null;
+}
+
 <div class="table-heading col-md-12">
     <div class="col-md-5 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])</div>
     <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])</div>
@@ -10,7 +14,7 @@
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "reusable_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
-        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "percent_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "percent_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], null, fairDatasetTypes)
     </div>
 </div>
 

@@ -23,9 +23,7 @@
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
         @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "reusable_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])
-        <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title="">
-            <span class="custom-icon">&nbsp;</span>
-        </span>
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "percent_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"])
     </div>
 </div>
 

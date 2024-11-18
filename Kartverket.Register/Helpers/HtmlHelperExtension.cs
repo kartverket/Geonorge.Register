@@ -402,6 +402,11 @@ namespace Kartverket.Register.Helpers
                 sortingClass = "sorted-desc";
                 sortingParam = "mareano_status_desc";
             }
+            else if (sortingSelected == "name" && defaultSort == "percent_status")
+            {
+                sortingClass = "sorted-desc";
+                sortingParam = "percent_status_desc";
+            }
             else
             {
                 sortingClass = "";
@@ -475,6 +480,11 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "mareano_status" || sortingParam == "mareano_status_desc")
             {
                 sortTitle = "Antall oppfylte kriterier";
+                statusIcon += "bullseye-icon";
+            }
+            else if (sortingParam == "percent_status" || sortingParam == "percent_status_desc")
+            {
+                sortTitle = "Prosent oppfylte kriterier";
                 statusIcon += "bullseye-icon";
             }
 

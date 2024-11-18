@@ -1135,6 +1135,16 @@ namespace Kartverket.Register.Services.RegisterItem
                             var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderByDescending(o => o.ReUseableStatus.sortorder).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
+                    case "percent_status":
+                        {
+                            var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderBy(o => o.FAIRStatusPerCent).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "percent_status_desc":
+                        {
+                            var sortedList = registerItems.OfType<FairDatasetViewModel>().OrderByDescending(o => o.FAIRStatusPerCent).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     //FAIR mareano
                     case "findable_metadata_status":
                         {

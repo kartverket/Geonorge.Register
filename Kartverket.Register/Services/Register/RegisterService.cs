@@ -153,7 +153,7 @@ namespace Kartverket.Register.Services.Register
             return register;
         }
 
-        private bool FilterFairDatasetType(string fairDatasetType, RegisterItemV2 item)
+        private bool FilterFairDatasetType(string[] fairDatasetType, RegisterItemV2 item)
         {
             var dataset = item as FairDataset;
             var fairDataset = GetFairDataset(dataset.SystemId);
@@ -164,7 +164,7 @@ namespace Kartverket.Register.Services.Register
                 {
                     foreach(var type in fairDatasetTypes)
                     {
-                        if (type.Label.ToLower() == fairDatasetType.ToLower())
+                        if (fairDatasetType.Contains(type.Label))
                             return true;
                     }
                 }

@@ -2,19 +2,6 @@
 @using Kartverket.Register.Models.ViewModels
 @using Kartverket.Register.Helpers
 
-<div class="pull-right">
-    @if (Request.QueryString["fairDatasetType"] != "DOK")
-    {<a href="?fairDatasetType=DOK&filterOrganization=@Request.QueryString["filterOrganization"]">DOK</a>}
-    else
-    { <mark>DOK</mark>}, @if (Request.QueryString["fairDatasetType"] != "Mareano")
-    {<a href="?fairDatasetType=Mareano&filterOrganization=@Request.QueryString["filterOrganization"]">Mareano</a>}
-    else
-    { <mark>Mareano</mark>}, @if (Request.QueryString["fairDatasetType"] != "MarineGrunnkart")
-    {<a href="?fairDatasetType=MarineGrunnkart&filterOrganization=@Request.QueryString["filterOrganization"]">Marine grunnkart</a>}
-    else
-    { <mark>Marine grunnkart</mark>}
-</div>
-
 <div class="table-heading col-md-12">
     <div class="col-md-5 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])</div>
     <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], Request.QueryString["fairDatasetType"])</div>

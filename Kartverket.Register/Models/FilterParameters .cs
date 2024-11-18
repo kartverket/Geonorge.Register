@@ -53,7 +53,7 @@ namespace Kartverket.Register.Models
         public string stationName { get; set; }
         public string stationType { get; set; }
         public DateTime? effectivedate_from { get; set; }
-        public string fairDatasetType { get; set; }
+        public string[] fairDatasetType { get; set; }
 
         public bool InspireRegistertTypeIsDataset()
         {

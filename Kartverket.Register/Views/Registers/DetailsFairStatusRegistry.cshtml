@@ -11,12 +11,14 @@
     filter = filter + "filterOrganization=" + filterOrganization;
     string[] fairDatasetTypesRoute = Request.QueryString["fairDatasetType"] != null ? Request.QueryString["fairDatasetType"].Split(',') : null;
     string fairDatasetTypesParameters = "";
-    foreach (var fairDatasetType in fairDatasetTypesRoute)
-    {
-        fairDatasetTypesParameters += "&fairDatasetType=" + fairDatasetType;
-    }
+    if(fairDatasetTypesRoute != null) {
+        foreach (var fairDatasetType in fairDatasetTypesRoute)
+        {
+            fairDatasetTypesParameters += "&fairDatasetType=" + fairDatasetType;
+        }
 
-    filter = filter + fairDatasetTypesParameters;
+        filter = filter + fairDatasetTypesParameters;
+    }
 }
 
 @section breadcrumb {

@@ -644,16 +644,46 @@ h2.small-h2 {
     font-size: 24pt;
 }
 .filtercheckbox {
-    margin-bottom: 12px;
-    > span
-{
+    margin: 12px 0;
+    width: 100%;
     margin-right: 10px;
-}
+
     display: inline-flex;
     margin-top: 15px;
     align-items: flex-start;
-     label
+}
+    .filtercheckbox label {
+        margin: 0 14px 0 0;
+    }
+.filtercheckbox > span
 {
-    margin: 0 10px 0 2px;
+  margin: 0 6px 0 2px;  
 }
+.filtercheckbox input[type="checkbox"] {
+        border-radius: 3px;
 }
+input[type=checkbox]:checked::before {
+    background-color: #3767c7;
+    content: "✓";
+    line-height: 13px;
+    color: #fff;
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+}
+.filtercheckbox input[type=checkbox], .filtercheckbox input[type=radio] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid #3767c7;
+    font: inherit;
+    color: currentColor;
+    width: 16px;
+    height: 16px;
+    margin: 0 6px 0 0;
+}
+    .filtercheckbox input[type=checkbox]:focus {
+        border: 2px solid #2f3940;
+        outline-offset: 0;
+    }
+

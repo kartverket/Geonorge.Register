@@ -516,4 +516,7 @@ Method is based on interviews of planners and GIS people from municipalities, co
   <data name="FilterOrganization" xml:space="preserve">
     <value>Filter organization</value>
   </data>
+  <data name="FilterTheme" xml:space="preserve">
+    <value>Show</value>
+  </data>
 </root>

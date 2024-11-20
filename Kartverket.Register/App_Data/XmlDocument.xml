@@ -4281,7 +4281,12 @@
         </member>
         <member name="P:Resources.DataSet.FilterOrganization">
             <summary>
-              Looks up a localized string similar to Filtrer organisasjon.
+              Looks up a localized string similar to Velg organisasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.FilterTheme">
+            <summary>
+              Looks up a localized string similar to Vis.
             </summary>
         </member>
         <member name="P:Resources.DataSet.GetInfoKartkatalog">

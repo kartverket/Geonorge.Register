@@ -694,11 +694,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filtrer organisasjon.
+        ///   Looks up a localized string similar to Velg organisasjon.
         /// </summary>
         public static string FilterOrganization {
             get {
                 return ResourceManager.GetString("FilterOrganization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vis.
+        /// </summary>
+        public static string FilterTheme {
+            get {
+                return ResourceManager.GetString("FilterTheme", resourceCulture);
             }
         }
         

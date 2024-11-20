@@ -90,51 +90,55 @@
         </div>
         <div class="col-sm-12 col-md-10 text-left" id="organization-list">
             <form id="filter-data" method="get">
-            <div style="margin-left: -13px;" class="col-sm-6">
-                
+                <div style="margin-left: -13px;" class="col-sm-6">
+
                     <input type="hidden" name="FairSelectedTab" value="@Request["FairSelectedTab"]">
                     <input type="hidden" name="StatusType" value="@Request["StatusType"]">
                     <span>@DataSet.FilterOrganization:</span>
                     <div class="custom-select">@Html.Raw(Html.DropDownList("filterOrganization", new SelectList(ViewBag.filterOrganization, "seoname", "name"), new { @class = "form-control", onchange = "this.form.submit()" }))</div>
 
-            </div><div class="col-sm-6"></div>
+                </div><div class="col-sm-6"></div>
 
-            @{
-                var fairDatasetTypes = Request.QueryString["fairDatasetType"];
-            }
-            Filtrer data:
-            @if (fairDatasetTypes != null && fairDatasetTypes.Contains("DOK"))
-            {
-                <input id="dok-data" type="checkbox" name="fairDatasetType" value="DOK" checked onchange="filterData();" />
-            }
-            else
-            {
-                <input id="dok-data" type="checkbox" name="fairDatasetType" value="DOK" onchange="filterData();" />
-            }
-            <label for="dok-data">DOK</label>
-            @if (fairDatasetTypes != null && fairDatasetTypes.Contains("Mareano"))
-            {
-                <input id="dok-data" type="checkbox" name="fairDatasetType" value="Mareano" checked onchange="filterData();" />
-            }
-            else
-            {
-                <input id="dok-data" type="checkbox" name="fairDatasetType" value="Mareano" onchange="filterData();" />
-            }
-            <label for="dok-data">Mareano</label>
-            @if (fairDatasetTypes != null && fairDatasetTypes.Contains("MarineGrunnkart"))
-            {
-                <input id="dok-data" type="checkbox" name="fairDatasetType" value="MarineGrunnkart" checked onchange="filterData();" />
-            }
-            else
-            {
-                <input id="dok-data" type="checkbox" name="fairDatasetType" value="MarineGrunnkart" onchange="filterData();" />
-            }
-            <label for="dok-data">Marine grunnkart</label>
+                @{
+                    var fairDatasetTypes = Request.QueryString["fairDatasetType"];
+                }
+                <div class="col-sm-12 col-md-12 filtercheckbox">
+                    <span>@DataSet.FilterTheme:</span>
+                    @if (fairDatasetTypes != null && fairDatasetTypes.Contains("DOK"))
+                    {
+                        <input id="dok-data" type="checkbox" name="fairDatasetType" value="DOK" checked onchange="filterData();" />
+                    }
+                    else
+                    {
+                        <input id="dok-data" type="checkbox" name="fairDatasetType" value="DOK" onchange="filterData();" />
+                    }
+                    <label for="dok-data">DOK</label>
+                    @if (fairDatasetTypes != null && fairDatasetTypes.Contains("Mareano"))
+                    {
+                        <input id="dok-data" type="checkbox" name="fairDatasetType" value="Mareano" checked onchange="filterData();" />
+                    }
+                    else
+                    {
+                        <input id="dok-data" type="checkbox" name="fairDatasetType" value="Mareano" onchange="filterData();" />
+                    }
+                    <label for="dok-data">Mareano</label>
+                    @if (fairDatasetTypes != null && fairDatasetTypes.Contains("MarineGrunnkart"))
+                    {
+                        <input id="dok-data" type="checkbox" name="fairDatasetType" value="MarineGrunnkart" checked onchange="filterData();" />
+                    }
+                    else
+                    {
+                        <input id="dok-data" type="checkbox" name="fairDatasetType" value="MarineGrunnkart" onchange="filterData();" />
+                    }
+                    <label for="dok-data">Marine grunnkart</label>
+                </div>
             </form>
+
         </div>
         <div class="col-sm-12 col-md-2 text-right">
             <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span><br />
         </div>
+        
         <div class="col-sm-12 col-md-12 ">
             <ul id="tabs" class="nav nav-tabs">
 
@@ -155,17 +159,20 @@
         <div class="col-md-4">
             @if (Model.ContainedItemClassIsRegister())
             {
-                @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize)) 
             }
             else if (Model.RegisterItemsV2.Any())
             {
-                @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+                  @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
             }
             else
             {
                 @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
             }
+
+
         </div>
+       
         <div class="col-md-4 pull-right">
             @Html.Partial("_otherformats")
         </div>

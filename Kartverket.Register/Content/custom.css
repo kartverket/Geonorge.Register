@@ -643,3 +643,17 @@ a.link-unstyled {
 h2.small-h2 {
     font-size: 24pt;
 }
+.filtercheckbox {
+    margin-bottom: 12px;
+    > span
+{
+    margin-right: 10px;
+}
+    display: inline-flex;
+    margin-top: 15px;
+    align-items: flex-start;
+     label
+{
+    margin: 0 10px 0 2px;
+}
+}

@@ -529,7 +529,7 @@ a.link-unstyled {
 }
 
 .custom-icon.bullseye-icon {
-    padding: 3px;
+    padding: 2px;
     border: 3px solid #EE432A;
     border-radius: 50%;
     background-color: #EE432A;
@@ -607,6 +607,9 @@ a.link-unstyled {
 }    
 .first-four > span:nth-child(4) {margin-right: 20px;}
 .first-four > a:nth-child(4) {margin-right: 20px}
+.first-four {
+    padding-right: 10px;
+}
 .fair ul li:before {
     content: none;
 }

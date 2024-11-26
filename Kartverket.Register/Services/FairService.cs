@@ -97,7 +97,7 @@ namespace Kartverket.Register.Services
             dataset.I3_a_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
                                             ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.Contains("er i henhold")).Any() : false;
 
-            if (spatialRepresentation != "grid")
+            if (spatialRepresentation == "grid")
             {
                 dataset.I3_b_Criteria = true;
                 dataset.I3_c_Criteria = true;

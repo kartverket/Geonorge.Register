@@ -418,9 +418,9 @@ namespace Kartverket.Register.Services
 
             fairDataset.F2_a_Criteria = dataset.F2_a_Criteria;
             fairDataset.F2_b_Criteria = dataset.F2_b_Criteria;
-            fairDataset.F2_c_Criteria = dataset.F2_b_Criteria;
-            fairDataset.F2_d_Criteria = dataset.F2_b_Criteria;
-            fairDataset.F2_e_Criteria = dataset.F2_b_Criteria;
+            fairDataset.F2_c_Criteria = dataset.F2_c_Criteria;
+            fairDataset.F2_d_Criteria = dataset.F2_d_Criteria;
+            fairDataset.F2_e_Criteria = dataset.F2_e_Criteria;
             fairDataset.F3_a_Criteria = dataset.F3_a_Criteria;
 
             fairDataset.FindableStatusPerCent = dataset.FindableStatusPerCent;
@@ -446,11 +446,12 @@ namespace Kartverket.Register.Services
 
             fairDataset.I1_a_Criteria = dataset.I1_a_Criteria;
             fairDataset.I1_b_Criteria = dataset.I1_b_Criteria;
-            fairDataset.I1_c_Criteria = dataset.I1_c_Criteria;
+            //fairDataset.I1_c_Criteria = dataset.I1_c_Criteria; //Moved to I3_a_Criteria
             fairDataset.I2_a_Criteria = dataset.I2_a_Criteria;
             fairDataset.I2_b_Criteria = dataset.I2_b_Criteria;
             fairDataset.I3_a_Criteria = dataset.I3_a_Criteria;
-            fairDataset.I3_b_Criteria = dataset.I3_a_Criteria;
+            fairDataset.I3_b_Criteria = dataset.I3_b_Criteria;
+            fairDataset.I3_c_Criteria = dataset.I3_c_Criteria;
 
 
             fairDataset.InteroperableStatusPerCent = dataset.InteroperableStatusPerCent;

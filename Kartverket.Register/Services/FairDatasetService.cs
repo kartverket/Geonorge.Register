@@ -432,9 +432,9 @@ namespace Kartverket.Register.Services
 
             fairDataset.F2_a_Criteria = dataset.F2_a_Criteria;
             fairDataset.F2_b_Criteria = dataset.F2_b_Criteria;
-            fairDataset.F2_c_Criteria = dataset.F2_b_Criteria;
-            fairDataset.F2_d_Criteria = dataset.F2_b_Criteria;
-            fairDataset.F2_e_Criteria = dataset.F2_b_Criteria;
+            fairDataset.F2_c_Criteria = dataset.F2_c_Criteria;
+            fairDataset.F2_d_Criteria = dataset.F2_d_Criteria;
+            fairDataset.F2_e_Criteria = dataset.F2_e_Criteria;
             fairDataset.F3_a_Criteria = dataset.F3_a_Criteria;
 
             fairDataset.FindableStatusPerCent = dataset.FindableStatusPerCent;
@@ -460,11 +460,12 @@ namespace Kartverket.Register.Services
 
             fairDataset.I1_a_Criteria = dataset.I1_a_Criteria;
             fairDataset.I1_b_Criteria = dataset.I1_b_Criteria;
-            fairDataset.I1_c_Criteria = dataset.I1_c_Criteria;
+            //fairDataset.I1_c_Criteria = dataset.I1_c_Criteria; //Moved to I3_a_Criteria
             fairDataset.I2_a_Criteria = dataset.I2_a_Criteria;
             fairDataset.I2_b_Criteria = dataset.I2_b_Criteria;
             fairDataset.I3_a_Criteria = dataset.I3_a_Criteria;
-            fairDataset.I3_b_Criteria = dataset.I3_a_Criteria;
+            fairDataset.I3_b_Criteria = dataset.I3_b_Criteria;
+            fairDataset.I3_c_Criteria = dataset.I3_c_Criteria;
 
 
             fairDataset.InteroperableStatusPerCent = dataset.InteroperableStatusPerCent;
@@ -650,6 +651,7 @@ namespace Kartverket.Register.Services
         private List<FairDataset> FetchFairDatasets()
         {
             var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets[0]name=nationalinitiative&facets[0]value=Mareano&facets[1]name=nationalinitiative&facets[1]value=MarineGrunnkart&limit=6000&mediatype=json&listhidden=true";
+            //var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?text=041f1e6e-bdbc-4091-b48f-8a5990f3cc5b&limit=1"; //use for test 1 dataset + remove DOK add
             var client = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
 
             List<string> datasetUuids = new List<string>();

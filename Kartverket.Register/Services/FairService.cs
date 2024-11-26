@@ -28,9 +28,10 @@ namespace Kartverket.Register.Services
         {
             Fair dataset = new Fair();
 
-            dataset.I1_c_Criteria = null;
+            //dataset.I1_c_Criteria = null; //Moved to I3_a_Criteria
             dataset.I3_a_Criteria = null;
             dataset.I3_b_Criteria = null;
+            dataset.I3_c_Criteria = null;
 
             int findableWeight = 0;
             if (_metadata?.SimpleMetadata == null)
@@ -57,16 +58,16 @@ namespace Kartverket.Register.Services
 
             int accesibleWeight = 0;
 
-            dataset.A1_a_Criteria = CheckWfs(_metadata.SimpleMetadata.Uuid, wfsStatus);
-            dataset.A1_b_Criteria = CheckWms(_metadata.SimpleMetadata.Uuid, wmsStatus);
+            dataset.A1_a_Criteria = CheckDownloadService(_metadata.SimpleMetadata.Uuid, wfsStatus);
+            dataset.A1_b_Criteria = CheckViewService(_metadata.SimpleMetadata.Uuid, wmsStatus);
             dataset.A1_c_Criteria = _metadata.SimpleMetadata?.DistributionsFormats != null ? _metadata.SimpleMetadata.DistributionsFormats.Where(p => !string.IsNullOrEmpty(p.Protocol) && p.Protocol.Contains("GEONORGE:DOWNLOAD")).Any() : false;
             dataset.A1_d_Criteria = atomFeedStatus != null ? atomFeedStatus.IsGood() : false;
             dataset.A1_e_Criteria = CheckDistributionUrl(_metadata.SimpleMetadata.Uuid, _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")));
             dataset.A1_f_Criteria = true;
 
-            if (dataset.A1_a_Criteria) accesibleWeight += 15;
-            if (dataset.A1_b_Criteria) accesibleWeight += 15;
-            if (dataset.A1_c_Criteria) accesibleWeight += 15;
+            if (dataset.A1_a_Criteria) accesibleWeight += 20;
+            if (dataset.A1_b_Criteria) accesibleWeight += 20;
+            if (dataset.A1_c_Criteria) accesibleWeight += 5;
             if (dataset.A1_d_Criteria) accesibleWeight += 5;
             if (dataset.A1_e_Criteria) accesibleWeight += 50;
             if (dataset.A1_f_Criteria) accesibleWeight += 0;
@@ -89,34 +90,33 @@ namespace Kartverket.Register.Services
                 if (!dataset.I1_b_Criteria)
                     dataset.I1_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "NetCDF-CF").Any();
             }
-            if (spatialRepresentation != "grid")
-                dataset.I1_c_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
-                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.StartsWith("GML-filer er i henhold")).Any() : false;
+    
             dataset.I2_a_Criteria = _metadata.SimpleMetadata.Keywords.Where(k => !string.IsNullOrEmpty(k.Thesaurus)).ToList().Count() >= 1;
             dataset.I2_b_Criteria = SimpleKeyword.Filter(_metadata.SimpleMetadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME).ToList().Count() >= 1;
-            if (spatialRepresentation == "vector")
-            {
-                dataset.I3_a_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
-                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Title) && r.Title.Contains("SOSI produktspesifikasjon")).Any() : false;
-                if (!dataset.I3_a_Criteria.HasValue && !dataset.I3_a_Criteria.Value)
-                {
-                    dataset.I3_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
-                }
-                dataset.I3_b_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
+
+            dataset.I3_a_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
                                             ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.Contains("er i henhold")).Any() : false;
-            }
-            else
+
+            if (spatialRepresentation != "grid")
             {
-                dataset.I3_a_Criteria = true;
                 dataset.I3_b_Criteria = true;
+                dataset.I3_c_Criteria = true;
             }
+            else if (spatialRepresentation == "vector")
+            { 
+                dataset.I3_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.ApplicationSchema);
+                dataset.I3_b_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
+                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Explanation.Contains("er i henhold til applikasjonsskjema")).Any() : false;
+            }
+
             if (dataset.I1_a_Criteria) interoperableWeight += 20;
-            if (dataset.I1_b_Criteria) interoperableWeight += 10;
-            if (!dataset.I1_c_Criteria.HasValue || (dataset.I1_c_Criteria.HasValue && dataset.I1_c_Criteria.Value)) interoperableWeight += 20;
+            if (dataset.I1_b_Criteria) interoperableWeight += 40;
             if (dataset.I2_a_Criteria) interoperableWeight += 10;
             if (dataset.I2_b_Criteria) interoperableWeight += 10;
             if (!dataset.I3_a_Criteria.HasValue || (dataset.I3_a_Criteria.HasValue && dataset.I3_a_Criteria.Value)) interoperableWeight += 10;
-            if (!dataset.I3_b_Criteria.HasValue || (dataset.I3_b_Criteria.HasValue && dataset.I3_b_Criteria.Value)) interoperableWeight += 20;
+
+            if (!dataset.I3_b_Criteria.HasValue || (dataset.I3_b_Criteria.HasValue && dataset.I3_b_Criteria.Value)) interoperableWeight += 5;
+            if (!dataset.I3_c_Criteria.HasValue || (dataset.I3_c_Criteria.HasValue && dataset.I3_c_Criteria.Value)) interoperableWeight += 5;
 
             dataset.InteroperableStatusPerCent = interoperableWeight;
             dataset.InteroperableStatus = CreateFairDelivery(interoperableWeight);
@@ -132,12 +132,12 @@ namespace Kartverket.Register.Services
                                            || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageGridUrl)
                                            || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageCellUrl);
 
-            dataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.SpecificUsage);
+            dataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.Purpose);
 
             dataset.R2_g_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ContactMetadata?.Organization);
             dataset.R2_h_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ContactPublisher?.Organization);
 
-            dataset.R3_b_Criteria = _metadata.SimpleMetadata.DistributionsFormats.Where(p => p.FormatName == "GML" || p.FormatName == "GeoTIFF" || p.FormatName == "TIFF" || p.FormatName == "JPEG" || p.FormatName == "JPEG2000" || p.FormatName == "NetCDF" || p.FormatName == "NetCDF-CF").Any();
+            dataset.R3_b_Criteria = dataset.I1_b_Criteria;
 
             if (dataset.R1_a_Criteria) reusableWeight += 30;
             if (dataset.R1_b_Criteria) reusableWeight += 10;
@@ -180,7 +180,7 @@ namespace Kartverket.Register.Services
             return fairDelivery;
         }
 
-        private bool CheckWms(string uuid, DatasetDelivery datasetDelivery)
+        private bool CheckViewService(string uuid, DatasetDelivery datasetDelivery)
         {
             if (datasetDelivery != null)
             {
@@ -210,7 +210,7 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-        private bool CheckWfs(string uuid, DatasetDelivery datasetDelivery)
+        private bool CheckDownloadService(string uuid, DatasetDelivery datasetDelivery)
         {
             if (datasetDelivery != null)
             {
@@ -227,8 +227,6 @@ namespace Kartverket.Register.Services
                         else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Features"))
                             return true;
                         else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("Coverages"))
-                            return true;
-                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("EDR"))
                             return true;
                         else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("OpenDAP"))
                             return true;

@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det sjekkes om datasettet har en &quot;direkte&quot; nedlastningstjeneste (WFS eller WCS) (vekt 15).
+        ///   Looks up a localized string similar to Det sjekkes om datasettet har en &quot;direkte&quot; nedlastningstjeneste (WFS, WCS, OpenDAP, OGC API Features eller OGC API Coverages) (vekt 20).
         /// </summary>
         public static string A1_a_Criteria {
             get {
@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det sjekkes om datasettet har en visningstjeneste (WMS eller WMTS) (vekt 15).
+        ///   Looks up a localized string similar to Det sjekkes om datasettet har en visningstjeneste (WMS, WMTS, OGC API Maps, OGC API Styles eller OGC API Tiles) (vekt 20).
         /// </summary>
         public static string A1_b_Criteria {
             get {
@@ -79,7 +79,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det sjekkes om datasettet er tilgjengelig gjennom &quot;Geonorge nedlastnings-api&quot; (vekt 15).
+        ///   Looks up a localized string similar to Det sjekkes om datasettet er tilgjengelig gjennom &quot;Geonorge nedlastnings-api&quot; (vekt 5).
         /// </summary>
         public static string A1_c_Criteria {
             get {
@@ -277,7 +277,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata skal ha en unik referanse til datasettet. Datasett skal ikke bare refereres til ved navn, men også ved en unik identifikator. Denne skal legges inn i metadata sammen med et navnerom. Datasett er definert med unike id-er i Geonorges navneromsregister hvis de har fått lagt inn datasett-id i metadata (vekt 25).
+        ///   Looks up a localized string similar to Metadata skal ha en unik referanse til datasettet. Datasett skal ikke bare refereres til ved navn, men også ved en unik identifikator. Denne skal legges inn i metadata sammen med et navnerom. Datasett er definert med unike id-er i Geonorges navneromsregister hvis de har fått lagt inn datasett-id i metadata (vekt 20).
         /// </summary>
         public static string F3_a_Criteria {
             get {
@@ -295,7 +295,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata som ligger i Geonorge er søkbare gjennom CSW-api (OGC) og DCAT-api (W3C). Dette gjør metadata søkbare gjennom standardiserte api-er både for geodatabransjen, forskningsmiljøer og &quot;open data&quot;-miljøer både nasjonalt og internasjonalt. (vekt 25).
+        ///   Looks up a localized string similar to Metadata som ligger i Geonorge er søkbare gjennom CSW-api (OGC) og DCAT-api (W3C). Dette gjør metadata søkbare gjennom standardiserte api-er både for geodatabransjen, forskningsmiljøer og &quot;open data&quot;-miljøer både nasjonalt og internasjonalt. (vekt 20).
         /// </summary>
         public static string F4_a_Criteria {
             get {
@@ -340,20 +340,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML for vektordata eller tiff/jpg for rasterdata i tillegg til NetCDF (vekt 10).
+        ///   Looks up a localized string similar to Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML, GeoJSON, JSON-FG, JSON-LD og GeoPackage for vektordata eller TIFF, JPEG, Cloud Optimized GeoTIFF (COG) eller Cloud Optimized Point Cloud (COPC) for rasterdata i tillegg til NetCDF (vekt 40).
         /// </summary>
         public static string I1_b_Criteria {
             get {
                 return ResourceManager.GetString("I1_b_Criteria", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hvis datasettet tilbys som GML skal datasettet validere i henhold til produktspesifikasjonens UML-modell (vekt 20).
-        /// </summary>
-        public static string I1_c_Criteria {
-            get {
-                return ResourceManager.GetString("I1_c_Criteria", resourceCulture);
             }
         }
         
@@ -367,7 +358,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nøkkelord fra minst ett vokabular (tesaurus) må være fylt ut. (vekt 10).
+        ///   Looks up a localized string similar to Det må være referert til nøkkelord fra oppgitt og kjent vokabular (for eksempel GEMET eller EUROVOC) (vekt 10).
         /// </summary>
         public static string I2_a_Criteria {
             get {
@@ -394,7 +385,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metadata skal referere til begreper som er beskrevet/definert i datasett UML-modell i Geonorges objektkatalog (vekt 10).
+        ///   Looks up a localized string similar to Datasettet skal være dokumentert og i henhold til oppgitt produktspesifikasjon (vekt 10).
         /// </summary>
         public static string I3_a_Criteria {
             get {
@@ -403,11 +394,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasettet skal modelleres i UML og metadataene skal referere til UML-modellen i Geonorges objektkatalog (vekt 20).
+        ///   Looks up a localized string similar to Datasettet skal modelleres i UML og metadataene skal referere til UML-modellen i Geonorges objektkatalog (5).
         /// </summary>
         public static string I3_b_Criteria {
             get {
                 return ResourceManager.GetString("I3_b_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasettet skal være i henhold til UML-modell i minst et av de leverte formatene (vekt 5).
+        /// </summary>
+        public static string I3_c_Criteria {
+            get {
+                return ResourceManager.GetString("I3_c_Criteria", resourceCulture);
             }
         }
         
@@ -538,7 +538,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bruksområde skal være utfylt (vekt 5).
+        ///   Looks up a localized string similar to Formål skal være utfylt (vekt 5).
         /// </summary>
         public static string R2_f_Criteria {
             get {
@@ -583,7 +583,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett leveres på internasjonale åpne vektorformater som GML eller raster/griddede data som TIFF/JPEG/NetCDF (vekt 5).
+        ///   Looks up a localized string similar to Datasett leveres på internasjonale åpne formater. Se Interoperabilitetskrav 1b (vekt 5).
         /// </summary>
         public static string R3_b_Criteria {
             get {

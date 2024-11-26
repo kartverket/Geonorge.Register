@@ -33,11 +33,12 @@ namespace Kartverket.Register.Models.FAIR
 
         public bool I1_a_Criteria { get; set; } = true;
         public bool I1_b_Criteria { get; set; } = false;
-        public bool? I1_c_Criteria { get; set; } = null;
+        //public bool? I1_c_Criteria { get; set; } = null; //Moved to I3_a_Criteria
         public bool I2_a_Criteria { get; set; } = false;
         public bool I2_b_Criteria { get; set; } = false;
         public bool? I3_a_Criteria { get; set; } = null;
         public bool? I3_b_Criteria { get; set; } = null;
+        public bool? I3_c_Criteria { get; set; } = null;
 
         public int InteroperableStatusPerCent { get; set; }
         public FAIRDelivery InteroperableStatus { get; set; }

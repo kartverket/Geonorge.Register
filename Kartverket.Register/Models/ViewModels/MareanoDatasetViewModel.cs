@@ -56,11 +56,12 @@ namespace Kartverket.Register.Models.ViewModels
         public bool A2_a_Criteria { get; set; }
         public bool I1_a_Criteria { get; set; }
         public bool I1_b_Criteria { get; set; }
-        public bool? I1_c_Criteria { get; set; }
+        //public bool? I1_c_Criteria { get; set; } //Moved to I3_a_Criteria
         public bool I2_a_Criteria { get; set; }
         public bool I2_b_Criteria { get; set; }
         public bool? I3_a_Criteria { get; set; }
         public bool? I3_b_Criteria { get; set; }
+        public bool? I3_c_Criteria { get; set; }
         public bool R1_a_Criteria { get; set; }
         public bool R1_b_Criteria { get; set; }
         public bool R2_a_Criteria { get; set; }
@@ -167,14 +168,16 @@ namespace Kartverket.Register.Models.ViewModels
                 A2_a_Criteria = mareanoDataset.A2_a_Criteria;
                 I1_a_Criteria = mareanoDataset.I1_a_Criteria;
                 I1_b_Criteria = mareanoDataset.I1_b_Criteria;
-                if(mareanoDataset.I1_c_Criteria.HasValue)
-                    I1_c_Criteria = mareanoDataset.I1_c_Criteria.Value;
+                //if(mareanoDataset.I1_c_Criteria.HasValue)
+                //    I1_c_Criteria = mareanoDataset.I1_c_Criteria.Value; //Moved to I3_a_Criteria
                 I2_a_Criteria = mareanoDataset.I2_a_Criteria;
                 I2_b_Criteria = mareanoDataset.I2_b_Criteria;
                 if(mareanoDataset.I3_a_Criteria.HasValue)
                     I3_a_Criteria = mareanoDataset.I3_a_Criteria.Value;
                 if(mareanoDataset.I3_b_Criteria.HasValue)
                     I3_b_Criteria = mareanoDataset.I3_b_Criteria.Value;
+                if (mareanoDataset.I3_c_Criteria.HasValue)
+                    I3_c_Criteria = mareanoDataset.I3_c_Criteria.Value;
                 R1_a_Criteria = mareanoDataset.R1_a_Criteria;
                 R1_b_Criteria = mareanoDataset.R1_b_Criteria;
                 R2_a_Criteria = mareanoDataset.R2_a_Criteria;

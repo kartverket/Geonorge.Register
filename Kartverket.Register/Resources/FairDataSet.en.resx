@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="A1_a_Criteria" xml:space="preserve">
-    <value>It is checked whether the dataset has a "direct" download service (WFS or WCS) (weight 15)</value>
+    <value>It is checked whether the dataset has a "direct" download service (WFS, WCS, OpenDAP, OGC API Features or OGC API Coverages) (weight 20)</value>
   </data>
   <data name="A1_b_Criteria" xml:space="preserve">
-    <value>It is checked whether the dataset has a view service (WMS or WMTS) (weight 15)</value>
+    <value>It is checked whether the dataset has a display service (WMS, WMTS, OGC API Maps, OGC API Styles or OGC API Tiles) (weight 20)</value>
   </data>
   <data name="A1_c_Criteria" xml:space="preserve">
-    <value>It is checked whether the dataset is available through the "Geonorge download api" (weight 15)</value>
+    <value>It is checked whether the dataset is available through the "Geonorge download api" (weight 5)</value>
   </data>
   <data name="A1_d_Criteria" xml:space="preserve">
     <value>Checking if dataset is available as a download service for predefined datasets (Atom Feed) (weight 5)</value>
@@ -193,13 +193,13 @@
     <value>F2: Data are described with rich metadata</value>
   </data>
   <data name="F3_a_Criteria" xml:space="preserve">
-    <value>Metadata should have a unique reference to the dataset. Datasets should not only be referred to by name, but also by the unique identifier (uuid) for the dataset. This must be entered in the metadata together with a namespace. (Datasets are defined with unique IDs in Geonorge's namespace register if they have entered dataset-IDs in metadata) (weight 25)</value>
+    <value>Metadata should have a unique reference to the dataset. Datasets should not only be referred to by name, but also by the unique identifier (uuid) for the dataset. This must be entered in the metadata together with a namespace. (Datasets are defined with unique IDs in Geonorge's namespace register if they have entered dataset-IDs in metadata) (weight 20)</value>
   </data>
   <data name="F3_Label" xml:space="preserve">
     <value>F3: Metadata clearly and explicitly include the identifier of the data they describe</value>
   </data>
   <data name="F4_a_Criteria" xml:space="preserve">
-    <value>Metadata located in Geonorge is searchable through CSW API (OGC) and DCAT API (W3C). This makes metadata searchable through standardized APIs for the geodata industry, research and science and "open data" industry both nationally and internationally. (weight 25)</value>
+    <value>Metadata located in Geonorge is searchable through CSW API (OGC) and DCAT API (W3C). This makes metadata searchable through standardized APIs for the geodata industry, research and science and "open data" industry both nationally and internationally. (weight 20)</value>
   </data>
   <data name="F4_Label" xml:space="preserve">
     <value>F4: (Meta)data are registered or indexed in a searchable resource</value>
@@ -214,16 +214,13 @@
     <value>Metadata for geodata must be established in accordance with the metadata standard ISO19115. (Metadata in Geonorge is based on the mentioned standard.) (weight 20)</value>
   </data>
   <data name="I1_b_Criteria" xml:space="preserve">
-    <value>The dataset should be available in internationally known open formats. Check for GML for vector data or tiff / jpg for raster data and NetCDF (weight 10)</value>
-  </data>
-  <data name="I1_c_Criteria" xml:space="preserve">
-    <value>If the dataset is offered as GML, the dataset must validat according to the Data Product Specification's UML model (weight 20)</value>
+    <value>The dataset is available in internationally recognized open formats. It is checked for GML, GeoJSON, JSON-FG, JSON-LD and GeoPackage for vector data or TIFF, JPEG, Cloud Optimized GeoTIFF (COG) or Cloud Optimized Point Cloud (COPC) for raster data in addition to NetCDF (weight 40)</value>
   </data>
   <data name="I1_Label" xml:space="preserve">
     <value>I1: Metadata and datasets are represented through international, well-documented and accessible standards.</value>
   </data>
   <data name="I2_a_Criteria" xml:space="preserve">
-    <value>Keywords from at least one vocabulary (thesaurus) must be filled in. (weight 10)</value>
+    <value>Reference must be made to keywords from a given and known vocabulary (for example GEMET or EUROVOC) (weight 10)</value>
   </data>
   <data name="I2_b_Criteria" xml:space="preserve">
     <value>National theme category must be filled in metadata to categorize the dataset in a national context (weight 10)</value>
@@ -232,10 +229,13 @@
     <value>I2: Metadata and datasets shall use vocabularies, concepts and code lists and refer to searchable resources on the web that are managed with unique identifiers.</value>
   </data>
   <data name="I3_a_Criteria" xml:space="preserve">
-    <value>Metadata must refer to terms that are described / defined in the dataset's UML model in Geonorge's object catalog (SOSI model register) (weight 10)</value>
+    <value>The data set must be documented and in accordance with the stated product specification (weight 10)</value>
   </data>
   <data name="I3_b_Criteria" xml:space="preserve">
-    <value>The dataset must be modeled in UML and the metadata must refer to the UML model in Geonorge's object catalog (SOSI model register) (weight 20)</value>
+    <value>The dataset must be modeled in UML and the metadata must refer to the UML model in Geonorge's object catalog (SOSI model register) (weight 5)</value>
+  </data>
+  <data name="I3_c_Criteria" xml:space="preserve">
+    <value>The dataset must be in accordance with the UML model in at least one of the delivered formats (weight 5)</value>
   </data>
   <data name="I3_Label" xml:space="preserve">
     <value>I3: (Meta)data include qualified references to other (meta)data</value>
@@ -280,7 +280,7 @@
     <value>Coverage map must be provided in the metadata (by municipality or grid) (weight 5)</value>
   </data>
   <data name="R2_f_Criteria" xml:space="preserve">
-    <value>Specific usage must be provided in the metadata (weight 5)</value>
+    <value>Purpose must be provided in the metadata (weight 5)</value>
   </data>
   <data name="R2_g_Criteria" xml:space="preserve">
     <value>Metadata contact must be provided  (weight 5)</value>
@@ -295,7 +295,7 @@
     <value>Metadata must follow the standards: ISO19115 and DCAT-AP-NO (weight 5)</value>
   </data>
   <data name="R3_b_Criteria" xml:space="preserve">
-    <value>Datasets are delivered on international open vector formats such as GML or raster / gridded data such as TIFF / JPEG / NetCDF (weight 5)</value>
+    <value>Data sets are delivered in international open formats. See Interoperability Requirement 1b (weight 5)</value>
   </data>
   <data name="R3_Label" xml:space="preserve">
     <value>R1.3 (Meta)data meet domain-relevant community standards</value>

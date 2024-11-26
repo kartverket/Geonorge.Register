@@ -17,6 +17,7 @@ using System.Runtime.Remoting.MetadataServices;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http.Results;
+using System.IdentityModel.Protocols.WSTrust;
 
 namespace Kartverket.Register.Services
 {
@@ -500,6 +501,31 @@ namespace Kartverket.Register.Services
             _dbContext.SaveChanges();
             fairDataset.FAIRStatusId = fairStatus.FAIRDeliveryId;
 
+            UpdateMetadataFair(_metadata.SimpleMetadata.Uuid, dataset.FAIRStatusPerCent);
+
+        }
+
+        private void UpdateMetadataFair(string uuid, int fAIRStatusPerCent)
+        {
+            var url = WebConfigurationManager.AppSettings["ApiGeonorge"];
+            url = url + "metadata-update-fair/"+uuid+"/" + fAIRStatusPerCent.ToString();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                try
+                {
+                    var response = client.GetAsync(new Uri(url)).Result;
+
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        Log.Error("Error updating metadata FAIR status: " + uuid + ", statuscode: " + response.StatusCode);
+                    }
+                }
+                catch (Exception ex)
+                { 
+                    Log.Error("Error updating metadata FAIR status: " + uuid, ex);
+                }
+            }
         }
 
         private FairDataset UpdateFairDataset(FairDataset originalDataset, FairDataset FairDatasetFromKartkatalogen)

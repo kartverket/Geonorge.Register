@@ -124,7 +124,7 @@ namespace Kartverket.Register.Services
 
             dataset.R1_a_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.Constraints?.UseConstraintsLicenseLink);
             dataset.R1_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata.Constraints?.AccessConstraintsLink);
-            dataset.R2_a_Criteria = _metadata.SimpleMetadata?.ProcessHistory.Count() > 200;
+            dataset.R2_a_Criteria = _metadata.SimpleMetadata?.ProcessHistory != null ? _metadata.SimpleMetadata?.ProcessHistory.Count() > 200 : false;
             dataset.R2_b_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.MaintenanceFrequency);
             dataset.R2_c_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ProductSpecificationUrl);
             dataset.R2_d_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ResolutionScale);

@@ -2743,7 +2743,7 @@
         </member>
         <member name="P:Resources.FairDataSet.I2_a_Criteria">
             <summary>
-              Looks up a localized string similar to Det må være referert til nøkkelord fra oppgitt og kjent vokabular (for eksempel GEMET eller EUROVOC) (vekt 10).
+              Looks up a localized string similar to Minimum ett tematisk søkeord skal legges inn fra et offisielt nasjonalt eller internasjonalt vokabular (feks GEMET (Inspire-tema), NASA/GCMD (Globalt vokabular med beskrivelser av  vitenskaplige datasett og tjenester ) eller LOS (Nasjonal kategorisering av offentlige tjenester og ressurser) ) (vekt 10).
             </summary>
         </member>
         <member name="P:Resources.FairDataSet.I2_b_Criteria">

@@ -214,10 +214,10 @@
     <value>I1: Metadata og datasett er representert gjennom internasjonale, godt dokumenterte og tilgjengelige standarder.</value>
   </data>
   <data name="I2_a_Criteria" xml:space="preserve">
-    <value>Det må være referert til nøkkelord fra oppgitt og kjent vokabular (for eksempel GEMET eller EUROVOC) (vekt 10)</value>
+    <value>Minimum ett tematisk søkeord skal legges inn fra et offisielt nasjonalt eller internasjonalt vokabular (feks GEMET (Inspire-tema), NASA/GCMD (Globalt vokabular med beskrivelser av  vitenskaplige datasett og tjenester ) eller LOS (Nasjonal kategorisering av offentlige tjenester og ressurser) ) (vekt 10)</value>
   </data>
   <data name="I2_b_Criteria" xml:space="preserve">
-    <value>Nasjonal temakategori må være utfylt  i metadata for å kategorisere datasettet i en nasjonal kontekst (vekt 10)</value>
+    <value>Minimum ett tematisk nøkkelord skal legges inn fra Nasjonal temainndeling (Geonorge-registeret) (vekt 10)</value>
   </data>
   <data name="I2_Label" xml:space="preserve">
     <value>I2: Metadata og datasett skal benytte vokabularer, kodeverk og referere til oppslagsbare ressurser på nett som forvaltes med unike identifikatorer</value>

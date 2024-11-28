@@ -220,10 +220,10 @@
     <value>I1: Metadata and datasets are represented through international, well-documented and accessible standards.</value>
   </data>
   <data name="I2_a_Criteria" xml:space="preserve">
-    <value>Reference must be made to keywords from a given and known vocabulary (for example GEMET or EUROVOC) (weight 10)</value>
+    <value>At least one thematic keyword must be entered from an official national or international vocabulary (e.g. GEMET (Inspire theme), NASA/GCMD (Global vocabulary with descriptions of scientific datasets and services) or LOS (National categorization of public services and resources)) (weight 10)</value>
   </data>
   <data name="I2_b_Criteria" xml:space="preserve">
-    <value>National theme category must be filled in metadata to categorize the dataset in a national context (weight 10)</value>
+    <value>At least one National theme category must be filled in metadata to categorize the dataset in a national context (weight 10)</value>
   </data>
   <data name="I2_Label" xml:space="preserve">
     <value>I2: Metadata and datasets shall use vocabularies, concepts and code lists and refer to searchable resources on the web that are managed with unique identifiers.</value>

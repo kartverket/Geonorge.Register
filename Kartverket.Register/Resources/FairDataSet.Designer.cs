@@ -358,7 +358,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det må være referert til nøkkelord fra oppgitt og kjent vokabular (for eksempel GEMET eller EUROVOC) (vekt 10).
+        ///   Looks up a localized string similar to Minimum ett tematisk søkeord skal legges inn fra et offisielt nasjonalt eller internasjonalt vokabular (feks GEMET (Inspire-tema), NASA/GCMD (Globalt vokabular med beskrivelser av  vitenskaplige datasett og tjenester ) eller LOS (Nasjonal kategorisering av offentlige tjenester og ressurser) ) (vekt 10).
         /// </summary>
         public static string I2_a_Criteria {
             get {
@@ -367,7 +367,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nasjonal temakategori må være utfylt  i metadata for å kategorisere datasettet i en nasjonal kontekst (vekt 10).
+        ///   Looks up a localized string similar to Minimum ett tematisk nøkkelord skal legges inn fra Nasjonal temainndeling (Geonorge-registeret) (vekt 10).
         /// </summary>
         public static string I2_b_Criteria {
             get {

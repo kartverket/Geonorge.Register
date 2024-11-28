@@ -1154,7 +1154,7 @@ namespace Kartverket.Register.Services.Search
 
                 objListGeolett.Add(new SearchResultItem
                 {
-                    RegisterName = "Planguider",
+                    RegisterName = "Veiledningstekster plan og bygg",
                     RegisterItemName = obj["title"] != null ? obj["title"].ToString() : null,
                     RegisterItemNameEnglish = null,
                     RegisterItemDescription = obj["description"] != null ? obj["description"].ToString() : null,

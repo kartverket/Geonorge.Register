@@ -1299,6 +1299,10 @@
     <Compile Include="Migrations\202411260702025_AddFairI3_c_Criteria.designer.cs">
       <DependentUpon>202411260702025_AddFairI3_c_Criteria.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411282000551_AddFairR2_i_Criteria.cs" />
+    <Compile Include="Migrations\202411282000551_AddFairR2_i_Criteria.designer.cs">
+      <DependentUpon>202411282000551_AddFairR2_i_Criteria.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -3367,6 +3371,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411260702025_AddFairI3_c_Criteria.resx">
       <DependentUpon>202411260702025_AddFairI3_c_Criteria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411282000551_AddFairR2_i_Criteria.resx">
+      <DependentUpon>202411282000551_AddFairR2_i_Criteria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

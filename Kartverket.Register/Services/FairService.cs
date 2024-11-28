@@ -136,11 +136,13 @@ namespace Kartverket.Register.Services
 
             dataset.R2_g_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ContactMetadata?.Organization);
             dataset.R2_h_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ContactPublisher?.Organization);
+            dataset.R2_i_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
+                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Title.Contains("Geografisk dekning oppgitt i prosent")).Any() : false;
 
             dataset.R3_b_Criteria = dataset.I1_b_Criteria;
 
             if (dataset.R1_a_Criteria) reusableWeight += 30;
-            if (dataset.R1_b_Criteria) reusableWeight += 10;
+            if (dataset.R1_b_Criteria) reusableWeight += 5;
             if (dataset.R2_a_Criteria) reusableWeight += 10;
             if (dataset.R2_b_Criteria) reusableWeight += 5;
             if (dataset.R2_c_Criteria) reusableWeight += 10;
@@ -149,6 +151,7 @@ namespace Kartverket.Register.Services
             if (dataset.R2_f_Criteria) reusableWeight += 5;
             if (dataset.R2_g_Criteria) reusableWeight += 5;
             if (dataset.R2_h_Criteria) reusableWeight += 5;
+            if (dataset.R2_i_Criteria) reusableWeight += 5;
             if (dataset.R3_a_Criteria) reusableWeight += 5;
             if (dataset.R3_b_Criteria) reusableWeight += 5;
 

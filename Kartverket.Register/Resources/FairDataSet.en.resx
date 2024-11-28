@@ -259,7 +259,7 @@
     <value>Licenses in the Geonorge register meet this requirement (weight 30)</value>
   </data>
   <data name="R1_b_Criteria" xml:space="preserve">
-    <value>Access rights must be specified (weight 10)</value>
+    <value>Access rights must be specified (weight 5)</value>
   </data>
   <data name="R1_Label" xml:space="preserve">
     <value>R1.1: (Meta)data are released with a clear and accessible and resolvable data usage license</value>
@@ -287,6 +287,9 @@
   </data>
   <data name="R2_h_Criteria" xml:space="preserve">
     <value>Technical contact must be provided  (weight 5)</value>
+  </data>
+  <data name="R2_i_Criteria" xml:space="preserve">
+    <value>Coverage rate (proportion of mapped area in relation to the extent of the dataset) must be stated. (weight 5)</value>
   </data>
   <data name="R2_Label" xml:space="preserve">
     <value>R1.2: Metadata about quality, coverage, processing, calculations, etc. must be provided.</value>

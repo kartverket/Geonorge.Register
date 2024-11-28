@@ -2808,7 +2808,7 @@
         </member>
         <member name="P:Resources.FairDataSet.R1_b_Criteria">
             <summary>
-              Looks up a localized string similar to Tilgangsrettigheter skal være oppgitt (vekt 10).
+              Looks up a localized string similar to Tilgangsrettigheter skal være oppgitt (vekt 5).
             </summary>
         </member>
         <member name="P:Resources.FairDataSet.R1_Label">
@@ -2854,6 +2854,11 @@
         <member name="P:Resources.FairDataSet.R2_h_Criteria">
             <summary>
               Looks up a localized string similar to Teknisk kontakt skal være oppgitt (vekt 5).
+            </summary>
+        </member>
+        <member name="P:Resources.FairDataSet.R2_i_Criteria">
+            <summary>
+              Looks up a localized string similar to Dekningsgrad (andel kartlagt område i forhold til datatsettes utstrekning) skal være oppgitt. (vekt 5).
             </summary>
         </member>
         <member name="P:Resources.FairDataSet.R2_Label">

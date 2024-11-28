@@ -486,6 +486,7 @@ namespace Kartverket.Register.Services
             fairDataset.R2_f_Criteria = dataset.R2_f_Criteria;
             fairDataset.R2_g_Criteria = dataset.R2_g_Criteria;
             fairDataset.R2_h_Criteria = dataset.R2_h_Criteria;
+            fairDataset.R2_i_Criteria = dataset.R2_i_Criteria;
             fairDataset.R3_b_Criteria = dataset.R3_b_Criteria;
 
             fairDataset.ReUseableStatusPerCent = dataset.ReUseableStatusPerCent;

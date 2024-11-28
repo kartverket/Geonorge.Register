@@ -72,6 +72,7 @@ namespace Kartverket.Register.Models.ViewModels
         public bool R2_f_Criteria { get; set; }
         public bool R2_g_Criteria { get; set; }
         public bool R2_h_Criteria { get; set; }
+        public bool R2_i_Criteria { get; set; }
         public bool R3_a_Criteria { get; set; }
         public bool R3_b_Criteria { get; set; }
 
@@ -188,6 +189,7 @@ namespace Kartverket.Register.Models.ViewModels
                 R2_f_Criteria = FairDataset.R2_f_Criteria;
                 R2_g_Criteria = FairDataset.R2_g_Criteria;
                 R2_h_Criteria = FairDataset.R2_h_Criteria;
+                R2_i_Criteria = FairDataset.R2_i_Criteria;
                 R3_a_Criteria = FairDataset.R3_a_Criteria;
                 R3_b_Criteria = FairDataset.R3_b_Criteria;
 

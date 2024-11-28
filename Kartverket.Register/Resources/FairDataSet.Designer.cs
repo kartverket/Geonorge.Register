@@ -475,7 +475,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tilgangsrettigheter skal være oppgitt (vekt 10).
+        ///   Looks up a localized string similar to Tilgangsrettigheter skal være oppgitt (vekt 5).
         /// </summary>
         public static string R1_b_Criteria {
             get {
@@ -561,6 +561,15 @@ namespace Resources {
         public static string R2_h_Criteria {
             get {
                 return ResourceManager.GetString("R2_h_Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dekningsgrad (andel kartlagt område i forhold til datatsettes utstrekning) skal være oppgitt. (vekt 5).
+        /// </summary>
+        public static string R2_i_Criteria {
+            get {
+                return ResourceManager.GetString("R2_i_Criteria", resourceCulture);
             }
         }
         

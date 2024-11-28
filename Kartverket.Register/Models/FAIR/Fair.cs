@@ -53,6 +53,7 @@ namespace Kartverket.Register.Models.FAIR
         public bool R2_f_Criteria { get; set; } = false;
         public bool R2_g_Criteria { get; set; } = false;
         public bool R2_h_Criteria { get; set; } = false;
+        public bool R2_i_Criteria { get; set; } = false;
         public bool R3_a_Criteria { get; set; } = true;
         public bool R3_b_Criteria { get; set; } = false; 
         public int ReUseableStatusPerCent { get; set; }

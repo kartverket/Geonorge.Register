@@ -346,7 +346,7 @@
     <value>Tidsbasert søk. Opprettet dato skal være oppgitt i metadata (vekt 5).</value>
   </data>
   <data name="R1_b_Criteria" xml:space="preserve">
-    <value>Tilgangsrettigheter skal være oppgitt (vekt 10)</value>
+    <value>Tilgangsrettigheter skal være oppgitt (vekt 5)</value>
   </data>
   <data name="R2_g_Criteria" xml:space="preserve">
     <value>Metadata kontakt skal være oppgitt (vekt 5)</value>
@@ -356,5 +356,8 @@
   </data>
   <data name="I3_c_Criteria" xml:space="preserve">
     <value>Datasettet skal være i henhold til UML-modell i minst et av de leverte formatene (vekt 5)</value>
+  </data>
+  <data name="R2_i_Criteria" xml:space="preserve">
+    <value>Dekningsgrad (andel kartlagt område i forhold til datatsettes utstrekning) skal være oppgitt. (vekt 5)</value>
   </data>
 </root>

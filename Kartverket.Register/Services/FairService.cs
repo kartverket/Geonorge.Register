@@ -230,6 +230,8 @@ namespace Kartverket.Register.Services
                             return true;
                         else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("OpenDAP"))
                             return true;
+                        else if (!string.IsNullOrEmpty(protocol) && protocol.Contains("API-EDR"))
+                            return true;
                     }
 
                     if (hasWfs || hasWcs)

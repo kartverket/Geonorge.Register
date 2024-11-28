@@ -4,12 +4,29 @@
 
 @Registers.HitsDisplay @(Model.TotalItemCount == 0 ? 0 : Model.FirstItemOnPage) - @Model.LastItemOnPage @Registers.HitsOf @Model.TotalItemCount @Registers.Hits
 
+@{
+    string filter = "&";
+    string filterOrganization = Request.QueryString["filterOrganization"];
+    filter = filter + "filterOrganization=" + filterOrganization;
+    string[] fairDatasetTypesRoute = Request.QueryString["fairDatasetType"] != null ? Request.QueryString["fairDatasetType"].Split(',') : null;
+    string fairDatasetTypesParameters = "";
+    if (fairDatasetTypesRoute != null)
+    {
+        foreach (var fairDatasetType in fairDatasetTypesRoute)
+        {
+            fairDatasetTypesParameters += "&fairDatasetType=" + fairDatasetType;
+        }
+
+        filter = filter + fairDatasetTypesParameters;
+    }
+}
+
 @Html.PagedListPager(Model, page => Request.Path + "?page=" + page
     + (!string.IsNullOrEmpty(ViewBag.SortOrder) ? "&sorting=" + ViewBag.SortOrder : "")
     + (Session["text"] != null && !string.IsNullOrEmpty(Session["text"].ToString()) ? "&text=" + Session["text"].ToString() : "")
     + (!string.IsNullOrEmpty(ViewBag.text) ? "&text=" + ViewBag.text : "")
     + (!string.IsNullOrEmpty(ViewBag.InspireRegisteryType) ? "&inspireRegisteryType=" + ViewBag.InspireRegisteryType : "dataset")
-    + (!string.IsNullOrEmpty(Request.QueryString["fairDatasetType"]) ? "&fairDatasetType=" + Request.QueryString["fairDatasetType"] : "")
+    + (filter)
     , new PagedListRenderOptions { MaximumPageNumbersToDisplay = 1, DisplayEllipsesWhenNotShowingAllPageNumbers = false })
 
 

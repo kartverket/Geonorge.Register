@@ -130,7 +130,7 @@
     <value>Checking if dataset is available as a download service for predefined datasets (Atom Feed) (weight 5)</value>
   </data>
   <data name="A1_e_Criteria" xml:space="preserve">
-    <value>It is checked whether the protocols that provide access to the datasets are openly accessible and readable with standard IT tools. Which we consider to be sufficient if one has provided a download URL with Https response (weight 50)</value>
+    <value>It is checked whether the protocols that provide access to the datasets are openly accessible and readable with standard IT tools. Which we consider to be sufficient if one has provided a download URL with Https response or by offering one of the two APIs mentioned above (weight 50)</value>
   </data>
   <data name="A1_f_Criteria" xml:space="preserve">
     <value>The protocol allows for an authentication and authorisation procedure, where necessary</value>
@@ -229,7 +229,7 @@
     <value>I2: Metadata and datasets shall use vocabularies, concepts and code lists and refer to searchable resources on the web that are managed with unique identifiers.</value>
   </data>
   <data name="I3_a_Criteria" xml:space="preserve">
-    <value>The data set must be documented and in accordance with the stated product specification (weight 10)</value>
+    <value>The data set must be in accordance with the stated product specification (weight 10)</value>
   </data>
   <data name="I3_b_Criteria" xml:space="preserve">
     <value>The dataset must be modeled in UML and the metadata must refer to the UML model in Geonorge's object catalog (SOSI model register) (weight 5)</value>

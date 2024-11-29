@@ -62,7 +62,7 @@ namespace Kartverket.Register.Services
             dataset.A1_b_Criteria = CheckViewService(_metadata.SimpleMetadata.Uuid, wmsStatus);
             dataset.A1_c_Criteria = _metadata.SimpleMetadata?.DistributionsFormats != null ? _metadata.SimpleMetadata.DistributionsFormats.Where(p => !string.IsNullOrEmpty(p.Protocol) && p.Protocol.Contains("GEONORGE:DOWNLOAD")).Any() : false;
             dataset.A1_d_Criteria = atomFeedStatus != null ? atomFeedStatus.IsGood() : false;
-            dataset.A1_e_Criteria = CheckDistributionUrl(_metadata.SimpleMetadata.Uuid, _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")));
+            dataset.A1_e_Criteria =  dataset.A1_c_Criteria || dataset.A1_d_Criteria || CheckDistributionUrl(_metadata.SimpleMetadata.Uuid, _metadata.SimpleMetadata.DistributionsFormats.Where(f => !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("WWW:DOWNLOAD") || !string.IsNullOrEmpty(f.Protocol) && f.Protocol.Contains("GEONORGE:FILEDOWNLOAD")));
             dataset.A1_f_Criteria = true;
 
             if (dataset.A1_a_Criteria) accesibleWeight += 20;

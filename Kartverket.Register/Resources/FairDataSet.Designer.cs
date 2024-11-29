@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons (vekt 50).
+        ///   Looks up a localized string similar to Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons eller ved at et av de to ovennevnte API-er tilbys (vekt 50).
         /// </summary>
         public static string A1_e_Criteria {
             get {
@@ -385,7 +385,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasettet skal være dokumentert og i henhold til oppgitt produktspesifikasjon (vekt 10).
+        ///   Looks up a localized string similar to Datasettet skal være i henhold til oppgitt produktspesifikasjon (vekt 10).
         /// </summary>
         public static string I3_a_Criteria {
             get {

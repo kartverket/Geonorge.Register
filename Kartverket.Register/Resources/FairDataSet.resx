@@ -193,7 +193,7 @@
     <value>Det sjekkes om datasett er tilgjengelig som en nedlastningstjeneste for forhåndsdefinerte geografiske områder (Atom Feed) (vekt 5)</value>
   </data>
   <data name="A1_e_Criteria" xml:space="preserve">
-    <value>Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons (vekt 50)</value>
+    <value>Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons eller ved at et av de to ovennevnte API-er tilbys (vekt 50)</value>
   </data>
   <data name="A1_f_Criteria" xml:space="preserve">
     <value>Protokoller skal støtte autentisering og autorisasjon</value>
@@ -223,7 +223,7 @@
     <value>I2: Metadata og datasett skal benytte vokabularer, kodeverk og referere til oppslagsbare ressurser på nett som forvaltes med unike identifikatorer</value>
   </data>
   <data name="I3_a_Criteria" xml:space="preserve">
-    <value>Datasettet skal være dokumentert og i henhold til oppgitt produktspesifikasjon (vekt 10)</value>
+    <value>Datasettet skal være i henhold til oppgitt produktspesifikasjon (vekt 10)</value>
   </data>
   <data name="I3_b_Criteria" xml:space="preserve">
     <value>Datasettet skal modelleres i UML og metadataene skal referere til UML-modellen i Geonorges objektkatalog (5)</value>

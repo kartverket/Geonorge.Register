@@ -133,16 +133,6 @@ namespace Kartverket.Register.Models.ViewModels
             items.Add(new SelectListItem() { Text = FairDataSet.Accesible_Label, Value = "Accesible" });
             items.Add(new SelectListItem() { Text = FairDataSet.Interoperable_Label, Value = "Interoperable" });
             items.Add(new SelectListItem() { Text = FairDataSet.ReUseable_Label, Value = "ReUseable" });
-            items.Add(new SelectListItem() { Text = InspireDataSet.Metadata, Value = "Metadata" });
-            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_ProductSheet, Value = "ProductSheet" });
-            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_PresentationRules, Value = "PresentationRules" });
-            items.Add(new SelectListItem() { Text = DataSet.DOK_ProductSpecificationStatus, Value = "ProductSpecification" });
-            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_SosiRequirements, Value = "SosiRequirements" });
-            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_GmlRequirements, Value = "GmlRequirements" });
-            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Wms, Value = "Wms" });
-            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_Wfs, Value = "Wfs" });
-            items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_AtomFeed, Value = "AtomFeed" });
-            items.Add(new SelectListItem() { Text = FairDataSet.Common, Value = "Common" });
 
             var selectList = new SelectList(items, "Value", "Text");
 

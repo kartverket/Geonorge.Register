@@ -393,6 +393,10 @@ namespace Kartverket.Register.Controllers
                         foreach (FairDatasetStatusReport item in fairStatusReport.StatusRegisterItems)
                         {
                             var fairDataset = _fairDatasetService.GetFairDatasetById(item.UuidFairDataset);
+                            if(fairDataset == null)
+                            {
+                                continue;
+                            }
                             var fairDatasetTypes = fairDataset.FairDatasetTypes.Select(s => s.Label).ToArray();
                             
                             bool matchType = false;

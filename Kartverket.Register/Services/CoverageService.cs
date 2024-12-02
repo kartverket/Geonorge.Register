@@ -15,7 +15,7 @@ namespace Kartverket.Register.Services
 
         List<string> coverageList;
 
-        string coverageApiUrl = "https://ws.geonorge.no/dekningsApi/kommune?kid=";
+        string coverageApiUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["CoverageApi"] + "kommune?kid=";
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 

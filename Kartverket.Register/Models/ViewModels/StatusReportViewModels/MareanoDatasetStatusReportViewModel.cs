@@ -23,19 +23,19 @@ namespace Kartverket.Register.Models.ViewModels
         public StatusLineChart StatusChart { get; set; }
 
         // Findable
-        [Display(Name = "Findable_Label", ResourceType = typeof(MareanoDataSet))]
+        [Display(Name = "Findable_Label", ResourceType = typeof(FairDataSet))]
         public NumberOfStatuses NumberOfItemsWithFindable { get; set; }
 
         // Accesible
-        [Display(Name = "Accesible_Label", ResourceType = typeof(MareanoDataSet))]
+        [Display(Name = "Accesible_Label", ResourceType = typeof(FairDataSet))]
         public NumberOfStatuses NumberOfItemsWithAccesible { get; set; }
 
         // Interoperable
-        [Display(Name = "Interoperable_Label", ResourceType = typeof(MareanoDataSet))]
+        [Display(Name = "Interoperable_Label", ResourceType = typeof(FairDataSet))]
         public NumberOfStatuses NumberOfItemsWithInteroperable { get; set; }
 
         // ReUsable
-        [Display(Name = "ReUseable_Label", ResourceType = typeof(MareanoDataSet))]
+        [Display(Name = "ReUseable_Label", ResourceType = typeof(FairDataSet))]
         public NumberOfStatuses NumberOfItemsWithReUseable { get; set; }
 
         // Metadata

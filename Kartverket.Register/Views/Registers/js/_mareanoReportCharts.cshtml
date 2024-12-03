@@ -121,7 +121,7 @@
             labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Labels))),
             datasets: [
                {
-                    label: "@RawText(MareanoDataSet.Findable_Label)",
+                    label: "@RawText(FairDataSet.Findable_Label)",
                     borderColor: 'rgb(171, 235, 52)',
                     data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Findable))),
                     backgroundColor: "rgb(171, 235, 52)",
@@ -131,7 +131,7 @@
                     lineTension: 0
                 },
                 {
-                    label: "@MareanoDataSet.Accesible_Label",
+                    label: "@FairDataSet.Accesible_Label",
                     borderColor: 'rgb(229, 52, 235)',
                     data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Accesible))),
                     backgroundColor: "rgb(229, 52, 235)",
@@ -141,7 +141,7 @@
                     lineTension: 0
                 },
                 {
-                    label: "@MareanoDataSet.Interoperable_Label",
+                    label: "@FairDataSet.Interoperable_Label",
                     borderColor: 'rgb(161, 109, 67)',
                     data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.Interoperable))),
                     backgroundColor: "rgb(161, 109, 67)",
@@ -151,7 +151,7 @@
                     lineTension: 0
                 },
                 {
-                    label: "@MareanoDataSet.ReUseable_Label",
+                    label: "@FairDataSet.ReUseable_Label",
                     borderColor: 'rgb(250, 114, 5)',
                     data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.MareanoLineChart.ReUsable))),
                     backgroundColor: "rgb(250, 114, 5)",
@@ -610,7 +610,7 @@
                 title: {
 
                     display: true,
-                    text: '@RawText(MareanoDataSet.Findable_Label)',
+                    text: '@RawText(FairDataSet.Findable_Label)',
                     fontSize: 20
             },
             tooltips: {
@@ -636,7 +636,7 @@
                 title: {
 
                     display: true,
-                    text: '@MareanoDataSet.Accesible_Label',
+                    text: '@FairDataSet.Accesible_Label',
                     fontSize: 20
             },
             tooltips: {
@@ -663,7 +663,7 @@
                 title: {
 
                     display: true,
-                    text: '@MareanoDataSet.Interoperable_Label',
+                    text: '@FairDataSet.Interoperable_Label',
                     fontSize: 20
             },
             tooltips: {
@@ -690,7 +690,7 @@
                 title: {
 
                     display: true,
-                    text: '@MareanoDataSet.ReUseable_Label',
+                    text: '@FairDataSet.ReUseable_Label',
                     fontSize: 20
             },
             tooltips: {
@@ -971,10 +971,10 @@
             data: {
 
                 labels: [
-                    '@RawText(MareanoDataSet.Findable_Label)',
-                    '@MareanoDataSet.Accesible_Label',
-                    '@MareanoDataSet.Interoperable_Label',
-                    '@MareanoDataSet.ReUseable_Label',
+                    '@RawText(FairDataSet.Findable_Label)',
+                    '@FairDataSet.Accesible_Label',
+                    '@FairDataSet.Interoperable_Label',
+                    '@FairDataSet.ReUseable_Label',
                     '@DataSet.DOK_Delivery_Metadata',
                     '@DataSet.DOK_Delivery_ProductSpesification',
                     '@DataSet.DOK_Delivery_ProductSheet',

@@ -17,5 +17,6 @@ namespace Kartverket.Register.Models
         public Guid Id { get; set; }
         [MaxLength(255)]
         public string OrganizationSeoName { get; set; }
+        public float? Grade { get; set; }
     }
 }

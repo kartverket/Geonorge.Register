@@ -1,0 +1,36 @@
+﻿@model PagedList.IPagedList<RegisterItemV2ViewModel>
+@using Kartverket.Register.Models.ViewModels
+@using Kartverket.Register.Helpers
+
+@{
+    string[] fairDatasetTypes = Request.QueryString["fairDatasetType"] != null ? Request.QueryString["fairDatasetType"].Split(',') : null;
+}
+
+<div class="table-heading col-md-12">
+    <div class="col-md-5 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], null, fairDatasetTypes)</div>
+    <div class="col-md-3 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], null, fairDatasetTypes)</div>
+    <div class="col-md-4 col-sm-5 status-icons first-four">
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "findable_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], null, fairDatasetTypes)
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "accesible_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"],null, fairDatasetTypes)
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "interoperable_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], null, fairDatasetTypes)
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "reusable_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], null, fairDatasetTypes)
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "percent_status", null, null, Request.QueryString["filterOrganization"], null, Request.QueryString["GeodataType"], null, fairDatasetTypes)
+    </div>
+</div>
+
+@foreach (FairDatasetViewModel item in Model)
+{
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-5 col-sm-2 col"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
+        <div class="col-md-3 col"><a href="@item.ItemsByOwnerUrl()&fairDatasetType=@Request.QueryString["fairDatasetType"]" title="Datasett eier: @item.Owner.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.NameTranslated()</a></div>
+        <div class="col-md-4 col-sm-5 status-icons first-four">
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.FindableStatusId, false, "findable")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AccesibleStatusId, false, "accesible")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InteroperableStatusId, false, "interoperable")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ReUseableStatusId, false, "reusable")
+            <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@(item.FAIRStatusPerCent.ToString().Replace(".",",") + " %")'>
+                <span class="custom-icon">@item.FAIRStatusPerCent.ToString()&nbsp;%</span>
+            </span>
+        </div>
+    </div>
+}

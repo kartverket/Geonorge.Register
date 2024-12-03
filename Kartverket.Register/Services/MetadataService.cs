@@ -14,6 +14,7 @@ namespace Kartverket.DOK.Service
 {
     public class MetadataService
     {
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly RegisterDbContext _dbContext;
         public MetadataService(RegisterDbContext dbContext)
         {
@@ -484,12 +485,118 @@ namespace Kartverket.DOK.Service
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);
+                Log.Error("Error fetching Mareano dataset from Kartkatalogen for url:" + url, e);
                 return null;
             }
 
             return mareanoDataset;
         }
 
+        public FairDataset FetchFairDatasetFromKartkatalogen(string uuid)
+        {
+            var dokId = Guid.Parse(GlobalVariables.DokRegistryId);
+
+            var queryResult = from r in _dbContext.Registers
+                              where r.systemId == dokId
+                              select r;
+            var dokRegister = queryResult.FirstOrDefault();
+
+            bool isDok = false;
+            var dataset = dokRegister.items.Cast<Dataset>().Where(d => d.Uuid == uuid).FirstOrDefault();
+            if(dataset != null)
+            {
+                isDok = true;
+            }
+
+            var fairDataset = new FairDataset();
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    fairDataset.Name = data.Title;
+                    fairDataset.Description = data.Abstract;
+                    fairDataset.PresentationRulesUrl = data.LegendDescriptionUrl;
+                    fairDataset.ProductSheetUrl = data.ProductSheetUrl;
+                    fairDataset.ProductSpecificationUrl = data.ProductSpecificationUrl;
+                    fairDataset.SpecificUsage = data.SpecificUsage;
+                    fairDataset.Uuid = data.Uuid;
+                    fairDataset.MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + fairDataset.Uuid;
+                    var thumbnails = data.Thumbnails;
+                    if (thumbnails != null && thumbnails.Count > 0)
+                    {
+                        fairDataset.DatasetThumbnail = thumbnails[0].URL.Value;
+                    }
+
+                    fairDataset.OwnerId = mapOrganizationNameToId(
+                        data.ContactOwner != null && data.ContactOwner.Organization != null
+                            ? data.ContactOwner.Organization.Value
+                            : "Kartverket");
+                    fairDataset.ThemeGroupId =
+                        AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0
+                            ? data.KeywordsNationalTheme[0].KeywordValue.Value
+                            : "Annen");
+
+                    if (data.ServiceUuid != null) fairDataset.UuidService = data.ServiceUuid;
+                    if (data.ServiceDistributionUrlForDataset != null)
+                        fairDataset.WmsUrl = data.ServiceDistributionUrlForDataset;
+
+                    if (data.DistributionDetails != null)
+                        fairDataset.DistributionUrl = data.DistributionDetails.URL;
+
+                    if (data.UnitsOfDistribution != null)
+                        fairDataset.DistributionArea = data.UnitsOfDistribution.Value;
+
+                    var distributionFormat = data.DistributionFormat;
+                    if (distributionFormat != null)
+                    {
+                        if (distributionFormat.Name != null)
+                            fairDataset.DistributionFormat = distributionFormat.Name.Value;
+                    }
+
+                    fairDataset.FairDatasetTypes = new List<FairDatasetType>();
+
+                    if(isDok)
+                        fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "DOK", Description = "Det offentlige kartgrunnlaget" });
+
+                    if (data.KeywordsNationalInitiative != null)
+                    {
+                        foreach (var keyword in data.KeywordsNationalInitiative)
+                        {
+                            /*if (keyword.KeywordValue == "Det offentlige kartgrunnlaget")
+                            {
+                                if(fairDataset.FairDatasetTypes.Where(f => f.Description == keyword.KeywordValue.ToString()).Any() == false)
+                                    fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "DOK", Description = "Det offentlige kartgrunnlaget" });
+                            }
+                            else*/ if (keyword.KeywordValue == "Mareano")
+                            {
+                                if (fairDataset.FairDatasetTypes.Where(f => f.Label == keyword.KeywordValue.ToString()).Any() == false)
+                                    fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "Mareano", Description = "Mareano" });
+                            }
+                            else if (keyword.KeywordValue == "MarineGrunnkart")
+                            {
+                                if (fairDataset.FairDatasetTypes.Where(f => f.Label == keyword.KeywordValue.ToString()).Any() == false)
+                                    fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "MarineGrunnkart", Description = "Marine grunnkart" });
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                Log.Error("Error fetching Fair dataset from Kartkatalogen for url:" + url, e);
+                return null;
+            }
+
+            return fairDataset;
+        }
 
         public SearchResultsType SearchMetadata(string searchString)
         {

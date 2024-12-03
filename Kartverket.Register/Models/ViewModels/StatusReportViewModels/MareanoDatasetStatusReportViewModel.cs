@@ -23,19 +23,19 @@ namespace Kartverket.Register.Models.ViewModels
         public StatusLineChart StatusChart { get; set; }
 
         // Findable
-        [Display(Name = "Findable_Label", ResourceType = typeof(MareanoDataSet))]
+        [Display(Name = "Findable_Label", ResourceType = typeof(FairDataSet))]
         public NumberOfStatuses NumberOfItemsWithFindable { get; set; }
 
         // Accesible
-        [Display(Name = "Accesible_Label", ResourceType = typeof(MareanoDataSet))]
+        [Display(Name = "Accesible_Label", ResourceType = typeof(FairDataSet))]
         public NumberOfStatuses NumberOfItemsWithAccesible { get; set; }
 
         // Interoperable
-        [Display(Name = "Interoperable_Label", ResourceType = typeof(MareanoDataSet))]
+        [Display(Name = "Interoperable_Label", ResourceType = typeof(FairDataSet))]
         public NumberOfStatuses NumberOfItemsWithInteroperable { get; set; }
 
         // ReUsable
-        [Display(Name = "ReUseable_Label", ResourceType = typeof(MareanoDataSet))]
+        [Display(Name = "ReUseable_Label", ResourceType = typeof(FairDataSet))]
         public NumberOfStatuses NumberOfItemsWithReUseable { get; set; }
 
         // Metadata
@@ -129,10 +129,10 @@ namespace Kartverket.Register.Models.ViewModels
             List<SelectListItem> items = new List<SelectListItem>();
 
             items.Add(new SelectListItem() { Text = Shared.ShowAll, Value = "all" });
-            items.Add(new SelectListItem() { Text = MareanoDataSet.Findable_Label, Value = "Findable" });
-            items.Add(new SelectListItem() { Text = MareanoDataSet.Accesible_Label, Value = "Accesible" });
-            items.Add(new SelectListItem() { Text = MareanoDataSet.Interoperable_Label, Value = "Interoperable" });
-            items.Add(new SelectListItem() { Text = MareanoDataSet.ReUseable_Label, Value = "ReUseable" });
+            items.Add(new SelectListItem() { Text = FairDataSet.Findable_Label, Value = "Findable" });
+            items.Add(new SelectListItem() { Text = FairDataSet.Accesible_Label, Value = "Accesible" });
+            items.Add(new SelectListItem() { Text = FairDataSet.Interoperable_Label, Value = "Interoperable" });
+            items.Add(new SelectListItem() { Text = FairDataSet.ReUseable_Label, Value = "ReUseable" });
             items.Add(new SelectListItem() { Text = InspireDataSet.Metadata, Value = "Metadata" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_ProductSheet, Value = "ProductSheet" });
             items.Add(new SelectListItem() { Text = DataSet.DOK_Delivery_PresentationRules, Value = "PresentationRules" });

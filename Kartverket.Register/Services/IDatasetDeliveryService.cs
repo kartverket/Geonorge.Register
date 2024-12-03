@@ -10,7 +10,7 @@ namespace Kartverket.Register.Services
         SelectList GetDokDeliveryStatusesAsSelectlist(string modelInspireDeliveryMetadataStatus);
         string GetMetadataStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");
         string GetDeliveryDistributionStatus(string metadataUuid, string distributionUrl, bool autoUpdate = true, string currentStatus = "deficient");
-        string GetDokDeliveryServiceStatus(string metadataUuid, bool autoUpdate, string currentStatus, string serviceUuid, Models.MareanoDataset mareanoDataset = null);
+        string GetDokDeliveryServiceStatus(string metadataUuid, bool autoUpdate, string currentStatus, string serviceUuid, object dataset = null);
         string GetInspireWmsStatus(string metadataUuid, bool autoUpdate, string currentStatus, string serviceUuid);
         string GetWfsStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient", string serviceUuid = "");
         string GetInspireWfsStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");

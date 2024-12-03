@@ -524,6 +524,9 @@ Metode baserer seg på intervjuer av planleggere og GIS-folk fra kommuner, fylke
     <value>Tiltak</value>
   </data>
   <data name="FilterOrganization" xml:space="preserve">
-    <value>Filtrer organisasjon</value>
+    <value>Velg organisasjon</value>
+  </data>
+  <data name="FilterTheme" xml:space="preserve">
+    <value>Vis</value>
   </data>
 </root>

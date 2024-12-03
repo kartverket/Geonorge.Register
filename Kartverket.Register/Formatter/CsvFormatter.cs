@@ -13,6 +13,7 @@ using System.Web;
 using Geonorge.AuthLib.Common;
 using Resources;
 using Kartverket.Register.Helpers;
+using Kartverket.Register.Models;
 
 namespace Kartverket.Register.Formatter
 {
@@ -38,6 +39,8 @@ namespace Kartverket.Register.Formatter
                 type == typeof(DokStatusReport) ||
                 type == typeof(MareanoDatasetStatusReport) ||
                 type == typeof(List<MareanoDatasetStatusReport>) ||
+                type == typeof(FairDatasetStatusReport) ||
+                type == typeof(List<FairDatasetStatusReport>) ||
                 type == typeof(GeodatalovDatasetStatusReport) ||
                 type == typeof(List<GeodatalovDatasetStatusReport>) ||
                 type == typeof(List<DokStatusReport>) ||
@@ -73,6 +76,8 @@ namespace Kartverket.Register.Formatter
                 type == typeof(List<GeodatalovDatasetStatusReport>) ||
                 type == typeof(MareanoDatasetStatusReport) ||
                 type == typeof(List<MareanoDatasetStatusReport>) ||
+                type == typeof(FairDatasetStatusReport) ||
+                type == typeof(List<FairDatasetStatusReport>) ||
                 type == typeof(List<Registeritem>))
                 BuildCSV(value, writeStream, content.Headers.ContentType.MediaType);
         }
@@ -159,6 +164,12 @@ namespace Kartverket.Register.Formatter
                 WriteMareanoStatusesInTable(streamWriter, mareanoDatasetStatusReport);
             }
 
+            if (models is FairDatasetStatusReport fairDatasetStatusReport)
+            {
+                streamWriter.WriteLine(SingelStatusReportHeading("", "fair"));
+                WriteFairStatusesInTable(streamWriter, fairDatasetStatusReport);
+            }
+
             if (models is List<GeodatalovDatasetStatusReport> geodatalovDatasetStatusReports)
             {
                 streamWriter.WriteLine(GeodatalovStatusReportHeading());
@@ -178,6 +189,17 @@ namespace Kartverket.Register.Formatter
                 foreach (var report in mareanoDatasetStatusReports)
                 {
                     streamWriter.WriteLine(WriteMareanoStatusReport(report));
+                }
+            }
+
+            if (models is List<FairDatasetStatusReport> fairDatasetStatusReports)
+            {
+                streamWriter.WriteLine(FairStatusReportHeading());
+                streamWriter.WriteLine(StatusReportHeadingStatusValuesFair());
+
+                foreach (var report in fairDatasetStatusReports)
+                {
+                    streamWriter.WriteLine(WriteFairStatusReport(report));
                 }
             }
 
@@ -201,7 +223,29 @@ namespace Kartverket.Register.Formatter
                HeadingStatusesMareano();
         }
 
+        private string StatusReportHeadingStatusValuesFair()
+        {
+            return ";" +
+               HeadingStatusesFair() +
+               HeadingStatusesFair() +
+               HeadingStatusesFair() +
+               HeadingStatusesFair() +
+               HeadingStatusesFair() +
+               HeadingStatusesFair() +
+               HeadingStatusesFair() +
+               HeadingStatusesFair() +
+               HeadingStatusesFair() +
+               HeadingStatusesFair() +
+               HeadingStatusesFair() +
+               HeadingStatusesFair();
+        }
+
         private string HeadingStatusesMareano()
+        {
+            return DataSet.DOK_Delivery_Status_Good + ";" + MareanoDataSet.Delivery_Status_Useable + ";" + MareanoDataSet.Delivery_Status_Deficient + ";" + DataSet.DOK_Delivery_Status_NotSet + ";" + MareanoDataSet.Delivery_Status_Satisfactory + ";";
+        }
+
+        private string HeadingStatusesFair()
         {
             return DataSet.DOK_Delivery_Status_Good + ";" + MareanoDataSet.Delivery_Status_Useable + ";" + MareanoDataSet.Delivery_Status_Deficient + ";" + DataSet.DOK_Delivery_Status_NotSet + ";" + MareanoDataSet.Delivery_Status_Satisfactory + ";";
         }
@@ -295,6 +339,36 @@ namespace Kartverket.Register.Formatter
 
         }
 
+        private string WriteFairStatusReport(FairDatasetStatusReport report)
+        {
+            return report.Date + ";" +
+                  
+                   report.NumberOfItemsWithFindable.Good + ";" +
+                   report.NumberOfItemsWithFindable.Useable + ";" +
+                   report.NumberOfItemsWithFindable.Deficient + ";" +
+                   report.NumberOfItemsWithFindable.Notset + ";" +
+                   report.NumberOfItemsWithFindable.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithAccesible.Good + ";" +
+                   report.NumberOfItemsWithAccesible.Useable + ";" +
+                   report.NumberOfItemsWithAccesible.Deficient + ";" +
+                   report.NumberOfItemsWithAccesible.Notset + ";" +
+                   report.NumberOfItemsWithAccesible.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithInteroperable.Good + ";" +
+                   report.NumberOfItemsWithInteroperable.Useable + ";" +
+                   report.NumberOfItemsWithInteroperable.Deficient + ";" +
+                   report.NumberOfItemsWithInteroperable.Notset + ";" +
+                   report.NumberOfItemsWithInteroperable.Satisfactory + ";" +
+
+                   report.NumberOfItemsWithReUseable.Good + ";" +
+                   report.NumberOfItemsWithReUseable.Useable + ";" +
+                   report.NumberOfItemsWithReUseable.Deficient + ";" +
+                   report.NumberOfItemsWithReUseable.Notset + ";" +
+                   report.NumberOfItemsWithReUseable.Satisfactory + ";";
+
+        }
+
         private string MareanoStatusReportHeading()
         {
             return Registers.Date + ";" +
@@ -308,15 +382,24 @@ namespace Kartverket.Register.Formatter
                DataSet.DOK_Delivery_Wfs + ";" + ";" + ";" + ";" + ";" +
                DataSet.DOK_Delivery_AtomFeed + ";" + ";" + ";" + ";" + ";" +
                GeodatalovDataSet.Common + ";" + ";" + ";" + ";" + ";" +
-               MareanoDataSet.Findable_Label + ";" + ";" + ";" + ";" + ";" +
-               MareanoDataSet.Accesible_Label + ";" + ";" + ";" + ";" + ";" +
-               MareanoDataSet.Interoperable_Label + ";" + ";" + ";" + ";" +";" +
-               MareanoDataSet.ReUseable_Label + ";" + ";" + ";" + ";" + ";";
+               FairDataSet.Findable_Label + ";" + ";" + ";" + ";" + ";" +
+               FairDataSet.Accesible_Label + ";" + ";" + ";" + ";" + ";" +
+               FairDataSet.Interoperable_Label + ";" + ";" + ";" + ";" +";" +
+               FairDataSet.ReUseable_Label + ";" + ";" + ";" + ";" + ";";
+        }
+
+        private string FairStatusReportHeading()
+        {
+            return Registers.Date + ";" +
+               FairDataSet.Findable_Label + ";" + ";" + ";" + ";" + ";" +
+               FairDataSet.Accesible_Label + ";" + ";" + ";" + ";" + ";" +
+               FairDataSet.Interoperable_Label + ";" + ";" + ";" + ";" + ";" +
+               FairDataSet.ReUseable_Label + ";" + ";" + ";" + ";" + ";";
         }
 
         private void WriteMareanoStatusesInTable(StreamWriter streamWriter, MareanoDatasetStatusReport mareanoDatasetStatusReport)
         {
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.Findable_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.Findable_Label,
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Deficient,
@@ -324,7 +407,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Satisfactory
                 ));
 
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.Accesible_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.Accesible_Label,
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Deficient,
@@ -332,7 +415,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Satisfactory
                 ));
 
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.Interoperable_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.Interoperable_Label,
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Deficient,
@@ -340,7 +423,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Satisfactory
                 ));
 
-            streamWriter.WriteLine(StatusByType(MareanoDataSet.ReUseable_Label,
+            streamWriter.WriteLine(StatusByType(FairDataSet.ReUseable_Label,
                 mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Deficient,
@@ -418,6 +501,43 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithCommon.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithCommon.Notset,
                 mareanoDatasetStatusReport.NumberOfItemsWithCommon.Satisfactory));
+
+            streamWriter.WriteLine(SingelStatusReportHeadingOK());
+        }
+
+        private void WriteFairStatusesInTable(StreamWriter streamWriter, FairDatasetStatusReport fairDatasetStatusReport)
+        {
+            streamWriter.WriteLine(StatusByType(FairDataSet.Findable_Label,
+                fairDatasetStatusReport.NumberOfItemsWithFindable.Good,
+                fairDatasetStatusReport.NumberOfItemsWithFindable.Useable,
+                fairDatasetStatusReport.NumberOfItemsWithFindable.Deficient,
+                fairDatasetStatusReport.NumberOfItemsWithFindable.Notset,
+                fairDatasetStatusReport.NumberOfItemsWithFindable.Satisfactory
+                ));
+
+            streamWriter.WriteLine(StatusByType(FairDataSet.Accesible_Label,
+                fairDatasetStatusReport.NumberOfItemsWithAccesible.Good,
+                fairDatasetStatusReport.NumberOfItemsWithAccesible.Useable,
+                fairDatasetStatusReport.NumberOfItemsWithAccesible.Deficient,
+                fairDatasetStatusReport.NumberOfItemsWithAccesible.Notset,
+                fairDatasetStatusReport.NumberOfItemsWithAccesible.Satisfactory
+                ));
+
+            streamWriter.WriteLine(StatusByType(FairDataSet.Interoperable_Label,
+                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Good,
+                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Useable,
+                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Deficient,
+                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Notset,
+                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Satisfactory
+                ));
+
+            streamWriter.WriteLine(StatusByType(FairDataSet.ReUseable_Label,
+                fairDatasetStatusReport.NumberOfItemsWithReUseable.Good,
+                fairDatasetStatusReport.NumberOfItemsWithReUseable.Useable,
+                fairDatasetStatusReport.NumberOfItemsWithReUseable.Deficient,
+                fairDatasetStatusReport.NumberOfItemsWithReUseable.Notset,
+                fairDatasetStatusReport.NumberOfItemsWithReUseable.Satisfactory
+                ));
 
             streamWriter.WriteLine(SingelStatusReportHeadingOK());
         }
@@ -797,7 +917,7 @@ namespace Kartverket.Register.Formatter
             var delivery_Status_Useable = DataSet.DOK_Delivery_Status_Useable;
             var delivery_Status_Deficient = DataSet.DOK_Delivery_Status_Deficient;
 
-            if (type == "mareano")
+            if (type == "mareano" || type == "fair")
             {
                 delivery_Status_Useable = MareanoDataSet.Delivery_Status_Useable;
                 delivery_Status_Deficient = MareanoDataSet.Delivery_Status_Deficient;
@@ -808,7 +928,7 @@ namespace Kartverket.Register.Formatter
                    delivery_Status_Deficient + ";" +
                    DataSet.DOK_Delivery_Status_NotSet;
 
-            if(type == "mareano")
+            if(type == "mareano" || type == "fair")
             {
                heading = heading + ";" + MareanoDataSet.Delivery_Status_Satisfactory;
             }
@@ -1045,6 +1165,18 @@ namespace Kartverket.Register.Formatter
                        (isAdmin ? ";" + item.uuid : "") + ";" +
                        item.MetadataUrl;
             }
+            else if (item.itemclass == "FairDataset")
+            {
+                text = item.label + ";" +
+                       item.owner + ";" +
+                       item.lastUpdated.ToString("dd/MM/yyyy") + ";" +
+                       item.versionNumber + ";" +
+                       item.description + ";" +
+                       item.id + ";" +
+                       GetFairDeliveryStatus(item) +
+                       item.uuid + ";" +
+                       item.MetadataUrl;
+            }
             else if (item.itemclass == "Organization")
             {
                 text = $"{item.label};{item.number};{item.MunicipalityCode};{item.GeographicCenterX};{item.GeographicCenterY};{item.BoundingBoxNorth};{item.BoundingBoxWest};{item.BoundingBoxSouth};{item.BoundingBoxEast};{HtmlHelperExtensions.TranslateBool(item.NorgeDigitaltMember)}";
@@ -1125,6 +1257,14 @@ namespace Kartverket.Register.Formatter
                    item.WfsStatus + ";" +
                    item.AtomFeedStatus + ";" +
                    item.CommonStatus;
+        }
+
+        private static string GetFairDeliveryStatus(Registeritem item)
+        {
+            return item.FindableStatus + ";" +
+                    item.AccesibleStatus + ";" +
+                    item.InteroperableStatus + ";" +
+                    item.ReUsableStatus + ";";
         }
 
         private static void ConvertRegisterItemDokMunicipalToCSV(StreamWriter streamWriter, Registeritem item)
@@ -1241,10 +1381,10 @@ namespace Kartverket.Register.Formatter
                        Registers.Updated + ";" +
                        Registers.VersionNumber + ";" +
                        Registers.Description + "; ID" + ";" +
-                       MareanoDataSet.Findable_Label + ";" +
-                       MareanoDataSet.Accesible_Label + ";" +
-                       MareanoDataSet.Interoperable_Label + ";" +
-                       MareanoDataSet.ReUseable_Label + ";" +
+                       FairDataSet.Findable_Label + ";" +
+                       FairDataSet.Accesible_Label + ";" +
+                       FairDataSet.Interoperable_Label + ";" +
+                       FairDataSet.ReUseable_Label + ";" +
                        DataSet.DOK_Delivery_Metadata + ";" +
                        DataSet.DOK_Delivery_ProductSpesification + ";" +
                        DataSet.DOK_Delivery_ProductSheet + ";" +
@@ -1255,6 +1395,20 @@ namespace Kartverket.Register.Formatter
                        DataSet.DOK_Delivery_Wfs + ";" +
                        DataSet.DOK_Delivery_AtomFeed + ";" +
                        DataSet.Delivery_Common + (isAdmin ? ";Uuid" : "") + ";" +
+                       DataSet.DisplayKartkatalogen;
+            }
+            if (containedItemClass == "FairDataset")
+            {
+                return Registers.Name + ";" +
+                       Registers.Owner + ";" +
+                       Registers.Updated + ";" +
+                       Registers.VersionNumber + ";" +
+                       Registers.Description + "; ID" + ";" +
+                       FairDataSet.Findable_Label + ";" +
+                       FairDataSet.Accesible_Label + ";" +
+                       FairDataSet.Interoperable_Label + ";" +
+                       FairDataSet.ReUseable_Label + ";" +
+                       "Uuid" + ";" +
                        DataSet.DisplayKartkatalogen;
             }
             if (containedItemClass == "Organization")

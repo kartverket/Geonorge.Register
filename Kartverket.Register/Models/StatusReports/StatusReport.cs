@@ -70,6 +70,11 @@ namespace Kartverket.Register.Models
             return StatusRegisterItems.FirstOrDefault() is MareanoDatasetStatusReport;
         }
 
+        public bool IsFairDatasetReport()
+        {
+            return StatusRegisterItems.FirstOrDefault() is FairDatasetStatusReport;
+        }
+
         public bool IsInspireDataserviceReport()
         {
             return StatusRegisterItems.FirstOrDefault() is InspireDataserviceStatusReport;
@@ -78,6 +83,11 @@ namespace Kartverket.Register.Models
         public bool IsMareanoDataserviceReport()
         {
             return StatusRegisterItems.FirstOrDefault() is MareanoDatasetStatusReport;
+        }
+
+        public bool IsFairDataserviceReport()
+        {
+            return StatusRegisterItems.FirstOrDefault() is FairDatasetStatusReport;
         }
 
         public int NumberOfItemsWithMetadata(string status)
@@ -161,6 +171,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfFairDatasetsWithFindable(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.FindableFairDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfMareanoDatasetsWithAccesible(string status)
         {
             int number = 0;
@@ -169,6 +195,22 @@ namespace Kartverket.Register.Models
                 if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
                 {
                     if (mareanoDatasetStatusReport.AccesibleMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfFairDatasetsWithAccesible(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.AccesibleFairDataset == status)
                     {
                         number++;
                     }
@@ -193,6 +235,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfFairDatasetsWithInteroperable(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport mareanoDatasetStatusReport)
+                {
+                    if (mareanoDatasetStatusReport.InteroperableFairDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfMareanoDatasetsWithProductSheet(string status)
         {
             int number = 0;
@@ -201,6 +259,22 @@ namespace Kartverket.Register.Models
                 if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
                 {
                     if (mareanoDatasetStatusReport.ProductSheetMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfFairDatasetsWithProductSheet(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.ProductSheetFairDataset == status)
                     {
                         number++;
                     }
@@ -225,6 +299,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfFairDatasetsWithPresentationRules(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.PresentationRulesFairDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfMareanoDatasetsWithReUsable(string status)
         {
             int number = 0;
@@ -241,6 +331,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfFairDatasetsWithReUsable(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.ReUsableFairDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfMareanoDatasetsWithMetadata(string status)
         {
             int number = 0;
@@ -249,6 +355,22 @@ namespace Kartverket.Register.Models
                 if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
                 {
                     if (mareanoDatasetStatusReport.MetadataMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfFairDatasetsWithMetadata(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.MetadataFairDataset == status)
                     {
                         number++;
                     }
@@ -337,6 +459,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfFairDatasetsWithProductSpecification(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.ProductSpesificationFairDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithWms(string status)
         {
             int number = 0;
@@ -393,6 +531,22 @@ namespace Kartverket.Register.Models
                 if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
                 {
                     if (mareanoDatasetStatusReport.WmsMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfFairDatasetsWithWms(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.WmsFairDataset == status)
                     {
                         number++;
                     }
@@ -481,6 +635,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfFairDatasetsWithWfs(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.WfsFairDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithSosiRequirements(string status)
         {
             int number = 0;
@@ -529,6 +699,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfFairDatasetsWithSosiRequirements(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.SosiDataFairDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
         public int NumberOfItemsWithGmlRequirements(string status)
         {
             int number = 0;
@@ -569,6 +755,22 @@ namespace Kartverket.Register.Models
                 if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
                 {
                     if (mareanoDatasetStatusReport.GmlDataMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfFairDatasetsWithGmlRequirements(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.GmlDataFairDataset == status)
                     {
                         number++;
                     }
@@ -633,6 +835,22 @@ namespace Kartverket.Register.Models
                 if (item is MareanoDatasetStatusReport mareanoDatasetStatusReport)
                 {
                     if (mareanoDatasetStatusReport.AtomFeedMareanoDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        public int NumberOfFairDatasetsWithAtomFeed(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.AtomFeedFairDataset == status)
                     {
                         number++;
                     }
@@ -785,6 +1003,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public int NumberOfFairDatasetsItemsWithCommon(string status)
+        {
+            int number = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    if (fairDatasetStatusReport.CommonStatusFairDataset == status)
+                    {
+                        number++;
+                    }
+                }
+            }
+            return number;
+        }
+
 
         public int NumberOfItemsByType(string statusType, string status)
         {
@@ -798,16 +1032,21 @@ namespace Kartverket.Register.Models
                 return NumberOfMareanoDatasetByType(statusType, status);
             }
 
+            if (IsFairDataserviceReport())
+            {
+                return NumberOfFairDatasetByType(statusType, status);
+            }
+
             switch (statusType)
             {
                 case "Findable":
-                    return NumberOfMareanoDatasetsWithFindable(status);
+                    return IsMareanoDatasetReport() ? NumberOfMareanoDatasetsWithFindable(status) : NumberOfFairDatasetsWithFindable(status);
                 case "Accesible":
-                    return NumberOfMareanoDatasetsWithAccesible(status);
+                    return IsMareanoDatasetReport() ? NumberOfMareanoDatasetsWithAccesible(status) : NumberOfFairDatasetsWithAccesible(status);
                 case "Interoperable":
-                    return NumberOfMareanoDatasetsWithInteroperable(status);
+                    return IsMareanoDatasetReport() ? NumberOfMareanoDatasetsWithInteroperable(status) : NumberOfFairDatasetsWithInteroperable(status);
                 case "ReUseable":
-                    return NumberOfMareanoDatasetsWithReUsable(status);
+                    return IsMareanoDatasetReport() ? NumberOfMareanoDatasetsWithReUsable(status) : NumberOfFairDatasetsWithReUsable(status);
                 case "Metadata":
                     return NumberOfItemsWithMetadata(status);
                 case "ProductSheet":
@@ -897,6 +1136,43 @@ namespace Kartverket.Register.Models
                     return NumberOfMareanoDatasetsWithAtomFeed(status);
                 case "Common":
                     return NumberOfMareanoDatasetsItemsWithCommon(status);
+            }
+
+            return 0;
+        }
+
+        private int NumberOfFairDatasetByType(string statusType, string status)
+        {
+            switch (statusType)
+            {
+                case "Findable":
+                    return NumberOfFairDatasetsWithFindable(status);
+                case "Accesible":
+                    return NumberOfFairDatasetsWithAccesible(status);
+                case "Interoperable":
+                    return NumberOfFairDatasetsWithInteroperable(status);
+                case "ReUseable":
+                    return NumberOfFairDatasetsWithReUsable(status);
+                case "Metadata":
+                    return NumberOfFairDatasetsWithMetadata(status);
+                case "ProductSheet":
+                    return NumberOfFairDatasetsWithProductSheet(status);
+                case "PresentationRules":
+                    return NumberOfFairDatasetsWithPresentationRules(status);
+                case "ProductSpecification":
+                    return NumberOfFairDatasetsWithProductSpecification(status);
+                case "Wms":
+                    return NumberOfFairDatasetsWithWms(status);
+                case "Wfs":
+                    return NumberOfFairDatasetsWithWfs(status);
+                case "SosiRequirements":
+                    return NumberOfFairDatasetsWithSosiRequirements(status);
+                case "GmlRequirements":
+                    return NumberOfFairDatasetsWithGmlRequirements(status);
+                case "AtomFeed":
+                    return NumberOfFairDatasetsWithAtomFeed(status);
+                case "Common":
+                    return NumberOfFairDatasetsItemsWithCommon(status);
             }
 
             return 0;

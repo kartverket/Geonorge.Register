@@ -78,6 +78,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string SelectedDokTab { get; set; }
         public string SelectedGeodatalovTab { get; set; }
         public string SelectedMareanoTab { get; set; }
+        public string SelectedFairTab { get; set; }
 
         public RegisterV2ViewModel(Register register, FilterParameters filter, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null)
         {
@@ -141,6 +142,11 @@ namespace Kartverket.Register.Models.ViewModels
                 {
                     return new MareanoDatasetStatusReportViewModel(statusReport, statusReports, filter.StatusType);
                 }
+
+                if (statusReport.IsFairDatasetReport())
+                {
+                    return new FairDatasetStatusReportViewModel(statusReport, statusReports, filter.StatusType);
+                }
             }
             return null;
         }
@@ -179,6 +185,12 @@ namespace Kartverket.Register.Models.ViewModels
                     foreach (MareanoDataset mareanoDataset in registerItems)
                     {
                         registerItemsViewModel.Add(new MareanoDatasetViewModel(mareanoDataset));
+                    }
+                    break;
+                case "FairDataset":
+                    foreach (FairDataset fairDataset in registerItems)
+                    {
+                        registerItemsViewModel.Add(new FairDatasetViewModel(fairDataset));
                     }
                     break;
             }
@@ -278,6 +290,11 @@ namespace Kartverket.Register.Models.ViewModels
         public bool ContainedItemClassIsMareanoDataset()
         {
             return ContainedItemClass == "MareanoDataset";
+        }
+
+        public bool ContainedItemClassIsFairDataset()
+        {
+            return ContainedItemClass == "FairDataset";
         }
 
         public string GetObjectCreateUrl()
@@ -382,6 +399,11 @@ namespace Kartverket.Register.Models.ViewModels
         public bool SelectedMareanoTabIsReport()
         {
             return SelectedMareanoTab == "report";
+        }
+
+        public bool SelectedFairTabIsReport()
+        {
+            return SelectedFairTab == "report";
         }
     }
 }

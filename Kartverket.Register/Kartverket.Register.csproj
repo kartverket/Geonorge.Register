@@ -120,8 +120,8 @@
     <Reference Include="Geonorge.AuthLib.NetFull, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Geonorge.AuthLib.NetFull.1.0.61\lib\net472\Geonorge.AuthLib.NetFull.dll</HintPath>
     </Reference>
-    <Reference Include="GeoNorgeAPI, Version=3.5.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GeoNorgeAPI.3.5.2\lib\net48\GeoNorgeAPI.dll</HintPath>
+    <Reference Include="GeoNorgeAPI, Version=3.6.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoNorgeAPI.3.6.8\lib\net48\GeoNorgeAPI.dll</HintPath>
     </Reference>
     <Reference Include="Ghostscript.NET, Version=1.2.3.0, Culture=neutral, PublicKeyToken=f85051de34525b59, processorArchitecture=MSIL">
       <HintPath>..\packages\Ghostscript.NET.1.2.3\lib\net40\Ghostscript.NET.dll</HintPath>
@@ -1271,6 +1271,38 @@
     <Compile Include="Migrations\202405221115160_AddCodeListExternalId.designer.cs">
       <DependentUpon>202405221115160_AddCodeListExternalId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411041517503_AddFairRegister.cs" />
+    <Compile Include="Migrations\202411041517503_AddFairRegister.designer.cs">
+      <DependentUpon>202411041517503_AddFairRegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411060840326_AddFairDatasetType.cs" />
+    <Compile Include="Migrations\202411060840326_AddFairDatasetType.designer.cs">
+      <DependentUpon>202411060840326_AddFairDatasetType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411080941025_AddFairReport.cs" />
+    <Compile Include="Migrations\202411080941025_AddFairReport.designer.cs">
+      <DependentUpon>202411080941025_AddFairReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411120912139_AddPropertiesForFindable.cs" />
+    <Compile Include="Migrations\202411120912139_AddPropertiesForFindable.designer.cs">
+      <DependentUpon>202411120912139_AddPropertiesForFindable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411121658004_AddPropertiesForReusable.cs" />
+    <Compile Include="Migrations\202411121658004_AddPropertiesForReusable.designer.cs">
+      <DependentUpon>202411121658004_AddPropertiesForReusable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411142055025_AddMareanoProperties.cs" />
+    <Compile Include="Migrations\202411142055025_AddMareanoProperties.designer.cs">
+      <DependentUpon>202411142055025_AddMareanoProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411260702025_AddFairI3_c_Criteria.cs" />
+    <Compile Include="Migrations\202411260702025_AddFairI3_c_Criteria.designer.cs">
+      <DependentUpon>202411260702025_AddFairI3_c_Criteria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411282000551_AddFairR2_i_Criteria.cs" />
+    <Compile Include="Migrations\202411282000551_AddFairR2_i_Criteria.designer.cs">
+      <DependentUpon>202411282000551_AddFairR2_i_Criteria.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1289,6 +1321,7 @@
     <Compile Include="Models\Api\FacetInput.cs" />
     <Compile Include="Models\Api\FieldValueModelBinder.cs" />
     <Compile Include="Models\Api\InspireDataset.cs" />
+    <Compile Include="Models\Api\FairDatasetStatusReport.cs" />
     <Compile Include="Models\Api\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\Api\OrganizationV2.cs" />
     <Compile Include="Models\Api\Register.cs" />
@@ -1306,6 +1339,9 @@
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DocumentFile.cs" />
     <Compile Include="Models\DokMeasureStatus.cs" />
+    <Compile Include="Models\FairDataset.cs" />
+    <Compile Include="Models\FairDatasetType.cs" />
+    <Compile Include="Models\FAIR\Fair.cs" />
     <Compile Include="Models\FAIR\FAIRDelivery.cs" />
     <Compile Include="Models\FAIR\FAIRDeliveryStatus.cs" />
     <Compile Include="Models\GeoDataCollection.cs" />
@@ -1313,12 +1349,16 @@
     <Compile Include="Models\MareanoDataset.cs" />
     <Compile Include="Models\NamespaceDataset.cs" />
     <Compile Include="Models\Station.cs" />
+    <Compile Include="Models\StatusReports\FairDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\StatusReports\GeodatalovDatasetStatusReport.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Translations\DOKThemeTranslation.cs" />
+    <Compile Include="Models\ViewModels\FairDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\MareanoDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\DokLineChart.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\FairDatasetStatusReportViewModel.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModels\FairLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoLineChart.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\MareanoDatasetStatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\StatusReportViewModels\GeodatalovDatasetStatusReportViewModel.cs" />
@@ -1429,6 +1469,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeodataCollection.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\FairDataSet.Designer.cs">
+      <DependentUpon>FairDataSet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\FairDataSet.en.Designer.cs">
+      <DependentUpon>FairDataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\MareanoDataSet.en.Designer.cs">
       <DependentUpon>MareanoDataSet.en.resx</DependentUpon>
@@ -1565,9 +1615,12 @@
     <Compile Include="Services\CoverageService.cs" />
     <Compile Include="Services\DatasetService.cs" />
     <Compile Include="Services\DokCoverageWmsMapping.cs" />
+    <Compile Include="Services\FairDatasetService.cs" />
+    <Compile Include="Services\FairService.cs" />
     <Compile Include="Services\GeoLettService.cs" />
     <Compile Include="Services\IDatasetService.cs" />
     <Compile Include="Services\IDatasetDeliveryService.cs" />
+    <Compile Include="Services\IFairDatasetService.cs" />
     <Compile Include="Services\IGeodatalovDatasetService.cs" />
     <Compile Include="Services\IInspireMonitoringService.cs" />
     <Compile Include="Services\IMareanoDatasetService.cs" />
@@ -2680,6 +2733,11 @@
     <Content Include="Views\Alerts\Edit.cshtml" />
     <Content Include="Views\Subregister\DeleteAll.cshtml" />
     <Content Include="Views\Documents\Logg.cshtml" />
+    <Content Include="Views\Shared\_fairDataset.cshtml" />
+    <Content Include="Views\Registers\DetailsFairStatusRegistry.cshtml" />
+    <Content Include="Views\Shared\_detailsFairDataset.cshtml" />
+    <Content Include="Views\Shared\_fairReport.cshtml" />
+    <Content Include="Views\Registers\js\_fairReportCharts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -3293,6 +3351,30 @@
     <EmbeddedResource Include="Migrations\202405221115160_AddCodeListExternalId.resx">
       <DependentUpon>202405221115160_AddCodeListExternalId.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411041517503_AddFairRegister.resx">
+      <DependentUpon>202411041517503_AddFairRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411060840326_AddFairDatasetType.resx">
+      <DependentUpon>202411060840326_AddFairDatasetType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411080941025_AddFairReport.resx">
+      <DependentUpon>202411080941025_AddFairReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411120912139_AddPropertiesForFindable.resx">
+      <DependentUpon>202411120912139_AddPropertiesForFindable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411121658004_AddPropertiesForReusable.resx">
+      <DependentUpon>202411121658004_AddPropertiesForReusable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411142055025_AddMareanoProperties.resx">
+      <DependentUpon>202411142055025_AddMareanoProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411260702025_AddFairI3_c_Criteria.resx">
+      <DependentUpon>202411260702025_AddFairI3_c_Criteria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411282000551_AddFairR2_i_Criteria.resx">
+      <DependentUpon>202411282000551_AddFairR2_i_Criteria.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodataCollection.en.Designer.cs</LastGenOutput>
@@ -3301,6 +3383,18 @@
     <EmbeddedResource Include="Resources\GeodataCollection.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeodataCollection.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FairDataSet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FairDataSet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FairDataSet.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FairDataSet.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\MareanoDataSet.en.resx">

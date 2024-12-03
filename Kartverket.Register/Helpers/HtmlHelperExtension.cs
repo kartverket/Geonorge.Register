@@ -374,7 +374,7 @@ namespace Kartverket.Register.Helpers
             return 0;
         }
 
-        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryType = null, string filterOrganization = null, string category = null, string GeodataType = null, string InspireAnnex = null)
+        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryType = null, string filterOrganization = null, string category = null, string GeodataType = null, string InspireAnnex = null, string[] fairDatasetType = null)
         {
 
             var sortingClass = "";
@@ -401,6 +401,11 @@ namespace Kartverket.Register.Helpers
             {
                 sortingClass = "sorted-desc";
                 sortingParam = "mareano_status_desc";
+            }
+            else if (sortingSelected == "name" && defaultSort == "percent_status")
+            {
+                sortingClass = "sorted-desc";
+                sortingParam = "percent_status_desc";
             }
             else
             {
@@ -475,6 +480,11 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "mareano_status" || sortingParam == "mareano_status_desc")
             {
                 sortTitle = "Antall oppfylte kriterier";
+                statusIcon += "bullseye-icon";
+            }
+            else if (sortingParam == "percent_status" || sortingParam == "percent_status_desc")
+            {
+                sortTitle = "Prosent oppfylte kriterier";
                 statusIcon += "bullseye-icon";
             }
 
@@ -657,24 +667,44 @@ namespace Kartverket.Register.Helpers
                 sortTitle = DataSet.DOK_Delivery_Metadata;
                 statusIcon += "custom-icon-info";
             }
+            else if (sortingParam == "findable_status" || sortingParam == "findable_status_desc")
+            {
+                sortTitle = FairDataSet.Findable_Label;
+                statusIcon += "custom-icon-findable";
+            }
+            else if (sortingParam == "accesible_status" || sortingParam == "accesible_status_desc")
+            {
+                sortTitle = FairDataSet.Accesible_Label;
+                statusIcon += "custom-icon-accesible";
+            }
+            else if (sortingParam == "interoperable_status" || sortingParam == "interoperable_status_desc")
+            {
+                sortTitle = FairDataSet.Interoperable_Label;
+                statusIcon += "custom-icon-interoperable";
+            }
+            else if (sortingParam == "reusable_status" || sortingParam == "reusable_status_desc")
+            {
+                sortTitle = FairDataSet.ReUseable_Label;
+                statusIcon += "custom-icon-re-useable";
+            }
             else if (sortingParam == "findable_metadata_status" || sortingParam == "findable_metadata_status_desc")
             {
-                sortTitle = MareanoDataSet.Findable_Label;
+                sortTitle = FairDataSet.Findable_Label;
                 statusIcon += "custom-icon-findable";
             }
             else if (sortingParam == "accesible_metadata_status" || sortingParam == "accesible_metadata_status_desc")
             {
-                sortTitle = MareanoDataSet.Accesible_Label;
+                sortTitle = FairDataSet.Accesible_Label;
                 statusIcon += "custom-icon-accesible";
             }
             else if (sortingParam == "interoperable_metadata_status" || sortingParam == "interoperable_metadata_status_desc")
             {
-                sortTitle = MareanoDataSet.Interoperable_Label;
+                sortTitle = FairDataSet.Interoperable_Label;
                 statusIcon += "custom-icon-interoperable";
             }
             else if (sortingParam == "reusable_metadata_status" || sortingParam == "reusable_metadata_status_desc")
             {
-                sortTitle = MareanoDataSet.ReUseable_Label;
+                sortTitle = FairDataSet.ReUseable_Label;
                 statusIcon += "custom-icon-re-useable";
             }
             else if (sortingParam == "geodatalov_productspecification_status" || sortingParam == "geodatalov_productspecification_status_desc"
@@ -743,6 +773,12 @@ namespace Kartverket.Register.Helpers
             if (InspireAnnex != null)
             {
                 linkSort += "&InspireAnnex=" + InspireAnnex;
+            }
+
+            if (fairDatasetType != null)
+            {
+                foreach(var type in fairDatasetType)
+                    linkSort += "&fairDatasetType=" + type;
             }
 
             if (text != null)

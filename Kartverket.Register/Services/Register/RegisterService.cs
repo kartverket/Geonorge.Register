@@ -95,7 +95,17 @@ namespace Kartverket.Register.Services.Register
                         {
                             if (FilterOrganization(filter.filterOrganization, item.Owner))
                             {
-                                registerItemsv2.Add(item);
+                                if (filter.fairDatasetType != null)
+                                {
+                                    if (FilterFairDatasetType(filter.fairDatasetType, item))
+                                    {
+                                        registerItemsv2.Add(item);
+                                    }
+                                }
+                                else
+                                {
+                                    registerItemsv2.Add(item);
+                                }
                             }
                         }
                         else if (!string.IsNullOrEmpty(filter.GeodataType))
@@ -123,7 +133,16 @@ namespace Kartverket.Register.Services.Register
                         }
                         else
                         {
-                            registerItemsv2.Add(item);
+                            if (filter.fairDatasetType != null)
+                            {
+                                if(FilterFairDatasetType(filter.fairDatasetType, item))
+                                {
+                                    registerItemsv2.Add(item);
+                                }
+                            }
+                            else { 
+                                registerItemsv2.Add(item);
+                            }
                         }
                     }
                 }
@@ -132,6 +151,34 @@ namespace Kartverket.Register.Services.Register
             register.items = registerItems;
             register.RegisterItems = registerItemsv2;
             return register;
+        }
+
+        private bool FilterFairDatasetType(string[] fairDatasetType, RegisterItemV2 item)
+        {
+            var dataset = item as FairDataset;
+            var fairDataset = GetFairDataset(dataset.SystemId);
+            if(fairDataset != null && fairDataset.FairDatasetTypes != null)
+            {     
+                var fairDatasetTypes = fairDataset.FairDatasetTypes.ToList();
+                if(fairDatasetTypes.Count > 0)
+                {
+                    foreach(var type in fairDatasetTypes)
+                    {
+                        if (fairDatasetType.Contains(type.Label))
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public FairDataset GetFairDataset(Guid systemid)
+        {
+            var queryResult = from i in _dbContext.FairDatasets.Include("FairDatasetTypes")
+                              where i.SystemId == systemid
+                              select i;
+
+            return queryResult.FirstOrDefault();
         }
 
         private void FilterAlert(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
@@ -1230,6 +1277,16 @@ namespace Kartverket.Register.Services.Register
             return queryResult.FirstOrDefault();
         }
 
+        public Models.Register GetFairDatasetRegister()
+        {
+            var fairRegisterId = Guid.Parse(GlobalVariables.FairRegistryId);
+
+            var queryResult = from r in _dbContext.Registers
+                              where r.systemId == fairRegisterId
+                              select r;
+            return queryResult.FirstOrDefault();
+        }
+
 
         public Guid GetOrganizationIdByUserName()
         {
@@ -1277,6 +1334,15 @@ namespace Kartverket.Register.Services.Register
         {
             var queryResults = from o in _dbContext.Registers
                                where o.name == "Mareano statusregister"
+                               select o.systemId;
+
+            return queryResults.FirstOrDefault();
+        }
+
+        public Guid GetFairRegisterId()
+        {
+            var queryResults = from o in _dbContext.Registers
+                               where o.name == "Fair-register"
                                select o.systemId;
 
             return queryResults.FirstOrDefault();
@@ -1388,6 +1454,7 @@ namespace Kartverket.Register.Services.Register
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("3D9114F6-FAAB-4521-BDF8-19EF6211E7D2"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse(GlobalVariables.MareanoRegistryId))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse(GlobalVariables.FairRegistryId))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("9A9BEF28-285B-477E-85F1-504F8227FF45"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("0F428034-0B2D-4FB7-84EA-C547B872B418"))));
             registers.Add(new RegisterView { name = GeodataCollection.RegisterName, description = GeodataCollection.RegisterDescription, ExternalUrl = GeodataCollection.RegisterSeoName });
@@ -1433,7 +1500,7 @@ namespace Kartverket.Register.Services.Register
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("b2e5f822-994d-47f5-ac52-cd4153d55198"))));
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("61E5A933-EA1E-4B16-8CE4-B1A1645B5B51"))));
             //registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("75A778A8-AD2C-4D91-A39F-1320762B2D5F"))));
-            registers.Add(new RegisterView { name = "Planguider", description = "I dette registeret kan du opprette eller endre arealplanveiledningstekster, samt se en oversikt over eksisterende arealplanveiledere.", ExternalUrl = WebConfigurationManager.AppSettings["GeolettUrl"] });
+            registers.Add(new RegisterView { name = "Veiledningstekster plan og bygg", description = "I dette registeret kan du opprette eller endre arealplanveiledningstekster, samt se en oversikt over eksisterende arealplanveiledere.", ExternalUrl = WebConfigurationManager.AppSettings["GeolettUrl"] });
 
             register.Items.Add(new Group
             {

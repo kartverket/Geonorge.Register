@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Accesible_Label" xml:space="preserve">
+    <value>Tilgjengelighet (Accessible)</value>
+  </data>
+  <data name="Accesible_Description" xml:space="preserve">
+    <value>Datasett skal være tilgjengelige gjennom standardiserte og åpne grensesnitt.</value>
+  </data>
+  <data name="Common" xml:space="preserve">
+    <value>Nedlastingskrav status</value>
+  </data>
+  <data name="Delivery_Status_Satisfactory" xml:space="preserve">
+    <value>Tilfredsstillende</value>
+  </data>
+  <data name="F1_a_Criteria" xml:space="preserve">
+    <value>Det sjekkes at det finnes metadata i Geonorge. Alle metadata i Geonorge har stabile og unike identifikatorer som er oppslagbare og returnerer metadata på standardisert form. ( vekt 20 )</value>
+  </data>
+  <data name="F1_Label" xml:space="preserve">
+    <value>F1: Metadata skal ha unik og stabil identifikator</value>
+  </data>
+  <data name="F2_a_Criteria" xml:space="preserve">
+    <value>Minst tre tematiske søkeord skal legges inn i metadata (vekt 10)</value>
+  </data>
+  <data name="F2_b_Criteria" xml:space="preserve">
+    <value>Tittel bør maksimalt være på 105 tegn for gi et enkelt og konsist navn som er søkbart (vekt 5)</value>
+  </data>
+  <data name="F2_c_Criteria" xml:space="preserve">
+    <value>Beskrivelsen bør være på minimum 200 tegn for å kunne gi tilstrekkelig informasjon om datasettet. Det skal tilstrebes å gi en god men kortfattet og presis beskrivelse av hva datasettet inneholder. Det finnes spesifikke steder en kan legge inn supplerende informasjon, prosesshistorie, kvalitet, oppdateringsfrekvens, eventuelt referere til annen dokumentasjon som produktspesifikasjoner, produktark m.m. (vekt 10)</value>
+  </data>
+  <data name="F2_Label" xml:space="preserve">
+    <value>F2: Det skal finnes gode søkemetadata</value>
+  </data>
+  <data name="F3_a_Criteria" xml:space="preserve">
+    <value>Metadata skal ha en unik referanse til datasettet. Datasett skal ikke bare refereres til ved navn, men også ved en unik identifikator. Denne skal legges inn i metadata sammen med et navnerom. Datasett er definert med unike id-er i Geonorges navneromsregister hvis de har fått lagt inn datasett-id i metadata (vekt 20)</value>
+  </data>
+  <data name="F3_Label" xml:space="preserve">
+    <value>F3: Metadata har datasett-id</value>
+  </data>
+  <data name="F4_a_Criteria" xml:space="preserve">
+    <value>Metadata som ligger i Geonorge er søkbare gjennom CSW-api (OGC) og DCAT-api (W3C). Dette gjør metadata søkbare gjennom standardiserte api-er både for geodatabransjen, forskningsmiljøer og "open data"-miljøer både nasjonalt og internasjonalt. (vekt 20)</value>
+  </data>
+  <data name="F4_Label" xml:space="preserve">
+    <value>F4: Metadata skal være søkbare gjennom åpne og standardiserte api-er</value>
+  </data>
+  <data name="Findable_Label" xml:space="preserve">
+    <value>Søkbarhet (Findable)</value>
+  </data>
+  <data name="Findable_Description" xml:space="preserve">
+    <value>Beskrivelser av datasett (metadata) og datasett skal være enkle å finne for både mennesker og datamaskiner. Maskinlesbare metadata er avgjørende for automatisk oppdagelse av datasett og tjenester</value>
+  </data>
+  <data name="Interoperable_Label" xml:space="preserve">
+    <value>Interoperabilitet (Interoperabel)</value>
+  </data>
+  <data name="Interoperable_Description" xml:space="preserve">
+    <value>Dataene må ha samvirkningsevne og kunne integreres i ulike løsninger.</value>
+  </data>
+  <data name="ReUseable_Label" xml:space="preserve">
+    <value>Gjenbrukbar (Reusable)</value>
+  </data>
+  <data name="ReUseable_Description" xml:space="preserve">
+    <value> For å optimalisere gjenbruk av data bør datasett beskrives godt slik at de kan tas i bruk i andre brukerløsninger.</value>
+  </data>
+  <data name="A1_a_Criteria" xml:space="preserve">
+    <value>Det sjekkes om datasettet har en "direkte" nedlastningstjeneste (WFS, WCS, OpenDAP, OGC API Features eller OGC API Coverages) (vekt 20)</value>
+  </data>
+  <data name="A1_Label" xml:space="preserve">
+    <value>A1: Datasett er tilgjengelige gjennom standard web-protokoller</value>
+  </data>
+  <data name="A1_b_Criteria" xml:space="preserve">
+    <value>Det sjekkes om datasettet har en visningstjeneste (WMS, WMTS, OGC API Maps, OGC API Styles eller OGC API Tiles) (vekt 20)</value>
+  </data>
+  <data name="A1_c_Criteria" xml:space="preserve">
+    <value>Det sjekkes om datasettet er tilgjengelig gjennom "Geonorge nedlastnings-api" (vekt 5)</value>
+  </data>
+  <data name="A1_d_Criteria" xml:space="preserve">
+    <value>Det sjekkes om datasett er tilgjengelig som en nedlastningstjeneste for forhåndsdefinerte geografiske områder (Atom Feed) (vekt 5)</value>
+  </data>
+  <data name="A1_e_Criteria" xml:space="preserve">
+    <value>Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons eller ved at et av de to ovennevnte API-er tilbys (vekt 50)</value>
+  </data>
+  <data name="A1_f_Criteria" xml:space="preserve">
+    <value>Protokoller skal støtte autentisering og autorisasjon</value>
+  </data>
+  <data name="A2_a_Criteria" xml:space="preserve">
+    <value>Det sjekkes ikke på dette punktet da Mareano-data skal være tilgjengelige for nedlastning (vekt 0)</value>
+  </data>
+  <data name="A2_Label" xml:space="preserve">
+    <value>A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig</value>
+  </data>
+  <data name="I1_a_Criteria" xml:space="preserve">
+    <value>Metadata for geodata skal etableres i henhold til metadatastandarden ISO19115. Metadata i Geonorge er basert på den nevnte standarden. (vekt 20)</value>
+  </data>
+  <data name="I1_b_Criteria" xml:space="preserve">
+    <value>Datasettet er tilgjengelig på internasjonalt kjente åpne formater. Det sjekkes for GML, GeoJSON, JSON-FG, JSON-LD og GeoPackage for vektordata eller TIFF, JPEG, Cloud Optimized GeoTIFF (COG) eller Cloud Optimized Point Cloud (COPC) for rasterdata i tillegg til NetCDF (vekt 40)</value>
+  </data>
+  <data name="I1_Label" xml:space="preserve">
+    <value>I1: Metadata og datasett er representert gjennom internasjonale, godt dokumenterte og tilgjengelige standarder.</value>
+  </data>
+  <data name="I2_a_Criteria" xml:space="preserve">
+    <value>Minimum ett tematisk søkeord skal legges inn fra et offisielt nasjonalt eller internasjonalt vokabular (feks GEMET (Inspire-tema), NASA/GCMD (Globalt vokabular med beskrivelser av  vitenskaplige datasett og tjenester ) eller LOS (Nasjonal kategorisering av offentlige tjenester og ressurser) ) (vekt 10)</value>
+  </data>
+  <data name="I2_b_Criteria" xml:space="preserve">
+    <value>Minimum ett tematisk nøkkelord skal legges inn fra Nasjonal temainndeling (Geonorge-registeret) (vekt 10)</value>
+  </data>
+  <data name="I2_Label" xml:space="preserve">
+    <value>I2: Metadata og datasett skal benytte vokabularer, kodeverk og referere til oppslagsbare ressurser på nett som forvaltes med unike identifikatorer</value>
+  </data>
+  <data name="I3_a_Criteria" xml:space="preserve">
+    <value>Datasettet skal være i henhold til oppgitt produktspesifikasjon (vekt 10)</value>
+  </data>
+  <data name="I3_b_Criteria" xml:space="preserve">
+    <value>Datasettet skal modelleres i UML og metadataene skal referere til UML-modellen i Geonorges objektkatalog (5)</value>
+  </data>
+  <data name="I3_Label" xml:space="preserve">
+    <value>I3: Relasjoner mellom (meta)data er beskrevet</value>
+  </data>
+  <data name="R1_a_Criteria" xml:space="preserve">
+    <value>Lisenser som ligger i Geonorge-registeret tilfredsstiller dette kravet (vekt 30)</value>
+  </data>
+  <data name="R1_Label" xml:space="preserve">
+    <value>R1: Lisens skal være oppgitt og oppslagbar.</value>
+  </data>
+  <data name="R2_a_Criteria" xml:space="preserve">
+    <value>Prosesshistorie (produksjonshistorie) skal være utfylt med mer enn 200 tegn (vekt 10)</value>
+  </data>
+  <data name="R2_b_Criteria" xml:space="preserve">
+    <value>Status for oppdateringsfrekvens skal være oppgitt i metadata (vekt 5)</value>
+  </data>
+  <data name="R2_c_Criteria" xml:space="preserve">
+    <value>Lenke til produktspesifikasjon (vekt 10)</value>
+  </data>
+  <data name="R2_d_Criteria" xml:space="preserve">
+    <value>Målestokk eller posisjonsnøyaktighet (romlig oppløsning) er angitt (vekt 5)</value>
+  </data>
+  <data name="R2_e_Criteria" xml:space="preserve">
+    <value>Dekningskart skal være oppgitt (kommunevis eller rutenett) (vekt 5)</value>
+  </data>
+  <data name="R2_f_Criteria" xml:space="preserve">
+    <value>Formål skal være utfylt (vekt 5)</value>
+  </data>
+  <data name="R2_Label" xml:space="preserve">
+    <value>R2: Metadata om kvalitet, dekning, bearbeiding, beregninger etc. skal være oppgitt.</value>
+  </data>
+  <data name="R3_a_Criteria" xml:space="preserve">
+    <value>Metadata skal følge standardene: ISO19115 og DCAT-AP-NO (vekt 5)</value>
+  </data>
+  <data name="R3_b_Criteria" xml:space="preserve">
+    <value>Datasett leveres på internasjonale åpne formater. Se Interoperabilitetskrav 1b (vekt 5)</value>
+  </data>
+  <data name="R3_Label" xml:space="preserve">
+    <value>R3: Metadata og datasett følger internasjonale standarder</value>
+  </data>
+  <data name="Delivery_Status_Useable" xml:space="preserve">
+    <value>Bør forbedres</value>
+  </data>
+  <data name="Delivery_Status_Deficient" xml:space="preserve">
+    <value>Dårlig</value>
+  </data>
+  <data name="Smiley-Green-Description" xml:space="preserve">
+    <value>grønn</value>
+  </data>
+  <data name="Smiley-Yellow-Description" xml:space="preserve">
+    <value>gul</value>
+  </data>
+  <data name="Smiley-Red-Description" xml:space="preserve">
+    <value>rød</value>
+  </data>
+  <data name="RequirementsMetadata" xml:space="preserve">
+    <value>&lt;p&gt;For at metadatakvaliteten skal bli &lt;b&gt;god&lt;/b&gt;, må metadata validere i Geonorge sin metadataeditor. Det vil si at alle påkrevde felt skal være utfylt. Ellers blir metadata vurdert til &lt;b&gt;brukbar&lt;/b&gt; hvis de finnes. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsAtom" xml:space="preserve">
+    <value>&lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må datasettet være tilgjengelig gjennom en atom feed-tjeneste som er registrert i Geonorge. Ellers blir status &lt;b&gt;ikke levert&lt;/&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsDownload" xml:space="preserve">
+    <value>&lt;p&gt;Hvis datasettet er levert som atom feed eller WFS-krav er godt oppfylt vil dette kvalifisere til god oppfyllelse av krav. Hvis datasettet kun er tilgjengelig som WFS med brukbar oppfyllelse av krav, kvalifiserer dette til karakteren &lt;b&gt;brukbar&lt;/b&gt;. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsGml" xml:space="preserve">
+    <value>&lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må nedlastbare GML-filer validere mot UML-modell i produktspesifikasjonen. Det vil gå fram av metadata om GML-filer er konforme med produktspesifikasjonen. Hvis det finnes nedlastbare GML-filer, så vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsProductSpesifications" xml:space="preserve">
+    <value>&lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må det refereres til godkjent SOSI produktspesifikasjon i metadata. Annen referert produktspesifikasjon vil kunne gi &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsSosi" xml:space="preserve">
+    <value>&lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må nedlastbare SOSI-filer validere mot UML-modell i produktspesifikasjonen. Det vil gå fram av metadata om SOSI-filer er konforme med produktspesifikasjonen. Hvis det finnes nedlastbare SOSI-filer, så vil det kvalifisere til &lt;b&gt;brukbar&lt;/b&gt; oppfyllelse av krav. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsWfs" xml:space="preserve">
+    <value>&lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må det i metadata finnes en WMS-tjeneste. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RequirementsWms" xml:space="preserve">
+    <value>&lt;p&gt;For å oppnå &lt;b&gt;god&lt;/b&gt; oppfyllelse av krav, må det i metadata finnes en WMS-tjeneste. Ellers blir status &lt;b&gt;ikke levert&lt;/b&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="RatingBad" xml:space="preserve">
+    <value>Dårlig (under 50%): Datasettet har store mangler i forhold til å oppfylle FAIR-prinsippene og må forbedres på mange områder.</value>
+  </data>
+  <data name="RatingDescription" xml:space="preserve">
+    <value>Vi har laget ulike tester for å vurdere datasett i forholdtaeiere slik at de kan vurdere metadata mot ulike indikatorer. For mer informasjon om hvilke beregninger vi benytter for hver indikator, se på detaljene for metadatakvalitet for en spesifikk datasettbeskrivelse.</value>
+  </data>
+  <data name="RatingEmoprovements" xml:space="preserve">
+    <value>Må forbedres (50-75%): Datasettet oppfyller et fåtall av FAIR-prinsippene på en god måte ,og må forbedres på flere områder.</value>
+  </data>
+  <data name="RatingGood" xml:space="preserve">
+    <value>God (over 90%): Datasettet ivaretar FAIR-prinsippene på en god måte. Du må selv gjøre kvalitative undersøkelser for å vurdere eventuelle tiltak for at forhold rundt gjenbruk skal bli ytterliggere forbedret.</value>
+  </data>
+  <data name="RatingLabel" xml:space="preserve">
+    <value>Forklaring til vurdering av FAIR-prinsipper:</value>
+  </data>
+  <data name="RatingSatisfactory" xml:space="preserve">
+    <value>Tilfredsstillende (75-90%): Datasettet oppfyller mange av FAIR-prinsippene, men bør forbedres på flere områder for å sikre gjenbruk.</value>
+  </data>
+  <data name="lesmer" xml:space="preserve">
+    <value>Les mer</value>
+  </data>
+  <data name="lesmindre" xml:space="preserve">
+    <value>Lukk</value>
+  </data>
+  <data name="sedetaljer" xml:space="preserve">
+    <value>Se detaljer</value>
+  </data>
+  <data name="DownloadRequirements" xml:space="preserve">
+    <value>Nedlastingskrav</value>
+  </data>
+  <data name="Productspesification" xml:space="preserve">
+    <value>Produktspesifikasjon</value>
+  </data>
+  <data name="F2_d_Criteria" xml:space="preserve">
+    <value>Geo-søk. Geografisk utstrekning skal være angitt (vekt 10).</value>
+  </data>
+  <data name="F2_e_Criteria" xml:space="preserve">
+    <value>Tidsbasert søk. Opprettet dato skal være oppgitt i metadata (vekt 5).</value>
+  </data>
+  <data name="R1_b_Criteria" xml:space="preserve">
+    <value>Tilgangsrettigheter skal være oppgitt (vekt 5)</value>
+  </data>
+  <data name="R2_g_Criteria" xml:space="preserve">
+    <value>Metadata kontakt skal være oppgitt (vekt 5)</value>
+  </data>
+  <data name="R2_h_Criteria" xml:space="preserve">
+    <value>Teknisk kontakt skal være oppgitt (vekt 5)</value>
+  </data>
+  <data name="I3_c_Criteria" xml:space="preserve">
+    <value>Datasettet skal være i henhold til UML-modell i minst et av de leverte formatene (vekt 5)</value>
+  </data>
+  <data name="R2_i_Criteria" xml:space="preserve">
+    <value>Dekningsgrad (andel kartlagt område i forhold til datatsettes utstrekning) skal være oppgitt. (vekt 5)</value>
+  </data>
+</root>

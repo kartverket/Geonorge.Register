@@ -272,11 +272,22 @@ namespace Kartverket.Register.Models
         
         public virtual Guid GetSystemId()
         {
-            if (systemId == null || systemId == Guid.Empty || (systemId == register.systemId))
+            if (systemId == null || systemId == Guid.Empty)
             {
                 return Guid.NewGuid();
             }
             else {
+                return systemId;
+            }
+        }
+        public virtual Guid GetSystemIdInsert()
+        {
+            if (systemId == null || systemId == Guid.Empty || (systemId == register.systemId))
+            {
+                return Guid.NewGuid();
+            }
+            else
+            {
                 return systemId;
             }
         }

@@ -79,7 +79,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.HasAccessTo(dataset.register))
                 {
-                    dataset.systemId = dataset.GetSystemId();
+                    dataset.systemId = dataset.GetSystemIdInsert();
                     dataset.registerId = dataset.register.GetSystemId();
                     dataset.DatasetType = dataset.GetDatasetType();
 

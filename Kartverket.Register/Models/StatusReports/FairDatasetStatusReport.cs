@@ -65,6 +65,11 @@ namespace Kartverket.Register.Models.StatusReports
 
                 if (FairDataset.Grade.HasValue)
                     Grade = FairDataset.Grade.Value;
+
+                FindableStatusPerCent = FairDataset.FindableStatusPerCent;
+                AccessibleStatusPerCent = FairDataset.AccesibleStatusPerCent;
+                InteroperableStatusPerCent = FairDataset.InteroperableStatusPerCent;
+                ReUseableStatusPerCent = FairDataset.ReUseableStatusPerCent;
             }
         }
     }

@@ -85,7 +85,6 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "Common", ResourceType = typeof(FairDataSet))]
         public NumberOfStatuses NumberOfItemsWithCommon { get; set; }
 
-
         public FairDatasetStatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
         {
             ReportsSelectList = CreateSelectList(statusReports);

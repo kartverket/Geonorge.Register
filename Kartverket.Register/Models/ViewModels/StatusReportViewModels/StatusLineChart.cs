@@ -14,6 +14,11 @@ namespace Kartverket.Register.Models
         public List<int> Notset { get; set; }
         public List<int> Useable { get; set; }
 
+        public List<double> FindablePercent { get; set; }
+        public List<double> AccessiblePercent { get; set; }
+        public List<double> InteroperablePercent { get; set; }
+        public List<double> ReUseablePercent { get; set; }
+
         public StatusLineChart(List<StatusReport> statusReports, StatusReport selectedStatusReport, string statusType = "Metadata")
         {
             Labels = new List<string>();
@@ -24,6 +29,10 @@ namespace Kartverket.Register.Models
             Deficient = new List<int>();
             Notset = new List<int>();
             Useable = new List<int>();
+            FindablePercent = new List<double>();
+            AccessiblePercent = new List<double>();
+            InteroperablePercent = new List<double>();
+            ReUseablePercent = new List<double>();
 
             if (statusReports != null)
             {
@@ -38,6 +47,11 @@ namespace Kartverket.Register.Models
                     Deficient.Add(statusReport.NumberOfItemsByType(statusType, "deficient"));
                     Notset.Add(statusReport.NumberOfItemsByType(statusType, "notset"));
                     Useable.Add(statusReport.NumberOfItemsByType(statusType, "useable"));
+
+                    FindablePercent.Add((int) statusReport.FairDatasetsFindablePercent());
+                    AccessiblePercent.Add((int)statusReport.FairDatasetsAccessiblePercent());
+                    InteroperablePercent.Add((int)statusReport.FairDatasetsInteroperablePercent());
+                    ReUseablePercent.Add((int)statusReport.FairDatasetsReuseablePercent());
                 }
             }
         }

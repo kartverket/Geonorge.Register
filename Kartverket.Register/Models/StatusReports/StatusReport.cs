@@ -187,6 +187,22 @@ namespace Kartverket.Register.Models
             return number;
         }
 
+        public double FairDatasetsFindablePercent()
+        {
+            int total = 0;
+            double percent = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    percent = percent + fairDatasetStatusReport.FindableStatusPerCent;
+                    total++;
+                }
+            }      
+
+            return percent / total;
+        }
+
         public int NumberOfMareanoDatasetsWithAccesible(string status)
         {
             int number = 0;
@@ -202,6 +218,24 @@ namespace Kartverket.Register.Models
             }
             return number;
         }
+
+
+        public double FairDatasetsAccessiblePercent()
+        {
+            int total = 0;
+            double percent = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    percent = percent + fairDatasetStatusReport.AccessibleStatusPerCent;
+                    total++;
+                }
+            }
+
+            return percent / total;
+        }
+
 
         public int NumberOfFairDatasetsWithAccesible(string status)
         {
@@ -233,6 +267,38 @@ namespace Kartverket.Register.Models
                 }
             }
             return number;
+        }
+
+        public double FairDatasetsInteroperablePercent()
+        {
+            int total = 0;
+            double percent = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    percent = percent + fairDatasetStatusReport.InteroperableStatusPerCent;
+                    total++;
+                }
+            }
+
+            return percent / total;
+        }
+
+        public double FairDatasetsReuseablePercent()
+        {
+            int total = 0;
+            double percent = 0;
+            foreach (RegisterItemStatusReport item in StatusRegisterItems)
+            {
+                if (item is FairDatasetStatusReport fairDatasetStatusReport)
+                {
+                    percent = percent + fairDatasetStatusReport.ReUseableStatusPerCent;
+                    total++;
+                }
+            }
+
+            return percent / total;
         }
 
         public int NumberOfFairDatasetsWithInteroperable(string status)

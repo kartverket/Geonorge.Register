@@ -18,5 +18,9 @@ namespace Kartverket.Register.Models
         [MaxLength(255)]
         public string OrganizationSeoName { get; set; }
         public float? Grade { get; set; }
+        public double FindableStatusPerCent { get; set; }
+        public double AccessibleStatusPerCent { get; set; }
+        public double InteroperableStatusPerCent { get; set; }
+        public double ReUseableStatusPerCent { get; set; }
     }
 }

@@ -24,7 +24,8 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -1302,6 +1303,10 @@
     <Compile Include="Migrations\202411282000551_AddFairR2_i_Criteria.cs" />
     <Compile Include="Migrations\202411282000551_AddFairR2_i_Criteria.designer.cs">
       <DependentUpon>202411282000551_AddFairR2_i_Criteria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412091330015_AddStatusReportFairPerCent.cs" />
+    <Compile Include="Migrations\202412091330015_AddStatusReportFairPerCent.designer.cs">
+      <DependentUpon>202412091330015_AddStatusReportFairPerCent.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -3374,6 +3379,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411282000551_AddFairR2_i_Criteria.resx">
       <DependentUpon>202411282000551_AddFairR2_i_Criteria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412091330015_AddStatusReportFairPerCent.resx">
+      <DependentUpon>202412091330015_AddStatusReportFairPerCent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

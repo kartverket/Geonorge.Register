@@ -68,10 +68,20 @@ namespace Kartverket.Register.Models.ViewModels.StatusReportViewModels
                     Wfs.Add(statusReport.NumberOfFairDatasetsWithWfs("good"));
                     AtomFeed.Add(statusReport.NumberOfFairDatasetsWithAtomFeed("good"));
                     Common.Add(statusReport.NumberOfItemsWithCommon("good"));
-                    Findable.Add(statusReport.NumberOfFairDatasetsWithFindable("good"));
-                    Accesible.Add(statusReport.NumberOfFairDatasetsWithAccesible("good"));
-                    Interoperable.Add(statusReport.NumberOfFairDatasetsWithInteroperable("good"));
-                    ReUsable.Add(statusReport.NumberOfFairDatasetsWithReUsable("good"));
+
+                    var numberOfFairDatasetsWithFindable = (int) statusReport.FairDatasetsFindablePercent() / 4;
+                    var numberOfFairDatasetsWithAccesible = (int)statusReport.FairDatasetsAccessiblePercent() / 4;
+                    var numberOfFairDatasetsWithInteroperable = (int)statusReport.FairDatasetsInteroperablePercent() / 4;
+                    var numberOfFairDatasetsWithReUsable = (int)statusReport.FairDatasetsReuseablePercent() / 4;
+
+
+                    Findable.Add(numberOfFairDatasetsWithFindable);
+                    Accesible.Add(numberOfFairDatasetsWithAccesible);
+                    Interoperable.Add(numberOfFairDatasetsWithInteroperable);
+                    ReUsable.Add(numberOfFairDatasetsWithReUsable);
+
+
+
                 }
             }
         }

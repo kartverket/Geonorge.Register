@@ -179,51 +179,63 @@
 
 
     var ctx = document.getElementById("LineChart").getContext('2d');
-    var LineChart = new Chart(ctx, {
-         plugins: [{
-             beforeDraw: function (LineChart) {
-                 var ctx = LineChart.chart.ctx;
-                ctx.fillStyle = "white";
-                 ctx.fillRect(0, 0, LineChart.chart.width, LineChart.chart.height);
-            }
-        }],
-        type: 'line',
-        fill: false,
-        data: {
-            labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Labels))),
-            datasets: [
+                    var LineChart = new Chart(ctx, {
+                        plugins: [{
+                            beforeDraw: function (LineChart) {
+                                var ctx = LineChart.chart.ctx;
+                                ctx.fillStyle = "white";
+                                ctx.fillRect(0, 0, LineChart.chart.width, LineChart.chart.height);
+                            }
+                        }],
+                        type: 'line',
+                        fill: false,
+                        data: {
+                            labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Labels))),
+                            datasets: [
+               @if (Request.QueryString["StatusType"] == "Findable")
                {
-                    label: "@RawText(FairDataSet.Findable_Label)",
-                    borderColor: 'rgb(171, 235, 52)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.FindablePercent))),
-                    backgroundColor: "rgb(171, 235, 52)",
-                    fill: true,
-                    lineTension: 0
-                },
-                @*{
-                    label: "@FairDataSet.Accesible_Label",
-                    borderColor: 'rgb(229, 52, 235)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.AccessiblePercent))),
-                    backgroundColor: "rgb(229, 52, 235)",
-                    fill: true,
-                    lineTension: 0
-                },
+                   @:{
+                   @:label: "@RawText(FairDataSet.Findable_Label)",
+                   @:borderColor: 'rgb(171, 235, 52)',
+                   @:data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.FindablePercent))),
+                   @:backgroundColor: "rgb(171, 235, 52)",
+                   @:fill: true,
+                   @:lineTension: 0
+                   @:},
+                }
+                @if (Request.QueryString["StatusType"] == "Accesible")
                 {
-                    label: "@FairDataSet.Interoperable_Label",
-                    borderColor: 'rgb(161, 109, 67)',
-                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.InteroperablePercent))),
-                    backgroundColor: "rgb(161, 109, 67)",
-                    fill: true,
-                    lineTension: 0
-                },
+                @:{
+                    @:label: "@FairDataSet.Accesible_Label",
+                    @:borderColor: 'rgb(229, 52, 235)',
+                    @:data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.AccessiblePercent))),
+                    @:backgroundColor: "rgb(229, 52, 235)",
+                    @:fill: true,
+                    @:lineTension: 0
+                @:},
+                }
+                @if (Request.QueryString["StatusType"] == "Interoperable")
                 {
-                    label: "@FairDataSet.ReUseable_Label",
-                    borderColor: 'rgb(250, 114, 5)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.ReUseablePercent))),
-                    backgroundColor: "rgb(250, 114, 5)",
-                    fill: true,
-                    lineTension: 0
-                },*@
+                @:{
+                    @:label: "@FairDataSet.Interoperable_Label",
+                    @:borderColor: 'rgb(161, 109, 67)',
+                    @:data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.InteroperablePercent))),
+                    @:backgroundColor: "rgb(161, 109, 67)",
+                    @:fill: true,
+                    @:lineTension: 0
+                @:},
+                }
+                @if (Request.QueryString["StatusType"] == "ReUseable")
+                {
+                @:{
+                    @:label: "@FairDataSet.ReUseable_Label",
+                    @:borderColor: 'rgb(250, 114, 5)',
+                    @:data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.ReUseablePercent))),
+                    @:backgroundColor: "rgb(250, 114, 5)",
+                    @:fill: true,
+                    @:lineTension: 0
+                @:},
+                }
             ]
         },
         options: {

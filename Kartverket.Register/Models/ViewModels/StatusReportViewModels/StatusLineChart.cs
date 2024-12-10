@@ -51,7 +51,7 @@ namespace Kartverket.Register.Models
                     FindablePercent.Add((int) statusReport.FairDatasetsFindablePercent());
                     AccessiblePercent.Add((int)statusReport.FairDatasetsAccessiblePercent());
                     InteroperablePercent.Add((int)statusReport.FairDatasetsInteroperablePercent());
-                    FindablePercent.Add((int)statusReport.FairDatasetsReuseablePercent());
+                    ReUseablePercent.Add((int)statusReport.FairDatasetsReuseablePercent());
                 }
             }
         }

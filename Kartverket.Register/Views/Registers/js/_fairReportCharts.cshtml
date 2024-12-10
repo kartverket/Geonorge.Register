@@ -121,7 +121,7 @@
             labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Labels))),
             datasets: [
                {
-                    label: "@RawText(FairDataSet.Findable_Label) % av total",
+                    label: "@RawText(FairDataSet.Findable_Label)",
                     borderColor: 'rgb(171, 235, 52)',
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Findable))),
                     backgroundColor: "rgb(171, 235, 52)",
@@ -129,7 +129,7 @@
                     lineTension: 0
                 },
                 {
-                    label: "@FairDataSet.Accesible_Label  % av total",
+                    label: "@FairDataSet.Accesible_Label",
                     borderColor: 'rgb(229, 52, 235)',
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Accesible))),
                     backgroundColor: "rgb(229, 52, 235)",
@@ -137,7 +137,7 @@
                     lineTension: 0
                 },
                 {
-                    label: "@FairDataSet.Interoperable_Label  % av total",
+                    label: "@FairDataSet.Interoperable_Label",
                     borderColor: 'rgb(161, 109, 67)',
                     data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.Interoperable))),
                     backgroundColor: "rgb(161, 109, 67)",
@@ -145,7 +145,7 @@
                     lineTension: 0
                 },
                 {
-                    label: "@FairDataSet.ReUseable_Label  % av total",
+                    label: "@FairDataSet.ReUseable_Label",
                     borderColor: 'rgb(250, 114, 5)',
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.FairLineChart.ReUsable))),
                     backgroundColor: "rgb(250, 114, 5)",
@@ -161,7 +161,7 @@
                         // Custom tooltip content
                         var dataset = data.datasets[tooltipItem.datasetIndex];
                         var currentValue = dataset.data[tooltipItem.index];
-                        var alternativeValue = (currentValue * 4);
+                        var alternativeValue = (currentValue * 4) + '% oppfylt';
                         return alternativeValue;
                     }
                 }

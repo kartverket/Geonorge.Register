@@ -155,6 +155,18 @@
             ]
         },
         options: {
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        // Custom tooltip content
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var alternativeValue = (currentValue * 4);
+                        return alternativeValue;
+                    }
+                }
+            },  
+
             scales: {
                 yAxes: [{
                     ticks: {

@@ -636,6 +636,11 @@
             Get alert
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.AlertApiController.GetUuid(System.String)">
+            <summary>
+            Get alerts by uuid
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.AlertApiController.PutServiceAlert(System.String,Kartverket.Register.Models.Api.AlertUpdate)">
             <summary>
             Update alert

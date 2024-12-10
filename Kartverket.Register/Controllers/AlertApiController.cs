@@ -152,6 +152,55 @@ namespace Kartverket.Register.Controllers
         }
 
         /// <summary>
+        /// Get alerts by uuid
+        /// </summary>
+        [ResponseType(typeof(List<AlertView>))]
+        [ApiExplorerSettings(IgnoreApi = false)]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetUuid(string id)
+        {
+            var alert = _dbContext.Alerts.Where(a => a.UuidExternal != null && a.UuidExternal.ToString().ToLower() == id.ToLower());
+            if (alert == null || alert.Count() == 0)
+                return NotFound();
+
+            var alertViews = new List<AlertView>();
+            foreach (var alertItem in alert)
+            {
+                var alertView = new AlertView();
+                alertView.SystemId = alertItem.systemId.ToString();
+                alertView.Label = alertItem.name;
+                alertView.AlertCategory = alertItem.AlertCategory;
+                alertView.AlertDate = alertItem.AlertDate;
+                alertView.AlertType = alertItem.AlertType;
+                alertView.DateResolved = alertItem.DateResolved;
+                alertView.EffectiveDate = alertItem.EffectiveDate;
+                alertView.Department = alertItem.departmentId;
+                alertView.Image1 = alertItem.Image1;
+                alertView.Image1Thumbnail = alertItem.Image1Thumbnail;
+                alertView.Image2 = alertItem.Image2;
+                alertView.Image2Thumbnail = alertItem.Image2Thumbnail;
+                alertView.Link = alertItem.Link;
+                alertView.Note = alertItem.Note;
+                alertView.Owner = alertItem.Owner;
+                alertView.StationName = alertItem.StationName;
+                alertView.StationType = alertItem.StationType;
+                alertView.Summary = alertItem.Summary;
+                //alertView.Tags = alertItem.Tags.Select(t => t.value).ToList();
+                alertView.UrlExternal = alertItem.UrlExternal;
+
+                if (alertItem.AlertCategory != "Driftsmelding")
+                {
+                    alertView.Type = alertItem.Type;
+                    alertView.UuidExternal = alertItem.UuidExternal;
+                }
+
+                alertViews.Add(alertView);
+            }
+
+            return Ok(alertViews);
+        }
+
+        /// <summary>
         /// Update alert
         /// </summary>
         [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]

@@ -39,6 +39,7 @@ namespace Kartverket.Register
             // Alert
             config.Routes.MapHttpRoute("AlertServicePost", "api/alert/add", new { controller = "AlertApi", action = "PostServiceAlert" });
             config.Routes.MapHttpRoute("AlertServiceGet", "api/alerts", new { controller = "AlertApi", action = "Get" });
+            config.Routes.MapHttpRoute("AlertServiceGetAllById", "api/alerts/{id}", new { controller = "AlertApi", action = "GetUuid" });
             config.Routes.MapHttpRoute("AlertServiceGetId", "api/alert/{id}", new { controller = "AlertApi", action = "GetId" });
             config.Routes.MapHttpRoute("AlertServiceUpdate", "api/alert/update/{id}", new { controller = "AlertApi", action = "PutServiceAlert" });
             //config.Routes.MapHttpRoute("AlertServiceDelete", "api/alert/delete", new { controller = "AlertApi", action = "DeleteServiceAlert" });

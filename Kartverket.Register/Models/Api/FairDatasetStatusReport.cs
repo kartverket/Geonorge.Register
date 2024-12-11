@@ -31,6 +31,10 @@ namespace Kartverket.Register.Models.Api
         public NumberOfStatuses NumberOfItemsWithWfs { get; set; }
         public NumberOfStatuses NumberOfItemsWithAtomFeed { get; set; }
         public NumberOfStatuses NumberOfItemsWithCommon { get; set; }
+        public double PercentageOfDatasetsWithFindable { get; set; }
+        public double PercentageOfDatasetsWithAccesible { get; set; }
+        public double PercentageOfDatasetsWithInteroperable { get; set; }
+        public double PercentageOfDatasetsWithReUseable { get; set; }
 
 
 
@@ -138,6 +142,12 @@ namespace Kartverket.Register.Models.Api
                 statusReport.NumberOfItemsWithCommon(Deficient),
                 statusReport.NumberOfItemsWithCommon(Notset),
                 statusReport.NumberOfItemsWithCommon(Satisfactory));
+
+
+            PercentageOfDatasetsWithFindable = (int) statusReport.FairDatasetsFindablePercent();
+            PercentageOfDatasetsWithAccesible = (int)statusReport.FairDatasetsAccessiblePercent();
+            PercentageOfDatasetsWithInteroperable = (int)statusReport.FairDatasetsInteroperablePercent();
+            PercentageOfDatasetsWithReUseable = (int) statusReport.FairDatasetsReuseablePercent();
         }
     }
 }

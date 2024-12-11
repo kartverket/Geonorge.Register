@@ -513,7 +513,7 @@ namespace Kartverket.Register.Formatter
                 fairDatasetStatusReport.NumberOfItemsWithFindable.Deficient,
                 fairDatasetStatusReport.NumberOfItemsWithFindable.Notset,
                 fairDatasetStatusReport.NumberOfItemsWithFindable.Satisfactory
-                ));
+                ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithFindable);
 
             streamWriter.WriteLine(StatusByType(FairDataSet.Accesible_Label,
                 fairDatasetStatusReport.NumberOfItemsWithAccesible.Good,
@@ -521,7 +521,7 @@ namespace Kartverket.Register.Formatter
                 fairDatasetStatusReport.NumberOfItemsWithAccesible.Deficient,
                 fairDatasetStatusReport.NumberOfItemsWithAccesible.Notset,
                 fairDatasetStatusReport.NumberOfItemsWithAccesible.Satisfactory
-                ));
+                ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithAccesible);
 
             streamWriter.WriteLine(StatusByType(FairDataSet.Interoperable_Label,
                 fairDatasetStatusReport.NumberOfItemsWithInteroperable.Good,
@@ -529,7 +529,7 @@ namespace Kartverket.Register.Formatter
                 fairDatasetStatusReport.NumberOfItemsWithInteroperable.Deficient,
                 fairDatasetStatusReport.NumberOfItemsWithInteroperable.Notset,
                 fairDatasetStatusReport.NumberOfItemsWithInteroperable.Satisfactory
-                ));
+                ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithInteroperable);
 
             streamWriter.WriteLine(StatusByType(FairDataSet.ReUseable_Label,
                 fairDatasetStatusReport.NumberOfItemsWithReUseable.Good,
@@ -537,7 +537,7 @@ namespace Kartverket.Register.Formatter
                 fairDatasetStatusReport.NumberOfItemsWithReUseable.Deficient,
                 fairDatasetStatusReport.NumberOfItemsWithReUseable.Notset,
                 fairDatasetStatusReport.NumberOfItemsWithReUseable.Satisfactory
-                ));
+                ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithReUseable);
 
             streamWriter.WriteLine(SingelStatusReportHeadingOK());
         }
@@ -933,6 +933,11 @@ namespace Kartverket.Register.Formatter
                heading = heading + ";" + MareanoDataSet.Delivery_Status_Satisfactory;
             }
 
+            if (type == "fair")
+            {
+                heading = heading + ";Prosent oppfylt";
+            }
+
             return heading;
         }
 
@@ -1264,7 +1269,8 @@ namespace Kartverket.Register.Formatter
             return item.FindableStatus + ";" +
                     item.AccesibleStatus + ";" +
                     item.InteroperableStatus + ";" +
-                    item.ReUsableStatus + ";";
+                    item.ReUsableStatus + ";" +
+                    item.FAIRStatusPerCent + ";";
         }
 
         private static void ConvertRegisterItemDokMunicipalToCSV(StreamWriter streamWriter, Registeritem item)
@@ -1408,6 +1414,7 @@ namespace Kartverket.Register.Formatter
                        FairDataSet.Accesible_Label + ";" +
                        FairDataSet.Interoperable_Label + ";" +
                        FairDataSet.ReUseable_Label + ";" +
+                       "Prosent oppfylt;" +
                        "Uuid" + ";" +
                        DataSet.DisplayKartkatalogen;
             }

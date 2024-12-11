@@ -491,6 +491,12 @@ namespace Kartverket.Register.Models.Api
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ReUsableStatus { get; set; }
 
+
+        //Fair
+        [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public double FAIRStatusPerCent { get; set; }
+
         [IgnoreDataMember]
         [XmlIgnore]
         public DateTime DefaultDate { get; set; } = new DateTime(1, 1, 1, 0, 0, 0) ;
@@ -775,6 +781,9 @@ namespace Kartverket.Register.Models.Api
                 {
                     CommonStatus = fairDataset.CommonStatus.Status.value;
                 }
+
+                FAIRStatusPerCent = (int) fairDataset.FAIRStatusPerCent;
+
             }
             if (item is EPSG epsg)
             {

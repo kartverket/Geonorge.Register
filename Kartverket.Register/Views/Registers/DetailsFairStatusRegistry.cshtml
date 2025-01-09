@@ -94,6 +94,7 @@
 
                     <input type="hidden" name="FairSelectedTab" value="@Request["FairSelectedTab"]">
                     <input type="hidden" name="StatusType" value="@Request["StatusType"]">
+                    <input type="hidden" name="SelectedReport" value="@Request["SelectedReport"]">
                     <span>@DataSet.FilterOrganization:</span>
                     <div class="custom-select">@Html.Raw(Html.DropDownList("filterOrganization", new SelectList(ViewBag.filterOrganization, "seoname", "name"), new { @class = "form-control", onchange = "this.form.submit()" }))</div>
 

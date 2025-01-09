@@ -14,6 +14,8 @@
     {
         SelectedReport = Request["SelectedReport"].ToString();
     }
+
+    string[] fairDatasetTypes = Request.QueryString["fairDatasetType"] != null ? Request.QueryString["fairDatasetType"].Split(',') : null;
 }
 @if (Model.ReportNotExists)
 {
@@ -29,6 +31,15 @@ else
                 @Html.Hidden("FairSelectedTab", "report")
                 @Html.Hidden("filterOrganization", filterOrganization)
                 @Html.Hidden("StatusType", StatusType)
+
+                if (fairDatasetTypes != null)
+                {
+                    foreach (var type in fairDatasetTypes)
+                    {
+                       <input type="hidden" name="fairDatasetType" value="@type" />
+                    }
+                }
+
                 @Html.DropDownList("SelectedReport", Model.ReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
             }
         </div>
@@ -305,6 +316,13 @@ else
                     @Html.Hidden("FairSelectedTab", "report")
                     @Html.Hidden("SelectedReport", SelectedReport)
                     @Html.Hidden("filterOrganization", filterOrganization)
+                    if (fairDatasetTypes != null)
+                    {
+                        foreach (var type in fairDatasetTypes)
+                        {
+                            <input type="hidden" name="fairDatasetType" value="@type" />
+                        }
+                    }
                     @Html.DropDownList("StatusType", Model.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
                 }
             </div>

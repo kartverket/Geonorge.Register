@@ -316,6 +316,13 @@ else
                     @Html.Hidden("FairSelectedTab", "report")
                     @Html.Hidden("SelectedReport", SelectedReport)
                     @Html.Hidden("filterOrganization", filterOrganization)
+                    if (fairDatasetTypes != null)
+                    {
+                        foreach (var type in fairDatasetTypes)
+                        {
+                            <input type="hidden" name="fairDatasetType" value="@type" />
+                        }
+                    }
                     @Html.DropDownList("StatusType", Model.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
                 }
             </div>

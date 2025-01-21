@@ -904,7 +904,7 @@ namespace Kartverket.Register.Formatter
 
         private string StatusByType(string statusType, int good, int useable, int deficient, int notSet, int satisfactory = 0)
         {
-            return statusType + ";" + good + ";" + useable + ";" + deficient + ";" + notSet + ";" + satisfactory;
+            return statusType + ";" + good + ";" + satisfactory + ";" + useable + ";" + deficient;
         }
 
         private string StatusOk(string statusType, int ok, int notOk)
@@ -923,15 +923,10 @@ namespace Kartverket.Register.Formatter
                 delivery_Status_Deficient = MareanoDataSet.Delivery_Status_Deficient;
             }
 
-                string heading = label + ";" + DataSet.DOK_Delivery_Status_Good + ";" +
-                   delivery_Status_Useable + ";" +
-                   delivery_Status_Deficient + ";" +
-                   DataSet.DOK_Delivery_Status_NotSet;
-
-            if(type == "mareano" || type == "fair")
-            {
-               heading = heading + ";" + MareanoDataSet.Delivery_Status_Satisfactory;
-            }
+            string heading = label + ";" + DataSet.DOK_Delivery_Status_Good + ";" +
+               (type == "mareano" || type == "fair" ? MareanoDataSet.Delivery_Status_Satisfactory + ";" : "") +
+               delivery_Status_Useable + ";" +
+               delivery_Status_Deficient;
 
             if (type == "fair")
             {

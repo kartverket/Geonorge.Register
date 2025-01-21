@@ -508,35 +508,35 @@ namespace Kartverket.Register.Formatter
         private void WriteFairStatusesInTable(StreamWriter streamWriter, FairDatasetStatusReport fairDatasetStatusReport)
         {
             streamWriter.WriteLine(StatusByType(FairDataSet.Findable_Label,
-                fairDatasetStatusReport.NumberOfItemsWithFindable.Good,
-                fairDatasetStatusReport.NumberOfItemsWithFindable.Useable,
-                fairDatasetStatusReport.NumberOfItemsWithFindable.Deficient,
-                fairDatasetStatusReport.NumberOfItemsWithFindable.Notset,
-                fairDatasetStatusReport.NumberOfItemsWithFindable.Satisfactory, "fair"
+                fairDatasetStatusReport.PercentageOfDatasetsWithFindableGood,
+                fairDatasetStatusReport.PercentageOfDatasetsWithFindableUseable,
+                fairDatasetStatusReport.PercentageOfDatasetsWithFindableDeficient,
+                0,
+                fairDatasetStatusReport.PercentageOfDatasetsWithFindableSatisfactory, "fair"
                 ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithFindable);
 
             streamWriter.WriteLine(StatusByType(FairDataSet.Accesible_Label,
-                fairDatasetStatusReport.NumberOfItemsWithAccesible.Good,
-                fairDatasetStatusReport.NumberOfItemsWithAccesible.Useable,
-                fairDatasetStatusReport.NumberOfItemsWithAccesible.Deficient,
-                fairDatasetStatusReport.NumberOfItemsWithAccesible.Notset,
-                fairDatasetStatusReport.NumberOfItemsWithAccesible.Satisfactory, "fair"
+                fairDatasetStatusReport.PercentageOfDatasetsWithAccesibleGood,
+                fairDatasetStatusReport.PercentageOfDatasetsWithAccesibleUseable,
+                fairDatasetStatusReport.PercentageOfDatasetsWithAccesibleDeficient,
+                0,
+                fairDatasetStatusReport.PercentageOfDatasetsWithAccesibleSatisfactory, "fair"
                 ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithAccesible);
 
             streamWriter.WriteLine(StatusByType(FairDataSet.Interoperable_Label,
-                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Good,
-                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Useable,
-                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Deficient,
-                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Notset,
-                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Satisfactory, "fair"
+                fairDatasetStatusReport.PercentageOfDatasetsWithInteroperableGood,
+                fairDatasetStatusReport.PercentageOfDatasetsWithInteroperableUseable,
+                fairDatasetStatusReport.PercentageOfDatasetsWithInteroperableDeficient,
+                0,
+                fairDatasetStatusReport.PercentageOfDatasetsWithInteroperableSatisfactory, "fair"
                 ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithInteroperable);
 
             streamWriter.WriteLine(StatusByType(FairDataSet.ReUseable_Label,
-                fairDatasetStatusReport.NumberOfItemsWithReUseable.Good,
-                fairDatasetStatusReport.NumberOfItemsWithReUseable.Useable,
-                fairDatasetStatusReport.NumberOfItemsWithReUseable.Deficient,
-                fairDatasetStatusReport.NumberOfItemsWithReUseable.Notset,
-                fairDatasetStatusReport.NumberOfItemsWithReUseable.Satisfactory, "fair"
+                fairDatasetStatusReport.PercentageOfDatasetsWithReUseableGood,
+                fairDatasetStatusReport.PercentageOfDatasetsWithReUseableUseable,
+                fairDatasetStatusReport.PercentageOfDatasetsWithReUseableDeficient,
+                0,
+                fairDatasetStatusReport.PercentageOfDatasetsWithReUseableSatisfactory, "fair"
                 ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithReUseable);
 
             streamWriter.WriteLine(SingelStatusReportHeadingOK());
@@ -902,7 +902,7 @@ namespace Kartverket.Register.Formatter
                 ));
         }
 
-        private string StatusByType(string statusType, int good, int useable, int deficient, int notSet, int satisfactory = 0, string reportType = "")
+        private string StatusByType(string statusType, double good, double useable, double deficient, double notSet, double satisfactory = 0, string reportType = "")
         {
             var status = statusType + ";" + good + ";" + useable + ";" + deficient + ";" + notSet;
             if (reportType == "mareano")

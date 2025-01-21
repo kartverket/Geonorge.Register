@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Models.Api
@@ -36,7 +37,22 @@ namespace Kartverket.Register.Models.Api
         public double PercentageOfDatasetsWithInteroperable { get; set; }
         public double PercentageOfDatasetsWithReUseable { get; set; }
 
-
+        public double PercentageOfDatasetsWithFindableGood { get; private set; }
+        public double PercentageOfDatasetsWithFindableSatisfactory { get; private set; }
+        public double PercentageOfDatasetsWithFindableUseable { get; private set; }
+        public double PercentageOfDatasetsWithFindableDeficient { get; private set; }
+        public double PercentageOfDatasetsWithAccesibleGood { get; private set; }
+        public double PercentageOfDatasetsWithAccesibleSatisfactory { get; private set; }
+        public double PercentageOfDatasetsWithAccesibleUseable { get; private set; }
+        public double PercentageOfDatasetsWithAccesibleDeficient { get; private set; }
+        public double PercentageOfDatasetsWithInteroperableGood { get; private set; }
+        public double PercentageOfDatasetsWithInteroperableSatisfactory { get; private set; }
+        public double PercentageOfDatasetsWithInteroperableUseable { get; private set; }
+        public double PercentageOfDatasetsWithInteroperableDeficient { get; private set; }
+        public double PercentageOfDatasetsWithReUseableGood { get; private set; }
+        public double PercentageOfDatasetsWithReUseableSatisfactory { get; private set; }
+        public double PercentageOfDatasetsWithReUseableUseable { get; private set; }
+        public double PercentageOfDatasetsWithReUseableDeficient { get; private set; }
 
         public FairDatasetStatusReport(StatusReport statusReport)
         {
@@ -148,6 +164,33 @@ namespace Kartverket.Register.Models.Api
             PercentageOfDatasetsWithAccesible = (int)statusReport.FairDatasetsAccessiblePercent();
             PercentageOfDatasetsWithInteroperable = (int)statusReport.FairDatasetsInteroperablePercent();
             PercentageOfDatasetsWithReUseable = (int) statusReport.FairDatasetsReuseablePercent();
+
+            var numberOfItems = statusReport.NumberOfIems();
+
+            PercentageOfDatasetsWithFindableGood = Percent(NumberOfItemsWithFindable.Good, numberOfItems);
+            PercentageOfDatasetsWithFindableSatisfactory = Percent(NumberOfItemsWithFindable.Satisfactory, numberOfItems);
+            PercentageOfDatasetsWithFindableUseable = Percent(NumberOfItemsWithFindable.Useable, numberOfItems);
+            PercentageOfDatasetsWithFindableDeficient = Percent(NumberOfItemsWithFindable.Deficient, numberOfItems);
+
+            PercentageOfDatasetsWithAccesibleGood = Percent(NumberOfItemsWithAccesible.Good, numberOfItems);
+            PercentageOfDatasetsWithAccesibleSatisfactory = Percent(NumberOfItemsWithAccesible.Satisfactory, numberOfItems);
+            PercentageOfDatasetsWithAccesibleUseable = Percent(NumberOfItemsWithAccesible.Useable, numberOfItems);
+            PercentageOfDatasetsWithAccesibleDeficient = Percent(NumberOfItemsWithAccesible.Deficient, numberOfItems);
+
+            PercentageOfDatasetsWithInteroperableGood = Percent(NumberOfItemsWithInteroperable.Good, numberOfItems);
+            PercentageOfDatasetsWithInteroperableSatisfactory = Percent(NumberOfItemsWithInteroperable.Satisfactory, numberOfItems);
+            PercentageOfDatasetsWithInteroperableUseable = Percent(NumberOfItemsWithInteroperable.Useable, numberOfItems);
+            PercentageOfDatasetsWithInteroperableDeficient = Percent(NumberOfItemsWithInteroperable.Deficient, numberOfItems);
+
+            PercentageOfDatasetsWithReUseableGood = Percent(NumberOfItemsWithReUseable.Good, numberOfItems);
+            PercentageOfDatasetsWithReUseableSatisfactory = Percent(NumberOfItemsWithReUseable.Satisfactory, numberOfItems);
+            PercentageOfDatasetsWithReUseableUseable = Percent(NumberOfItemsWithReUseable.Useable, numberOfItems);
+            PercentageOfDatasetsWithReUseableDeficient = Percent(NumberOfItemsWithReUseable.Deficient, numberOfItems);
+        }
+
+        public double Percent(int numberOf, int numberOfItems)
+        {
+            return HtmlHelperExtensions.Percent(numberOf, numberOfItems);
         }
     }
 }

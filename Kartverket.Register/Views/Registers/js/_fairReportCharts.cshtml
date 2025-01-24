@@ -302,7 +302,7 @@
     }
 
     var dataFindable = {
-        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithFindable.Good))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithFindable.Satisfactory))" , "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithFindable.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithFindable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithFindable.Notset))"],
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithFindable.Good))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithFindable.Satisfactory))" , "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithFindable.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithFindable.Deficient))"],
         datasets: [
             {
                 fill: true,
@@ -310,15 +310,14 @@
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithFindable.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithFindable.Satisfactory))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithFindable.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithFindable.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithFindable.Notset)))
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithFindable.Deficient)))
                 ],
             }
         ]
     };
 
     var dataAccesible = {
-        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithAccesible.Good))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory,Model.NumberOfItemsWithAccesible.Satisfactory))" , "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithAccesible.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithAccesible.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithAccesible.Notset))"],
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithAccesible.Good))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory,Model.NumberOfItemsWithAccesible.Satisfactory))" , "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithAccesible.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithAccesible.Deficient))"],
         datasets: [
             {
                 fill: true,
@@ -326,15 +325,14 @@
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAccesible.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAccesible.Satisfactory))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAccesible.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAccesible.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAccesible.Notset)))
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithAccesible.Deficient)))
                 ],
             }
         ]
     };
 
     var dataInteroperable = {
-        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithInteroperable.Good))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithInteroperable.Satisfactory))" , "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithInteroperable.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithInteroperable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithInteroperable.Notset)) "],
+        labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithInteroperable.Good))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithInteroperable.Satisfactory))" , "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithInteroperable.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithInteroperable.Deficient))"],
         datasets: [
             {
                     fill: true,
@@ -342,15 +340,14 @@
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithInteroperable.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithInteroperable.Satisfactory))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithInteroperable.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithInteroperable.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithInteroperable.Notset)))
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithInteroperable.Deficient)))
                 ],
             }
         ]
     };
 
                 var dataReUseable = {
-                    labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithReUseable.Good)) ", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithReUseable.Satisfactory))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithReUseable.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithReUseable.Deficient))", "@RawText(formatLabel(DataSet.DOK_Delivery_Status_NotSetShort, Model.NumberOfItemsWithReUseable.Notset))"],
+                    labels: ["@RawText(formatLabel(DataSet.DOK_Delivery_Status_Good, Model.NumberOfItemsWithReUseable.Good)) ", "@RawText(formatLabel(FairDataSet.Delivery_Status_Satisfactory, Model.NumberOfItemsWithReUseable.Satisfactory))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Useable, Model.NumberOfItemsWithReUseable.Useable))", "@RawText(formatLabel(FairDataSet.Delivery_Status_Deficient, Model.NumberOfItemsWithReUseable.Deficient))"],
         datasets: [
             {
                 fill: true,
@@ -358,8 +355,7 @@
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithReUseable.Good))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithReUseable.Satisfactory))),
                     @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithReUseable.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithReUseable.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithReUseable.Notset)))
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.NumberOfItemsWithReUseable.Deficient)))
                 ],
             }
         ]
@@ -993,27 +989,6 @@
                         0, 0
                     ],
                     backgroundColor: '#ee432a',
-                },
-                {
-        label: '@DataSet.DOK_Delivery_Status_NotSet',
-                    data: [
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithFindable.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAccesible.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithInteroperable.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithReUseable.Notset)))),
-                        @*@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadata.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecification.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSheet.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRules.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirements.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirements.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWms.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfs.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeed.Notset)))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithCommon.Notset)))),*@
-                        0, 0, 0, 0, 0
-                    ],
-                    backgroundColor: '#d8d8d8',
                 }
             ]
         },

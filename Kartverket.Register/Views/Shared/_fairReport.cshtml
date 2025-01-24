@@ -76,48 +76,43 @@ else
                 <thead>
                     <tr>
                         <th></th>
-                        <th>@DataSet.DOK_Delivery_Status_Good</th>
-                        <th>@FairDataSet.Delivery_Status_Satisfactory</th>
-                        <th>@FairDataSet.Delivery_Status_Useable</th>
-                        <th>@FairDataSet.Delivery_Status_Deficient</th>
-                        <th>@DataSet.DOK_Delivery_Status_NotSet</th>
+                        <th>@DataSet.DOK_Delivery_Status_Good %</th>
+                        <th>@FairDataSet.Delivery_Status_Satisfactory %</th>
+                        <th>@FairDataSet.Delivery_Status_Useable %</th>
+                        <th>@FairDataSet.Delivery_Status_Deficient %</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithFindable)</td>
-                        <td>@Model.NumberOfItemsWithFindable.Good</td>
-                        <td>@Model.NumberOfItemsWithFindable.Satisfactory</td>
-                        <td>@Model.NumberOfItemsWithFindable.Useable</td>
-                        <td>@Model.NumberOfItemsWithFindable.Deficient</td>
-                        <td>@Model.NumberOfItemsWithFindable.Notset</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithFindable.Good)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithFindable.Satisfactory)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithFindable.Useable)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithFindable.Deficient)</td>
                     </tr>
 
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithAccesible)</td>
-                        <td>@Model.NumberOfItemsWithAccesible.Good</td>
-                        <td>@Model.NumberOfItemsWithAccesible.Satisfactory</td>
-                        <td>@Model.NumberOfItemsWithAccesible.Useable</td>
-                        <td>@Model.NumberOfItemsWithAccesible.Deficient</td>
-                        <td>@Model.NumberOfItemsWithAccesible.Notset</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithAccesible.Good)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithAccesible.Satisfactory)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithAccesible.Useable)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithAccesible.Deficient)</td>
                     </tr>
 
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithInteroperable)</td>
-                        <td>@Model.NumberOfItemsWithInteroperable.Good</td>
-                        <td>@Model.NumberOfItemsWithInteroperable.Satisfactory</td>
-                        <td>@Model.NumberOfItemsWithInteroperable.Useable</td>
-                        <td>@Model.NumberOfItemsWithInteroperable.Deficient</td>
-                        <td>@Model.NumberOfItemsWithInteroperable.Notset</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithInteroperable.Good)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithInteroperable.Satisfactory)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithInteroperable.Useable)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithInteroperable.Deficient)</td>
                     </tr>
                     <tr>
                         <td>@Html.LabelFor(model => model.NumberOfItemsWithReUseable)</td>
-                        <td>@Model.NumberOfItemsWithReUseable.Good</td>
-                        <td>@Model.NumberOfItemsWithReUseable.Satisfactory</td>
-                        <td>@Model.NumberOfItemsWithReUseable.Useable</td>
-                        <td>@Model.NumberOfItemsWithReUseable.Deficient</td>
-                        <td>@Model.NumberOfItemsWithReUseable.Notset</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithReUseable.Good)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithReUseable.Satisfactory)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithReUseable.Useable)</td>
+                        <td>@Model.Percent(Model.NumberOfItemsWithReUseable.Deficient)</td>
                     </tr>
 
                     @*<tr>

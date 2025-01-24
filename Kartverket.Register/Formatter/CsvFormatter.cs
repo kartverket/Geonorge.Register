@@ -404,7 +404,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithFindable.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithFindable.Satisfactory
+                mareanoDatasetStatusReport.NumberOfItemsWithFindable.Satisfactory, "mareano"
                 ));
 
             streamWriter.WriteLine(StatusByType(FairDataSet.Accesible_Label,
@@ -412,7 +412,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Satisfactory
+                mareanoDatasetStatusReport.NumberOfItemsWithAccesible.Satisfactory, "mareano"
                 ));
 
             streamWriter.WriteLine(StatusByType(FairDataSet.Interoperable_Label,
@@ -420,7 +420,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Satisfactory
+                mareanoDatasetStatusReport.NumberOfItemsWithInteroperable.Satisfactory, "mareano"
                 ));
 
             streamWriter.WriteLine(StatusByType(FairDataSet.ReUseable_Label,
@@ -428,7 +428,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Satisfactory
+                mareanoDatasetStatusReport.NumberOfItemsWithReUseable.Satisfactory, "mareano"
                 ));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Metadata,
@@ -436,7 +436,7 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithMetadata.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithMetadata.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithMetadata.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithMetadata.Satisfactory
+                mareanoDatasetStatusReport.NumberOfItemsWithMetadata.Satisfactory, "mareano"
                 ));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_ProductSpesification,
@@ -444,63 +444,63 @@ namespace Kartverket.Register.Formatter
                 mareanoDatasetStatusReport.NumberOfItemsWithProductSpecification.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithProductSpecification.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithProductSpecification.Notset, 
-                mareanoDatasetStatusReport.NumberOfItemsWithMetadata.Satisfactory));
+                mareanoDatasetStatusReport.NumberOfItemsWithMetadata.Satisfactory, "mareano"));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_ProductSheet,
                 mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Satisfactory));
+                mareanoDatasetStatusReport.NumberOfItemsWithProductSheet.Satisfactory, "mareano"));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_PresentationRules,
                 mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Satisfactory));
+                mareanoDatasetStatusReport.NumberOfItemsWithPresentationRules.Satisfactory, "mareano"));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_GmlRequirements,
                 mareanoDatasetStatusReport.NumberOfItemsWithGmlRequirements.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithGmlRequirements.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithGmlRequirements.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithGmlRequirements.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithGmlRequirements.Satisfactory));
+                mareanoDatasetStatusReport.NumberOfItemsWithGmlRequirements.Satisfactory, "mareano"));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_SosiRequirements,
                 mareanoDatasetStatusReport.NumberOfItemsWithSosiRequirements.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithSosiRequirements.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithSosiRequirements.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithSosiRequirements.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithSosiRequirements.Satisfactory));
+                mareanoDatasetStatusReport.NumberOfItemsWithSosiRequirements.Satisfactory, "mareano"));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Wms,
                 mareanoDatasetStatusReport.NumberOfItemsWithWms.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithWms.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithWms.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithWms.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithWms.Satisfactory));
+                mareanoDatasetStatusReport.NumberOfItemsWithWms.Satisfactory, "mareano"));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Wfs,
                 mareanoDatasetStatusReport.NumberOfItemsWithWfs.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithWfs.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithWfs.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithWfs.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithWfs.Satisfactory));
+                mareanoDatasetStatusReport.NumberOfItemsWithWfs.Satisfactory, "mareano"));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_AtomFeed,
                 mareanoDatasetStatusReport.NumberOfItemsWithAtomFeed.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithAtomFeed.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithAtomFeed.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithAtomFeed.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithAtomFeed.Satisfactory));
+                mareanoDatasetStatusReport.NumberOfItemsWithAtomFeed.Satisfactory, "mareano"));
 
             streamWriter.WriteLine(StatusByType(DataSet.DOK_Delivery_Distribution,
                 mareanoDatasetStatusReport.NumberOfItemsWithCommon.Good,
                 mareanoDatasetStatusReport.NumberOfItemsWithCommon.Useable,
                 mareanoDatasetStatusReport.NumberOfItemsWithCommon.Deficient,
                 mareanoDatasetStatusReport.NumberOfItemsWithCommon.Notset,
-                mareanoDatasetStatusReport.NumberOfItemsWithCommon.Satisfactory));
+                mareanoDatasetStatusReport.NumberOfItemsWithCommon.Satisfactory, "mareano"));
 
             streamWriter.WriteLine(SingelStatusReportHeadingOK());
         }
@@ -508,35 +508,35 @@ namespace Kartverket.Register.Formatter
         private void WriteFairStatusesInTable(StreamWriter streamWriter, FairDatasetStatusReport fairDatasetStatusReport)
         {
             streamWriter.WriteLine(StatusByType(FairDataSet.Findable_Label,
-                fairDatasetStatusReport.NumberOfItemsWithFindable.Good,
-                fairDatasetStatusReport.NumberOfItemsWithFindable.Useable,
-                fairDatasetStatusReport.NumberOfItemsWithFindable.Deficient,
-                fairDatasetStatusReport.NumberOfItemsWithFindable.Notset,
-                fairDatasetStatusReport.NumberOfItemsWithFindable.Satisfactory
+                fairDatasetStatusReport.PercentageOfDatasetsWithFindableGood,
+                fairDatasetStatusReport.PercentageOfDatasetsWithFindableUseable,
+                fairDatasetStatusReport.PercentageOfDatasetsWithFindableDeficient,
+                0,
+                fairDatasetStatusReport.PercentageOfDatasetsWithFindableSatisfactory, "fair"
                 ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithFindable);
 
             streamWriter.WriteLine(StatusByType(FairDataSet.Accesible_Label,
-                fairDatasetStatusReport.NumberOfItemsWithAccesible.Good,
-                fairDatasetStatusReport.NumberOfItemsWithAccesible.Useable,
-                fairDatasetStatusReport.NumberOfItemsWithAccesible.Deficient,
-                fairDatasetStatusReport.NumberOfItemsWithAccesible.Notset,
-                fairDatasetStatusReport.NumberOfItemsWithAccesible.Satisfactory
+                fairDatasetStatusReport.PercentageOfDatasetsWithAccesibleGood,
+                fairDatasetStatusReport.PercentageOfDatasetsWithAccesibleUseable,
+                fairDatasetStatusReport.PercentageOfDatasetsWithAccesibleDeficient,
+                0,
+                fairDatasetStatusReport.PercentageOfDatasetsWithAccesibleSatisfactory, "fair"
                 ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithAccesible);
 
             streamWriter.WriteLine(StatusByType(FairDataSet.Interoperable_Label,
-                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Good,
-                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Useable,
-                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Deficient,
-                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Notset,
-                fairDatasetStatusReport.NumberOfItemsWithInteroperable.Satisfactory
+                fairDatasetStatusReport.PercentageOfDatasetsWithInteroperableGood,
+                fairDatasetStatusReport.PercentageOfDatasetsWithInteroperableUseable,
+                fairDatasetStatusReport.PercentageOfDatasetsWithInteroperableDeficient,
+                0,
+                fairDatasetStatusReport.PercentageOfDatasetsWithInteroperableSatisfactory, "fair"
                 ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithInteroperable);
 
             streamWriter.WriteLine(StatusByType(FairDataSet.ReUseable_Label,
-                fairDatasetStatusReport.NumberOfItemsWithReUseable.Good,
-                fairDatasetStatusReport.NumberOfItemsWithReUseable.Useable,
-                fairDatasetStatusReport.NumberOfItemsWithReUseable.Deficient,
-                fairDatasetStatusReport.NumberOfItemsWithReUseable.Notset,
-                fairDatasetStatusReport.NumberOfItemsWithReUseable.Satisfactory
+                fairDatasetStatusReport.PercentageOfDatasetsWithReUseableGood,
+                fairDatasetStatusReport.PercentageOfDatasetsWithReUseableUseable,
+                fairDatasetStatusReport.PercentageOfDatasetsWithReUseableDeficient,
+                0,
+                fairDatasetStatusReport.PercentageOfDatasetsWithReUseableSatisfactory, "fair"
                 ) + ";" + fairDatasetStatusReport.PercentageOfDatasetsWithReUseable);
 
             streamWriter.WriteLine(SingelStatusReportHeadingOK());
@@ -902,9 +902,16 @@ namespace Kartverket.Register.Formatter
                 ));
         }
 
-        private string StatusByType(string statusType, int good, int useable, int deficient, int notSet, int satisfactory = 0)
+        private string StatusByType(string statusType, double good, double useable, double deficient, double notSet, double satisfactory = 0, string reportType = "")
         {
-            return statusType + ";" + good + ";" + useable + ";" + deficient + ";" + notSet + ";" + satisfactory;
+            var status = statusType + ";" + good + ";" + useable + ";" + deficient + ";" + notSet;
+            if (reportType == "mareano")
+                status = status + ";" + satisfactory;
+            if (reportType == "fair")
+            {
+                status = statusType + ";" + good + ";" + satisfactory + ";" + useable + ";" + deficient;
+            }
+            return status;
         }
 
         private string StatusOk(string statusType, int ok, int notOk)
@@ -923,15 +930,15 @@ namespace Kartverket.Register.Formatter
                 delivery_Status_Deficient = MareanoDataSet.Delivery_Status_Deficient;
             }
 
-                string heading = label + ";" + DataSet.DOK_Delivery_Status_Good + ";" +
-                   delivery_Status_Useable + ";" +
-                   delivery_Status_Deficient + ";" +
-                   DataSet.DOK_Delivery_Status_NotSet;
+            string heading = label + ";" + DataSet.DOK_Delivery_Status_Good + ";" +
+               (type == "mareano" || type == "fair" ? MareanoDataSet.Delivery_Status_Satisfactory + ";" : "") +
+               delivery_Status_Useable + ";" +
+               delivery_Status_Deficient;
 
-            if(type == "mareano" || type == "fair")
-            {
-               heading = heading + ";" + MareanoDataSet.Delivery_Status_Satisfactory;
-            }
+            if (type != "fair")
+                heading = heading + ";" + DataSet.DOK_Delivery_Status_NotSet;
+
+
 
             if (type == "fair")
             {

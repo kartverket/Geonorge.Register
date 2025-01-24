@@ -599,7 +599,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
                 if (!string.IsNullOrWhiteSpace(registeritem.value) || !string.IsNullOrWhiteSpace(registeritem.name))
                 {
-                    if (!string.IsNullOrWhiteSpace(registeritem.value) && (registeritem.value.Contains("/") || registeritem.value.Contains("\\"))) 
+                    if (!string.IsNullOrWhiteSpace(registeritem.value) && (/*registeritem.value.Contains("/") || */registeritem.value.Contains("\\"))) 
                     {
                         return false;
                     }

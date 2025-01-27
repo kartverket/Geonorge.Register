@@ -21,10 +21,10 @@ namespace Kartverket.Register.Models.ViewModels.StatusReportViewModels
         public List<int> AtomFeed { get; set; }
         public List<int> Common { get; set; }
 
-        public List<int> Findable { get; set; }
-        public List<int> Accesible { get; set; }
-        public List<int> Interoperable { get; set; }
-        public List<int> ReUsable { get; set; }
+        public List<double> Findable { get; set; }
+        public List<double> Accesible { get; set; }
+        public List<double> Interoperable { get; set; }
+        public List<double> ReUsable { get; set; }
 
 
         public List<int> PointSize { get; set; }
@@ -43,10 +43,10 @@ namespace Kartverket.Register.Models.ViewModels.StatusReportViewModels
             Common = new List<int>();
             Labels = new List<string>();
             PointSize = new List<int>();
-            Findable = new List<int>();
-            Accesible = new List<int>();
-            Interoperable = new List<int>();
-            ReUsable = new List<int>();
+            Findable = new List<double>();
+            Accesible = new List<double>();
+            Interoperable = new List<double>();
+            ReUsable = new List<double>();
 
             if (statusReports != null)
             {
@@ -69,10 +69,10 @@ namespace Kartverket.Register.Models.ViewModels.StatusReportViewModels
                     AtomFeed.Add(statusReport.NumberOfFairDatasetsWithAtomFeed("good"));
                     Common.Add(statusReport.NumberOfItemsWithCommon("good"));
 
-                    var numberOfFairDatasetsWithFindable = (int) statusReport.FairDatasetsFindablePercent() / 4;
-                    var numberOfFairDatasetsWithAccesible = (int)statusReport.FairDatasetsAccessiblePercent() / 4;
-                    var numberOfFairDatasetsWithInteroperable = (int)statusReport.FairDatasetsInteroperablePercent() / 4;
-                    var numberOfFairDatasetsWithReUsable = (int)statusReport.FairDatasetsReuseablePercent() / 4;
+                    var numberOfFairDatasetsWithFindable = Math.Round(statusReport.FairDatasetsFindablePercent() / 4, 2);
+                    var numberOfFairDatasetsWithAccesible = Math.Round(statusReport.FairDatasetsAccessiblePercent() / 4, 2);
+                    var numberOfFairDatasetsWithInteroperable = Math.Round(statusReport.FairDatasetsInteroperablePercent() / 4, 2);
+                    var numberOfFairDatasetsWithReUsable = Math.Round(statusReport.FairDatasetsReuseablePercent() / 4, 2);
 
 
                     Findable.Add(numberOfFairDatasetsWithFindable);

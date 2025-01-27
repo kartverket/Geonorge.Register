@@ -120,10 +120,10 @@ namespace Kartverket.Register.Models.ViewModels
                 NumberOfItemsWithAtomFeed = new NumberOfStatuses(statusReport.NumberOfFairDatasetsWithAtomFeed(Good), statusReport.NumberOfFairDatasetsWithAtomFeed(Useable), statusReport.NumberOfFairDatasetsWithAtomFeed(Deficient), statusReport.NumberOfFairDatasetsWithAtomFeed(Notset));
                 NumberOfItemsWithCommon = new NumberOfStatuses(statusReport.NumberOfItemsWithCommon(Good), statusReport.NumberOfItemsWithCommon(Useable), statusReport.NumberOfItemsWithCommon(Deficient), statusReport.NumberOfItemsWithCommon(Notset));
 
-                FindableStatusPerCent = statusReport.FairDatasetsFindablePercent();
-                AccessibleStatusPerCent = statusReport.FairDatasetsAccessiblePercent();
-                InteroperableStatusPerCent = statusReport.FairDatasetsInteroperablePercent();
-                ReUseableStatusPerCent = statusReport.FairDatasetsReuseablePercent();
+                FindableStatusPerCent = Math.Round(statusReport.FairDatasetsFindablePercent(),2);
+                AccessibleStatusPerCent = Math.Round(statusReport.FairDatasetsAccessiblePercent(),2);
+                InteroperableStatusPerCent = Math.Round(statusReport.FairDatasetsInteroperablePercent(),2);
+                ReUseableStatusPerCent = Math.Round(statusReport.FairDatasetsReuseablePercent(), 2);
 
 
             }

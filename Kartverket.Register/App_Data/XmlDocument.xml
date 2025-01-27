@@ -2801,6 +2801,11 @@
               Looks up a localized string similar to Lukk.
             </summary>
         </member>
+        <member name="P:Resources.FairDataSet.PercentageFulfilled">
+            <summary>
+              Looks up a localized string similar to Prosent oppfylt.
+            </summary>
+        </member>
         <member name="P:Resources.FairDataSet.Productspesification">
             <summary>
               Looks up a localized string similar to Produktspesifikasjon.

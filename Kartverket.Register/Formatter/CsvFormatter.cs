@@ -942,7 +942,7 @@ namespace Kartverket.Register.Formatter
 
             if (type == "fair")
             {
-                heading = heading + ";Prosent oppfylt";
+                heading = heading + ";" + FairDataSet.PercentageFulfilled;
             }
 
             return heading;

@@ -85,6 +85,11 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "Common", ResourceType = typeof(FairDataSet))]
         public NumberOfStatuses NumberOfItemsWithCommon { get; set; }
 
+        public double FindableStatusPerCent { get; set; }
+        public double AccessibleStatusPerCent { get; set; }
+        public double InteroperableStatusPerCent { get; set; }
+        public double ReUseableStatusPerCent { get; set; }
+
         public FairDatasetStatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
         {
             ReportsSelectList = CreateSelectList(statusReports);
@@ -114,6 +119,12 @@ namespace Kartverket.Register.Models.ViewModels
                 NumberOfItemsWithWfs = new NumberOfStatuses(statusReport.NumberOfFairDatasetsWithWfs(Good), statusReport.NumberOfFairDatasetsWithWfs(Useable), statusReport.NumberOfFairDatasetsWithWfs(Deficient), statusReport.NumberOfFairDatasetsWithWfs(Notset));
                 NumberOfItemsWithAtomFeed = new NumberOfStatuses(statusReport.NumberOfFairDatasetsWithAtomFeed(Good), statusReport.NumberOfFairDatasetsWithAtomFeed(Useable), statusReport.NumberOfFairDatasetsWithAtomFeed(Deficient), statusReport.NumberOfFairDatasetsWithAtomFeed(Notset));
                 NumberOfItemsWithCommon = new NumberOfStatuses(statusReport.NumberOfItemsWithCommon(Good), statusReport.NumberOfItemsWithCommon(Useable), statusReport.NumberOfItemsWithCommon(Deficient), statusReport.NumberOfItemsWithCommon(Notset));
+
+                FindableStatusPerCent = statusReport.FairDatasetsFindablePercent();
+                AccessibleStatusPerCent = statusReport.FairDatasetsAccessiblePercent();
+                InteroperableStatusPerCent = statusReport.FairDatasetsInteroperablePercent();
+                ReUseableStatusPerCent = statusReport.FairDatasetsReuseablePercent();
+
 
             }
             else

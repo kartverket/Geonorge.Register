@@ -457,6 +457,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prosent oppfylt.
+        /// </summary>
+        public static string PercentageFulfilled {
+            get {
+                return ResourceManager.GetString("PercentageFulfilled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Produktspesifikasjon.
         /// </summary>
         public static string Productspesification {

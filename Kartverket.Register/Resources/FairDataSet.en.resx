@@ -252,6 +252,9 @@
   <data name="lesmindre" xml:space="preserve">
     <value>Read less</value>
   </data>
+  <data name="PercentageFulfilled" xml:space="preserve">
+    <value>Percentage fulfilled</value>
+  </data>
   <data name="Productspesification" xml:space="preserve">
     <value>Productspesification</value>
   </data>

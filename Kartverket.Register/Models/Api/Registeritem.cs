@@ -1006,23 +1006,28 @@ namespace Kartverket.Register.Models.Api
             List<NarrowerDetails> details = new List<NarrowerDetails>();
             foreach (var codelistvalue in narrowerItems)
             {
-                details.Add(GetNarrowerDetail(codelistvalue, baseUrl));
+                details.Add(GetNarrowerDetail(codelistvalue, baseUrl, new HashSet<CodelistValue>()));
             }
             return details;
         }
 
-        private NarrowerDetails GetNarrowerDetail(CodelistValue codelistvalue, string baseUrl)
+        private NarrowerDetails GetNarrowerDetail(CodelistValue codelistvalue, string baseUrl, HashSet<CodelistValue> visited)
         {
-            var itemNarrower = new NarrowerDetails { id= baseUrl + codelistvalue.GetObjectUrl(), label = codelistvalue.name, codevalue = codelistvalue.value };
+            if (visited.Contains(codelistvalue))
+                return null;
 
-            if(codelistvalue.narrowerItems != null && codelistvalue.narrowerItems.Any())
+            visited.Add(codelistvalue);
+
+            var itemNarrower = new NarrowerDetails { id = baseUrl + codelistvalue.GetObjectUrl(), label = codelistvalue.name, codevalue = codelistvalue.value };
+
+            if (codelistvalue.narrowerItems != null && codelistvalue.narrowerItems.Any())
                 itemNarrower.narrowerdetails = new List<NarrowerDetails>();
 
             foreach (var codelistvalue2 in codelistvalue.narrowerItems)
             {
-                NarrowerDetails narrowerDetails = GetNarrowerDetail(codelistvalue2, baseUrl);
-                itemNarrower.narrowerdetails.Add(narrowerDetails);
-                narrowerdetails.Add(itemNarrower);
+                NarrowerDetails narrowerDetails = GetNarrowerDetail(codelistvalue2, baseUrl, visited);
+                if (narrowerDetails != null)
+                    itemNarrower.narrowerdetails.Add(narrowerDetails);
             }
 
             return itemNarrower;

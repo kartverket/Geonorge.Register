@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beskrivelse engelsk.
+        ///   Looks up a localized string similar to Beskrivelse.
         /// </summary>
         public static string Beskrivelse_Engelsk {
             get {
@@ -359,7 +359,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Navn engelsk.
+        ///   Looks up a localized string similar to Navn.
         /// </summary>
         public static string Navn_Engelsk {
             get {

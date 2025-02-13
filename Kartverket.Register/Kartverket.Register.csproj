@@ -1465,6 +1465,11 @@
     <Compile Include="Models\ViewModels\ShowDatasetCoverageViewModel.cs" />
     <Compile Include="Models\XmlResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\CodelistValues.nn-NO.Designer.cs">
+      <DependentUpon>CodelistValues.nn-NO.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\GeodataCollection.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3382,6 +3387,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202412091330015_AddStatusReportFairPerCent.resx">
       <DependentUpon>202412091330015_AddStatusReportFairPerCent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CodelistValues.nn-NO.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CodelistValues.nn-NO.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodataCollection.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

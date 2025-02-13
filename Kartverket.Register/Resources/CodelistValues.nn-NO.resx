@@ -117,176 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppPageTitle" xml:space="preserve">
-    <value>Geonorge Register</value>
+  <data name="BroaderItem" xml:space="preserve">
+    <value>Mer generelt begrep</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="Codelist" xml:space="preserve">
+    <value>Kodeliste</value>
   </data>
-  <data name="Details" xml:space="preserve">
-    <value>Show</value>
+  <data name="CodeValue" xml:space="preserve">
+    <value>Kodeverdi</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+  <data name="CreateNew" xml:space="preserve">
+    <value>Foreslå ny kodeverdi</value>
   </data>
-  <data name="Beskrivelse_Engelsk" xml:space="preserve">
-    <value>Description</value>
+  <data name="ErrorMessagefile" xml:space="preserve">
+    <value>Filen har feil innhold!</value>
   </data>
-  <data name="Navn_Engelsk" xml:space="preserve">
-    <value>Name</value>
+  <data name="HierarchicalCodelists" xml:space="preserve">
+    <value>Hierarkiske kodelister</value>
   </data>
-  <data name="Search_AllRegisters" xml:space="preserve">
-    <value>All registers</value>
+  <data name="HierarchicalCodelistsSelectionText" xml:space="preserve">
+    <value>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</value>
   </data>
-  <data name="Search" xml:space="preserve">
-    <value>Search</value>
+  <data name="Import" xml:space="preserve">
+    <value>Importer</value>
   </data>
-  <data name="Search_Heading" xml:space="preserve">
-    <value>Search register</value>
+  <data name="ImportFile" xml:space="preserve">
+    <value>Import fra CSV fil</value>
   </data>
-  <data name="Search_LoadingMessage" xml:space="preserve">
-    <value>Retrieving search results</value>
+  <data name="ImportFileInfo" xml:space="preserve">
+    <value>Velg csv fil i UTF-8 med kodeliste</value>
   </data>
-  <data name="Search_Placeholder" xml:space="preserve">
-    <value>Search for register content</value>
+  <data name="NarrowerItems" xml:space="preserve">
+    <value>Mer spesialiserte begrep</value>
   </data>
-  <data name="Heading" xml:space="preserve">
-    <value>Norwegian NSDI registers</value>
+  <data name="SelectCodeValue" xml:space="preserve">
+    <value>velg kodeverdi</value>
   </data>
-  <data name="Add" xml:space="preserve">
-    <value>Add</value>
+  <data name="ValidFromDate" xml:space="preserve">
+    <value>Gyldig fra</value>
   </data>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
+  <data name="ValidToDate" xml:space="preserve">
+    <value>Gyldig til</value>
   </data>
-  <data name="DisplayTypeSelect" xml:space="preserve">
-    <value>Select display layout</value>
+  <data name="CodeValueEnglish" xml:space="preserve">
+    <value>Kodeverdi engelsk</value>
   </data>
-  <data name="Download" xml:space="preserve">
-    <value>Download</value>
+  <data name="CodeValues" xml:space="preserve">
+    <value>Kodeverdier</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="SaveAs" xml:space="preserve">
-    <value>Save As</value>
-  </data>
-  <data name="LayoutList" xml:space="preserve">
-    <value>List</value>
-  </data>
-  <data name="LayoutTable" xml:space="preserve">
-    <value>Table</value>
-  </data>
-  <data name="GeneralInformation" xml:space="preserve">
-    <value>General Informasjon</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="NoHits" xml:space="preserve">
-    <value>No hits</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Select</value>
-  </data>
-  <data name="ValidationSummary" xml:space="preserve">
-    <value>The form is incorrectly filled in. Please correct the following errors:</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="HideText" xml:space="preserve">
-    <value>Hide text</value>
-  </data>
-  <data name="List" xml:space="preserve">
-    <value>List</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-  <data name="Enter" xml:space="preserve">
-    <value>Enter</value>
-  </data>
-  <data name="Text" xml:space="preserve">
-    <value>Text</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="Previous" xml:space="preserve">
-    <value>Previous</value>
-  </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Search for</value>
-  </data>
-  <data name="SearchResult" xml:space="preserve">
-    <value>Search result</value>
-  </data>
-  <data name="ContactUs" xml:space="preserve">
-    <value>Contact Us</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="ErrorInfo" xml:space="preserve">
-    <value>Unfortunately, an error has occurred with your request. Please try again.</value>
-  </data>
-  <data name="ErrorReport" xml:space="preserve">
-    <value>&lt;p&gt;The error is logged and will be checked by the system administrator.&lt;/p&gt;
-&lt;p&gt;You can also report the error to &lt;a mailto:"post@norgedigitalt.no"&gt;post@norgedigitalt.no &lt;/a&gt;. &lt;/p&gt;</value>
-  </data>
-  <data name="NotFoundText" xml:space="preserve">
-    <value>We can not find the page you are looking for, but Geonorge will help you further.</value>
-  </data>
-  <data name="DisplayMoreInfo" xml:space="preserve">
-    <value>display more info</value>
-  </data>
-  <data name="NameFor_en" xml:space="preserve">
-    <value>Name english</value>
-  </data>
-  <data name="HeadingText" xml:space="preserve">
-    <value>The registers contain technical and formal documentation used in the Norwegian Spatial Data Infrastructure. The documentation can be viewed in the registers modules of the geoportal, and are also available through APIs.</value>
-  </data>
-  <data name="LogIn" xml:space="preserve">
-    <value>Log in</value>
-  </data>
-  <data name="All" xml:space="preserve">
-    <value>All</value>
-  </data>
-  <data name="ShowAll" xml:space="preserve">
-    <value>Show all</value>
-  </data>
-  <data name="Deficient" xml:space="preserve">
-    <value>Deficient</value>
-  </data>
-  <data name="Good" xml:space="preserve">
-    <value>Good</value>
-  </data>
-  <data name="NotSet" xml:space="preserve">
-    <value>NotSet</value>
-  </data>
-  <data name="Useable" xml:space="preserve">
-    <value>Useable</value>
-  </data>
-  <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
-  </data>
-  <data name="DeleteCodeValues" xml:space="preserve">
-    <value>Delete code values</value>
-  </data>
-  <data name="DisplayDocument" xml:space="preserve">
-    <value>Display document</value>
-  </data>
-  <data name="Attachment" xml:space="preserve">
-    <value>Attachment</value>
-  </data>
-  <data name="DownloadEnglish" xml:space="preserve">
-    <value>English version</value>
+  <data name="ExternalId" xml:space="preserve">
+    <value>Ekstern id</value>
   </data>
 </root>

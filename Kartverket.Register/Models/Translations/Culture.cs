@@ -13,9 +13,13 @@ namespace Kartverket.Register.Models.Translations
         public const string NorwegianCode = "no";
         public const string NorwegianName = "Norsk";
 
+        public const string NynorskCode = "nn-NO";
+        public const string NynorskName = "Nynorsk";
+
         public static readonly Dictionary<string, string> Languages = new Dictionary<string, string>()
         {
-            {EnglishCode, EnglishName}
+            {EnglishCode, EnglishName},
+            {NynorskCode, NynorskName},
         };
     }
 }

@@ -15,7 +15,8 @@ namespace Kartverket.Register.Helpers
         private static readonly List<string> _cultures = new List<string> {
         Culture.NorwegianCode,  // first culture is the DEFAULT
         "nb-NO",
-        Culture.EnglishCode
+        Culture.EnglishCode,
+        "nn-NO"
 
     };
         /// <summary>

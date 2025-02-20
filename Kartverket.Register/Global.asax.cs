@@ -131,6 +131,23 @@ namespace Kartverket.Register
             }
         }
 
+        protected void Application_EndRequest()
+        {
+            try
+            {
+                var loggedInCookie = Context.Request.Cookies["_loggedIn"];
+                if (Request.QueryString["autologin"] == null && loggedInCookie != null && loggedInCookie.Value == "true" && !Request.IsAuthenticated)
+                {
+                    Response.Redirect("/SignIn?autologin=true");
+                }
+            }
+
+            catch (Exception ex)
+            {
+            }
+        }
+
+
         void ValidateReturnUrl(NameValueCollection queryString)
         {
             if (queryString != null)

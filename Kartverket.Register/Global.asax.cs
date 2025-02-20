@@ -138,7 +138,8 @@ namespace Kartverket.Register
                 var loggedInCookie = Context.Request.Cookies["_loggedIn"];
                 if (Request.QueryString["autologin"] == null && loggedInCookie != null && loggedInCookie.Value == "true" && !Request.IsAuthenticated)
                 {
-                    Response.Redirect("/SignIn?autologin=true");
+                    if(Request.Path != "/SignOut" && Request.Path != "/signout-callback-oidc")
+                        Response.Redirect("/SignIn?autologin=true");
                 }
             }
 

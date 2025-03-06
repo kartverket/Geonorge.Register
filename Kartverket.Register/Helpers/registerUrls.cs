@@ -148,7 +148,7 @@ namespace Kartverket.Register.Helpers
             encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9æøå.]", "-");
 
             if(transliterNorwegian)
-                encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "e").Replace("ø", "o");
+                encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
 
             // remove duplicates
             encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");

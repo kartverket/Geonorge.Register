@@ -280,7 +280,7 @@
     <value>Scale for the dataset must be provided in the metadata(weight 5)v</value>
   </data>
   <data name="R2_e_Criteria" xml:space="preserve">
-    <value>Coverage map must be provided in the metadata (by municipality or grid) (weight 5)</value>
+    <value>Coverage map must be provided in the metadata (by municipality, grid or image/pdf) (weight 5)</value>
   </data>
   <data name="R2_f_Criteria" xml:space="preserve">
     <value>Purpose must be provided in the metadata (weight 5)</value>

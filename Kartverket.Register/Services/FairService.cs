@@ -130,7 +130,8 @@ namespace Kartverket.Register.Services
             dataset.R2_d_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ResolutionScale) || _metadata.SimpleMetadata?.ResolutionDistance != null;
             dataset.R2_e_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageUrl)
                                            || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageGridUrl)
-                                           || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageCellUrl);
+                                           || !string.IsNullOrEmpty(_metadata.SimpleMetadata?.CoverageCellUrl)
+                                           || (_metadata.SimpleMetadata.Thumbnails != null && _metadata.SimpleMetadata.Thumbnails.Count > 0 && _metadata.SimpleMetadata.Thumbnails.Where(t => t.Type == "dekningsoversikt").Any());
 
             dataset.R2_f_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.Purpose);
 

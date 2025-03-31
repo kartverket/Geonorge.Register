@@ -314,11 +314,11 @@ namespace Kartverket.Register.Controllers
             // TODO - handle limit in API request
             if (category == Constants.AlertCategoryDataset) { 
                 if(_accessControlService.IsAdmin())
-                    url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title";
+                    url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title&listhidden=true&facets[1]name=type&facets[1]value=series";
                 else if(currentUserOrganizationName.ToLower() == "kartverket")
-                    url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title&facets[1]name=organization&facets[1]value=Kartverket&facets[2]name=organization&facets[2]value=Geovekst";
+                    url = urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title&facets[1]name=organization&facets[1]value=Kartverket&facets[2]name=organization&facets[2]value=Geovekst&listhidden=true&facets[3]name=type&facets[3]value=series";
                 else
-                    url= urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title&facets[1]name=organization&facets[1]value=" + currentUserOrganizationName;
+                    url= urlToKartkatalogenApi + "api/search/?facets[0]name=type&facets[0]value=dataset&limit=10000&orderby=title&facets[1]name=organization&facets[1]value=" + currentUserOrganizationName+ "&listhidden=true&facets[2]name=type&facets[2]value=series";
             }
             WebClient c = new WebClient();
             c.Encoding = System.Text.Encoding.UTF8;

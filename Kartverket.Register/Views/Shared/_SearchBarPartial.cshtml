@@ -54,13 +54,13 @@
                 <li tabindex="0" onclick="registerName('Alle registre')" class="left-edge-registre"><a href="@Html.RegistryUrl()">@Shared.Search_AllRegisters</a></li>
                 <li tabindex="0" onclick="registerName('Planguider')" class="left-edge-registre"><a href="@Html.GeolettUrl()">Veiledningstekster plan og bygg</a></li>
                 <li tabindex="0" onclick="registerName('Objektregisteret')" class="left-edge-registre"><a href="@Html.ObjektkatalogUrl()">@Registers.Objektregisteret</a></li>
-                <li tabindex="0" onclick="registerName('Kartografi')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/kartografi">@Registers.Kartografi</a></li>
-                <li tabindex="0" onclick="registerName('Symbol')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/symbol">Symbol</a></li>
+                <li tabindex="0" onclick="registerName('Kartografi')" class="left-edge-registre"><a href="@Html.RegistryUrl()kartografi">@Registers.Kartografi</a></li>
+                <li tabindex="0" onclick="registerName('Symbol')" class="left-edge-registre"><a href="@Html.RegistryUrl()symbol">Symbol</a></li>
                 <li tabindex="0" onclick="registerName('@GeodataCollection.RegisterName')" class="left-edge-registre"><a href="@Html.RegistryUrl()@GeodataCollection.RegisterSeoName">@GeodataCollection.RegisterName</a></li>
 
                 @foreach (var item in HtmlHelperExtensions.Registers())
                 {
-                    <li tabindex="0" onclick="registerName('@item.name')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/@item.seoname">@item.NameTranslated()</a></li>
+                    <li tabindex="0" onclick="registerName('@item.name')" class="left-edge-registre"><a href="@Html.RegistryUrl()@item.seoname">@item.NameTranslated()</a></li>
                 }
             </ul>
         </div><!-- /input-group-btn -->

@@ -41,6 +41,8 @@
     </script>
     @Scripts.Render("~/shared-partials-scripts")
     @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Analytics.min.cshtml")
+
+    <link href="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.0/index.css")" rel="stylesheet" type="text/css">
 </head>
 @{
     dynamic userInfo = new System.Dynamic.ExpandoObject();
@@ -196,10 +198,10 @@
             <!-- @role.Value-->
         }
     }
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.22.6/MainNavigation.js")"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.22.6/GeonorgeFooter.js")"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.22.6/HeadingText.js")"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.22.6/BodyText.js")"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.22.6/NavigationTabs.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.0/MainNavigation.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.0/GeonorgeFooter.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.0/HeadingText.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.0/BodyText.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.0/NavigationTabs.js")"></script>
 </body>
 </html>

@@ -159,7 +159,7 @@ namespace Kartverket.Register.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetUuid(string id)
         {
-            var alert = _dbContext.Alerts.Where(a => a.UuidExternal != null && a.UuidExternal.ToString().ToLower() == id.ToLower());
+            var alert = _dbContext.Alerts.Where(a => a.UuidExternal != null && a.UuidExternal.ToString().ToLower() == id.ToLower() && a.statusId != "Retired");
             if (alert == null || alert.Count() == 0)
                 return NotFound();
 

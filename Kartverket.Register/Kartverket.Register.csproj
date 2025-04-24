@@ -140,7 +140,7 @@
       <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.61\lib\net45\Kartverket.Geonorge.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Kartverket.ReportApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.ReportApi.15.8.343\lib\net472\Kartverket.ReportApi.dll</HintPath>
+      <HintPath>..\packages\Kartverket.ReportApi.15.8.353\lib\net472\Kartverket.ReportApi.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>

@@ -626,8 +626,10 @@ namespace Kartverket.Register.Controllers
                 }
             }
 
-            if (register == null)
+            if (register == null) {
+                HttpContext.Response.StatusCode = 404;
                 return View("~/Views/Error/NotFound.cshtml");
+            }
 
             if (register.ContainedItemClassIsDocument() && !register.items.Any()) 
             {

@@ -601,25 +601,8 @@ namespace Kartverket.DOK.Service
         public SearchResultsType SearchMetadata(string searchString)
         {
             GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);
-            var filters = new object[]
-                   {
-                        new PropertyIsLikeType
-                        {
-                            escapeChar = "\\",
-                            singleChar = "_",
-                            wildCard = "%",
-                            PropertyName = new PropertyNameType {Text = new[] {"srv:title"}},
-                            Literal = new LiteralType {Text = new[] {searchString}}
-                    }
-                   };
 
-
-            var filterNames = new ItemsChoiceType23[]
-            {
-                        ItemsChoiceType23.PropertyIsLike,
-            };
-
-            var result = g.SearchWithFilters(filters, filterNames, 1, 200, true);
+            var result = g.Search(searchString, 1, 200);
             return result;
         }
 

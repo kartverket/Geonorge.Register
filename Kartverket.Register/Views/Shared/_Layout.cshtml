@@ -41,10 +41,53 @@
     </script>
     @Scripts.Render("~/shared-partials-scripts")
     @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Analytics.min.cshtml")
-</head>
 
+    <link href="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/index.css")" rel="stylesheet" type="text/css">
+</head>
+@{
+    dynamic userInfo = new System.Dynamic.ExpandoObject();
+    userInfo.name = "";
+    userInfo.email = "";
+
+    dynamic organization = new System.Dynamic.ExpandoObject();
+    organization.organizationName = "";
+    organization.organizationNumber = "";
+
+    <!-- user claims: -->
+    var cp = (ClaimsPrincipal)User;
+    foreach (var claim in cp.Claims)
+    {
+        <!-- @claim.Type = @claim.Value -->
+        if (claim.Type == "Name")
+        {
+            userInfo.name = claim.Value;
+        }
+        if (claim.Type == "Email")
+        {
+            userInfo.email = claim.Value;
+        }
+        if (claim.Type == "OrganizationOrgnr")
+        {
+            organization.organizationNumber = claim.Value;
+        }
+        if (claim.Type == "OrganizationName")
+        {
+            organization.organizationName = claim.Value;
+        }
+    }
+
+    <!-- roles: -->
+    var roles = cp.FindAll(GeonorgeAuthorizationService.ClaimIdentifierRole);
+    foreach (var role in roles)
+    {
+        <!-- @role.Value-->
+    }
+
+    string userInfoJson = Newtonsoft.Json.JsonConvert.SerializeObject(userInfo);
+    string organizationJson = Newtonsoft.Json.JsonConvert.SerializeObject(organization);
+}
 <body class="geonorge-container prototype  geonorge">
-    <main-navigation environment="@Html.EnvironmentName()" signinurl="@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url.ToString().Replace("http://","https://") }))"
+    <main-navigation userinfo='@userInfoJson' organization='@organizationJson' environment="@Html.EnvironmentName()" signinurl="@Html.Raw(Url.Action("SignIn", "Home", new { ReturnUrl = Request.Url.ToString().Replace("http://","https://") }))"
                      signouturl="@Html.Raw(Url.Action("SignOut", "Home"))"
                      isLoggedIn="@Request.IsAuthenticated.ToString().ToLower()"
                      norwegianurl="@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))"
@@ -142,23 +185,23 @@
     @if (Html.EnvironmentName() == "dev" && HttpContext.Current.IsDebuggingEnabled)
     {
         <!-- user claims: -->
-        var cp = (ClaimsPrincipal)User;
-        foreach (var claim in cp.Claims)
+        var cp2 = (ClaimsPrincipal)User;
+        foreach (var claim in cp2.Claims)
         {
             <!-- @claim.Type = @claim.Value -->
-            }
+        }
 
-            <!-- roles: -->
-            var roles = cp.FindAll(GeonorgeAuthorizationService.ClaimIdentifierRole);
-            foreach (var role in roles)
-            {
+        <!-- roles: -->
+        var roles2 = cp.FindAll(GeonorgeAuthorizationService.ClaimIdentifierRole);
+        foreach (var role in roles2)
+        {
             <!-- @role.Value-->
-            }
-            }
-            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.20.6/MainNavigation.js")"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.20.6/GeonorgeFooter.js")"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.20.6/HeadingText.js")"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.20.6/BodyText.js")"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@2.20.6/NavigationTabs.js")"></script>
-     </body>
+        }
+    }
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/MainNavigation.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/GeonorgeFooter.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/HeadingText.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/BodyText.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/NavigationTabs.js")"></script>
+</body>
 </html>

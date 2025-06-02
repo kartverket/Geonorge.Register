@@ -69,6 +69,9 @@ namespace Kartverket.Register.Controllers
 
         public ActionResult Index(string fylke, string dataset)
         {
+            // Set the content security policy header to allow framing from geonorge.no
+            Response.Headers.Add("Content-Security-Policy", "frame-ancestors 'self' https://kartkatalog.geonorge.no;");
+
             ViewBag.States = new SelectList(GetListOfStates(), "value", "name", fylke);
 
             Models.Register dokDatasets = _registerService.GetRegisterBySystemId(SystemIdDokRegister);

@@ -691,11 +691,7 @@ input[type=checkbox]:checked::before {
     }
 
 h1.shortcut {
-    font-size: 34pt;
     word-wrap: normal;
-    color: #5d4777;
-    font-family: Raleway, sans-serif;
-    font-weight: 300;
     margin: 0 0 10px 0;
     padding-top: 0;
 }

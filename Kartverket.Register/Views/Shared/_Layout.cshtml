@@ -105,7 +105,7 @@
     @{
         var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
     }
-
+    <gn-shortcut-button environment="@Html.EnvironmentName()" language="no"></gn-shortcut-button>
     <div class="body-content fixed-menu-margin">
         <div class="container container-breadcrumbs" id="navTabCont">
             <ul class="breadcrumbs col-md-12">
@@ -198,10 +198,35 @@
             <!-- @role.Value-->
         }
     }
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/MainNavigation.js")"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/GeonorgeFooter.js")"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/HeadingText.js")"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/BodyText.js")"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@3.0.1/NavigationTabs.js")"></script>
+
+    @{
+        var cp3 = (ClaimsPrincipal)User;
+        var claim3 = cp3.FindFirst("access_token");
+        var accessToken = claim3 != null ? claim3.Value : null;
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@4.0.5/GnShortcutButton.js")"></script>
+
+    <script>
+        var accessToken = "@accessToken";
+        var GnShortcutButton = window.geonorge.GnShortcutButton.GnShortcutButton;
+
+        function getAuthToken() {
+            return accessToken;
+        }
+
+        if (accessToken) {
+            GnShortcutButton.setup("gn-shortcut-button", {
+                getAuthToken: getAuthToken
+            });
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@4.0.5/MainNavigation.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@4.0.5/GeonorgeFooter.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@4.0.5/HeadingText.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@4.0.5/BodyText.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@4.0.5/NavigationTabs.js")"></script>
+
 </body>
 </html>

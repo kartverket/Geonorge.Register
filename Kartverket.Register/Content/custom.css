@@ -690,3 +690,12 @@ input[type=checkbox]:checked::before {
         outline-offset: 0;
     }
 
+h1.shortcut {
+    word-wrap: normal;
+    margin: 0 0 10px 0;
+    padding-top: 0;
+}
+
+div:has(> h1.shortcut) {
+    margin-top: 20px;
+}

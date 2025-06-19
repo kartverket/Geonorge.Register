@@ -570,12 +570,22 @@ namespace Kartverket.Register.Controllers
                     if (path.Contains('/') && !urlInSubregister)
                     path = path.Substring(0, path.LastIndexOf('/'));
                 //check codevalue
-                var codevalue = _db.RegisterItems.OfType<CodelistValue>().Where(s => (s.value == value || s.seoname == value )  && s.register.path == path).FirstOrDefault();
+                var codevalue = _db.RegisterItems.OfType<CodelistValue>().Where(s => (s.value == value)  && s.register.path == path).FirstOrDefault();
                 if(codevalue != null)
                 {
                     systemId = codevalue.systemId.ToString();
                     register = codevalue.register;
                     isRegisterItem = true;
+                }
+                else 
+                {
+                    codevalue = _db.RegisterItems.OfType<CodelistValue>().Where(s => (s.seoname == value) && s.register.path == path).FirstOrDefault();
+                    if (codevalue != null)
+                    {
+                        systemId = codevalue.systemId.ToString();
+                        register = codevalue.register;
+                        isRegisterItem = true;
+                    }
                 }
             }
 

@@ -582,6 +582,11 @@ namespace Kartverket.DOK.Service
                                 if (fairDataset.FairDatasetTypes.Where(f => f.Label == keyword.KeywordValue.ToString()).Any() == false)
                                     fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "MarineGrunnkart", Description = "Marine grunnkart" });
                             }
+                            else if (keyword.KeywordValue == "ØkologiskGrunnkart")
+                            {
+                                if (fairDataset.FairDatasetTypes.Where(f => f.Label == keyword.KeywordValue.ToString()).Any() == false)
+                                    fairDataset.FairDatasetTypes.Add(new FairDatasetType { Label = "ØkologiskGrunnkart", Description = "Økologiske grunnkart" });
+                            }
                         }
                     }
 

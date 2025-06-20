@@ -103,36 +103,45 @@
                 @{
                     var fairDatasetTypes = Request.QueryString["fairDatasetType"];
                 }
-                <div class="filtercheckbox">
-                    <span>@DataSet.FilterTheme:</span>
-                    @if (fairDatasetTypes != null && fairDatasetTypes.Contains("DOK"))
-                    {
-                        <input id="dok-data" type="checkbox" name="fairDatasetType" value="DOK" checked onchange="filterData();" />
-                    }
-                    else
-                    {
-                        <input id="dok-data" type="checkbox" name="fairDatasetType" value="DOK" onchange="filterData();" />
-                    }
-                    <label for="dok-data">DOK</label>
-                    @if (fairDatasetTypes != null && fairDatasetTypes.Contains("Mareano"))
-                    {
-                        <input id="mareano-data" type="checkbox" name="fairDatasetType" value="Mareano" checked onchange="filterData();" />
-                    }
-                    else
-                    {
-                        <input id="mareano-data" type="checkbox" name="fairDatasetType" value="Mareano" onchange="filterData();" />
-                    }
-                    <label for="mareano-data">Mareano</label>
-                    @if (fairDatasetTypes != null && fairDatasetTypes.Contains("MarineGrunnkart"))
-                    {
-                        <input id="mg-data" type="checkbox" name="fairDatasetType" value="MarineGrunnkart" checked onchange="filterData();" />
-                    }
-                    else
-                    {
-                        <input id="mg-data" type="checkbox" name="fairDatasetType" value="MarineGrunnkart" onchange="filterData();" />
-                    }
-                    <label for="mg-data">Marine grunnkart</label>
-                </div>
+            <div class="filtercheckbox">
+                <span>@DataSet.FilterTheme:</span>
+                @if (fairDatasetTypes != null && fairDatasetTypes.Contains("DOK"))
+                {
+                    <input id="dok-data" type="checkbox" name="fairDatasetType" value="DOK" checked onchange="filterData();" />
+                }
+                else
+                {
+                    <input id="dok-data" type="checkbox" name="fairDatasetType" value="DOK" onchange="filterData();" />
+                }
+                <label for="dok-data">DOK</label>
+                @if (fairDatasetTypes != null && fairDatasetTypes.Contains("Mareano"))
+                {
+                    <input id="mareano-data" type="checkbox" name="fairDatasetType" value="Mareano" checked onchange="filterData();" />
+                }
+                else
+                {
+                    <input id="mareano-data" type="checkbox" name="fairDatasetType" value="Mareano" onchange="filterData();" />
+                }
+                <label for="mareano-data">Mareano</label>
+                @if (fairDatasetTypes != null && fairDatasetTypes.Contains("MarineGrunnkart"))
+                {
+                    <input id="mg-data" type="checkbox" name="fairDatasetType" value="MarineGrunnkart" checked onchange="filterData();" />
+                }
+                else
+                {
+                    <input id="mg-data" type="checkbox" name="fairDatasetType" value="MarineGrunnkart" onchange="filterData();" />
+                }
+                <label for="mg-data">Marine grunnkart</label>
+                @if (fairDatasetTypes != null && fairDatasetTypes.Contains("ØkologiskGrunnkart"))
+                {
+                    <input id="mg-data" type="checkbox" name="fairDatasetType" value="ØkologiskGrunnkart" checked onchange="filterData();" />
+                }
+                else
+                {
+                    <input id="mg-data" type="checkbox" name="fairDatasetType" value="ØkologiskGrunnkart" onchange="filterData();" />
+                }
+                <label for="mg-data">Økologisk grunnkart</label>
+            </div>
             </form>
 
         </div>

@@ -437,7 +437,7 @@ a.link-unstyled {
 
 .custom-checkbox.custom-checkbox-0 input[type=checkbox] + .checkbox-icon:after,
 .custom-checkbox.custom-checkbox-0 input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
-    background-color: rgb(248,105,107);
+    background-color: rgb(211, 211, 211);
 }
 
 .custom-checkbox.custom-checkbox-1 input[type=checkbox] + .checkbox-icon:after,

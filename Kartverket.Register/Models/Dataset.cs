@@ -630,7 +630,7 @@ namespace Kartverket.Register.Models
         {
             return new List<SelectListItem>
             {
-                new SelectListItem { Selected = true, Text = "0", Value = "0"},
+                new SelectListItem { Selected = true, Text = "-", Value = "0"},
                 new SelectListItem { Selected = false, Text = "1", Value = "1"},
                 new SelectListItem { Selected = false, Text = "2", Value = "2"},
                 new SelectListItem { Selected = false, Text = "3", Value = "3"},

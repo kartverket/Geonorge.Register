@@ -437,37 +437,32 @@ a.link-unstyled {
 
 .custom-checkbox.custom-checkbox-0 input[type=checkbox] + .checkbox-icon:after,
 .custom-checkbox.custom-checkbox-0 input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
-    background-color: rgb(211, 211, 211);
+    background-color: rgb(232, 232, 232);
 }
 
 .custom-checkbox.custom-checkbox-1 input[type=checkbox] + .checkbox-icon:after,
 .custom-checkbox.custom-checkbox-1 input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
-    background-color: rgb(250,157,117);
+    background-color: rgb(208,46,38);
 }
 
 .custom-checkbox.custom-checkbox-2 input[type=checkbox] + .checkbox-icon:after,
 .custom-checkbox.custom-checkbox-2 input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
-    background-color: rgb(253,209,127);
+    background-color: rgb(244, 137, 86);
 }
 
 .custom-checkbox.custom-checkbox-3 input[type=checkbox] + .checkbox-icon:after,
 .custom-checkbox.custom-checkbox-3 input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
-    background-color: rgb(224,227,131);
+    background-color: rgb(246, 217, 135);
 }
 
 .custom-checkbox.custom-checkbox-4 input[type=checkbox] + .checkbox-icon:after,
 .custom-checkbox.custom-checkbox-4 input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
-    background-color: rgb(162,208,127);
+    background-color: rgb(210,232,135);
 }
 
 .custom-checkbox.custom-checkbox-5 input[type=checkbox] + .checkbox-icon:after,
 .custom-checkbox.custom-checkbox-5 input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
-    background-color: rgb(99,190,123);
-}
-
-.custom-checkbox.custom-checkbox-5 input[type=checkbox] + .checkbox-icon:after,
-.custom-checkbox.custom-checkbox-5 input[type=checkbox] + input[type=hidden] + .checkbox-icon:after {
-    background-color: rgb(99,190,123);
+    background-color: rgb(140,210,93);
 }
 
 .custom-checkbox.superImportantCheckbox input[type=checkbox] + .checkbox-icon:after,

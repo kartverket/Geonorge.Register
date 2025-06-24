@@ -570,12 +570,22 @@ namespace Kartverket.Register.Controllers
                     if (path.Contains('/') && !urlInSubregister)
                     path = path.Substring(0, path.LastIndexOf('/'));
                 //check codevalue
-                var codevalue = _db.RegisterItems.OfType<CodelistValue>().Where(s => (s.value == value || s.seoname == value )  && s.register.path == path).FirstOrDefault();
+                var codevalue = _db.RegisterItems.OfType<CodelistValue>().Where(s => (s.value == value)  && s.register.path == path).FirstOrDefault();
                 if(codevalue != null)
                 {
                     systemId = codevalue.systemId.ToString();
                     register = codevalue.register;
                     isRegisterItem = true;
+                }
+                else 
+                {
+                    codevalue = _db.RegisterItems.OfType<CodelistValue>().Where(s => (s.seoname == value) && s.register.path == path).FirstOrDefault();
+                    if (codevalue != null)
+                    {
+                        systemId = codevalue.systemId.ToString();
+                        register = codevalue.register;
+                        isRegisterItem = true;
+                    }
                 }
             }
 
@@ -620,14 +630,16 @@ namespace Kartverket.Register.Controllers
                 var itemVersion= itemArray[itemArray.Length -1 ];
 
                 RegisterItemV2ViewModel view = new DocumentViewModel((Document)_registerItemService.GetRegisterItemByPath(path, itemName, itemVersion));
-                if (view != null) { 
+                if (view != null && view.SystemId != Guid.Empty) { 
                     view.AccessRegisterItem = _accessControlService.HasAccessTo(view);
                     return View("DetailsRegisterItem", view);
                 }
             }
 
-            if (register == null)    
-                return HttpNotFound();
+            if (register == null) {
+                HttpContext.Response.StatusCode = 404;
+                return View("~/Views/Error/NotFound.cshtml");
+            }
 
             if (register.ContainedItemClassIsDocument() && !register.items.Any()) 
             {

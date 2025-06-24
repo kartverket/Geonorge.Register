@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Web;
@@ -41,7 +42,7 @@ namespace Kartverket.Register.Controllers
         /// <returns></returns>
         public ActionResult SignOutCallback()
         {
-            return RedirectToAction(nameof(RegistersController.Index), "Registers");
+            return Redirect("/?logout=true");
         }
     }
 }

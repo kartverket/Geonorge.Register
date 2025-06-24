@@ -250,7 +250,7 @@
     <value>Målestokk eller posisjonsnøyaktighet (romlig oppløsning) er angitt (vekt 5)</value>
   </data>
   <data name="R2_e_Criteria" xml:space="preserve">
-    <value>Dekningskart skal være oppgitt (kommunevis eller rutenett) (vekt 5)</value>
+    <value>Dekningskart skal være oppgitt (kommunevis, rutenett eller bilde/PDF)  (vekt 5)</value>
   </data>
   <data name="R2_f_Criteria" xml:space="preserve">
     <value>Formål skal være utfylt (vekt 5)</value>

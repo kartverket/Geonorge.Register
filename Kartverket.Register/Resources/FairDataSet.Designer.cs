@@ -538,7 +538,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dekningskart skal være oppgitt (kommunevis eller rutenett) (vekt 5).
+        ///   Looks up a localized string similar to Dekningskart skal være oppgitt (kommunevis, rutenett eller bilde/PDF)  (vekt 5).
         /// </summary>
         public static string R2_e_Criteria {
             get {

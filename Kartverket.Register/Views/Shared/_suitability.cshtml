@@ -5,7 +5,7 @@
 @helper FormatSuitability(int? value)
 {
     string suitability = value.ToString();
-    if (suitability != "0")
+    if (suitability != null)
     {<span class="checkbox-character">@suitability</span>}
 else
 {<span>&nbsp;&nbsp;</span>}

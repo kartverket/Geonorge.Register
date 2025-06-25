@@ -45,7 +45,7 @@
             var id = "Translations_" + t + "__Name";
             @Html.HiddenFor(m => Model.Translations[t].CultureName)
             <div class="form-group">
-                <label for="@id" class="control-label col-md-2">@Shared.Navn_Engelsk @Model.Translations[t].CultureName</label>
+                <label for="@id" class="control-label col-md-2">@Shared.Navn_Engelsk @CultureHelper.GetCultureName(Model.Translations[t].CultureName)</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(m => Model.Translations[t].Name)
@@ -66,7 +66,7 @@
             var id = "Translations_" + t + "__Description";
             @Html.HiddenFor(m => Model.Translations[t].CultureName)
             <div class="form-group">
-                <label for="@id" class="control-label col-md-2">@Shared.Beskrivelse_Engelsk @Model.Translations[t].CultureName</label>
+                <label for="@id" class="control-label col-md-2">@Shared.Beskrivelse_Engelsk @CultureHelper.GetCultureName(Model.Translations[t].CultureName)</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(m => Model.Translations[t].Description)

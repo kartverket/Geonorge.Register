@@ -900,6 +900,11 @@
             Returns true if current language is norwegian. Otherwise, false.
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Helpers.CultureHelper.GetCultureName(System.String)">
+            <summary>
+            Returns true if current language is norwegian. Otherwise, false.
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Helpers.CultureHelper.GetImplementedCulture(System.String)">
             <summary>
             Returns a valid culture name based on "name" parameter. If "name" is not valid, it returns the default culture "en-US"

@@ -1218,7 +1218,12 @@ namespace Kartverket.Register.Controllers
                 format = _registerService.ContentNegotiation(ControllerContext);
                 if (!string.IsNullOrWhiteSpace(format))
                 {
-                    return "/api/" + Request.FilePath + "." + format + "?" + Request.QueryString;
+                    var filePath = Request.FilePath;
+                    if(filePath.EndsWith("/"))
+                    {
+                        filePath = filePath.TrimEnd('/'); // Remove trailing slash if exists
+                    }
+                    return "/api/" + filePath + "." + format + "?" + Request.QueryString;
                 }
             }
 

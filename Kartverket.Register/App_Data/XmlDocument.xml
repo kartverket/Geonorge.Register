@@ -900,6 +900,11 @@
             Returns true if current language is norwegian. Otherwise, false.
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Helpers.CultureHelper.GetCultureName(System.String)">
+            <summary>
+            Returns true if current language is norwegian. Otherwise, false.
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Helpers.CultureHelper.GetImplementedCulture(System.String)">
             <summary>
             Returns a valid culture name based on "name" parameter. If "name" is not valid, it returns the default culture "en-US"
@@ -5532,7 +5537,7 @@
         </member>
         <member name="P:Resources.Shared.Beskrivelse_Engelsk">
             <summary>
-              Looks up a localized string similar to Beskrivelse engelsk.
+              Looks up a localized string similar to Beskrivelse.
             </summary>
         </member>
         <member name="P:Resources.Shared.Cancel">
@@ -5673,7 +5678,7 @@
         </member>
         <member name="P:Resources.Shared.Navn_Engelsk">
             <summary>
-              Looks up a localized string similar to Navn engelsk.
+              Looks up a localized string similar to Navn.
             </summary>
         </member>
         <member name="P:Resources.Shared.Next">

@@ -97,6 +97,16 @@ namespace Kartverket.Register.Helpers
         }
         public static string GetCurrentCulture()
         {
+            var langFromQuerystring = HttpContext.Current?.Request.QueryString["lang"];
+            if(!string.IsNullOrEmpty(langFromQuerystring) && _validCultures.Contains(langFromQuerystring) && _cultures.Contains(langFromQuerystring))
+            {
+                return langFromQuerystring; // return culture from query string if it is valid
+            }
+            var langFromHeader = HttpContext.Current?.Request.Headers["Accept-Language"];
+            if (!string.IsNullOrEmpty(langFromHeader) && _validCultures.Contains(langFromHeader) && _cultures.Contains(langFromHeader))
+            {
+                return langFromHeader; // return culture from header if it is valid
+            }
             return Thread.CurrentThread.CurrentCulture.Name;
         }
         public static string GetCurrentNeutralCulture()

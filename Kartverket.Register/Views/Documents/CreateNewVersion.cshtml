@@ -1,4 +1,5 @@
 ﻿@model Kartverket.Register.Models.Document
+@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = Registers.SuggestNewVersionOf + " " + Model.NameTranslated();
@@ -45,7 +46,7 @@
     {
         <input type="hidden" name="versionNumber" id="versionNumber" value="@Model.versionNumber" />
     }
-    
+
 
     if (Model.register.parentRegisterId != null)
     {
@@ -53,58 +54,61 @@
         <input type="hidden" name="parentRegisterOwner" id="parentRegisterOwner" value="@Model.register.parentRegister.owner.seoname" />
     }
 
-        <div class="form-horizontal">
+    <div class="form-horizontal">
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessage("ErrorMessage")
-                </div>
-            </div>
-
-            @for (int t = 0; t < Model.Translations.Count; t++)
-    {
-        @Html.HiddenFor(m => Model.Translations[t].CultureName)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(m => Model.Translations[t].Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => Model.Translations[t].Name)
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessage("ErrorMessage")
             </div>
         </div>
-}
 
+        @for (int t = 0; t < Model.Translations.Count; t++)
+        {
+            var id = "Translations_" + t + "__Name";
+            @Html.HiddenFor(m => Model.Translations[t].CultureName)
             <div class="form-group">
-                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label for="@id" class="control-label col-md-2">@Shared.Navn_Engelsk @CultureHelper.GetCultureName(Model.Translations[t].CultureName)</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => Model.Translations[t].Name)
                 </div>
             </div>
+        }
 
-            @for (int t = 0; t < Model.Translations.Count; t++)
-    {
-        @Html.HiddenFor(m => Model.Translations[t].CultureName)
         <div class="form-group">
-            @Html.LabelFor(m => Model.Translations[t].Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => Model.Translations[t].Description)
+                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
         </div>
-}
 
+        @for (int t = 0; t < Model.Translations.Count; t++)
+        {
+            var id = "Translations_" + t + "__Description";
+            @Html.HiddenFor(m => Model.Translations[t].CultureName)
             <div class="form-group">
-                @Html.LabelFor(model => model.versionName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label for="@id" class="control-label col-md-2">@Shared.Beskrivelse_Engelsk @CultureHelper.GetCultureName(Model.Translations[t].CultureName)</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.versionName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.versionName, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => Model.Translations[t].Description)
                 </div>
             </div>
+        }
 
-        @if(Model.register.seoname == "gml-applikasjonsskjema") { 
+        <div class="form-group">
+            @Html.LabelFor(model => model.versionName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.versionName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.versionName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @if (Model.register.seoname == "gml-applikasjonsskjema")
+        {
             <div class="form-group">
                 @Html.LabelFor(model => model.DatasetUuid, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -114,73 +118,73 @@
             </div>
         }
 
+        <div class="form-group">
+            <label class="control-label col-md-2" for="documentfile">@Documents.DocumentFile:</label>
+            <div class="col-md-10">
+                <input type="file" name="documentfile" />
+                <input type="checkbox" name="zipIsAsciiDoc" id="zipIsAsciiDoc" value="1" /><label for="zipIsAsciiDoc">&nbsp;Zip er AsciiDoc med eventuelt pdf-dokument</label>
+            </div>
+        </div>
+
+        <div class="form-group@(Model.register.seoname == "gml-applikasjonsskjema" ? " hidden" :"")">
+            <label class="control-label col-md-2" for="documentfileEnglish">@Documents.DocumentFileEnglish:</label>
+            <div class="col-md-10">
+                <input type="file" name="documentfileEnglish" />
+                <input type="checkbox" name="zipIsAsciiDocEnglish" id="zipIsAsciiDocEnglish" value="1" /><label for="zipIsAsciiDocEnglish">&nbsp;Zip er AsciiDoc</label>
+            </div>
+        </div>
+
+        <div class="form-group@(Model.register.seoname != "gml-applikasjonsskjema" ? " hidden" :"")">
+            <label class="control-label col-md-2" for="schematronfile">Schematron-fil:</label>
+            <div class="col-md-10">
+                <input type="file" name="schematronfile" id="schematronfile" />
+                @Html.ValidationMessage("FileName", new { @class = "text-danger" })
+                @Html.ValidationMessage("ErrorMessageFileName")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.documentUrl2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.documentUrl2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.documentUrl2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">@Registers.DocumentUrlAttachment</label>
+        </div>
+        <div class="form-group">
+            <label for="DocumentUrlAttachments[0].Url" class="control-label col-md-2">Url</label>
+            <div class="col-md-4">
+                <input type="text" value="@DocumentUrlAttachmentsUrl" name="DocumentUrlAttachments[0].Url" id="DocumentUrlAttachments[0].Url" />
+            </div>
+            <label for="DocumentUrlAttachments[0].Text" class="control-label col-md-2">@Shared.Title</label>
+            <div class="col-md-4">
+                <input type="text" value="@DocumentUrlAttachmentsText" name="DocumentUrlAttachments[0].Text" id="DocumentUrlAttachments[0].Text" />
+            </div>
+        </div>
+        @for (int a = 1; a < Model.DocumentUrlAttachments.Count; a++)
+        {
             <div class="form-group">
-                <label class="control-label col-md-2" for="documentfile">@Documents.DocumentFile:</label>
-                <div class="col-md-10">
-                    <input type="file" name="documentfile" />
-                    <input type="checkbox" name="zipIsAsciiDoc" id="zipIsAsciiDoc" value="1" /><label for="zipIsAsciiDoc">&nbsp;Zip er AsciiDoc med eventuelt pdf-dokument</label>
+                <label for="DocumentUrlAttachments[@a].Url" class="control-label col-md-2">Url</label>
+                <div class="col-md-4">
+                    <input type="text" value="@Model.DocumentUrlAttachments.ToArray()[a].Url" name="DocumentUrlAttachments[@a].Url" id="DocumentUrlAttachments[@a].Url" />
+                </div>
+                <label for="DocumentUrlAttachments[@a].Text" class="control-label col-md-2">@Shared.Title</label>
+                <div class="col-md-4">
+                    <input type="text" value="@Model.DocumentUrlAttachments.ToArray()[a].Text" name="DocumentUrlAttachments[@a].Text" id="DocumentUrlAttachments[@a].Text" />
                 </div>
             </div>
-
-            <div class="form-group@(Model.register.seoname == "gml-applikasjonsskjema" ? " hidden" :"")">
-                <label class="control-label col-md-2" for="documentfileEnglish">@Documents.DocumentFileEnglish:</label>
-                <div class="col-md-10">
-                    <input type="file" name="documentfileEnglish" />
-                    <input type="checkbox" name="zipIsAsciiDocEnglish" id="zipIsAsciiDocEnglish" value="1" /><label for="zipIsAsciiDocEnglish">&nbsp;Zip er AsciiDoc</label>
-                </div>
+        }
+        <div id="new-attachments">
+        </div>
+        <div>
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-2"> <input type="button" value="Nytt vedlegg" onclick="addAttachment();" /></div>
             </div>
-
-            <div class="form-group@(Model.register.seoname != "gml-applikasjonsskjema" ? " hidden" :"")">
-                <label class="control-label col-md-2" for="schematronfile">Schematron-fil:</label>
-                <div class="col-md-10">
-                    <input type="file" name="schematronfile" id="schematronfile" />
-                    @Html.ValidationMessage("FileName", new { @class = "text-danger" })
-                    @Html.ValidationMessage("ErrorMessageFileName")
-                </div>
-            </div>
-
-           <div class="form-group">
-                @Html.LabelFor(model => model.documentUrl2, htmlAttributes: new { @class = "control-label col-md-2" })
-               <div class="col-md-10">
-                   @Html.EditorFor(model => model.documentUrl2, new { htmlAttributes = new { @class = "form-control" } })
-                   @Html.ValidationMessageFor(model => model.documentUrl2, "", new { @class = "text-danger" })
-               </div>
-            </div>
-                <div class="form-group">
-                    <label class="control-label col-md-2">@Registers.DocumentUrlAttachment</label>
-                </div>
-                <div class="form-group">
-                    <label for="DocumentUrlAttachments[0].Url" class="control-label col-md-2">Url</label>
-                    <div class="col-md-4">
-                        <input type="text" value="@DocumentUrlAttachmentsUrl" name="DocumentUrlAttachments[0].Url" id="DocumentUrlAttachments[0].Url" />
-                    </div>
-                    <label for="DocumentUrlAttachments[0].Text" class="control-label col-md-2">@Shared.Title</label>
-                    <div class="col-md-4">
-                        <input type="text" value="@DocumentUrlAttachmentsText" name="DocumentUrlAttachments[0].Text" id="DocumentUrlAttachments[0].Text" />
-                    </div>
-                </div>
-                @for (int a = 1; a < Model.DocumentUrlAttachments.Count; a++)
-                {
-                    <div class="form-group">
-                        <label for="DocumentUrlAttachments[@a].Url" class="control-label col-md-2">Url</label>
-                        <div class="col-md-4">
-                            <input type="text" value="@Model.DocumentUrlAttachments.ToArray()[a].Url" name="DocumentUrlAttachments[@a].Url" id="DocumentUrlAttachments[@a].Url" />
-                        </div>
-                        <label for="DocumentUrlAttachments[@a].Text" class="control-label col-md-2">@Shared.Title</label>
-                        <div class="col-md-4">
-                            <input type="text" value="@Model.DocumentUrlAttachments.ToArray()[a].Text" name="DocumentUrlAttachments[@a].Text" id="DocumentUrlAttachments[@a].Text" />
-                        </div>
-                    </div>
-                }
-                <div id="new-attachments">
-                </div>
-                <div>
-                    <div class="form-group">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-2"> <input type="button" value="Nytt vedlegg" onclick="addAttachment();" /></div>
-                    </div>
-                </div>
-                <script>
+        </div>
+        <script>
                     var counter = @(Model.DocumentUrlAttachments != null ? Model.DocumentUrlAttachments.Count() : 1);
                     function addAttachment() {
                         document.getElementById("new-attachments").innerHTML +=
@@ -196,16 +200,16 @@
                     '</div>';
                         counter++;
                     }
-                </script>
-            <div class="form-group">
-                @Html.LabelFor(model => model.thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input type="file" name="thumbnail" />
-                    @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
-                    @Documents.ThumbnailInfo
-                </div>
+        </script>
+        <div class="form-group">
+            @Html.LabelFor(model => model.thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="thumbnail" />
+                @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
+                @Documents.ThumbnailInfo
             </div>
         </div>
+    </div>
     <div class="form-group">
         <hr />
         <input type="submit" value="@Registers.Propose" class="btn btn-default pull-right" />

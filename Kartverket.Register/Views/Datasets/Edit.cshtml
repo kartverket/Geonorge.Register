@@ -88,9 +88,10 @@
 
                 @for (int t = 0; t < Model.Translations.Count; t++)
                 {
+                    var id = "Translations_" + t + "__Name";
                     @Html.HiddenFor(m => Model.Translations[t].CultureName)
                     <div class="form-group">
-                        @Html.LabelFor(m => Model.Translations[t].Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <label for="@id" class="control-label col-md-3">@Shared.Navn_Engelsk @CultureHelper.GetCultureName(Model.Translations[t].CultureName)</label>
                         <div class="col-md-9">
                             @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(m => Model.Translations[t].Name)
@@ -108,9 +109,10 @@
 
                 @for (int t = 0; t < Model.Translations.Count; t++)
                 {
+                    var id = "Translations_" + t + "__Description";
                     @Html.HiddenFor(m => Model.Translations[t].CultureName)
                     <div class="form-group">
-                        @Html.LabelFor(m => Model.Translations[t].Description, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <label for="@id" class="control-label col-md-3">@Shared.Beskrivelse_Engelsk @CultureHelper.GetCultureName(Model.Translations[t].CultureName)</label>
                         <div class="col-md-9">
                             @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(m => Model.Translations[t].Description)

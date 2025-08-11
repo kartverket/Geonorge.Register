@@ -519,6 +519,7 @@ namespace Kartverket.Register.Models.Api
             {
                 id = baseUrl + registerItem.GetObjectUrl();
                 label = registerItem.NameTranslated();
+                description = registerItem.DescriptionTranslated();
                 seoname = registerItem.seoname;
                 lang = CultureHelper.GetCurrentCulture();
                 lastUpdated = registerItem.modified;

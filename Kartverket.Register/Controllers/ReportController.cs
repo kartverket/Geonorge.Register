@@ -23,6 +23,8 @@ namespace Kartverket.Register.Controllers
         /// QueryName = "register-DOK-selectedTheme".
         /// QueryName = "register-DOK-coverage".
         /// </summary>
+        [HttpPost]
+        [HttpGet]
         public ReportResult Post(ReportQuery query)
         {
             Trace.WriteLine("QueryName: " + query.QueryName);

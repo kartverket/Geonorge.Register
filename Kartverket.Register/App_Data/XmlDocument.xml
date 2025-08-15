@@ -890,6 +890,11 @@
             QueryName = "register-DOK-coverage".
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ReportController.DokSelected">
+            <summary>
+            Return report for DOK-selectedAndAdditional.
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Helpers.CultureHelper.IsRighToLeft">
             <summary>
             Returns true if the language is a right-to-left language. Otherwise, false.

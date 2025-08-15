@@ -35,6 +35,7 @@ namespace Kartverket.Register
             config.Routes.MapHttpRoute("GetStatusReportsOld", "api/register/{registerName}/report", new { controller = "ApiRoot", action = "StatusReports" });
 
             config.Routes.MapHttpRoute("ReportPost", "api/Report", new { controller = "Report", action = "Post" });
+            config.Routes.MapHttpRoute("ReportGetDok", "api/report/dok-selected", new { controller = "Report", action = "DokSelected" });
 
             // Alert
             config.Routes.MapHttpRoute("AlertServicePost", "api/alert/add", new { controller = "AlertApi", action = "PostServiceAlert" });

@@ -44,6 +44,23 @@ namespace Kartverket.Register.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Return report for DOK-selectedAndAdditional.
+        /// </summary>
+        [HttpGet]
+        public ReportResult DokSelected()
+        {
+            ReportQuery query = new ReportQuery
+            {
+                QueryName = "register-DOK-selectedAndAdditional",
+                Parameters = new System.Collections.Generic.List<ReportQueryParameter>()
+            };
+
+            query.Parameters.Add(new ReportQueryParameter { Name = "area" , Value ="Hele landet" });
+            query.Parameters.Add(new ReportQueryParameter { Name = "data", Value = "e4eb3a1d-481e-45a2-8a58-ead15240a9b0" });
+
+            return Post(query);
+        }
 
     }
 }

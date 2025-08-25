@@ -159,7 +159,7 @@ namespace Kartverket.Register.Services
             }
             catch (Exception ex) {
                 Log.Error("Sftp opplasting til skjema test feilet.", ex);
-                throw new Exception("Sftp skjema test feilet");
+                throw new Exception("Sftp skjema test feilet:" + ex);
             }
 
             Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = path + "/" + file.FileName, Operation = Operation.Added, User = ClaimsPrincipal.Current.GetUsername(), Description = "Ftp gml-skjema til test" }));

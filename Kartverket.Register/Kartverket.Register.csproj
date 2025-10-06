@@ -59,10 +59,10 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Arkitektum.GIS.Lib.MetadataCSW, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Arkitektum.GIS.Lib.MetadataCSW.2.0.0-alpha2\lib\netstandard2.0\Arkitektum.GIS.Lib.MetadataCSW.dll</HintPath>
+      <HintPath>..\packages\Arkitektum.GIS.Lib.MetadataCSW.2.0.0\lib\netstandard2.0\Arkitektum.GIS.Lib.MetadataCSW.dll</HintPath>
     </Reference>
     <Reference Include="Arkitektum.GIS.Lib.SerializeUtil, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Arkitektum.GIS.Lib.SerializeUtil.1.4.0-alpha1\lib\netstandard2.0\Arkitektum.GIS.Lib.SerializeUtil.dll</HintPath>
+      <HintPath>..\packages\Arkitektum.GIS.Lib.SerializeUtil.1.4.0\lib\netstandard2.0\Arkitektum.GIS.Lib.SerializeUtil.dll</HintPath>
     </Reference>
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
@@ -115,13 +115,13 @@
       <HintPath>..\packages\ExpressiveAnnotations.2.9.6\lib\net45\ExpressiveAnnotations.MvcUnobtrusive.dll</HintPath>
     </Reference>
     <Reference Include="Geonorge.AuthLib.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Geonorge.AuthLib.Common.2.0.0-alpha4\lib\netstandard2.0\Geonorge.AuthLib.Common.dll</HintPath>
+      <HintPath>..\packages\Geonorge.AuthLib.Common.1.0.67\lib\netstandard2.0\Geonorge.AuthLib.Common.dll</HintPath>
     </Reference>
     <Reference Include="Geonorge.AuthLib.NetFull, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Geonorge.AuthLib.NetFull.2.0.0-alpha2\lib\net472\Geonorge.AuthLib.NetFull.dll</HintPath>
+      <HintPath>..\packages\Geonorge.AuthLib.NetFull.1.0.67\lib\net472\Geonorge.AuthLib.NetFull.dll</HintPath>
     </Reference>
     <Reference Include="GeoNorgeAPI, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GeoNorgeAPI.4.0.0-alpha3\lib\netstandard2.0\GeoNorgeAPI.dll</HintPath>
+      <HintPath>..\packages\GeoNorgeAPI.4.0.0\lib\netstandard2.0\GeoNorgeAPI.dll</HintPath>
     </Reference>
     <Reference Include="Ghostscript.NET, Version=1.2.3.0, Culture=neutral, PublicKeyToken=f85051de34525b59, processorArchitecture=MSIL">
       <HintPath>..\packages\Ghostscript.NET.1.2.3\lib\net40\Ghostscript.NET.dll</HintPath>
@@ -137,7 +137,7 @@
       <HintPath>..\packages\ImageResizer.4.2.5\lib\net45\ImageResizer.dll</HintPath>
     </Reference>
     <Reference Include="Kartverket.Geonorge.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.Geonorge.Utilities.2.0.0-alpha2\lib\netstandard2.0\Kartverket.Geonorge.Utilities.dll</HintPath>
+      <HintPath>..\packages\Kartverket.Geonorge.Utilities.1.0.64\lib\netstandard2.0\Kartverket.Geonorge.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Kartverket.ReportApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Kartverket.ReportApi.15.8.353\lib\net472\Kartverket.ReportApi.dll</HintPath>

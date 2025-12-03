@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -262,7 +262,8 @@ namespace Kartverket.Register.Controllers
             if (IsAdmin() || 
                 (IsEditor() 
                               && codelistValue.register.accessId == 2 
-                              && codelistValue.submitter.name.ToLower() == currentUserOrganizationName.ToLower()))
+                              && (codelistValue.submitter.name.ToLower() == currentUserOrganizationName.ToLower() ||
+                              codelistValue.GetOwner().name.ToLower() == currentUserOrganizationName.ToLower())))
             {
                 Viewbags(codelistValue);
                 return View(codelistValue);
@@ -278,6 +279,8 @@ namespace Kartverket.Register.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(string systemid)
         {
+            string currentUserOrganizationName = CurrentUserOrganizationName();
+
             var systemId = Guid.Parse(systemid);
 
             var queryResults = from o in _db.CodelistValues
@@ -292,6 +295,14 @@ namespace Kartverket.Register.Controllers
             if (codelistValue.register.parentRegisterId != null)
             {
                 parent = codelistValue.register.parentRegister.path;
+            }
+
+            if (!(IsAdmin() || (IsEditor()
+                  && codelistValue.register.accessId == 2
+                  && (codelistValue.submitter.name.ToLower() == currentUserOrganizationName.ToLower() ||
+                  codelistValue.GetOwner().name.ToLower() == currentUserOrganizationName.ToLower()))))
+            {
+                return HttpNotFound("Ingen tilgang");
             }
 
             _registerItemService.RemoveBroaderAndNarrower(codelistValue);

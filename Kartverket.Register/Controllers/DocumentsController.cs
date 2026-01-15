@@ -144,7 +144,11 @@ namespace Kartverket.Register.Controllers
             Document document = (Document)_registerItemService.GetCurrentRegisterItem(parentRegister, registername, itemname);
             if (document != null)
             {
-                document.versionName = DateTime.Now.ToString("yyyyMMdd");
+                var prevVersion = document.versionName;
+                var newVersion = DateTime.Now.ToString("yyyyMMdd");
+                if(prevVersion == newVersion)
+                    newVersion = DateTime.Now.ToString("yyyyMMddHHmm");
+                document.versionName = newVersion;
                 if (_accessControlService.AddToRegister(document.register))
                 {
                     Viewbags(document);

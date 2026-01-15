@@ -181,6 +181,17 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
+                    document.versioningId = GetVersioningId(document, document.versioningId);
+                    var versionsOfDocument = _registerItemService.GetAllVersionsOfItembyVersioningId(document.versioningId);
+                    foreach (var version in versionsOfDocument) 
+                    { 
+                        if(version.versionName == document.versionName) 
+                        {
+                            ModelState.AddModelError("versionName", "Versjon finnes allerede");
+                            break;
+                        }
+                    }
+
                     document = initialisationDocument(document, documentfile, thumbnail, false, false, null, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
                     if (ModelState.IsValid)
                         return Redirect(document.GetObjectUrl());

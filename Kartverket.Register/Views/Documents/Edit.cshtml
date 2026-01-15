@@ -99,7 +99,7 @@
     </div>
 </section>
 <p id="registerName">Register: @Model.register.NameTranslated()</p>
-<p>Versjons id: @Model.versionNumber</p>
+<p>Versjons id: @Model.versionNumber, versjonsnavn: @Model.versionName</p>
 
 <form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })

@@ -78,6 +78,13 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "VersionName", ResourceType = typeof(Registers))]
         public string versionName { get; set; }
+        protected RegisterItem()
+        {
+            if (string.IsNullOrEmpty(versionName))
+            {
+                versionName = DateTime.Now.ToString("yyyyMMdd");
+            }
+        }
 
         [Display(Name = "DocumentUrl", ResourceType = typeof(Registers))]
         public string documentUrl { get; set; }

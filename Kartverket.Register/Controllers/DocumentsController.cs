@@ -144,6 +144,11 @@ namespace Kartverket.Register.Controllers
             Document document = (Document)_registerItemService.GetCurrentRegisterItem(parentRegister, registername, itemname);
             if (document != null)
             {
+                var prevVersion = document.versionName;
+                var newVersion = DateTime.Now.ToString("yyyyMMdd");
+                if(prevVersion == newVersion)
+                    newVersion = DateTime.Now.ToString("yyyyMMddHHmm");
+                document.versionName = newVersion;
                 if (_accessControlService.AddToRegister(document.register))
                 {
                     Viewbags(document);
@@ -176,6 +181,17 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
+                    document.versioningId = GetVersioningId(document, document.versioningId);
+                    var versionsOfDocument = _registerItemService.GetAllVersionsOfItembyVersioningId(document.versioningId);
+                    foreach (var version in versionsOfDocument) 
+                    { 
+                        if(version.versionName == document.versionName) 
+                        {
+                            ModelState.AddModelError("versionName", "Versjon finnes allerede");
+                            break;
+                        }
+                    }
+
                     document = initialisationDocument(document, documentfile, thumbnail, false, false, null, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
                     if (ModelState.IsValid)
                         return Redirect(document.GetObjectUrl());

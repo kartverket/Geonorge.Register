@@ -138,7 +138,7 @@ namespace Kartverket.Register.Services
             dataset.R2_g_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ContactMetadata?.Organization);
             dataset.R2_h_Criteria = !string.IsNullOrEmpty(_metadata.SimpleMetadata?.ContactPublisher?.Organization);
             dataset.R2_i_Criteria = _metadata.SimpleMetadata.QualitySpecifications != null && _metadata.SimpleMetadata.QualitySpecifications.Count > 0
-                                            ? _metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Title.Contains("dekning")).Any() : false;
+                                            ? (_metadata.SimpleMetadata.QualitySpecifications.Where(r => !string.IsNullOrEmpty(r.Explanation) && r.Title.Contains("dekning")).Any()) || (!string.IsNullOrEmpty(_metadata.SimpleMetadata.SurveyAreaMapUrl) || !string.IsNullOrEmpty(_metadata.SimpleMetadata.SurveyAreaMapUrlWms)) : false;
 
             dataset.R3_b_Criteria = dataset.I1_b_Criteria;
 

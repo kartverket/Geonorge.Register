@@ -341,11 +341,22 @@ namespace Kartverket.Register.Services.RegisterItem
             var queryResults = from o in _dbContext.RegisterItems
                                 where (o.register.path == path || o.register.pathOld == path) &&
                                 o.seoname == itemName &&
-                                (o.versionName == vnr || o.versionNumber == vnrInt)
+                                (o.versionName == vnr)
                                 select o;
 
             registerItems = queryResults.ToList();
-           
+
+            if(registerItems.Count == 0) 
+            {
+                queryResults = from o in _dbContext.RegisterItems
+                               where (o.register.path == path || o.register.pathOld == path) &&
+                               o.seoname == itemName &&
+                               (o.versionNumber == vnrInt)
+                               select o;
+            }
+
+            registerItems = queryResults.ToList();
+
             return registerItems.FirstOrDefault();
         }
 

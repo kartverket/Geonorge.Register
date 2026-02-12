@@ -358,7 +358,7 @@
     <value>Datasettet skal være i henhold til UML-modell i minst et av de leverte formatene (vekt 5)</value>
   </data>
   <data name="R2_i_Criteria" xml:space="preserve">
-    <value>Dekningsgrad (andel kartlagt område i forhold til datatsettes utstrekning) skal være oppgitt. (vekt 5)</value>
+    <value>Dekningsgrad (andel kartlagt område i forhold til datatsettes utstrekning) eller fullstendighetsdekningskart skal være oppgitt i metadata. (vekt 5)</value>
   </data>
   <data name="PercentageFulfilled" xml:space="preserve">
     <value>Prosent oppfylt</value>

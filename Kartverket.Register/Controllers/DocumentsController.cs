@@ -1,28 +1,29 @@
-﻿using System;
+﻿using Ghostscript.NET.Rasterizer;
+using GhostscriptSharp;
+using GhostscriptSharp.Settings;
+using Ionic.Zip;
+using Kartverket.Geonorge.Utilities.LogEntry;
+using Kartverket.Register.Helpers;
+using Kartverket.Register.Models;
+using Kartverket.Register.Services;
+using Kartverket.Register.Services.Notify;
+using Kartverket.Register.Services.Register;
+using Kartverket.Register.Services.RegisterItem;
+using Kartverket.Register.Services.Translation;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Kartverket.Register.Models;
-using System.IO;
-using Kartverket.Register.Helpers;
-using Kartverket.Register.Services.RegisterItem;
-using Kartverket.Register.Services.Register;
-using Kartverket.Register.Services;
-using GhostscriptSharp.Settings;
 using System.Drawing;
-using GhostscriptSharp;
-using Kartverket.Register.Services.Notify;
-using Kartverket.Register.Services.Translation;
-using Kartverket.Geonorge.Utilities.LogEntry;
-using System.Web.Configuration;
-using Ionic.Zip;
-using Ghostscript.NET.Rasterizer;
 using System.Drawing.Imaging;
-using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.Caching;
+using System.Text;
+using System.Web;
+using System.Web.Configuration;
+using System.Web.Mvc;
 //ghostscriptsharp MIT license:
 //Copyright(c) 2009 Matthew Ephraim
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -538,6 +539,9 @@ namespace Kartverket.Register.Controllers
                     documentfile.InputStream.Position = 0;
                     using (ZipFile zip = ZipFile.Read(documentfile.InputStream))
                     {
+                        // Ensure UTF-8 is used for file names
+                        zip.AlternateEncodingUsage = ZipOption.Always;
+                        zip.AlternateEncoding = Encoding.UTF8;
                         seofilename = zip.EntryFileNames.Where(f => f.EndsWith(".pdf")).FirstOrDefault();
                     }
                 }
@@ -647,6 +651,9 @@ namespace Kartverket.Register.Controllers
             {
                 using (ZipFile zip = ZipFile.Read(file.InputStream))
                 {
+                    // Ensure UTF-8 is used for file names
+                    zip.AlternateEncodingUsage = ZipOption.Always;
+                    zip.AlternateEncoding = Encoding.UTF8;
                     seofilename = zip.EntryFileNames.Where(f => f.EndsWith(".html")).FirstOrDefault();
 
                     var pdf = zip.EntryFileNames.Where(f => f.EndsWith(".pdf")).FirstOrDefault();
@@ -665,6 +672,9 @@ namespace Kartverket.Register.Controllers
             {
                 using (ZipFile zip = ZipFile.Read(fileEnglish.InputStream))
                 {
+                    // Ensure UTF-8 is used for file names
+                    zip.AlternateEncodingUsage = ZipOption.Always;
+                    zip.AlternateEncoding = Encoding.UTF8;
                     seofilenameEnglish = zip.EntryFileNames.Where(f => f.EndsWith(".html")).FirstOrDefault();
 
                     zip.ExtractAll(path);

@@ -339,6 +339,9 @@ namespace Kartverket.Register.Controllers
 
             RemoveFiles(document);
 
+            if (!string.IsNullOrEmpty(documentname))
+                registerUrl = registerUrl + "/" + documentname;
+
             return Redirect(registerUrl);
         }
 

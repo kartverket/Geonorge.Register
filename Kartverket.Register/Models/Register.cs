@@ -126,8 +126,13 @@ namespace Kartverket.Register.Models
         /// Gets Url to current object
         /// </summary>
         /// <returns>Url</returns>
-        public virtual string GetObjectUrl()
+        public virtual string GetObjectUrl(string nameBack = null)
         {
+            if(!string.IsNullOrEmpty(nameBack))
+                return path != null
+                ? "/" + path + "/" + nameBack
+                : "/" + pathOld + "/" + nameBack;
+
             return path != null
                 ? "/" + path
                 : "/" + pathOld;

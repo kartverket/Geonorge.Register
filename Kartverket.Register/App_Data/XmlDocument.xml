@@ -1301,7 +1301,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Kartverket.Register.Models.Register.GetObjectUrl">
+        <member name="M:Kartverket.Register.Models.Register.GetObjectUrl(System.String)">
             <summary>
             Gets Url to current object
             </summary>

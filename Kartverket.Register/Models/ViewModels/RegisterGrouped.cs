@@ -42,7 +42,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         }
 
-        public override string GetObjectUrl()
+        public override string GetObjectUrl(string nameBack = null)
         {
             if (!string.IsNullOrEmpty(ExternalUrl))
                 return ExternalUrl;

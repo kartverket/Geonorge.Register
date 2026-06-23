@@ -142,8 +142,8 @@ Api er dokumentert her:  [https://register.geonorge.no/help](https://register.
 
 Eksempelkall:
 
-[http://register.geonorge.no/api/register/produktspesifikasjoner](http://register.geonorge.no/api/register/produktspesifikasjoner "http://register.geonorge.no/api/produktspesifikasjoner") returnerer alle produktspesifikasjoner som er registert i Geonorge.
+[http://register.geonorge.no/api/produktspesifikasjoner](http://register.geonorge.no/api/produktspesifikasjoner "http://register.geonorge.no/api/produktspesifikasjoner") returnerer alle produktspesifikasjoner som er registert i Geonorge.
 
-[http://register.geonorge.no/api/epsg-koder](http://register.geonorge.no/api/register/epsg-koder "http://register.geonorge.no/api/epsg-koder") returnerer alle EPSG-koder som ligger i registeret i Geonorge.
+[http://register.geonorge.no/api/epsg-koder](http://register.geonorge.no/api/epsg-koder "http://register.geonorge.no/api/epsg-koder") returnerer alle EPSG-koder som ligger i registeret i Geonorge.
 
 Register benytter solr indeks for søk: [https://github.com/kartverket/Geonorge.Kartkatalog.Solr/tree/master/solr/register](https://github.com/kartverket/Geonorge.Kartkatalog.Solr/tree/master/solr/register "https://github.com/kartverket/Geonorge.Kartkatalog.Solr/tree/master/solr/register")

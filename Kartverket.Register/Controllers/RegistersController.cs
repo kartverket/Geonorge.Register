@@ -632,6 +632,7 @@ namespace Kartverket.Register.Controllers
                 RegisterItemV2ViewModel view = new DocumentViewModel((Document)_registerItemService.GetRegisterItemByPath(path, itemName, itemVersion));
                 if (view != null && view.SystemId != Guid.Empty) { 
                     view.AccessRegisterItem = _accessControlService.HasAccessTo(view);
+                    ViewBag.BackName = view.Seoname;
                     return View("DetailsRegisterItem", view);
                 }
             }

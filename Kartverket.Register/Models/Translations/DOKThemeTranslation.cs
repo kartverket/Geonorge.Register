@@ -27,7 +27,8 @@ namespace Kartverket.Register.Models.Translations
             { "Plan", "Planning" },
             { "Samferdsel", "Transportation" },
             { "Samfunnssikkerhet", "Crisis management" },
-            { "Vær og klima", "Weather and climate" }
+            { "Vær og klima", "Weather and climate" },
+            { "Eiendom", "Property" }
         };
     }
 }

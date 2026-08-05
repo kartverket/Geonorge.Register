@@ -1138,6 +1138,56 @@
             The value of the facet
             </summary>
         </member>
+        <member name="T:Kartverket.Register.Models.Api.FAIR">
+            <summary>
+            FAIR assessment of a dataset with the same details as shown on the FAIR dataset page
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FAIR.Rating">
+            <summary>
+            Explanation of how the FAIR rating is given
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FAIR.Principles">
+            <summary>
+            The four FAIR principles with criteria, in presentation order
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairRating.Levels">
+            <summary>
+            Rating levels from best to worst
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairRatingLevel.Status">
+            <summary>
+            good, satisfactory, useable or deficient
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairPrinciple.Code">
+            <summary>
+            F, A, I or R
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairPrinciple.Status">
+            <summary>
+            good, satisfactory, useable, deficient or notset
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairCriteriaGroup.Code">
+            <summary>
+            For example F1
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairCriterion.Code">
+            <summary>
+            For example F1_a
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairCriterion.Fulfilled">
+            <summary>
+            True when fulfilled, false when not fulfilled and null when not evaluated
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.RegisterData.Id">
             <summary>
             The uniqueidentifier

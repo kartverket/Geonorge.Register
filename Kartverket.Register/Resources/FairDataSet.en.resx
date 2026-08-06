@@ -196,13 +196,13 @@
     <value>It is checked whether the protocols that provide access to the datasets are openly accessible and readable with standard IT tools. Which we consider to be sufficient if one has provided a download URL with Https response or by offering one of the two APIs mentioned above (weight 50)</value>
   </data>
   <data name="A1_f_Criteria" xml:space="preserve">
-    <value>The protocol allows for an authentication and authorisation procedure, where necessary</value>
+    <value>The protocol allows for an authentication and authorisation procedure, where necessary (weight 0)</value>
   </data>
   <data name="A2_a_Criteria" xml:space="preserve">
     <value>This requirement is not checked as all Mareano data should be available for download (weight 0)</value>
   </data>
   <data name="A2_Label" xml:space="preserve">
-    <value>A2: Metadata are accessible, even when the data are no longer available</value>
+    <value>A2: Metadata are accessible, even when the data are no longer available (weight 0)</value>
   </data>
   <data name="I1_a_Criteria" xml:space="preserve">
     <value>Metadata for geodata must be established in accordance with the metadata standard ISO19115. (Metadata in Geonorge is based on the mentioned standard.) (weight 20)</value>
@@ -362,8 +362,5 @@
   </data>
   <data name="PercentageFulfilled" xml:space="preserve">
     <value>Percentage fulfilled</value>
-  </data>
-  <data name="Delivery_Statusdeficient" xml:space="preserve">
-    <value>Bad</value>
   </data>
 </root>

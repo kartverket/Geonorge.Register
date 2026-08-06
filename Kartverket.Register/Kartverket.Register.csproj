@@ -2425,6 +2425,7 @@
     <Content Include="Scripts\expressive.annotations.validate.js" />
     <Content Include="Scripts\expressive.annotations.validate.min.js" />
     <Content Include="Scripts\geonorge-register.js" />
+    <Content Include="Scripts\posthog-tracking.js" />
     <Content Include="authentication.default.config" />
     <Content Include="authentication.config" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />

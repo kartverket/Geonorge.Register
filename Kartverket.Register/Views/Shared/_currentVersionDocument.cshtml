@@ -34,7 +34,7 @@
     </p>
     <p><strong>@Registers.Version: </strong>@Model.VersionName</p>
 </div>
-<div class="col-sm-12 col-md-2 col">
+<div class="col-sm-12 col-md-2 col" data-register="@(Model.Register != null ? Model.Register.GetObjectUrl().TrimStart('/') : "")">
 
     @if (!string.IsNullOrEmpty(Model.DocumentUrl2))
     {
@@ -105,14 +105,14 @@
 
     @if (!string.IsNullOrEmpty(Model.ApplicationSchema))
     {
-        <a href="@Html.DisplayFor(modelItem => Model.ApplicationSchema)" class="btn btn-block" title="Vis datamodell i Geonorge objektkatalog" target="_blank">
+        <a href="@Html.DisplayFor(modelItem => Model.ApplicationSchema)" class="btn btn-block" title="Vis datamodell i Geonorge objektkatalog" target="_blank" data-track="application_schema_opened">
             <span class="custom-icon custom-icon-eksternlink"> </span> Vis datamodell
         </a><br />
     }
 
     @if (!string.IsNullOrEmpty(Model.GmlApplicationSchema))
     {
-        <a href="@Html.DisplayFor(modelItem => Model.GmlApplicationSchema)" class="btn btn-block" title="Vis datamodell for @Model.Name" target="_blank">
+        <a href="@Html.DisplayFor(modelItem => Model.GmlApplicationSchema)" class="btn btn-block" title="Vis datamodell for @Model.Name" target="_blank" data-track="gml_schema_opened">
             <span class="custom-icon custom-icon-eksternlink"> </span> Vis GML-skjema
         </a><br />
     }

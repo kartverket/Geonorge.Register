@@ -21,6 +21,19 @@
 
 @Html.Partial("_SearchBarPartial")
 
+@* Read by Scripts/posthog-tracking.js to capture the search outcome, including zero-result
+   searches. Only rendered for the first page of results - paging returns to this view, and
+   rendering it again would record the same search once per page. Offset is 1-based, see
+   SearchParameters. *@
+@if (Model.Offset <= 1)
+{
+    <div id="search-tracking"
+         data-result-count="@Model.NumFound"
+         data-register="@TelemetryHelper.NormalizeSearchScope(Model.Register)"
+         data-search-term="@TelemetryHelper.SanitizeSearchTerm(Model.Text)"
+         hidden></div>
+}
+
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">

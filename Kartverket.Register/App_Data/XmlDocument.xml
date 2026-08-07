@@ -985,6 +985,19 @@
             <param name="filtype"></param>
             <param name="seofilename"></param>
         </member>
+        <member name="M:Kartverket.Register.Helpers.HtmlHelperExtensions.PostHogAutocapture(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Captures a $autocapture event for every click and input in addition to the events
+            in Scripts/posthog-tracking.js. Off unless configured - those events carry the
+            text of whatever was clicked.
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Helpers.HtmlHelperExtensions.PostHogDisableSessionRecording(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Session replay records the rendered page, which on an authenticated page includes
+            the user's name and email. Disabled unless configured otherwise.
+            </summary>
+        </member>
         <member name="T:Kartverket.Register.Helpers.TelemetryHelper">
             <summary>
             Prepares values for analytics capture. The search box is free text, so a term is

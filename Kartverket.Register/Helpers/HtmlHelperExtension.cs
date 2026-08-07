@@ -43,6 +43,31 @@ namespace Kartverket.Register.Helpers
             return WebConfigurationManager.AppSettings["PostHog:UiHost"];
         }
 
+        /// <summary>
+        /// Captures a $autocapture event for every click and input in addition to the events
+        /// in Scripts/posthog-tracking.js. Off unless configured - those events carry the
+        /// text of whatever was clicked.
+        /// </summary>
+        public static bool PostHogAutocapture(this HtmlHelper helper)
+        {
+            return BoolSetting("PostHog:Autocapture", false);
+        }
+
+        /// <summary>
+        /// Session replay records the rendered page, which on an authenticated page includes
+        /// the user's name and email. Disabled unless configured otherwise.
+        /// </summary>
+        public static bool PostHogDisableSessionRecording(this HtmlHelper helper)
+        {
+            return BoolSetting("PostHog:DisableSessionRecording", true);
+        }
+
+        private static bool BoolSetting(string key, bool fallback)
+        {
+            bool value;
+            return bool.TryParse(WebConfigurationManager.AppSettings[key], out value) ? value : fallback;
+        }
+
         public static string Accessibilitystatementurl(this HtmlHelper helper)
         {
             return WebConfigurationManager.AppSettings["Accessibilitystatementurl"];

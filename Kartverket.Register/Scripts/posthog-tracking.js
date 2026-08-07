@@ -62,9 +62,9 @@ $(function () {
         });
     }
 
-    // Links that name their own event through data-track: currently the "Vis datamodell"
-    // (application_schema_opened) and "Vis GML-skjema" (gml_schema_opened) links on a
-    // document. They share the external-link icon with other links, so they are marked
+    // Links that name their own event through data-track - the "Vis datamodell",
+    // "Vis GML-skjema" and "Vis kartografi-fil" links on a document. They all share the
+    // external-link icon, so there is no structural marker to key on and each is tagged
     // explicitly. Adding data-track to another link is enough to capture it.
     $(document).on('click', 'a[data-track]', function () {
         var link = $(this);

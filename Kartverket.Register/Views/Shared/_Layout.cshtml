@@ -52,7 +52,15 @@
                 defaults: '2026-05-30',
                 person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
                 autocapture: @(Html.PostHogAutocapture() ? "true" : "false"), // true also captures every click, with the text of the clicked element
-                disable_session_recording: @(Html.PostHogDisableSessionRecording() ? "true" : "false") // replay records the page, which for a logged in user includes name and email
+                disable_session_recording: @(Html.PostHogDisableSessionRecording() ? "true" : "false"), // replay records the page, which for a logged in user includes name and email
+                loaded: function (ph) {
+                    // Several Geonorge applications report to the same PostHog project, so every
+                    // event needs to say which one it came from. Registered as a super property
+                    // here rather than passed per capture, so it also lands on the events PostHog
+                    // captures by itself ($pageview, $pageleave, $autocapture). Set from the
+                    // loaded callback because that runs before the first pageview is captured.
+                    ph.register({ app: 'register' });
+                }
             })
         </script>
     }

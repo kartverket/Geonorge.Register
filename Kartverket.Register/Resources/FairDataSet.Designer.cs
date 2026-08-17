@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Protokoller skal støtte autentisering og autorisasjon.
+        ///   Looks up a localized string similar to Protokoller skal støtte autentisering og autorisasjon (vekt 0).
         /// </summary>
         public static string A1_f_Criteria {
             get {
@@ -133,7 +133,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig.
+        ///   Looks up a localized string similar to A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig (vekt 0).
         /// </summary>
         public static string A2_Label {
             get {

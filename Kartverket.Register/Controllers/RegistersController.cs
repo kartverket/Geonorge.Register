@@ -1371,6 +1371,23 @@ namespace Kartverket.Register.Controllers
             ViewBag.registerSEO = register.Seoname;
             ViewBag.InspireRegisteryType = filter.InspireRegisteryType;
             ViewBag.text = filter.text;
+            ViewBag.searchResultCount = SearchResultCount(register);
+        }
+
+        /// <summary>
+        /// Number of items shown after filtering, for the search event in _SearchBarPartial.
+        /// Mirrors how the views pick a collection: RegisterItemsV2 when it has items,
+        /// otherwise RegisterItems.
+        /// </summary>
+        private static int SearchResultCount(RegisterV2ViewModel register)
+        {
+            if (register == null)
+                return 0;
+
+            if (register.RegisterItemsV2 != null && register.RegisterItemsV2.Count > 0)
+                return register.RegisterItemsV2.Count;
+
+            return register.RegisterItems != null ? register.RegisterItems.Count : 0;
         }
 
         private static bool Search(FilterParameters filter)

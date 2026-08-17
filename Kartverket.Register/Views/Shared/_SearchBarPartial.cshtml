@@ -34,7 +34,25 @@
 
 }
 
+@{
+    // Searching from inside a register posts back to the register's own page rather than to
+    // /search, so those searches are recorded here instead of in Views/Search/Index.cshtml.
+    // Only on the first page - paging returns to this view and would record the search again.
+    var trackedSearchText = ViewBag.text as string;
+    var trackedPage = ViewBag.page as int?;
+    var trackedResultCount = ViewBag.searchResultCount as int?;
+    var trackedIsFirstPage = !trackedPage.HasValue || trackedPage.Value <= 1;
+}
 
+@if (ViewBag.registerSEO != null && trackedResultCount.HasValue
+     && !string.IsNullOrWhiteSpace(trackedSearchText) && trackedIsFirstPage)
+{
+    <div id="search-tracking"
+         data-result-count="@trackedResultCount.Value"
+         data-register="@TelemetryHelper.NormalizeSearchScope(ViewBag.registerSEO as string)"
+         data-search-term="@TelemetryHelper.SanitizeSearchTerm(trackedSearchText)"
+         hidden></div>
+}
 
 <form action="@kontroller" class="col-md-offset-2 col-md-8 hidden-print">
 

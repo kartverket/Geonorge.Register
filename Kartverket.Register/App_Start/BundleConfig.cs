@@ -42,7 +42,8 @@ namespace Kartverket.Register
                 "~/Scripts/proj4-compressed.js",
                 "~/Content/bower_components/tablesorter/dist/js/jquery.tablesorter.min.js",
                 "~/Scripts/geonorge-register.js",
-                "~/Scripts/proj4leaflet.js"));
+                "~/Scripts/proj4leaflet.js",
+                "~/Scripts/posthog-tracking.js"));
 
             BundleTable.EnableOptimizations = true;
 

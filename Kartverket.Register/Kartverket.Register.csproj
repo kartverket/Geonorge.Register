@@ -535,6 +535,7 @@
     <Compile Include="Helpers\Log4netExceptionFilter.cs" />
     <Compile Include="Helpers\RegisterUrls.cs" />
     <Compile Include="Helpers\HtmlHelperExtension.cs" />
+    <Compile Include="Helpers\TelemetryHelper.cs" />
     <Compile Include="Migrations\201410281525363_AddOrganization.cs" />
     <Compile Include="Migrations\201410281525363_AddOrganization.Designer.cs">
       <DependentUpon>201410281525363_AddOrganization.cs</DependentUpon>
@@ -1409,6 +1410,7 @@
     <Compile Include="Models\Api\FacetInput.cs" />
     <Compile Include="Models\Api\FieldValueModelBinder.cs" />
     <Compile Include="Models\Api\InspireDataset.cs" />
+    <Compile Include="Models\Api\FAIR.cs" />
     <Compile Include="Models\Api\FairDatasetStatusReport.cs" />
     <Compile Include="Models\Api\MareanoDatasetStatusReport.cs" />
     <Compile Include="Models\Api\OrganizationV2.cs" />
@@ -2424,6 +2426,7 @@
     <Content Include="Scripts\expressive.annotations.validate.js" />
     <Content Include="Scripts\expressive.annotations.validate.min.js" />
     <Content Include="Scripts\geonorge-register.js" />
+    <Content Include="Scripts\posthog-tracking.js" />
     <Content Include="authentication.default.config" />
     <Content Include="authentication.config" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />

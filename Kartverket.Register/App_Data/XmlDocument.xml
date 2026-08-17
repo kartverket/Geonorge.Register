@@ -875,6 +875,13 @@
             Get organization by number
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.RegistersController.SearchResultCount(Kartverket.Register.Models.ViewModels.RegisterV2ViewModel)">
+            <summary>
+            Number of items shown after filtering, for the search event in _SearchBarPartial.
+            Mirrors how the views pick a collection: RegisterItemsV2 when it has items,
+            otherwise RegisterItems.
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.RegistersController.CreateStatusDokMunicipalList">
             <summary>
             Creates a list of statuses for DOK Municipal register. 
@@ -977,6 +984,50 @@
             <param name="file"></param>
             <param name="filtype"></param>
             <param name="seofilename"></param>
+        </member>
+        <member name="M:Kartverket.Register.Helpers.HtmlHelperExtensions.PostHogAutocapture(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Captures a $autocapture event for every click and input in addition to the events
+            in Scripts/posthog-tracking.js. Off unless configured - those events carry the
+            text of whatever was clicked.
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Helpers.HtmlHelperExtensions.PostHogDisableSessionRecording(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Session replay records the rendered page, which on an authenticated page includes
+            the user's name and email. Disabled unless configured otherwise.
+            </summary>
+        </member>
+        <member name="T:Kartverket.Register.Helpers.TelemetryHelper">
+            <summary>
+            Prepares values for analytics capture. The search box is free text, so a term is
+            normalised before it leaves the application and dropped entirely when it looks like
+            it could carry personal data.
+            </summary>
+        </member>
+        <member name="F:Kartverket.Register.Helpers.TelemetryHelper.MaxSearchTermLength">
+            <summary>
+            Real search terms are short. Longer input is pasted content, which is where
+            personal data realistically ends up.
+            </summary>
+        </member>
+        <member name="F:Kartverket.Register.Helpers.TelemetryHelper.NationalIdentityNumber">
+            <summary>Fødselsnummer and D-nummer, also written as 6 digits + space + 5.</summary>
+        </member>
+        <member name="M:Kartverket.Register.Helpers.TelemetryHelper.SanitizeSearchTerm(System.String)">
+            <summary>
+            Returns the search term normalised for analytics, or an empty string when it must
+            not be captured. An empty result means "no term recorded", not "empty search".
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Helpers.TelemetryHelper.NormalizeSearchScope(System.String)">
+            <summary>
+            Returns the search scope for analytics as a seoname, or an empty string for a
+            search across all registers. Two things are normalised away: the search bar puts a
+            translated label in the register field when no register is chosen, and a global
+            search reports the register name where an in-register search reports the seoname.
+            Slugifying is idempotent, so an already-slugified value passes through unchanged.
+            </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.AlertView.AlertDate">
             <summary>
@@ -1136,6 +1187,56 @@
         <member name="P:Kartverket.Register.Models.Api.FacetInput.value">
             <summary>
             The value of the facet
+            </summary>
+        </member>
+        <member name="T:Kartverket.Register.Models.Api.FAIR">
+            <summary>
+            FAIR assessment of a dataset with the same details as shown on the FAIR dataset page
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FAIR.Rating">
+            <summary>
+            Explanation of how the FAIR rating is given
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FAIR.Principles">
+            <summary>
+            The four FAIR principles with criteria, in presentation order
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairRating.Levels">
+            <summary>
+            Rating levels from best to worst
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairRatingLevel.Status">
+            <summary>
+            good, satisfactory, useable or deficient
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairPrinciple.Code">
+            <summary>
+            F, A, I or R
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairPrinciple.Status">
+            <summary>
+            good, satisfactory, useable, deficient or notset
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairCriteriaGroup.Code">
+            <summary>
+            For example F1
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairCriterion.Code">
+            <summary>
+            For example F1_a
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FairCriterion.Fulfilled">
+            <summary>
+            True when fulfilled, false when not fulfilled and null when not evaluated
             </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.RegisterData.Id">
@@ -2618,7 +2719,7 @@
         </member>
         <member name="P:Resources.FairDataSet.A1_f_Criteria">
             <summary>
-              Looks up a localized string similar to Protokoller skal støtte autentisering og autorisasjon.
+              Looks up a localized string similar to Protokoller skal støtte autentisering og autorisasjon (vekt 0).
             </summary>
         </member>
         <member name="P:Resources.FairDataSet.A1_Label">
@@ -2633,7 +2734,7 @@
         </member>
         <member name="P:Resources.FairDataSet.A2_Label">
             <summary>
-              Looks up a localized string similar to A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig.
+              Looks up a localized string similar to A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig (vekt 0).
             </summary>
         </member>
         <member name="P:Resources.FairDataSet.Accesible_Description">

@@ -196,13 +196,13 @@
     <value>Det sjekkes om protokollene som gir tilgang til datasettene er åpent tilgjengelige og lesbare med standard IT-verktøy. Noe som vi anser å være tilstrekkelig med en utfylt nedlastnings-URL  med Https-respons eller ved at et av de to ovennevnte API-er tilbys (vekt 50)</value>
   </data>
   <data name="A1_f_Criteria" xml:space="preserve">
-    <value>Protokoller skal støtte autentisering og autorisasjon</value>
+    <value>Protokoller skal støtte autentisering og autorisasjon (vekt 0)</value>
   </data>
   <data name="A2_a_Criteria" xml:space="preserve">
     <value>Det sjekkes ikke på dette punktet da Mareano-data skal være tilgjengelige for nedlastning (vekt 0)</value>
   </data>
   <data name="A2_Label" xml:space="preserve">
-    <value>A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig</value>
+    <value>A2: Metadata er tilgjengelig selv om datasettet ikke lenger er tilgjengelig (vekt 0)</value>
   </data>
   <data name="I1_a_Criteria" xml:space="preserve">
     <value>Metadata for geodata skal etableres i henhold til metadatastandarden ISO19115. Metadata i Geonorge er basert på den nevnte standarden. (vekt 20)</value>

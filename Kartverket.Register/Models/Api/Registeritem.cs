@@ -153,11 +153,13 @@ namespace Kartverket.Register.Models.Api
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string BoundingBoxWest { get; set; }
 
-
-        // EPSG
+        [DataMemberAttribute]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string thumbnail { get; set; }
         [DataMemberAttribute]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string documentreference { get; set; }
+        // EPSG
         [DataMemberAttribute]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string epsgcode { get; set; }
@@ -851,6 +853,9 @@ namespace Kartverket.Register.Models.Api
                 if (d.description != null) description = GetDescriptionLocale(d);
                 if (d.documentowner != null) owner = d.documentowner.NameTranslated();
                 documentreference = d.documentUrl;
+                if (!string.IsNullOrEmpty(d.thumbnail))
+                    thumbnail = d.thumbnail;
+                    
                 UmlModelTreeStructureLink = d.UmlModelTreeStructureLink;
                 ApplicationSchema = d.ApplicationSchema;
                 GMLApplicationSchema = d.GMLApplicationSchema;

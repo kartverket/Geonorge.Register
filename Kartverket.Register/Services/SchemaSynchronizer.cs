@@ -12,8 +12,6 @@ using System.Security.Claims;
 using Geonorge.AuthLib.Common;
 using System.Web.Configuration;
 using Renci.SshNet;
-using Renci.SshNet.Sftp;
-using Renci.SshNet.Common;
 using Kartverket.Register.Models;
 
 namespace Kartverket.Register.Services
@@ -127,14 +125,8 @@ namespace Kartverket.Register.Services
                     foreach (string subDir in subDirs)
                     {
                         currentDir = currentDir + "/" + subDir;
-                        try { 
-                        SftpFile folder = sftp.Get(currentDir);
-                        }
-                        catch(SftpPathNotFoundException ex)
-                        {
+                        if (!sftp.Exists(currentDir))
                             sftp.CreateDirectory(currentDir);
-                        }
-
                     }
 
                     var filePath = currentDir + "/" + file.FileName;
@@ -208,14 +200,8 @@ namespace Kartverket.Register.Services
                     foreach (string subDir in subDirs)
                     {
                         currentDir = currentDir + "/" + subDir;
-                        try
-                        {
-                            SftpFile folder = sftp.Get(currentDir);
-                        }
-                        catch (SftpPathNotFoundException ex)
-                        {
+                        if (!sftp.Exists(currentDir))
                             sftp.CreateDirectory(currentDir);
-                        }
                     }
 
                     stream.Position = 0;

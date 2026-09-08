@@ -1,0 +1,15 @@
+# Target architecture — Structurizr Lite on http://localhost:8081
+#
+#   docker compose up
+#
+# Runs on 8081 so it can sit side by side with the as-is model on 8080.
+# Override with STRUCTURIZR_PORT if either is taken.
+
+services:
+  structurizr-target:
+    image: structurizr/lite
+    container_name: geonorge-register-c4-target
+    ports:
+      - "${STRUCTURIZR_PORT:-8082}:8080"
+    volumes:
+      - ./:/usr/local/structurizr

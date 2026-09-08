@@ -1,0 +1,6 @@
+# Structurizr Lite writes these back: rendered layout and internal state.
+# workspace.dsl is the source of truth. Delete these lines and commit
+# workspace.json if you decide manual diagram layout is worth keeping.
+workspace.json
+.structurizr/
+.out/

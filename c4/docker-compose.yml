@@ -1,0 +1,13 @@
+# Structurizr Lite — browse the C4 model at http://localhost:8080
+# Lite reads workspace.dsl on every page refresh, so you can edit the DSL and
+# just reload the browser. It writes workspace.json back with the diagram
+# layout you drag into place; that file is gitignored by default.
+
+services:
+  structurizr:
+    image: structurizr/lite
+    container_name: geonorge-register-c4
+    ports:
+      - "${STRUCTURIZR_PORT:-8081}:8080"
+    volumes:
+      - ./:/usr/local/structurizr

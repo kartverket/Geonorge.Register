@@ -248,7 +248,20 @@ namespace Kartverket.Register.Services
 
         public static dynamic GetDistributions(string metadataUuid)
         {
-            return DatasetDeliveryService.GetDistributions(metadataUuid);
+            try
+            {
+                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distributions/" + metadataUuid;
+                var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
+
+                var json = c.DownloadString(metadataUrl);
+
+                dynamic metadata = Newtonsoft.Json.Linq.JArray.Parse(json);
+                return metadata;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private bool CheckDistributionUrl(string uuid, IEnumerable<SimpleDistribution> distributions)

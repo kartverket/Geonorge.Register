@@ -118,18 +118,18 @@ namespace Kartverket.Register.Services
         private bool HasWfs(string metadataUuid)
         {
 
-            var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distribution-lists/" + metadataUuid;
+            var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distributions/" + metadataUuid;
             var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
 
             var json = c.DownloadString(metadataUrl);
 
             dynamic metadata = Newtonsoft.Json.Linq.JObject.Parse(json);
 
-            dynamic distributions = metadata.RelatedDownloadServices;
+            dynamic distributions = metadata;
 
             if (distributions != null)
             {
-                for (int j =0; j< distributions.Count; j++)
+                for (int j = 0; j< distributions.Count; j++)
                 {
                     var protocol = distributions[j].Protocol;
                     if (!string.IsNullOrEmpty(protocol?.ToString()))

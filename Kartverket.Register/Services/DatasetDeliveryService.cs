@@ -117,27 +117,13 @@ namespace Kartverket.Register.Services
 
         private bool HasWfs(string metadataUuid)
         {
+            var distributions = GetDistributions(metadataUuid, true);
 
-            var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distribution-lists/" + metadataUuid;
-            var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
-
-            var json = c.DownloadString(metadataUrl);
-
-            dynamic metadata = Newtonsoft.Json.Linq.JObject.Parse(json);
-
-            dynamic distributions = metadata.RelatedDownloadServices;
-
-            if (distributions != null)
+            foreach (var distribution in distributions)
             {
-                for (int j =0; j< distributions.Count; j++)
-                {
-                    var protocol = distributions[j].Protocol;
-                    if (!string.IsNullOrEmpty(protocol?.ToString()))
-                    {
-                        if (protocol.ToString().ToLower().Contains("wfs"))
-                            return true;
-                    }
-                }
+                string protocol = distribution.Protocol?.ToString();
+                if (!string.IsNullOrEmpty(protocol) && protocol.ToLower().Contains("wfs"))
+                    return true;
             }
             return false;
         }
@@ -528,20 +514,38 @@ namespace Kartverket.Register.Services
             return statusValue;
         }
 
-        private static dynamic GetDistributions(string metadataUuid)
+        private static readonly string[] DistributionLists =
+        {
+            "SelfDistribution", "RelatedViewServices", "RelatedDownloadServices", "RelatedServices", "RelatedApplications"
+        };
+
+        // Flattens the lists from api/distribution-lists into one array of distributions
+        public static dynamic GetDistributions(string metadataUuid, bool throwOnError = false)
         {
             try
             {
-                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distributions/" + metadataUuid;
-                var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
+                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distribution-lists/" + metadataUuid;
+                string json;
+                using (var c = new WebClient { Encoding = System.Text.Encoding.UTF8 })
+                {
+                    json = c.DownloadString(metadataUrl);
+                }
 
-                var json = c.DownloadString(metadataUrl);
+                var lists = Newtonsoft.Json.Linq.JObject.Parse(json);
+                var distributions = new Newtonsoft.Json.Linq.JArray();
+                foreach (var listName in DistributionLists)
+                {
+                    var list = lists[listName] as Newtonsoft.Json.Linq.JArray;
+                    if (list == null) continue;
+                    foreach (var distribution in list)
+                        distributions.Add(distribution.DeepClone());
+                }
 
-                dynamic metadata = Newtonsoft.Json.Linq.JArray.Parse(json);
-                return metadata;
+                return distributions;
             }
             catch (Exception)
             {
+                if (throwOnError) throw;
                 return null;
             }
         }

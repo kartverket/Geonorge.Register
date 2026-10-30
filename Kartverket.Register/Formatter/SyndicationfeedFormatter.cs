@@ -1,5 +1,6 @@
 ﻿
 using Kartverket.Register.Models.Api;
+using Markdig;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -250,6 +251,14 @@ namespace Kartverket.Register.Formatter
 
                 if (u.Station != null)
                     content = content + "Station: " + u.Station + "<br>";
+
+                if (content != null)
+                {
+                    var pipeline = new MarkdownPipelineBuilder()
+                        .UseSoftlineBreakAsHardlineBreak()
+                        .Build();
+                    content = Markdown.ToHtml(content, pipeline);
+                }
             }
 
             return content;

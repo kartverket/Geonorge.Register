@@ -1,5 +1,6 @@
 ﻿
 using Kartverket.Register.Models.Api;
+using Markdig;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -180,7 +181,7 @@ namespace Kartverket.Register.Formatter
                 Content = new TextSyndicationContent(content, TextSyndicationContentKind.Html),
                 Id = FixSpecialCharacters(u.id)
             };
-            item.Links.Add(new SyndicationLink() { Title = u.label, Uri = new Uri((u.id)) });
+            item.Links.Add(new SyndicationLink() { Title = u.label, Uri = new Uri((u.id)), RelationshipType = "alternate" });
             item.Authors.Add(new SyndicationPerson() { Name = u.owner });
             item.Categories.Add(new SyndicationCategory() { Name = u.status });
             item.Categories.Add(new SyndicationCategory() { Name = u.owner });
@@ -250,10 +251,15 @@ namespace Kartverket.Register.Formatter
 
                 if (u.Station != null)
                     content = content + "Station: " + u.Station + "<br>";
-            }
 
-            if (content != null)
-                content = System.Web.HttpUtility.HtmlEncode(content);
+                if (content != null)
+                {
+                    var pipeline = new MarkdownPipelineBuilder()
+                        .UseSoftlineBreakAsHardlineBreak()
+                        .Build();
+                    content = Markdown.ToHtml(content, pipeline);
+                }
+            }
 
             return content;
         }

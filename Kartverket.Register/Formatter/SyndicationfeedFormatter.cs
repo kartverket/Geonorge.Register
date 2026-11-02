@@ -1,5 +1,6 @@
 ﻿
 using Kartverket.Register.Models.Api;
+using Markdig;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -180,7 +181,7 @@ namespace Kartverket.Register.Formatter
                 Content = new TextSyndicationContent(content, TextSyndicationContentKind.Html),
                 Id = FixSpecialCharacters(u.id)
             };
-            item.Links.Add(new SyndicationLink() { Title = u.label, Uri = new Uri((u.id)) });
+            item.Links.Add(new SyndicationLink() { Title = u.label, Uri = new Uri((u.id)), RelationshipType = "alternate" });
             item.Authors.Add(new SyndicationPerson() { Name = u.owner });
             item.Categories.Add(new SyndicationCategory() { Name = u.status });
             item.Categories.Add(new SyndicationCategory() { Name = u.owner });
@@ -216,7 +217,7 @@ namespace Kartverket.Register.Formatter
             if(u.itemclass == "Alert")
             {
                 if (!string.IsNullOrEmpty(content))
-                    content = content + "<br>";
+                    content = MarkdownToHtml(content);
 
                 if (!string.IsNullOrEmpty(u.owner))
                     content = content + "Dataeier: " + u.owner + "<br>";
@@ -234,7 +235,7 @@ namespace Kartverket.Register.Formatter
                     content = content + "Ikrafttredelse: " + u.EffectiveDate.ToString("dd.MM.yyyy") + "<br>";
 
                 if (!string.IsNullOrEmpty(u.Note))
-                    content = content + "Varselet gjelder: " + u.Note + "<br>";
+                    content = content + "Varselet gjelder: " + MarkdownToHtml(u.Note);
 
                 if (!string.IsNullOrEmpty(u.id))
                     content = content + "Link til tjenestevarsel: " + "<a href='" + u.id + "'>" + u.label + "</a><br>";
@@ -252,10 +253,18 @@ namespace Kartverket.Register.Formatter
                     content = content + "Station: " + u.Station + "<br>";
             }
 
-            if (content != null)
-                content = System.Web.HttpUtility.HtmlEncode(content);
-
             return content;
+        }
+
+        private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()
+            .UseSoftlineBreakAsHardlineBreak()
+            .Build();
+
+        // Markdown must be converted per field: headings, lists etc. are only
+        // recognized at the start of a line, not mid-way in concatenated text.
+        private static string MarkdownToHtml(string markdown)
+        {
+            return Markdown.ToHtml(markdown, MarkdownPipeline);
         }
 
         private SyndicationItem BuildSyndicationRegister(Models.Api.Register u)

@@ -5,12 +5,14 @@ $('.datasetSelect').select2({
     language: "nb",
     templateSelection: selectDatasetLink,
     ajax: {
-        url: "https://kartkatalog.dev.geonorge.no/api/datasets",
+        url: "https://kartkatalog.dev.geonorge.no/api/search",
         dataType: 'json',
         delay: 250,
         data: function (params) {
             return {
                 text: params.term,// search term
+                "facets[0]name": "type",
+                "facets[0]value": "dataset",
                 limit: 10
             };
         },

@@ -516,7 +516,7 @@ namespace Kartverket.Register.Services
         {
             var inspireDatasetsFromKartkatalogen = new List<InspireDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Inspire&Offset=1&limit=500&mediatype=json";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search?facets%5b0%5dname=type&facets%5b0%5dvalue=dataset&facets%5b1%5dname=nationalinitiative&facets%5b1%5dvalue=Inspire&Offset=1&limit=500&mediatype=json";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {
@@ -546,7 +546,7 @@ namespace Kartverket.Register.Services
             catch (Exception e)
             {
                 synchronizationJob.FailCount++;
-                synchronizationJob.FailLog.Add(new SyncLogEntry("Klarer ikke hente fra - api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Inspire&Offset=1&limit=500&mediatype=json "));
+                synchronizationJob.FailLog.Add(new SyncLogEntry("Klarer ikke hente fra - api/search?facets%5b0%5dname=type&facets%5b0%5dvalue=dataset&facets%5b1%5dname=nationalinitiative&facets%5b1%5dvalue=Inspire&Offset=1&limit=500&mediatype=json "));
 
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);

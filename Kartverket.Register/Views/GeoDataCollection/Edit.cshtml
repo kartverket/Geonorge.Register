@@ -610,6 +610,9 @@
 
 @section Scripts {
     <script src="~/Scripts/select2.min.js"></script>
+    <script type="text/javascript">
+        var kartkatalogenUrl = '@HttpUtility.JavaScriptStringEncode(System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"])';
+    </script>
     <script type="text/javascript" src="~/Scripts/custom.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -5,7 +5,7 @@ $('.datasetSelect').select2({
     language: "nb",
     templateSelection: selectDatasetLink,
     ajax: {
-        url: "https://kartkatalog.dev.geonorge.no/api/search",
+        url: kartkatalogenUrl + "api/search",
         dataType: 'json',
         delay: 250,
         data: function (params) {
@@ -23,7 +23,7 @@ $('.datasetSelect').select2({
                 option = {}
                 option["id"] = item.Title;
                 option["text"] = item.Title;
-                option["link"] = "https://kartkatalog.geonorge.no/metadata/" + item.Uuid ;
+                option["link"] = kartkatalogenUrl + "metadata/" + item.Uuid;
 
                 datasets.push(option);
             })

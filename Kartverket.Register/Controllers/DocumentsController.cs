@@ -193,9 +193,11 @@ namespace Kartverket.Register.Controllers
                         }
                     }
 
-                    document = initialisationDocument(document, documentfile, thumbnail, false, false, null, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
-                    if (ModelState.IsValid)
+                    
+                    if (ModelState.IsValid) { 
+                        document = initialisationDocument(document, documentfile, thumbnail, false, false, null, schematronfile, zipIsAsciiDoc, documentfileEnglish, zipIsAsciiDocEnglish);
                         return Redirect(document.GetObjectUrl());
+                    }
                 }
             }
             return View(document);

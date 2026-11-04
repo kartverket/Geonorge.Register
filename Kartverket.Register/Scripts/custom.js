@@ -13,6 +13,8 @@ $('.datasetSelect').select2({
                 text: params.term,// search term
                 "facets[0]name": "type",
                 "facets[0]value": "dataset",
+                "facets[1]name": "type",
+                "facets[1]value": "series",
                 limit: 10
             };
         },

@@ -428,7 +428,7 @@ namespace Kartverket.Register.Services
         {
             var geodatalovDatasetsFromKartkatalogen = new List<GeodatalovDataset>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search?facets%5b0%5dname=type&facets%5b0%5dvalue=dataset&facets%5b1%5dname=nationalinitiative&facets%5b1%5dvalue=geodataloven&facets%5b2%5dname=nationalinitiative&facets%5b2%5dvalue=Norge digitalt&facets%5b3%5dname=nationalinitiative&facets%5b3%5dvalue=modellbaserteVegprosjekter&Offset=1&limit=6000&mediatype=json";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search?facets%5b0%5dname=type&facets%5b0%5dvalue=dataset&facets%5b1%5dname=type&facets%5b1%5dvalue=series&facets%5b2%5dname=nationalinitiative&facets%5b2%5dvalue=geodataloven&facets%5b3%5dname=nationalinitiative&facets%5b3%5dvalue=Norge digitalt&facets%5b4%5dname=nationalinitiative&facets%5b4%5dvalue=modellbaserteVegprosjekter&Offset=1&limit=8000&mediatype=json";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

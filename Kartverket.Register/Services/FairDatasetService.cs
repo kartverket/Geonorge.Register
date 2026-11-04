@@ -677,7 +677,7 @@ namespace Kartverket.Register.Services
 
         private List<FairDataset> FetchFairDatasets()
         {
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search?facets[0]name=type&facets[0]value=dataset&facets[1]name=nationalinitiative&facets[1]value=Mareano&facets[2]name=nationalinitiative&facets[2]value=MarineGrunnkart&facets[3]name=nationalinitiative&facets[3]value=ØkologiskGrunnkart&limit=6000&mediatype=json&listhidden=true";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search?facets[0]name=type&facets[0]value=dataset&facets[1]name=type&facets[1]value=series&facets[2]name=nationalinitiative&facets[2]value=Mareano&facets[3]name=nationalinitiative&facets[3]value=MarineGrunnkart&facets[4]name=nationalinitiative&facets[4]value=ØkologiskGrunnkart&limit=6000&mediatype=json&listhidden=true";
             var client = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
 
             List<string> datasetUuids = new List<string>();

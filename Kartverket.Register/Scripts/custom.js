@@ -5,12 +5,16 @@ $('.datasetSelect').select2({
     language: "nb",
     templateSelection: selectDatasetLink,
     ajax: {
-        url: "https://kartkatalog.dev.geonorge.no/api/datasets",
+        url: kartkatalogenUrl + "api/search",
         dataType: 'json',
         delay: 250,
         data: function (params) {
             return {
                 text: params.term,// search term
+                "facets[0]name": "type",
+                "facets[0]value": "dataset",
+                "facets[1]name": "type",
+                "facets[1]value": "series",
                 limit: 10
             };
         },
@@ -21,7 +25,7 @@ $('.datasetSelect').select2({
                 option = {}
                 option["id"] = item.Title;
                 option["text"] = item.Title;
-                option["link"] = "https://kartkatalog.geonorge.no/metadata/" + item.Uuid ;
+                option["link"] = kartkatalogenUrl + "metadata/" + item.Uuid;
 
                 datasets.push(option);
             })

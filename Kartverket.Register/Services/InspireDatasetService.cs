@@ -678,7 +678,7 @@ namespace Kartverket.Register.Services
         {
             List<InspireDataService> inspireDataServices = new List<InspireDataService>();
 
-            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/servicedirectory?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Inspire&Offset=1&limit=500&mediatype=json";
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search?facets%5b0%5dname=type&facets%5b0%5dvalue=service&facets%5b1%5dname=type&facets%5b1%5dvalue=servicelayer&facets%5b2%5dname=nationalinitiative&facets%5b2%5dvalue=Inspire&Offset=1&limit=500&mediatype=json";
             var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {

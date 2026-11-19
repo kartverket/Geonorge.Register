@@ -119,7 +119,7 @@
       <HintPath>..\packages\Geonorge.AuthLib.Common.1.0.71\lib\netstandard2.0\Geonorge.AuthLib.Common.dll</HintPath>
     </Reference>
     <Reference Include="Geonorge.AuthLib.NetFull, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Geonorge.AuthLib.NetFull.1.0.67\lib\net472\Geonorge.AuthLib.NetFull.dll</HintPath>
+      <HintPath>..\packages\Geonorge.AuthLib.NetFull.1.0.71\lib\net472\Geonorge.AuthLib.NetFull.dll</HintPath>
     </Reference>
     <Reference Include="GeoNorgeAPI, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GeoNorgeAPI.4.0.3\lib\netstandard2.0\GeoNorgeAPI.dll</HintPath>

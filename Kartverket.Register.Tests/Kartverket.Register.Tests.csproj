@@ -85,7 +85,7 @@
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="Geonorge.AuthLib.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Geonorge.AuthLib.Common.1.0.71\lib\netstandard2.0\Geonorge.AuthLib.Common.dll</HintPath>
+      <HintPath>..\packages\Geonorge.AuthLib.Common.1.0.72\lib\netstandard2.0\Geonorge.AuthLib.Common.dll</HintPath>
     </Reference>
     <Reference Include="GhostscriptSharp, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -97,50 +97,50 @@
     <Reference Include="Kartverket.ReportApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Kartverket.ReportApi.15.8.363\lib\net472\Kartverket.ReportApi.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Authentication, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Authentication, Version=2.3.12.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.2.3.12\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Abstractions.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions, Version=2.3.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Abstractions.2.3.10\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Authentication.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Core.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Core.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Core, Version=2.3.11.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Core.2.3.11\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Authentication.OAuth, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.OAuth.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.OAuth.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Authentication.OAuth, Version=2.3.13.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.OAuth.2.3.13\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.OpenIdConnect.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect, Version=2.3.14.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.OpenIdConnect.2.3.14\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=2.3.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.2.3.10\lib\netstandard2.0\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.DataProtection, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.DataProtection, Version=2.3.11.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.2.3.11\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.DataProtection.Abstractions, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.Abstractions.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.DataProtection.Abstractions, Version=2.3.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.Abstractions.2.3.10\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Abstractions.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions, Version=2.3.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Abstractions.2.3.10\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Server.Abstractions.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions, Version=2.3.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Server.Abstractions.2.3.9\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Http, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Http.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Http, Version=2.3.11.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.2.3.11\lib\netstandard2.0\Microsoft.AspNetCore.Http.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.3.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.3.10\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Http.Extensions, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Http.Extensions.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Http.Extensions, Version=2.3.11.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Extensions.2.3.11\lib\netstandard2.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.3.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.3.9\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.3.14.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.3.14\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -212,8 +212,8 @@
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=8.14.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.8.14.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Net.Http.Headers, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.3.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.3.13.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.3.13\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=4.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.2.3\lib\net45\Microsoft.Owin.dll</HintPath>
